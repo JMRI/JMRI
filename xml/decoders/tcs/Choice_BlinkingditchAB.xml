@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-          <enumChoice choice="Blinking ditch light A">
+          <enumChoice choice="Blinking ditch light A" value="10">
             <choice>Blinking ditch light A</choice>
             <choice xml:lang="it">Lampeggiante Ditch tipo A</choice>
           </enumChoice>

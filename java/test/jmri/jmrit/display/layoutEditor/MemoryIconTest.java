@@ -2,35 +2,52 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of MemoryIcon
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class MemoryIconTest {
+public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
 
     @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        MemoryIcon t = new MemoryIcon("test", new LayoutEditor());
-        Assert.assertNotNull("exists", t);
-        t.getEditor().dispose();
+    @Override
+    @Ignore("Superclass method assumes graphical icon (red X)")
+    @ToDo("rewrite superclass test so it works in this case.")
+    public void testShowEmpty() {
     }
 
+    @Test
+    @Override
+    @Ignore("When test from superclass is run, Scale is not set")
+    @ToDo("rewrite superclass test so it works in this case.")
+    public void testGetAndSetScale(){
+    }
+    
+
+
     @Before
-    public void setUp() throws Exception {
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            editor = new LayoutEditor();
+            p = to = new MemoryIcon("MemoryTest1", (LayoutEditor)editor );
+            to.setMemory("IM1");
+        }
     }
 
     @After
-    public void tearDown() throws Exception {
+    @Override
+    public void tearDown() {
+        if(to!=null) {
+           to.getEditor().dispose();
+           to = null;
+           p = null;
+        }
         JUnitUtil.tearDown();
     }
 

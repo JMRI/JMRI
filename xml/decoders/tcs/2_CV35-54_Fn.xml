@@ -288,6 +288,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/Choice_BlinkingditchAB.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
 			</enumVal>
 		<label>Green Wire Effect</label>
 		<label xml:lang="it">Effetti filo Verde</label>
