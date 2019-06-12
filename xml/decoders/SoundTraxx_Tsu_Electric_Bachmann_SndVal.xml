@@ -786,11 +786,7 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>F9 controls output Water-Stop</label>
           </variable>
-		  <variable item="F9 controls output 10" CV="43" mask="XXXXVXXX" default="0" minFn="9">
-            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-            <label>F9 controls output Water-Stop</label>
-          </variable>
-          <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+	  <variable item="F9 controls output 11" CV="43" mask="XXXVXXXX" default="0" minFn="9">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>F9 controls output Dimming</label>
           </variable>
