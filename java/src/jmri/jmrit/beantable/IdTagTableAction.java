@@ -51,9 +51,11 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      */
     @Override
     public void setManager(@Nonnull Manager<IdTag> t) {
-        tagManager = (IdTagManager) t;
-        if (m != null) {
-            m.setManager(tagManager);
+        if (t instanceof IdTagManager) {
+            tagManager = (IdTagManager) t;
+            if (m != null) {
+                m.setManager(tagManager);
+            }
         }
     }
 

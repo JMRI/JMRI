@@ -222,8 +222,9 @@ public class JUnitUtil {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
             
-        // reset the UnexpectedMessageFlags so that errors from a 
-        // previous test doesn't interfere with the current test.
+        // clear the backlog and reset the UnexpectedMessageFlags so that 
+        // errors from a previous test do not interfere with the current test.
+        JUnitAppender.clearBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
 
 
