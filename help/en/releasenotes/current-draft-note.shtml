@@ -41,7 +41,7 @@
 
         <h4>Hornby</h4>
             <ul>
-                <li>Improve the sequence of messages used when programming with the Hornby Elite</li>
+                <li></li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Update some node identification information</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -266,7 +266,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>Fix FN ditch light</li>
+                <li></li>
             </ul>
 	    
 	    <h4>Team Digital</h4>
@@ -335,11 +335,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>When an edge connector or end bumper does not have an attached track segment, 
-	            creating a context menu fails with a NPE. This prevents deleting the EC or EB 
-	            using the Delete option in the context menu. 
-	            The EB or EC can be deleted by adding a track segment 
-	            and then the context menu works.</li>
+	        <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -357,7 +353,7 @@
    <h3>Panel Editors</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Fixed problem with dragging in Control Panel Editor</li>
+            <li></li>
         </ul>
         <h4>CTC Tool</h4>
             <a id="PE-CTC" name="PE-CTC"></a>
@@ -456,7 +452,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>Fixed an issue where null could be returned for some information (from 4.15.7)</li>
+            <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
