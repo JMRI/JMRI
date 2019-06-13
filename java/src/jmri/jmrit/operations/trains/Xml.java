@@ -120,6 +120,9 @@ public class Xml {
 //    static final String ACTIVE_ID = "activeId"; // NOI18N
     static final String START_UP = "startUp"; // NOI18N
     static final String SHUT_DOWN = "shutDown"; // NOI18N
+    
+    static final String CONDUCTOR_OPTIONS = "conductorOptions"; // NOI18N
+    static final String SHOW_HYPHEN_NAME = "showHyphenName"; // NOI18N
 
     static final String ROW_COLOR_OPTIONS = "rowColorOptions"; // NOI18N
     static final String ROW_COLOR_MANUAL = "rowColorManual"; // NOI18N

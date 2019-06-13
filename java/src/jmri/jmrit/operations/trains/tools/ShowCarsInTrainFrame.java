@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -12,6 +13,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -21,9 +26,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Show Cars In Train Frame. This frame lists all cars assigned to a train in
@@ -36,6 +40,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
     Train _train = null;
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     // labels
     JLabel textTrainName = new JLabel();
@@ -143,8 +148,10 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                 pCars.removeAll();
                 RouteLocation rl = _train.getCurrentLocation();
                 if (rl != null) {
-                    textLocationName.setText(rl.getLocation().getName());
-                    textNextLocationName.setText(_train.getNextLocationName());
+                    textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
+                            ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
+                    textNextLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
+                            ? _train.getNextLocationName() : TrainCommon.splitString(_train.getNextLocationName()));
                     // add header
                     int i = 0;
                     addItemLeft(pCars, textPickUp, 0, 0);

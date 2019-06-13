@@ -167,7 +167,7 @@ public class DccSignalHead extends AbstractSignalHead {
                 sigPacket = NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspect);
             }
             if (sigPacket != null) {
-                c.sendPacket(sigPacket, 3);
+                c.sendPacket(sigPacket, packetSendCount);
             }
         }
     }
@@ -227,6 +227,28 @@ public class DccSignalHead extends AbstractSignalHead {
             default:
                 return 8;
         }
+    }
+
+    int packetSendCount = 3;
+    /**
+     * Set Number of times the packet should be sent to the track.
+     * @param count - less than 1 is treated as 1.
+     */
+    public void setDccSignalHeadPacketSendCount(int count) {
+        if (count > 0) {
+            packetSendCount = count;
+        } else {
+            packetSendCount = 1;
+        }
+    }
+
+    /**
+     * get the number of times the packet should be sent to the track.
+     *
+     * @return the count.
+     */
+    public int getDccSignalHeadPacketSendCount() {
+        return packetSendCount;
     }
 
     int dccSignalDecoderAddress;

@@ -59,9 +59,13 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     DccSignalMast currentMast = null;
     SignalSystem sigsys;
+    /* IMM Send Count */
+    JSpinner packetSendCountSpinner = new JSpinner();
 
     /**
      * Check if a command station will work for this subtype.
+     * @param cs The current command station.
+     * @return true if cs supports IMM packets.
      */
     protected boolean usableCommandStation(CommandStation cs) {
         return true;
@@ -107,6 +111,12 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         dccMastPanel.add(dccAspectAddressLabel);
         dccAspectAddressField.setText("");
         dccMastPanel.add(dccAspectAddressField);
+
+        dccMastPanel.add(new JLabel(Bundle.getMessage("DCCMastPacketSendCount")));
+        packetSendCountSpinner.setModel(new SpinnerNumberModel(3, 1, 4, 1));
+        packetSendCountSpinner.setPreferredSize(new JTextField(5).getPreferredSize());
+        dccMastPanel.add(packetSendCountSpinner);
+        packetSendCountSpinner.setToolTipText(Bundle.getMessage("DCCMastPacketSendCountToolTip"));
 
         for (Map.Entry<String, DCCAspectPanel> entry : dccAspect.entrySet()) {
             log.trace("   aspect: {}", entry.getKey());
@@ -182,7 +192,8 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         if (currentMast.allowUnLit()) {
             unLitAspectField.setText("" + currentMast.getUnlitId());
         }
-
+        // set up DCC IMM send count
+        packetSendCountSpinner.setValue(currentMast.getDccSignalMastPacketSendCount());
         log.debug("setMast({}) end", mast);
     }
 
@@ -264,6 +275,9 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
         if (allowUnLit.isSelected()) {
             currentMast.setUnlitId(Integer.parseInt(unLitAspectField.getText()));
         }
+
+        int sendCount = (Integer) packetSendCountSpinner.getValue(); // from a JSpinner with 1 set as minimum 4 max
+        currentMast.setDccSignalMastPacketSendCount(sendCount);
 
         log.debug("createMast({},{} end)", sigsysname, mastname);
         return true;
