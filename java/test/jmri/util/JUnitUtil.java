@@ -908,6 +908,17 @@ public class JUnitUtil {
             sm.deregister(list.get(0));
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
+
+        // use reflection to reset static fields in the class.
+        try {
+            Class<?> c = jmri.managers.DefaultShutDownManager.class;
+            java.lang.reflect.Field f = c.getDeclaredField("shuttingDown");
+            f.setAccessible(true);
+            f.set(sm, false);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
+        }
+        
     }
 
     /**
