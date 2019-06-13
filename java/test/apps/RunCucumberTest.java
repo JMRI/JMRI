@@ -36,7 +36,6 @@ public class RunCucumberTest {
 
    @AfterClass
    public static void afterTests(){
-      jmri.util.web.BrowserFactory.CloseAllDriver();
       jmri.util.JUnitUtil.tearDown();
    }
 

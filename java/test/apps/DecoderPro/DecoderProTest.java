@@ -29,12 +29,14 @@ public class DecoderProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchEasyDcc() throws IOException {
         runOne("EasyDcc_Simulator", "DecoderPro", "DecoderPro version");
         // param 1 is profile folder name, param 2 and 3 must match Console output
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchGrapevine() throws IOException {
         runOne("Grapevine_Simulator", "DecoderPro", "DecoderPro version");
         JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
@@ -42,6 +44,7 @@ public class DecoderProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchLocoNet() throws IOException {
         runOne("LocoNet_Simulator", "DecoderPro", "DecoderPro version");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
@@ -50,16 +53,19 @@ public class DecoderProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchSprog() throws IOException {
         runOne("Sprog_Simulator", "DecoderPro", "DecoderPro version");
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchTmcc() throws IOException {
         runOne("TMCC_Simulator", "DecoderPro", "DecoderPro version");
     }
 
     @Test
+    @Ignore("Replaced with a Cucumber test")
     public void testLaunchInitLoop() throws IOException {
         runOne("Prevent_Init_Loop", "DecoderPro", "DecoderPro version");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
