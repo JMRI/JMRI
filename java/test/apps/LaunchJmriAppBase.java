@@ -109,6 +109,7 @@ abstract public class LaunchJmriAppBase {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
