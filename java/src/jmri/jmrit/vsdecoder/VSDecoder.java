@@ -817,10 +817,10 @@ public class VSDecoder implements PropertyChangeListener {
         n = e.getChildText("create-xy-series");
         if ((n != null) && (n.equals("yes"))) {
             create_xy_series = true;
-            log.debug("Profile {}: xy-position-coordinates will be created in JMRI System console", getProfileName());
+            log.debug("Profile {}: xy-position-coordinates will be created in JMRI System Console", getProfileName());
         } else {
             create_xy_series = false;
-            log.debug("Profile {}: xy-position-coordinates will NOT be created in JMRI System console", getProfileName());
+            log.debug("Profile {}: xy-position-coordinates will NOT be created in JMRI System Console", getProfileName());
         }
 
         // Check for an optional sound start-position.
