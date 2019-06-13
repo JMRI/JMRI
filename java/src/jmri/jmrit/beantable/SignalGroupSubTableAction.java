@@ -942,7 +942,7 @@ public class SignalGroupSubTableAction {
     private ArrayList<SignalGroupSensor> _sensorList;        // array of all Sensors
     private ArrayList<SignalGroupSensor> _includedSensorList;
 
-    private synchronized static void setRowHeight(@Nonnull int newVal) {
+    private synchronized static void setRowHeight(int newVal) {
         ROW_HEIGHT = newVal;
     }
 
