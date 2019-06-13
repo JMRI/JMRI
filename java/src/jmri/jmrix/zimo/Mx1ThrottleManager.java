@@ -31,10 +31,16 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        //We do interact
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new Mx1Throttle for " + address); //IN18N
-        notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
+        if (a instanceof DccLocoAddress ) {
+            //We do interact
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new Mx1Throttle for " + address); //IN18N
+            notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+        }
     }
 
     /**
@@ -71,9 +77,11 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            Mx1Throttle nct = (Mx1Throttle) t;
-            nct.throttleDispose();
-            return true;
+            if (t instanceof Mx1Throttle) {
+                Mx1Throttle nct = (Mx1Throttle) t;
+                nct.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

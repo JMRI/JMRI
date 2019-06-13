@@ -39,6 +39,11 @@
                 <li></li>
             </ul>
 
+        <h4>Hornby</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -377,7 +382,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Improved behaviour of multiple <a 
+              href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
+              >Fast Clock following Light Controllers</a> on a single Light.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -465,6 +472,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>If using a non-default look and feel; it may need to be reset. Note that the look and feel stored by JMRI 4.17.1 and
+                later will be ignored by JMRI 4.16 and earlier.</li>
         </ul>
 
