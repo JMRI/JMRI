@@ -22,14 +22,14 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     public LNCPSignalMast(String sys, String user) {
         super(sys, user, "F$lncpsm"); // NOI18N
-        packetRepeatCount = 1;
+        packetSendCount = 1;
         configureFromName(sys);
         init();
     }
 
     public LNCPSignalMast(String sys) {
         super(sys, null, "F$lncpsm"); // NOI18N
-        packetRepeatCount = 1;
+        packetSendCount = 1;
         configureFromName(sys);
         init();
     }
@@ -103,7 +103,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     @Override
     public void setAspect(String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
+            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
             log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
         }
