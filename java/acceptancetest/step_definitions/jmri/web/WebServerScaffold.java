@@ -23,6 +23,7 @@ public class WebServerScaffold implements En {
 
         Before(tags, () -> {
             jmri.util.JUnitUtil.resetProfileManager();
+            instance.setDefault(jmri.web.server.WebServerPreferences.class, new jmri.web.server.WebServerPreferences());
             jmri.util.JUnitUtil.initConfigureManager();
             jmri.util.JUnitUtil.initInternalTurnoutManager();
             jmri.util.JUnitUtil.initInternalLightManager();
@@ -31,7 +32,6 @@ public class WebServerScaffold implements En {
             jmri.util.JUnitUtil.initShutDownManager();
             jmri.util.JUnitUtil.initConnectionConfigManager();
             jmri.util.JUnitUtil.initDebugPowerManager();
-            instance.getDefault(jmri.web.server.WebServerPreferences.class).setRailroadName("My JMRI Railroad"); // make sure railroad name is the default.
             server = new WebServer(); // a webserver using default preferences.
             server.start();
             jmri.util.JUnitUtil.waitFor(() -> {
