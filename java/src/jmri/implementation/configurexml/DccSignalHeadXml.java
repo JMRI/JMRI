@@ -50,6 +50,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         } else {
             element.addContent(new Element("useAddressOffSet").addContent("no"));
         }
+        element.addContent(new Element("packetsendcount").addContent(Integer.toString(p.getDccSignalHeadPacketSendCount())));
 
         for (int i = 0; i < p.getValidStates().length; i++) {
             String aspect = p.getValidStateNames()[i];
@@ -81,6 +82,10 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             if (shared.getChild("useAddressOffSet").getText().equals("yes")) {
                 h.useAddressOffSet(true);
             }
+        }
+
+        if (shared.getChild("packetsendcount") != null) {
+            h.setDccSignalHeadPacketSendCount(Integer.parseInt(shared.getChild("packetsendcount").getValue()));
         }
 
         List<Element> list = shared.getChildren("aspect");

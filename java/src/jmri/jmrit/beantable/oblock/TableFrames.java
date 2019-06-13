@@ -419,7 +419,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _openMenu.add(openTurnoutPath);
     }
 
-    private synchronized static void setRowHeight(@Nonnull int newVal) {
+    private synchronized static void setRowHeight(int newVal) {
         ROW_HEIGHT = newVal;
     }
 
