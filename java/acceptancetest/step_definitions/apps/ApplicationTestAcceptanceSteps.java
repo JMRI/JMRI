@@ -77,6 +77,7 @@ public class ApplicationTestAcceptanceSteps implements En {
         FileUtils.deleteDirectory(tempFolder);
         System.clearProperty("jmri.prefsdir");
         System.clearProperty("org.jmri.profile");
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     });
 

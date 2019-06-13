@@ -1641,9 +1641,6 @@
             <test name="jmri.RunCucumberTest">
                 <formatter usefile="no" type="brief"/>
             </test>
-            <test name="apps.RunCucumberTest">
-                <formatter usefile="no" type="brief"/>
-            </test>
         </junit>
         <fail>
             <condition>
