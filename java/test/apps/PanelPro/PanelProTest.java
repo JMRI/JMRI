@@ -23,6 +23,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017, 2019
  * @author Bob Jacobsen Copyright (C) 2017
  */
+@Ignore("Replaced with a Cucumber test")
 public class PanelProTest extends apps.LaunchJmriAppBase {
 
     protected void launch(String[] args) {
@@ -34,14 +35,12 @@ public class PanelProTest extends apps.LaunchJmriAppBase {
     }
     
     @Test
-    @Ignore("Replaced with a Cucumber test")
     public void testLaunchEasyDcc() throws IOException {
         runOne("EasyDcc_Simulator", "PanelPro", "PanelPro version");
         // param 1 is profile folder name, param 2 and 3 must match Console output
     }
 
     @Test
-    @Ignore("Replaced with a Cucumber test")
     public void testLaunchGrapevine() throws IOException {
         runOne("Grapevine_Simulator", "PanelPro", "PanelPro version");
         JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
@@ -49,7 +48,6 @@ public class PanelProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
-    @Ignore("Replaced with a Cucumber test")
     public void testLaunchLocoNet() throws IOException {
         runOne("LocoNet_Simulator", "PanelPro", "PanelPro version");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
@@ -58,19 +56,16 @@ public class PanelProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
-    @Ignore("Replaced with a Cucumber test")
     public void testLaunchSprog() throws IOException {
         runOne("Sprog_Simulator", "PanelPro", "PanelPro version");
     }
 
     @Test
-    @Ignore("Replaced with a Cucumber test")
     public void testLaunchTmcc() throws IOException {
         runOne("TMCC_Simulator", "PanelPro", "PanelPro version");
     }
 
     @Test
-    @Ignore("Replaced with a Cucumber test")
     public void testLaunchInitLoop() throws IOException {
         runOne("Prevent_Init_Loop", "PanelPro", "PanelPro version");
         JUnitAppender.suppressWarnMessage("passing to xmit: unexpected exception:  [LnPowerManager LnTrackStatusUpdateThread] jmri.jmrix.loconet.LnPacketizer.sendLocoNetMessage()");
