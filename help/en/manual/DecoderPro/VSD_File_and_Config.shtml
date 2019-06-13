@@ -183,7 +183,7 @@
       <p>Description:<br>
       Helpfull option to verify the setup of your VSDGeoData.xml file
       (see <a href="VSD_LocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>).<br>
-      The JMRI system console output can be copied and edited for printing a route curve.
+      The JMRI System Console output can be copied and edited for printing a route curve.
       I have tested this with "LibreOffice Calc" and "Gnuplot".<br>
       Optional. Must be declared right after the
       <code>&lt;profile&gt;</code> tag.<br>
