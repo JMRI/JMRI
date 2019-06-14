@@ -27,6 +27,7 @@ public class ApplicationTestAcceptanceSteps implements En {
 
    Before(tags,() -> {
       JUnitUtil.setUp();
+      JUnitUtil.clearShutDownManager();
       JUnitUtil.resetApplication();
    });
 
