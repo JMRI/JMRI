@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="James Exler" version="8" lastUpdated="20190610"/>
   <version author="Alain Le Marchand" version="7.1" lastUpdated="20170218"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20140427"/>
   <version author="Steve Lowens" version="6" lastUpdated="20120515"/>
@@ -49,6 +50,8 @@
   <!--    Size information for SDN144K1E
           Function number = 12 for all decoders
           (for consist advanced function behavior )                        -->
+  <!--  Version 8 (James Exler jimXexler@hotmail.com)
+    Revised choices and selections at CV11 (Sound Time Out) as they were reversed and confusing. Changed selection tabs to On/Off and time out to 06, 30 or 60 sec -->
   <!--                                             -->
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
@@ -244,17 +247,23 @@
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
-      <variable CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 5" default="6">
+      <variable CV="11" tooltip="Sound times out after loco is de-selected or idle" item="Sound Option 7" default="6">
         <enumVal>
-          <enumChoice choice="Yes" value="0">
-            <choice>Yes</choice>
-            <choice xml:lang="it">Si</choice>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+            <choice xml:lang="it">spento</choice>
           </enumChoice>
-          <enumChoice choice="No" value="6">
-            <choice>No</choice>
+          <enumChoice choice="On:06" value="06">
+            <choice>On:06</choice>
+          </enumChoice>
+          <enumChoice choice="On:30" value="30">
+            <choice>On:30</choice>
+          </enumChoice>  
+          <enumChoice choice="On:60" value="60">
+            <choice>On:60</choice>
           </enumChoice>
         </enumVal>
-        <label>Sound Time Out</label>
+        <label>Sound Time Out (seconds)</label>
         <label xml:lang="it">Durata Suono</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>

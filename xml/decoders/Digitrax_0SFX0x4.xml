@@ -17,12 +17,15 @@
   <version author="Michael Mosher" version="2" lastUpdated="20080204"/>
   <version author="Michael Mosher" version="3" lastUpdated="20080222"/>
   <version author="Alain Le Marchand" version="3" lastUpdated="20140830"/>
+  <version author="James Exler" version="4" lastUpdated="20190610"/>
   <!-- V1: Created from version 3 of the Digitrax_0SFX file -->
   <!-- V2: Update versions, bug fix, add SFX0416 -->
   <!-- V3: Add CV 133 & 134 -->
   <!-- V3: Add SFX006
             + re-factoring using Xinclude files
             + alignement on 0SFX_Series6            -->
+  <!--Version 4 (James Exler jimXexler@hotmail.com)
+    Revised choices and selections at CV11 (Sound Time Out) as they were reversed and confusing. Changed selection tabs to On/Off and time out to 06, 30 or 60 sec -->
   <decoder>
     <family name="SFX Sound Only Decoders" mfg="Digitrax" lowVersionID="16" highVersionID="16">
       <model model="SFX004" numOuts="0" numFns="0" formFactor="HO" productID="SFX004" comment="8-bit Soundbug(TM) for DH165xx decoders &amp; others">
@@ -95,17 +98,23 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <!-- Sound options -->
-      <variable CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 7" default="6">
+      <variable CV="11" tooltip="Sound times out after loco is de-selected or idle" item="Sound Option 7" default="6">
         <enumVal>
-          <enumChoice choice="Yes" value="0">
-            <choice>Yes</choice>
-            <choice xml:lang="it">Si</choice>
+          <enumChoice choice="Off" value="0">
+            <choice>Off</choice>
+            <choice xml:lang="it">spento</choice>
           </enumChoice>
-          <enumChoice choice="No" value="6">
-            <choice>No</choice>
+          <enumChoice choice="On:06" value="06">
+            <choice>On:06</choice>
+          </enumChoice>
+          <enumChoice choice="On:30" value="30">
+            <choice>On:30</choice>
+          </enumChoice>  
+          <enumChoice choice="On:60" value="60">
+            <choice>On:60</choice>
           </enumChoice>
         </enumVal>
-        <label>Sound Time Out</label>
+        <label>Sound Time Out (seconds)</label>
         <label xml:lang="it">Durata Suono</label>
       </variable>
       <variable CV="58" item="Sound Setting 1" comment="0-15" default="9">
