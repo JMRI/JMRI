@@ -2141,7 +2141,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         lockTurnoutInputModes = newArray;
     }
 
-    private synchronized static void setRowHeight(@Nonnull int newVal) {
+    private synchronized static void setRowHeight(int newVal) {
         ROW_HEIGHT = newVal;
     }
 
