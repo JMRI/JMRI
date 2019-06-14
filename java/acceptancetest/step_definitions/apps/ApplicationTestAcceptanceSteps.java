@@ -11,6 +11,8 @@ import jmri.managers.DefaultShutDownManager;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  * Cucumber step definitions for Application Acceptance tests.
@@ -68,6 +70,7 @@ public class ApplicationTestAcceptanceSteps implements En {
     });
 
     After(tags,() -> {
+        dismissClosingDialogs(); // this method starts a new thread
         try{
            // gracefully shutdown, but don't exit
            ((DefaultShutDownManager)instance.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
@@ -83,4 +86,27 @@ public class ApplicationTestAcceptanceSteps implements En {
     });
 
    }
+
+   private void dismissClosingDialogs(){
+        // the Unsaved Changes dialog doesn't appear every time we close, 
+        // so put pressing No button in that dialog into a thread by itself.  
+        // If the dialog appears, the button will be clicked, but it's not 
+        // an error if the dialog doesn't appear.
+        Thread t = new Thread( () -> {
+           try {
+              JDialogOperator d = new JDialogOperator(Bundle.getMessage("UnsavedChangesTitle"));
+              // Find the button that deletes the panel
+              JButtonOperator bo = new JButtonOperator(d,Bundle.getMessage("ButtonNo"));
+
+              // Click button to delete panel and close window
+              bo.push();
+              } catch (Exception e) {
+                  // exceptions in this thread are not considered an error.
+                  return;
+              }
+        });
+        t.setName("Unsaved Changes Dialog Close Thread");
+        t.start();
+    }
+
 }
