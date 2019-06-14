@@ -96,7 +96,6 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             // check head exists
             if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name) == null) {
                 log.warn("Attempting to create Mast from non-existant signal head {}", name);
-                continue;
             }
             NamedBeanHandle<SignalHead> s
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
