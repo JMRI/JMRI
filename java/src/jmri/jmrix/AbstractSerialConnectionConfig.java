@@ -158,9 +158,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudRate((String) baudBox.getSelectedItem());
-        for (String i : options.keySet()) {
-            adapter.setOptionState(i, options.get(i).getItem());
+        adapter.configureBaudIndex((int) baudBox.getSelectedIndex()); // manage by index, not item value
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
 
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
@@ -375,7 +375,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
-        baudBox.setSelectedItem(adapter.getCurrentBaudRate());
+        baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {

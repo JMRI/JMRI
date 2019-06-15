@@ -149,6 +149,7 @@ public class PR4Adapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
+     *
      * @return int[] containing the single valud baud rate, 57600.
      */
     @Override

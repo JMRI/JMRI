@@ -144,6 +144,60 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public void configureBaudRate(String rate) {
         mBaudRate = rate;
     }
+
+    @Override
+    public void configureBaudNumber(String indexString) {
+        int index = 0;
+        String[] rates = validBaudRates();
+        if (indexString.isEmpty()) {
+            mBaudRate = null; // represents "(none)"
+            log.debug("empty baud rate received");
+            return;
+        }
+        try {
+            // since 4.16 try to convert directly to integer
+            int baudNum = Integer.parseInt((indexString)); // new storage format
+            int[] numbers = validBaudNumber(); // TODO refactor method name to validBaudNumbers() - multiple
+            for (int i = 0; i < numbers.length; i++) {
+                if (numbers[i] == baudNum) {
+                    index = i;
+                    log.debug("found new format baud value at index {}", i);
+                    break;
+                }
+            }
+            mBaudRate = validBaudRates()[index];
+        } catch (NumberFormatException e) {
+            // old pre 4.15.8 format is i18n string including thousand separator and whatever suffix like "18,600 bps"
+            log.warn("old format configuration file converted");
+            // filter only numerical characters from indexString
+            for (int n = 0; n < indexString.length(); n++) {
+                if (Character.isDigit(indexString.charAt(n))) {
+                    indexString = indexString + indexString.charAt(n);
+                    log.debug("old format baud number: {}", indexString);
+                }
+            }
+            index = Integer.parseInt((indexString));
+        }
+        // fetch baud rate description from ValidBaudRates[] array copy and set
+        mBaudRate = rates[index];
+        log.debug("mBaudRate set to: {}", mBaudRate);
+    }
+
+    @Override
+    public void configureBaudIndex(int index) {
+        int baud = 0; // represents "(none)"
+        if (validBaudNumber() != null) {
+            for (int i = 0; i < validBaudNumber().length; i++) {
+                if (validBaudRates()[i].equals(mBaudRate)) {
+                    mBaudRate = validBaudRates()[i];
+                    break;
+                }
+            }
+        } else {
+            log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter
+        }
+    }
+
     protected String mBaudRate = null;
 
     /**
@@ -152,9 +206,40 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public String getCurrentBaudRate() {
         if (mBaudRate == null) {
-            return validBaudRates()[0];
+            return "";
         }
         return mBaudRate;
+    }
+
+    @Override
+    public String getCurrentBaudNumber() {
+        if (mBaudRate != null) {
+            int[] numbers = validBaudNumber(); // TODO refactor to validBaudNumbers() - multiple
+            String[] rates = validBaudRates();
+            String baudNumString = "";
+            // find the configured baud rate value
+            for (int i = 0; i < numbers.length; i++) {
+                if (rates[i].equals(mBaudRate)) {
+                    baudNumString = Integer.toString(numbers[i]);
+                }
+            }
+            return baudNumString;
+        }
+        return ""; // (none)
+    }
+
+    @Override
+    public int getCurrentBaudIndex() {
+        if (mBaudRate != null) {
+            String[] rates = validBaudRates();
+            // find the configured baud rate value
+            for (int i = 0; i < rates.length; i++) {
+                if (rates[i].equals(mBaudRate)) {
+                    return i;
+                }
+            }
+        }
+        return 0; // (none)
     }
 
     /**
@@ -170,7 +255,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Convert a baud rate String to a int number,e.g. "9,600" to 9600.
+     * Convert a baud rate I18N String to a int number, e.g. "9,600 baud" to 9600.
      * <p>
      * Uses the validBaudNumber and validBaudRates methods to do this.
      *
@@ -203,7 +288,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
 
         // no match
-        log.error("no match to (" + currentBaudRate + ") in currentBaudNumber");
+        log.error("no match to ({}) in currentBaudNumber", currentBaudRate);
         return -1;
     }
 
@@ -361,7 +446,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             thread.join();
         } catch (InterruptedException e) {
-            log.error("Unable to join to the reconnection thread ", e.getMessage());
+            log.error("Unable to join to the reconnection thread {}", e.getMessage());
         }
         if (!opened) {
             log.error("Failed to re-establish connectivity");
