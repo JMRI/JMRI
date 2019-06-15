@@ -11,6 +11,7 @@ Scenario Outline: Application Start
    Examples: Tests that are failing
    | application | profile | name | infoline |
    | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/EasyDcc_Simulator | PanelProPro | Main initialization done |
+   | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Grapevine_Simulator | DispatcherPro | DecoderPro version |
 
    @PanelProTest 
    Examples: PanelPro Tests
@@ -28,18 +29,17 @@ Scenario Outline: Application Start
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/EasyDcc_Simulator | DecoderPro | DecoderPro version |
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/TMCC_Simulator | DecoderPro | DecoderPro version |
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | DecoderPro | DecoderPro version |
-   | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Grapevine_Simulator | DispatcherPro | DecoderPro version |
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | DecoderPro | DecoderPro version |
 
    @DecoderPro3Test
    Examples: DecoderPro3 Tests
    | application | profile | name | infoline |
-   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/LocoNet_Simulator | DecoderPro | DecoderPro version |
+   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/LocoNet_Simulator | DecoderPro:All Entries | DecoderPro version |
    | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/EasyDcc_Simulator | DecoderPro | DecoderPro version |
    | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/TMCC_Simulator | DecoderPro | DecoderPro version |
-   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | DecoderPro | DecoderPro version |
-   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/Grapevine_Simulator | DispatcherPro | DispatcherPro version |
-   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/Sprog_Simulator | DecoderPro | DecoderPro version |
+   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | DecoderPro:All Entries | DecoderPro version |
+   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/Grapevine_Simulator | DecoderPro:All Entries | DecoderPro version |
+   | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/Sprog_Simulator | DecoderPro:All Entries | DecoderPro version |
 
    @SoundProTest
    Examples: SoundPro Tests
