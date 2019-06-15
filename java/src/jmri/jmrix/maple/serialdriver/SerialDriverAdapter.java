@@ -30,6 +30,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         this.manufacturerName = jmri.jmrix.maple.SerialConnectionTypeList.MAPLE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -115,7 +118,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Set up all of the other objects to operate connected to this port.
+     * {@inheritDoc}
      */
     @Override
     public void configure() {
@@ -187,7 +190,15 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Set the baud rate.
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void configureBaudRate(String rate) {

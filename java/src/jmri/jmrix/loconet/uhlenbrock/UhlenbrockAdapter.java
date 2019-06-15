@@ -37,8 +37,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
     }
 
     /**
-     * Set up all of the other objects to operate with a LocoBuffer connected to
-     * this port.
+     * {@inheritDoc}
      */
     @Override
     public void configure() {
@@ -60,21 +59,25 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
-     *
-     * @return list of value baud rates
+     * {@inheritDoc}
      */
     @Override
     public int[] validBaudNumber() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean okToSend() {
         return true;

@@ -31,6 +31,9 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
 
     SerialPort activeSerialPort = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -114,7 +117,7 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * {@inheritDoc}
      */
     @Override
     public void configure() {
@@ -126,6 +129,10 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
     }
 
     // base class methods for the SerialPortAdapter interface
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -135,6 +142,9 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -148,6 +158,9 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -172,13 +185,24 @@ public class SerialDriverAdapter extends SerialPortAdapter implements jmri.jmrix
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void configureBaudRate(String rate) {

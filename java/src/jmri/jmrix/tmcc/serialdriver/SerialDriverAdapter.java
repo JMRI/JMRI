@@ -33,6 +33,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         this.manufacturerName = jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
@@ -110,7 +113,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Set up all of the other objects to operate connected to this port.
+     * {@inheritDoc}
      */
     @Override
     public void configure() {
@@ -125,6 +128,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     // Base class methods for the SerialPortController interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -134,6 +140,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return new DataInputStream(serialStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -147,6 +156,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -174,15 +186,24 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
-     *
-     * @param rate the baud rate
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void configureBaudRate(String rate) {
