@@ -59,7 +59,20 @@ public interface SerialPortAdapter extends PortAdapter {
      */
     public void configureBaudRate(String rate);
 
+    /**
+     * Set the baud rate by index from ValidBaudRates[].
+     * <p>
+     * Only to be used after construction, but before the openPort call.
+     */
+    public void configureBaudNumber(String index);
+
+    public void configureBaudIndex(int index);
+
     public String getCurrentBaudRate();
+
+    public String getCurrentBaudNumber();
+
+    public int getCurrentBaudIndex();
 
     /**
      * Set the first port option. Only to be used after construction, but before

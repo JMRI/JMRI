@@ -22,7 +22,7 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Always use flow control, not considered a user-setable option
+     * Always use flow control, not considered a user-settable option
      */
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
