@@ -31,7 +31,7 @@ Scenario Outline: Application Start
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | DecoderPro | DecoderPro version |
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | DecoderPro | DecoderPro version |
 
-   @DecoderPro3Test
+   @DecoderPro3Test @Ignore
    Examples: DecoderPro3 Tests
    | application | profile | name | infoline |
    | apps.gui3.dp3.DecoderPro3 | java/test/apps/PanelPro/profiles/LocoNet_Simulator | DecoderPro:All Entries | DecoderPro version |
