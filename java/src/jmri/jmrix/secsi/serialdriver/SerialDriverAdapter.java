@@ -161,7 +161,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // find the baud rate value, configure comm options
         int baud = 38400;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(selectedSpeed)) {
+            if (currentBaudNumber(validSpeeds[i]) == currentBaudNumber(selectedSpeed)) {
                 baud = validSpeedValues[i];
             }
         }
