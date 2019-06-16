@@ -428,9 +428,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.8+Rf006fc4.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.8/JMRI.4.15.8+Rf006fc4.dmg) | e4a438800095aded9d8d36d3fa7b766f3e17db366327d435a8f125634b31b4d3
-[JMRI.4.15.8+Rf006fc4.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.8/JMRI.4.15.8+Rf006fc4.exe) | a0212fa68718214074cfd4202bf31d29e479b909eec1210e61eab03869b92990
-[JMRI.4.15.8+Rf006fc4.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.8/JMRI.4.15.8+Rf006fc4.tgz) | ec280f9c317f6b458e5b21e207a04666b89f9525f41a0e097aa08c817cb777f7
+[JMRI.4.15.8+R6d09260.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.8/JMRI.4.15.8+R6d09260.dmg) | 02be066f341ebf6c269be2011215533fecd88f2af8fab82f4c293e95288d0dd4
+[JMRI.4.15.8+R6d09260.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.8/JMRI.4.15.8+R6d09260.exe) | 1ee05ed0e46f4dfcc383366e9259dcb62223e7502d42156093a98823b684fe9f
+[JMRI.4.15.8+R6d09260.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.8/JMRI.4.15.8+R6d09260.tgz) | 3f1cfc9e693c1bcc63dff7f68c81e702145ce75683e93a91b444095e1c9d66ec
 
 ```
 
@@ -456,7 +456,7 @@ git fetch
 git checkout master
 git pull
 git checkout -b temp-master
-git merge origin/release-4.13.6
+git merge origin/release-4.15.8
 ```
 
 Note that you're testing the merge of the release branch back onto master.  This should report "Already up-to-date.", i.e. no changes, with the possible exception of some auto-generated files:

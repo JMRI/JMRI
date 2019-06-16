@@ -94,12 +94,13 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];
             // check head exists
-            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(parts[i])==null) {
-                log.warn("Attempting to create Mast from non-existant signal head {}", parts[i]);
+            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name) == null) {
+                log.warn("Attempting to create Mast from non-existant signal head {}", name);
+                continue;
             }
             NamedBeanHandle<SignalHead> s
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(parts[i],
+                                .getNamedBeanHandle(name,
                             InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name));
             heads.add(s);
         }
@@ -198,15 +199,18 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
             if (!error) {
                 SignalHead head = heads.get(i).getBean();
-                int toSet = map.getAspectSettings(aspect)[i];
-                if (delay == 0) {
-                    head.setAppearance(toSet);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Setting " + head.getSystemName() + " to "
-                                + head.getAppearanceName(toSet));
+                int[] dsam = map.getAspectSettings(aspect);
+                if (i < dsam.length) {
+                    int toSet = dsam[i];
+                    if (delay == 0) {
+                        head.setAppearance(toSet);
+                        log.debug("Setting {} to {}", head.getSystemName(), 
+                                head.getAppearanceName(toSet));
+                    } else {
+                        delayedSet.put(head, toSet);
                     }
                 } else {
-                    delayedSet.put(head, toSet);
+                    log.error("     head '{}' appearance not set for aspect '{}'", head.getSystemName(), aspect);                    
                 }
             } else {
                 log.error("     head appearance not set due to above error");

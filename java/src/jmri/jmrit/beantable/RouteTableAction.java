@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a Route Table.
  *
- * Based in part on SignalHeadTableAction.java by Bob Jacobsen
+ * Based in part on {@link SignalHeadTableAction} by Bob Jacobsen
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007
@@ -91,22 +91,22 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         // late initialization of string "constants" so that TurnoutManager
         // has time to be fully configured
-        SET_TO_CLOSED = Bundle.getMessage("Set") + " "
-                + InstanceManager.turnoutManagerInstance().getClosedText();
-        SET_TO_THROWN = Bundle.getMessage("Set") + " "
-                + InstanceManager.turnoutManagerInstance().getThrownText();
-        turnoutInputModes = new String[]{
+        RouteTableAction.setClosedString(Bundle.getMessage("Set") + " "
+                + InstanceManager.turnoutManagerInstance().getClosedText());
+        RouteTableAction.setThrownString(Bundle.getMessage("Set") + " "
+                + InstanceManager.turnoutManagerInstance().getThrownText());
+        RouteTableAction.setTurnoutInputModes(new String[]{
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
             Bundle.getMessage("OnConditionChange"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
-        };
-        lockTurnoutInputModes = new String[]{
+        });
+        RouteTableAction.setLockTurnoutModes(new String[]{
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
             Bundle.getMessage("OnConditionChange")
-        };
+        });
 
         m = new BeanTableDataModel<Route>() {
             static public final int ENABLECOL = NUMCOLUMN;
@@ -124,7 +124,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                     return "";  // no heading on "Set"
                 }
                 if (col == SETCOL) {
-                    return "";    // no heading on "Edit"
+                    return "";  // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
                     return Bundle.getMessage("ColumnHeadEnabled");
@@ -570,7 +570,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
-            ROW_HEIGHT = routeTurnoutTable.getRowHeight();
+            RouteTableAction.setRowHeight(routeTurnoutTable.getRowHeight());
             JComboBox<String> stateTCombo = new JComboBox<>();
             stateTCombo.addItem(SET_TO_CLOSED);
             stateTCombo.addItem(SET_TO_THROWN);
@@ -958,7 +958,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * Check name and return a new or existing Route object with the name
      * as entered in the _systemName field on the addFrame pane.
      *
-     * @return The new/updated Route object
+     * @return the new/updated Route object
      */
     Route checkNamesOK() {
         // Get system name and user name
@@ -2116,13 +2116,34 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         Bundle.getMessage("OnConditionChange")
     };
 
+    // safe methods to set tho above 4 static field values
     private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
         Route.VETOCLOSED, Route.VETOTHROWN};
+
+    private static void setClosedString(@Nonnull String newVal) {
+        SET_TO_CLOSED = newVal;
+    }
+
+    private static void setThrownString(@Nonnull String newVal) {
+        SET_TO_THROWN = newVal;
+    }
+
+    private static void setTurnoutInputModes(@Nonnull String[] newArray) {
+        turnoutInputModes = newArray;
+    }
+
+    private static void setLockTurnoutModes(@Nonnull String[] newArray) {
+        lockTurnoutInputModes = newArray;
+    }
+
+    private synchronized static void setRowHeight(int newVal) {
+        ROW_HEIGHT = newVal;
+    }
 
     private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList<RouteTurnout> _includedTurnoutList;
 
-    private ArrayList<RouteSensor> _sensorList;        // array of all Sensorsy
+    private ArrayList<RouteSensor> _sensorList;        // array of all Sensors
     private ArrayList<RouteSensor> _includedSensorList;
 
     private abstract class RouteElement {

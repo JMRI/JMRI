@@ -1,6 +1,5 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -74,7 +74,7 @@ public class ActivateTrainFrame {
     private Transit selectedTransit = null;
     //private String selectedTrain = "";
     private JmriJFrame initiateFrame = null;
-    private Container initiatePane = null;
+    private JPanel initiatePane = null;
     private final JComboBox<String> transitSelectBox = new JComboBox<>();
     private final List<Transit> transitBoxList = new ArrayList<>();
     private final JLabel trainBoxLabel = new JLabel("     " + Bundle.getMessage("TrainBoxLabel") + ":");
@@ -190,8 +190,10 @@ public class ActivateTrainFrame {
         if (initiateFrame == null) {
             initiateFrame = new JmriJFrame(Bundle.getMessage("AddTrainTitle"), false, true);
             initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
-            initiatePane = initiateFrame.getContentPane();
-            initiatePane.setLayout(new BoxLayout(initiateFrame.getContentPane(), BoxLayout.Y_AXIS));
+            
+            initiatePane = new JPanel();
+            initiatePane.setLayout(new BoxLayout(initiatePane, BoxLayout.Y_AXIS));
+            
             // add buttons to load and save train information
             JPanel p0 = new JPanel();
             p0.setLayout(new FlowLayout());
@@ -219,8 +221,7 @@ public class ActivateTrainFrame {
                 }
             });
             deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonHint"));
-            initiatePane.add(p0);
-            initiatePane.add(new JSeparator());
+
             // add items relating to both manually run and automatic trains.
             JPanel p1 = new JPanel();
             p1.setLayout(new FlowLayout());
@@ -427,7 +428,7 @@ public class ActivateTrainFrame {
             initiatePane.add(p5);
 
             initializeAutoRunItems();
-            initiatePane.add(new JSeparator());
+
             JPanel p7 = new JPanel();
             p7.setLayout(new FlowLayout());
             JButton cancelButton = null;
@@ -447,7 +448,15 @@ public class ActivateTrainFrame {
                 }
             });
             addNewTrainButton.setToolTipText(Bundle.getMessage("AddNewTrainButtonHint"));
-            initiatePane.add(p7);
+            
+            JPanel mainPane = new JPanel();
+            mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
+            JScrollPane scrPane = new JScrollPane(initiatePane);
+            mainPane.add(p0);
+            mainPane.add(scrPane);
+            mainPane.add(p7);
+            initiateFrame.setContentPane(mainPane);
+            
         }
         if (_TrainsFromRoster || _TrainsFromTrains) {
             trainBoxLabel.setVisible(true);

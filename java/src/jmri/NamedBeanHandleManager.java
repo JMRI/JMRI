@@ -84,8 +84,8 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     public <T extends NamedBean> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
-         Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name
+         Although when we get a new bean we always return the first one that exists,
+         when a rename is performed it doesn't delete the bean with the old name;
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
