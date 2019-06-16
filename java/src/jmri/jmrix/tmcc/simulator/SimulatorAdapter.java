@@ -176,7 +176,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

@@ -60,7 +60,7 @@ public class Port extends AbstractSerialPortController {
     } // is hidden from user in connection config UI
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{};
     }
 

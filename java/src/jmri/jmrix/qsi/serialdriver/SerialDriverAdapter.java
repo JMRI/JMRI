@@ -160,7 +160,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{19200};
     }
 

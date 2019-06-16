@@ -207,7 +207,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

@@ -180,7 +180,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

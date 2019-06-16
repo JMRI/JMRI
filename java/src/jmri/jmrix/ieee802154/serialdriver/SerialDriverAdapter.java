@@ -171,7 +171,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

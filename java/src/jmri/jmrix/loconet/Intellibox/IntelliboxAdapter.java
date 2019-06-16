@@ -60,7 +60,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
      * Get an array of valid baud rates as integers.
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

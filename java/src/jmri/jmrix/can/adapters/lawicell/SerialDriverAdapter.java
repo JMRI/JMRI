@@ -170,7 +170,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
      * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return validBaudValues();
     }
 

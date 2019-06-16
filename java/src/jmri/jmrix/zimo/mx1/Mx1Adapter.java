@@ -191,7 +191,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

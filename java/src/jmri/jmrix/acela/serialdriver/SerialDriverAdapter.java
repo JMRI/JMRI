@@ -152,8 +152,8 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
      * Return array of valid baud rates as integers.
      */
     @Override
-    public int[] validBaudNumber() {
-    // Really just want 9600 Baud for Acela
+    public int[] validBaudNumbers() {
+    // Only 9600 Baud for Acela
         return new int[]{9600};
     }
 

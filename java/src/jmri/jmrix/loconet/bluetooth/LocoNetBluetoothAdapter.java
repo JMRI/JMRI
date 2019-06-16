@@ -239,7 +239,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

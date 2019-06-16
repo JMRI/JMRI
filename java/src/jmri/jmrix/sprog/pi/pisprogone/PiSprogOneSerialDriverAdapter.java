@@ -34,7 +34,7 @@ public class PiSprogOneSerialDriverAdapter
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{115200};
     }
 

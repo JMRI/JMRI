@@ -256,7 +256,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

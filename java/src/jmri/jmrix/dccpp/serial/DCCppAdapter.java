@@ -194,7 +194,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

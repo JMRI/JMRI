@@ -164,7 +164,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{9600};
     }
 

@@ -178,7 +178,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{19200};
     }
 
