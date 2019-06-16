@@ -192,6 +192,11 @@ public class QsiTrafficControllerTest {
             return null;
         }
 
+        @Override
+        public int[] validBaudNumber() {
+            return null;
+        }
+
         protected QsiPortControllerScaffold() throws Exception {
             super(new QsiSystemConnectionMemo());
             PipedInputStream tempPipe;

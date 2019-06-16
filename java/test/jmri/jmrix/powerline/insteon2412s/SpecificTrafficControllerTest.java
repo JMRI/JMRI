@@ -213,6 +213,11 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             return null;
         }
 
+        @Override
+        public int[] validBaudNumber() {
+            return null;
+        }
+
         protected SerialPortControllerScaffold() throws Exception {
             super(null);
             PipedInputStream tempPipe;

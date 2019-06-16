@@ -133,6 +133,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             return null;
         }
 
+        @Override
+        public int[] validBaudNumber() {
+            return null;
+        }
+
         protected SerialPortControllerScaffold() throws Exception {
             super(null);
             PipedInputStream tempPipe;
