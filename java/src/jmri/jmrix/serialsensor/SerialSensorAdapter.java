@@ -185,7 +185,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{9600};
     }
 

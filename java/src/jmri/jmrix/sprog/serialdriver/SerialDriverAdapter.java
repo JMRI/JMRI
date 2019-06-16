@@ -197,7 +197,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{9600};
     }
 

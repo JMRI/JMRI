@@ -181,7 +181,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{16600};
     }
 

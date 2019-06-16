@@ -110,7 +110,7 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

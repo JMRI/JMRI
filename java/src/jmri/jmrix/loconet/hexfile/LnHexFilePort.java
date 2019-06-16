@@ -246,7 +246,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

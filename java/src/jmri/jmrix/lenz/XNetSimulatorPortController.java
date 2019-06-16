@@ -97,7 +97,7 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

@@ -175,7 +175,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{115200};
     }
 

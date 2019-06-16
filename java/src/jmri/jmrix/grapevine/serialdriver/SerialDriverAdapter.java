@@ -193,7 +193,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

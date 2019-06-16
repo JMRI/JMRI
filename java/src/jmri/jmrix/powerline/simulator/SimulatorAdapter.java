@@ -115,7 +115,7 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

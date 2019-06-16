@@ -153,7 +153,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
      * Return array of valid baud rates as integers.
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{38400};
     }
 

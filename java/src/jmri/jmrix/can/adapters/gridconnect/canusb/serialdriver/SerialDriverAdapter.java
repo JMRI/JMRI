@@ -34,7 +34,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
      * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return validBaudValues();
     }
 

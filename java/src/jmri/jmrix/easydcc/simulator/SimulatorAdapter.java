@@ -172,7 +172,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

@@ -71,7 +71,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
      * @return list of value baud rates
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

@@ -339,7 +339,7 @@ public class GcSerialDriverAdapter extends GcPortController {
      * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return validBaudValues();
     }
 

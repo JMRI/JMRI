@@ -191,7 +191,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

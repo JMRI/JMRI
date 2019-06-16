@@ -177,7 +177,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
      * Return array of valid baud rates as integers.
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{9600};
     }
 

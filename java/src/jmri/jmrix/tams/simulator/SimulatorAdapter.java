@@ -114,7 +114,7 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

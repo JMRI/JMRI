@@ -177,7 +177,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

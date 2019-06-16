@@ -150,7 +150,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         int baudNum;
         int index = 0;
         String[] rates = validBaudRates();
-        int[] numbers = validBaudNumber(); // TODO refactor method name to validBaudNumbers() - multiple values
+        int[] numbers = validBaudNumbers();
         if (numbers == null) { // simulators return null
             mBaudRate = null;
             log.warn("no serial port speed values received, OK for simulator");
@@ -210,8 +210,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public void configureBaudIndex(int index) {
         int baud = 0; // represents "(none)"
-        if (validBaudNumber() != null) {
-            for (int i = 0; i < validBaudNumber().length; i++) {
+        if (validBaudNumbers() != null) {
+            for (int i = 0; i < validBaudNumbers().length; i++) {
                 if (validBaudRates()[i].equals(mBaudRate)) {
                     mBaudRate = validBaudRates()[i];
                     break;
@@ -238,7 +238,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public String getCurrentBaudNumber() {
         if (mBaudRate != null) {
-            int[] numbers = validBaudNumber(); // TODO refactor to validBaudNumbers() - multiple
+            int[] numbers = validBaudNumbers();
             String[] rates = validBaudRates();
             String baudNumString = "";
             // find the configured baud rate value
@@ -275,7 +275,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "null signal incorrect implementation of portcontroller")
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         log.error("default validBaudNumber implementation should not be used", new Exception());
         return null;
     }
@@ -290,7 +290,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
-        int[] numbers = validBaudNumber();
+        int[] numbers = validBaudNumbers();
 
         // return if arrays invalid
         if (numbers == null) {

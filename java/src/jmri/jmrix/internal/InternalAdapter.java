@@ -54,7 +54,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 

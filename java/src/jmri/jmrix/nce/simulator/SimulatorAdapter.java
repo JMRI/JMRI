@@ -220,7 +220,7 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return null;
     }
 
