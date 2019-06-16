@@ -61,7 +61,7 @@ public class Port extends AbstractSerialPortController {
 
     @Override
     public int[] validBaudNumbers() {
-        return new int[]{};
+        return new int[]{0}; // array length must match that of validBaudRates
     }
 
     @Override

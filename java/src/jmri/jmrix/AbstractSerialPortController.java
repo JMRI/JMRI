@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.util.Enumeration;
 import java.util.Vector;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -151,12 +152,12 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         int index = 0;
         String[] rates = validBaudRates();
         int[] numbers = validBaudNumbers();
-        if (numbers == null) { // simulators return null
+        if (numbers == null || numbers.length == 0) { // simulators return null TODO for SpotBugs make that into an empty array
             mBaudRate = null;
-            log.warn("no serial port speed values received, OK for simulator");
+            log.debug("no serial port speed values received (OK for simulator)");
             return;
         }
-        if (numbers.length < 1 || (numbers.length != rates.length)) {
+        if (numbers.length != rates.length) {
             mBaudRate = null;
             log.error("arrays wrong length in currentBaudNumber: {}, {}", numbers.length, rates.length);
             return;
@@ -169,27 +170,27 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             // since 4.16 first try to convert loaded value directly to integer
             baudNum = Integer.parseInt(indexString); // new storage format, will throw ex on old format
-            log.debug("new format baud value");
+            log.debug("new profile format port speed value");
         } catch (NumberFormatException ex) {
             // old pre 4.15.8 format is i18n string including thousand separator and whatever suffix like "18,600 bps"
-            log.warn("old format configuration file converted");
+            log.warn("old profile format port speed value converted");
             // filter only numerical characters from indexString
-            String baudNumber = "";
+            StringBuilder baudNumber = new StringBuilder();
             for (int n = 0; n < indexString.length(); n++) {
                 if (Character.isDigit(indexString.charAt(n))) {
-                    baudNumber = baudNumber + indexString.charAt(n);
+                    baudNumber.append(indexString.charAt(n));
                 } else if (indexString.charAt(n) == ' ') {
                     break; // break on first space char encountered
                 }
             }
-            if (baudNumber.equals("")) { // no number found in indexString e.g. "(automatic)"
+            if (baudNumber.toString().equals("")) { // no number found in indexString e.g. "(automatic)"
                 baudNum = 0;
             } else {
                 try {
-                    baudNum = Integer.parseInt((baudNumber));
+                    baudNum = Integer.parseInt(baudNumber.toString());
                 } catch (NumberFormatException e2) {
                     mBaudRate = null; // represents "(none)"
-                    log.error("error in filtering old format port speed");
+                    log.error("error in filtering old profile format port speed value");
                     return;
                 }
                 log.debug("old format baud number: {}", indexString);
@@ -210,7 +211,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public void configureBaudIndex(int index) {
         int baud = 0; // represents "(none)"
-        if (validBaudNumbers() != null) {
+        if ((validBaudNumbers() != null) && (validBaudNumbers().length > 0)) {
             for (int i = 0; i < validBaudNumbers().length; i++) {
                 if (validBaudRates()[i].equals(mBaudRate)) {
                     mBaudRate = validBaudRates()[i];
@@ -281,9 +282,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Convert a baud rate I18N String to a int number, e.g. "9,600 baud" to 9600.
+     * Convert a baud rate I18N String to an int number, e.g. "9,600 baud" to 9600.
      * <p>
-     * Uses the validBaudNumber and validBaudRates methods to do this.
+     * Uses the validBaudNumbers() and validBaudRates() methods to do this.
      *
      * @param currentBaudRate a rate from validBaudRates
      * @return -1 if no match (configuration system should prevent this)
