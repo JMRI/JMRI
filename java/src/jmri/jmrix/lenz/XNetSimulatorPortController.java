@@ -2,6 +2,7 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Arrays;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
@@ -92,6 +93,11 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
      */
     @Override
     public String[] validBaudRates() {
+        return null;
+    }
+
+    @Override
+    public int[] validBaudNumber() {
         return null;
     }
 

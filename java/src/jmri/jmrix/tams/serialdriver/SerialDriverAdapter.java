@@ -157,6 +157,11 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200")};

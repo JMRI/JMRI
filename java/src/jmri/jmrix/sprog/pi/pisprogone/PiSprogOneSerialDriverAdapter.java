@@ -5,6 +5,8 @@ import jmri.jmrix.sprog.update.SprogType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <p>
@@ -29,6 +31,11 @@ public class PiSprogOneSerialDriverAdapter
     @Override
     public String[] validBaudRates() {
         return new String[]{"115,200 bps"};
+    }
+
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{115200};
     }
 
     /**

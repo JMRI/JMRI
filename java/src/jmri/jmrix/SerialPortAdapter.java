@@ -54,6 +54,11 @@ public interface SerialPortAdapter extends PortAdapter {
     public String[] validBaudRates();
 
     /**
+     * Get an array of valid baud rates; used to display valid options.
+     */
+    public int[] validBaudNumber();
+
+    /**
      * Set the baud rate. Only to be used after construction, but before the
      * openPort call.
      */

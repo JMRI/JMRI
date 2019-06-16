@@ -3,6 +3,8 @@ package jmri.jmrix.internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 /**
  * Provides a dummy Adapter to allow the system connection memo and multiple
  * Internal managers to be handled.
@@ -48,6 +50,11 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
+        return null;
+    }
+
+    @Override
+    public int[] validBaudNumber() {
         return null;
     }
 

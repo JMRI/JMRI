@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
@@ -159,6 +161,11 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
+    }
+
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{9600};
     }
 
     private boolean opened = false;

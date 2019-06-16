@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -177,6 +178,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     @Override
     public String[] validBaudRates() {
         return new String[]{"fixed at 16600 baud"};
+    }
+
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{16600};
     }
 
     /**

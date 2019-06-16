@@ -202,6 +202,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     }
 
     @Override
+    public int[] validBaudNumber() {
+        return null;
+    }
+
+    @Override
     public String getCurrentPortName(){
         return "";
     }

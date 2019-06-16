@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
@@ -155,6 +157,11 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     @Override
     public String[] validBaudRates() {
         return new String[]{"19,200 bps"};
+    }
+
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{19200};
     }
 
     private boolean opened = false;

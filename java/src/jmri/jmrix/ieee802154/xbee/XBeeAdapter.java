@@ -207,6 +207,11 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     }
 
     @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    @Override
     public XBeeConnectionMemo getSystemConnectionMemo() {
         jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = super.getSystemConnectionMemo();
         if (m instanceof XBeeConnectionMemo ) {

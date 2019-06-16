@@ -174,6 +174,11 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         return new String[]{"115,200 bps"};
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{115200};
+    }
+
     InputStream serialStream = null;
 
     /**

@@ -173,6 +173,14 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         return new String[]{"9,600 bps"};
     }
 
+    /**
+     * Return array of valid baud rates as integers.
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{9600};
+    }
+
     private boolean opened = false;
     InputStream serialStream = null;
 

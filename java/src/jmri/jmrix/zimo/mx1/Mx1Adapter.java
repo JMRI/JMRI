@@ -190,6 +190,11 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
             Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud4800"),
             Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),

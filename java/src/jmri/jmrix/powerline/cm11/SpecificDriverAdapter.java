@@ -130,6 +130,11 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     // base class methods for the SerialPortController interface
     @Override
     public DataInputStream getInputStream() {

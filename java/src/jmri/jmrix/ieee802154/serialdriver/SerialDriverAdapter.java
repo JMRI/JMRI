@@ -170,6 +170,11 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     /**
      * Set the baud rate.
      */

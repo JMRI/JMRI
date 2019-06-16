@@ -147,39 +147,63 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     @Override
     public void configureBaudNumber(String indexString) {
+        int baudNum;
         int index = 0;
         String[] rates = validBaudRates();
+        int[] numbers = validBaudNumber(); // TODO refactor method name to validBaudNumbers() - multiple values
+        if (numbers == null) { // simulators return null
+            mBaudRate = null;
+            log.warn("no serial port speed values received, OK for simulator");
+            return;
+        }
+        if (numbers.length < 1 || (numbers.length != rates.length)) {
+            mBaudRate = null;
+            log.error("arrays wrong length in currentBaudNumber: {}, {}", numbers.length, rates.length);
+            return;
+        }
         if (indexString.isEmpty()) {
             mBaudRate = null; // represents "(none)"
             log.debug("empty baud rate received");
             return;
         }
         try {
-            // since 4.16 try to convert directly to integer
-            int baudNum = Integer.parseInt((indexString)); // new storage format
-            int[] numbers = validBaudNumber(); // TODO refactor method name to validBaudNumbers() - multiple
-            for (int i = 0; i < numbers.length; i++) {
-                if (numbers[i] == baudNum) {
-                    index = i;
-                    log.debug("found new format baud value at index {}", i);
-                    break;
-                }
-            }
-            mBaudRate = validBaudRates()[index];
-        } catch (NumberFormatException e) {
+            // since 4.16 first try to convert loaded value directly to integer
+            baudNum = Integer.parseInt(indexString); // new storage format, will throw ex on old format
+            log.debug("new format baud value");
+        } catch (NumberFormatException ex) {
             // old pre 4.15.8 format is i18n string including thousand separator and whatever suffix like "18,600 bps"
             log.warn("old format configuration file converted");
             // filter only numerical characters from indexString
+            String baudNumber = "";
             for (int n = 0; n < indexString.length(); n++) {
                 if (Character.isDigit(indexString.charAt(n))) {
-                    indexString = indexString + indexString.charAt(n);
-                    log.debug("old format baud number: {}", indexString);
+                    baudNumber = baudNumber + indexString.charAt(n);
+                } else if (indexString.charAt(n) == ' ') {
+                    break; // break on first space char encountered
                 }
             }
-            index = Integer.parseInt((indexString));
+            if (baudNumber.equals("")) { // no number found in indexString e.g. "(automatic)"
+                baudNum = 0;
+            } else {
+                try {
+                    baudNum = Integer.parseInt((baudNumber));
+                } catch (NumberFormatException e2) {
+                    mBaudRate = null; // represents "(none)"
+                    log.error("error in filtering old format port speed");
+                    return;
+                }
+                log.debug("old format baud number: {}", indexString);
+            }
         }
         // fetch baud rate description from ValidBaudRates[] array copy and set
-        mBaudRate = rates[index];
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] == baudNum) {
+                index = i;
+                log.debug("found new format baud value at index {}", i);
+                break;
+            }
+        }
+        mBaudRate = validBaudRates()[index];
         log.debug("mBaudRate set to: {}", mBaudRate);
     }
 
@@ -278,7 +302,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return -1;
         }
         if (numbers.length < 1 || (numbers.length != rates.length)) {
-            log.error("arrays wrong length in currentBaudNumber: " + numbers.length + "," + rates.length);
+            log.error("arrays wrong length in currentBaudNumber: {}, {}", numbers.length, rates.length);
             return -1;
         }
 
