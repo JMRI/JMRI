@@ -233,8 +233,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
         if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null) ||
                 (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) &&
-                        e
-                                .getNewValue() == null) ||
+                        e.getNewValue() == null) ||
                 e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
             // remove car from list
