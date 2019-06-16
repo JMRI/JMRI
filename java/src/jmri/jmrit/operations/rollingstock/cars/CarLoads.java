@@ -430,9 +430,9 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String key = en.nextElement();
                 List<CarLoad> loads = listCarLoads.get(key);
                 for (CarLoad load : loads) {
-                    if (load.getName().length() > maxNameLength) {
-                        maxName = load.getName();
-                        maxNameLength = load.getName().length();
+                    if (load.getName().split("-")[0].length() > maxNameLength) {
+                        maxName = load.getName().split("-")[0];
+                        maxNameLength = load.getName().split("-")[0].length();
                     }
                 }
             }
