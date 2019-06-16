@@ -22,6 +22,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017, 2019
  * @author Bob Jacobsen Copyright (C) 2017
  */
+@Ignore("Replaced with a Cucumber test")
 public class DispatcherProTest extends apps.LaunchJmriAppBase {
 
     protected void launch(String[] args) {
