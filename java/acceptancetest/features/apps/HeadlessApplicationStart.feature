@@ -6,7 +6,7 @@ Scenario Outline: Application Start
    When starting application <application> with <name> 
    Then <infoline> is printed to the console
 
-   @JmriFacelessTest @Ignore
+   @JmriFacelessTest 
    Examples: Headless Tests
    | application | profile | name | infoline |
    | apps.JmriFaceless | java/test/apps/PanelPro/profiles/LocoNet_Simulator | JmriFaceless | JmriFaceless version |

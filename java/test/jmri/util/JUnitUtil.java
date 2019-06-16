@@ -957,6 +957,20 @@ public class JUnitUtil {
     }
 
     /*
+     * Use reflection to reset the apps.AppsBase instance
+     */
+    public static void resetAppsBase() {
+        try {
+            Class<?> c = apps.AppsBase.class;
+            java.lang.reflect.Field f = c.getDeclaredField("preInit");
+            f.setAccessible(true);
+            f.set(null, false);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset apps.AppsBase static preInit field", x);
+        }
+    }
+
+    /*
      * Use reflection to reset the jmri.util.node.NodeIdentity instance
      */
     public static void resetNodeIdentity() {

@@ -31,6 +31,7 @@ public class ApplicationTestAcceptanceSteps implements En {
       JUnitUtil.setUp();
       JUnitUtil.clearShutDownManager();
       JUnitUtil.resetApplication();
+      JUnitUtil.resetAppsBase();
    });
 
    Given("^I am using profile (.*)$", (String profile) -> {
@@ -82,6 +83,7 @@ public class ApplicationTestAcceptanceSteps implements En {
         System.clearProperty("jmri.prefsdir");
         System.clearProperty("org.jmri.profile");
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetAppsBase();
         JUnitUtil.tearDown();
     });
 
