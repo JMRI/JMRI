@@ -1,6 +1,5 @@
 package jmri.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,19 +8,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.swing.ComboBoxEditor;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
 
 import jmri.Manager;
 import jmri.NamedBean;
@@ -31,13 +34,13 @@ import jmri.util.ThreadingPropertyChangeListener;
 
 /**
  * A {@link javax.swing.JComboBox} for {@link jmri.NamedBean}s.
- * 
+ * <p>
  * Validation of user input to select a NamedBean is limited to setting the
  * selection to a NamedBean matching the typed input, and is always enabled
  * unless {@link #setEditable(boolean)} is called against this JComboBox with
  * {@code false}. API hooks exist for more complex validation, although they
  * currently do nothing.
- * 
+ * <p>
  * <strong>Note:</strong> It is recommended that implementations that exclude
  * some NamedBeans from the combo box call {@link #setToolTipText(String)} to
  * provide a context specific reason for excluding those items. The default tool
@@ -45,7 +48,7 @@ import jmri.util.ThreadingPropertyChangeListener;
  * context.", but a better tool tip (example for Signal Heads when creating a
  * Signal Mast) may be "Signal Heads not shown are assigned to another Signal
  * Mast."
- * 
+ *
  * @param <B> the supported type of NamedBean
  */
 public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
@@ -56,22 +59,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private boolean validatingInput = false;
     private final Set<B> excludedItems = new HashSet<>();
     private KeyAdapter keyListener = null;
-    private PropertyChangeListener managerListener = ThreadingPropertyChangeListener.guiListener(evt -> sort());
-    /**
-     * Color of successful validation. Note: do not rely on this not being moved
-     * or redefined.
-     */
-    public final static Color SUCCESS = new Color(0xBDECB6); // pastel green
-    /**
-     * Color of failed validation. Note: do not rely on this not being moved or
-     * redefined.
-     */
-    public final static Color FAILURE = new Color(0xFFC0C0); // pastel red
-    /**
-     * Color of warning in validation. Note: do not rely on this not being moved
-     * or redefined.
-     */
-    public final static Color WARNING = new Color(0xFDFD96); //pastel yellow
+    private final PropertyChangeListener managerListener = ThreadingPropertyChangeListener.guiListener(evt -> sort());
 
     /**
      * Create a ComboBox without a selection using the
@@ -89,7 +77,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param manager   the Manager backing the ComboBox
      * @param selection the NamedBean that is selected or null to specify no
-     *                      selection
+     *                  selection
      */
     public NamedBeanComboBox(Manager<B> manager, B selection) {
         this(manager, selection, DisplayOptions.DISPLAYNAME);
@@ -101,7 +89,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param manager      the Manager backing the ComboBox
      * @param selection    the NamedBean that is selected or null to specify no
-     *                         selection
+     *                     selection
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
@@ -109,7 +97,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
         setEditable(true);
-        setRenderer(new NamedBeanRenderer());
+        NamedBeanRenderer renderer = new NamedBeanRenderer();
+        setRenderer(renderer);
+        setKeySelectionManager(renderer);
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
         sort();
@@ -133,7 +123,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Is this JComboBox validating typed input?
-     * 
+     *
      * @return true if validating input; false otherwise
      */
     public boolean isValidatingInput() {
@@ -142,7 +132,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Set if this JComboBox validates typed input.
-     * 
+     *
      * @param validatingInput true to validate; false to prevent validation
      */
     public void setValidatingInput(boolean validatingInput) {
@@ -151,7 +141,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Is this JComboBox allowing a null object to be selected?
-     * 
+     *
      * @return true if allowing a null selection; false otherwise
      */
     public boolean isAllowNull() {
@@ -161,7 +151,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     /**
      * Set if this JComboBox allows a null object to be selected. If so, the
      * null object is placed first in the displayed list of NamedBeans.
-     * 
+     *
      * @param allowNull true if allowing a null selection; false otherwise
      */
     public void setAllowNull(boolean allowNull) {
@@ -170,7 +160,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return the selected item as the supported type of NamedBean or null if
      *         there is no selection, or {@link #isAllowNull()} is true and the
      *         null object is selected
@@ -185,7 +175,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         if (editable) {
             if (keyListener == null) {
                 keyListener = new KeyAdapter() {
-                
+
                     @Override
                     public void keyReleased(KeyEvent e) {
                         validateInput();
@@ -198,11 +188,12 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
             keyListener = null;
         }
         super.setEditable(editable);
+        ((JComponent) super.getEditor().getEditorComponent()).setInputVerifier(null);
     }
 
     /**
      * Get the display name of the selected item.
-     * 
+     *
      * @return the display name of the selected item or null if the selected
      *         item is null or there is no selection
      */
@@ -213,9 +204,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Get the system name of the selected item.
-     * 
-     * @return the system name of the selected item or null if the selected
-     *         item is null or there is no selection
+     *
+     * @return the system name of the selected item or null if the selected item
+     *         is null or there is no selection
      */
     public String getSelectedItemSystemName() {
         B item = getSelectedItem();
@@ -224,9 +215,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Get the user name of the selected item.
-     * 
-     * @return the user name of the selected item or null if the selected
-     *         item is null or there is no selection
+     *
+     * @return the user name of the selected item or null if the selected item
+     *         is null or there is no selection
      */
     public String getSelectedItemUserName() {
         B item = getSelectedItem();
@@ -235,11 +226,10 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Set the selected item by either its user name or system name.
-     * 
+     *
      * @param name the name of the item to select
      * @throws IllegalArgumentException if {@link #isAllowNull()} is false and
-     *                                      no bean exists by name or name is
-     *                                      null
+     *                                  no bean exists by name or name is null
      */
     public void setSelectedItemByName(String name) {
         B item = null;
@@ -262,7 +252,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         if (displayOptions == DisplayOptions.USERNAME || displayOptions == DisplayOptions.USERNAMESYSTEMNAME) {
             comparator = new NamedBeanUserNameComparator<>();
         }
-        TreeSet<B> set = new TreeSet<B>(comparator);
+        TreeSet<B> set = new TreeSet<>(comparator);
         set.addAll(manager.getNamedBeanSet());
         set.removeAll(excludedItems);
         Vector<B> vector = new Vector<>(set);
@@ -313,7 +303,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         //
         // following code maps enumsto int and int to enum
         //
-        private int value;
+        private final int value;
         private static final Map<Integer, DisplayOptions> enumMap;
 
         private DisplayOptions(int value) {
@@ -339,9 +329,18 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         }
     }
 
-    private class NamedBeanRenderer implements ListCellRenderer<B> {
+    private class NamedBeanRenderer implements ListCellRenderer<B>, JComboBox.KeySelectionManager {
 
         protected DefaultListCellRenderer renderer = new DefaultListCellRenderer();
+        private final long timeFactor;
+        private long lastTime;
+        private long time;
+        private String prefix = "";
+
+        public NamedBeanRenderer() {
+            Long l = (Long) UIManager.get("ComboBox.timeFactor");
+            timeFactor = l != null ? l : 1000;
+        }
 
         @Override
         public Component getListCellRendererComponent(JList<? extends B> list, B value, int index, boolean isSelected,
@@ -357,7 +356,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                         break;
                     case USERNAME:
                         String userName = value.getUserName();
-                        label.setText((userName != null && userName.isEmpty()) ? userName : value.getSystemName());
+                        label.setText((userName != null && !userName.isEmpty()) ? userName : value.getSystemName());
                         break;
                     case USERNAMESYSTEMNAME:
                         label.setText(value.getFullyFormattedDisplayName());
@@ -370,6 +369,79 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
             return label;
         }
 
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int selectionForKey(char key, ComboBoxModel<?> model) {
+            time = System.currentTimeMillis();
+
+            //  Get the index of the currently selected item
+            int size = model.getSize();
+            int startIndex = -1;
+            B selectedItem = (B) model.getSelectedItem();
+
+            if (selectedItem != null) {
+                for (int i = 0; i < size; i++) {
+                    if (selectedItem == model.getElementAt(i)) {
+                        startIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            //  Determine the "prefix" to be used when searching the model. The
+            //  prefix can be a single letter or multiple letters depending on how
+            //  fast the user has been typing and on which letter has been typed.
+            if (time - lastTime < timeFactor) {
+                if ((prefix.length() == 1) && (key == prefix.charAt(0))) {
+                    // Subsequent same key presses move the keyboard focus to the next
+                    // object that starts with the same letter.
+                    startIndex++;
+                } else {
+                    prefix += key;
+                }
+            } else {
+                startIndex++;
+                prefix = "" + key;
+            }
+
+            lastTime = time;
+
+            //  Search from the current selection and wrap when no match is found
+            if (startIndex < 0 || startIndex >= size) {
+                startIndex = 0;
+            }
+
+            int index = getNextMatch(prefix, startIndex, size, model);
+
+            if (index < 0) {
+                // wrap
+                index = getNextMatch(prefix, 0, startIndex, model);
+            }
+
+            return index;
+        }
+
+        /*
+	**  Find the index of the item in the model that starts with the prefix.
+         */
+        private int getNextMatch(String prefix, int start, int end, ComboBoxModel<?> model) {
+            for (int i = start; i < end; i++) {
+                B item = (B) model.getElementAt(i);
+
+                if (item != null) {
+                    String userName = item.getUserName();
+
+                    if (item.getSystemName().toLowerCase().startsWith(prefix)
+                            || (userName != null && userName.toLowerCase().startsWith(prefix))) {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
+        }
     }
 
     public Set<B> getExcludedItems() {
@@ -381,7 +453,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * should not be included in the combo box. This may be, for example, a list
      * of SignalHeads already in use, and therefor not available to be added to
      * a SignalMast.
-     * 
+     *
      * @param excludedItems items to be excluded from this combo box
      */
     public void setExcludedItems(Set<B> excludedItems) {

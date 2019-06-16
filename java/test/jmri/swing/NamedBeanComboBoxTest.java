@@ -210,12 +210,12 @@ public class NamedBeanComboBoxTest {
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.WARNING, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.WARNING, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         // test with no matching bean and isValidatingInput() == true
         t.setValidatingInput(true);
@@ -228,12 +228,12 @@ public class NamedBeanComboBoxTest {
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.FAILURE, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.FAILURE, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         // test with a matching bean and isValidatingInput() == false
         t.setValidatingInput(false);
@@ -247,12 +247,12 @@ public class NamedBeanComboBoxTest {
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.SUCCESS, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.WARNING, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         // test with no matching bean and isValidatingInput() == true
         t.setValidatingInput(true);
@@ -265,12 +265,12 @@ public class NamedBeanComboBoxTest {
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.SUCCESS, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(NamedBeanComboBox.FAILURE, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
     }
 
     @Test
