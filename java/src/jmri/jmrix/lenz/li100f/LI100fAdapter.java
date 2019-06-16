@@ -179,6 +179,11 @@ public class LI100fAdapter extends XNetSerialPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     /**
      * option1 controls flow control option.
      */

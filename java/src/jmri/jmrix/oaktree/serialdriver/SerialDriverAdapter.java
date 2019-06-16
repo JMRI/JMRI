@@ -181,6 +181,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     /**
      * Set the baud rate.
      */

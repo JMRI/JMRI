@@ -334,6 +334,15 @@ public class GcSerialDriverAdapter extends GcPortController {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800};
     }
 
+    /**
+     * Migration method
+     * TODO refactor validBaudValues() to validBaudNumber(s)
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return validBaudValues();
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

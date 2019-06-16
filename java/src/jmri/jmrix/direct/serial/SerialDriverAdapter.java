@@ -177,6 +177,11 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return new String[]{Bundle.getMessage("Baud19200")};
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{19200};
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialInStream = null;

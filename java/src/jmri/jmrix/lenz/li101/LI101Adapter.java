@@ -178,6 +178,11 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("LIBaud19200"), Bundle.getMessage("Baud38400"),
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{19200, 38400, 57600, 115200};

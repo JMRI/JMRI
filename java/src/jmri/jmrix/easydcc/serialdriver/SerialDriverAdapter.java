@@ -154,6 +154,14 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
         return new String[]{Bundle.getMessage("Baud9600")};
     }
 
+    /**
+     * Return array of valid baud rates as integers.
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{9600};
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

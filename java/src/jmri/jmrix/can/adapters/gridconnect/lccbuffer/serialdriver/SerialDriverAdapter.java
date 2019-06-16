@@ -29,4 +29,13 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
         return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800};
     }
 
+    /**
+     * Migration method
+     * TODO refactor validBaudValues() to validBaudNumber(s)
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return validBaudValues();
+    }
+
 }

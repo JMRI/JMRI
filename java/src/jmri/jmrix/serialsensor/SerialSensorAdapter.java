@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
 import jmri.InstanceManager;
@@ -181,6 +182,11 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
+    }
+
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{9600};
     }
 
     /**

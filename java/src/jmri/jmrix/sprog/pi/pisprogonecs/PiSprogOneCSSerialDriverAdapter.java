@@ -34,6 +34,11 @@ public class PiSprogOneCSSerialDriverAdapter
         return new String[]{"115,200 bps"};
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{115200};
+    }
+
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */

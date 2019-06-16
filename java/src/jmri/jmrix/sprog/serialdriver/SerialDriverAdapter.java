@@ -196,6 +196,11 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         return new String[]{"9,600 bps"};
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{9600};
+    }
+
     InputStream serialStream = null;
 
     /**

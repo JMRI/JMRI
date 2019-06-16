@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.powerline.SerialPortController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +111,11 @@ public class SimulatorAdapter extends SerialPortController implements
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
+        return null;
+    }
+
+    @Override
+    public int[] validBaudNumber() {
         return null;
     }
 

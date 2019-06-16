@@ -175,6 +175,11 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{57600};
 

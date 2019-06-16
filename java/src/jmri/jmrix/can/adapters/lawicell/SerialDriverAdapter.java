@@ -165,6 +165,15 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
+    /**
+     * Migration method
+     * TODO refactor validBaudValues() to validBaudNumber(s)
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return validBaudValues();
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud115200"), Bundle.getMessage("Baud230400"),
             Bundle.getMessage("Baud250000"), Bundle.getMessage("Baud333333"),

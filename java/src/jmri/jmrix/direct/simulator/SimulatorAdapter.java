@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import jmri.jmrix.direct.Message;
 import jmri.jmrix.direct.PortController; // no special xSimulatorController
@@ -174,6 +176,11 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
+        return null;
+    }
+
+    @Override
+    public int[] validBaudNumber() {
         return null;
     }
 

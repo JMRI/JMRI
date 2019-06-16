@@ -110,6 +110,11 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     @Override
+    public int[] validBaudNumber() {
+        return null;
+    }
+
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }

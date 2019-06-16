@@ -305,6 +305,11 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     /**
      * Set the baud rate.
      *

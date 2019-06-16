@@ -179,6 +179,11 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    @Override
+    public int[] validBaudNumber() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200")};
     protected int[] validSpeedValues = new int[]{19200};
 

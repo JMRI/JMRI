@@ -2,6 +2,8 @@ package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
+import java.util.Arrays;
+
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <p>
@@ -31,6 +33,11 @@ public class PiSprogNanoSerialDriverAdapter
     @Override
     public String[] validBaudRates() {
         return new String[]{"115,200 bps"};
+    }
+
+    @Override
+    public int[] validBaudNumber() {
+        return new int[]{115200};
     }
 
     /**

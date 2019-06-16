@@ -30,4 +30,13 @@ public class CanUsbDriverAdapter
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
 
+    /**
+     * Migration method
+     * TODO refactor validBaudValues() to validBaudNumber(s)
+     */
+    @Override
+    public int[] validBaudNumber() {
+        return validBaudValues();
+    }
+
 }
