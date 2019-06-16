@@ -96,7 +96,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager = manager;
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
-        setEditable(true);
+        setEditable(false);
         NamedBeanRenderer renderer = new NamedBeanRenderer();
         setRenderer(renderer);
         setKeySelectionManager(renderer);
@@ -373,6 +373,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
          * {@inheritDoc}
          */
         @Override
+        @SuppressWarnings("unchecked") // unchecked cast due to API constraints
         public int selectionForKey(char key, ComboBoxModel<?> model) {
             time = System.currentTimeMillis();
 
@@ -426,6 +427,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         /*
 	**  Find the index of the item in the model that starts with the prefix.
          */
+        @SuppressWarnings("unchecked") // unchecked cast due to API constraints
         private int getNextMatch(String prefix, int start, int end, ComboBoxModel<?> model) {
             for (int i = start; i < end; i++) {
                 B item = (B) model.getElementAt(i);
