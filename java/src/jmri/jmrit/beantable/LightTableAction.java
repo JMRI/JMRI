@@ -56,6 +56,7 @@ import jmri.implementation.LightControl;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
