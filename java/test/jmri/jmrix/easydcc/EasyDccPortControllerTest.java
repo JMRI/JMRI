@@ -45,6 +45,7 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
              * Open a specified port. The appname argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc

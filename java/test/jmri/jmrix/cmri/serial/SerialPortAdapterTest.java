@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the SerialPortAdapter class
- * <p>
+ * JUnit tests for the SerialPortAdapter class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -48,6 +47,7 @@ public class SerialPortAdapterTest extends jmri.jmrix.AbstractSerialPortControll
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
              * Open a specified port. The appname argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
