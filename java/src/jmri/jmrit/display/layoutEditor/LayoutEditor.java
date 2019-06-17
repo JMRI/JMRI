@@ -1975,7 +1975,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         log.debug("LE setupComboBox called");
 
         inComboBox.setEnabled(inEnable);
-        inComboBox.setEditable(true);
+        inComboBox.setEditable(false);
         inComboBox.setValidatingInput(inValidateMode);
         inComboBox.setSelectedIndex(-1);
 

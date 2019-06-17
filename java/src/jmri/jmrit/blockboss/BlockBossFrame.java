@@ -1133,7 +1133,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
         inComboBox.setEnabled(inEnable);
-        inComboBox.setEditable(true);
+        inComboBox.setEditable(false);
         inComboBox.setValidatingInput(inValidateMode);
         inComboBox.setSelectedItem(null);
         log.debug("SSL setupComboBox called");
