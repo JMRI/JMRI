@@ -154,7 +154,12 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return _status;
     }
 
-    /* currently Portals do not have an instance manager - !!!todo? */
+    @Override
+    public void remove() {
+        ((ControlPanelEditor)_editor).getCircuitBuilder().removeIcon(this);
+        super.remove();
+    }
+
     @Override
     public NamedBean getNamedBean() {
         return getPortal();

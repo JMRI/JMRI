@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,10 +26,8 @@ import jmri.jmrit.logix.Portal;
  * @author Pete Cressman Copyright: Copyright (c) 2013
  *
  */
-public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionListener, ListSelectionListener {
+public class EditPortalDirection extends EditFrame implements ActionListener, ListSelectionListener {
 
-    private final OBlock _homeBlock;
-    private final CircuitBuilder _parent;
     private PortalIcon _icon;
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
@@ -44,57 +40,8 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
     static Dimension _dim = null;
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
-        _homeBlock = block;
-        _parent = parent;
-        setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
-
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                closingEvent();
-            }
-        });
-        addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
-
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        javax.swing.border.Border padding = BorderFactory.createEmptyBorder(10, 5, 4, 5);
-        contentPane.setBorder(padding);
-
-        contentPane.add(new JScrollPane(makePortalPanel()));
-        setContentPane(contentPane);
-
+        super(title, parent, block);
         pack();
-        if (_loc.x < 0) {
-            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
-        } else {
-            setLocation(_loc);
-            setSize(_dim);
-        }
-        setVisible(true);
-    }
-
-    private JPanel makeDoneButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-
-        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent();
-            }
-        });
-        panel.add(doneButton);
-        buttonPanel.add(panel);
-
-        panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(buttonPanel);
-
-        return panel;
     }
 
     private JPanel makeArrowPanel() {
@@ -128,7 +75,8 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         return panel;
     }
 
-    private JPanel makePortalPanel() {
+    @Override
+    protected JPanel makeContentPanel() {
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
 
@@ -244,11 +192,8 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         }
     }
 
-    protected void closingEvent() {
-        _parent.closePortalDirection(_homeBlock);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
-        dispose();
+    protected void closingEvent(boolean close) {
+        closingEvent(close, null);
     }
 
     protected OBlock getHomeBlock() {

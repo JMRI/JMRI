@@ -39,76 +39,21 @@ import jmri.jmrit.picker.PickSinglePanel;
  * @author Pete Cressman Copyright: Copyright (c) 2019
  *
  */
-public class EditSignalFrame extends jmri.util.JmriJFrame implements ActionListener, ListSelectionListener {
+public class EditSignalFrame extends EditFrame implements ActionListener, ListSelectionListener {
 
-    private final OBlock _homeBlock;
-    private final CircuitBuilder _parent;
     private PortalIcon _icon;
 
-    private final JTextField _mastName = new JTextField();
+    private JTextField _mastName;
     private PortalList _portalList;
     OpenPickListButton<SignalMast> _pickTable;
 
-    static int STRUT_SIZE = 10;
-    static Point _loc = new Point(-1, -1);
-    static Dimension _dim = null;
-
     public EditSignalFrame(String title, CircuitBuilder parent, OBlock block) {
-        _homeBlock = block;
-        _parent = parent;
-        setTitle(java.text.MessageFormat.format(title, _homeBlock.getDisplayName()));
-
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                closingEvent(true);
-            }
-        });
-        addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
-
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        javax.swing.border.Border padding = BorderFactory.createEmptyBorder(10, 5, 4, 5);
-        contentPane.setBorder(padding);
-
-        contentPane.add(new JScrollPane(makeSignalPanel()));
-        
-        setContentPane(contentPane);
-
+        super(title, parent, block);
         pack();
-        if (_loc.x < 0) {
-            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
-        } else {
-            setLocation(_loc);
-            setSize(_dim);
-        }
-        setVisible(true);
     }
 
-    private JPanel makeDoneButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-
-        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-        doneButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                closingEvent(false);
-            }
-        });
-        panel.add(doneButton);
-        buttonPanel.add(panel);
-
-        panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(buttonPanel);
-
-        return panel;
-    }
-
-    private JPanel makeSignalPanel() {
+    @Override
+    protected JPanel makeContentPanel() {
         JPanel signalPanel = new JPanel();
         signalPanel.setLayout(new BoxLayout(signalPanel, BoxLayout.Y_AXIS));
 
@@ -136,6 +81,7 @@ public class EditSignalFrame extends jmri.util.JmriJFrame implements ActionListe
         signalPanel.add(panel);
 
         panel = new JPanel();
+        _mastName = new JTextField();
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _mastName, "mastName", true, null));
         _mastName.setPreferredSize(new Dimension(300, _mastName.getPreferredSize().height));
@@ -208,25 +154,7 @@ public class EditSignalFrame extends jmri.util.JmriJFrame implements ActionListe
         if (portals.size() == 0) {
             msg = Bundle.getMessage("needPortal", _homeBlock.getDisplayName());
         }
-        if (msg != null) {
-            if (close) {
-                JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                StringBuilder sb = new StringBuilder(msg);
-                sb.append(" ");
-                sb.append(Bundle.getMessage("exitQuestion"));
-                int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("makePortal"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (answer == JOptionPane.NO_OPTION) {
-                    return;
-                }
-            }
-        }
-        _pickTable.closePickList();
-        _parent.closeEditSignalFrame(_homeBlock);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
-        dispose();
+        closingEvent(close, msg);
     }
 
 
