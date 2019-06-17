@@ -60,13 +60,16 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
+     * {@inheritDoc}
      *
      * @return list of value baud rates
      */

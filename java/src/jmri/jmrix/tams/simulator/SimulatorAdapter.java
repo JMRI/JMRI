@@ -105,7 +105,7 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
@@ -113,6 +113,9 @@ public class SimulatorAdapter extends TamsPortController implements
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

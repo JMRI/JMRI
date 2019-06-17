@@ -54,11 +54,17 @@ public class Port extends AbstractSerialPortController {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return new String[]{"None"};
     } // is hidden from user in connection config UI
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return new int[]{0}; // array length must match that of validBaudRates

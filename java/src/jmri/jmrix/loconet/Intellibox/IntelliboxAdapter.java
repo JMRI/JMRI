@@ -51,13 +51,16 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
+     * {@inheritDoc}
      */
     @Override
     public int[] validBaudNumbers() {

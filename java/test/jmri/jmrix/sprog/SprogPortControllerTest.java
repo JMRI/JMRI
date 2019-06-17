@@ -46,7 +46,7 @@ public class SprogPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
             }
 
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override

@@ -45,7 +45,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
@@ -53,6 +53,9 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

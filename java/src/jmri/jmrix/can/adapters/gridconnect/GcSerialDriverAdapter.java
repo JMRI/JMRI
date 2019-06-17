@@ -316,9 +316,9 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     /**
-     * Get an array of valid baud rates in US English locale.
+     * {@inheritDoc}
      *
-     * @return valid baud rates in US English locale
+     * @return valid baud rates in US English locale TODO I18N using Bundle
      */
     @Override
     public String[] validBaudRates() {
@@ -335,8 +335,9 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Migration method
-     * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
     public int[] validBaudNumbers() {

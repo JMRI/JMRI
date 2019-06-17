@@ -138,7 +138,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return String[] containing the single valid baud rate, "57,600".
      */
@@ -148,8 +148,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
+     * {@inheritDoc}
      * @return int[] containing the single valid baud rate, 57600.
      */
     @Override

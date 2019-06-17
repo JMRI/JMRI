@@ -244,8 +244,8 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
             return null;
         }
 
-        @Override
-        public int[] validBaudNumber() {
+        //@Override
+        public int[] validBaudNumbers() {
             return null;
         }
 

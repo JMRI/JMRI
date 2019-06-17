@@ -161,7 +161,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
@@ -171,6 +171,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

@@ -166,7 +166,8 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     * Currently only 9,600 bps
      */
     @Override
     public String[] validBaudRates() {
@@ -174,7 +175,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
 
     /**
-     * Return array of valid baud rates as integers.
+     * {@inheritDoc}
      */
     @Override
     public int[] validBaudNumbers() {

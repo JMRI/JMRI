@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the MrcPortController class
- * <p>
+ * JUnit tests for the MrcPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -45,7 +44,7 @@ public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
             }
 
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override

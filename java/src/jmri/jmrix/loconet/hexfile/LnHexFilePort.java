@@ -239,12 +239,18 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         log.error("configure should not have been invoked");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         log.error("validBaudRates should not have been invoked", new Exception());
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

@@ -15,7 +15,7 @@ public class CanUsbDriverAdapter
         implements jmri.jmrix.SerialPortAdapter {
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
@@ -31,8 +31,9 @@ public class CanUsbDriverAdapter
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Migration method
-     * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
     public int[] validBaudNumbers() {

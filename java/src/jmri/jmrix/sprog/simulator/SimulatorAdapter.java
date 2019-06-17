@@ -186,7 +186,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
@@ -201,6 +201,9 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         return "";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

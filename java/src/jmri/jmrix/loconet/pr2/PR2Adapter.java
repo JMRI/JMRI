@@ -79,7 +79,7 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
@@ -87,8 +87,7 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
+     * {@inheritDoc}
      */
     @Override
     public int[] validBaudNumbers() {
