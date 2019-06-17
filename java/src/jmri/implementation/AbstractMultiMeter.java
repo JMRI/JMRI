@@ -16,6 +16,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
 
     protected float current_float = 0.0f;
     protected float voltage_float = 0.0f;
+    protected CurrentUnits currentUnits = CurrentUnits.CURRENT_UNITS_PERCENTAGE;
 
     //private boolean is_enabled = false;
     private UpdateTask intervalTask = null;
@@ -100,6 +101,11 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     @Override
     public float getCurrent() {
         return current_float;
+    }
+
+    // @Override
+    public CurrentUnits getCurrentUnits() {
+        return currentUnits;
     }
 
     @Override

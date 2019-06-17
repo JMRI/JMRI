@@ -189,13 +189,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         } else {
             sb.append("(rev)");
         }
-        //Only repack if the text size has increased.
-        if (status.getText().length() < sb.toString().length()) {
-            status.setText(sb.toString());
-            autoTrainsFrame.pack();
-        } else {
-            status.setText(sb.toString());
-        }
+        status.setText(sb.toString());
+        autoTrainsFrame.pack();
     }
 
     private void addThrottleListener(AutoActiveTrain aat) {

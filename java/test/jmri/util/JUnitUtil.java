@@ -222,8 +222,9 @@ public class JUnitUtil {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
             
-        // reset the UnexpectedMessageFlags so that errors from a 
-        // previous test doesn't interfere with the current test.
+        // clear the backlog and reset the UnexpectedMessageFlags so that 
+        // errors from a previous test do not interfere with the current test.
+        JUnitAppender.clearBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
 
 
@@ -907,6 +908,17 @@ public class JUnitUtil {
             sm.deregister(list.get(0));
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
+
+        // use reflection to reset static fields in the class.
+        try {
+            Class<?> c = jmri.managers.DefaultShutDownManager.class;
+            java.lang.reflect.Field f = c.getDeclaredField("shuttingDown");
+            f.setAccessible(true);
+            f.set(sm, false);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
+        }
+        
     }
 
     /**

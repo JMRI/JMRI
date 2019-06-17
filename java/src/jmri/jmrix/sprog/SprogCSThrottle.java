@@ -5,6 +5,9 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
  * Station connection.
@@ -20,6 +23,13 @@ public class SprogCSThrottle extends AbstractThrottle {
      */
     public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
+        
+        if (address instanceof DccLocoAddress) {
+            this.address = ((DccLocoAddress) address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",address);
+        }
 
         // cache settings.
         this.speedSetting = 0;
@@ -36,7 +46,6 @@ public class SprogCSThrottle extends AbstractThrottle {
         this.f10 = false;
         this.f11 = false;
         this.f12 = false;
-        this.address = ((DccLocoAddress) address);
         this.isForward = true;
 
         //@TODO - this needs a little work. Current implementation looks like it
@@ -170,5 +179,5 @@ public class SprogCSThrottle extends AbstractThrottle {
         commandStation.release(address);
         finishRecord();
     }
-
+    private final static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class);
 }

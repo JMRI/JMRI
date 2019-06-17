@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auxiliary-configuration xmlns="http://www.netbeans.org/ns/auxiliary-configuration/1">
+    <connections xmlns="http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd">
+        <connection xmlns="" class="jmri.jmrix.grapevine.simulator.configurexml.ConnectionConfigXml" disabled="no" manufacturer="ProTrak" port="(none)" speed="" systemPrefix="G" userName="Grapevine Simulator">
+            <options>
+                <option>
+                    <name>InitPreference</name>
+                    <value>First 4 per bank</value>
+                </option>
+            </options>
+            <node name="1">
+                <parameter name="nodetype">0</parameter>
+            </node>
+            <node name="2">
+                <parameter name="nodetype">0</parameter>
+            </node>
+        </connection>
+    </connections>
+    <startup xmlns="http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd">
+    </startup>
+</auxiliary-configuration>

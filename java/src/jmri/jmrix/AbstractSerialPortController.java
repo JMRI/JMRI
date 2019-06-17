@@ -164,6 +164,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * This method need not be reimplemented unless the subclass is using
      * currentBaudNumber, which requires it.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "null signal incorrect implementation of portcontroller")
     public int[] validBaudNumber() {
         log.error("default validBaudNumber implementation should not be used", new Exception());
         return null;

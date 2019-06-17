@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.util.Objects;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.*;
@@ -50,6 +51,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public Turnout getTurnout(@Nonnull String name) {
         Turnout result = getByUserName(name);
         if (result == null) {
