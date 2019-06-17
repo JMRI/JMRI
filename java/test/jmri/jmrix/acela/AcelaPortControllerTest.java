@@ -42,6 +42,7 @@ public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
              * Open a specified port. The appname argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
