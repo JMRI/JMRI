@@ -1,14 +1,15 @@
 package jmri.swing;
 
+import com.alexandriasoftware.swing.JInputValidatorPreferences;
+import com.alexandriasoftware.swing.NonVerifyingValidator;
+import com.alexandriasoftware.swing.Validation;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
+import javax.swing.text.JTextComponent;
 
 import jmri.Manager;
 import jmri.NamedBean;
@@ -57,8 +59,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private DisplayOptions displayOptions;
     private boolean allowNull = false;
     private boolean validatingInput = false;
+    private String beanInUse = "NamedBeanComboBoxBeanInUse";
+    private String noMatchingBean = "NamedBeanComboBoxNoMatchingBean";
     private final Set<B> excludedItems = new HashSet<>();
-    private KeyAdapter keyListener = null;
     private final PropertyChangeListener managerListener = ThreadingPropertyChangeListener.guiListener(evt -> sort());
 
     /**
@@ -172,23 +175,28 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     @Override
     public void setEditable(boolean editable) {
-        if (editable) {
-            if (keyListener == null) {
-                keyListener = new KeyAdapter() {
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                        validateInput();
+        Component ec = getEditor().getEditorComponent();
+        if (editable && ec instanceof JTextComponent) {
+            JTextComponent jtc = (JTextComponent) ec;
+            jtc.setInputVerifier(new NonVerifyingValidator(jtc) {
+                @Override
+                protected Validation getValidation(JComponent componenet, JInputValidatorPreferences preferences) {
+                    String text = jtc.getText();
+                    if (validatingInput && text != null && !text.isEmpty()) {
+                        B bean = manager.getNamedBean(text);
+                        if (bean != null && excludedItems.contains(bean)) {
+                            return new Validation(Validation.Type.DANGER, Bundle.getMessage(beanInUse, manager.getBeanTypeHandled(), bean.getFullyFormattedDisplayName()));
+                        } else if (bean == null) {
+                            return new Validation(Validation.Type.DANGER, Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
+                        }
                     }
-                };
-            }
-            getEditor().getEditorComponent().addKeyListener(keyListener);
+                    return new Validation(Validation.Type.NONE, ""); // NOI18N
+                }
+            });
         } else {
-            getEditor().getEditorComponent().removeKeyListener(keyListener);
-            keyListener = null;
+            ((JComponent) super.getEditor().getEditorComponent()).setInputVerifier(null);
         }
         super.setEditable(editable);
-        ((JComponent) super.getEditor().getEditorComponent()).setInputVerifier(null);
     }
 
     /**
@@ -273,6 +281,34 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 setSelectedItem(item);
             }
         }
+    }
+
+    /**
+     * Set the translation key to be used when a typed in bean name matches a
+     * named bean has been included in a call to
+     * {@link #setExcludedItems(java.util.Set)} and {@link #isValidatingInput()}
+     * is {@code true}.
+     *
+     * @param beanInUseKey a translatable bundle key where {@code {0}} is the
+     *                     result of {@link jmri.Manager#getBeanTypeHandled()}
+     *                     and {1} is the result of
+     *                     {@link jmri.NamedBean#getFullyFormattedDisplayName()}
+     *                     for the matching bean
+     */
+    public void setNoMatchingToolTipBeanInUse(String beanInUseKey) {
+        beanInUse = beanInUseKey;
+    }
+
+    /**
+     * Set the translation key to be used when a typed in bean name does not
+     * match a named bean and {@link #isValidatingInput()} is {@code true}.
+     *
+     * @param noMatchingBeanKey a translatable bundle key where {@code {0}} is the
+     *                     result of {@link jmri.Manager#getBeanTypeHandled()}
+     *                     and {1} is the typed input
+     */
+    public void setNoMatchingToolTipNoMatchingBean(String noMatchingBeanKey) {
+        noMatchingBean = noMatchingBeanKey;
     }
 
     public enum DisplayOptions {
