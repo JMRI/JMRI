@@ -1,21 +1,23 @@
 package jmri.swing;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.SystemColor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import javax.swing.JList;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextField;
+
+import com.alexandriasoftware.swing.JInputValidator;
+import com.alexandriasoftware.swing.Validation;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.InstanceManager;
@@ -96,13 +98,13 @@ public class NamedBeanComboBoxTest {
         Assert.assertEquals(4, t.getItemCount());
         Assert.assertEquals(s2, t.getSelectedItem());
 
-        t.setExcludedItems(new HashSet<Sensor>(Arrays.asList(new Sensor[]{s4})));
+        t.setExcludedItems(new HashSet<>(Arrays.asList(new Sensor[]{s4})));
         Assert.assertNotNull(t.getExcludedItems());
 
         Assert.assertEquals(3, t.getItemCount());
         Assert.assertEquals(s2, t.getSelectedItem());
 
-        t.setExcludedItems(new HashSet<Sensor>(Arrays.asList(new Sensor[]{s2, s4})));
+        t.setExcludedItems(new HashSet<>(Arrays.asList(new Sensor[]{s2, s4})));
 
         Assert.assertEquals(2, t.getItemCount());
         Assert.assertTrue(!s2.equals(t.getSelectedItem())); // just has to change, don't care what to
@@ -186,7 +188,6 @@ public class NamedBeanComboBoxTest {
     }
 
     @Test
-    @Ignore("background color validation removed to be replaced")
     public void testSensorTestValidity()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
@@ -200,77 +201,81 @@ public class NamedBeanComboBoxTest {
         method.setAccessible(true);
 
         // test with no matching bean and isValidatingInput() == false
+        // should always match NONE
         t.setValidatingInput(false);
 
         c.setText("");
         Assert.assertEquals("", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         // test with no matching bean and isValidatingInput() == true
+        // should match NONE when empty and DANGER otherwise
         t.setValidatingInput(true);
 
         c.setText("");
         Assert.assertEquals("", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.DANGER, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.DANGER, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         // test with a matching bean and isValidatingInput() == false
+        // should always match NONE
         t.setValidatingInput(false);
         m.provide("IS1");
 
         c.setText("");
         Assert.assertEquals("", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
-        // test with no matching bean and isValidatingInput() == true
+        // test with a matching bean and isValidatingInput() == true
+        // should match DANGER with text "K" and NONE otherwise
         t.setValidatingInput(true);
 
         c.setText("");
         Assert.assertEquals("", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("IS1");
         Assert.assertEquals("IS1", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.NONE, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
 
         c.setText("K");
         Assert.assertEquals("K", c.getText());
         method.invoke(t);
-        Assert.assertEquals(SystemColor.menu, t.getEditor().getEditorComponent().getBackground());
+        Assert.assertEquals(Validation.Type.DANGER, ((JInputValidator) ((JComponent) t.getEditor().getEditorComponent()).getInputVerifier()).getValidation().getType());
     }
 
     @Test
@@ -311,7 +316,6 @@ public class NamedBeanComboBoxTest {
     }
 
     @Test
-    @Ignore("not tracking change in display name with underlying bean change")
     public void testSensorNameChange() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
