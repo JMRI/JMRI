@@ -1,10 +1,6 @@
 package jmri.swing;
 
-import com.alexandriasoftware.swing.JInputValidatorPreferences;
-import com.alexandriasoftware.swing.NonVerifyingValidator;
-import com.alexandriasoftware.swing.Validation;
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +11,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import javax.swing.ComboBoxEditor;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -23,10 +18,13 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
+
+import com.alexandriasoftware.swing.JInputValidatorPreferences;
+import com.alexandriasoftware.swing.NonVerifyingValidator;
+import com.alexandriasoftware.swing.Validation;
 
 import jmri.Manager;
 import jmri.NamedBean;
@@ -100,9 +98,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
         setEditable(false);
-        NamedBeanRenderer renderer = new NamedBeanRenderer();
-        setRenderer(renderer);
-        setKeySelectionManager(renderer);
+        NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer();
+        setRenderer(namedBeanRenderer);
+        setKeySelectionManager(namedBeanRenderer);
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
         sort();
@@ -117,7 +115,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         return displayOptions;
     }
 
-    public void setDisplayOrder(DisplayOptions displayOrder) {
+    public final void setDisplayOrder(DisplayOptions displayOrder) {
         if (displayOptions != displayOrder) {
             displayOptions = displayOrder;
             sort();
@@ -182,6 +180,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 @Override
                 protected Validation getValidation(JComponent componenet, JInputValidatorPreferences preferences) {
                     String text = jtc.getText();
+                    validateInput();
                     if (validatingInput && text != null && !text.isEmpty()) {
                         B bean = manager.getNamedBean(text);
                         if (bean != null && excludedItems.contains(bean)) {
@@ -272,10 +271,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     }
 
     private void validateInput() {
-        ComboBoxEditor cbe = getEditor();
-        JTextField c = (JTextField) cbe.getEditorComponent();
+        JTextComponent c = (JTextComponent) getEditor().getEditorComponent();
         String text = c.getText();
-        if (isEditable() && !text.isEmpty()) {
+        if (isEditable() && text != null && !text.isEmpty()) {
             B item = manager.getNamedBean(text);
             if (item != null) {
                 setSelectedItem(item);
