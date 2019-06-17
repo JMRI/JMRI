@@ -22,9 +22,9 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates. This is modified to have different
-     * comments. Because the speeds are the same as the parent class (19200 and
-     * 57600), we don't override validBaudNumbers().
+     * {@inheritDoc}
+     * This is modified to have different comments. Because the speeds are the same as
+     * the parent class (19200 and 57600), we don't override validBaudNumbers().
      */
     @Override
     public String[] validBaudRates() {

@@ -209,7 +209,7 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
@@ -219,6 +219,11 @@ public class SimulatorAdapter extends NcePortController implements
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return null
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

@@ -150,12 +150,16 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         return opened;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }

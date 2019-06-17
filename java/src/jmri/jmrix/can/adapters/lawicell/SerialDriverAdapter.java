@@ -101,7 +101,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     }
 
     /**
-     * set up all of the other objects to operate with a CAN RS adapter
+     * Set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
      */
     @Override
@@ -156,18 +156,25 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int[] validBaudValues() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Migration method
-     * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
     public int[] validBaudNumbers() {

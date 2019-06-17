@@ -212,8 +212,8 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             return null;
         }
 
-        @Override
-        public int[] validBaudNumber() {
+        //@Override
+        public int[] validBaudNumbers() {
             return null;
         }
 

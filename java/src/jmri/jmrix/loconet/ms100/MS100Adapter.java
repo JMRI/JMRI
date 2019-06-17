@@ -172,14 +172,18 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
+     * {@inheritDoc}
+     *
+     * Just a message saying it's fixed
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"fixed at 16600 baud"};
+        return new String[]{"fixed at 16,600 baud"};
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return new int[]{16600};

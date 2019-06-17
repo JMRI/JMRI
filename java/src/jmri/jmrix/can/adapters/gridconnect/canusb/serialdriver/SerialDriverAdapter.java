@@ -14,7 +14,9 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
+     *
+     * TODO I18N using Bundle
      */
     @Override
     public String[] validBaudRates() {
@@ -30,8 +32,9 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Migration method
-     * TODO refactor validBaudValues() to validBaudNumber(s)
      */
     @Override
     public int[] validBaudNumbers() {

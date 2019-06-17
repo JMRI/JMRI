@@ -166,8 +166,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * it's fixed.
+     * {@inheritDoc}
+     * Currently just a message saying it's fixed.
      *
      * @return null
      */
@@ -176,6 +176,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

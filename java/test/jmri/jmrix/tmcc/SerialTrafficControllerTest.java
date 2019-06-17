@@ -221,8 +221,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return null;
         }
 
-        @Override
-        public int[] validBaudNumber() {
+        //@Override
+        public int[] validBaudNumbers() {
             return null;
         }
 

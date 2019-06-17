@@ -169,7 +169,7 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
@@ -179,6 +179,9 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;

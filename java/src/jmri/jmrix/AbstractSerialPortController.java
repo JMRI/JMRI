@@ -176,11 +176,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             log.warn("old profile format port speed value converted");
             // filter only numerical characters from indexString
             StringBuilder baudNumber = new StringBuilder();
+            boolean digitSeen = false;
             for (int n = 0; n < indexString.length(); n++) {
                 if (Character.isDigit(indexString.charAt(n))) {
+                    digitSeen = true;
                     baudNumber.append(indexString.charAt(n));
-                } else if (indexString.charAt(n) == ' ') {
-                    break; // break on first space char encountered
+                } else if ((indexString.charAt(n) == ' ') && digitSeen) {
+                    break; // break on first space char encountered after at least 1 digit was found
                 }
             }
             if (baudNumber.toString().equals("")) { // no number found in indexString e.g. "(automatic)"
@@ -246,6 +248,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             for (int i = 0; i < numbers.length; i++) {
                 if (rates[i].equals(mBaudRate)) {
                     baudNumString = Integer.toString(numbers[i]);
+                    break;
                 }
             }
             return baudNumString;
@@ -272,10 +275,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * change the arrays of speeds.
      * <p>
      * This method need not be reimplemented unless the subclass is using
-     * currentBaudNumber, which requires it.
+     * currentBaudNumbers(), which requires it.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "null signal incorrect implementation of portcontroller")
+    justification = "null signals incorrect implementation of portcontroller")
     public int[] validBaudNumbers() {
         log.error("default validBaudNumber implementation should not be used", new Exception());
         return null;

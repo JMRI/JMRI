@@ -164,8 +164,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * {@inheritDoc}
      *
      * @return null
      */
@@ -175,6 +174,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] validBaudNumbers() {
         return null;
