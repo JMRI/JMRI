@@ -153,6 +153,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
@@ -160,6 +161,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     /**
      * {@inheritDoc}
      */
+    @Override
     public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }

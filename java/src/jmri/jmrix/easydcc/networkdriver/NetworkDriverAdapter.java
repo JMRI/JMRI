@@ -58,9 +58,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public String[] validBaudRates() {
         log.error("Unexpected call to validBaudRates");
         return null;
