@@ -27,7 +27,7 @@ public interface SerialPortAdapter extends PortAdapter {
     public String openPort(String portName, String appName);
 
     /**
-     * Configure all of the other jmrix widgets needed to work with this adapter
+     * Configure all of the other jmrix widgets needed to work with this adapter.
      */
     @Override
     public void configure();
@@ -86,28 +86,28 @@ public interface SerialPortAdapter extends PortAdapter {
 
     /**
      * Set the first port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption1(String value);
 
     /**
      * Set the second port option. Only to be used after construction, but
-     * before the openPort call
+     * before the openPort call.
      */
     @Override
     public void configureOption2(String value);
 
     /**
      * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption3(String value);
 
     /**
      * Set the fourth port option. Only to be used after construction, but
-     * before the openPort call
+     * before the openPort call.
      */
     @Override
     public void configureOption4(String value);
@@ -120,13 +120,13 @@ public interface SerialPortAdapter extends PortAdapter {
     public String handlePortBusy(PortInUseException p, String portName, Logger log);
 
     /**
-     * Return the System Manufacturers Name
+     * Get the System Manufacturers Name.
      */
     @Override
     public String getManufacturer();
 
     /**
-     * Set the System Manufacturers Name
+     * Set the System Manufacturers Name.
      */
     @Override
     public void setManufacturer(String Manufacturer);
