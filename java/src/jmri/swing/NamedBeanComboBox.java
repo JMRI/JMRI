@@ -99,11 +99,12 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
+        super();
         this.manager = manager;
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
         setEditable(false);
-        NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer();
+        NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer(getRenderer());
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
         Component ec = getEditor().getEditorComponent();
@@ -128,7 +129,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                 }
                             } else {
                                 if (validatingInput) {
-                                    return new Validation(Validation.Type.DANGER,
+                                    return new Validation(Validation.Type.WARNING,
                                             Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
                                 }
                             }
@@ -393,13 +394,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     private class NamedBeanRenderer implements ListCellRenderer<B>, JComboBox.KeySelectionManager {
 
-        protected DefaultListCellRenderer renderer = new DefaultListCellRenderer();
+        private final ListCellRenderer renderer;
         private final long timeFactor;
         private long lastTime;
         private long time;
         private String prefix = "";
 
-        public NamedBeanRenderer() {
+        public NamedBeanRenderer(ListCellRenderer renderer) {
+            this.renderer = renderer;
             Long l = (Long) UIManager.get("ComboBox.timeFactor");
             timeFactor = l != null ? l : 1000;
         }
