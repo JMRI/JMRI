@@ -152,7 +152,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         int index = 0;
         String[] rates = validBaudRates();
         int[] numbers = validBaudNumbers();
-        if (numbers == null || numbers.length == 0) { // simulators return null TODO for SpotBugs make that into an empty array
+        if ((numbers == null) || (numbers.length == 0)) { // simulators return null TODO for SpotBugs make that into an empty array
             mBaudRate = null;
             log.debug("no serial port speed values received (OK for simulator)");
             return;

@@ -158,7 +158,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudIndex((int) baudBox.getSelectedIndex()); // manage by index, not item value
+        adapter.configureBaudIndex(baudBox.getSelectedIndex()); // manage by index, not item value
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
