@@ -82,7 +82,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
         String baudNumber = perNode.getAttribute("speed").getValue();
-        adapter.configureBaudNumber(baudNumber);
+        adapter.configureBaudRateFromNumber(baudNumber);
         loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();

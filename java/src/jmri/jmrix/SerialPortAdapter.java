@@ -74,7 +74,7 @@ public interface SerialPortAdapter extends PortAdapter {
      * <p>
      * Only to be used after construction, but before the openPort call.
      */
-    public void configureBaudNumber(String index);
+    public void configureBaudRateFromNumber(String index);
 
     public void configureBaudIndex(int index);
 
