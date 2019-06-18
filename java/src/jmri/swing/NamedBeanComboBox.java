@@ -13,7 +13,6 @@ import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -123,13 +122,13 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                 if (!bean.equals(getSelectedItem())) {
                                     jtc.setText(text);
                                     if (validatingInput) {
-                                        return new Validation(Validation.Type.WARNING, Bundle.getMessage(beanInUse,
+                                        return new Validation(Validation.Type.DANGER, Bundle.getMessage(beanInUse,
                                                 manager.getBeanTypeHandled(), bean.getFullyFormattedDisplayName()));
                                     }
                                 }
                             } else {
                                 if (validatingInput) {
-                                    return new Validation(Validation.Type.WARNING,
+                                    return new Validation(Validation.Type.DANGER,
                                             Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
                                 }
                             }
@@ -394,13 +393,13 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     private class NamedBeanRenderer implements ListCellRenderer<B>, JComboBox.KeySelectionManager {
 
-        private final ListCellRenderer renderer;
+        private final ListCellRenderer<? super B> renderer;
         private final long timeFactor;
         private long lastTime;
         private long time;
         private String prefix = "";
 
-        public NamedBeanRenderer(ListCellRenderer renderer) {
+        public NamedBeanRenderer(ListCellRenderer<? super B> renderer) {
             this.renderer = renderer;
             Long l = (Long) UIManager.get("ComboBox.timeFactor");
             timeFactor = l != null ? l : 1000;
