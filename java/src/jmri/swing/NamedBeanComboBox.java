@@ -26,8 +26,12 @@ import com.alexandriasoftware.swing.JInputValidatorPreferences;
 import com.alexandriasoftware.swing.NonVerifyingValidator;
 import com.alexandriasoftware.swing.Validation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.ProvidingManager;
 import jmri.util.NamedBeanComparator;
 import jmri.util.NamedBeanUserNameComparator;
 import jmri.util.ThreadingPropertyChangeListener;
@@ -61,6 +65,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private String noMatchingBean = "NamedBeanComboBoxNoMatchingBean";
     private final Set<B> excludedItems = new HashSet<>();
     private final PropertyChangeListener managerListener = ThreadingPropertyChangeListener.guiListener(evt -> sort());
+    private final static Logger log = LoggerFactory.getLogger(NamedBeanComboBox.class);
 
     /**
      * Create a ComboBox without a selection using the
@@ -78,7 +83,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param manager   the Manager backing the ComboBox
      * @param selection the NamedBean that is selected or null to specify no
-     *                  selection
+     *                      selection
      */
     public NamedBeanComboBox(Manager<B> manager, B selection) {
         this(manager, selection, DisplayOptions.DISPLAYNAME);
@@ -90,7 +95,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param manager      the Manager backing the ComboBox
      * @param selection    the NamedBean that is selected or null to specify no
-     *                     selection
+     *                         selection
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
@@ -101,6 +106,38 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer();
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
+        Component ec = getEditor().getEditorComponent();
+        if (ec instanceof JComponent) {
+            JComponent jc = (JComponent) ec;
+            jc.setInputVerifier(new NonVerifyingValidator(jc, true) {
+                @Override
+                protected Validation getValidation(JComponent component, JInputValidatorPreferences preferences) {
+                    if (component instanceof JTextComponent) {
+                        JTextComponent jtc = (JTextComponent) component;
+                        String text = jtc.getText();
+                        if (text != null && !text.isEmpty()) {
+                            B bean = manager.getNamedBean(text);
+                            if (bean != null) {
+                                setSelectedItem(bean); // won't change if bean is not in model
+                                if (!bean.equals(getSelectedItem())) {
+                                    jtc.setText(text);
+                                    if (validatingInput) {
+                                        return new Validation(Validation.Type.WARNING, Bundle.getMessage(beanInUse,
+                                                manager.getBeanTypeHandled(), bean.getFullyFormattedDisplayName()));
+                                    }
+                                }
+                            } else {
+                                if (validatingInput) {
+                                    return new Validation(Validation.Type.DANGER,
+                                            Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
+                                }
+                            }
+                        }
+                    }
+                    return new Validation(Validation.Type.NONE, ""); // NOI18N
+                }
+            });
+        }
         this.manager.addPropertyChangeListener("beans", managerListener);
         this.manager.addPropertyChangeListener("DisplayListName", managerListener);
         sort();
@@ -173,27 +210,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     @Override
     public void setEditable(boolean editable) {
-        Component ec = getEditor().getEditorComponent();
-        if (editable && ec instanceof JTextComponent) {
-            JTextComponent jtc = (JTextComponent) ec;
-            jtc.setInputVerifier(new NonVerifyingValidator(jtc) {
-                @Override
-                protected Validation getValidation(JComponent componenet, JInputValidatorPreferences preferences) {
-                    String text = jtc.getText();
-                    validateInput();
-                    if (validatingInput && text != null && !text.isEmpty()) {
-                        B bean = manager.getNamedBean(text);
-                        if (bean != null && excludedItems.contains(bean)) {
-                            return new Validation(Validation.Type.DANGER, Bundle.getMessage(beanInUse, manager.getBeanTypeHandled(), bean.getFullyFormattedDisplayName()));
-                        } else if (bean == null) {
-                            return new Validation(Validation.Type.DANGER, Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
-                        }
-                    }
-                    return new Validation(Validation.Type.NONE, ""); // NOI18N
-                }
-            });
-        } else {
-            ((JComponent) super.getEditor().getEditorComponent()).setInputVerifier(null);
+        if (editable && !(manager instanceof ProvidingManager)) {
+            log.error("Unable to set editable to true because not backed by editable manager");
         }
         super.setEditable(editable);
     }
@@ -236,7 +254,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param name the name of the item to select
      * @throws IllegalArgumentException if {@link #isAllowNull()} is false and
-     *                                  no bean exists by name or name is null
+     *                                      no bean exists by name or name is
+     *                                      null
      */
     public void setSelectedItemByName(String name) {
         B item = null;
@@ -270,17 +289,6 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         setSelectedItem(selectedItem); // retain selection
     }
 
-    private void validateInput() {
-        JTextComponent c = (JTextComponent) getEditor().getEditorComponent();
-        String text = c.getText();
-        if (isEditable() && text != null && !text.isEmpty()) {
-            B item = manager.getNamedBean(text);
-            if (item != null) {
-                setSelectedItem(item);
-            }
-        }
-    }
-
     /**
      * Set the translation key to be used when a typed in bean name matches a
      * named bean has been included in a call to
@@ -288,10 +296,11 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * is {@code true}.
      *
      * @param beanInUseKey a translatable bundle key where {@code {0}} is the
-     *                     result of {@link jmri.Manager#getBeanTypeHandled()}
-     *                     and {1} is the result of
-     *                     {@link jmri.NamedBean#getFullyFormattedDisplayName()}
-     *                     for the matching bean
+     *                         result of
+     *                         {@link jmri.Manager#getBeanTypeHandled()} and {1}
+     *                         is the result of
+     *                         {@link jmri.NamedBean#getFullyFormattedDisplayName()}
+     *                         for the matching bean
      */
     public void setNoMatchingToolTipBeanInUse(String beanInUseKey) {
         beanInUse = beanInUseKey;
@@ -301,12 +310,31 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * Set the translation key to be used when a typed in bean name does not
      * match a named bean and {@link #isValidatingInput()} is {@code true}.
      *
-     * @param noMatchingBeanKey a translatable bundle key where {@code {0}} is the
-     *                     result of {@link jmri.Manager#getBeanTypeHandled()}
-     *                     and {1} is the typed input
+     * @param noMatchingBeanKey a translatable bundle key where {@code {0}} is
+     *                              the result of
+     *                              {@link jmri.Manager#getBeanTypeHandled()}
+     *                              and {1} is the typed input
      */
     public void setNoMatchingToolTipNoMatchingBean(String noMatchingBeanKey) {
         noMatchingBean = noMatchingBeanKey;
+    }
+
+    public Set<B> getExcludedItems() {
+        return excludedItems;
+    }
+
+    /**
+     * Collection of named beans managed by the manager for this combo box that
+     * should not be included in the combo box. This may be, for example, a list
+     * of SignalHeads already in use, and therefor not available to be added to
+     * a SignalMast.
+     *
+     * @param excludedItems items to be excluded from this combo box
+     */
+    public void setExcludedItems(Set<B> excludedItems) {
+        this.excludedItems.clear();
+        this.excludedItems.addAll(excludedItems);
+        sort();
     }
 
     public enum DisplayOptions {
@@ -458,8 +486,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
             return index;
         }
 
-        /*
-	**  Find the index of the item in the model that starts with the prefix.
+        /**
+         * Find the index of the item in the model that starts with the prefix.
          */
         @SuppressWarnings("unchecked") // unchecked cast due to API constraints
         private int getNextMatch(String prefix, int start, int end, ComboBoxModel model) {
@@ -469,33 +497,14 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 if (item != null) {
                     String userName = item.getUserName();
 
-                    if (item.getSystemName().toLowerCase().startsWith(prefix)
-                            || (userName != null && userName.toLowerCase().startsWith(prefix))) {
+                    if (item.getSystemName().toLowerCase().startsWith(prefix) ||
+                            (userName != null && userName.toLowerCase().startsWith(prefix))) {
                         return i;
                     }
                 }
             }
-
             return -1;
         }
-    }
-
-    public Set<B> getExcludedItems() {
-        return excludedItems;
-    }
-
-    /**
-     * Collection of named beans managed by the manager for this combo box that
-     * should not be included in the combo box. This may be, for example, a list
-     * of SignalHeads already in use, and therefor not available to be added to
-     * a SignalMast.
-     *
-     * @param excludedItems items to be excluded from this combo box
-     */
-    public void setExcludedItems(Set<B> excludedItems) {
-        this.excludedItems.clear();
-        this.excludedItems.addAll(excludedItems);
-        sort();
     }
 
 }
