@@ -196,18 +196,17 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
         return null;
     }
 
-    @Override
-    public String getCurrentBaudRate() {
-        return "";
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public int[] validBaudNumbers() {
-        int[] numbers = {0};
-        return numbers;
+        return null;
+    }
+
+    @Override
+    public String getCurrentBaudRate() {
+        return "";
     }
 
     @Override

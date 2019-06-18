@@ -2,7 +2,6 @@ package jmri.jmrix;
 
 import java.util.Enumeration;
 import java.util.Vector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -147,7 +146,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     @Override
-    public void configureBaudNumber(String indexString) {
+    public void configureBaudRateFromNumber(String indexString) {
         int baudNum;
         int index = 0;
         final String[] rates = validBaudRates();
@@ -172,7 +171,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             baudNum = Integer.parseInt(indexString); // new storage format, will throw ex on old format
             log.debug("new profile format port speed value");
         } catch (NumberFormatException ex) {
-            // old pre 4.15.8 format is i18n string including thousand separator and whatever suffix like "18,600 bps"
+            // old pre 4.15.8 format is i18n string including thousand separator and whatever suffix like "18,600 bps (J1)"
             log.warn("old profile format port speed value converted");
             // filter only numerical characters from indexString
             StringBuilder baudNumber = new StringBuilder();
@@ -242,6 +241,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         if (mBaudRate != null) {
             int[] numbers = validBaudNumbers();
             String[] rates = validBaudRates();
+            if (numbers == null || rates == null || numbers.length != rates.length) { // arrays should correspond
+                return "";
+            }
             String baudNumString = "";
             // find the configured baud rate value
             for (int i = 0; i < numbers.length; i++) {
@@ -310,7 +312,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return -1;
         }
 
-        // find the baud rate value, configure comm options
+        // find the baud rate value
         for (int i = 0; i < numbers.length; i++) {
             if (rates[i].equals(currentBaudRate)) {
                 return numbers[i];
