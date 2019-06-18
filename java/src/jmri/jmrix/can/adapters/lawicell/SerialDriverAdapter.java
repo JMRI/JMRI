@@ -164,9 +164,6 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int[] validBaudValues() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
