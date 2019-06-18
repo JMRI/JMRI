@@ -8,7 +8,7 @@ addons:
     - dbus-x11
     - tidy
   firefox: latest
-  chrome: stable
+  chrome: beta 
 
 before_install:
   # ensure no unwanted defaults are set
