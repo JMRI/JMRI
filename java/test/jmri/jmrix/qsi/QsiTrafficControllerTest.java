@@ -192,7 +192,7 @@ public class QsiTrafficControllerTest {
             return null;
         }
 
-        //@Override
+        @Override
         public int[] validBaudNumbers() {
             return null;
         }

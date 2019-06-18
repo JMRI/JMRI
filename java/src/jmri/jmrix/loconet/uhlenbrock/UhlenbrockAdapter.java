@@ -70,8 +70,6 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
     /**
      * {@inheritDoc}
-     *
-     * @return list of value baud rates
      */
     @Override
     public int[] validBaudNumbers() {

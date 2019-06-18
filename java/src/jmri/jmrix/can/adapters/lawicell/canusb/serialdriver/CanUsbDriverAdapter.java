@@ -10,8 +10,7 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
-public class CanUsbDriverAdapter
-        extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter
+public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter
         implements jmri.jmrix.SerialPortAdapter {
 
     /**
@@ -23,7 +22,7 @@ public class CanUsbDriverAdapter
     }
 
     /**
-     * And the corresponding values.
+     * {@inheritDoc}
      */
     @Override
     public int[] validBaudValues() {
