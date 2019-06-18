@@ -150,8 +150,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public void configureBaudNumber(String indexString) {
         int baudNum;
         int index = 0;
-        String[] rates = validBaudRates();
-        int[] numbers = validBaudNumbers();
+        final String[] rates = validBaudRates();
+        final int[] numbers = validBaudNumbers();
         if ((numbers == null) || (numbers.length == 0)) { // simulators return null TODO for SpotBugs make that into an empty array
             mBaudRate = null;
             log.debug("no serial port speed values received (OK for simulator)");
@@ -278,6 +278,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "null signals incorrect implementation of portcontroller")
+    @Override
     public int[] validBaudNumbers() {
         log.error("default validBaudNumber implementation should not be used", new Exception());
         return null;
@@ -288,7 +289,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * <p>
      * Uses the validBaudNumbers() and validBaudRates() methods to do this.
      *
-     * @param currentBaudRate a rate from validBaudRates
+     * @param currentBaudRate a rate from validBaudRates()
      * @return -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {

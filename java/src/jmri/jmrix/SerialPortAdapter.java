@@ -49,7 +49,7 @@ public interface SerialPortAdapter extends PortAdapter {
     public String getCurrentPortName();
 
     /**
-     * Get an array of valid baud rates; used to display valid options in Connections Preferences.
+     * Get an array of valid baud rate strings; used to display valid options in Connections Preferences.
      *
      * @return array of I18N display strings of port speed settings valid for this serial adapter,
      * must match order and values from {@link #validBaudNumbers()}

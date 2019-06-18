@@ -206,7 +206,8 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        int[] numbers = {0};
+        return numbers;
     }
 
     @Override
