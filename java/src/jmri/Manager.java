@@ -232,7 +232,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Locate an existing instance based on a name. Returns null if no instance already
      * exists.
      *
-     * @param name System Name of the required NamedBean
+     * @param name User Name or System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
     @CheckReturnValue
