@@ -40,11 +40,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
-            log.error("SignalMast system name needs at least three parts: " + systemName);
+            log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].equals("IF$tsm")) {
-            log.warn("SignalMast system name should start with IF$tsm but is " + systemName);
+            log.warn("SignalMast system name should start with IF$tsm but is {}", systemName);
         }
         String system = parts[1];
         String mast = parts[2];
@@ -55,11 +55,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
-            if (autoNumber > lastRef) {
-                lastRef = autoNumber;
+            if (autoNumber > getLastRef()) {
+                setLastRef(autoNumber);
             }
         } catch (NumberFormatException e) {
-            log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
+            log.warn("Auto generated SystemName {} is not in the correct format", systemName);
         }
 
         configureSignalSystemDefinition(system);
@@ -71,10 +71,10 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         // check it's a choice
         if (!map.checkAspect(aspect)) {
             // not a valid aspect
-            log.warn("attempting to set invalid aspect: " + aspect + " on mast: " + getDisplayName());
+            log.warn("attempting to set invalid aspect: {} on mast: {}", aspect, getDisplayName());
             throw new IllegalArgumentException("attempting to set invalid aspect: " + aspect + " on mast: " + getDisplayName());
         } else if (disabledAspects.contains(aspect)) {
-            log.warn("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
+            log.warn("attempting to set an aspect that has been disabled: {} on mast: {}", aspect, getDisplayName());
             throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
         }
         
@@ -97,7 +97,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                                 aspt.getTurnout().setCommandedState(setState);
                             }
                         } else {
-                            log.error("Trying to reset \"" + appearance + "\" on signal mast \"" + getDisplayName() + "\" which has not been configured");
+                            log.error("Trying to reset \"{}\" on signal mast \"{}\" which has not been configured", appearance, getDisplayName());
                         }
                     }
                 }
@@ -109,7 +109,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 int stateToSet = turnouts.get(aspect).getTurnoutState();
                 turnToSet.setCommandedState(stateToSet);
             } else {
-                log.error("Trying to set \"" + aspect + "\" on signal mast \"" + getDisplayName() + "\" which has not been configured");
+                log.error("Trying to set \"{}\" on signal mast \"{}\" which has not been configured", aspect, getDisplayName());
             }
             
         } else if (log.isDebugEnabled()) {
@@ -194,7 +194,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     public void setTurnout(String appearance, String turn, int state) {
         if (turnouts.containsKey(appearance)) {
-            log.debug("Appearance " + appearance + " is already defined so will override");
+            log.debug("Appearance {} is already defined so will override", appearance);
             turnouts.remove(appearance);
         }
         turnouts.put(appearance, new TurnoutAspect(turn, state));
@@ -270,11 +270,25 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return new ArrayList<NamedBeanHandle<Turnout>>();
     }
 
+    /**
+     *
+     * @param newVal for ordinal of all TurnoutSignalMasts in use
+     */
+    public static void setLastRef(int newVal) {
+        lastRef = newVal;
+    }
+
+    /**
+     * @return highest ordinal of all TurnoutSignalMasts in use
+     */
     public static int getLastRef() {
         return lastRef;
     }
 
-    static int lastRef = 0;
+    /**
+     * Ordinal of all TurnoutSignalMasts to create unique system name.
+     */
+    protected static volatile int lastRef = 0;
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {

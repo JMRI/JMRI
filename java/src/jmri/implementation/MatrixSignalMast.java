@@ -484,7 +484,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     /**
      * Ordinal of all MatrixSignalMasts to create unique system name.
      */
-    private static int lastRef = 0;
+    private static volatile int lastRef = 0;
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
