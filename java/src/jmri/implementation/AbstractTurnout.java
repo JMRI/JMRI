@@ -732,33 +732,35 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     @Override
     public void setInitialKnownStateFromFeedback() {
+        Sensor firstSensor = getFirstSensor();
         if (_activeFeedbackType == ONESENSOR) {
             // ONESENSOR feedback
-            if (getFirstSensor() != null) {
+            if (firstSensor != null) {
                 // set according to state of sensor
-                int sState = getFirstSensor().getKnownState();
+                int sState = firstSensor.getKnownState();
                 if (sState == Sensor.ACTIVE) {
                     newKnownState(THROWN);
                 } else if (sState == Sensor.INACTIVE) {
                     newKnownState(CLOSED);
                 }
             } else {
-                log.warn("expected Sensor 1 not defined - " + getSystemName());
+                log.warn("expected Sensor 1 not defined - {}", getSystemName());
                 newKnownState(UNKNOWN);
             }
         } else if (_activeFeedbackType == TWOSENSOR) {
             // TWOSENSOR feedback
             int s1State = Sensor.UNKNOWN;
             int s2State = Sensor.UNKNOWN;
-            if (getFirstSensor() != null) {
-                s1State = getFirstSensor().getKnownState();
+            if (firstSensor != null) {
+                s1State = firstSensor.getKnownState();
             } else {
-                log.warn("expected Sensor 1 not defined - " + getSystemName());
+                log.warn("expected Sensor 1 not defined - {}", getSystemName());
             }
-            if (getSecondSensor() != null) {
-                s2State = getSecondSensor().getKnownState();
+            Sensor secondSensor = getSecondSensor();
+            if (secondSensor != null) {
+                s2State = secondSensor.getKnownState();
             } else {
-                log.warn("expected Sensor 2 not defined - " + getSystemName());
+                log.warn("expected Sensor 2 not defined - {}", getSystemName());
             }
             // set Turnout state according to sensors
             if ((s1State == Sensor.ACTIVE) && (s2State == Sensor.INACTIVE)) {
@@ -804,9 +806,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                     newKnownState(CLOSED);
                 }
             } else {
-                // unexected mismatch
-                log.warn("expected sensor " + getFirstNamedSensor().getName()
-                        + " was " + ((Sensor) evt.getSource()).getSystemName());
+                // unexpected mismatch
+                if ((log.isDebugEnabled()) && (getFirstNamedSensor() != null)) {
+                        log.warn("expected sensor {} was {}", getFirstNamedSensor().getName(), ((Sensor) evt.getSource()).getSystemName());
+                }
             }
             // end ONESENSOR block
         } else if (_activeFeedbackType == TWOSENSOR) {

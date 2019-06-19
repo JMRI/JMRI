@@ -23,7 +23,7 @@ import jmri.Reporter;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,Reportable  {
+public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, Reportable  {
 
     protected Reporter whereLastSeen = null;
 
@@ -73,9 +73,9 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
           sb.append(userName);
         }
 
-        // check to see if any properties have been added.
+        // check to see if any properties have been added
         Set keySet = getPropertyKeys();
-        if(keySet!=null){
+        if (keySet != null) {
             // we have properties, so append the values to the
             // end of the report seperated by spaces.
             for( Object s : keySet) {
