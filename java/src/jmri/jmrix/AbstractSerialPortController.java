@@ -272,17 +272,24 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
-     * <p>
-     * This method need not be reimplemented unless the subclass is using
-     * currentBaudNumbers(), which requires it.
+     * {@inheritDoc}
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "null signals incorrect implementation of portcontroller")
+    @Override
+    public String[] validBaudRates() {
+        log.error("default validBaudRates implementation should not be used", new Exception());
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "null signals incorrect implementation of portcontroller")
     @Override
     public int[] validBaudNumbers() {
-        log.error("default validBaudNumber implementation should not be used", new Exception());
+        log.error("default validBaudNumbers implementation should not be used", new Exception());
         return null;
     }
 
