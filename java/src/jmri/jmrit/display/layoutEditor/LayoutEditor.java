@@ -1951,9 +1951,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Set up editable JmriBeanComboBoxes
      *
      * @param inComboBox     the editable JmriBeanComboBoxes to set up
-     * @param inValidateMode boolean: if true, valid text == green, invalid text
-     *                       == red background; if false, valid text == green,
-     *                       invalid text == yellow background
+     * @param inValidateMode true to validate typed inputs; false otherwise
      * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable) {
@@ -1964,9 +1962,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Set up editable JmriBeanComboBoxes
      *
      * @param inComboBox     the editable JmriBeanComboBoxes to set up
-     * @param inValidateMode boolean: if true, valid text == green, invalid text
-     *                       == red background; if false, valid text == green,
-     *                       invalid text == yellow background
+     * @param inValidateMode true to validate typed inputs; false otherwise
      * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      * @param inFirstBlank   boolean to enable / disable the first item being
      *                       blank

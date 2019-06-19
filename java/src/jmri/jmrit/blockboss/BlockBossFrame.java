@@ -1124,9 +1124,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
      * @author G. Warner 2017
      *
      * @param inComboBox     the editable NamedBeanComboBoxes to set up
-     * @param inValidateMode boolean: if true, valid text == green, invalid text
-     *                       == red background; if false, valid text == green,
-     *                       invalid text == yellow background
+     * @param inValidateMode boolean: if true, typed in text is validated; if
+     *                       false input text is not
      * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      * @param inFirstBlank   boolean to enable / disable the first item being
      *                       blank
