@@ -49,7 +49,7 @@ public class ApplicationTestAcceptanceSteps implements En {
     When("^starting application (.*) with (.*)", (String application,String frametitle ) -> {
         try {
             // use redirection to start the application.
-            Class appclass = Class.forName(application);
+            Class<?> appclass = Class.forName(application);
             Method method = appclass.getMethod("main",String[].class);
             String[] params = new String[]{frametitle};
             method.invoke(null,(Object)params);
