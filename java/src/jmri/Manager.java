@@ -106,6 +106,16 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public NameValidity validSystemNameFormat(@Nonnull String systemName);
 
     /**
+     * Test if a given name is in a valid format for this Manager.
+     * 
+     * @param systemName the name to check
+     * @return {@code true} if {@link #validSystemNameFormat(java.lang.String)} equals {@link NameValidity#VALID}; {@code false} otherwise
+     */
+    public default boolean isValidSystemNameFormat(@Nonnull String systemName) {
+        return validSystemNameFormat(systemName) == NameValidity.VALID;
+    }
+
+    /**
      * Free resources when no longer used. Specifically, remove all references
      * to and from this object, so it can be garbage-collected.
      */
