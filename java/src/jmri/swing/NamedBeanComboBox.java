@@ -38,11 +38,25 @@ import jmri.util.ThreadingPropertyChangeListener;
 /**
  * A {@link javax.swing.JComboBox} for {@link jmri.NamedBean}s.
  * <p>
- * Validation of user input to select a NamedBean is limited to setting the
- * selection to a NamedBean matching the typed input, and is always enabled
- * unless {@link #setEditable(boolean)} is called against this JComboBox with
- * {@code false}. API hooks exist for more complex validation, although they
- * currently do nothing.
+ * When editable, this will create a new NamedBean if backed by a
+ * {@link jmri.ProvidingManager} if {@link #getSelectedItem()} is called and the
+ * current text is neither the system name nor user name of an existing
+ * NamedBean. This will also validate input when editable, showing an
+ * Information (blue I in circle) icon to indicate a name will be used to create
+ * a new Named Bean, an Error (red X in circle) icon to indicate a typed in name
+ * cannot be used (either because it would not be valid as a user name or system
+ * name or because the name of an existing NamedBean not usable in the current
+ * context has been entered, or no icon to indicate the name of an existing
+ * Named Bean has been entered.
+ * <p>
+ * When not editable, this will allow (but may not actively show) continual
+ * typing of a system name or a user name by a user to match a NamedBean even if
+ * only the system name or user name or both are displayed (e.g. if a list of
+ * turnouts is shown by user name only, a user may type in the system name of
+ * the turnout and the turnout will be selected correctly). If the typing speed
+ * is slower than the {@link javax.swing.UIManager}'s
+ * {@code ComboBox.timeFactor} setting, keyboard input acts like a normal
+ * JComboBox, with only the first character displayed matching the user input.
  * <p>
  * <strong>Note:</strong> It is recommended that implementations that exclude
  * some NamedBeans from the combo box call {@link #setToolTipText(String)} to
@@ -59,9 +73,12 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private final Manager<B> manager;
     private DisplayOptions displayOptions;
     private boolean allowNull = false;
-    private boolean validatingInput = false;
+    private boolean providing = true;
+    private boolean validatingInput = true;
     private String beanInUse = "NamedBeanComboBoxBeanInUse";
+    private String invalidNameFormat = "NamedBeanComboBoxInvalidNameFormat";
     private String noMatchingBean = "NamedBeanComboBoxNoMatchingBean";
+    private String willCreateBean = "NamedBeanComboBoxWillCreateBean";
     private final Set<B> excludedItems = new HashSet<>();
     private final PropertyChangeListener managerListener = ThreadingPropertyChangeListener.guiListener(evt -> sort());
     private final static Logger log = LoggerFactory.getLogger(NamedBeanComboBox.class);
@@ -82,7 +99,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param manager   the Manager backing the ComboBox
      * @param selection the NamedBean that is selected or null to specify no
-     *                      selection
+     *                  selection
      */
     public NamedBeanComboBox(Manager<B> manager, B selection) {
         this(manager, selection, DisplayOptions.DISPLAYNAME);
@@ -94,7 +111,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param manager      the Manager backing the ComboBox
      * @param selection    the NamedBean that is selected or null to specify no
-     *                         selection
+     *                     selection
      * @param displayOrder the sorting scheme for NamedBeans
      */
     public NamedBeanComboBox(Manager<B> manager, B selection, DisplayOptions displayOrder) {
@@ -128,8 +145,19 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                 }
                             } else {
                                 if (validatingInput) {
-                                    return new Validation(Validation.Type.DANGER,
-                                            Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
+                                    if (providing) {
+                                        // Once #6974 is merged, isValidSystemNameFormat can be expected to be honest
+                                        // and the test that text starts with the correct system prefix can be removed
+                                        if (!manager.isValidSystemNameFormat(text) && !text.startsWith(manager.getSystemPrefix()) && !text.equals(NamedBean.normalizeUserName(text))) {
+                                            return new Validation(Validation.Type.DANGER,
+                                                    Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text));
+                                        }
+                                        return new Validation(Validation.Type.INFORMATION,
+                                                Bundle.getMessage(willCreateBean, manager.getBeanTypeHandled(), text));
+                                    } else {
+                                        return new Validation(Validation.Type.WARNING,
+                                                Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
+                                    }
                                 }
                             }
                         }
@@ -199,19 +227,67 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     /**
      * {@inheritDoc}
      *
-     * @return the selected item as the supported type of NamedBean or null if
-     *         there is no selection, or {@link #isAllowNull()} is true and the
-     *         null object is selected
+     * @return the selected item as the supported type of NamedBean, creating a
+     *         new NamedBean as needed if {@link #isEditable()} and
+     *         {@link #isProviding()} are true, or null if there is no
+     *         selection, or {@link #isAllowNull()} is true and the null object
+     *         is selected
      */
     @Override
     public B getSelectedItem() {
-        return getItemAt(getSelectedIndex());
+        B item = getItemAt(getSelectedIndex());
+        if (isEditable() && providing && item == null) {
+            Component ec = getEditor().getEditorComponent();
+            if (ec instanceof JTextComponent && manager instanceof ProvidingManager) {
+                JTextComponent jtc = (JTextComponent) ec;
+                String text = jtc.getText();
+                if (text != null && !text.isEmpty()) {
+                    // Once #6974 is merged, isValidSystemNameFormat can be expected to be honest
+                    // and the test that text starts with the correct system prefix can be removed
+                    if ((manager.isValidSystemNameFormat(text) && text.startsWith(manager.getSystemPrefix())) || text.equals(NamedBean.normalizeUserName(text))) {
+                        ProvidingManager<B> pm = (ProvidingManager<B>) manager;
+                        item = pm.provide(jtc.getText());
+                    }
+                } else {
+                    item = null;
+                }
+            }
+        }
+        return item;
+    }
+
+    /**
+     * Check if new NamedBeans can be provided by a
+     * {@link jmri.ProvidingManager} when {@link #isEditable} returns
+     * {@code true}.
+     *
+     * @return {@code true} is allowing new NamedBeans to be provided;
+     *         {@code false} otherwise
+     */
+    public boolean isProviding() {
+        return providing;
+    }
+
+    /**
+     * Set if new NamedBeans can be provided by a {@link jmri.ProvidingManager}
+     * when {@link #isEditable()} returns {@code true}.
+     *
+     * @param providing {@code true} to allow new NamedBeans to be provided;
+     *                  {@code false} otherwise
+     */
+    public void setProviding(boolean providing) {
+        this.providing = providing;
     }
 
     @Override
     public void setEditable(boolean editable) {
         if (editable && !(manager instanceof ProvidingManager)) {
             log.error("Unable to set editable to true because not backed by editable manager");
+            return; // refuse to allow editing if unable to accept user input
+        }
+        if (editable && !providing) {
+            log.error("Refusing to set editable if not allowing new NamedBeans to be created");
+            return; // refuse to allow editing if not allowing user input to be accepted
         }
         super.setEditable(editable);
     }
@@ -254,8 +330,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      *
      * @param name the name of the item to select
      * @throws IllegalArgumentException if {@link #isAllowNull()} is false and
-     *                                      no bean exists by name or name is
-     *                                      null
+     *                                  no bean exists by name or name is null
      */
     public void setSelectedItemByName(String name) {
         B item = null;
@@ -296,11 +371,10 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * is {@code true}.
      *
      * @param beanInUseKey a translatable bundle key where {@code {0}} is the
-     *                         result of
-     *                         {@link jmri.Manager#getBeanTypeHandled()} and {1}
-     *                         is the result of
-     *                         {@link jmri.NamedBean#getFullyFormattedDisplayName()}
-     *                         for the matching bean
+     *                     result of {@link jmri.Manager#getBeanTypeHandled()}
+     *                     and {1} is the result of
+     *                     {@link jmri.NamedBean#getFullyFormattedDisplayName()}
+     *                     for the matching bean
      */
     public void setNoMatchingToolTipBeanInUse(String beanInUseKey) {
         beanInUse = beanInUseKey;
@@ -308,15 +382,30 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * Set the translation key to be used when a typed in bean name does not
-     * match a named bean and {@link #isValidatingInput()} is {@code true}.
+     * match a named bean, {@link #isValidatingInput()} is {@code true} and
+     * {@link #isProviding()} is {@code false}.
      *
      * @param noMatchingBeanKey a translatable bundle key where {@code {0}} is
-     *                              the result of
-     *                              {@link jmri.Manager#getBeanTypeHandled()}
-     *                              and {1} is the typed input
+     *                          the result of
+     *                          {@link jmri.Manager#getBeanTypeHandled()} and
+     *                          {1} is the typed input
      */
     public void setNoMatchingToolTipNoMatchingBean(String noMatchingBeanKey) {
         noMatchingBean = noMatchingBeanKey;
+    }
+
+    /**
+     * Set the translation key to be used when a typed in bean name does not
+     * match a named bean, {@link #isValidatingInput()} is {@code true} and
+     * {@link #isProviding()} is {@code true}.
+     *
+     * @param willCreateBeanKey a translatable bundle key where {@code {0}} is
+     *                          the result of
+     *                          {@link jmri.Manager#getBeanTypeHandled()} and
+     *                          {1} is the typed input
+     */
+    public void setNoMatchingToolTipWillCreateBean(String willCreateBeanKey) {
+        willCreateBean = willCreateBeanKey;
     }
 
     public Set<B> getExcludedItems() {
@@ -363,7 +452,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         SYSTEMNAMEUSERNAME(5);
 
         //
-        // following code maps enumsto int and int to enum
+        // following code maps enum to int and int to enum
         //
         private final int value;
         private static final Map<Integer, DisplayOptions> enumMap;
@@ -498,8 +587,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 if (item != null) {
                     String userName = item.getUserName();
 
-                    if (item.getSystemName().toLowerCase().startsWith(prefix) ||
-                            (userName != null && userName.toLowerCase().startsWith(prefix))) {
+                    if (item.getSystemName().toLowerCase().startsWith(prefix)
+                            || (userName != null && userName.toLowerCase().startsWith(prefix))) {
                         return i;
                     }
                 }

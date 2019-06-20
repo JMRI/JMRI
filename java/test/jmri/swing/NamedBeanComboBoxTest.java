@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
@@ -149,13 +150,13 @@ public class NamedBeanComboBoxTest {
         Manager<Sensor> m = InstanceManager.getDefault(jmri.SensorManager.class);
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
 
-        assertTrue(!t.isValidatingInput());
-
-        t.setValidatingInput(true);
         assertTrue(t.isValidatingInput());
 
         t.setValidatingInput(false);
         assertTrue(!t.isValidatingInput());
+
+        t.setValidatingInput(true);
+        assertTrue(t.isValidatingInput());
 
     }
 
@@ -187,7 +188,7 @@ public class NamedBeanComboBoxTest {
     }
 
     @Test
-    public void testSensorTestValidity()
+    public void testSensorTestProvidingValidity()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
@@ -195,6 +196,126 @@ public class NamedBeanComboBoxTest {
         t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
         t.setAllowNull(true);
         t.setEditable(true);
+        t.setProviding(true);
+        JTextField c = ((JTextField) t.getEditor().getEditorComponent());
+
+        // test with no matching bean and isValidatingInput() == false
+        // should always match NONE
+        t.setValidatingInput(false);
+
+        c.setText("");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("", c.getText());
+        assertNull(t.getSelectedItem());
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("IS1");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1", c.getText());
+        Sensor s1 = t.getSelectedItem();
+        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("K ");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K ", c.getText());
+        assertEquals(s1, t.getSelectedItem()); // selection did not change because of invalid input
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        // clear manager
+        m.deregister(s1);
+        s1 = null;
+
+        // test with no matching bean and isValidatingInput() == true
+        // should match NONE when empty and DANGER otherwise
+        t.setValidatingInput(true);
+
+        c.setText("");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("", c.getText());
+        assertNull(t.getSelectedItem());
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("IS1");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1", c.getText());
+        s1 = t.getSelectedItem();
+        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(Validation.Type.INFORMATION, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("K ");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K ", c.getText());
+        assertEquals(s1, t.getSelectedItem()); // selection did not change because of invalid input
+        assertEquals(Validation.Type.DANGER, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        // clear manager
+        m.deregister(s1);
+        s1 = null;
+
+        // test with a matching bean and isValidatingInput() == false
+        // should always match NONE
+        t.setValidatingInput(false);
+
+        c.setText("");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("", c.getText());
+        assertNull(t.getSelectedItem());
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("IS1");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1", c.getText());
+        s1 = t.getSelectedItem();
+        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("K ");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K ", c.getText());
+        assertEquals(s1, t.getSelectedItem()); // selection did not change because of invalid input
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        // clear manager
+        m.deregister(s1);
+        s1 = null;
+
+        // test with a matching bean and isValidatingInput() == true
+        // should match DANGER with text "K " and NONE otherwise
+        t.setValidatingInput(true);
+
+        c.setText("");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("", c.getText());
+        assertNull(t.getSelectedItem());
+        assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        t.setSelectedItem(null); // change selection to verify selection changes
+        assertNull(t.getSelectedItem());
+        c.setText("IS1");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("IS1", c.getText());
+        s1 = t.getSelectedItem();
+        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(Validation.Type.INFORMATION, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+
+        c.setText("K ");
+        c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
+        assertEquals("K ", c.getText());
+        assertEquals(s1, t.getSelectedItem()); // selection did not change because of invalid input
+        assertEquals(Validation.Type.DANGER, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+    }
+
+    @Test
+    public void testSensorTestNonProvidingValidity()
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
+            SecurityException {
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
+        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
+        t.setAllowNull(true);
+        t.setEditable(true);
+        t.setProviding(false);
         JTextField c = ((JTextField) t.getEditor().getEditorComponent());
 
         // test with no matching bean and isValidatingInput() == false
@@ -213,14 +334,14 @@ public class NamedBeanComboBoxTest {
         assertNull(t.getSelectedItem());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
-        c.setText("K");
+        c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K", c.getText());
+        assertEquals("K ", c.getText());
         assertNull(t.getSelectedItem());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
         // test with no matching bean and isValidatingInput() == true
-        // should match NONE when empty and DANGER otherwise
+        // should match NONE when empty and WARNING otherwise
         t.setValidatingInput(true);
 
         c.setText("");
@@ -233,13 +354,13 @@ public class NamedBeanComboBoxTest {
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
         assertEquals("IS1", c.getText());
         assertNull(t.getSelectedItem());
-        assertEquals(Validation.Type.DANGER, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
-        c.setText("K");
+        c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K", c.getText());
-        assertNull(t.getSelectedItem());
-        assertEquals(Validation.Type.DANGER, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals("K ", c.getText());
+        assertNull(t.getSelectedItem());        
+        assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
         // test with a matching bean and isValidatingInput() == false
         // should always match NONE
@@ -258,14 +379,14 @@ public class NamedBeanComboBoxTest {
         assertEquals(s, t.getSelectedItem());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
-        c.setText("K");
+        c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K", c.getText());
+        assertEquals("K ", c.getText());
         assertEquals(s, t.getSelectedItem()); // selection did not change because of invalid input
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
         // test with a matching bean and isValidatingInput() == true
-        // should match DANGER with text "K" and NONE otherwise
+        // should match WARNING with text "K " and NONE otherwise
         t.setValidatingInput(true);
 
         c.setText("");
@@ -282,11 +403,11 @@ public class NamedBeanComboBoxTest {
         assertEquals(s, t.getSelectedItem());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
 
-        c.setText("K");
+        c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
-        assertEquals("K", c.getText());
+        assertEquals("K ", c.getText());
         assertEquals(s, t.getSelectedItem()); // selection did not change because of invalid input
-        assertEquals(Validation.Type.DANGER, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
+        assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
     }
 
     @Test
