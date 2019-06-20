@@ -866,7 +866,7 @@ public class CircuitBuilder {
         return null;
     }
 
-    private SignalMast getProtectingSignal(OBlock block, Portal portal) {
+    protected SignalMast getProtectingSignal(OBlock block, Portal portal) {
         // fromSignal protects toBlock, toSignal protects fromBlock
         NamedBean signal = portal.getFromSignal();
         if (signal != null && (signal instanceof SignalMast) && block.equals(portal.getToBlock())) {

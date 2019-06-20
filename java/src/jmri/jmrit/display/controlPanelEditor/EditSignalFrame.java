@@ -1,25 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -32,7 +21,6 @@ import jmri.SignalMast;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.picker.PickSinglePanel;
 
 /**
  *
@@ -85,7 +73,7 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _mastName, "mastName", true, null));
         _mastName.setPreferredSize(new Dimension(300, _mastName.getPreferredSize().height));
-        _mastName.setToolTipText(Bundle.getMessage("TooltipPortalName", _homeBlock.getDisplayName()));
+        _mastName.setToolTipText(Bundle.getMessage("ToolTipMastName", _homeBlock.getDisplayName()));
         signalPanel.add(panel);
 
         String[] blurbLines = {Bundle.getMessage("DragMast", Bundle.getMessage("mastName"))};
@@ -100,6 +88,7 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     protected void clearListSelection() {
         _portalList.clearSelection();
         _parent._editor.highlight(null);
+        _mastName.setText(null);
     }
 
     protected void setSelected(PortalIcon icon) {
@@ -119,10 +108,18 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
+            SignalMast mast =_parent.getProtectingSignal(_homeBlock, portal);
+            if (mast != null) {
+                _mastName.setText(mast.getDisplayName());
+            } else {
+                _mastName.setText(null);
+            }
             java.util.List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
             for (PortalIcon icon : piArray) {
                 setPortalIcon(icon, false);
             }
+        } else {
+            _mastName.setText(null);
         }
     }
 

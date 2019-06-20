@@ -2,8 +2,6 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -54,10 +52,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
 
     private JTextField _portalName;
     private JPanel _dndPanel;
-
-/*    static int STRUT_SIZE = 10;
-    static Point _loc = new Point(-1, -1);
-    static Dimension _dim = null;*/
 
     /* Ctor for fix a portal error  */
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, Portal portal, PortalIcon icon) {
