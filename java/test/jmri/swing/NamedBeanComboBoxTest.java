@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
@@ -224,7 +223,6 @@ public class NamedBeanComboBoxTest {
 
         // clear manager
         m.deregister(s1);
-        s1 = null;
 
         // test with no matching bean and isValidatingInput() == true
         // should match NONE when empty and DANGER otherwise
@@ -251,7 +249,6 @@ public class NamedBeanComboBoxTest {
 
         // clear manager
         m.deregister(s1);
-        s1 = null;
 
         // test with a matching bean and isValidatingInput() == false
         // should always match NONE
@@ -278,7 +275,6 @@ public class NamedBeanComboBoxTest {
 
         // clear manager
         m.deregister(s1);
-        s1 = null;
 
         // test with a matching bean and isValidatingInput() == true
         // should match DANGER with text "K " and NONE otherwise

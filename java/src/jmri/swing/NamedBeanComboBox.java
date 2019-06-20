@@ -248,8 +248,6 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                         ProvidingManager<B> pm = (ProvidingManager<B>) manager;
                         item = pm.provide(jtc.getText());
                     }
-                } else {
-                    item = null;
                 }
             }
         }
