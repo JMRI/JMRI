@@ -128,5 +128,8 @@ log4j.category.jmri.util.JUnitAppenderTest = INFO
 
 # INFO is part of application tests
 log4j.category.apps.Apps = INFO
+log4j.category.apps.AppsBase = INFO
 log4j.category.apps.PanelPro.PanelPro = INFO
+log4j.category.apps.gui3.Apps3 = INFO
+log4j.category.apps.gui3.dp3.DecoderPro3 = INFO
 
