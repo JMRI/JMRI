@@ -871,7 +871,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         String entry = (String) box.getSelectedItem();
         T newNameBean = getBySystemName(entry);
         if (oldNameBean != newNameBean) {
-            oldNameBean.setUserName("");
+            oldNameBean.setUserName(null);
             newNameBean.setUserName(currentName);
             InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {

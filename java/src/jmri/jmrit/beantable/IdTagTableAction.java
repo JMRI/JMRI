@@ -60,6 +60,11 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
         tagManager = (IdTagManager) t;
         if (m != null) {
             m.setManager(tagManager);
+        if (t instanceof IdTagManager) {
+            tagManager = (IdTagManager) t;
+            if (m != null) {
+                m.setManager(tagManager);
+            }
         }
         tagManager.addPropertyChangeListener(this);
     }
@@ -217,6 +222,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
+                // return (e.getPropertyName().indexOf("alue")>=0);
             }
 
             @Override

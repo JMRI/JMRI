@@ -15,9 +15,10 @@
 
 <!ELEMENT operations-config (trains | options | schedules | trainScheduleOptions | automations)*>
 
-<!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | scripts | manifestCreator 
+<!ELEMENT options (trainOptions | conductorOptions | rowColorOptions | trainEditOptions | scripts | manifestCreator 
 | switchlistCreator)*>
 <!ELEMENT trainOptions EMPTY>
+<!ELEMENT conductorOptions EMPTY>
 <!ELEMENT rowColorOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
@@ -28,6 +29,8 @@
 <!ATTLIST trainOptions openFile		 	(true | false) "false">
 <!ATTLIST trainOptions runFile		 	(true | false) "false">
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
+
+<!ATTLIST conductorOptions showHyphenName		(true | false) "false">
 
 <!ATTLIST rowColorOptions rowColorManual		(true | false) "false">
 <!ATTLIST rowColorOptions rowColorBuidFailed 	CDATA #IMPLIED>
@@ -194,6 +197,7 @@
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>
 <!ATTLIST item gotoAutomationId		CDATA #IMPLIED>
+<!ATTLIST item gotoBranched			CDATA #IMPLIED>
 <!ATTLIST item trainScheduleId		CDATA #IMPLIED>
 <!ATTLIST item haltFail				(true | false) "true">
 <!ATTLIST item actionRan			(true | false) "false">

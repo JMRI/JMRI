@@ -72,15 +72,12 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         
         preferences = jmri.InstanceManager.getDefault(CbusPreferences.class);
         
-        if ( preferences != null ) {
-            
-            setBackgroundAllocateListener( preferences.getAllocateNNListener() );
-            if ( preferences.getStartupSearchForCs() ) {
-                send.searchForCommandStations();
-            }
-            if ( preferences.getStartupSearchForNodes() ) {
-                send.searchForNodes();
-            }
+        setBackgroundAllocateListener( preferences.getAllocateNNListener() );
+        if ( preferences.getStartupSearchForCs() ) {
+            send.searchForCommandStations();
+        }
+        if ( preferences.getStartupSearchForNodes() ) {
+            send.searchForNodes();
         }
         
     }

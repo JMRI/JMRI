@@ -410,14 +410,25 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @return the lookAndFeel
+     * Get the name of the class implementing the preferred look and feel. Note
+     * this may not be the in-use look and feel if the preferred look and feel
+     * is not available on the current platform; and will be overwritten if
+     * preferences are saved on a platform where the preferred look and feel is
+     * not available.
+     * 
+     * @return the look and feel class name
      */
     public String getLookAndFeel() {
         return lookAndFeel;
     }
 
     /**
-     * @param lookAndFeel the lookAndFeel to set
+     * Set the name of the class implementing the preferred look and feel. Note
+     * this change only takes effect after the application is restarted, because
+     * Java has some issues setting the look and feel correctly on already open
+     * windows.
+     * 
+     * @param lookAndFeel the look and feel class name
      */
     public void setLookAndFeel(String lookAndFeel) {
         String oldLookAndFeel = this.lookAndFeel;
@@ -433,8 +444,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void applyLookAndFeel() {
         String lafClassName = null;
         for (LookAndFeelInfo LAF : UIManager.getInstalledLookAndFeels()) {
-            if (LAF.getName().equals(this.lookAndFeel)) {
+            // accept either name or classname of look and feel
+            if (LAF.getClassName().equals(this.lookAndFeel) || LAF.getName().equals(this.lookAndFeel)) {
                 lafClassName = LAF.getClassName();
+                break; // use first match, not last match (unlikely to be different, but you never know)
             }
         }
         log.debug("Look and feel selection \"{}\" ({})", this.lookAndFeel, lafClassName);
@@ -490,6 +503,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * available, to ensure the correct language is set as
      * startup proceeds. Must be followed eventually
      * by a complete {@link #setLocale}.
+     * 
+     * @param profile The profile to get the locale from
      */
     public static void setLocaleMinimally(Profile profile) {
         String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found

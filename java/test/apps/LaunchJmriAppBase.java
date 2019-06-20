@@ -25,14 +25,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
- * from prebuilt profile directories
+ * from prebuilt profile directories.
  *
  * @author Bob Jacobsen 2018
  */
 abstract public class LaunchJmriAppBase {
 
     static final int RELEASETIME = 3000; // mSec
-    static final int TESTMAXTIME = 20; // seconds - not too long, so job doesn't hang
+    static final int TESTMAXTIME = 40; // seconds - not too long, so job doesn't hang
+    // in particular the #testLaunchInitLoop() test needs this time for setup
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -44,18 +45,17 @@ abstract public class LaunchJmriAppBase {
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     /**
-     * Run one application
+     * Run one application.
      * 
-     * @param profileName Name of the Profile to copy from files in
-     *                  java/test/apps/PanelPro/profiles/
-     * @param frameName Application (frame) title
-     * @param startMessageStart Start of the "we're up!" message
+     * @param profileName       Name of the Profile folder to copy from
+     *                          java/test/apps/PanelPro/profiles/
+     * @param frameName         Application (frame) title
+     * @param startMessageStart Start of the "we're up!" message as seen in System Console
      */
     protected void runOne(String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
-
             // create a custom profile
             folder.create();
             File tempFolder = folder.newFolder();
@@ -70,11 +70,11 @@ abstract public class LaunchJmriAppBase {
 
             JUnitUtil.waitFor(() -> {
                 return JmriJFrame.getFrame(frameName) != null;
-            }, "window up");
+            }, "the application window is up");
 
             JUnitUtil.waitFor(() -> {
                 return JUnitAppender.checkForMessageStartingWith(startMessageStart) != null;
-            }, "first Info line seen");
+            }, "first Info line seen in Console after startup");
 
             extraChecks();
 
@@ -104,11 +104,13 @@ abstract public class LaunchJmriAppBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
