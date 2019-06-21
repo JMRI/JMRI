@@ -2805,8 +2805,11 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         if (newTurnout == null) {
             noTurnoutMessage(title, bp.getDisplayName());
         }
-        if (newTurnout != null && (newTurnout.getComment() == null || newTurnout.getComment().isEmpty())) {
-            newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
+        else {
+            String comment = newTurnout.getComment();
+            if (comment == null || comment.isEmpty()) {
+                newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
+            }
         }
         if (oldTurnout == null || newTurnout == oldTurnout) {
             return newTurnout;
