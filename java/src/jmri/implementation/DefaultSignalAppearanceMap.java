@@ -251,7 +251,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             log.debug("appearance not configured");
             return;
         }
-
     }
 
     /**
@@ -373,9 +372,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     /**
-     * Returns a list of potential aspects that we could set the signalmast to
-     * given the state of the advanced signal mast.
+     * {@inheritDoc}
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "null returned is documented to mean no valid result")
     @Override
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect) {
         if (aspectRelationshipMap == null) {

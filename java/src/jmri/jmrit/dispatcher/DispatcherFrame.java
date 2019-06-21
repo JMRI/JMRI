@@ -1504,6 +1504,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 at.initializeRestartSensor();
             }
         }
+        activeTrainsTableModel.fireTableDataChanged();
     }
 
     /**
@@ -2249,19 +2250,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /**
-     * This method tests time assuming both times are on the same day (ignoring
-     * midnight).
+     * This method tests time
      *
      * @param hr  the hour to test against (0-23)
      * @param min the minute to test against (0-59)
-     * @return true if fast clock time and tested time are in same day
+     * @return true if fast clock time and tested time are the same
      */
     protected boolean isFastClockTimeGE(int hr, int min) {
         Calendar now = Calendar.getInstance();
         now.setTime(fastClock.getTime());
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = now.get(Calendar.MINUTE);
-        return ((nowHours * 60) + nowMinutes) >= ((hr * 60) + min);
+        return ((nowHours * 60) + nowMinutes) == ((hr * 60) + min);
     }
 
     // option access methods

@@ -10,7 +10,7 @@
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Light Table">
+  <meta name="keywords" content="JMRI help Light Table lights enable disable">
   <!--#include virtual="/Style" -->
 </head>
 
@@ -55,6 +55,13 @@
       One or more of these controls may be specified when the
       Light is created, or when it is edited via the Light Table.
 
+    <p>Note that enabled / disabled column only applies to a Light's
+      automated Light Control mechanism.
+      <br>A 'disabled' state will not
+      prevent a Light from being turned On or Off using the button
+      in the Light Table or from being controlled by a Logix.</p>
+
+
       <p>When a Light is created, or when it is read from a
       configuration file, the Light is 'activated'; it is set up to
       monitor automatically any changes in state of its control
@@ -63,6 +70,24 @@
       way, the Light is switched on or off. Lights can also be
       controlled by <a href="LogixTable.shtml">Logix</a>, if more
       complicated control logic is needed.</p>
+      
+      
+      
+      
+      <p>which contains the following columns:</p>
+
+      <ul>
+        <li>System Name</li>
+        <li>User Name (optional)</li>
+        <li>State</li>
+        <li>Comment (optional, double click to edit)</li>
+        <li>Enabled ( Automated Light Control excl. Logix )</li>
+        <li>Intensity</li>
+      </ul>
+      
+      
+      
+      
 
       <p>The Light Table contains an 'Enabled' column. For a Light
       to be triggered by its control Sensor, the Fast Clock, or its
@@ -79,10 +104,11 @@
       light.</p>
 
       <img src="images/LightTableGraphic.png" height="135" width="276"
-      align="right" alt="Graphic Light state column">
+      alt="Graphic Light state column">
       <p>Choose between textual and graphic display of the Light state
-      in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
-      </p>
+      in the <a href="../../../apps/TabbedPreferences.shtml#Display" 
+      title="Main JMRI Preferences"
+      >Display preferences</a>.</p>
 
       <h2>Switching a Light On or Off</h2>
 
@@ -127,13 +153,14 @@
       To define a new light, click the
       <a href="LightAddEdit.shtml">Add...</a> button the Light
       Table. This will take you to a <a href=
-      "LightAddEdit.shtml">new pane</a> for adding or editing
+      "LightAddEdit.shtml">new window</a> for adding or editing
       Lights.
 
       <h2>Saving Lights to Disk</h2>
 
-      <p>Lights are saved in your layout configuration file, along
-      with Turnouts, Sensors, Signal Heads, etc. To store this
+      <p>Lights is kept in your <i>layout configuration</i>, along
+      with Turnouts, Sensors, Signal Heads, control panel
+      setup etc. To store this
       information on disk, use <b>Store &gt;</b> in the <b>File</b>
       menu at the top of the Lights Table (or other tables from the
       Tools menu), or select <b>Store Panel...</b> in the
@@ -141,9 +168,9 @@
       each Light is not saved in the configuration file. When
       Lights are loaded from a configuration file, they are all
       enabled.</p>
-
-      <p>Back to the
-        <a href="../../../../html/tools/Lights.shtml">Lights help intro</a>.</p>
+      
+      <h3>Further JMRI Support</h3>
+      <p><a href="../../../../html/tools/Lights.shtml" title="JMRI Lights Help">JMRI Lights Documentation</a>.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

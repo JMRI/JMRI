@@ -1,9 +1,9 @@
 package jmri.managers;
 
+import java.util.Objects;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
-
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
@@ -51,6 +51,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public Turnout getTurnout(@Nonnull String name) {
         Turnout result = getByUserName(name);
         if (result == null) {
@@ -368,8 +369,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);

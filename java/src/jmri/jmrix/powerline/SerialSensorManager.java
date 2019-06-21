@@ -146,8 +146,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);

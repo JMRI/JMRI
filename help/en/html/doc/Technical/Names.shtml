@@ -107,7 +107,8 @@
       these "system names". JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
-      <h2 id="format">System Name Format</h2>
+      <a name="format" id="format"></a>
+      <h2>System Name Format</h2>
       
       A system name is formed from a short "system prefix" representing
       the hardware system, followed by a single upper case "type letter"
@@ -882,9 +883,10 @@ SENSOR GROUP:my group:LS2
       <p>To make this possible, two informal rules are used:</p>
 
       <ul>
-        <li>Users should not use the : (colon, ASCII 0x3A), "
-        (double quote, ASCII 0x22), nor $ (dollar sign, ASCII 0x24
-        ) characters in their system or user names. Automatic tools
+        <li>Users should not use the <code>:</code> (colon,
+        ASCII 0x3A), <code>"</code> (double quote, ASCII
+        0x22), nor <code>$</code> (dollar sign, ASCII 0x24)
+        characters in their system or user names. Automatic tools
         should use at least one of these to make sure they don't
         collide with user-selected names. Quotes should always be
         used in pairs to allow nesting.</li>

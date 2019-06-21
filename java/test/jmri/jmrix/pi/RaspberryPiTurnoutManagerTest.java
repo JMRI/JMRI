@@ -20,9 +20,8 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @Override
     public String getSystemName(int i){
-        return "PiT"+i;
+        return l.getSystemPrefix() + "T" + i;
     }
-
 
    @Test
    public void ConstructorTest(){
@@ -31,7 +30,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
    @Test
    public void checkPrefix(){
-       Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
+       Assert.assertEquals("Prefix", "Pi", l.getSystemPrefix());
    }
 
     @Override    
@@ -107,8 +106,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     protected int getNumToTest2() {
         return 5;
     }
-
-
 
     // The minimal setup for log4J
     @Override

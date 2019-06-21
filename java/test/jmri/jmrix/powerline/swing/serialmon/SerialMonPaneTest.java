@@ -22,6 +22,7 @@ public class SerialMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         // pane for AbstractMonPaneTestBase, panel for JmriPanel
         panel = pane = new SerialMonPane();
         title="Powerline_: Communication Monitor";
+        helpTarget="package.jmri.jmrix.powerline.serialmon.SerialMonFrame";
     }
 
     @Override

@@ -227,8 +227,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21SensorManager.class);

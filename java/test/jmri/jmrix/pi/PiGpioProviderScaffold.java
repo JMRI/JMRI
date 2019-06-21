@@ -7,7 +7,8 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.WiringPiGpioProviderBase;
 
 /**
- * Tests for RaspberryPiSensorManager.
+ * Implementation of RaspberryPiAdapter that eases
+ * checking whether data was forwarded or not
  *
  * @author Paul Bender Copyright (C) 2016
  */

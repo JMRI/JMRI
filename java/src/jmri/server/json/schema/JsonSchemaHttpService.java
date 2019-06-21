@@ -55,7 +55,8 @@ public class JsonSchemaHttpService extends JsonHttpService {
                         try {
                             ArrayNode schemas = this.mapper.createArrayNode();
                             Set<JsonNode> dedup = new HashSet<>();
-                            for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class).getServices(name)) {
+                            for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class)
+                                    .getServices(name)) {
                                 // separate try/catch blocks to ensure one failure does not
                                 // block following from being accepted
                                 if (server == null || server) {
@@ -111,7 +112,8 @@ public class JsonSchemaHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        return this.doGet(type, name, data, locale, id);
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                Bundle.getMessage(locale, "PostNotAllowed", type), id);
     }
 
     @Override

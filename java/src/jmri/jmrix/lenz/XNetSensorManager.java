@@ -209,8 +209,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class);

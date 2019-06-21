@@ -38,9 +38,10 @@ import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*Created with Notepad++*/
 /**
- * Pane for monitoring and configuring a MERG CBUS Command Station
- * Created with Notepad++
+ * Pane for monitoring and configuring a MERG CBUS Command Station.
+ *
  * @author Steve Young Copyright (C) 2018
  * @since 4.13.4
  */
@@ -66,7 +67,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             CbusSlotMonitorDataModel.MAX_COLUMN); // controller, row, column
         init();
     }
-
 
     public void init() {
         JTable slotTable = new JTable(slotModel) {
@@ -187,7 +187,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         p1.setMinimumSize(p1size);
         
         p1.setVisible(true);
-        log.debug("class name {} ",CbusSlotMonitorPane.class.getName());
+        log.debug("class name {}", CbusSlotMonitorPane.class.getName());
     }
     
     @Override
@@ -239,7 +239,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             MenuSelectionManager.defaultManager().setSelectedPath(path);
         }
     }
-    
 
     /**
      * {@inheritDoc}

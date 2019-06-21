@@ -243,7 +243,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         mainButtons.setVisible(true);
         add(mainButtons);
         
-        addHelpMenu("package.jmri.jmrix.cmri.serial.serialmon.CMRInetMetricsFrame", true);
+        addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsFrame", true);
 
         // pack for display
         //-----------------

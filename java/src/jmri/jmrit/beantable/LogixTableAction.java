@@ -1324,9 +1324,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param sName system name of bean to be deleted
      */
     void deletePressed(String sName) {
-        if (!checkFlags(sName)) {
-            return;
-        }
         if (!checkConditionalReferences(sName)) {
             return;
         }

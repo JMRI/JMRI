@@ -55,6 +55,7 @@ import org.junit.runners.Suite;
         XNetAddressTest.class,
         XNetStreamConnectionConfigTest.class,
         XNetHeartBeatTest.class,
+        jmri.jmrix.lenz.lzv200.PackageTest.class,
 })
 
 /**
