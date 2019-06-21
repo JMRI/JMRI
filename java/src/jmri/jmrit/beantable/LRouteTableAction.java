@@ -1693,6 +1693,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
+                            case SET_SIGNAL_DARK:
                             case SignalHead.DARK:
                                 varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
@@ -1719,9 +1720,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                                 break;
                             case CLEAR_SIGNAL_HELD:
                                 add = false;    // don't know how to test for this
-                                break;
-                            case SET_SIGNAL_DARK:
-                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SET_SIGNAL_LIT:
                                 varType = Conditional.Type.SIGNAL_HEAD_LIT;

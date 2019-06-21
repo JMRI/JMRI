@@ -587,20 +587,24 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
 
             @Override
-            public String getValue(String name) {
-                int val = turnManager.getBySystemName(name).getCommandedState();
-                switch (val) {
-                    case Turnout.CLOSED:
-                        return closedText;
-                    case Turnout.THROWN:
-                        return thrownText;
-                    case Turnout.UNKNOWN:
-                        return Bundle.getMessage("BeanStateUnknown");
-                    case Turnout.INCONSISTENT:
-                        return Bundle.getMessage("BeanStateInconsistent");
-                    default:
-                        return "Unexpected value: " + val;
+            public String getValue(@Nonnull String name) {
+                Turnout turn = turnManager.getBySystemName(name);
+                if (turn != null) {
+                    int val = turn.getCommandedState();
+                    switch (val) {
+                        case Turnout.CLOSED:
+                            return closedText;
+                        case Turnout.THROWN:
+                            return thrownText;
+                        case Turnout.UNKNOWN:
+                            return Bundle.getMessage("BeanStateUnknown");
+                        case Turnout.INCONSISTENT:
+                            return Bundle.getMessage("BeanStateInconsistent");
+                        default:
+                            return "Unexpected value: " + val;
+                    }
                 }
+                return "Turnout not found";
             }
 
             @Override
@@ -1204,10 +1208,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             cb.setSelectedIndex(0);
         } else if (t.getTurnoutOperation() == null) {
             cb.setSelectedIndex(1);
-        } else if (t.getTurnoutOperation().isNonce()) {
-            cb.setSelectedIndex(2);
-        } else {
-            cb.setSelectedItem(t.getTurnoutOperation().getName());
+        } else { // spotbugs happy null check
+            if (t.getTurnoutOperation().isNonce()) {
+                cb.setSelectedIndex(2);
+            } else {
+                cb.setSelectedItem(t.getTurnoutOperation().getName());
+            }
         }
     }
 
@@ -1702,7 +1708,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
 
         String uName = userNameTextField.getText().trim(); // N11N
-        if ((uName != null) && uName.isEmpty()) {
+        if (uName.isEmpty()) {
             uName = null;
         }
 

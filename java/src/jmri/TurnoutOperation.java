@@ -123,6 +123,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      *
      * @return name
      */
+    @Nonnull
     public String getName() {
         return name;
     }
