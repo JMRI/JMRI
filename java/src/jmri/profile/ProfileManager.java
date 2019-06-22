@@ -108,10 +108,9 @@ public class ProfileManager extends Bean {
     /**
      * Get the {@link Profile} that is currently in use.
      * <p>
-     * Note that this returning null is not an error condition, and
-     * should not be treated as such, since there are times when the
-     * user interacts with a JMRI application that there should be no
-     * active profile.
+     * Note that this returning null is not an error condition, and should not
+     * be treated as such, since there are times when the user interacts with a
+     * JMRI application that there should be no active profile.
      *
      * @return the in use Profile or null if there is no Profile in use
      */
@@ -249,7 +248,7 @@ public class ProfileManager extends Bean {
             p.setProperty(AUTO_START, Boolean.toString(autoStart));
             p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
         }
-        
+
         if (!config.exists() && !config.createNewFile()) {
             throw new IOException("Unable to create file at " + config.getAbsolutePath()); // NOI18N
         }
@@ -258,7 +257,7 @@ public class ProfileManager extends Bean {
             p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
             os.close();
         } catch (Throwable ex) { // IOException, but also misc errors in Java XML processing
-            log.error("While trying to save active profile {}", config,ex);
+            log.error("While trying to save active profile {}", config, ex);
             if (os != null) {
                 os.close();
             }
@@ -633,8 +632,8 @@ public class ProfileManager extends Bean {
      * Create a default profile if no profiles exist.
      *
      * @return A new profile or null if profiles already exist
-     * @throws java.io.IOException        if unable to create a Profile
      * @throws IllegalArgumentException if profile already exists at default location
+     * @throws java.io.IOException      if unable to create a Profile
      */
     @CheckForNull
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
@@ -806,6 +805,7 @@ public class ProfileManager extends Bean {
      *                                 Profile
      */
     public void export(@Nonnull Profile profile, @Nonnull File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
+            boolean exportExternalRoster) throws IOException, JDOMException {
         if (!target.exists() && !target.createNewFile()) {
             throw new IOException("Unable to create file " + target);
         }
