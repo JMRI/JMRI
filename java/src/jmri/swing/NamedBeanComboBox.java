@@ -150,19 +150,19 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                         // and the test that text starts with the correct system prefix can be removed
                                         if (!manager.isValidSystemNameFormat(text) && !text.startsWith(manager.getSystemPrefix()) && !text.equals(NamedBean.normalizeUserName(text))) {
                                             return new Validation(Validation.Type.DANGER,
-                                                    Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text));
+                                                    Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text), preferences);
                                         }
                                         return new Validation(Validation.Type.INFORMATION,
-                                                Bundle.getMessage(willCreateBean, manager.getBeanTypeHandled(), text));
+                                                Bundle.getMessage(willCreateBean, manager.getBeanTypeHandled(), text), preferences);
                                     } else {
                                         return new Validation(Validation.Type.WARNING,
-                                                Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text));
+                                                Bundle.getMessage(noMatchingBean, manager.getBeanTypeHandled(), text), preferences);
                                     }
                                 }
                             }
                         }
                     }
-                    return new Validation(Validation.Type.NONE, ""); // NOI18N
+                    return getNoneValidation();
                 }
             });
         }
