@@ -231,7 +231,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     @Override
-    @CheckReturnValue
+    @Nonnull
     public String describeState(int state) {
         switch (state) {
             case THROWN: return Bundle.getMessage("TurnoutStateThrown");
@@ -770,8 +770,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             } else if (_knownState != UNKNOWN) {
                 newKnownState(UNKNOWN);
             }
-        } else {
-            // nothing required at this time for other modes
+        // nothing required at this time for other modes
         }
     }
 
@@ -848,9 +847,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                    newKnownState(UNKNOWN);
             }
             // end TWOSENSOR block
-        } else // don't need to do anything
-        {
-            return;
         }
     }
 

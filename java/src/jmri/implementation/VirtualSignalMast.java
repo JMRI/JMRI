@@ -29,15 +29,17 @@ public class VirtualSignalMast extends AbstractSignalMast {
         configureFromName(systemName);
     }
 
-    void configureFromName(String systemName) {
+    private static final String mastType = "IF$vsm";
+
+    private void configureFromName(String systemName) {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
             log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].equals("IF$vsm")) {
-            log.warn("SignalMast system name should start with IF$vsm but is {}", systemName);
+        if (!parts[0].equals(mastType)) {
+            log.warn("SignalMast system name should start with {} but is {}", mastType, systemName);
         }
 
         String system = parts[1];
@@ -78,7 +80,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
      *
      * @param newVal for ordinal of all VirtualSignalMasts in use
      */
-    public static void setLastRef(int newVal) {
+    protected static void setLastRef(int newVal) {
         lastRef = newVal;
     }
 
@@ -92,7 +94,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
     /**
      * Ordinal of all VirtualSignalMasts to create unique system name.
      */
-    protected static volatile int lastRef = 0;
+    private static volatile int lastRef = 0;
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMast.class);
 

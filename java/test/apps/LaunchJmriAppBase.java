@@ -104,11 +104,13 @@ abstract public class LaunchJmriAppBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.resetApplication();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

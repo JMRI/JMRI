@@ -17,16 +17,17 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System name specifies the creation information:
  * <pre>
- * IF:basic:one-searchlight:(IH1)(IH2)
- * </pre> The name is a colon-separated series of terms:
+ * IF$shsm:basic:one-searchlight:(IH1)(IH2)
+ * </pre>
+ * The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$shsm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
  * <li>(IH1)(IH2) - colon-separated list of names for SignalHeads
  * </ul>
- * There was an older form where the names where colon separated:
- * IF:basic:one-searchlight:IH1:IH2 This was deprecated because colons appear in
+ * There was an older form where the SignalHead names were also colon separated:
+ * IF$shsm:basic:one-searchlight:IH1:IH2 This was deprecated because colons appear in
  * e.g. SE8c system names.
  * <ul>
  * <li>IF$shsm - defines signal masts of this type
@@ -49,15 +50,17 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         configureFromName(systemName);
     }
 
-    void configureFromName(String systemName) {
+    private static final String mastType = "IF$shsm";
+
+    private void configureFromName(String systemName) {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
             log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].equals("IF$shsm")) {
-            log.warn("SignalMast system name should start with IF$shsm but is {}", systemName);
+        if (!parts[0].equals(mastType)) {
+            log.warn("SignalMast system name should start with {} but is {}", mastType, systemName);
         }
         String prefix = parts[0];
         String system = parts[1];
@@ -89,7 +92,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         }
     }
 
-    void configureHeads(String parts[], int start) {
+    private void configureHeads(String parts[], int start) {
         heads = new ArrayList<NamedBeanHandle<SignalHead>>();
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];
@@ -152,7 +155,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         super.setLit(state);
     }
 
-    List<NamedBeanHandle<SignalHead>> heads;
+    private List<NamedBeanHandle<SignalHead>> heads;
 
     public List<NamedBeanHandle<SignalHead>> getHeadsUsed() {
         return heads;
@@ -198,14 +201,18 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
             if (!error) {
                 SignalHead head = heads.get(i).getBean();
-                int toSet = map.getAspectSettings(aspect)[i];
-                if (delay == 0) {
-                    head.setAppearance(toSet);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Setting {} to {}", head.getSystemName(), head.getAppearanceName(toSet));
+                int[] dsam = map.getAspectSettings(aspect);
+                if (i < dsam.length) {
+                    int toSet = dsam[i];
+                    if (delay == 0) {
+                        head.setAppearance(toSet);
+                        log.debug("Setting {} to {}", head.getSystemName(),
+                                head.getAppearanceName(toSet));
+                    } else {
+                        delayedSet.put(head, toSet);
                     }
                 } else {
-                    delayedSet.put(head, toSet);
+                    log.error("     head '{}' appearance not set for aspect '{}'", head.getSystemName(), aspect);
                 }
             } else {
                 log.error("     head appearance not set due to above error");
@@ -230,7 +237,6 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                 log.error(ex.toString());
             }
         }
-        return;
     }
 
     private void setDelayedAppearances(final HashMap<SignalHead, Integer> delaySet, final int delay) {
@@ -258,9 +264,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             try {
                 thr.start();
                 thr.join();
-            } catch (java.lang.IllegalThreadStateException ex) {
-                log.error(ex.toString());
-            } catch (InterruptedException ex) {
+            } catch (java.lang.IllegalThreadStateException | InterruptedException ex) {
                 log.error(ex.toString());
             }
         }
@@ -285,7 +289,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast) mast).getHeadsUsed();
                 for (NamedBeanHandle<SignalHead> bean : masthead) {
                     if ((bean.getBean()) == head) {
-                        return ((jmri.implementation.SignalHeadSignalMast) mast).getDisplayName();
+                        return mast.getDisplayName();
                     }
                 }
             }
@@ -309,4 +313,5 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class);
+
 }
