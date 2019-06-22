@@ -10,7 +10,7 @@ addons:
     - libalut0
     - dbus-x11
     - tidy
-    - pulseaudio
+    - pulseaudio-module-x11
   firefox: latest
   chrome: beta
 
