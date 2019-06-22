@@ -14,7 +14,9 @@ import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ThrottleListener;
+import jmri.ThrottleListener.DecisionType;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -209,6 +211,55 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
     }
 
+    @Override
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+        if ( question == DecisionType.STEAL ){
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                    this, "StealQuestionText", 
+                    "StealRequestTitle", javax.swing.JOptionPane.YES_NO_OPTION)) {
+                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+                } else {
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                }
+            });
+        }
+        else if ( question == DecisionType.SHARE ){
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                    this, "ShareQuestionText", 
+                    "ShareRequestTitle", javax.swing.JOptionPane.YES_NO_OPTION)) {
+                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                } else {
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                }
+            });
+        }
+        else if ( question == DecisionType.STEAL_OR_SHARE ){
+            
+            String[] options = new String[] {"StealButton", 
+                "ShareButton", "CancelButton"};
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                int response = javax.swing.JOptionPane.showOptionDialog(
+                    this, "StealShareQuestionText",
+                    "StealShareRequestTitle",
+                    javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[1]);
+            
+                if (response == 0){
+                    log.debug("steal clicked");
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+                } else if ( response == 1 ) {
+                    log.debug("share clicked");
+                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                }
+                else {
+                    log.debug("cancel clicked");
+                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                }
+            });
+        }
+    }
     public void delThrottlesActionPerformed(java.awt.event.ActionEvent e) {
         int count = (int) numberOfThrottles.getValue();
         int startingDCC = (int) firstThrottleAddress.getValue();
