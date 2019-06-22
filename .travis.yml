@@ -13,9 +13,6 @@ addons:
   firefox: latest
   chrome: beta
 
-services:
-  - xvfb
-
 before_install:
   # ensure no unwanted defaults are set
   # see https://github.com/travis-ci/travis-ci/issues/4613#issuecomment-181845546
@@ -28,8 +25,10 @@ install:
   - mvn verify -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 before_script:
+  # start audio services
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then start-pulseaudio-x11 ; fi
   # silence errors from firefox about dbus.
-  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]]; then dbus-launch ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dbus-launch ; fi
 
 script:
   - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
@@ -59,11 +58,18 @@ env:
   - HEADLESS=true STATIC=true
 
 matrix:
-  exclude:
-  - os: osx
+  include:
+  - os: linux
+    dist: xenial
     env: HEADLESS=true STATIC=true
-  - os: osx
+  - os: linux
+    dist: xenial
     env: HEADLESS=true STATIC=false
+  - os: linux
+    dist: xenial
+    services:
+      - xvfb
+    env: HEADLESS=false STATIC=false
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
