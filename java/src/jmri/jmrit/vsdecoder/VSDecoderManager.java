@@ -493,9 +493,10 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     * getProfilePath()
-     *
      * Retrieve the Path for a given Profile name.
+     * 
+     * @param profile the profile to get the path for
+     * @return the path for the profile
      */
     public String getProfilePath(String profile) {
         return profiletable.get(profile);

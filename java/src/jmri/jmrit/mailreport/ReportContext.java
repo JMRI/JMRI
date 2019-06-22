@@ -76,9 +76,13 @@ public class ReportContext {
         addCommunicationPortInfo();
 
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        addString("Active profile: " + profile.getName() + "   ");
-        addString("Profile location: " + profile.getPath().getPath() + "   ");
-        addString("Profile ID: " + profile.getId() + "   ");
+        if (profile != null) {
+            addString("Active profile: " + profile.getName() + "   ");
+            addString("Profile location: " + profile.getPath().getPath() + "   ");
+            addString("Profile ID: " + profile.getId() + "   ");
+        } else {
+            addString("No active profile");
+        }
         
         addString("JMRI Network ID: " + jmri.util.node.NodeIdentity.networkIdentity());
         addString("JMRI Storage ID: " + jmri.util.node.NodeIdentity.storageIdentity(profile));
