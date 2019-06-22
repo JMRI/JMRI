@@ -10,8 +10,12 @@ addons:
     - libalut0
     - dbus-x11
     - tidy
+    - pulseaudio
   firefox: latest
   chrome: beta
+
+services:
+  - xvfb
 
 before_install:
   # ensure no unwanted defaults are set
@@ -58,18 +62,11 @@ env:
   - HEADLESS=true STATIC=true
 
 matrix:
-  include:
-  - os: linux
-    dist: xenial
+  exclude:
+  - os: osx
     env: HEADLESS=true STATIC=true
-  - os: linux
-    dist: xenial
+  - os: osx
     env: HEADLESS=true STATIC=false
-  - os: linux
-    dist: xenial
-    services:
-      - xvfb
-    env: HEADLESS=false STATIC=false
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
