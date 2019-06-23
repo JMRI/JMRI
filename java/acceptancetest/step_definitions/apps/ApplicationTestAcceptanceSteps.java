@@ -23,10 +23,8 @@ public class ApplicationTestAcceptanceSteps implements En {
      
    String[] tags = {"@apptest"};
    File tempFolder;
-   String initProperty;
    
    public ApplicationTestAcceptanceSteps(jmri.InstanceManager instance) {
-
 
    Before(tags,() -> {
       JUnitUtil.setUp();
@@ -41,7 +39,6 @@ public class ApplicationTestAcceptanceSteps implements En {
             tempFolder =Files.createTempDirectory("AppTest").toFile();
             File profileDir = new File(tempFolder.getAbsolutePath() + File.separator + "Name" );
             FileUtils.copyDirectory(new File(profile), profileDir );
-            initProperty=System.getProperty("jmri.prefsdir");
             System.setProperty("jmri.prefsdir",tempFolder.getAbsolutePath());
             System.setProperty("org.jmri.profile", profileDir.getAbsolutePath() );
        } catch(java.io.IOException ioe) {
@@ -82,7 +79,6 @@ public class ApplicationTestAcceptanceSteps implements En {
            jmri.util.JUnitUtil.releaseThread(this, 5000);
         }
         FileUtils.deleteDirectory(tempFolder);
-        System.setProperty("jmri.prefsdir",initProperty);
         System.clearProperty("org.jmri.profile");
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetAppsBase();
