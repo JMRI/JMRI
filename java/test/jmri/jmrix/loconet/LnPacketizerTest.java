@@ -9,6 +9,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 /**
+ * JUnit tests for the LnPacketizerTest class.
+ *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2018
  */
@@ -47,16 +49,14 @@ public class LnPacketizerTest {
                 return new DataOutputStream(new ByteArrayOutputStream());
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override

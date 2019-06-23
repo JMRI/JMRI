@@ -33,6 +33,10 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
         return null;
     }
 
+    public int[] validBaudNumbers() {
+        return null;
+    }
+
     PipedInputStream otempIPipe;
     PipedOutputStream otempOPipe;
     

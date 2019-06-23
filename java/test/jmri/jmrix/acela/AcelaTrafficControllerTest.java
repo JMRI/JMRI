@@ -107,6 +107,11 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
             return null;
         }
 
+        //@Override
+        public int[] validBaudNumbers() {
+            return null;
+        }
+
         protected AcelaPortControllerScaffold() throws Exception {
             super(new AcelaSystemConnectionMemo());
             PipedInputStream tempPipe;
