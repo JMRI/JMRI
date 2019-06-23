@@ -2,6 +2,7 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Arrays;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
@@ -87,11 +88,18 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
         return null;
     }
 

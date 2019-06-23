@@ -325,15 +325,16 @@ public class SplitVariableValue extends VariableValue
         if (_textField != null && !oldContents.equals(_textField.getText())) {
             long newFieldVal = getValueFromText(_textField.getText());
             log.debug("_minVal = {},_maxVal = {},newFieldVal = {}", _minVal, _maxVal, newFieldVal);
-            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
-                _textField.setText(oldContents);
-            } else {
+//            disable recently-added _minVal, _maxVal checking for now
+//            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
+//                _textField.setText(oldContents);
+//            } else {
                 long newVal = (newFieldVal - mOffset) / mFactor;
                 long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
 //            log.debug("Enter updatedTextField from exitField");
                 updatedTextField();
                 prop.firePropertyChange("Value", oldVal, newVal);
-            }
+//            }
         }
     }
 

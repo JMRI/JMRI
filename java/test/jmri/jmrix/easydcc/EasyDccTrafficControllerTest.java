@@ -119,6 +119,11 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
             return null;
         }
 
+        //@Override
+        public int[] validBaudNumbers() {
+            return null;
+        }
+
         protected EasyDccPortControllerScaffold() throws Exception {
             super(new EasyDccSystemConnectionMemo());
             PipedInputStream tempPipe;

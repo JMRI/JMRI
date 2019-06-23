@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the EasyDccPortController class
+ * JUnit tests for the EasyDccPortController class.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -45,8 +45,9 @@ public class EasyDccPortControllerTest extends jmri.jmrix.AbstractSerialPortCont
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
