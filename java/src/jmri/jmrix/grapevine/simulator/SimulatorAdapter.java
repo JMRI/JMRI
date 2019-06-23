@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialPortController; // no special xSimulatorController
@@ -184,13 +185,21 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
         return null;
     }
 
