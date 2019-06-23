@@ -146,7 +146,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(@Nonnull String propertyName,
-                                                       PropertyChangeListener l, String beanRef, String listenerRef) {
+                                                       @Nonnull PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(propertyName, l);
         if (beanRef != null) {
             register.put(l, beanRef);

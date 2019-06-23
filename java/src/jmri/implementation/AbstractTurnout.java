@@ -312,8 +312,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         int oldMode = _activeFeedbackType;
         _activeFeedbackType = mode;
         if (oldMode != _activeFeedbackType) {
-            firePropertyChange("feedbackchange", (Integer) oldMode,
-                    (Integer) _activeFeedbackType);
+            firePropertyChange("feedbackchange", oldMode,
+                    _activeFeedbackType);
         }
         // unlock turnout if feedback is changed
         setLocked(CABLOCKOUT, false);
@@ -353,8 +353,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", (Boolean) oldInverted,
-                    (Boolean) _inverted);
+            firePropertyChange("inverted", oldInverted,
+                    _inverted);
             int state = _knownState;
             if (state == THROWN) {
                 newKnownState(CLOSED);
@@ -426,7 +426,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             }
         }
         if (firechange) {
-            firePropertyChange("locked", (Boolean) !locked, (Boolean) locked);
+            firePropertyChange("locked", !locked, locked);
         }
     }
 

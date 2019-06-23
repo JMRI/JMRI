@@ -131,7 +131,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public String getDisplayName();
 
     /**
-     * Returns a fully formatted display that includes the SystemName and
+     * Returns a fully formatted display that includes the SystemName, and
      * UserName if set.
      * <p>
      * This is the same as calling

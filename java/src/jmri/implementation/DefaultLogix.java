@@ -170,7 +170,7 @@ public class DefaultLogix extends AbstractNamedBean
             for (int i = _listeners.size() - 1; i >= 0; i--) {
                 _listeners.get(i).setEnabled(state);
             }
-            firePropertyChange("Enabled", (Boolean) old, (Boolean) state);  // NOI18N
+            firePropertyChange("Enabled", old, state);  // NOI18N
         }
     }
 
