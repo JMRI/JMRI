@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Vector;
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DeviceClass;
@@ -232,9 +233,20 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return new String[]{""};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{0};
     }
 
 }

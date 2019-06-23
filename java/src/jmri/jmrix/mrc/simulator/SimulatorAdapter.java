@@ -101,11 +101,19 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked"); // NOI18N
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
         return null;
     }
 

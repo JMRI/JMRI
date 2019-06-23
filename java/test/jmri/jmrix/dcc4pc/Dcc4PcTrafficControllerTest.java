@@ -114,6 +114,11 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return null;
         }
 
+        //@Override
+        public int[] validBaudNumbers() {
+            return null;
+        }
+
         protected Dcc4PcPortControllerScaffold() throws Exception {
             super(new Dcc4PcSystemConnectionMemo());
             PipedInputStream tempPipe;

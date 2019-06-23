@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the Mx1PortController class
- * <p>
+ * JUnit tests for the Mx1PortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -55,8 +54,9 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override

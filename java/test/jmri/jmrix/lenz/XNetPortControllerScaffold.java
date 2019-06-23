@@ -41,6 +41,11 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
         return null;
     }
 
+    @Override
+    public int[] validBaudNumbers() {
+        return null;
+    }
+
     PipedInputStream otempIPipe;
     PipedOutputStream otempOPipe;
     

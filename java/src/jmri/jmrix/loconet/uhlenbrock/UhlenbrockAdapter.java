@@ -33,7 +33,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
                 Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
-        configureBaudRate("Baud115200"); // Set the default baud rate (localized)
+        configureBaudRate(Bundle.getMessage("Baud115200")); // Set the default baud rate (localized)
     }
 
     /**
@@ -60,18 +60,19 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
-     *
-     * @return list of value baud rates
+     * {@inheritDoc}
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
