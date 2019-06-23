@@ -5547,7 +5547,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
-            //requesting marker popup out of edit mode
+            // requesting marker popup out of edit mode
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
                 showPopUp(lo, event);
@@ -5565,11 +5565,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             break;
                         }
 
-                        case LayoutTrack.LEVEL_XING_CENTER: {
-                            foundTrack.showPopup(event);
-                            break;
-                        }
-
+                        case LayoutTrack.LEVEL_XING_CENTER:
                         case LayoutTrack.SLIP_RIGHT:
                         case LayoutTrack.SLIP_LEFT: {
                             foundTrack.showPopup(event);

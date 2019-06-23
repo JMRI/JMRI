@@ -135,7 +135,8 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
         data.put(JSON.RAILROAD, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName());
         data.put(JSON.NODE, NodeIdentity.networkIdentity());
-        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
+        Profile activeProfile = ProfileManager.getDefault().getActiveProfile();
+        data.put(JSON.ACTIVE_PROFILE, activeProfile != null ? activeProfile.getName() : null);
         return message(JSON.HELLO, data, id);
     }
 

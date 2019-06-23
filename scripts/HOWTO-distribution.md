@@ -432,6 +432,7 @@ File | SHA256 checksum
 [JMRI.4.15.9+Rf006fc4.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.9/JMRI.4.15.9+Rf006fc4.exe) | a0212fa68718214074cfd4202bf31d29e479b909eec1210e61eab03869b92990
 [JMRI.4.15.9+Rf006fc4.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.9/JMRI.4.15.9+Rf006fc4.tgz) | ec280f9c317f6b458e5b21e207a04666b89f9525f41a0e097aa08c817cb777f7
 
+
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
@@ -456,7 +457,7 @@ git fetch
 git checkout master
 git pull
 git checkout -b temp-master
-git merge origin/release-4.13.6
+git merge origin/release-4.15.8
 ```
 
 Note that you're testing the merge of the release branch back onto master.  This should report "Already up-to-date.", i.e. no changes, with the possible exception of some auto-generated files:
