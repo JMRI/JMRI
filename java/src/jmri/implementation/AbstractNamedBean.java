@@ -91,6 +91,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * @return user name if not null or empty, else return system name
      */
     @Override
+    @CheckReturnValue
     @Nonnull
     final public String getDisplayName() {
         String name = getUserName();
@@ -103,6 +104,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
     @Nonnull
     final public String getFullyFormattedDisplayName(boolean userNameFirst) {
         String name = getUserName();

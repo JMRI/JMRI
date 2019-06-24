@@ -106,7 +106,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * Get a system-specific name. This encodes the hardware addressing
      * information. Any given system name must be unique within the layout.
      *
-     * @return the system-specific name.
+     * @return the system-specific name
      */
     @CheckReturnValue
     @Nonnull
@@ -115,14 +115,14 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     /**
      * Display the system-specific name.
      *
-     * @return the system-specific name.
+     * @return the system-specific name
      */
     @Nonnull
     @Override
     public String toString();
 
     /**
-     * return user name if it exists, otherwise return System name
+     * Get user name if it exists, otherwise return System name.
      *
      * @return the user name or system-specific name
      */
@@ -131,8 +131,8 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public String getDisplayName();
 
     /**
-     * Returns a fully formatted display that includes the SystemName, and
-     * UserName if set.
+     * Get a fully formatted display that includes the SystemName and,
+     * if set, the UserName”.
      * <p>
      * This is the same as calling
      * {@link #getFullyFormattedDisplayName(boolean)} with the parameter true.
