@@ -230,9 +230,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                 }
             };
         }
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
-        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
     }
 
     public void monitorLocos(boolean monitor) {

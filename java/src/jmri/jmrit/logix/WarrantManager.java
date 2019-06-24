@@ -178,12 +178,8 @@ public class WarrantManager extends AbstractManager<Warrant>
         if (_mergeProfiles == null) {
             _mergeProfiles = new HashMap<>();
             _sessionProfiles = new HashMap<>();
-            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-            } else {
-                log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
-            }
+            ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
         }
         if (id != null) {
             _mergeProfiles.put(id, merge);
