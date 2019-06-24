@@ -374,7 +374,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             return;
                         default:
                             log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
-                            return;
                     }
                 }
             }
@@ -456,6 +455,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             closeConnection();
         } catch (RuntimeException e) {
+            log.warn("closeConnection failed");
         }
         reconnect();
     }
@@ -532,6 +532,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         }
                     }
                 } catch (RuntimeException e) {
+                    log.warn("failed to reconnect to port {}", (mPort == null ? "null" : mPort));
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {
