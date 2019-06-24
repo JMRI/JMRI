@@ -17,7 +17,6 @@ import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.managers.DefaultShutDownManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
@@ -95,8 +94,6 @@ public abstract class AppsBase {
         configureProfile();
 
         installConfigurationManager();
-
-        installShutDownManager();
 
         addDefaultShutDownTasks();
 
@@ -314,8 +311,12 @@ public abstract class AppsBase {
         return result;
     }
 
+    /**
+     * @deprecated for removal since 4.17.2 without replacement
+     */
+    @Deprecated
     protected void installShutDownManager() {
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
+        // nothing to do
     }
 
     protected void addDefaultShutDownTasks() {

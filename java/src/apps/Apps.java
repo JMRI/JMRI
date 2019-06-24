@@ -77,7 +77,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.managers.DefaultShutDownManager;
 import jmri.plaf.macosx.Application;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -199,10 +198,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
-
-        // install shutdown manager
-        log.trace("about to install ShutDownManager");
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
 
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks

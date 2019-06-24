@@ -922,13 +922,19 @@ public class JUnitUtil {
     }
 
     /**
-     * Creates a new ShutDownManager.
-     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
-     * @see #clearShutDownManager()
+     * Creates, if needed, a new ShutDownManager, clearing any existing
+     * ShutDownManager, and ensuring the ShutDownManager is not in the state of
+     * ShuttingDown if the ShutDownManager is a MockShutDownManager.
      */
     public static void initShutDownManager() {
-        if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
-            InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
+        ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
+        List<ShutDownTask> tasks = manager.tasks();
+        while (!tasks.isEmpty()) {
+            manager.deregister(tasks.get(0));
+            tasks = manager.tasks(); // avoid ConcurrentModificationException
+        }
+        if (manager instanceof MockShutDownManager) {
+            ((MockShutDownManager) manager).resetShuttingDown();
         }
     }
 
