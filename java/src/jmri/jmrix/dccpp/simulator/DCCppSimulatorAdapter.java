@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -165,13 +166,21 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * it's fixed.
+     * {@inheritDoc}
+     * Currently just a message saying it's fixed.
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
         return null;
     }
 

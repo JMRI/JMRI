@@ -97,7 +97,7 @@ public class Sound {
     private Clip openClip() {
         Clip newClip = null;
         try {
-            newClip = AudioSystem.getClip();
+            newClip = AudioSystem.getClip(null);
             newClip.addLineListener(event -> {
                 if (LineEvent.Type.STOP.equals(event.getType())) {
                     if (autoClose) {

@@ -344,9 +344,10 @@ public class VSDecoderPane extends JmriPanel {
     }
 
     /**
-     * getDecoder(String)
-     *
      * Looks up a decoder profile by name and returns that decoder.
+     * 
+     * @param profile name of the profile to get
+     * @return the decoder for the profile
      */
     public VSDecoder getDecoder(String profile) {
         @SuppressWarnings("deprecation")
