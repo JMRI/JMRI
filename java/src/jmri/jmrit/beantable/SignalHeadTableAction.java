@@ -2814,9 +2814,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         if (oldTurnout == null || newTurnout == oldTurnout) {
             return newTurnout;
         }
-        if ((oldTurnout.getComment() != null) && (reference != null)) {
-            if (oldTurnout.getComment().equals(reference)) {
-                // won't delete old Turnout Comment if Locale or Bundle was changed in between
+        String oldComment = oldTurnout.getComment();
+        if ((oldComment != null) && (reference != null)) {
+            if (oldComment.equals(reference)) {
+                // won't delete old Turnout Comment if Locale or Bundle was changed since filling it in
                 // user could have typed something in the Comment as well
                 oldTurnout.setComment(null); // deletes current Comment in bean
             }

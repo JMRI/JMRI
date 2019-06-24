@@ -59,8 +59,7 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull
-            SignalAppearanceMap map, SignalSystem sigSystem) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map, @Nonnull SignalSystem sigSystem) {
         Enumeration<String> aspects = map.getAspects();
         log.debug("setAspectNames(...)");
 

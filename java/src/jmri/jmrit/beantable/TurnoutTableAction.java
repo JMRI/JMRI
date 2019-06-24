@@ -1206,13 +1206,16 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
         if (t.getInhibitOperation()) {
             cb.setSelectedIndex(0);
-        } else if (t.getTurnoutOperation() == null) {
-            cb.setSelectedIndex(1);
-        } else { // spotbugs happy null check
-            if (t.getTurnoutOperation().isNonce()) {
-                cb.setSelectedIndex(2);
+        } else {
+            TurnoutOperation turnOp = t.getTurnoutOperation();
+            if (turnOp == null) {
+                cb.setSelectedIndex(1);
             } else {
-                cb.setSelectedItem(t.getTurnoutOperation().getName());
+                if (turnOp.isNonce()) {
+                    cb.setSelectedIndex(2);
+                } else {
+                    cb.setSelectedItem(turnOp.getName());
+                }
             }
         }
     }

@@ -352,7 +352,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             try {
                 if (tr.isDataFlavorSupported(TABLECELL_FLAVOR)
                         || tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                    if (comp instanceof JTable) {
+                    if (comp instanceof DnDJTable) {
                         DnDJTable table = (DnDJTable) comp;
                         AbstractTableModel model = (AbstractTableModel) table.getModel();
                         int col = table.getSelectedColumn();
