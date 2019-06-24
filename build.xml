@@ -1353,7 +1353,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" path="jmri.util.MockShutDownManager" />
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1380,6 +1380,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" path="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed'"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
 
@@ -1406,7 +1407,7 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" path="jmri.util.MockShutDownManager" />
-            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed'"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1649,6 +1650,9 @@
             <classpath refid="test.class.path"/>
 
             <test name="jmri.RunCucumberTest">
+                <formatter usefile="no" type="brief"/>
+            </test>
+            <test name="apps.RunCucumberTest">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>

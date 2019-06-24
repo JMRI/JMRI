@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.JComboBox;
@@ -159,7 +160,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudRate((String) baudBox.getSelectedItem());
+        adapter.configureBaudIndex(baudBox.getSelectedIndex()); // manage by index, not item value
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
@@ -376,7 +377,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
-        baudBox.setSelectedItem(adapter.getCurrentBaudRate());
+        baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {

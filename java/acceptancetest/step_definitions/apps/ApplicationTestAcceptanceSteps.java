@@ -28,11 +28,11 @@ public class ApplicationTestAcceptanceSteps implements En {
    
    public ApplicationTestAcceptanceSteps(jmri.InstanceManager instance) {
 
-
    Before(tags,() -> {
       JUnitUtil.setUp();
       JUnitUtil.clearShutDownManager();
       JUnitUtil.resetApplication();
+      JUnitUtil.resetAppsBase();
    });
 
    Given("^I am using profile (.*)$", (String profile) -> {
@@ -85,9 +85,9 @@ public class ApplicationTestAcceptanceSteps implements En {
             jmri.util.JUnitUtil.releaseThread(this, 5000);
         }
         FileUtils.deleteDirectory(tempFolder);
-        System.clearProperty("jmri.prefsdir");
         System.clearProperty("org.jmri.profile");
         JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetAppsBase();
         JUnitUtil.tearDown();
     });
 

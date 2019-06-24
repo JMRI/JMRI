@@ -196,6 +196,7 @@ public class JUnitUtil {
     static private StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
     
     static private boolean isLoggingInitialized = false;
+    static private String initPrefsDir = null;
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
@@ -231,6 +232,13 @@ public class JUnitUtil {
         // do not set the UncaughtExceptionHandler while unit testing
         // individual tests can explicitly set it after calling this method
         Thread.setDefaultUncaughtExceptionHandler(null);
+
+        // make sure the jmri.prefsdir property match the property passed 
+        // to the tests.
+        if(initPrefsDir==null){
+           initPrefsDir = System.getProperty("jmri.prefsdir");
+        }
+        System.setProperty("jmri.prefsdir",initPrefsDir);
         
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
@@ -959,6 +967,20 @@ public class JUnitUtil {
             f.set(new jmri.Application(), null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             log.error("Failed to reset jmri.Application static field", x);
+        }
+    }
+
+    /*
+     * Use reflection to reset the apps.AppsBase instance
+     */
+    public static void resetAppsBase() {
+        try {
+            Class<?> c = apps.AppsBase.class;
+            java.lang.reflect.Field f = c.getDeclaredField("preInit");
+            f.setAccessible(true);
+            f.set(null, false);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset apps.AppsBase static preInit field", x);
         }
     }
 

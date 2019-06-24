@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
 import jmri.InstanceManager;
@@ -176,11 +177,20 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps.
+     * {@inheritDoc}
+     * Currently only 19,200 bps.
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
     }
 
     /**
