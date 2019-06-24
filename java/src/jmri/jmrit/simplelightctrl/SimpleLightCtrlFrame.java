@@ -245,7 +245,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
     }
     
     private void setControlFrameActive(boolean showLight){
-        log.info("selected light is {}",selectedLight() );
+        log.debug("selected light is {}",selectedLight() );
         onButton.setEnabled(showLight);
         offButton.setEnabled(showLight);
         statusIsEnabledCheckBox.setEnabled(showLight);
