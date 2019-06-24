@@ -1,4 +1,4 @@
-package jmri;
+package apps;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
@@ -24,20 +24,8 @@ import org.junit.BeforeClass;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"junit:cucumber-results.xml","progress","json:cucumber-results.json"},
-                 features="java/acceptancetest/features/web",
+                 features="java/acceptancetest/features/apps",
                  tags = {"not @webtest", "not @Ignore", "not @ignore"},
                  glue = {"apps","jmri"} )
 public class RunCucumberTest {
-   
-   @BeforeClass
-   public static void beforeTests(){
-     jmri.util.JUnitUtil.setUp();
-   }
-
-   @AfterClass
-   public static void afterTests(){
-      jmri.util.web.BrowserFactory.CloseAllDriver();
-      jmri.util.JUnitUtil.tearDown();
-   }
-
 }
