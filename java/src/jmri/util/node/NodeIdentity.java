@@ -156,11 +156,10 @@ public class NodeIdentity {
      *         identity will change once that a configuration profile is loaded.
      */
     public static synchronized String networkIdentity() {
-        String uniqueId = "-";
-        try {
-            uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
-        } catch (NullPointerException ex) {
-            uniqueId = "";
+        String uniqueId = "";
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        if (profile != null) {
+            uniqueId = "-" + profile.getUniqueId();
         }
         if (instance == null) {
             instance = new NodeIdentity();

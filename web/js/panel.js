@@ -405,6 +405,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
                                     $widget['state'] = item.attributes['value'].value; //use value for initial state
                                 });
+                                $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
