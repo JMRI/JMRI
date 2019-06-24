@@ -2011,7 +2011,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 log.warn("Unhandled object type: {}", type);
                 break;
         }
-        return null;
+        return new String[]{};
     }
 
     private String[] getOutputComboBoxItems(int type) {
@@ -2027,7 +2027,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             default:
                 log.warn("Unhandled type: {}", type);
         }
-        return null;
+        return new String[]{};
     }
 
 ////////////////////////////// Internal Utility Classes ////////////////////////////////
