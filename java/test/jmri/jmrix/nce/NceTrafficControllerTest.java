@@ -244,6 +244,11 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
             return null;
         }
 
+        //@Override
+        public int[] validBaudNumbers() {
+            return null;
+        }
+
         protected NcePortControllerScaffold() throws Exception {
             super(null);
             PipedInputStream tempPipe;

@@ -45,6 +45,7 @@ import org.junit.runners.Suite;
     SampleMinimalProgramTest.class,
     SystemConsoleTest.class,
     AppsLaunchFrameTest.class,
+    RunCucumberTest.class,
 })
 /**
  * Invoke complete set of tests for the apps package

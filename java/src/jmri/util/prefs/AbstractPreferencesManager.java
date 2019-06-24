@@ -24,20 +24,29 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     private final HashMap<Profile, Boolean> initializing = new HashMap<>();
     private final HashMap<Profile, List<Exception>> exceptions = new HashMap<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isInitialized(@Nonnull Profile profile) {
-        return this.initialized.getOrDefault(profile, false)
-                && this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
+    public boolean isInitialized(Profile profile) {
+        return this.initialized.getOrDefault(profile, false) &&
+                this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isInitializedWithExceptions(@Nonnull Profile profile) {
-        return this.initialized.getOrDefault(profile, false)
-                && !this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized.getOrDefault(profile, false) &&
+                !this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<Exception> getInitializationExceptions(@Nonnull Profile profile) {
+    public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions.getOrDefault(profile, new ArrayList<>()));
     }
 
@@ -45,11 +54,12 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * Test if the manager is being initialized.
      *
      * @param profile the profile against which the manager is being initialized
+     *                    or null if being initialized for this user regardless
+     *                    of profile
      * @return true if being initialized; false otherwise
      */
-    protected boolean isInitializing(@Nonnull Profile profile) {
-        return !this.initialized.getOrDefault(profile, false)
-                && this.initializing.getOrDefault(profile, false);
+    protected boolean isInitializing(Profile profile) {
+        return !this.initialized.getOrDefault(profile, false) && this.initializing.getOrDefault(profile, false);
     }
 
     /**
@@ -101,7 +111,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * @param profile     the profile to set initialized against
      * @param initialized the initialized state to set
      */
-    protected void setInitialized(@Nonnull Profile profile, boolean initialized) {
+    protected void setInitialized(Profile profile, boolean initialized) {
         this.initialized.put(profile, initialized);
         if (initialized) {
             this.setInitializing(profile, false);
@@ -114,7 +124,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * @param profile      the profile for which initializing is ongoing
      * @param initializing the initializing state to set
      */
-    protected void setInitializing(@Nonnull Profile profile, boolean initializing) {
+    protected void setInitializing(Profile profile, boolean initializing) {
         this.initializing.put(profile, initializing);
     }
 
@@ -122,10 +132,10 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * Add an error to the list of exceptions.
      *
      * @param profile   the profile against which the manager is being
-     *                  initialized
+     *                      initialized
      * @param exception the exception to add
      */
-    protected void addInitializationException(@Nonnull Profile profile, @Nonnull Exception exception) {
+    protected void addInitializationException(Profile profile, @Nonnull Exception exception) {
         if (this.exceptions.get(profile) == null) {
             this.exceptions.put(profile, new ArrayList<>());
         }
@@ -142,19 +152,23 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      *
      * @param profile the profile against which the manager is being initialized
      * @param classes the manager classes for which all calling
-     *                {@link #isInitialized(jmri.profile.Profile)} must return
-     *                true against all instances of
+     *                    {@link #isInitialized(jmri.profile.Profile)} must
+     *                    return true against all instances of
      * @param message the localized message to display if an
-     *                InitializationExcpetion is thrown
+     *                    InitializationExcpetion is thrown
      * @throws InitializationException  if any instance of any class in classes
-     *                                  returns false on isIntialized(profile)
+     *                                      returns false on
+     *                                      isIntialized(profile)
      * @throws IllegalArgumentException if any member of classes is not also in
-     *                                  the set of classes returned by
-     *                                  {@link #getRequires()}
+     *                                      the set of classes returned by
+     *                                      {@link #getRequires()}
      */
-    protected void requiresNoInitializedWithExceptions(@Nonnull Profile profile, @Nonnull Set<Class<? extends PreferencesManager>> classes, @Nonnull String message) throws InitializationException {
+    protected void requiresNoInitializedWithExceptions(Profile profile,
+            @Nonnull Set<Class<? extends PreferencesManager>> classes, @Nonnull String message)
+            throws InitializationException {
         classes.stream().filter((clazz) -> (!this.getRequires().contains(clazz))).forEach((clazz) -> {
-            throw new IllegalArgumentException("Class " + clazz.getClass().getName() + " not marked as required by " + this.getClass().getName());
+            throw new IllegalArgumentException(
+                    "Class " + clazz.getClass().getName() + " not marked as required by " + this.getClass().getName());
         });
         for (Class<? extends PreferencesManager> clazz : classes) {
             for (PreferencesManager instance : InstanceManager.getList(clazz)) {
@@ -181,11 +195,13 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      *
      * @param profile the profile against which the manager is being initialized
      * @param message the localized message to display if an
-     *                InitializationExcpetion is thrown
+     *                    InitializationExcpetion is thrown
      * @throws InitializationException if any instance of any class in classes
-     *                                 returns false on isIntialized(profile)
+     *                                     returns false on
+     *                                     isIntialized(profile)
      */
-    protected void requiresNoInitializedWithExceptions(@Nonnull Profile profile, @Nonnull String message) throws InitializationException {
+    protected void requiresNoInitializedWithExceptions(Profile profile, @Nonnull String message)
+            throws InitializationException {
         this.requiresNoInitializedWithExceptions(profile, this.getRequires(), message);
     }
 }
