@@ -71,6 +71,7 @@ public class MatrixSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBa
     }
 
     @Test
+    @SuppressWarnings("unused") // it1 etc. are indirectly used as NamedBeans IT1 etc.
     public void testEditAndDisableViaGui() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
