@@ -44,7 +44,7 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
     public void testCreateMast() {
         VirtualSignalMastAddPane vp = new VirtualSignalMastAddPane();
         new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "no user name"){
-            { lastRef = 4; } // reset references - this leads to $0005 below, just in case anybody else has created one
+            { setLastRef(4); } // reset references - this leads to $0005 below, just in case anybody else has created one
         };
         
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
@@ -105,7 +105,7 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Assert.assertEquals(0, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());
         VirtualSignalMast mast = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "user name 2"){
-            { lastRef = 7; } // reset references - this leads to $0007 below, just in case anybody else has created one
+            { setLastRef(7); } // reset references - this leads to $0007 below, just in case anybody else has created one
         };
         InstanceManager.getDefault(jmri.SignalMastManager.class).register(mast);
         Assert.assertEquals(1, InstanceManager.getDefault(jmri.SignalMastManager.class).getObjectCount());

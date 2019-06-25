@@ -48,7 +48,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     public void testCanHandleMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         SignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
-            { lastRef = 4; } // reset references 
+            { setLastRef(4); } // reset references
         };
         Assert.assertTrue(vp.canHandleMast(mast));
         
@@ -60,7 +60,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     public void testCreateMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
-            { lastRef = 4; } // reset references - this leads to ($0005) below, just in case anybody else has created one
+            { setLastRef(4); } // reset references - this leads to ($0005) below, just in case anybody else has created one
         };
         
         vp.createMast("AAR-1946", "appearance-PL-2-high.xml", "user name");
