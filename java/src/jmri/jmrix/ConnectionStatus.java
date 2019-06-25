@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import java.util.Map;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
 
@@ -33,7 +34,7 @@ public class ConnectionStatus {
     private final HashMap<ConnectionKey, String> portStatus = new HashMap<>();
 
     /**
-     * record the single instance *
+     * Record the single instance *
      */
     private static ConnectionStatus _instance = null;
 
@@ -43,15 +44,16 @@ public class ConnectionStatus {
             // create and load
             _instance = new ConnectionStatus();
         }
-        //    log.debug("ConnectionStatus returns instance " + _instance);
+        // log.debug("ConnectionStatus returns instance {}", _instance);
         return _instance;
     }
 
     /**
-     * Set the connection state of a communication port.
+     * Add a connection with a given name and port name to the portStatus set
+     * if not yet present in the set.
      *
      * @param systemName human-readable name for system like "LocoNet 2"
-     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
+     *                   which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      */
     public synchronized void addConnection(String systemName, @Nonnull String portName) {
@@ -73,19 +75,19 @@ public class ConnectionStatus {
      *                   ConnectionStatus.UNKNOWN.
      */
     public synchronized void setConnectionState(String systemName, @Nonnull String portName, @Nonnull String state) {
-        log.debug("setConnectionState systemName: {} portName: {} state: {}",systemName, portName, state);
+        log.debug("setConnectionState systemName: {} portName: {} state: {}", systemName, portName, state);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
             portStatus.put(newKey, state);
             firePropertyChange("add", null, portName);
-            log.debug("New Connection added: {} ",newKey);
+            log.debug("New Connection added: {} ", newKey);
         } else {
             firePropertyChange("change", portStatus.put(newKey, state), portName);
         }
     }
 
     /**
-     * Get the status of a communication port.
+     * Get the status of a communication port, based on the port name only.
      *
      * @param portName the port name
      * @return status
@@ -94,16 +96,16 @@ public class ConnectionStatus {
      */
     @Deprecated
     public synchronized String getConnectionState(@Nonnull String portName) {
-        log.debug("Deprecated getConnectionState portName: {} ",portName);
+        log.debug("Deprecated getConnectionState portName: {} ", portName);
         ConnectionKey newKey = new ConnectionKey(null, portName);
         if (portStatus.containsKey(newKey)) {
             return getConnectionState(null, portName);
         } else {
-            // we have to see if there is a key that has portName as the port value.
-            for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getPortName() == null ? portName == null : c.getPortName().equals(portName)) {
-                    // if we find a match, return it.
-                    return portStatus.get(c);
+            // see if there is a key that has portName as the port value
+            for (Map.Entry<ConnectionKey, String> entry : portStatus.entrySet()) {
+                if ((entry.getKey().getPortName() != null) && (entry.getKey().getPortName().equals(portName))) {
+                    // if we find a match, return it
+                    return entry.getValue();
                 }
             }
         }
@@ -113,28 +115,7 @@ public class ConnectionStatus {
     }
 
     /**
-     * get the status of a communication port based on the system name.
-     *
-     * @param systemName human-readable name for system like "LocoNet 2"
-     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @return the status
-     */
-    public synchronized String getSystemState(@Nonnull String systemName) {
-        log.debug("getSystemState systemName: {} ",systemName);
-        // we have to see if there is a key that has systemName as the port value.
-        for (ConnectionKey c : portStatus.keySet()) {
-            if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
-                // if we find a match, return it.
-                return portStatus.get(c);
-            }
-        }
-        // If we still don't find a match, then we don't know the status
-        log.warn("Didn't find system status for system {}", systemName);
-        return CONNECTION_UNKNOWN;
-    }
-
-    /**
-     * Get the status of a communication port.
+     * Get the status of a communication port with a given name.
      *
      * @param systemName human-readable name for system like "LocoNet 2"
      *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
@@ -147,15 +128,36 @@ public class ConnectionStatus {
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (portStatus.containsKey(newKey)) {
             stateText = portStatus.get(newKey);
-            log.debug("connection found : {}",stateText);
+            log.debug("connection found : {}", stateText);
         } else {
-            log.debug("connection systemName {} portName {} not found, {}",systemName,portName,stateText);
+            log.debug("connection systemName {} portName {} not found, {}", systemName, portName, stateText);
         }
         return stateText;
     }
 
     /**
-     * Get the status of a communication port.
+     * Get the status of a communication port, based on the system name only.
+     *
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
+     * @return the status
+     */
+    public synchronized String getSystemState(@Nonnull String systemName) {
+        log.debug("getSystemState systemName: {} ", systemName);
+        // see if there is a key that has systemName as the port value.
+        for (Map.Entry<ConnectionKey, String> entry : portStatus.entrySet()) {
+            if ((entry.getKey().getSystemName() != null) && (entry.getKey().getSystemName().equals(systemName))) {
+                // if we find a match, return it
+                return entry.getValue();
+            }
+        }
+        // If we still don't find a match, then we don't know the status
+        log.warn("Didn't find system status for system {}", systemName);
+        return CONNECTION_UNKNOWN;
+    }
+
+    /**
+     * Confirm status of a communication port is not down, based on the port name.
      *
      * @param portName the port name
      * @return true if port connection is operational or unknown, false if not
@@ -168,7 +170,7 @@ public class ConnectionStatus {
     }
 
     /**
-     * Get the status of a communication port.
+     * Confirm status of a communication port is not down.
      *
      * @param systemName human-readable name for system like "LocoNet 2"
      *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
@@ -181,7 +183,7 @@ public class ConnectionStatus {
     }
 
     /**
-     * Get the status of a communication port based on the system name.
+     * Confirm status of a communication port is not down, based on the system name.
      *
      * @param systemName human-readable name for system like "LocoNet 2"
      *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
@@ -189,11 +191,11 @@ public class ConnectionStatus {
      *                      returning true if the connection is not recognized.
      */
     public synchronized boolean isSystemOk(@Nonnull String systemName) {
-        // we have to see if there is a key that has systemName as the port value.
-        for (ConnectionKey c : portStatus.keySet()) {
-            if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
-                // if we find a match, return it.
-                return !portStatus.get(c).equals(CONNECTION_DOWN);
+        // see if there is a key that has systemName as the port value.
+        for (Map.Entry<ConnectionKey, String> entry : portStatus.entrySet()) {
+            if ((entry.getKey().getSystemName() != null) && (entry.getKey().getSystemName().equals(systemName))) {
+                // if we find a match, return it
+                return !portStatus.get(entry.getKey()).equals(CONNECTION_DOWN);
             }
         }
         // and if we still don't find a match, go ahead and reply true

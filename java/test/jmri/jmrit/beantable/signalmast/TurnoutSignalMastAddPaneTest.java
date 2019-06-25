@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable.signalmast;
 
+import jmri.InstanceManager;
 import jmri.implementation.*;
 import jmri.util.*;
 
@@ -29,10 +30,10 @@ public class TurnoutSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         
         vp.setMast(null);
         
-        vp.setAspectNames(s1.getAppearanceMap(), null);
+        vp.setAspectNames(s1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(s1);
         
-        vp.setAspectNames(m1.getAppearanceMap(), null);
+        vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
     }

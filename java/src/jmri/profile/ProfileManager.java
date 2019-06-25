@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -104,24 +106,15 @@ public class ProfileManager extends Bean {
     }
 
     /**
-     * Returns true if the manager has an active profile.
-     *
-     * @return true if the manager has an active profile
-     */
-    public boolean hasActiveProfile() {
-        return (activeProfile != null);
-    }
-
-    /**
      * Get the {@link Profile} that is currently in use.
      * <p>
-     * Note that this returning null is not an error condition, and
-     * should not be treated as such, since there are times when the
-     * user interacts with a JMRI application that there should be no
-     * active profile.
+     * Note that this returning null is not an error condition, and should not
+     * be treated as such, since there are times when the user interacts with a
+     * JMRI application that there should be no active profile.
      *
      * @return the in use Profile or null if there is no Profile in use
      */
+    @CheckForNull
     public Profile getActiveProfile() {
         return activeProfile;
     }
@@ -136,25 +129,27 @@ public class ProfileManager extends Bean {
      * @return the name of the active profile or null if there is no active
      *         profile
      */
-    @Nonnull
+    @CheckForNull
     public String getActiveProfileName() {
-        if (activeProfile == null) {
-            throw new NullPointerException("activeProfile is null");
-        }
-        return activeProfile.getName();
+        return activeProfile != null ? activeProfile.getName() : null;
     }
 
     /**
      * Set the {@link Profile} to use. This method finds the Profile by path or
      * Id and calls {@link #setActiveProfile(jmri.profile.Profile)}.
      *
-     * @param identifier the profile path or id; must not be null
+     * @param identifier the profile path or id; can be null
      */
-    public void setActiveProfile(@Nonnull String identifier) {
+    public void setActiveProfile(@Nullable String identifier) {
         log.debug("setActiveProfile called with {}", identifier);
         // handle null profile
         if (identifier == null) {
-            throw new IllegalArgumentException("identifier is null");
+            Profile old = activeProfile;
+            activeProfile = null;
+            FileUtil.setProfilePath(null);
+            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            log.debug("Setting active profile to null");
+            return;
         }
         // handle profile path
         File profileFile = new File(identifier);
@@ -197,10 +192,14 @@ public class ProfileManager extends Bean {
      *
      * @param profile the profile to activate
      */
-    public void setActiveProfile(@Nonnull Profile profile) {
+    public void setActiveProfile(@Nullable Profile profile) {
         Profile old = activeProfile;
         if (profile == null) {
-            throw new IllegalArgumentException("profile is null");
+            activeProfile = null;
+            FileUtil.setProfilePath(null);
+            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            log.debug("Setting active profile to null");
+            return;
         }
         activeProfile = profile;
         FileUtil.setProfilePath(profile.getPath().toString());
@@ -235,7 +234,7 @@ public class ProfileManager extends Bean {
         this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
     }
 
-    protected void saveActiveProfile(@Nonnull Profile profile, boolean autoStart) throws IOException {
+    protected void saveActiveProfile(@CheckForNull Profile profile, boolean autoStart) throws IOException {
         Properties p = new Properties();
         FileOutputStream os = null;
         File config = this.getConfigFile();
@@ -244,14 +243,12 @@ public class ProfileManager extends Bean {
             log.debug("No config file defined, not attempting to save active profile.");
             return;
         }
-        if (profile == null) {
-            throw new IllegalArgumentException("profile is null");
+        if (profile != null) {
+            p.setProperty(ACTIVE_PROFILE, profile.getId());
+            p.setProperty(AUTO_START, Boolean.toString(autoStart));
+            p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
         }
-        
-        p.setProperty(ACTIVE_PROFILE, profile.getId());
-        p.setProperty(AUTO_START, Boolean.toString(autoStart));
-        p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
-        
+
         if (!config.exists() && !config.createNewFile()) {
             throw new IOException("Unable to create file at " + config.getAbsolutePath()); // NOI18N
         }
@@ -260,7 +257,7 @@ public class ProfileManager extends Bean {
             p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
             os.close();
         } catch (Throwable ex) { // IOException, but also misc errors in Java XML processing
-            log.error("While trying to save active profile {}", config,ex);
+            log.error("While trying to save active profile {}", config, ex);
             if (os != null) {
                 os.close();
             }
@@ -329,7 +326,7 @@ public class ProfileManager extends Bean {
      * @return A list of all Profile objects
      */
     @Nonnull
-    public ArrayList<Profile> getAllProfiles() {
+    public List<Profile> getAllProfiles() {
         return new ArrayList<>(profiles);
     }
 
@@ -353,10 +350,7 @@ public class ProfileManager extends Bean {
      * @param profile the Profile to set
      * @param index   the index to set; any existing profile at index is removed
      */
-    public void setProfiles(@Nonnull Profile profile, int index) {
-        if (profile == null) {
-            throw new IllegalArgumentException("profile is null");
-        }
+    public void setProfiles(Profile profile, int index) {
         Profile oldProfile = profiles.get(index);
         if (!this.readingProfiles) {
             profiles.set(index, profile);
@@ -364,10 +358,7 @@ public class ProfileManager extends Bean {
         }
     }
 
-    protected void addProfile(@Nonnull Profile profile) {
-        if (profile == null) {
-            throw new IllegalArgumentException("profile is null");
-        }
+    protected void addProfile(Profile profile) {
         if (!profiles.contains(profile)) {
             profiles.add(profile);
             if (!this.readingProfiles) {
@@ -389,10 +380,7 @@ public class ProfileManager extends Bean {
         }
     }
 
-    protected void removeProfile(@Nonnull Profile profile) {
-        if (profile == null) {
-            throw new IllegalArgumentException("profile is null");
-        }
+    protected void removeProfile(Profile profile) {
         try {
             int index = profiles.indexOf(profile);
             if (index >= 0) {
@@ -400,7 +388,7 @@ public class ProfileManager extends Bean {
                     this.fireIndexedPropertyChange(PROFILES, index, profile, null);
                     this.writeProfiles();
                 }
-                if (profile.equals(this.getNextActiveProfile())) {
+                if (profile != null && profile.equals(this.getNextActiveProfile())) {
                     this.setNextActiveProfile(null);
                     this.saveActiveProfile(this.getActiveProfile(), this.autoStartActiveProfile);
                 }
@@ -470,9 +458,7 @@ public class ProfileManager extends Bean {
     }
 
     protected void setDefaultSearchPath(@Nonnull File defaultSearchPath) throws IOException {
-        if (defaultSearchPath == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(defaultSearchPath);
         if (!defaultSearchPath.equals(this.defaultSearchPath)) {
             File oldDefault = this.defaultSearchPath;
             this.defaultSearchPath = defaultSearchPath;
@@ -629,7 +615,7 @@ public class ProfileManager extends Bean {
      * @return true if the app should start without user interaction
      */
     public boolean isAutoStartActiveProfile() {
-        return (this.hasActiveProfile() && autoStartActiveProfile);
+        return (this.getActiveProfile() != null && autoStartActiveProfile);
     }
 
     /**
@@ -645,11 +631,11 @@ public class ProfileManager extends Bean {
     /**
      * Create a default profile if no profiles exist.
      *
-     * @return A new profile if profile does not already exist
-     * @throws java.io.IOException if unable to create a Profile
-     * @throws java.lang.RuntimeException if profile already exists
+     * @return A new profile or null if profiles already exist
+     * @throws IllegalArgumentException if profile already exists at default location
+     * @throws java.io.IOException      if unable to create a Profile
      */
-    @Nonnull
+    @CheckForNull
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
         if (this.getAllProfiles().isEmpty()) {
             String pn = Bundle.getMessage("defaultProfileName");
@@ -661,9 +647,7 @@ public class ProfileManager extends Bean {
             log.info("Created default profile \"{}\"", pn);
             return profile;
         } else {
-            // createDefaultProfile() should never be called if there already
-            // exists a profile
-            throw new RuntimeException("profile already exists");
+            return null;
         }
     }
 
@@ -674,7 +658,8 @@ public class ProfileManager extends Bean {
      * @param config the configuration file
      * @param name   the name of the configuration
      * @return The profile with the migrated configuration
-     * @throws java.io.IOException if unable to create a Profile
+     * @throws java.io.IOException      if unable to create a Profile
+     * @throws IllegalArgumentException if profile already exists for config
      */
     @Nonnull
     public Profile migrateConfigToProfile(@Nonnull File config, @Nonnull String name) throws IllegalArgumentException, IOException {
@@ -700,33 +685,73 @@ public class ProfileManager extends Bean {
      * Profile-related states requiring preparation to use profiles:
      * <table>
      * <caption>Matrix of states determining if migration required.</caption>
-     * <tr><th>Profile Catalog</th><th>Profile Config</th><th>App
-     * Config</th><th>Action</th></tr>
-     * <tr><td>YES</td><td>YES</td><td>YES</td><td>No preparation required -
-     * migration from earlier JMRI complete</td></tr>
-     * <tr><td>YES</td><td>YES</td><td>NO</td><td>No preparation required - JMRI
-     * installed after profiles feature introduced</td></tr>
-     * <tr><td>YES</td><td>NO</td><td>YES</td><td>Migration required - other
-     * JMRI applications migrated to profiles by this user, but not this
-     * one</td></tr>
-     * <tr><td>YES</td><td>NO</td><td>NO</td><td>No preparation required -
-     * prompt user for desired profile if multiple profiles exist, use default
-     * otherwise</td></tr>
-     * <tr><td>NO</td><td>NO</td><td>NO</td><td>New user - create and use
-     * default profile</td></tr>
-     * <tr><td>NO</td><td>NO</td><td>YES</td><td>Migration required - need to
-     * create first profile</td></tr>
-     * <tr><td>NO</td><td>YES</td><td>YES</td><td>No preparation required -
-     * catalog will be automatically regenerated</td></tr>
-     * <tr><td>NO</td><td>YES</td><td>NO</td><td>No preparation required -
-     * catalog will be automatically regenerated</td></tr>
+     * <tr>
+     * <th>Profile Catalog</th>
+     * <th>Profile Config</th>
+     * <th>App Config</th>
+     * <th>Action</th>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>No preparation required - migration from earlier JMRI complete</td>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>No preparation required - JMRI installed after profiles feature
+     * introduced</td>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>Migration required - other JMRI applications migrated to profiles by
+     * this user, but not this one</td>
+     * </tr>
+     * <tr>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>No preparation required - prompt user for desired profile if multiple
+     * profiles exist, use default otherwise</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>New user - create and use default profile</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>Migration required - need to create first profile</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>YES</td>
+     * <td>No preparation required - catalog will be automatically
+     * regenerated</td>
+     * </tr>
+     * <tr>
+     * <td>NO</td>
+     * <td>YES</td>
+     * <td>NO</td>
+     * <td>No preparation required - catalog will be automatically
+     * regenerated</td>
+     * </tr>
      * </table>
      * This method returns true if a migration occurred, and false in all other
      * circumstances.
      *
      * @param configFilename the name of the app config file
      * @return true if a user's existing config was migrated, false otherwise
-     * @throws java.io.IOException if unable to to create a Profile
+     * @throws java.io.IOException      if unable to to create a Profile
+     * @throws IllegalArgumentException if profile already exists for configFilename
      */
     public boolean migrateToProfiles(@Nonnull String configFilename) throws IllegalArgumentException, IOException {
         File appConfigFile = new File(configFilename);
@@ -780,9 +805,6 @@ public class ProfileManager extends Bean {
      *                                 Profile
      */
     public void export(@Nonnull Profile profile, @Nonnull File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
-        if (profile == null) {
-            throw new IllegalArgumentException("profile is null");
-        }
         if (!target.exists() && !target.createNewFile()) {
             throw new IOException("Unable to create file " + target);
         }
@@ -880,16 +902,11 @@ public class ProfileManager extends Bean {
      */
     @CheckForNull
     public static Profile getStartingProfile() throws IOException {
-        if (!ProfileManager.getDefault().hasActiveProfile()) {
+        if (ProfileManager.getDefault().getActiveProfile() == null) {
             ProfileManager.getDefault().readActiveProfile();
             // Automatically start with only profile if only one profile
             if (ProfileManager.getDefault().getProfiles().length == 1) {
-                Profile profile = ProfileManager.getDefault().getProfiles(0);
-                if (profile != null) {
-                    ProfileManager.getDefault().setActiveProfile(profile);
-                } else {
-                    throw new RuntimeException("profile is null");
-                }
+                ProfileManager.getDefault().setActiveProfile(ProfileManager.getDefault().getProfiles(0));
                 // Display profile selector if user did not choose to auto start with last used profile
             } else if (!ProfileManager.getDefault().isAutoStartActiveProfile()) {
                 return null;

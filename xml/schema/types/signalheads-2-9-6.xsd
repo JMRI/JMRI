@@ -63,6 +63,7 @@
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
         <xs:element name="useAddressOffSet" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="packetsendcount" type="xs:int" minOccurs="0" maxOccurs="1"/>
         <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
           Deprecated in JMRI 2.7.7 in favor of turnoutname element

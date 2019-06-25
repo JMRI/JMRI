@@ -31,7 +31,7 @@ class DCCppPortControllerScaffold extends DCCppSimulatorPortController {
 
     @Override
     public String[] validBaudRates() {
-        return null;
+        return new String[] {};
     }
 
     protected DCCppPortControllerScaffold() throws Exception {

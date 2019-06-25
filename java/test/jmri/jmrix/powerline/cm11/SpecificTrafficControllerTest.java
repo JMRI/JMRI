@@ -189,7 +189,12 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected SerialPortControllerScaffold() throws Exception {
