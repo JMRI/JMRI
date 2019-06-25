@@ -347,15 +347,21 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         refreshPortBox();
 
-        baudList = adapter.validBaudRates();
+        baudList = adapter.validBaudRates(); // should not return null, empty String[] {} when not supported
         // need to remove ActionListener before addItem() or action event will occur
         if (baudBox.getActionListeners().length > 0) {
             baudBox.removeActionListener(baudBox.getActionListeners()[0]);
         }
+        // rebuild baudBox combo list
         baudBox.removeAllItems();
         if (log.isDebugEnabled()) {
             log.debug("after remove, {} items, first is {}", baudBox.getItemCount(),
                     baudBox.getItemAt(0));
+        }
+
+        // empty array means: baud not supported by adapter (but extends serialConnConfig)
+        if (baudList.length == 0) {
+            log.debug("empty array received from adapter");
         }
         for (String baudList1 : baudList) {
             baudBox.addItem(baudList1);
@@ -377,7 +383,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
-        baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
+        if (baudBox.getItemCount() > 0) { // skip when adapter returned an empty array (= spotbug's preference)
+            baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
+        }
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {

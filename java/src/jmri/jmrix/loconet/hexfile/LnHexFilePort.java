@@ -245,7 +245,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     @Override
     public String[] validBaudRates() {
         log.error("validBaudRates should not have been invoked", new Exception());
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -253,7 +253,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     /**
