@@ -287,7 +287,7 @@ public abstract class ItemPanel extends JPanel {
             return PORTAL;
         } else {
             log.error("Item type \"{}\" cannot create icon sets!", type);
-            return null;
+            return new String[]{};
         }
     }
 
