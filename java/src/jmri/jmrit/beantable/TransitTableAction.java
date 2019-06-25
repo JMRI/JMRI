@@ -1973,21 +1973,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 whatMinuteSpinner1.setToolTipText(rbx.getString("HintPauseData"));
                 break;
             case TransitSectionAction.SETMAXSPEED:
-                if (editActionMode) {
-                    float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);
-                    whatPercentSpinner.setValue(maxPerc);
-                }
-                whatPercentSpinner.setVisible(true);
-                whatPercentSpinner.setToolTipText(rbx.getString("HintSetSpeedData1"));
-                break;
             case TransitSectionAction.SETCURRENTSPEED:
-                if (editActionMode) {
-                    float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);
-                    whatPercentSpinner.setValue(maxPerc);
-                }
-                whatPercentSpinner.setVisible(true);
-                whatPercentSpinner.setToolTipText(rbx.getString("HintSetSpeedData1"));
-                break;
             case TransitSectionAction.RAMPTRAINSPEED:
                 if (editActionMode) {
                     float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);
