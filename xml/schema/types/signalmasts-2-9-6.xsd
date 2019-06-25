@@ -274,6 +274,7 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+      <xs:element name="packetsendcount" type="xs:int" minOccurs="0" maxOccurs="1"/>
       <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:sequence>
@@ -404,6 +405,16 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
+        <xs:element name="delay" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+                <xs:attribute name="duration" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Specifies mast-specific delay before each separate output command
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:complexType>
+        </xs:element>
       <xs:element name="outputs" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>

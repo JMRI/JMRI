@@ -1,20 +1,17 @@
 package jmri.jmrix.sprog;
 
-import java.awt.GraphicsEnvironment;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import javax.swing.JOptionPane;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.PowerManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
 import purejavacomm.SerialPortEvent;
 import purejavacomm.SerialPortEventListener;
@@ -284,13 +281,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             }
             log.debug("Message dequeued id: {}", messageToSend.message.getId());
             // remember who sent this
-//            log.debug("Updating last sender {}");
             lastSender = messageToSend.listener;
             lastId = messageToSend.message.getId();
             // notify all _other_ listeners
-            if (messageToSend.listener != null) {
-                notifyMessage(messageToSend.message, messageToSend.listener);
-            }
+            notifyMessage(messageToSend.message, messageToSend.listener);
             replyAvailable = false;
             sendToInterface(messageToSend.message);
             log.debug("Waiting for a reply");
@@ -360,6 +354,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * Break connection to existing SprogPortController object.
      * <p>
      * Once broken, attempts to send via "message" member will fail.
+     * 
+     * @param p the connection to break
      */
     public void disconnectPort(AbstractPortController p) {
         istream = null;

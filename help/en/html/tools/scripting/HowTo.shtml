@@ -61,7 +61,7 @@
         the <a href="Start.shtml">introductory page</a> shows some
         of the basic commands.</p>
 	  <p>See also <a href="Python.shtml">Python/Jython Language</a> for general FAQ about the language.</p>
-	  <p>See also <a href="WhatWhere.shtml">Jython Scripting "What...Where"</a> for other interesting tidbits.</p>
+	  <p>See also <a href="WhatWhere.shtml">Jython Scripting "What... Where"</a> for other interesting tidbits.</p>
 
 <!-- = = = = = = = = = = = = The How To's = = = = = = = = = = = = = = = = = -->	 
      
@@ -165,7 +165,7 @@
 		<h3>Alternative syntax in Python</h3>
 		
 		<p>The Python language provides alternative ways of addressing objects and methods. It is not the purpose 
-		of this FAQ to explain all of these, but it is worth noting that the above examples could have been written 
+		of this short intro to explain all of these, but it is worth noting that the above examples could have been written
 		as:</p>
 		
 		<pre>
@@ -564,7 +564,6 @@ SensndExample().start()
       <p><a href="#HowToTopOfPage">[Go to top of page]</a></p>
       </div>
 
-      
         <!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->

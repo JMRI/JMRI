@@ -31,9 +31,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         super(new EliteXNetSystemConnectionMemo());
         option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("HornbyEliteConnectionLabel"), validOption1));
-        option2Name = Bundle.getMessage("BufferTitle");
-        options.put(option2Name, new Option(Bundle.getMessage("HornbyEliteCheckLabel"), validOption2));
-        setCheckBuffer(true); // default to true for elite
         this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
@@ -181,9 +178,20 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
          CheckBuffer = false;*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
@@ -201,7 +209,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     private boolean opened = false;
     InputStream serialStream = null;
-
 
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used. Convert to JMRI multi-system support structure.

@@ -130,10 +130,8 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         String name;
         if (namedBlock == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getBlock().getUserName() != null) {
-            name = getBlock().getUserName() + " (" + getBlock().getSystemName() + ")";
         } else {
-            name = getBlock().getSystemName();
+            name = getBlock().getFullyFormattedDisplayName();
         }
         return name;
     }

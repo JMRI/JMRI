@@ -109,6 +109,14 @@ public final class JSON {
      * {@value #DEFAULT}
      */
     public static final String DEFAULT = "default"; // NOI18N
+    /**
+     * {@value #SPEED}
+     */
+    public static final String SPEED = "speed"; // NOI18N
+    /**
+     * {@value #DIRECTION}
+     */
+    public static final String DIRECTION = "direction"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -378,9 +386,9 @@ public final class JSON {
 
     /* JSON route (operations) tokens */
     /**
-     * {@value #DIRECTION}
+     * {@value #TRAIN_DIRECTION}
      */
-    public static final String DIRECTION = "trainDirection"; // NOI18N
+    public static final String TRAIN_DIRECTION = "trainDirection"; // NOI18N
     /**
      * {@value #SEQUENCE}
      */
@@ -636,7 +644,8 @@ public final class JSON {
      * {@value #UNKNOWN}
      * <p>
      * Note that this value deliberately differs from
-     * {@link jmri.NamedBean#UNKNOWN}.
+     * {@link jmri.NamedBean#UNKNOWN} so that JSON clients can treat
+     * all known states as true, and the unknown state as false. 
      */
     public static final int UNKNOWN = 0x00;
 

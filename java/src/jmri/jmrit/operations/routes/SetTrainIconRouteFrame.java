@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,6 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -23,8 +28,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for setting train icon coordinates for a location.
@@ -64,14 +67,13 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     // test train icon
     TrainIcon _tIon;
 
-    public SetTrainIconRouteFrame(String routeName) {
+    public SetTrainIconRouteFrame(Route route) {
         super(Bundle.getMessage("MenuSetTrainIcon"));
 
-        // create route
-        if (routeName == null) {
+        if (route == null) {
             return;
         }
-        _route = InstanceManager.getDefault(RouteManager.class).getRouteByName(routeName);
+        _route = route;
         _route.addPropertyChangeListener(this);
 
         // general GUI config

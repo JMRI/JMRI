@@ -45,7 +45,7 @@ public class AboutServlet extends HttpServlet {
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         response.setContentType(UTF8_TEXT_HTML);
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        String profileName = profile.getName();
+        String profileName = profile != null ? profile.getName() : "";
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "About.html"))),
                 Bundle.getMessage(request.getLocale(), "AboutTitle"),                                   // page title is parm 1

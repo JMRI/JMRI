@@ -42,15 +42,19 @@ public class NullAudioFactory extends AbstractAudioFactory {
         log.info("Initialised Null audio system - no sounds will be available.");
 
         super.init();
-        initialised = true;
+        setInit(true);
         return true;
+    }
+
+    private synchronized static void setInit(boolean newVal) {
+        initialised = newVal;
     }
 
     @Override
     public String toString() {
         return "NullAudioFactory:"
                 + " vendor - JMRI Community"
-                + " version - " + jmri.Version.name();
+                + " version - " + jmri.Version.name(); // NOI18N
     }
 
     @Override

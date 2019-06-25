@@ -57,7 +57,6 @@ import jmri.beans.PropertyChangeProvider;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
@@ -77,6 +76,11 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * inconsistency has been detected in the hardware readback.
      */
     public static final int INCONSISTENT = 0x08;
+
+    /**
+     * Format used for {@link #getFullyFormattedDisplayName(boolean)}.
+     */
+    public static final String DISPLAY_NAME_FORMAT = "%s (%s)";
 
     /**
      * User's identification for the item. Bound parameter so manager(s) can
@@ -102,7 +106,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * Get a system-specific name. This encodes the hardware addressing
      * information. Any given system name must be unique within the layout.
      *
-     * @return the system-specific name.
+     * @return the system-specific name
      */
     @CheckReturnValue
     @Nonnull
@@ -111,14 +115,14 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     /**
      * Display the system-specific name.
      *
-     * @return the system-specific name.
+     * @return the system-specific name
      */
     @Nonnull
     @Override
     public String toString();
 
     /**
-     * return user name if it exists, otherwise return System name
+     * Get user name if it exists, otherwise return System name.
      *
      * @return the user name or system-specific name
      */
@@ -127,14 +131,35 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public String getDisplayName();
 
     /**
-     * Returns a fully formatted display that includes the SystemName and
-     * UserName if set.
+     * Get a fully formatted display that includes the SystemName and,
+     * if set, the UserName”.
+     * <p>
+     * This is the same as calling
+     * {@link #getFullyFormattedDisplayName(boolean)} with the parameter true.
      *
-     * @return <code>UserName (SystemName)</code> or <code>SystemName</code>
+     * @return {@code UserName (SystemName)} or {@code SystemName} if the
+     *         UserName is null, empty, or matches the SystemName
      */
     @CheckReturnValue
     @Nonnull
-    public String getFullyFormattedDisplayName();
+    public default String getFullyFormattedDisplayName() {
+        return getFullyFormattedDisplayName(true);
+    }
+
+    /**
+     * Returns a fully formatted display that includes the SystemName and
+     * UserName if set. This uses the format {@value #DISPLAY_NAME_FORMAT}
+     *
+     * @param userNameFirst returns UserName followed by SystemName if true;
+     *                          otherwise returns SystemName followed by
+     *                          UserName
+     * @return {@code UserName (SystemName)} or {@code SystemName (UserName)}
+     *         based on value of userNameFirst, or {@code SystemName} if the
+     *         UserName is null, empty, or matches the SystemName
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String getFullyFormattedDisplayName(boolean userNameFirst);
 
     /**
      * Request a call-back when a bound property changes. Bound properties are

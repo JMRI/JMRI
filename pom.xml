@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.15.7-SNAPSHOT</version>
+    <version>4.17.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -16,7 +16,7 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <cucumber.version>2.0.1</cucumber.version>
+        <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
         <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
@@ -426,16 +426,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.1.0</version>
                 <configuration>
                     <!-- differs from ant-produced Javadocs by including JMRI version -->
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <show>package</show>
-                    <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
-                    <!-- change from default 100 warnings -->
-                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2300</additionalparam>
+                    <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
+                    <additionalJOption>-breakiterator -Xmaxwarns 1650</additionalJOption>
+                    <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
+                    <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -604,16 +605,22 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>net.ossindex</groupId>
+                <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
-                <version>2.3.7</version>
+                <version>3.0.4</version>
                 <configuration>
                     <failOnError>true</failOnError>
                     <!-- List packages with vulnerabilities to ignore. -->
                     <!-- Include an issue in GitHub for each ignored package -->
                     <!-- documenting why the vulnerability is ignored. -->
-                    <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
-                    <ignore>org.python:jython-standalone:2.7.0</ignore>
+                    <excludeCoordinates>
+                        <exclude>
+                            <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
+                            <groupId>org.python</groupId>
+                            <artifactId>jython-standalone</artifactId>
+                            <version>2.7.0</version>
+                        </exclude>
+                    </excludeCoordinates>
                 </configuration>
             </plugin>
             <plugin>
@@ -1101,7 +1108,7 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.10</version>
         </dependency>
         <dependency>
 	         <groupId>org.eclipse.paho</groupId>

@@ -180,6 +180,7 @@ public class LoadAtStartUpTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initShutDownManager();
         JUnitUtil.initDebugThrottleManager();
     }
 

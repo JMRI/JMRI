@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <name>Function Outputs</name>
+    <name xml:lang="de">Funktionsausgänge</name>
     <grid gridx="NEXT" gridy="0" ipadx="50" anchor="PAGE_START">
         <griditem>
             <group include="SwitchPilot,SwitchPilot V2.0">
@@ -11,6 +12,7 @@
                     </label>
                     <label>
                         <text>Output 1</text>
+                        <text xml:lang="de">Ausgang 1</text>
                     </label>
                     <label>
                         <text> </text>
@@ -26,7 +28,10 @@
                         <label>
                             <text>(</text>
                         </label>
-                        <display item="SwitchPilot Function Output 1 effect generated" label="Mode CV Value is"/>
+                        <display item="SwitchPilot Function Output 1 effect generated">
+                         <label>Mode CV Value is</label>
+                         <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                        </display>
                         <label>
                             <text>)</text>
                         </label>
@@ -47,6 +52,7 @@
                     </label>
                     <label>
                         <text>Output 2</text>
+                        <text xml:lang="de">Ausgang 2</text>
                     </label>
                     <label>
                         <text> </text>
@@ -62,7 +68,10 @@
                         <label>
                             <text>(</text>
                         </label>
-                        <display item="SwitchPilot Function Output 2 effect generated" label="Mode CV Value is"/>
+                        <display item="SwitchPilot Function Output 2 effect generated">
+                         <label>Mode CV Value is</label>
+                         <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                        </display>
                         <label>
                             <text>)</text>
                         </label>
@@ -83,6 +92,7 @@
                     </label>
                     <label>
                         <text>Output 3</text>
+                        <text xml:lang="de">Ausgang 3</text>
                     </label>
                     <label>
                         <text> </text>
@@ -98,7 +108,10 @@
                         <label>
                             <text>(</text>
                         </label>
-                        <display item="SwitchPilot Function Output 3 effect generated" label="Mode CV Value is"/>
+                        <display item="SwitchPilot Function Output 3 effect generated">
+                         <label>Mode CV Value is</label>
+                         <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                        </display>
                         <label>
                             <text>)</text>
                         </label>
@@ -119,6 +132,7 @@
                     </label>
                     <label>
                         <text>Output 4</text>
+                        <text xml:lang="de">Ausgang 4</text>
                     </label>
                     <label>
                         <text> </text>
@@ -134,7 +148,10 @@
                         <label>
                             <text>(</text>
                         </label>
-                        <display item="SwitchPilot Function Output 4 effect generated" label="Mode CV Value is"/>
+                        <display item="SwitchPilot Function Output 4 effect generated">
+                         <label>Mode CV Value is</label>
+                         <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                        </display>
                         <label>
                             <text>)</text>
                         </label>

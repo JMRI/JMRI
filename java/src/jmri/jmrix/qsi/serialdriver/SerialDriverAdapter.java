@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
@@ -150,11 +152,21 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     *
+     * Currently only 19,200 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"19,200 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{19200};
     }
 
     private boolean opened = false;

@@ -263,10 +263,12 @@
         <variable CV="27" mask="XXVXXXXX" item="ESU V4 Selectrix Brake Reverse" default="0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Brake on reverse polarity of brake diode</label>
+        <label xml:lang="de">Bremsen wenn Polarität entgegengesetzt der Fahrtrichtung</label>
         </variable>
         <variable CV="27" mask="XVXXXXXX" item="ESU V4 Selectrix Brake Forward" default="0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Brake on forward polarity of brake diode</label>
+            <label xml:lang="de">Bremsen wenn Polarität gleich der Fahrtrichtung</label>
         </variable>
     </variables>
     <variable CV="27" mask="VXXXXXXX" default="0" item="ESU V4 Constant Brake" exclude="Essential Sound Unit">
@@ -428,11 +430,15 @@
     <variable CV="50" mask="XXXXXVXX" default="0" item="Analog Control check 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Quantum Engineer support</label>
+        <label xml:lang="de">Quantum Engineer Unterstützung</label>
+        <tooltip xml:lang="de">QSI Quantum Engineer im DC Analogbetrieb</tooltip>
     </variable>
     <variables exclude="LokPilot Fx V4.0">
         <variable CV="51" default="10" item="EMF Option 4">
             <decVal/>
             <label>BEMF Parameter 'K' Slow Cutoff</label>
+            <label xml:lang="de">Lastregelung Param. „K" Slow Cutoff</label>
+            <tooltip xml:lang="de">Interne Fahrstufe, bis zu der «K Slow» gilt</tooltip>
         </variable>
         <variable CV="52" default="10" item="EMF Option 3">
             <decVal/>
@@ -461,7 +467,9 @@
         <variable CV="56" default="255" item="EMF Option 5">
             <decVal/>
             <label>BEMF Influence at Vmin</label>
+            <label xml:lang="de">Regelungseinfluss bei Vmin</label>
             <tooltip>Defines the Strength of the BEMF at minimum speed step (255=100%).</tooltip>
+            <tooltip xml:lang="de">0-100 %, Bestimmt, wie stark die Lastregelung bei der kleinsten Fahrstufe ist.</tooltip>
         </variable>
         <variable CV="66" default="128" item="Forward Trim" comment="Range 0-255">
             <decVal/>
@@ -488,16 +496,21 @@
     <variable CV="101" default="64" item="ESU V5 Shunt Trim">
         <decVal max="128"/>
         <label>Shunting Mode Trim</label>
+        <label xml:lang="de">Rangiermodus Trimmen</label>
         <tooltip>Shunting Mode speed factor. Default is 64 (50%).</tooltip>
+        <tooltip xml:lang="de">Rangiermodus Geschwindigkeitsfaktor. Standard ist 50% (64)</tooltip>
     </variable>
     <variable CV="102" default="12" item="ESU V5 Brake Mode Exit Delay">
         <decVal/>
         <label>Brake Section Exit Delay</label>
+        <label xml:lang="de">Bremssteckenaufhebungsverzögerung</label>
         <tooltip>Unit is 16 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Zeit als Vielfaches von 16 ms</tooltip>
     </variable>
     <variable CV="103" default="0" item="ESU V5 Optional Load Adjustment">
         <decVal/>
         <label>Optional Load Adjustment</label>
+        <label xml:lang="de">Lastanpassung „Alternative Last”</label>
         <tooltip>&lt;html&gt;Sets the factor that changes CV3, CV4 and the sound.&lt;br/&gt;
             Acceleration time = CV3*(load value/128).&lt;br/&gt;
             Deceleration time = CV4*(load value/128).&lt;br/&gt;
@@ -507,10 +520,20 @@
             Intended to be set up for Light Load.
         &lt;/html&gt;
         </tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Stellt den Faktor ein, der CV3, CV4 und den Klang ändert.&lt;br/&gt;
+            Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
+            Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
+            (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
+            (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
+            (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
+            Vorgesehen für leichte Belastung.
+        &lt;/html&gt;
+        </tooltip>
     </variable>
     <variable CV="104" default="255" item="ESU V5 Primary Load Adjustment">
         <decVal/>
         <label>Primary Load Adjustment</label>
+        <label xml:lang="de">Lastanpassung „Schwere Last”</label>
         <tooltip>&lt;html&gt;Sets the factor that changes CV3, CV4 and the sound.&lt;br/&gt;
             Acceleration time = CV3*(load value/128).&lt;br/&gt;
             Deceleration time = CV4*(load value/128).&lt;br/&gt;
@@ -521,18 +544,31 @@
             If active, overrides Optional Load.
         &lt;/html&gt;
         </tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Stellt den Faktor ein, der CV3, CV4 und den Klang ändert.&lt;br/&gt;
+            Beschleunigungszeit = CV3*(Lastwert/128).&lt;br/&gt;
+            Verzögerungszeit = CV4*(Lastwert/128).&lt;br/&gt;
+            (Wert = 0) ändert die Zeit auf Null.&lt;br/&gt;
+            (Wert = 128) ändert die Zeit nicht.&lt;br/&gt;
+            (Wert = 255) verdoppelt die Zeit.&lt;br/&gt;
+            Vorgesehen für schwere Lastunen.&lt;br/&gt;
+            Wenn aktiv, wird die Lastanpassung „Alternative Last” überschrieben.
+        &lt;/html&gt;
+        </tooltip>
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     <variable CV="111" default="0" item="Motor Option 1">
         <decVal/>
         <label>Gearbox Backlash Compensation</label>
+        <label xml:lang="de">Getriebelastausgleich</label>
         <tooltip>Time for which the motor runs at minimum speed after changing direction to prevent gear box jerking. Unit is 16 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Zeit als Vielfaches von 16mS, für die der Motor nach Fahrtirchtungsumkehr mit minimaler Geschwindigkeit läuft, um ein Anfahrrucken durch Getriebsspiel zu verhindern.</tooltip>
     </variable>
     <variable CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Function Settings General Slider 1">
         <decVal/>
         <label>Rate for Blinking Effects</label>
         <label xml:lang="de">Zeitdauer für Blinkeffekte</label>
         <label xml:lang="ca">Taxa per efectes intermitents</label>
+        <tooltip xml:lang="de">Einheit ist 0.05 s</tooltip>
     </variable>
     <variable CV="113" default="32" tooltip="Unit is 0.032768 seconds" item="ESU V4 Power Fail Bypass" exclude="Essential Sound Unit">
         <decVal/>
@@ -543,42 +579,58 @@
     <variable CV="116" exclude="Essential Sound Unit" default="50" item="EMF Option 6">
         <decVal min="50" max="200"/>
         <label>Slow Speed BEMF Sampling Period</label>
+        <label xml:lang="de">EMK Messperiode bei Vmin</label>
         <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
     </variable>
     <variable CV="116" include="Essential Sound Unit" readOnly="yes" default="50" item="EMF Option 6">
         <decVal min="50" max="200"/>
         <label>Slow Speed BEMF Sampling Period</label>
+        <label xml:lang="de">EMK Messperiode bei Vmin</label>
         <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
     </variable>
     <variable CV="117" exclude="Essential Sound Unit" default="150" item="EMF Option 7">
         <decVal min="50" max="200"/>
         <label>Full Speed BEMF Sampling Period</label>
+        <label xml:lang="de">EMK Messperiode bei Vmax</label>
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
     </variable>
     <variable CV="117" include="Essential Sound Unit" readOnly="yes" default="150" item="EMF Option 7">
         <decVal min="50" max="200"/>
         <label>Full Speed BEMF Sampling Period</label>
+        <label xml:lang="de">EMK Messperiode bei Vmax</label>
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Häufigkeit der EMK-Messung in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
     </variable>
     <variable CV="118" exclude="Essential Sound Unit" default="15" item="EMF Option 8">
         <decVal min="10" max="40"/>
         <label>Slow Speed BEMF Measurement Gap</label>
+        <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin</label>
         <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
     </variable>
     <variable CV="118" include="Essential Sound Unit" readOnly="yes" default="15" item="EMF Option 8">
         <decVal min="10" max="40"/>
         <label>Slow Speed BEMF Measurement Gap</label>
+        <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmin</label>
         <tooltip>At speed step 1. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 1</tooltip>
     </variable>
     <variable CV="119" exclude="Essential Sound Unit" default="20" item="EMF Option 9">
         <decVal min="10" max="40"/>
         <label>Full Speed BEMF Measurement Gap</label>
+        <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax</label>
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
     </variable>
     <variable CV="119" include="Essential Sound Unit" readOnly="yes" default="20" item="EMF Option 9">
         <decVal min="10" max="40"/>
         <label>Full Speed BEMF Measurement Gap</label>
+        <label xml:lang="de">Austastlücke der EMK-Spannung bei Vmax</label>
         <tooltip>At speed step 255. Unit is 0.1 milliseconds.</tooltip>
+        <tooltip xml:lang="de">Länge der Meßlücke in 0,1 Millisekunden bei Fahrstufe 255</tooltip>
     </variable>
     <variable CV="123" default="100" item="ESU V4 ABC Reduced Speed">
         <decVal/>
@@ -619,11 +671,13 @@
     <variable CV="124" mask="XVXXXXXX" default="0" item="Motor Option 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Parking Brake</label>
+        <label xml:lang="de">Parkbremse</label>
     </variable>
     <variable CV="124" mask="VXXXXXXX" default="1" item="ESU V4 Function Settings General Check 3" include="LokPilot Fx V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Enable Output Driver on AUX3 and AUX4</label>
         <label xml:lang="ca">Activa Sortides en AUX3 i AUX4</label>
+        <label xml:lang="de">reserviert</label>
     </variable>
     <variable CV="125" default="90" item="Analog Vstart">
         <decVal/>
@@ -666,6 +720,7 @@
     <variable CV="132" default="80" tooltip="Unit is 0.0625 seconds" item="ESU V4 Function Settings General Slider 2">
         <decVal/>
         <label>Grade Crossing Hold Time</label>
+        <tooltip xml:lang="de">Einheit ist 0.0625 s</tooltip>
     </variable>
     <variable CV="134" default="10" item="ESU V4 ABC Detection Threshold">
         <defaultItem default="95" include="Essential Sound Unit"/>
@@ -698,69 +753,82 @@
         <decVal/>
         <label>Preheating Temperature for Secondary Smoke Unit</label>
         <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
-        <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
         <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
+        <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
     </variable>
     <variable CV="149" default="0" item="ESU V5 ABC Shuttle Train">
         <decVal/>
         <label>ABC Shuttle Train</label>
+        <label xml:lang="de">ABC Pendelzug Wartezeit</label>
         <tooltip>Waiting time in seconds before direction change. 0 to disable Shuttle Train.</tooltip>
+        <tooltip xml:lang="de">Zeit in Sekunden, die bei ABC Pendelzugbetrieb gewartet wird, ehe die Fahrtrichtung umgeschaltet wird.</tooltip>
     </variable>
     <variables exclude="Essential Sound Unit">
         <variable CV="150" default="42" item="ESU V5 HLU Speed Limit 1">
             <decVal/>
             <label>HLU Speed Limit 1</label>
             <tooltip>Internal speedstep.</tooltip>
+            <tooltip xml:lang="de">Interne Fahrstufe</tooltip>
         </variable>
         <variable CV="151" default="85" item="ESU V5 HLU Speed Limit 2">
             <decVal/>
             <label>HLU Speed Limit 2</label>
             <tooltip>Internal speedstep.</tooltip>
+            <tooltip xml:lang="de">Interne Fahrstufe</tooltip>
         </variable>
         <variable CV="152" default="127" item="ESU V5 HLU Speed Limit 3">
             <decVal/>
             <label>HLU Speed Limit 3</label>
             <tooltip>Internal speedstep.</tooltip>
+            <tooltip xml:lang="de">Interne Fahrstufe</tooltip>
         </variable>
         <variable CV="153" default="170" item="ESU V5 HLU Speed Limit 4">
             <decVal/>
             <label>HLU Speed Limit 4</label>
             <tooltip>Internal speedstep.</tooltip>
+            <tooltip xml:lang="de">Interne Fahrstufe</tooltip>
         </variable>
         <variable CV="154" default="212" item="ESU V5 HLU Speed Limit 5">
             <decVal/>
             <label>HLU Speed Limit 5</label>
             <tooltip>Internal speedstep.</tooltip>
+            <tooltip xml:lang="de">Interne Fahrstufe</tooltip>
         </variable>
     </variables>
     <variable CV="179" default="80" item="ESU V4 Brake Function 1 Deceleration">
         <decVal/>
         <label>Brake Function 1 time reduction</label>
+        <label xml:lang="de">Bremsfunktion 1 Bremszeit</label>
         <tooltip>Reduction of CV4 time value. (255 = 100%)</tooltip>
     </variable>
     <variable CV="180" default="40" item="ESU V4 Brake Function 2 Deceleration" exclude="Essential Sound Unit">
         <decVal/>
         <label>Brake Function 2 time reduction</label>
+        <label xml:lang="de">Bremsfunktion 2 Bremszeit</label>
         <tooltip>Reduction of CV4 time value. (255 = 100%)</tooltip>
     </variable>
     <variable CV="181" default="40" item="ESU V4 Brake Function 3 Deceleration" exclude="Essential Sound Unit">
         <decVal/>
         <label>Brake Function 3 time reduction</label>
+        <label xml:lang="de">Bremsfunktion 3 Bremszeit</label>
         <tooltip>Reduction of CV4 time value. (255 = 100%)</tooltip>
     </variable>
     <variable CV="182" default="0" item="ESU V4 Brake Function 1 max Speed">
         <decVal max="126"/>
         <label>Brake Function 1  maximum speed</label>
+        <label xml:lang="de">Bremsfunktion 1 max. Speed</label>
         <tooltip>Highest speed step that can be reached when Brake Function 1 is active.</tooltip>
     </variable>
     <variable CV="183" default="126" item="ESU V4 Brake Function 2 max Speed" exclude="Essential Sound Unit">
         <decVal max="126"/>
         <label>Brake Function 2  maximum speed</label>
+        <label xml:lang="de">Bremsfunktion 2 max. Speed</label>
         <tooltip>Highest speed step that can be reached when Brake Function 2 is active.</tooltip>
     </variable>
     <variable CV="184" default="126" item="ESU V4 Brake Function 3 max Speed" exclude="Essential Sound Unit">
         <decVal max="126"/>
         <label>Brake Function 3  maximum speed</label>
+        <label xml:lang="de">Bremsfunktion 3 max. Speed</label>
         <tooltip>Highest speed step that can be reached when Brake Function 3 is active.</tooltip>
     </variable>
     <variables exclude="Essential Sound Unit">

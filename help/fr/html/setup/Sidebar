@@ -99,8 +99,9 @@
 				<li><a href="../hardware/loconet/Digitrax.shtml">LocoNet</a>
 				<li><a href="../hardware/maple/index.shtml">Maple Systems</a>
 				<li><a href="../hardware/marklin/index.shtml">M&auml;rklin CS2</a>
-				<li><a href="../hardware/modbus/index.shtml">Modbus</a>
 				<li><a href="../hardware/can/cbus/index.shtml">MERG CBUS</a>
+				<li><a href="../hardware/modbus/index.shtml">Modbus</a>
+                <li><a href="../hardware/mqtt/index.shtml">MQTT</a>
 				<li><a href="../hardware/mrc/index.shtml">MRC</a>
 				<li><a href="../hardware/rps/index.shtml">NAC Services RPS</a>
 				<li><a href="../hardware/nce/NCE.shtml">NCE</a>

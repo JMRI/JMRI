@@ -569,7 +569,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
         public Default() {
-            super(Bundle.getMessage("ConfigTitle"),
+            super(Bundle.getMessage("CapConfigTitle"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     ConfigToolPane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));

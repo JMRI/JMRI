@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Description:	JUnit tests for the AcelaTrafficController class
+ * JUnit tests for the AcelaTrafficController class.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
@@ -64,7 +64,7 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
         Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
     }
 
-    // internal class to simulate a AcelaListener
+    // internal class to simulate an AcelaListener
     class AcelaListenerScaffold implements AcelaListener {
 
         public AcelaListenerScaffold() {
@@ -85,7 +85,7 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
     AcelaReply rcvdReply;
     AcelaMessage rcvdMsg;
 
-    // internal class to simulate a AcelaPortController
+    // internal class to simulate an AcelaPortController
     class AcelaPortControllerScaffold extends AcelaPortController {
 
         @Override
@@ -104,7 +104,12 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected AcelaPortControllerScaffold() throws Exception {

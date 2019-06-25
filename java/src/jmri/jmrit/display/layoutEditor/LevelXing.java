@@ -2,7 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -105,21 +105,22 @@ public class LevelXing extends LayoutTrack {
     public static final int POINTD = 0x30;
 
     /**
-     * constructor method
+     * Constructor method
      */
     public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
         super(id, c, layoutEditor);
     }
 
-    // this should only be used for debugging...
+    // this should only be used for debugging
     @Override
     public String toString() {
         return "LevelXing " + getName();
     }
 
-    /**
+    /*
      * Accessor methods
      */
+
     @Nonnull
     public String getBlockNameAC() {
         String result = null;
@@ -700,7 +701,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * return the coordinates for a specified connection type
+     * Get the coordinates for a specified connection type.
      *
      * @param connectionType the connection type
      * @return the coordinates for the specified connection type
@@ -745,8 +746,9 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Add Layout Blocks
+     * Add Layout Blocks.
      */
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockAC(LayoutBlock newLayoutBlock) {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
@@ -769,6 +771,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockBD(LayoutBlock newLayoutBlock) {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
@@ -839,9 +842,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Methods to test if mainline track or not Returns true if either
-     * connecting track segment is mainline Defaults to not mainline if
-     * connecting track segments are missing
+     * Test if mainline track or not.
+     *
+     * @return true if either connecting track segment is mainline; Defaults
+     * to not mainline if connecting track segments are missing
      */
     public boolean isMainlineAC() {
         if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
@@ -866,8 +870,8 @@ public class LevelXing extends LayoutTrack {
         return (isMainlineAC() || isMainlineBD());
     }
 
-    /**
-     * Modify coordinates methods
+    /*
+     * Modify coordinates methods.
      */
     public void setCoordsA(Point2D p) {
         dispA = MathUtil.subtract(p, center);
@@ -886,7 +890,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * Scale this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
@@ -900,7 +904,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * Translate (2D move) this LayoutTrack's coordinates by the x and y factors.
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -1011,13 +1015,13 @@ public class LevelXing extends LayoutTrack {
         LayoutBlock lb;
         if (!tLayoutBlockNameAC.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockNameAC);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 if (namedLayoutBlockBD != namedLayoutBlockAC) {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blocknamebd '" + tLayoutBlockNameAC + "' in levelxing " + getName());
+                log.error("bad blocknamebd '{}' in levelxing {}", tLayoutBlockNameAC, getName());
                 namedLayoutBlockAC = null;
             }
             tLayoutBlockNameAC = null; //release this memory
@@ -1025,17 +1029,59 @@ public class LevelXing extends LayoutTrack {
 
         if (!tLayoutBlockNameBD.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockNameBD);
-            if (lb != null) {
+            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
                 namedLayoutBlockBD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 if (namedLayoutBlockBD != namedLayoutBlockAC) {
                     lb.incrementUse();
                 }
             } else {
-                log.error("bad blocknamebd '" + tLayoutBlockNameBD + "' in levelxing " + getName());
+                log.error("bad blocknamebd '{}' in levelxing {}", tLayoutBlockNameBD, getName());
                 namedLayoutBlockBD = null;
             }
             tLayoutBlockNameBD = null; //release this memory
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
+        if (!beanReferences.isEmpty()) {
+            displayRemoveWarningDialog(beanReferences, "LevelCrossing");  // NOI18N
+        }
+        return beanReferences.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a level crossing point.
+     * @param pointName Specify the point (A-D) or all (All) points.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getBeanReferences(String pointName) {
+        ArrayList<String> references = new ArrayList<>();
+        if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
+            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
+            if (!getSignalAName().isEmpty()) references.add(getSignalAName());
+        }
+        if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
+            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
+            if (!getSignalBName().isEmpty()) references.add(getSignalBName());
+        }
+        if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
+            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
+            if (!getSignalCName().isEmpty()) references.add(getSignalCName());
+        }
+        if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
+            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
+            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
+            if (!getSignalDName().isEmpty()) references.add(getSignalDName());
+        }
+        return references;
     }
 
     JPopupMenu popup = null;
@@ -1154,7 +1200,7 @@ public class LevelXing extends LayoutTrack {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLevelXing(LevelXing.this)) {
+                    if (canRemove() && layoutEditor.removeLevelXing(LevelXing.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -1308,7 +1354,7 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
+     * the object is still displayed; see remove().
      */
     void dispose() {
         if (popup != null) {
@@ -1318,7 +1364,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Removes this object from display and persistance
+     * Remove this object from display and persistance.
      */
     void remove() {
         // remove from persistance by flagging inactive
@@ -1407,7 +1453,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * draw this level crossing
+     * Draw this level crossing.
      *
      * @param g2 the graphics port to draw to
      */

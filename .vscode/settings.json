@@ -1,3 +1,16 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.test.config": [
+        {
+            "name": "JMRI",
+            "workingDirectory": "${workspaceFolder}",
+            "env": {
+                "user.language": "en",
+                "user.region": "US",
+                "jmri.prefsdir": "${workspaceFolder}/temp"
+            }
+        }
+    ],
+    "java.test.defaultConfig": "JMRI"
 }

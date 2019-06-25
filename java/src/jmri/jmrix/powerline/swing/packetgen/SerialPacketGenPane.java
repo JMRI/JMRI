@@ -53,7 +53,7 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.powerline.swing.packetgen.PowerlinePacketGenPane";
+        return "package.jmri.jmrix.powerline.packetgen.PowerlinePacketGenPane";
     }
 
     /**
