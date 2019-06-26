@@ -104,7 +104,7 @@ public class DispatcherPro extends Apps {
     @Override
     protected void attachHelp() {
         if (h1 != null) {
-            jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DispatcherPro.DispatcherPro");
+            jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DispatcherPro.index");
         }
     }
     
