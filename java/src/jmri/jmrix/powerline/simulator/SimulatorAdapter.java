@@ -111,7 +111,7 @@ public class SimulatorAdapter extends SerialPortController implements
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -119,7 +119,7 @@ public class SimulatorAdapter extends SerialPortController implements
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     @Override

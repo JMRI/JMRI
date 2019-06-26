@@ -117,7 +117,12 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
             } else {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
             }
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            if (t != null) {
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } else {
+                log.warn("Failed to find turnout {}. Check connection and configuration", name);
+                return null;
+            }
         } else {
             String name = e.getText();
             try {
@@ -136,4 +141,5 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
     }
 
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
+
 }

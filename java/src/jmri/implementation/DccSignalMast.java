@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class implements a SignalMast that use <b>Extended Accessory Decoder
+ * This class implements a SignalMast that uses <b>Extended Accessory Decoder
  * Control Packet Format</b>
  * and outputs that packet to the DCC System via the generic CommandStation
- * interface
+ * interface.
  * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
@@ -51,7 +51,7 @@ public class DccSignalMast extends AbstractSignalMast {
         configureFromName(sys);
     }
 
-    protected String mastType = "F$dsm";
+    private String mastType = "F$dsm";
 
     protected void configureFromName(String systemName) {
         // split out the basic information

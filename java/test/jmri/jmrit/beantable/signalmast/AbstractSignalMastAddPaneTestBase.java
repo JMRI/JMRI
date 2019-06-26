@@ -12,7 +12,7 @@ import org.junit.Test;
  * Base-class of the 
  * tests of individual implementations of {@link SignalMastAddPane} subclasses.
  * <p>
- * See {@link SignalMastAddPaneTest} for tests the overall 
+ * See {@link SignalMastAddPaneTest} for tests of the overall
  * operation of {@link SignalMastAddPane} services.
  * 
  * @author	Bob Jacobsen Copyright 2018
@@ -28,9 +28,8 @@ abstract public class AbstractSignalMastAddPaneTestBase {
     public void testInfoMethods() {
         SignalMastAddPane testPane = getOTT();
         
-        Assert.assertTrue(testPane.getPaneName() != null);
-        Assert.assertTrue(! testPane.getPaneName().isEmpty());
-
+        Assert.assertNotNull(testPane.getPaneName());
+        Assert.assertFalse(testPane.getPaneName().isEmpty());
     }
 
     @Before

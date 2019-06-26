@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import java.util.Date;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.Reportable;
 import jmri.Reporter;
@@ -23,7 +24,7 @@ import jmri.Reporter;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,Reportable  {
+public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, Reportable  {
 
     protected Reporter whereLastSeen = null;
 
@@ -38,6 +39,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
     }
 
     @Override
+    @Nonnull
     public String getTagID() {
         // TODO: Convert this to allow for >1 char system name length
         // Or, is this really necessary as it will always be 'I'nternal???
@@ -73,20 +75,19 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
           sb.append(userName);
         }
 
-        // check to see if any properties have been added.
+        // check to see if any properties have been added
         Set keySet = getPropertyKeys();
-        if(keySet!=null){
-            // we have properties, so append the values to the
-            // end of the report seperated by spaces.
-            for( Object s : keySet) {
-                sb.append(" ");
-                sb.append(getProperty((String)s));
-            }
+        // we have properties, so append the values to the
+        // end of the report, seperated by spaces.
+        for( Object s : keySet) {
+            sb.append(" ");
+            sb.append(getProperty((String)s));
         }
         return sb.toString();
     }
 
     @Override
+    @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
     }

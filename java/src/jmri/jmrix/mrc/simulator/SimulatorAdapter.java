@@ -106,7 +106,7 @@ public class SimulatorAdapter extends MrcPortController implements
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked"); // NOI18N
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -114,7 +114,7 @@ public class SimulatorAdapter extends MrcPortController implements
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     @Override
