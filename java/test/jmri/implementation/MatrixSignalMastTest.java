@@ -53,13 +53,13 @@ public class MatrixSignalMastTest {
     public void testHeld() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
-        Assert.assertTrue(!m.getHeld());
+        Assert.assertFalse(m.getHeld());
 
         m.setHeld(true);
         Assert.assertTrue(m.getHeld());
 
         m.setHeld(false);
-        Assert.assertTrue(!m.getHeld());
+        Assert.assertFalse(m.getHeld());
     }
 
     @Test

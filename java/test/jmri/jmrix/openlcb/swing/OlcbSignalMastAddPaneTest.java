@@ -35,10 +35,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         
         vp.setMast(null);
         
-        vp.setAspectNames(s1.getAppearanceMap(), null);
+        vp.setAspectNames(s1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(s1);
         
-        vp.setAspectNames(m1.getAppearanceMap(), null);
+        vp.setAspectNames(m1.getAppearanceMap(), InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");
 
@@ -90,7 +90,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
                                     "Permissive", "Restricting", "Stop and Proceed", "Stop"}));
                     }
             }
-                , null );
+                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic") );
         
         JFrame frame = new JFrame("Add/Edit Signal Mast");
         frame.add(vp);
@@ -163,7 +163,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
                 public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
             }
-                , null);
+                , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(mast);
               
         JFrame frame = new JFrame("Add/Edit Signal Mast");

@@ -173,7 +173,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     @Override
     public String[] validBaudRates() {
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -181,7 +181,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     @Deprecated
