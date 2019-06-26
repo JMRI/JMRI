@@ -3,6 +3,8 @@ package jmri.jmrix.loconet.locobufferii;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
+import java.util.Arrays;
+
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
  * switch settings on the new LocoBuffer-II.
@@ -20,9 +22,9 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates. This is modified to have different
-     * comments. Because the speeds are the same as the parent class (19200 and
-     * 57600), we don't override validBaudNumber().
+     * {@inheritDoc}
+     * This is modified to have different comments. Because the speeds are the same as
+     * the parent class (19200 and 57600), we don't override validBaudNumbers().
      */
     @Override
     public String[] validBaudRates() {

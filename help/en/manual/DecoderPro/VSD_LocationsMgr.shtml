@@ -349,7 +349,7 @@
       the right place.</p>
 
       <p>During the setting up and test process I recommend to open a JMRI system
-      console, which might provide helpful information: Help &gt; System console.</p>
+      console, which might provide helpful information: Help &gt; System Console.</p>
 
       <p>You might also enrich the logging information, by adding the line</p>
        <pre>   log4j.category.jmri.jmrit.vsdecoder.VSDGeoFile=DEBUG</pre>

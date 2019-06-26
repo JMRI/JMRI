@@ -10,8 +10,7 @@ import org.junit.Test;
  * Tests for ConnectionConfig class.
  *
  * @author Paul Bender Copyright (C) 2016
- **/
-
+ */
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before

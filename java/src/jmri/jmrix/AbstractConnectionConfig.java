@@ -1,9 +1,11 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -11,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 
 /**
@@ -95,6 +98,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     abstract public void updateAdapter();
 
+    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Field used by implementing classes")
     protected int NUMOPTIONS = 2;
 
     // Load localized field names
@@ -140,7 +144,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
-	JLabel label = null;
+	    JLabel label = null;
 
         public Option(String name, JComponent optionSelection, Boolean advanced) {
             this.optionDisplayName = name;
@@ -191,6 +195,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     @Override
     abstract public String getInfo();
 
+    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Field used by implementing classes")
     protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
 
     /**
@@ -212,14 +217,14 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     abstract protected void showAdvancedItems();
 
     protected int addStandardDetails(PortAdapter adapter, boolean incAdvanced, int i) {
-        for (String item : options.keySet()) {
-            if (!options.get(item).isAdvanced()) {
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            if (!entry.getValue().isAdvanced()) {
                 cR.gridy = i;
                 cL.gridy = i;
-                gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                _details.add(options.get(item).getLabel());
-                _details.add(options.get(item).getComponent());
+                gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                _details.add(entry.getValue().getLabel());
+                _details.add(entry.getValue().getComponent());
                 i++;
             }
         }
@@ -229,7 +234,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(systemPrefixLabel, cL);
             gbLayout.setConstraints(systemPrefixField, cR);
-	    systemPrefixLabel.setLabelFor(systemPrefixField);
+            systemPrefixLabel.setLabelFor(systemPrefixField);
             _details.add(systemPrefixLabel);
             _details.add(systemPrefixField);
             i++;
@@ -237,7 +242,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(connectionNameLabel, cL);
             gbLayout.setConstraints(connectionNameField, cR);
-	    connectionNameLabel.setLabelFor(connectionNameField);
+            connectionNameLabel.setLabelFor(connectionNameField);
             _details.add(connectionNameLabel);
             _details.add(connectionNameField);
             i++;

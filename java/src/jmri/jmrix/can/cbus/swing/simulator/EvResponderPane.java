@@ -17,8 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
-import jmri.jmrix.can.cbus.swing.simulator.DirectionPane;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +58,7 @@ public class EvResponderPane extends JPanel {
         _selectMode = new JComboBox<String>();
         _selectMode.setEditable(false);
         
-        SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
+        ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectMode.setRenderer(renderer);
     
         tooltips = new ArrayList<String>();

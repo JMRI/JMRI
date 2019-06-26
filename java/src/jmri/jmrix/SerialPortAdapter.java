@@ -27,7 +27,7 @@ public interface SerialPortAdapter extends PortAdapter {
     public String openPort(String portName, String appName);
 
     /**
-     * Configure all of the other jmrix widgets needed to work with this adapter
+     * Configure all of the other jmrix widgets needed to work with this adapter.
      */
     @Override
     public void configure();
@@ -49,9 +49,19 @@ public interface SerialPortAdapter extends PortAdapter {
     public String getCurrentPortName();
 
     /**
-     * Get an array of valid baud rates; used to display valid options.
+     * Get an array of valid baud rate strings; used to display valid options in Connections Preferences.
+     *
+     * @return array of I18N display strings of port speed settings valid for this serial adapter,
+     * must match order and values from {@link #validBaudNumbers()}
      */
     public String[] validBaudRates();
+
+    /**
+     * Get an array of valid baud rate numbers; used to store/load adapter speed option.
+     *
+     * @return integer array of speeds, must match order and values from {@link #validBaudRates()}
+     */
+    public int[] validBaudNumbers();
 
     /**
      * Set the baud rate. Only to be used after construction, but before the
@@ -59,32 +69,45 @@ public interface SerialPortAdapter extends PortAdapter {
      */
     public void configureBaudRate(String rate);
 
+    /**
+     * Set the baud rate by index from ValidBaudRates[].
+     * <p>
+     * Only to be used after construction, but before the openPort call.
+     */
+    public void configureBaudRateFromNumber(String index);
+
+    public void configureBaudIndex(int index);
+
     public String getCurrentBaudRate();
+
+    public String getCurrentBaudNumber();
+
+    public int getCurrentBaudIndex();
 
     /**
      * Set the first port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption1(String value);
 
     /**
      * Set the second port option. Only to be used after construction, but
-     * before the openPort call
+     * before the openPort call.
      */
     @Override
     public void configureOption2(String value);
 
     /**
      * Set the third port option. Only to be used after construction, but before
-     * the openPort call
+     * the openPort call.
      */
     @Override
     public void configureOption3(String value);
 
     /**
      * Set the fourth port option. Only to be used after construction, but
-     * before the openPort call
+     * before the openPort call.
      */
     @Override
     public void configureOption4(String value);
@@ -97,13 +120,13 @@ public interface SerialPortAdapter extends PortAdapter {
     public String handlePortBusy(PortInUseException p, String portName, Logger log);
 
     /**
-     * Return the System Manufacturers Name
+     * Get the System Manufacturers Name.
      */
     @Override
     public String getManufacturer();
 
     /**
-     * Set the System Manufacturers Name
+     * Set the System Manufacturers Name.
      */
     @Override
     public void setManufacturer(String Manufacturer);

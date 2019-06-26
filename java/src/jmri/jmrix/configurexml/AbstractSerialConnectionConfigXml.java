@@ -51,7 +51,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         }
 
         if (adapter.getCurrentBaudRate() != null) {
-            e.setAttribute("speed", adapter.getCurrentBaudRate());
+            e.setAttribute("speed", adapter.getCurrentBaudNumber()); // store by baud number, not by i18n combo display string
         } else {
             e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
@@ -81,9 +81,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
-        String baudRate = perNode.getAttribute("speed").getValue();
-        adapter.configureBaudRate(baudRate);
-
+        String baudNumber = perNode.getAttribute("speed").getValue();
+        adapter.configureBaudRateFromNumber(baudNumber);
         loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
