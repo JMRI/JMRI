@@ -249,7 +249,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 sensorFeedBack1ComboBox.setEnabled(true);
                 sensorFeedBack2ComboBox.setEnabled(true);
             }
-            t.setFeedbackMode(mode);
+            bean.setFeedbackMode(mode);
         }
 
         bean.setFeedbackMode((String) modeBox.getSelectedItem());
@@ -357,7 +357,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String lockOpName = (String) lockOperationBox.getSelectedItem();
-                    if (lockOpNmae != null) {
+                    if (lockOpName != null) {
                         if (lockOpName.equals(bothText)) {
                             bean.enableLockOperation(Turnout.CABLOCKOUT
                                     + Turnout.PUSHBUTTONLOCKOUT, true);
