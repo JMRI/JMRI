@@ -211,10 +211,10 @@ git push github
     If there were, update the master
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.17.2.shtml
+     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.17.1.shtml
      
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft=warnings.shtml ../website/releasenotes/jmri4.17.2.shtml
+     bbedit help/en/releasenotes/current-draft=warnings.shtml ../website/releasenotes/jmri4.17.1.shtml
      
 - Clean out the unneeded sections from the release note
 
@@ -260,7 +260,7 @@ where the date at the end should be the date (and optionally time) of the last r
 
 - (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the next release:
 ```
-    <version>4.17.3-SNAPSHOT</version>
+    <version>4.17.2-SNAPSHOT</version>
 ```
 Commit, and push back directly to master (this should be the only change, and has to be before the next step)
 ```
