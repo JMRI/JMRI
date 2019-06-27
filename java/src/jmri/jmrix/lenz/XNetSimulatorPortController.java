@@ -92,7 +92,7 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
      */
     @Override
     public String[] validBaudRates() {
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -100,7 +100,7 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
 }

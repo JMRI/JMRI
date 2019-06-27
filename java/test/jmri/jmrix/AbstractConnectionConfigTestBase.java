@@ -67,15 +67,15 @@ abstract public class AbstractConnectionConfigTestBase {
     }
 
     /**
-     * configure the ConnectionConfig object (cc) and any other
-     * neccesary objects.
+     * Configure the ConnectionConfig object (cc) and any other
+     * necessary objects.
      */
     @Before
     abstract public void setUp();
 
     /**
-     * clean up the ConnectionConfig object (cc) and any other
-     * neccesary objects.
+     * Clean up the ConnectionConfig object (cc) and any other
+     * necessary objects.
      */
     @After
     abstract public void tearDown();

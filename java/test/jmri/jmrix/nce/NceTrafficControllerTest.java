@@ -241,12 +241,12 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
         }
 
         //@Override
         public int[] validBaudNumbers() {
-            return null;
+            return new int[] {};
         }
 
         protected NcePortControllerScaffold() throws Exception {

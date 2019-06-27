@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -1581,8 +1582,12 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void handleDCCOkPressed() {
         DccSignalHead s;
-        String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
-        //if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
+        String systemNameText = null;
+        String prefix = (String) prefixBox.getSelectedItem();
+        if (prefix != null) {
+            systemNameText = ConnectionNameFromSystemName.getPrefixFromName(prefix);
+        }
+        // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
         if (systemNameText == null) {
             systemNameText = "I";
         }
@@ -1657,7 +1662,6 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
             JOptionPane.showMessageDialog(addFrame, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
         }
     }
 
@@ -2784,7 +2788,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     /**
-     * Update Turnout object for a signal mast output
+     * Update Turnout object for a signal mast output.
      *
      * @param bp         Pane in which the new output/bean was entered by user
      * @param reference  Turnout application description
@@ -2816,7 +2820,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     /**
-     * Create Turnout object for a signal mast output
+     * Create Turnout object for a signal mast output.
      *
      * @param bp        Pane in which the new output/bean was entered by user
      * @param reference Turnout application description
@@ -2894,4 +2898,5 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class);
+
 }

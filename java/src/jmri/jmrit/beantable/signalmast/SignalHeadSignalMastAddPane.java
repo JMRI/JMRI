@@ -98,8 +98,7 @@ public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull
-            SignalAppearanceMap newMap, SignalSystem sigSystem) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap newMap, @Nonnull SignalSystem sigSystem) {
         log.debug("setAspectNames(...)");
 
         map = (DefaultSignalAppearanceMap)newMap;

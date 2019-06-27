@@ -241,7 +241,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         if (mBaudRate != null) {
             int[] numbers = validBaudNumbers();
             String[] rates = validBaudRates();
-            if (numbers == null || rates == null || numbers.length != rates.length) { // arrays should correspond
+            if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
                 return "";
             }
             String baudNumString = "";
@@ -299,7 +299,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Uses the validBaudNumbers() and validBaudRates() methods to do this.
      *
      * @param currentBaudRate a rate from validBaudRates()
-     * @return -1 if no match (configuration system should prevent this)
+     * @return baudrate as integer if available and matching first digits in currentBaudRate,
+     *         0 if baudrate not supported by this adapter,
+     *         -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
@@ -307,18 +309,21 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         // return if arrays invalid
         if (numbers == null) {
-            log.error("numbers array null in currentBaudNumber");
+            log.error("numbers array null in currentBaudNumber()");
             return -1;
         }
         if (rates == null) {
-            log.error("rates array null in currentBaudNumber");
+            log.error("rates array null in currentBaudNumber()");
             return -1;
         }
-        if (numbers.length < 1 || (numbers.length != rates.length)) {
-            log.error("arrays wrong length in currentBaudNumber: {}, {}", numbers.length, rates.length);
+        if (numbers.length != rates.length) {
+            log.error("arrays are of different length in currentBaudNumber: {} vs {}", numbers.length, rates.length);
             return -1;
         }
-
+        if (numbers.length < 1) {
+            log.warn("baudrate is not supported by adapter");
+            return 0;
+        }
         // find the baud rate value
         for (int i = 0; i < numbers.length; i++) {
             if (rates[i].equals(currentBaudRate)) {
@@ -374,7 +379,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             return;
                         default:
                             log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
-                            return;
                     }
                 }
             }
@@ -456,6 +460,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             closeConnection();
         } catch (RuntimeException e) {
+            log.warn("closeConnection failed");
         }
         reconnect();
     }
@@ -532,6 +537,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         }
                     }
                 } catch (RuntimeException e) {
+                    log.warn("failed to reconnect to port {}", (mPort == null ? "null" : mPort));
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {
