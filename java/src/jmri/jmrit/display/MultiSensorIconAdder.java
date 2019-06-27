@@ -314,7 +314,6 @@ public class MultiSensorIconAdder extends IconAdder {
         }
 
         @Override
-        @Nonnull
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             log.debug("TransferableNamedBean.getTransferData");
             if (isDataFlavorSupported(flavor)) {
