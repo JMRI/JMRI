@@ -127,12 +127,12 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
         }
 
         //@Override
         public int[] validBaudNumbers() {
-            return null;
+            return new int[] {};
         }
 
         protected SerialPortControllerScaffold() throws Exception {

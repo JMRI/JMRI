@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -242,7 +243,8 @@ public abstract class AbstractMonPane extends JmriPanel {
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setSelected(pm.getSimplePreferenceState(alwaysOnTopCheck));
-        if ((getTopLevelAncestor() != null) && (getTopLevelAncestor() instanceof JmriJFrame)) {
+        Component ancestor = getTopLevelAncestor();
+        if (ancestor instanceof JmriJFrame) {
             ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         } else {
             // this pane isn't yet part of a frame,
@@ -507,7 +509,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * Get hex opcode for filtering
+     * Get hex opcode for filtering.
      * <p>
      * Reports the "opcode" byte from the string containing the ASCII string
      * representation of the message. Assumes that there is a generic header on
@@ -520,7 +522,7 @@ public abstract class AbstractMonPane extends JmriPanel {
      *         the opcode from the raw message.
      */
     protected String getOpCodeForFilter(String raw) {
-        //note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        // note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
         if (raw != null && raw.length() >= 7) {
             return raw.substring(5, 7);
         } else {
@@ -528,7 +530,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
     }
 
-    String newline = System.getProperty("line.separator"); // NOI18N
+    private static final String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
@@ -546,12 +548,14 @@ public abstract class AbstractMonPane extends JmriPanel {
             //
             // Should instead use the profile directory, as "null" can default to
             // the JMRI program directory, which might not be user-writable.
-            if ((FileUtil.getUserFilesPath() != null) && (p.getFileName() != null)) {
-                returnString = FileUtil.getUserFilesPath() + p.getFileName().toString();
+            java.nio.file.Path fileName = p.getFileName();
+            if (fileName != null) { // getUserFilesPath() never null
+                returnString = FileUtil.getUserFilesPath() + fileName.toString();
             } else {
                 log.error("User Files File Path not valid");
             }
-            log.warn("File selection dialog box did not provide a path to the specified file. Log will be saved to {}", returnString);
+            log.warn("File selection dialog box did not provide a path to the specified file. Log will be saved to {}",
+                    returnString);
         } else {
             returnString = p.toString();
         }

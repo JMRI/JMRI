@@ -271,7 +271,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMaxIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MaxIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+            firePropertyChange("MaxIntensity", oldValue, intensity);
         }
     }
 
@@ -439,7 +439,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+            firePropertyChange("TargetIntensity", oldValue, intensity);
         }
     }
 
@@ -531,8 +531,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     @Override
-    public void setCommandedAnalogValue(float value) throws JmriException {
-        float middle = (getMax() - getMin()) / 2 + getMin();
+    public void setCommandedAnalogValue(double value) throws JmriException {
+        double middle = (getMax() - getMin()) / 2 + getMin();
         
         if (value > middle) {
             setCommandedState(ON);
@@ -542,24 +542,24 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     @Override
-    public float getCommandedAnalogValue() {
-        return (float) getCurrentIntensity();
+    public double getCommandedAnalogValue() {
+        return getCurrentIntensity();
     }
 
     @Override
-    public float getMin() {
-        return (float) getMinIntensity();
+    public double getMin() {
+        return getMinIntensity();
     }
 
     @Override
-    public float getMax() {
-        return (float) getMaxIntensity();
+    public double getMax() {
+        return getMaxIntensity();
     }
 
     @Override
-    public float getResolution() {
+    public double getResolution() {
         // AbstractLight is by default only ON or OFF
-        return (float) (getMaxIntensity() - getMinIntensity());
+        return (getMaxIntensity() - getMinIntensity());
     }
 
     @Override

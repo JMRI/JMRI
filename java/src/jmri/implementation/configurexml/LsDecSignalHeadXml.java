@@ -120,7 +120,12 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         Element e = (Element) o;
         String name = e.getAttribute("systemName").getValue();
         Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+        if (t != null) {
+            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+        } else {
+            log.warn("Failed to find turnout {}. Check connection and configuration", name);
+            return null;
+        }
     }
 
     int loadTurnoutStatus(Object o) {
@@ -139,4 +144,5 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     }
 
     private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class);
+
 }

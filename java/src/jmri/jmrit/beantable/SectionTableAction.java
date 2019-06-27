@@ -656,15 +656,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     private void initializeEditInformation() {
         userName.setText(curSection.getUserName());
         switch (curSection.getSectionType()) {
-            case Section.USERDEFINED:
-                generationStateLabel.setText("");
-                break;
             case Section.SIGNALMASTLOGIC:
                 generationStateLabel.setText(rbx.getString("SectionTypeSMLLabel"));
                 break;
             case Section.DYNAMICADHOC:
                 generationStateLabel.setText(rbx.getString("SectionTypeDynLabel"));
                 break;
+            case Section.USERDEFINED:
             default:
                 generationStateLabel.setText("");
                 break;
