@@ -78,7 +78,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     private JPanel _buttonPanel;
     private String _type;
     private boolean _userDefaults;
-    private JTextField _sysNameText;
+    protected JTextField _sysNameText; // is set in IconAdderTest
     //Manager _manager;
     JTable _table;
     JButton _addButton;
