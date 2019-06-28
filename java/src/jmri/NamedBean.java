@@ -441,9 +441,25 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n2);
 
     public class BadUserNameException extends IllegalArgumentException {
+
+        public BadUserNameException() {
+            super();
+        }
+
+        public BadUserNameException(String message) {
+            super(message);
+        }
     }
 
     public class BadSystemNameException extends IllegalArgumentException {
+
+        public BadSystemNameException() {
+            super();
+        }
+
+        public BadSystemNameException(String message) {
+            super(message);
+        }
     }
 
 }

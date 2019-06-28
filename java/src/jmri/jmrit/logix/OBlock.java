@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -17,7 +18,7 @@ import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+ /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It
  * is the smallest piece of track that can have occupancy detection. A better
  * name would be Detection Circuit. However, an OBlock can be defined without an
@@ -749,6 +750,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return null;
     }
 
+    @Nonnull
     public List<Portal> getPortals() {
         ArrayList<Portal> clone = new ArrayList<Portal>();
         Iterator<Portal> iter = _portals.iterator();
@@ -888,7 +890,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (msg == null && path !=null) {  // _warrant has precedence - OK to throw
             int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
             path.setTurnouts(0, true, lockState, true);
-            firePropertyChange("pathState", Integer.valueOf(0), Integer.valueOf(getState()));
+            firePropertyChange("pathState", 0, getState());
         }
         if (log.isDebugEnabled()) {
             log.debug("setPath: Path \"{}\" in OBlock \"{}\" {} set for warrant {}",

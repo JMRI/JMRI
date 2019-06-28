@@ -32,8 +32,8 @@ import org.slf4j.LoggerFactory;
 public class MemoryComboIcon extends PositionableJPanel
         implements java.beans.PropertyChangeListener, ActionListener {
 
-    JComboBox<String> _comboBox;
-    ComboModel _model;
+    private JComboBox<String> _comboBox;
+    private ComboModel _model;
 
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
@@ -113,9 +113,9 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     /**
-     * Attached a named Memory to this display item
+     * Attach a named Memory to this display item.
      *
-     * @param pName Used as a system/user name to lookup the Memory object
+     * @param pName used as a system/user name to look up the Memory object
      */
     public void setMemory(String pName) {
         log.debug("setMemory for memory= {}", pName);
@@ -131,7 +131,7 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     /**
-     * Attached a named Memory to this display item
+     * Attach a named Memory to this display item.
      *
      * @param m The Memory object
      */
@@ -209,9 +209,9 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     /**
-     * Poppup menu iconEditor's ActionListener
+     * Popup menu iconEditor's ActionListener
      */
-    DefaultListModel<String> _listModel;
+    private DefaultListModel<String> _listModel;
 
     @Override
     protected void edit() {
@@ -220,6 +220,7 @@ public class MemoryComboIcon extends PositionableJPanel
             JButton bDel = new JButton(Bundle.getMessage("deleteSelection"));
             JButton bAdd = new JButton(Bundle.getMessage("addItem"));
             JTextField textfield = new JTextField(30);
+            int idx;
 
             @Override
             protected void addAdditionalButtons(JPanel p) {
@@ -227,7 +228,7 @@ public class MemoryComboIcon extends PositionableJPanel
                 bDel.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent a) {
-                        int idx = list.getSelectedIndex();
+                        idx = list.getSelectedIndex();
                         if (idx >= 0) {
                             _listModel.removeElementAt(idx);
                         }
@@ -240,7 +241,7 @@ public class MemoryComboIcon extends PositionableJPanel
                         if (text == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
                             return;
                         }
-                        int idx = list.getSelectedIndex();
+                        idx = list.getSelectedIndex();
                         if (idx < 0) {
                             idx = _listModel.getSize();
                         }
@@ -336,4 +337,5 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     private final static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class);
+
 }
