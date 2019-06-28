@@ -267,9 +267,10 @@ abstract public class SystemConnectionMemo extends Bean {
     }
 
     /**
-     * Provide access to the Consist Manager for this particular connection.
-     * <p>
-     * NOTE: Consist manager defaults to NULL
+     * Provide access to the ConsistManager for this particular connection.
+     * 
+     * @return the provided ConsistManager or null if the connection does not
+     *         provide a ConsistManager
      */
     public ConsistManager getConsistManager() {
         if (consistManager == null) {

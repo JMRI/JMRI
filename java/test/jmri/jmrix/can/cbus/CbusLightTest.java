@@ -48,7 +48,6 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
             t = new CbusLight("ML",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 

@@ -1015,8 +1015,9 @@ public class LevelXing extends LayoutTrack {
         LayoutBlock lb;
         if (!tLayoutBlockNameAC.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockNameAC);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            String userName = lb.getUserName();
+            if (userName != null) {
+                namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
                 if (namedLayoutBlockBD != namedLayoutBlockAC) {
                     lb.incrementUse();
                 }
@@ -1029,8 +1030,9 @@ public class LevelXing extends LayoutTrack {
 
         if (!tLayoutBlockNameBD.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockNameBD);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockBD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            String userName = lb.getUserName();
+            if (userName != null) {
+                namedLayoutBlockBD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
                 if (namedLayoutBlockBD != namedLayoutBlockAC) {
                     lb.incrementUse();
                 }
