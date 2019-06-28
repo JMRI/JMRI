@@ -80,7 +80,18 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
-        return getSystemPrefix() + typeLetter() + s;
+        String prefix = getSystemNamePrefix();
+        // do some basic format checking that can throw explicit exception with feedback to user
+        if (s.trim().isEmpty()) {
+            log.error("Invalid system name for {}: \"\" needed non-empty suffix to follow {}", getBeanTypeHandled(), prefix);
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty suffix to follow " + prefix);
+        }
+        String name = prefix + s;
+        // verify name format is valid
+        if (validSystemNameFormat(name) != NameValidity.VALID) {
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": name \"" + name + "\" has incorrect format");
+        }
+        return name;
     }
 
     /** {@inheritDoc} */
@@ -569,18 +580,25 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+        if (validSystemNameFormat(inputName) != NameValidity.VALID) {
+            throw new NamedBean.BadSystemNameException();
+        }
         return inputName;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @return always 'VALID' to let undocumented connection system
-     *         managers pass entry validation.
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name suffix
+     *         is empty or all white space; otherwise returns
+     *         {@link jmri.Manager.NameValidity#VALID} to let undocumented
+     *         connection system managers pass entry validation.
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
+        return !getSystemNamePrefix().equals(systemName.trim())
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
     }
 
     /** {@inheritDoc} */

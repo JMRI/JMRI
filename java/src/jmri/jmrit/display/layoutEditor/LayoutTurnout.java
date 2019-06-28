@@ -1549,9 +1549,11 @@ public class LayoutTurnout extends LayoutTrack {
             }
 
             blockA = newLayoutBlock;
-            if ((newLayoutBlock != null) &&
-                    (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock) != null)) {
-                namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+            if (newLayoutBlock != null) {
+                String userName = newLayoutBlock.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, newLayoutBlock);
+                }
             } else {
                 namedLayoutBlockA = null;
                 setDisableWhenOccupied(false);
@@ -2467,9 +2469,12 @@ public class LayoutTurnout extends LayoutTrack {
         LayoutBlock lb;
         if (!tBlockAName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockAName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
-                lb.incrementUse();
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                    lb.incrementUse();
+                }
             } else {
                 log.error("bad blockname '{}' in layoutturnout {}", tBlockAName, getId());
                 namedLayoutBlockA = null;
@@ -2479,8 +2484,11 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockBName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockBName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                }
                 if (namedLayoutBlockB != namedLayoutBlockA) {
                     lb.incrementUse();
                 }
@@ -2493,8 +2501,11 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockCName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockCName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                }
                 if ((namedLayoutBlockC != namedLayoutBlockA)
                         && (namedLayoutBlockC != namedLayoutBlockB)) {
                     lb.incrementUse();
@@ -2503,13 +2514,16 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '{}' in layoutturnout {}", tBlockCName, getId());
                 namedLayoutBlockC = null;
             }
-            tBlockCName = null; //release this memory
+            tBlockCName = null; // release this memory
         }
 
         if (!tBlockDName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockDName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                }
                 if ((namedLayoutBlockD != namedLayoutBlockA)
                         && (namedLayoutBlockD != namedLayoutBlockB)
                         && (namedLayoutBlockD != namedLayoutBlockC)) {
