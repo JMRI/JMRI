@@ -6,12 +6,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
@@ -70,23 +67,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Override
     public SignalGroup getByUserName(String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IG prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid system connection prefix, hence doesn't throw NamedBean.BadSystemNameException
-        if (inputName.length() < 3 || !inputName.startsWith("IG")) {
-            inputName = "IG" + inputName;
-        }
-        return inputName.toUpperCase().trim();
     }
 
     /**

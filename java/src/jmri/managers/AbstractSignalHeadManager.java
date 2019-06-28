@@ -1,13 +1,8 @@
 package jmri.managers;
 
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
@@ -71,20 +66,6 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     @Override
     public SignalHead getByUserName(String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
     }
 
     /** {@inheritDoc} */

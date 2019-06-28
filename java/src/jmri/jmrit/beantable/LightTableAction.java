@@ -953,8 +953,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         } else {
             hardwareAddressTextField.setBackground(Color.white);
         }
-        // Format is valid, normalize it
-        String sName = InstanceManager.getDefault(LightManager.class).normalizeSystemName(suName);
+        String sName = suName;
         // check if a Light with this name already exists
         Light g = InstanceManager.getDefault(LightManager.class).getBySystemName(sName);
         if (g != null) {
@@ -1008,8 +1007,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         // check if requested Light uses the same address as a Turnout
         String testSN = turnoutPrefix + curAddress;
-        // normalize name before test to compare the string used as Light system name, normalized above
-        testSN = InstanceManager.turnoutManagerInstance().normalizeSystemName(testSN);
         Turnout testT = InstanceManager.turnoutManagerInstance().
                 getBySystemName(testSN);
         if (testT != null) {
@@ -1153,7 +1150,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
     void editPressed() {
         // check if a Light with this name already exists
         String suName = fixedSystemName.getText();
-        String sName = InstanceManager.getDefault(LightManager.class).normalizeSystemName(suName);
+        String sName = suName;
         if (sName.isEmpty()) {
             // Entered system name has invalid format
             status1.setText(Bundle.getMessage("LightError3"));
@@ -1873,9 +1870,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (t == null) {
                         // not user name, try system name
                         t = InstanceManager.turnoutManagerInstance().
-                                getBySystemName(
-                                    InstanceManager.getDefault(jmri.TurnoutManager.class).normalizeSystemName(turnoutName)
-                                );
+                                getBySystemName(turnoutName);
                         if (t != null) {
                             // update turnout system name in case it changed
                             turnoutName = t.getSystemName();

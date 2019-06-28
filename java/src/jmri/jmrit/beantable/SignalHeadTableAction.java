@@ -1172,12 +1172,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private boolean checkBeforeCreating(String sysName) {
-        String sName;
         if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
-            sName = sysName;
             try {
                 Integer.parseInt(sysName.substring(sysName.indexOf("$") + 1, sysName.length()));
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{"Hardware Address"});
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1186,35 +1184,34 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
 
         } else {
-            sName = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(sysName);
 
             boolean ok = true;
             try {
-                int i = jmri.Manager.getSystemPrefixLength(sName);
-                if (sName.length() < i+2) {
+                int i = jmri.Manager.getSystemPrefixLength(sysName);
+                if (sysName.length() < i+2) {
                     ok = false;
                 } else {
-                    if (!sName.substring(i, i+1).equals("H")) ok = false;
+                    if (!sysName.substring(i, i+1).equals("H")) ok = false;
                 }
             } catch (NamedBean.BadSystemNameException e) {
                 ok = false;
             }
             if (!ok) {
-                String msg = Bundle.getMessage("InvalidSignalSystemName", new Object[]{sName});
+                String msg = Bundle.getMessage("InvalidSignalSystemName", new Object[]{sysName});
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
         // check for pre-existing signal head with same system name
-        SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sName);
+        SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
         // return true if signal head does not exist
         if (s == null) {
             //Need to check that the Systemname doesn't already exists as a UserName
-            SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
+            SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sysName);
             if (nB != null) {
-                log.error("System name is not unique " + sName + " It already exists as a User name");
-                String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sName)});
+                log.error("System name is not unique " + sysName + " It already exists as a User name");
+                String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sysName)});
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -1223,8 +1220,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             return true;
         }
         // inform the user if signal head already exists, and return false so creation can be bypassed
-        log.warn("Attempt to create signal with duplicate system name " + sName);
-        String msg = Bundle.getMessage("DuplicateSignalSystemName", new Object[]{sName});
+        log.warn("Attempt to create signal with duplicate system name " + sysName);
+        String msg = Bundle.getMessage("DuplicateSignalSystemName", new Object[]{sysName});
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         return false;
@@ -1281,7 +1278,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 handleSE8cOkPressed();
             } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
                 String inputusername = userNameTextField.getText();
-                String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(ato1TextField.getText());
+                String inputsysname = ato1TextField.getText();
                 int headnumber;
                 //int aspecttype;
 
@@ -1349,7 +1346,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     log.warn("must supply a signalhead number (i.e. GH23)");
                     return;
                 }
-                String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(systemNameTextField.getText());
+                String inputsysname = systemNameTextField.getText();
                 int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
                 if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
                     log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);

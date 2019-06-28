@@ -228,7 +228,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
         if (uName == null || uName.isEmpty()) {
             uName = null;
         }
-        String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysNameField.getText());
+        String sName = sysNameField.getText();
         // initial check for empty entry
         if (sName.isEmpty() && !autoSystemNameBox.isSelected()) {
             statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));

@@ -1029,7 +1029,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
         String system = sysName.getText();
         String sName = system; // keep result separate to prevent recursive manipulation
-        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
         if (sName.length() < 3 && !_autoSystemNameCheckBox.isSelected()) {  // Using 3 to catch a plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));

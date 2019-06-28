@@ -1296,7 +1296,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         if (_autoSystemName.isSelected()) {
             curTransit = transitManager.createNewTransit(uName);
         } else {
-            String sName = InstanceManager.getDefault(jmri.TransitManager.class).normalizeSystemName(sysName.getText());
+            String sName = sysName.getText();
             curTransit = transitManager.createNewTransit(sName, uName);
         }
         if (curTransit == null) {
