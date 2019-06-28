@@ -78,7 +78,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     protected void sendIdleReply() {
-        Assert.assertTrue(false);
+        Assert.fail("Should not have been called");
     }
     
     @Test
@@ -86,7 +86,6 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         // unused but needs to be there for CanListener
         jmri.jmrix.can.CanMessage m = new jmri.jmrix.can.CanMessage(new int[]{CbusConstants.CBUS_TON},0x12);
         pwr.message(m);
-        Assert.assertTrue(true);
         
     }
     

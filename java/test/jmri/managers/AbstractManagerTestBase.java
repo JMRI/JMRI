@@ -6,9 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import jmri.util.JUnitAppender;
 
-import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.Test;
 
