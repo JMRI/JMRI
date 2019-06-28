@@ -42,17 +42,17 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals(0, l.getObjectCount());
         // create
         Sensor t = l.provideSensor("IS:XYZ");
-        Assert.assertEquals(t, l.provideSensor("IS:xyz"));  // upper case and lower case are the same object
+        Assert.assertNotEquals(t, l.provideSensor("IS:xyz"));  // upper case and lower case are different objects
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
         Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
-        Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(2, l.getObjectCount());
+        Assert.assertEquals(2, l.getNamedBeanSet().size());
         // test providing same name as existing sensor does not create new sensor
         l.provideSensor("IS:XYZ");
-        Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(2, l.getObjectCount());
+        Assert.assertEquals(2, l.getNamedBeanSet().size());
     }
 
     @Test
@@ -120,14 +120,14 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
-    public void testUpperLower() {  // this is part of testing of (default) normalization
+    public void testUpperLower() {  // verify that names are case sensitive
         Sensor t = l.provideSensor("JS1ABC");  // internal will always accept that name
         String name = t.getSystemName();
         
         int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
         String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
         
-        Assert.assertEquals(t, l.getSensor(lowerName));
+        Assert.assertNotEquals(t, l.getSensor(lowerName));
     }
 
     @Test
