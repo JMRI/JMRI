@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import org.slf4j.Logger;
@@ -96,7 +97,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                 || !(sysName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.debug("Invalid system name for sensor: {} needed {}{} followed by a suffix",
                     sysName, getSystemPrefix(), typeLetter());
-            throw new IllegalArgumentException("systemName \""+sysName+"\" bad format in newSensor");
+            throw new NamedBean.BadSystemNameException("systemName \""+sysName+"\" bad format in newSensor");
         }
 
         // return existing if there is one

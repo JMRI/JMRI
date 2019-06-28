@@ -4,6 +4,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Light;
 import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -77,32 +78,21 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @Test
-    public void testLowerLower() {
-        Light t = l.provideLight("mlxabcdef;xfedcba");
-        Assert.assertTrue("hex LowerLower ", t == l.getLight(t.getSystemName()));
-        Light t2 = l.provideLight("ml+n1e77;-n1e45");
-        Assert.assertNotNull("exists", t2);
-        Assert.assertTrue("event LowerLower", t2 == l.getLight(t2.getSystemName()));
-    }
-
-    @Test
-    public void testLowerUpper() {
-        Light t = l.provideLight("mlxabcdef;xfedcba");
-        Assert.assertTrue("hex Lower Upper", t == l.getLight(t.getSystemName().toUpperCase()));
-        Light t2 = l.provideLight("ml+n1e77;-n1e45");
-        Assert.assertNotNull("exists", t2);
-        Assert.assertTrue("event Lower Upper", t2 == l.getLight(t2.getSystemName().toUpperCase()));
-    }
-
-    @Override
-    @Test
-    public void testUpperLower() {
-        Light t = l.provideLight("MLXABCDEF01;XFFEDCCBA");
-        Assert.assertTrue("Same hex getLight", t == l.getLight(t.getSystemName().toLowerCase()));
-        Assert.assertTrue("Same hex getBySystemName", t == l.getBySystemName(t.getSystemName().toLowerCase()));
-        Light t2 = l.provideLight("ML-N66E1;+N125E789");
-        Assert.assertTrue("Same long getLight", t2 == l.getLight(t2.getSystemName().toLowerCase()));
-        Assert.assertTrue("Same hex getBySystemName", t2 == l.getBySystemName(t2.getSystemName().toLowerCase()));
+    public void testLowercaseSystemName() {
+        String name1 = "mlxabcdef;xfedcba";
+        try {
+            l.provideLight(name1);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            // passes, so do nothing
+        }
+        String name2 = "ml+n1e77;-n1e45";
+        try {
+            Light t2 = l.provideLight(name2);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            // passes, so do nothing
+        }
     }
 
     @Test
