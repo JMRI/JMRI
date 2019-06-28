@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -165,18 +166,21 @@ public class PanelMenu extends JMenu {
         for (int i = 0; i < panelsList.size(); i++) {
             Object o = panelsList.get(i);
             if (o == panel) {
-                JCheckBoxMenuItem r = (JCheckBoxMenuItem) panelsSubMenu.getItem(i);
-                if (panel instanceof LayoutEditor) {
-                    if (panel.isVisible()) {
-                        r.setSelected(true);
+                JMenuItem subMenu = panelsSubMenu.getItem(i);
+                if (subMenu instanceof JCheckBoxMenuItem) {
+                    JCheckBoxMenuItem r = (JCheckBoxMenuItem) subMenu;
+                    if (panel instanceof LayoutEditor) {
+                        if (panel.isVisible()) {
+                            r.setSelected(true);
+                        } else {
+                            r.setSelected(false);
+                        }
                     } else {
-                        r.setSelected(false);
-                    }
-                } else {
-                    if (panel.getTargetFrame().isVisible()) {
-                        r.setSelected(true);
-                    } else {
-                        r.setSelected(false);
+                        if (panel.getTargetFrame().isVisible()) {
+                            r.setSelected(true);
+                        } else {
+                            r.setSelected(false);
+                        }
                     }
                 }
                 return;
@@ -185,7 +189,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Rename an Editor type panel in Show Panels sub menu.
+     * Rename an Editor type panel in Show Panels submenu.
      *
      * @param panel the panel to rename
      */
@@ -196,16 +200,18 @@ public class PanelMenu extends JMenu {
         for (int i = 0; i < panelsList.size(); i++) {
             Object o = panelsList.get(i);
             if (o == panel) {
-                JCheckBoxMenuItem r = (JCheckBoxMenuItem) panelsSubMenu.getItem(i);
-                r.setText(panel.getTitle());
+                JMenuItem subMenu = panelsSubMenu.getItem(i);
+                if (subMenu instanceof JCheckBoxMenuItem) {
+                    JCheckBoxMenuItem r = (JCheckBoxMenuItem) subMenu;
+                    r.setText(panel.getTitle());
+                }
                 return;
             }
         }
     }
 
     /**
-     * Determine if named panel already exists returns true if named panel
-     * already loaded.
+     * Determine if named panel already exists.
      *
      * @param name the name to test
      * @return true if name is in use; false otherwise
@@ -252,6 +258,7 @@ public class PanelMenu extends JMenu {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(PanelMenu.class)) {
                 return new PanelMenu();
@@ -260,6 +267,7 @@ public class PanelMenu extends JMenu {
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(PanelMenu.class);
