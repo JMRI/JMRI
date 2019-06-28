@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrix.internal.InternalSensorManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -41,15 +42,15 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals(0, l.getObjectCount());
         // create
         Sensor t = l.provideSensor("IS:XYZ");
-        t = l.provideSensor("IS:xyz");  // upper canse and lower case are the same object
+        Assert.assertEquals(t, l.provideSensor("IS:xyz"));  // upper case and lower case are the same object
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
         Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
         Assert.assertEquals(1, l.getObjectCount());
         Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
-
-        t = l.provideSensor("IS:XYZ");
+        // test providing same name as existing sensor does not create new sensor
+        l.provideSensor("IS:XYZ");
         Assert.assertEquals(1, l.getObjectCount());
         Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
     }
@@ -101,6 +102,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
         Assert.assertTrue("Exception thrown properly", correct);
     }
 
