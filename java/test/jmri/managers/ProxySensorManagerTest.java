@@ -86,14 +86,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideSensor("1").getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
     public void testProvideFailure() {
         boolean correct = false;
         try {
