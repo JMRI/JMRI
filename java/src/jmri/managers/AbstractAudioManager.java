@@ -64,12 +64,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     /** {@inheritDoc} */
     @Override
     public Audio getBySystemName(@Nonnull String key) {
-        //return _tsys.get(key);
-        Audio rv =  _tsys.get(key);
-        if (rv == null) {
-            rv = _tsys.get(key.toUpperCase());
-        }
-        return (rv);
+        return _tsys.get(key);
     }
 
     /** {@inheritDoc} */

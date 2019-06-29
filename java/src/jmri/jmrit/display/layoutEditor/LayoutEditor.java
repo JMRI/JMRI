@@ -4262,10 +4262,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            if (!rName.equals(reporter.getDisplayName())) {
-                rName = rName.toUpperCase();
-            }
         } else {
             JOptionPane.showMessageDialog(enterReporterFrame,
                     Bundle.getMessage("Error17"), Bundle.getMessage("ErrorTitle"),

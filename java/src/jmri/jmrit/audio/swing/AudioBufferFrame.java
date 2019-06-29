@@ -258,7 +258,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
+        String sName = sysName.getText();
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);

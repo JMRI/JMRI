@@ -2162,9 +2162,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         if (!sName.equals(s.getUserName())) {
             if (when) {
-                tWhenString = sName.toUpperCase();
+                tWhenString = sName;
             } else {
-                tWhatString = sName.toUpperCase();
+                tWhatString = sName;
             }
         }
         return true;

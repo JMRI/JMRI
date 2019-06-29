@@ -667,7 +667,6 @@ public class LayoutEditorTools {
             } else {
                 String uname = turnout.getUserName();
                 if ((uname == null) || uname.isEmpty() || !uname.equals(str)) {
-                    str = str.toUpperCase();
                     if (isCrossover) {
                         xoverTurnoutName = str;
                     } else {
@@ -1141,7 +1140,6 @@ public class LayoutEditorTools {
         if (result != null) {
             String uname = result.getUserName();
             if ((uname == null) || uname.isEmpty() || !uname.equals(signalName)) {
-                signalName = signalName.toUpperCase();
                 signalNameComboBox.setText(signalName);
             }
         }
@@ -1157,7 +1155,6 @@ public class LayoutEditorTools {
         if (result != null) {
             String uname = result.getUserName();
             if ((uname == null) || uname.isEmpty() || !uname.equals(signalName)) {
-                signalName = signalName.toUpperCase();
                 signalNameTextField.setText(signalName);
             }
         }
@@ -6277,7 +6274,6 @@ public class LayoutEditorTools {
             String uname = turnoutB.getUserName();
             if ((uname == null) || uname.isEmpty()
                     || !uname.equals(str)) {
-                str = str.toUpperCase();
                 turnoutBComboBox.setText(str);
             }
             layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayTurnoutFrame);
@@ -6329,7 +6325,6 @@ public class LayoutEditorTools {
             String uname = turnoutA.getUserName();
             if ((uname == null) || uname.isEmpty()
                     || !uname.equals(str)) {
-                str = str.toUpperCase();
                 turnoutAComboBox.setText(str);
             }
             // have turnout A - get corresponding layoutTurnout
@@ -6386,7 +6381,6 @@ public class LayoutEditorTools {
                 uname = turnoutB.getUserName();
                 if ((uname == null) || uname.isEmpty()
                         || !uname.equals(str)) {
-                    str = str.toUpperCase();
                     turnoutBComboBox.setText(str);
                 }
                 layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayTurnoutFrame);

@@ -110,11 +110,11 @@ import org.slf4j.LoggerFactory;
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public Block(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     static final public int OCCUPIED = Sensor.ACTIVE;

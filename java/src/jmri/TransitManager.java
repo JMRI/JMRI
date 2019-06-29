@@ -17,8 +17,7 @@ import javax.annotation.Nonnull;
  * instead of being system-specific.
  * <p>
  * Note that Transit system names must begin with IZ, and be followed by a
- * string, usually, but not always, a number. All alphabetic characters in a
- * Transit system name must be upper case. This is enforced when a Transit is
+ * string, usually, but not always, a number. This is enforced when a Transit is
  * created.
  * <br>
  * <hr>
@@ -83,16 +82,12 @@ public class TransitManager extends AbstractManager<Transit> implements Property
                 return null;
             }
         }
-        String sName = sysName.toUpperCase().trim();
         z = getBySystemName(sysName);
-        if (z == null) {
-            z = getBySystemName(sName);
-        }
         if (z != null) {
             return null;
         }
         // Transit does not exist, create a new Transit
-        z = new Transit(sName, userName);
+        z = new Transit(sysName, userName);
         // save in the maps
         register(z);
         return z;
@@ -146,8 +141,7 @@ public class TransitManager extends AbstractManager<Transit> implements Property
         return getBySystemName(name);
     }
 
-    public Transit getBySystemName(String name) {
-        String key = name.toUpperCase();
+    public Transit getBySystemName(String key) {
         return  _tsys.get(key);
     }
 
