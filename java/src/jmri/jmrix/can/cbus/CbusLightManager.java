@@ -73,7 +73,7 @@ public class CbusLightManager extends AbstractLightManager {
         String addr = systemName.substring(prefix.length() + 1);
         // first, check validity
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {
             log.error(e.toString());
             throw e;
@@ -106,7 +106,7 @@ public class CbusLightManager extends AbstractLightManager {
             return NameValidity.INVALID;
         }
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e){
             return NameValidity.INVALID;
         }
@@ -120,7 +120,7 @@ public class CbusLightManager extends AbstractLightManager {
      * @param address the hardware address to check
      * @throws IllegalArgumentException when delimiter is not found
      */
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
         log.debug("validated system name {}", newAddress);
     }
@@ -132,7 +132,7 @@ public class CbusLightManager extends AbstractLightManager {
     public boolean validSystemNameConfig(String systemName) {
         String addr = systemName.substring(prefix.length() + 1);
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e){
             log.debug("Warning: {}", e.getMessage());
             return false;

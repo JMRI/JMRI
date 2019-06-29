@@ -21,7 +21,7 @@ public class RpsAddressTest {
     }
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - RS(0,0,0);(1,0,0);(1,1,0)", NameValidity.VALID == RpsAddress.validSystemNameFormat("RS(0,0,0);(1,0,0);(1,1,0)", 'S', "R"));
 
         Assert.assertTrue("invalid format - RS(0,0,0)", NameValidity.VALID != RpsAddress.validSystemNameFormat("RS(0,0,0)", 'S', "R"));

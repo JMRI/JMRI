@@ -20,7 +20,7 @@ public class SerialAddressTest {
     SerialTrafficControlScaffold tc = null;
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - PLA1", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLA1", 'L'));
         Assert.assertTrue("valid format - PLA16", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLA16", 'L'));
         Assert.assertTrue("valid format - PLK3", NameValidity.VALID == tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLK3", 'L'));

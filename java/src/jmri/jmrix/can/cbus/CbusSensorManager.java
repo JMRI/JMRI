@@ -57,7 +57,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         String addr = systemName.substring(prefix.length() + 1);
         // first, check validity
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {
             log.error(e.toString());
             throw e;
@@ -77,7 +77,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         // first, check validity
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -102,7 +102,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         String testAddr = curAddress;
         // make sure starting name is valid
         try {
-            validateSystemNameFormat(testAddr);
+            validateAddressFormat(testAddr);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -141,7 +141,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             return NameValidity.INVALID;
         }
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e){
             return NameValidity.INVALID;
         }
@@ -155,7 +155,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      * @param address the hardware address to check
      * @throws IllegalArgumentException when delimiter is not found
      */
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
         log.debug("validated system name {}", newAddress);
     }

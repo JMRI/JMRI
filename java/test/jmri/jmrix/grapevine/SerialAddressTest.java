@@ -166,7 +166,7 @@ public class SerialAddressTest {
     }
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         checkValidSystemNameFormatName("GL1302", 'L', true);
         checkValidSystemNameFormatName("GL1B302", 'L', true);
         checkValidSystemNameFormatName("GL", 'L', false);

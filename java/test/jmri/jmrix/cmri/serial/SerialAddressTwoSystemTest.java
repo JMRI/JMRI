@@ -95,7 +95,7 @@ public class SerialAddressTwoSystemTest {
     }
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", NameValidity.VALID == memo1.validSystemNameFormat("CL2", 'L'));
         Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo1.validSystemNameFormat("CL0B2", 'L'));
 
