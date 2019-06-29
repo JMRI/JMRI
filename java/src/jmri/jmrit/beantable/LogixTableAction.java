@@ -945,7 +945,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param e the event heard
      */
     void copyLogixPressed(ActionEvent e) {
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
         }
@@ -959,7 +959,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             if (!checkLogixSysName()) {
                 return;
             }
-            String sName = _systemName.getText().trim();
+            String sName = _systemName.getText();
             // check if a Logix with this name already exists
             boolean createLogix = true;
             targetLogix = _logixManager.getBySystemName(sName);
@@ -1162,7 +1162,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         // possible change
         _showReminder = true;
         String sName = "";
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
         }

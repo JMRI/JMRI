@@ -661,8 +661,8 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         private void makeWarrant() {
-            String sysName = _sysNameBox.getText().trim();
-            String userName = _userNameBox.getText().trim();
+            String sysName = _sysNameBox.getText();
+            String userName = _userNameBox.getText();
             if (!sysName.startsWith("IW")) {
                 sysName = "IW" + sysName;
             }

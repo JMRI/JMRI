@@ -4250,7 +4250,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // get reporter name
         Reporter reporter = null;
-        String rName = reporterNameField.getText().trim();
+        String rName = reporterNameField.getText();
 
         if (InstanceManager.getNullableDefault(ReporterManager.class) != null) {
             try {

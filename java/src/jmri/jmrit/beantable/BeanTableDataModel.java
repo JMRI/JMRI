@@ -735,7 +735,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         if (retval != 1) {
             return;
         }
-        String value = _newName.getText().trim(); // N11N
+        String value = _newName.getText();
 
         if (value.equals(oldName)) {
             //name not changed.
