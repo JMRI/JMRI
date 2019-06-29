@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
@@ -207,14 +209,24 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return null
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override

@@ -57,7 +57,6 @@ import jmri.beans.PropertyChangeProvider;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
@@ -107,7 +106,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * Get a system-specific name. This encodes the hardware addressing
      * information. Any given system name must be unique within the layout.
      *
-     * @return the system-specific name.
+     * @return the system-specific name
      */
     @CheckReturnValue
     @Nonnull
@@ -116,14 +115,14 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     /**
      * Display the system-specific name.
      *
-     * @return the system-specific name.
+     * @return the system-specific name
      */
     @Nonnull
     @Override
     public String toString();
 
     /**
-     * return user name if it exists, otherwise return System name
+     * Get user name if it exists, otherwise return System name.
      *
      * @return the user name or system-specific name
      */
@@ -132,8 +131,8 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public String getDisplayName();
 
     /**
-     * Returns a fully formatted display that includes the SystemName and
-     * UserName if set.
+     * Get a fully formatted display that includes the SystemName and,
+     * if set, the UserName.
      * <p>
      * This is the same as calling
      * {@link #getFullyFormattedDisplayName(boolean)} with the parameter true.
@@ -442,9 +441,25 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n2);
 
     public class BadUserNameException extends IllegalArgumentException {
+
+        public BadUserNameException() {
+            super();
+        }
+
+        public BadUserNameException(String message) {
+            super(message);
+        }
     }
 
     public class BadSystemNameException extends IllegalArgumentException {
+
+        public BadSystemNameException() {
+            super();
+        }
+
+        public BadSystemNameException(String message) {
+            super(message);
+        }
     }
 
 }

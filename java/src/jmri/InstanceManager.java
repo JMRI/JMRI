@@ -809,8 +809,8 @@ public final class InstanceManager {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
         
-        // replace the instance manager, so future calls will invoke the new one
-        LazyInstanceManager.instanceManager = new InstanceManager();
+        // reset the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.resetInstanceManager();
         
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
@@ -851,11 +851,31 @@ public final class InstanceManager {
 
     /**
      * A class for lazy initialization of the singleton class InstanceManager.
-     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     *
+     * See https://www.ibm.com/developerworks/library/j-jtp03304/
      */
     private static class LazyInstanceManager {
 
-        public static InstanceManager instanceManager = new InstanceManager();
+        private static InstanceManager instanceManager = new InstanceManager();
+
+        /**
+         * Get the InstanceManager.
+         */
+        public static InstanceManager getInstanceManager() {
+            return instanceManager;
+        }
+
+        /**
+         * Replace the (static) InstanceManager.
+         */
+        public synchronized static void resetInstanceManager() {
+            try {
+                instanceManager = new InstanceManager();
+            } catch (Exception e) {
+                log.error("can't create new InstanceManager");
+            }
+        }
+
     }
 
     /**
@@ -867,7 +887,7 @@ public final class InstanceManager {
      */
     @Nonnull
     public static InstanceManager getDefault() {
-        return LazyInstanceManager.instanceManager;
+        return LazyInstanceManager.getInstanceManager();
     }
 
     // support checking for overlapping intialization

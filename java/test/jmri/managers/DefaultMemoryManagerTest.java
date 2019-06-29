@@ -14,20 +14,22 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
     public void testIMthrows() {
         try {
             l.provideMemory("IM");
+            Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
-            return;
+            // nothing to do
         }
+        JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
     }
 
     @Test
-    public void testBlankThrows() throws java.lang.IllegalArgumentException {
+    public void testBlankThrows() {
         try {
             l.provideMemory("");
+            Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
-            return;
+            // nothing to do
         }
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: \"\" needed non-empty suffix to follow IM");
     }
 
     @Test

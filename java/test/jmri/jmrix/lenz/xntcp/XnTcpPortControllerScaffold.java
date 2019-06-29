@@ -30,7 +30,11 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
     }
 
     public String[] validBaudRates() {
-        return null;
+        return new String[] {};
+    }
+
+    public int[] validBaudNumbers() {
+        return new int[] {};
     }
 
     PipedInputStream otempIPipe;

@@ -191,6 +191,7 @@
       <systemName>NF$dsm:AAR-1946:PL-2-high(12)</systemName>
       <userName>DCC1</userName>
       <unlit allowed="no" />
+      <packetsendcount>3</packetsendcount>
       <aspect defines="Clear">
         <number>1</number>
       </aspect>

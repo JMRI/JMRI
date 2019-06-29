@@ -38,7 +38,12 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
     @Override
     public String[] validBaudRates() {
-        return null;
+        return new String[] {};
+    }
+
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[] {};
     }
 
     PipedInputStream otempIPipe;
