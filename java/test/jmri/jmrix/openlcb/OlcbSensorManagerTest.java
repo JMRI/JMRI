@@ -21,7 +21,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     public String getSystemName(int i) {
-        return "MSX010203040506070" + i;
+        return "MSx010203040506070" + i;
     }
 
     @Test
@@ -34,8 +34,8 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -45,8 +45,8 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // olcb addresses are hex values requirng 16 digits.
         Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct " + t.getSystemName(), t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override

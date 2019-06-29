@@ -55,7 +55,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provide("ASNode 1:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNODE 1:2"));
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNode 1:2"));
     }
 
     @Test

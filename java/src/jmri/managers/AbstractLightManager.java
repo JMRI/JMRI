@@ -76,8 +76,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @CheckForNull
-    public Light getBySystemName(@Nonnull String name
-    ) {
+    public Light getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
