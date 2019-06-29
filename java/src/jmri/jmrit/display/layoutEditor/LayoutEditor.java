@@ -4271,7 +4271,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //add the reporter icon
-        addReporter(rName, xx, yy);
+        addReporter(reporter, xx, yy);
 
         //success - repaint the panel
         redrawPanel();
@@ -8676,9 +8676,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Add a Reporter Icon to the panel
      */
-    void addReporter(@Nonnull String textReporter, int xx, int yy) {
+    void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
-        l.setReporter(textReporter);
+        l.setReporter(reporter);
         l.setLocation(xx, yy);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);
