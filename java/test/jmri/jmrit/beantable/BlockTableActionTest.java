@@ -107,7 +107,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddBlock"));  // NOI18N
         Assert.assertNotNull("Found Add Block Frame", addFrame);  // NOI18N
 
-        new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
+        new JTextFieldOperator(addFrame, 0).setText("IB105");  // NOI18N
         new JTextFieldOperator(addFrame, 2).setText("Block 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
@@ -258,7 +258,7 @@ public class BlockTableActionTest extends AbstractTableActionBase {
 	//Enter 1 in the text field labeled "System Name:"
 	   
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
-        ((JTextField)jlo.getLabelFor()).setText("1");
+        ((JTextField)jlo.getLabelFor()).setText("IB1");
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         jf.requestClose();

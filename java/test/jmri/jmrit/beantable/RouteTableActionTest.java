@@ -65,7 +65,7 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddRoute"));  // NOI18N
         Assert.assertNotNull("Found Add Route Frame", addFrame);  // NOI18N
 
-        new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
+        new JTextFieldOperator(addFrame, 0).setText("IR105");  // NOI18N
         new JTextFieldOperator(addFrame, 1).setText("Route 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
