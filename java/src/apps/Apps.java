@@ -801,7 +801,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             cs.setForeground(Color.red);
             String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
-            cf = cf.toUpperCase();
             cs.setText(cf);
         }
 
