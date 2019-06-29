@@ -865,6 +865,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
         }
         // check if a SignalGroup with this system name already exists
+        sName = InstanceManager.getDefault(SignalGroupManager.class).makeSystemName(sName);
         g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g != null) {
             // SignalGroup already exists
@@ -915,6 +916,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 return null;
             }
             try {
+                sName = InstanceManager.getDefault(SignalGroupManager.class).makeSystemName(sName);
                 g = InstanceManager.getDefault(SignalGroupManager.class).provideSignalGroup(sName, uName);
             } catch (IllegalArgumentException ex) {
                 log.error("checkNamesOK; Unknown failure to create Signal Group with System Name: {}", sName); // NOI18N
@@ -1033,7 +1035,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
      */
     void editPressed(ActionEvent e) {
         // identify the Signal Group with this name if it already exists
-        String sName = _systemName.getText();
+        String sName = InstanceManager.getDefault(SignalGroupManager.class).makeSystemName(_systemName.getText());
         // sName is already filled in from the Signal Group table by addPressed()
         SignalGroup g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g == null) {

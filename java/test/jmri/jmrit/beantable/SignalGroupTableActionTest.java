@@ -114,7 +114,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         JFrameOperator jf = new JFrameOperator(f1);
 	    //Enter 1 in the text field labeled "System Name:"
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
-        ((JTextField)jlo.getLabelFor()).setText("IF1");
+        ((JTextField)jlo.getLabelFor()).setText("1");
 	    //and press create
 	    jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         JUnitUtil.dispose(f1);
@@ -137,7 +137,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
 	//Enter 1 in the text field labeled "System Name:"
 	   
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
-        ((JTextField)jlo.getLabelFor()).setText("IF1");
+        ((JTextField)jlo.getLabelFor()).setText("1");
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
 
