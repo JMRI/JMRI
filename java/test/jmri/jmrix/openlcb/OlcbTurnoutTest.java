@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -13,11 +15,14 @@ import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.JmriException;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
 import jmri.util.NamedBeanComparator;
 import jmri.util.PropertyChangeListenerScaffold;
+import jmri.util.ThreadingUtil;
+
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnout class.
  *
@@ -233,6 +238,47 @@ public class OlcbTurnoutTest {
         t.flush();
         t.assertNoSentMessages();
     }
+
+    /**
+     * In this test we simulate the following scenario: A turnout R that is being changed locally
+     * by JMRI (e.g. due to a panel icon action), which triggers a Logix, and in that Logix there
+     * is an action that sets a second turnout U.
+     * We check that the messages sent to the layout are in the order of T:=Active, U:=Active.
+    */
+    @Test
+    public void testListenerOutOfOrder() throws JmriException {
+        final OlcbTurnout r = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
+        final OlcbTurnout u = new OlcbTurnout("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", t.iface);
+        r.finishLoad();
+        u.finishLoad();
+        r.setCommandedState(Turnout.CLOSED);
+        u.setCommandedState(Turnout.CLOSED);
+
+        t.clearSentMessages();
+
+        r.addPropertyChangeListener("KnownState", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                Assert.assertEquals(Turnout.THROWN, r.getKnownState());
+                u.setCommandedState(Turnout.THROWN);
+            }
+        });
+
+        ThreadingUtil.runOnLayout(new ThreadingUtil.ThreadAction() {
+            @Override
+            public void run() {
+                r.setCommandedState(Turnout.THROWN);
+            }
+        });
+
+        Assert.assertEquals(Turnout.THROWN, r.getKnownState());
+        Assert.assertEquals(Turnout.THROWN, u.getKnownState());
+
+        // Ensures that the last sent message is U==Active. Particularly important that it is NOT
+        // the message ending with 0708.
+        t.assertSentMessage(":X195B4C4CN010203040506070A;");
+    }
+
 
     @Test
     public void testEventTable() {
