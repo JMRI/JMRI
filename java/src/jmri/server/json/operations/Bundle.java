@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.server.json.Bundle {
 
     @Nullable
-    private static final String name = null; // no local resources
+    private static final String name = "jmri.server.json.operations.Bundle";
 
     //
     // below here is boilerplate to be copied exactly

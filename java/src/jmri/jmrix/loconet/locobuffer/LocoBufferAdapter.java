@@ -254,17 +254,23 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200LB"), Bundle.getMessage("Baud57600LB")};
     protected int[] validSpeedValues = new int[]{19200, 57600};
 
     // meanings are assigned to these above, so make sure the order is consistent
@@ -294,7 +300,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     /**
      * for a given readable choice return internal value
      * or the default
-     * <p>
+     *
      * @param s  string containing ?a packetizer name?
      * @return internal value
      */

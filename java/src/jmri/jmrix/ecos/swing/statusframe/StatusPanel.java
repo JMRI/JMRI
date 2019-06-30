@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Panel to show ECoS status
  *
  * @author Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
     JPanel statusPanel = new JPanel();

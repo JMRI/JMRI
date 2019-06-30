@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  *
  * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
-  */
+ */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
     public IntelliboxAdapter() {
@@ -51,16 +51,19 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
+     * {@inheritDoc}
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 

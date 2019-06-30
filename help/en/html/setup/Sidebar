@@ -33,7 +33,7 @@
 		<dd>
 			<ul>
 			<li><a href="../apps/DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-			<li><a href="../apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+			<li><a href="../apps/PanelPro/index.shtml">PanelPro&trade;</a></li>
 			<li><a href="../apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
 	        <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 			<li><a href="../apps/SoundPro/SoundPro.shtml">SoundPro</a></li>
@@ -79,6 +79,7 @@
 		    <li><dfn><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="../tools/uss/index.shtml">USS CTC</a></dfn>
 		    <li><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
 		    </ul>
 		</dd>
@@ -105,8 +106,9 @@
 				<li><a href="../hardware/loconet/Digitrax.shtml">LocoNet</a>
 				<li><a href="../hardware/maple/index.shtml">Maple Systems</a>
 				<li><a href="../hardware/marklin/index.shtml">M&auml;rklin CS2</a>
-				<li><a href="../hardware/modbus/index.shtml">Modbus</a>
 				<li><a href="../hardware/can/cbus/index.shtml">MERG CBUS</a>
+				<li><a href="../hardware/modbus/index.shtml">Modbus</a>
+                <li><a href="../hardware/mqtt/index.shtml">MQTT</a>
 				<li><a href="../hardware/mrc/index.shtml">MRC</a>
 				<li><a href="../hardware/rps/index.shtml">NAC Services RPS</a>
 				<li><a href="../hardware/nce/NCE.shtml">NCE</a>

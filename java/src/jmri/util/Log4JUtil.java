@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Log4J.
- * <P>
+ * <p>
  * Two system properties influence how logging is configured in JMRI:
  * <dl>
  * <dt>jmri.log</dt><dd>The logging control file. If this file is not an
@@ -130,7 +130,7 @@ public class Log4JUtil {
      * <p>
      * Primary functions:
      * <ul>
-     * <li>Initialize the JMRI system console
+     * <li>Initialize the JMRI System Console
      * <li>Set up the slf4j j.u.logging to log4J bridge
      * <li>Start log4j
      * <li>Initialize some default exception handlers (to feed the logs?)

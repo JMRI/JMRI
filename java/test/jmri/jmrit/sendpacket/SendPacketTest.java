@@ -7,7 +7,7 @@ import org.junit.*;
  * Tests for classes in the jmri.jmrit.sendpacket package
  *
  * @author	Bob Jacobsen Copyright 2003
-  */
+ */
 public class SendPacketTest {
 
     @Test
@@ -50,4 +50,5 @@ public class SendPacketTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

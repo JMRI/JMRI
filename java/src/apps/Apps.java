@@ -192,7 +192,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile.getId());
+            if (profile != null) {
+                log.info("Starting with profile {}", profile.getId());
+            } else {
+                log.info("Starting without a profile");
+            }
             
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
@@ -505,7 +509,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Create default menubar.
-     * <P>
+     * <p>
      * This does not include the development menu.
      *
      * @param menuBar Menu bar to be populated
@@ -838,8 +842,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
 
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
+        String name = ProfileManager.getDefault().getActiveProfileName();
+        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", name)));
 
         // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
@@ -1035,17 +1039,17 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Set up the configuration file name at startup.
-     * <P>
+     * <p>
      * The Configuration File name variable holds the name used to load the
      * configuration file during later startup processing. Applications invoke
      * this method to handle the usual startup hierarchy:
-     * <UL>
-     * <LI>If an absolute filename was provided on the command line, use it
-     * <LI>If a filename was provided that's not absolute, consider it to be in
+     * <ul>
+     * <li>If an absolute filename was provided on the command line, use it
+     * <li>If a filename was provided that's not absolute, consider it to be in
      * the preferences directory
-     * <LI>If no filename provided, use a default name (that's application
+     * <li>If no filename provided, use a default name (that's application
      * specific)
-     * </UL>
+     * </ul>
      * This name will be used for reading and writing the preferences. It need
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em> and may not contain the equals sign (=).

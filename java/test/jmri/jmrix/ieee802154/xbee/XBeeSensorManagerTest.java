@@ -1,27 +1,22 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import java.beans.PropertyVetoException;
+
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.io.IOLine;
-import com.digi.xbee.api.io.IOValue;
-import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.PropertyVetoException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOValue;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.Sensor;
-import jmri.util.JUnitAppender;
-import org.apache.log4j.Level;
-import org.junit.*;
-import jmri.util.junit.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XBeeSensorManagerTest.java
@@ -125,72 +120,19 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-       String s1 = l.makeSystemName("00 02:1");
-       String s2 = l.makeSystemName("00 02:2");
-       Assert.assertNotNull(s1);
-       Assert.assertFalse(s1.isEmpty());
-       Assert.assertNotNull(s2);
-       Assert.assertFalse(s2.isEmpty());
-
-       Sensor e1;
-       Sensor e2;
-
-       try {
-          e1 = l.provide(s1);
-          e2 = l.provide(s2);
-       } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
-          // jmri.jmrix.openlcb.OlcbLightManagerTest gives a NullPointerException here.
-          // jmri.jmrix.openlcb.OlcbSensorManagerTest gives a ArrayIndexOutOfBoundsException here.
-          // Some other tests give an IllegalArgumentException here.
-
-          // If the test is unable to provide a named bean, abort this test.
-          JUnitAppender.clearBacklog(Level.WARN);
-          log.debug("Cannot provide a named bean", ex);
-          Assume.assumeTrue("We got no exception", false);
-          return;
-       }
-
-       // Use reflection to change the systemName of e2
-       // Try to find the field
-       Field f1 = getField(e2.getClass(), "mSystemName");
-       f1.setAccessible(true);
-       f1.set(e2, e1.getSystemName());
-
-       // Remove bean if it's already registered
-       if (l.getBeanBySystemName(e1.getSystemName()) != null) {
-          l.deregister(e1);
-       }
-       // Remove bean if it's already registered
-       if (l.getBeanBySystemName(e2.getSystemName()) != null) {
-          l.deregister(e2);
-       }
-
-       // Register the bean once. This should be OK.
-       l.register(e1);
-
-       // Register bean twice. This gives only a debug message.
-       l.register(e1);
-
-       String expectedMessage = "systemName is already registered: " + e1.getSystemName();
-       boolean hasException = false;
-       try {
-          // Register different bean with existing systemName.
-          // This should fail with an IllegalArgumentException.
-          l.register(e2);
-       } catch (IllegalArgumentException ex) {
-          hasException = true;
-          Assert.assertTrue("exception message is correct",
-             expectedMessage.equals(ex.getMessage()));
-          JUnitAppender.assertErrorMessage(expectedMessage);
-       }
-       Assert.assertTrue("exception is thrown", hasException);
-
-       l.deregister(e1);
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("00 02:1"),
+                l.makeSystemName("00 02:2"));
     }
 
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("00 02:1");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
 
-
-    // The minimal setup for log4J
     @Override
     @Before 
     public void setUp() {
@@ -227,7 +169,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
 
 }
 

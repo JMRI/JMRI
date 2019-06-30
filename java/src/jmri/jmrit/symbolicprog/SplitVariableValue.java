@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * </pre>
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
- * @author Dave Heap Copyright (C) 2016
+ * @author Dave Heap Copyright (C) 2016, 2019
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -325,15 +325,16 @@ public class SplitVariableValue extends VariableValue
         if (_textField != null && !oldContents.equals(_textField.getText())) {
             long newFieldVal = getValueFromText(_textField.getText());
             log.debug("_minVal = {},_maxVal = {},newFieldVal = {}", _minVal, _maxVal, newFieldVal);
-            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
-                _textField.setText(oldContents);
-            } else {
+//            disable recently-added _minVal, _maxVal checking for now
+//            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
+//                _textField.setText(oldContents);
+//            } else {
                 long newVal = (newFieldVal - mOffset) / mFactor;
                 long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
 //            log.debug("Enter updatedTextField from exitField");
                 updatedTextField();
                 prop.firePropertyChange("Value", oldVal, newVal);
-            }
+//            }
         }
     }
 
@@ -579,7 +580,7 @@ public class SplitVariableValue extends VariableValue
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
         if (_progState != IDLE) {
-            log.warn("Variable={}; programming state {}, not IDLE, in read()", _name,_progState);
+            log.warn("Variable={}; programming state {}, not IDLE, in read()", _name, _progState);
         }
         _textField.setText(""); // start with a clean slate
         for (int i = 0; i < cvCount; i++) { // mark all Cvs as unknown otherwise problems occur
@@ -635,9 +636,7 @@ public class SplitVariableValue extends VariableValue
     // handle incoming parameter notification
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; property changed event - name: {}", _name, e.getPropertyName());
-        }
+        log.debug("Variable={}; property changed event - name: {}", _name, e.getPropertyName());
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state

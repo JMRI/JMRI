@@ -4,7 +4,7 @@ import jmri.Memory;
 
 /**
  * Base for the Memory interface.
- * <P>
+ * <p>
  * Implements the parameter binding support.
  * <p>
  * Memory system names are always upper case.

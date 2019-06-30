@@ -20,7 +20,7 @@ import org.openlcb.swing.EventIdTextField;
 
 /**
  * A pane for configuring OlcbSignalMast objects
- * <P>
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
@@ -121,8 +121,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull
-            SignalAppearanceMap map, SignalSystem sigSystem) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map, @Nonnull SignalSystem sigSystem) {
         Enumeration<String> aspects = map.getAspects();
         // update immediately
         disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);

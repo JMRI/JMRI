@@ -9,8 +9,10 @@ import java.awt.Color;
 import javax.annotation.Nonnull;
 import jmri.util.swing.JmriColorChooser;
 
-/**
- *
+/******************************************************************************* 
+ * LayoutTrackDrawingOptions.
+ * since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here 
+ * 
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTrackDrawingOptions {
@@ -47,6 +49,10 @@ public class LayoutTrackDrawingOptions {
         sideTieGap = ltdo.getSideTieGap();
         sideTieLength = ltdo.getSideTieLength();
         sideTieWidth = ltdo.getSideTieWidth();
+        blockDefaultColor = ltdo.getBlockDefaultColor();
+        blockOccupiedColor = ltdo.getBlockOccupiedColor();
+        blockAlternativeColor = ltdo.getBlockAlternativeColor();
+
     }
 
     public String getName() {
@@ -303,6 +309,39 @@ public class LayoutTrackDrawingOptions {
         mainBlockLineWidth = val;
     }
 
+    private Color blockDefaultColor = Color.GRAY;
+
+    public Color getBlockDefaultColor() {
+        return blockDefaultColor;
+    }
+
+    public void setBlockDefaultColor(@Nonnull Color val) {
+        blockDefaultColor = val;
+        JmriColorChooser.addRecentColor(val);
+    }
+
+    private Color blockOccupiedColor = Color.red;
+
+    public Color getBlockOccupiedColor() {
+        return blockOccupiedColor;
+    }
+
+    public void setBlockOccupiedColor(@Nonnull Color val) {
+        blockOccupiedColor = val;
+        JmriColorChooser.addRecentColor(val);
+    }
+
+    private Color blockAlternativeColor = Color.GRAY;
+
+    public Color getBlockAlternativeColor() {
+        return blockAlternativeColor;
+    }
+
+    public void setBlockAlternativeColor(@Nonnull Color val) {
+        blockAlternativeColor = val;
+        JmriColorChooser.addRecentColor(val);
+    }
+
     //
     public boolean equalsAllButName(@Nonnull LayoutTrackDrawingOptions ltdo) {
         boolean result = true;  // assume success (optimist!)
@@ -405,6 +444,15 @@ public class LayoutTrackDrawingOptions {
                     if (mainBlockLineWidth != ltdo.getMainBlockLineWidth()) {
                         break;
                     }
+                    if (!blockDefaultColor.equals(ltdo.getBlockDefaultColor())) {
+                        break;
+                    }
+                    if (!blockOccupiedColor.equals(ltdo.getBlockOccupiedColor())) {
+                        break;
+                    }
+                    if (!blockAlternativeColor.equals(ltdo.getBlockAlternativeColor())) {
+                        break;
+                    }
                     result = true;
                 } while (false);
             }
@@ -446,6 +494,11 @@ public class LayoutTrackDrawingOptions {
         result = (37 * result) + (mainRailColor == null ? 0 : mainRailColor.hashCode());
         result = (37 * result) + mainBlockLineDashPercentageX10;
         result = (37 * result) + mainBlockLineWidth;
+
+        // block
+        result = (37 * result) + (blockDefaultColor == null ? 0 : blockDefaultColor.hashCode());
+        result = (37 * result) + (blockOccupiedColor == null ? 0 : blockOccupiedColor.hashCode());
+        result = (37 * result) + (blockAlternativeColor == null ? 0 : blockAlternativeColor.hashCode());
 
         return result;
     }

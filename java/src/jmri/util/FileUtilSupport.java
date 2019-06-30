@@ -586,13 +586,18 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the preferences directory. This directory is set based on the OS and
-     * is not normally settable by the user. <ul><li>On Microsoft Windows
-     * systems, this is JMRI in the User's home directory.</li> <li>On OS X
-     * systems, this is Library/Preferences/JMRI in the User's home
-     * directory.</li> <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
-     * the User's home directory.</li> <li>This can be overridden with by
-     * setting the jmri.prefsdir Java property when starting JMRI.</li></ul> Use
-     * {@link #getHomePath()} to get the User's home directory.
+     * is not normally settable by the user.
+     * <ul>
+     * <li>On Microsoft Windows systems, this is JMRI in the User's home directory.
+     * </li>
+     * <li>On OS X systems, this is Library/Preferences/JMRI in the User's home
+     * directory.</li>
+     * <li>On Linux, Solaris, and othe UNIXes, this is .jmri in the User's home
+     * directory.</li>
+     * <li>This can be overridden with by setting the jmri.prefsdir Java property
+     * when starting JMRI.</li>
+     * </ul>
+     * Use {@link #getHomePath()} to get the User's home directory.
      *
      * @see #getHomePath()
      * @return Path to the preferences directory using system-specific
@@ -632,7 +637,7 @@ public class FileUtilSupport extends Bean {
                 result = this.getHomePath() + "JMRI" + File.separator; // NOI18N
                 break;
         }
-        // logging here merely throws warnings since we call this method to setup logging
+        // logging here merely throws warnings since we call this method to set up logging
         // uncomment below to print OS default to console
         // System.out.println("preferencesPath defined as \"" + result + "\" based on os.name=\"" + SystemType.getOSName() + "\"");
         return result;

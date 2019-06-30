@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
- * <P>
+ * <p>
  * When the "open programmer" button is pushed, i.e. the user is ready to
  * continue, the startProgrammer method is invoked. This should be overridden
  * (e.g. in a local anonymous class) to create the programmer frame you're

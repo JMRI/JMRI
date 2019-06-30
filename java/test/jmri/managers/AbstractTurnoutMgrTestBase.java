@@ -55,7 +55,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         try {
             l.provideTurnout("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
           throw ex;
         }
     }

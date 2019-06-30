@@ -33,13 +33,13 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        return doGet(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name), name, type, locale);
+    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        return doGet(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name), name, type, locale, id);
     }
 
     @Override
-    protected ObjectNode doGet(SignalHead signalHead, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(signalHead, name, type, locale); // throws JsonException if signalHead == null
+    protected ObjectNode doGet(SignalHead signalHead, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = this.getNamedBean(signalHead, name, type, locale, id); // throws JsonException if signalHead == null
         ObjectNode data = root.with(DATA);
         if (signalHead != null) {
             data.put(LIT, signalHead.getLit());
@@ -57,8 +57,8 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        SignalHead signalHead = this.postNamedBean(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name), data, name, type, locale);
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        SignalHead signalHead = this.postNamedBean(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name), data, name, type, locale, id);
         if (data.path(STATE).isIntegralNumber()) {
             int state = data.path(STATE).asInt();
             if (state == SignalHead.HELD) {
@@ -77,34 +77,35 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
                     }
                 }
                 if (!isValid) {
-                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state));
+                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_HEAD, state), id);
                 }
             }
         }
-        return this.doGet(type, name, data, locale);
+        return this.doGet(type, name, data, locale, id);
     }
 
     @Override
-    public ArrayNode doGetList(String type, JsonNode data, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
+    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+        ArrayNode array = this.mapper.createArrayNode();
         for (SignalHead head : InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet()) {
             String name = head.getSystemName();
-            root.add(this.doGet(SIGNAL_HEAD, name, data, locale));
+            array.add(this.doGet(SIGNAL_HEAD, name, data, locale, id));
         }
-        return root;
+        return message(array, id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case SIGNAL_HEAD:
             case SIGNAL_HEADS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/signalHead/signalHead-server.json",
-                        "jmri/server/json/signalHead/signalHead-client.json");
+                        "jmri/server/json/signalHead/signalHead-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 }

@@ -27,7 +27,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public QsiSystemConnectionMemo() {
-        super("Q", "Quantum Programmer"); //"Quantum Programmer"
+        super("Q", "Quantum Programmer"); // "Quantum Programmer"
         register(); // registers general type
         InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
 
@@ -128,7 +128,5 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         super.dispose();
     }
+
 }
-
-
-

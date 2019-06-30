@@ -48,7 +48,7 @@
         found them to work reliably in all cases so far.</li>
 
         <li>Other companies, such as <a href=
-        "http://www.belkin.com">Belkin</a>, market adapters under
+        "https://www.belkin.com">Belkin</a>, market adapters under
         their own name, and you can often also find off-brand
         adapters at your local computer store for as little as
         $10.</li>
@@ -68,8 +68,9 @@
       will probably work. But some DCC systems require either
       special baud rates and/or RS232 control leads that not all
       adapters can provide. The rest of this page addresses those
-      special cases.</p><a name="connecting" id="connecting"></a>
+      special cases.</p>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2><a name="MS100" id="MS100"></a>
 
       <h3>LocoNet via MS100 adapter</h3>

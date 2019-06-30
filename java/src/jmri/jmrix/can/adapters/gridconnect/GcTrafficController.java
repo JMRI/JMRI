@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Traffic controller for the GridConnect protocol.
- * <P>
+ * <p>
  * GridConnect uses messages transmitted as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
  * CAN frame hhhh is the two byte header (11 useful bits) N or R indicates a
  * normal or remote frame d0 - d7 are the (up to) 8 data bytes
  *
  * @author Andrew Crosland Copyright (C) 2008
-  */
+ */
 public class GcTrafficController extends TrafficController {
 
     public GcTrafficController() {
@@ -171,13 +171,13 @@ public class GcTrafficController extends TrafficController {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * This is over-ridden from AbstractMRTrafficController so we can add
      * suppression of the characters before ':'. We can't use
      * waitForStartOfReply() because that strips the 1st character also.
-     * <P>
+     * <p>
      * Handles timeouts on read by ignoring zero-length reads.
      *
      * @param msg     message to fill

@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -787,6 +788,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
             p.add(dccOffSetAddress);
             dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
+            p.add(dccPacketSendCount);
+            dccPacketSendCountSpinner.setModel(new SpinnerNumberModel(3, 1, 4, 1));
+            p.add(dccPacketSendCountSpinner);
+            dccPacketSendCountSpinner.setToolTipText(Bundle.getMessage("DCCMastPacketSendCountToolTip"));
             panelHeader.add(p);
 
             p = new JPanel();
@@ -932,6 +937,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         stateLabel1.setVisible(false); // label in front of s1Box
         s1Box.setVisible(false);
         dccOffSetAddress.setVisible(false);
+        dccPacketSendCount.setVisible(false);
+        dccPacketSendCountSpinner.setVisible(false);
         v1Panel.setVisible(false);
         v2Panel.setVisible(false);
         to2.setVisible(false);
@@ -1128,6 +1135,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             dccSignalPanel.setVisible(true);
             dccOffSetAddress.setVisible(true);
             dccOffSetAddress.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
+            dccPacketSendCount.setVisible(true);
+            dccPacketSendCountSpinner.setVisible(true);
         } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(Bundle.getMessage("LabelSystemName"));
             systemNameTextField.setToolTipText(Bundle.getMessage("SignalHeadSysNameTooltip"));
@@ -1573,8 +1582,16 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void handleDCCOkPressed() {
         DccSignalHead s;
-        String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
-        //if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
+        String systemNameText = null;
+        String prefix = (String) prefixBox.getSelectedItem();
+        if (prefix != null) {
+            systemNameText = ConnectionNameFromSystemName.getPrefixFromName(prefix);
+        }
+        if (systemNameText == null) {
+            log.error("could not retrieve systemName");
+            return;
+        }
+        // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
         if (systemNameText.equals("\0")) {
             systemNameText = "I";
         }
@@ -1595,6 +1612,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
             InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
             s.useAddressOffSet(dccOffSetAddress.isSelected());
+            s.setDccSignalHeadPacketSendCount((int)dccPacketSendCountSpinner.getValue());
         }
     }
 
@@ -1648,7 +1666,6 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
             JOptionPane.showMessageDialog(addFrame, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-            return;
         }
     }
 
@@ -1881,6 +1898,9 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             p.add(eSysNameLabel);
             p.add(dccOffSetAddressEdt);
             dccOffSetAddressEdt.setToolTipText(Bundle.getMessage("DccOffsetTooltip"));
+            p.add(dccPacketSendCount);
+            p.add(dccPacketSendCountSpinner);
+
             panelHeader.add(p);
             p = new JPanel();
             p.setLayout(new FlowLayout());
@@ -2007,6 +2027,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         eUserName.setVisible(true);
         ev1Panel.setVisible(false);
         dccOffSetAddressEdt.setVisible(false);
+        dccPacketSendCount.setVisible(false);
+        dccPacketSendCountSpinner.setVisible(false);
         eto1.setVisible(false);
         es1Box.setVisible(false);
         ev2Panel.setVisible(false);
@@ -2229,6 +2251,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
             dccOffSetAddressEdt.setVisible(true);
             dccOffSetAddressEdt.setSelected(((DccSignalHead) curS).useAddressOffSet());
+            dccPacketSendCount.setVisible(true);
+            dccPacketSendCountSpinner.setVisible(true);
+            dccPacketSendCountSpinner.setValue(((DccSignalHead) curS).getDccSignalHeadPacketSendCount());
+
             ev2Border.setTitle(Bundle.getMessage("LabelAspectNumbering"));
             ev2Panel.setVisible(true);
             dccSignalPanelEdt.setVisible(true);
@@ -2606,6 +2632,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 }
             }
             ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());
+            ((DccSignalHead) curS).setDccSignalHeadPacketSendCount(((int) dccPacketSendCountSpinner.getValue()));
         } else {
             log.error("Internal error - cannot update signal of type " + className);
         }
@@ -2765,7 +2792,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     /**
-     * Update Turnout object for a signal mast output
+     * Update Turnout object for a signal mast output.
      *
      * @param bp         Pane in which the new output/bean was entered by user
      * @param reference  Turnout application description
@@ -2778,21 +2805,28 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         if (newTurnout == null) {
             noTurnoutMessage(title, bp.getDisplayName());
         }
-        if (newTurnout != null && (newTurnout.getComment() == null || newTurnout.getComment().equals(""))) {
-            newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
+        else {
+            String comment = newTurnout.getComment();
+            if (comment == null || comment.isEmpty()) {
+                newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
+            }
         }
         if (oldTurnout == null || newTurnout == oldTurnout) {
             return newTurnout;
         }
-        if (oldTurnout.getComment() != null && oldTurnout.getComment().equals(reference)) {
-            // wont delete old Turnout Comment if Locale or Bundle was changed in between, but user could have type something in the Comment as well
-            oldTurnout.setComment(null); // deletes current Comment in bean
+        String oldComment = oldTurnout.getComment();
+        if ((oldComment != null) && (reference != null)) {
+            if (oldComment.equals(reference)) {
+                // won't delete old Turnout Comment if Locale or Bundle was changed since filling it in
+                // user could have typed something in the Comment as well
+                oldTurnout.setComment(null); // deletes current Comment in bean
+            }
         }
         return newTurnout;
     }
 
     /**
-     * Create Turnout object for a signal mast output
+     * Create Turnout object for a signal mast output.
      *
      * @param bp        Pane in which the new output/bean was entered by user
      * @param reference Turnout application description
@@ -2823,6 +2857,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private JSpinner[] dccAspect;
     private JCheckBox dccOffSetAddress = new JCheckBox(Bundle.getMessage("DccAccessoryAddressOffSet"));
+    private JLabel dccPacketSendCount = new JLabel(Bundle.getMessage("DCCMastPacketSendCount"));
+    private JSpinner dccPacketSendCountSpinner = new JSpinner();
     private JPanel dccSignalPanel = new JPanel();
 
     public void dccSignalPanel() {
@@ -2868,4 +2904,5 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class);
+
 }

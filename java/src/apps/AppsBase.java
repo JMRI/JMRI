@@ -168,7 +168,11 @@ public abstract class AppsBase {
                 // Apps.setConfigFilename() does not reset the system property
                 System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
-                log.info("Starting with profile {}", profile.getId());
+                if (profile != null) {
+                    log.info("Starting with profile {}", profile.getId());
+                } else {
+                    log.info("Starting without a profile");
+                }
             } else {
                 log.error("Specify profile to use as command line argument.");
                 log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
@@ -351,14 +355,16 @@ public abstract class AppsBase {
 
     /**
      * Set up the configuration file name at startup.
-     * <P>
+     * <p>
      * The Configuration File name variable holds the name used to load the
      * configuration file during later startup processing. Applications invoke
-     * this method to handle the usual startup hierarchy: <UL> <LI>If an
-     * absolute filename was provided on the command line, use it <LI>If a
-     * filename was provided that's not absolute, consider it to be in the
-     * preferences directory <LI>If no filename provided, use a default name
-     * (that's application specific) </UL>
+     * this method to handle the usual startup hierarchy:
+     * <ul>
+     * <li>If an absolute filename was provided on the command line, use it
+     * <li>If a filename was provided that's not absolute, consider it to be in
+     * the preferences directory
+     * <li>If no filename provided, use a default name (that's application specific)
+     * </ul>
      * This name will be used for reading and writing the preferences. It need
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em>.
@@ -390,7 +396,6 @@ public abstract class AppsBase {
     }
 
     // We will use the value stored in the system property
-    // TODO: change to return profile-name/profile.xml
     static public String getConfigFileName() {
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return System.getProperty("org.jmri.Apps.configFilename");

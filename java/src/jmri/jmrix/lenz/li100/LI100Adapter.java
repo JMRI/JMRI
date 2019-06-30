@@ -180,8 +180,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
-        /*if (getOptionState(option2Name).equals(validOption2[0]))
-         checkBuffer = true;*/
     }
 
     /**
@@ -190,6 +188,14 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};

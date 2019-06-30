@@ -120,7 +120,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             // if object has been deleted, it's not here; ignore it
             T b = getBySystemName(sysNameList.get(i));
             if (b != null) {
-                b.addPropertyChangeListener(this, null, "Table View");
+                b.addPropertyChangeListener(this);
             }
         }
     }
@@ -153,7 +153,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Is this property event announcing a change this table should display?
-     * <P>
+     * <p>
      * Note that events will come both from the NamedBeans and also from the
      * manager
      *
@@ -474,7 +474,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
+     * Service method to setup a column so that it will hold a button for its
      * values
      *
      * @param table  {@link JTable} to use
@@ -871,7 +871,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         String entry = (String) box.getSelectedItem();
         T newNameBean = getBySystemName(entry);
         if (oldNameBean != newNameBean) {
-            oldNameBean.setUserName("");
+            oldNameBean.setUserName(null);
             newNameBean.setUserName(currentName);
             InstanceManager.getDefault(NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
@@ -1022,7 +1022,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 message.append(e.getMessage());
             }
-            int count = t.getNumPropertyChangeListeners();
+            int count = t.getListenerRefs().size();
             log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
                 doDelete(t);

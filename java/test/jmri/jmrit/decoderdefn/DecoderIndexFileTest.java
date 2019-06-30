@@ -12,10 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for DecoderIndexFile class
+ * Tests for DecoderIndexFile class.
  *
  * @author	Bob Jacobsen, Copyright (c) 2001, 2002
-  */
+ */
 public class DecoderIndexFileTest {
 
     @Test
@@ -255,4 +255,5 @@ public class DecoderIndexFileTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class);
+
 }

@@ -4,11 +4,11 @@
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"configProfile\"",
     "properties": {
-        "name": {
+        "userName": {
             "type": "string",
             "description": "Name of configuration profile"
         },
-        "id": {
+        "name": {
             "type": "string",
             "description": "Configuration profile identity"
         },
@@ -26,5 +26,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "id", "uniqueId", "isActiveProfile", "isAutoStart"]
+    "required": ["name", "userName", "uniqueId", "isActiveProfile", "isAutoStart"]
 }

@@ -37,7 +37,7 @@ public class LocoNetSlot {
     /**
      * Create a slot based solely on a slot number.  The remainder of the slot is
      * left un-initialized.
-     * <p>
+     *
      * @param slotNum  slot number to be assigned to the new LocoNetSlot object
      */
     public LocoNetSlot(int slotNum) {
@@ -74,7 +74,7 @@ public class LocoNetSlot {
     /**
      * Creates a slot object based on the contents of a LocoNet message.
      * The slot number is assumed to be found in byte 2 of the message if message is 0xE6 or bytes 2 and 3 for 0xE7
-     * <p>
+     *
      * @param l  a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
      * slot number
@@ -107,7 +107,7 @@ public class LocoNetSlot {
     /**
      * Returns the slot number which was either specified or inferred at object
      * creation time.
-     * <p>
+     *
      * @return the slot number
      */
     public int getSlot() {
@@ -147,7 +147,7 @@ public class LocoNetSlot {
      * {@link LnConstants#DEC_MODE_14},
      * {@link LnConstants#DEC_MODE_28TRI},
      * {@link LnConstants#DEC_MODE_28}
-     * <p>
+     *
      * @return the encoded decoder operating mode.
      */
     public int decoderType() {
@@ -192,7 +192,7 @@ public class LocoNetSlot {
      * <p>
      * This returns only those bits of the slot's STAT2 byte which are related to
      * the slot's "secondary status".
-     * <p>
+     *
      * @return the slot secondary status bits associated with the slot
      */
 
@@ -227,7 +227,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if slot is set for forward movement, else false
      */
     public boolean isForward() {
@@ -239,7 +239,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F0 is "on", else false
      */
     public boolean isF0() {
@@ -254,7 +254,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F1 is "on", else false
      */
     public boolean isF1() {
@@ -266,7 +266,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F2 is "on", else false
      */
     public boolean isF2() {
@@ -278,7 +278,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F3 is "on", else false
      */
     public boolean isF3() {
@@ -290,7 +290,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F4 is "on", else false
      */
     public boolean isF4() {
@@ -302,7 +302,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F5 is "on", else false
      */
     public boolean isF5() {
@@ -314,7 +314,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F6 is "on", else false
      */
     public boolean isF6() {
@@ -326,7 +326,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F7 is "on", else false
      */
     public boolean isF7() {
@@ -338,7 +338,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F8 is "on", else false
      */
     public boolean isF8() {
@@ -354,7 +354,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F9 is "on", else false
      */
     public boolean isF9() {
@@ -370,7 +370,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F10 is "on", else false
      */
     public boolean isF10() {
@@ -386,7 +386,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F11 is "on", else false
      */
     public boolean isF11() {
@@ -402,7 +402,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F12 is "on", else false
      */
     public boolean isF12() {
@@ -418,7 +418,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F13 is "on", else false
      */
     public boolean isF13() {
@@ -434,7 +434,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F14 is "on", else false
      */
     public boolean isF14() {
@@ -450,7 +450,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F15 is "on", else false
      */
     public boolean isF15() {
@@ -466,7 +466,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F16 is "on", else false
      */
     public boolean isF16() {
@@ -482,7 +482,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F17 is "on", else false
      */
     public boolean isF17() {
@@ -498,7 +498,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F1 is "on", else false
      */
     public boolean isF18() {
@@ -514,7 +514,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F19 is "on", else false
      */
     public boolean isF19() {
@@ -530,7 +530,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F20 is "on", else false
      */
     public boolean isF20() {
@@ -546,7 +546,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F21 is "on", else false
      */
     public boolean isF21() {
@@ -562,7 +562,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F22 is "on", else false
      */
     public boolean isF22() {
@@ -578,7 +578,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F23 is "on", else false
      */
     public boolean isF23() {
@@ -594,7 +594,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F24 is "on", else false
      */
     public boolean isF24() {
@@ -610,7 +610,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F25 is "on", else false
      */
     public boolean isF25() {
@@ -626,7 +626,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F26 is "on", else false
      */
     public boolean isF26() {
@@ -642,7 +642,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F27 is "on", else false
      */
     public boolean isF27() {
@@ -658,7 +658,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, this bit
      * may have other meanings.
-     * <p>
+     *
      * @return true if F28 is "on", else false
      */
     public boolean isF28() {
@@ -674,7 +674,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
-     * <p>
+     *
      * @return the mobile decoder address
      */
     public int locoAddr() {
@@ -690,7 +690,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
-     * <p>
+     *
      * @return the current speed step associated with the slot.
      */
     public int speed() {
@@ -709,7 +709,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
-     * <p>
+     *
      * @return the &lt;DIRF&gt; byte value
      */
     public int dirf() {
@@ -722,7 +722,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
-     * <p>
+     *
      * @return the &lt;SND&gt; byte value
      */
     public int snd() {
@@ -737,7 +737,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
-     * <p>
+     *
      * @return an integer representing the throttle ID number
      */
     public int id() {
@@ -753,7 +753,7 @@ public class LocoNetSlot {
      * <p>
      * For slot numbers other than the programmer slot, these bits
      * may have other meanings.
-     * <p>
+     *
      * @return the &lt;PCMD&gt; byte
      */
     public int pcmd() {
@@ -792,7 +792,7 @@ public class LocoNetSlot {
      * LocoNet message.
      * <p>Note that the object's "slot" field
      * is not updated by this method.
-     * <p>
+     *
      * @param l  a LocoNet message
      * @throws LocoNetException if the message is not one which
      *      contains slot-related data
@@ -1054,7 +1054,7 @@ public class LocoNetSlot {
      * <p>If the pkt parameter does not contain data from an appropriate
      * OPC_IMM_PACKET message, the pkt is ignored and the slot object remains
      * unchanged.
-     * <p>
+     *
      * @param pkt is a "long" consisting of four bytes extracted from a LocoNet
      * "OPC_IMM_PACKET" message.
      * <p>
@@ -1246,7 +1246,7 @@ public class LocoNetSlot {
     /**
      * Creates a LocoNet "OPC_WR_SL_DATA" message containing the current state of
      * the LocoNetSlot object.
-     * <p>
+     *
      * @return a LocoNet message which can be used to inform the command station
      * of a change in the slot contents.
      */
@@ -1340,7 +1340,7 @@ public class LocoNetSlot {
 
     /**
      * Registers a slot listener if it is not already registered.
-     * <p>
+     *
      * @param l  a slot listener
      */
     public synchronized void addSlotListener(SlotListener l) {
@@ -1352,7 +1352,7 @@ public class LocoNetSlot {
 
     /**
      * Un-registers a slot listener.
-     * <p>
+     *
      * @param l  a slot listener
      */
     public synchronized void removeSlotListener(SlotListener l) {
@@ -1364,7 +1364,7 @@ public class LocoNetSlot {
     /**
      * Returns the timestamp when this LocoNetSlot was updated by some LocoNet
      * message.
-     * <p>
+     *
      * @return last time the slot info was updated
      */
     public long getLastUpdateTime() {
@@ -1393,7 +1393,7 @@ public class LocoNetSlot {
      * Get the track status byte (location 7)
      * <p>
      * Note that the &lt;TRK&gt; byte is not accurate on some command stations.
-     * <p>
+     *
      * @return the effective &lt;TRK&gt; byte
      */
     public int getTrackStatus() { return trk; }
@@ -1404,7 +1404,7 @@ public class LocoNetSlot {
      * Note that setting the LocoNetSlot object's track status may result in a
      * change to the command station's actual track status if the slot's status
      * is communicated to the command station via an OPC_WR_DL_DATA LocoNet message.
-     * <p>
+     *
      * @param status is the new track status value.
      */
     public void setTrackStatus(int status) { trk = status; }
@@ -1413,7 +1413,7 @@ public class LocoNetSlot {
      * Return the days value from the slot.  Only valid for fast-clock slot.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @return "Days" value currently in fast-clock slot.
      */
     public int getFcDays() {
@@ -1432,7 +1432,7 @@ public class LocoNetSlot {
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @param val is the new fast-clock "days" value
      */
     public void setFcDays(int val) {
@@ -1448,7 +1448,7 @@ public class LocoNetSlot {
      * Return the hours value from the slot.  Only valid for fast-clock slot.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @return "Hours" value currently stored in fast clock slot.
      */
     public int getFcHours() {
@@ -1468,7 +1468,7 @@ public class LocoNetSlot {
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @param val is the new fast-clock "hours" value
      */
     public void setFcHours(int val) {
@@ -1484,7 +1484,7 @@ public class LocoNetSlot {
      * Return the minutes value from the slot.  Only valid for fast-clock slot.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @return Return minutes value currently stored in the fast clock slot.
      */
     public int getFcMinutes() {
@@ -1504,7 +1504,7 @@ public class LocoNetSlot {
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @param val is the new fast-clock "minutes" value
      */
     public void setFcMinutes(int val) {
@@ -1521,7 +1521,7 @@ public class LocoNetSlot {
      * clock slot.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @return Return frac_mins field which is the number of 65ms ticks until
      *         then next minute rollover. These ticks step at the current fast
      *         clock rate
@@ -1542,7 +1542,7 @@ public class LocoNetSlot {
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @param val is the new fast-clock "fractional minutes"
      */
     public void setFcFracMins(int val) {
@@ -1560,7 +1560,7 @@ public class LocoNetSlot {
      * Get the fast-clock rate.  Only valid for fast-clock slot.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @return Rate stored in fast clock slot.
      */
     public int getFcRate() {
@@ -1579,7 +1579,7 @@ public class LocoNetSlot {
      * which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
+     *
      * @param val is the new fast-clock rate
      */
     public void setFcRate(int val) {

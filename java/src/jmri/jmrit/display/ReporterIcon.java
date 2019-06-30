@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
+ * An icon to display info from a Reporter, e.g. transponder or RFID reader.
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */
@@ -105,10 +105,8 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         String name;
         if (reporter == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (reporter.getUserName() != null) {
-            name = reporter.getUserName() + " (" + reporter.getSystemName() + ")";
         } else {
-            name = reporter.getSystemName();
+            name = reporter.getFullyFormattedDisplayName();
         }
         return name;
     }

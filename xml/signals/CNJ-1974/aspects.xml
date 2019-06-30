@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>CNJ 1974</name>
+  <date>1974</date>
+  <reference>As described in the http://signals.jovet.net/rules/CNJ%20Signal%20Rules.pdf </reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>Joseph</firstname><surname>Comuzzi</surname></personname>
+        <email>jcomuzzi@kateharper.com</email>
+    </author>    
+</authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2018-8-1</date>
+        <authorinitials>JJC</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed</indication>
+      <reference>Page 42</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach Medium</name>
+      <rule>Rule 281A</rule>
+      <indication>Proceed approaching second signal at Medium speed</indication>
+      <reference>Page 42</reference>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule 281B</rule>
+      <indication>Proceed approaching next signal at Limited speed</indication>
+      <reference>Page 43</reference>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Limited Clear</name>
+      <rule>Rule 281C</rule>
+      <indication>Proceed; Limited speed within interlocking limits</indication>
+      <reference>Page 43</reference>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Limited Approach Medium</name>
+      <rule>Rule 281D</rule>
+      <indication>Proceed; Limited speed within interlocking limits approaching next signal at Medium speed</indication>
+      <reference>Page 43</reference>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Limited Approach Slow</name>
+      <rule>Rule 281E</rule>
+      <indication>Proceed; Limited speed within interlocking limits approaching next signal at Slow speed</indication>
+      <reference>Page 43</reference>
+      <speed>Limited</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Limited Approach</name>
+      <rule>Rule 281F</rule>
+      <indication>Proceed at limited speed prepared to stop at next signal.</indication>
+      <reference>Page 43</reference>
+      <speed>Limited</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed approaching next signal at Medium speed</indication>
+      <reference>Page 44</reference>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 282A</rule>
+      <indication>Proceed preparing to Stop at second signal</indication>
+      <reference>Page 44</reference>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed; Medium speed within interlocking limits</indication>
+      <reference>Page 45</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach Medium</name>
+      <rule>Rule 283A</rule>
+      <indication>Proceed Medium speed within interlocking limits approaching next signal at Medium speed.</indication>
+      <reference>Page 45</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach Slow</name>
+      <rule>Rule 283B</rule>
+      <indication>Proceed at Medium speed approaching next signal at Slow speed</indication>
+      <reference>Page 46</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed approaching next signal at Slow speed. Trains exceeding Medium speed must at once reduce to that speed.</indication>
+      <reference>Page 46</reference>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed preparing to Stop at next signal. Trains exceeding Medium speed must at once reduce to that speed.</indication>
+      <reference>Page 47</reference>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed at Medium speed preparing to stop at next signal</indication>
+      <reference>Page 47</reference>
+      <speed>Medium</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed; Slow speed within interlocking limits.</indication>
+      <reference>Page 48</reference>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed. Slow speed within interlocking limits prepared to Stop at next signl.</indication>
+      <reference>Page 48</reference>
+      <speed>Slow</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at Restricted speed.</indication>
+      <reference>Page 49</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Stop; then proceed at restricted speed.</indication>
+      <reference>Page 50</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <reference>Page 50</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-SL-1-high-abs.xml"/>
+    <appearancefile href="appearance-SL-2-abs.xml"/>
+    <appearancefile href="appearance-SL-3-abs.xml"/>
+    <appearancefile href="appearance-SL-1-low-abs.xml"/>
+    <appearancefile href="appearance-SL-2-pbs.xml"/>
+    <appearancefile href="appearance-SL-3-pbs.xml"/>
+    <appearancefile href="appearance-SL-1-dwarf-abs.xml"/>
+  </appearancefiles>
+  
+</aspecttable>
+  

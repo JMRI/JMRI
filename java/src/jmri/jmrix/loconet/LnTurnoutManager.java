@@ -1,5 +1,12 @@
 package jmri.jmrix.loconet;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.*;
+import jmri.BooleanPropertyDescriptor;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
+
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -115,7 +122,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         // parse message type
         int addr;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_SW_REQ: {               /* page 9 of Loconet PE */
+            case LnConstants.OPC_SW_REQ: {               /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -124,14 +131,14 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 // store message in case resend is needed
                 lastSWREQ = l;
 
-                // Loconet spec says 0x10 of SW2 must be 1, but we observe 0
+                // LocoNet spec says 0x10 of SW2 must be 1, but we observe 0
                 if (((sw1 & 0xFC) == 0x78) && ((sw2 & 0xCF) == 0x07)) {
                     return;  // turnout interrogate msg
                 }
                 log.debug("SW_REQ received with address {}", addr);
                 break;
             }
-            case LnConstants.OPC_SW_REP: {                /* page 9 of Loconet PE */
+            case LnConstants.OPC_SW_REP: {                /* page 9 of LocoNet PE */
 
                 // clear resend message, indicating not to resend
 
@@ -233,8 +240,41 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
+    }
+
+    public static final String BYPASSBUSHBYBITKEY = "Bypass Bushby Bit";
+    public static final String SENDONANDOFFKEY = "Send ON/OFF";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        l.add(new BooleanPropertyDescriptor(BYPASSBUSHBYBITKEY, false) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("LnByPassBushbyHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return bean.getClass().getName().contains("LnTurnout");
+            }
+        });
+        l.add(new BooleanPropertyDescriptor(SENDONANDOFFKEY, _binaryOutput ? false : true) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("SendOnOffHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return bean.getClass().getName().contains("LnTurnout");
+            }
+        });
+        return l;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);

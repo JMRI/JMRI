@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
- * <P>
+ * <p>
  * Source of the tree content is the file system. Only directories are included
  * in the tree. A filter can be set to extract particular file types.
  *

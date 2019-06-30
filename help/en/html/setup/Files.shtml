@@ -61,15 +61,15 @@
               Any files that the program writes to containing local
               information, e.g. Roster entries and Panel files, are
               also written here.
-              <P>
+              <br>
               The default user's Preferences location varies by
               computer operating system. Normally, it's located:
 
               <ul>
-                <li>On a Linux machine, look for a .jmri directory
-                in your home directory.</li>
+                <li>On a Linux machine, look for a <code>.jmri</code>
+                directory in your home directory.</li>
 
-                <li>On Mac OS X, Preferences are stored in a "JMRI"
+                <li>On macOS, Preferences are stored in a "JMRI"
                 folder in the /Users/me/Library/Preferences/
                 folder.</li>
 
@@ -81,23 +81,24 @@
                 called "JMRI".</li>
               </ul>
 
-              <p>The easiest way to find the preferences location is to start a JMRI
-              program, e.g. DecoderPro or PanelPro, and select
-              "Locations ..." from the "Help" menu. A special treat
-              for Windows users: if you go to the Windows Start
-              Menu, in the JMRI section, you can select
+              The easiest way to find the preferences location is to
+              start a JMRI program, e.g. DecoderPro or PanelPro, select
+              "Locations..." from the "Help" menu and click on [User Files
+              Location].<br>
+              A special treat for Windows users: if you go to the Windows
+              Start Menu, in the JMRI section, you can select
               "Preferences" to have it open that directory for
-              you.</p>
+              you.</li>
 
             <li>User files can be stored under the preferences location, 
               but JMRI can also be configured to put them somewhere else.
-              <p>You may set or change the location scripts and
+              <br>You may set or change the location scripts and
               user files in the <a href=
               "../../package/apps/TabbedPreferences.shtml#FileLocations">
               Preferences... -&gt; File Locations</a> panel. Note
               that changing the "User Files Location" will also
               change the default location for Panels, Rosters
-              etc.</p>
+              etc.
             </li>
           </ol>
         </dd>

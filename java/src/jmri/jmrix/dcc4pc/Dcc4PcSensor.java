@@ -4,7 +4,7 @@ import jmri.implementation.AbstractSensor;
 
 /**
  * Implement a Sensor via Dcc4Pc communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Dcc4Pc communications. This is because it
  * should be the only object that is sending messages for this sensor; more than
  * one Sensor object pointing to a single device is not allowed.

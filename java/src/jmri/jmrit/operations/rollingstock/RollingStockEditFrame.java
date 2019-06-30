@@ -1,12 +1,12 @@
 package jmri.jmrit.operations.rollingstock;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,6 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -33,8 +38,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for edit of rolling stock. The common elements are: road, road number,
@@ -75,6 +78,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     // text field
     public JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
     public JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
+    public JTextField blockingTextField = new JTextField(4);
     public JTextField weightTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField weightTonsTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField commentTextField = new JTextField(35);
@@ -180,11 +184,14 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         // type options dependent on car or engine rolling stock
         addItemWidth(pType, pTypeOptions, 3, 0, 1);
         pPanel.add(pType);
-
+        
         // row 4
-        // only cars use the blocking option
+        pBlocking.setLayout(new GridBagLayout());
+        pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutBlockingOrder")));
+        addItem(pBlocking, blockingTextField, 0, 0);
+        blockingTextField.setText("0");
         pPanel.add(pBlocking);
-        pBlocking.setVisible(false);
+        pBlocking.setVisible(false); // default is blocking order not shown
 
         // row 5
         JPanel pLength = new JPanel();
@@ -354,6 +361,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             }
         }
         typeComboBox.setSelectedItem(rs.getTypeName());
+        blockingTextField.setText(Integer.toString(rs.getBlocking()));
 
         if (!getLengthManager().containsName(rs.getLength())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("lengthNameNotExist"),
@@ -509,7 +517,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                         !_rs.getNumber().equals(roadNumberTextField.getText()))) {
             String road = (String) roadComboBox.getSelectedItem();
             String number = roadNumberTextField.getText();
-            manager.changeId((T) _rs, road, number);
             _rs.setRoadName(road);
             _rs.setNumber(number);
         }
@@ -526,6 +533,19 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (typeComboBox.getSelectedItem() != null) {
             _rs.setTypeName((String) typeComboBox.getSelectedItem());
         }
+        
+        int blocking = 0;
+        try {
+            blocking = Integer.parseInt(blockingTextField.getText());
+            // only allow numbers between 0 and 100
+            if (blocking < 0 || blocking > 100) {
+                blocking = 0;
+            }
+        } catch (Exception e) {
+            log.warn("Blocking must be a number between 0 and 100");
+        }
+        blockingTextField.setText(Integer.toString(blocking));
+        
         if (lengthComboBox.getSelectedItem() != null) {
             _rs.setLength((String) lengthComboBox.getSelectedItem());
         }

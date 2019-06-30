@@ -21,7 +21,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     private SerialTrafficController trafficController = null;
 
     public SerialTurnoutManager() {
-        log.debug("TMCC Turnout Manager null");
+        log.debug("TMCC TurnoutManager null");
     }
 
     public SerialTurnoutManager(TmccSystemConnectionMemo memo) {
@@ -31,7 +31,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         trafficController = memo.getTrafficController();
         // listen for turnout creation
         trafficController.addSerialListener(this);
-        log.debug("TMCC Turnout Manager prefix={}", prefix);
+        log.debug("TMCC TurnoutManager prefix={}", prefix);
     }
 
     @Override
@@ -200,8 +200,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

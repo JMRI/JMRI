@@ -265,7 +265,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     javax.swing.Timer staleSlotCheckTimer = null;
 
     /**
-     * Scan the slot array looking for slots that are in-use but have
+     * Scan the slot array looking for slots that are in-use or common but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
      * the slot without telling us via a LocoNet message.
@@ -280,7 +280,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         for (int i = 1; i < numSlots; i++) {
             slot = _slots[i];
             if (!slot.isSystemSlot()) {
-                if ((slot.slotStatus() == LnConstants.LOCO_IN_USE) && (slot.getLastUpdateTime() <= staleTimeout)) {
+                if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
+                        && (slot.getLastUpdateTime() <= staleTimeout)) {
                     sendReadSlot(i);
                 }
             }
@@ -300,7 +301,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Add a slot listener, if it is not already registered
      * <p>
      * The slot listener will be invoked every time a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be added
      */
     public synchronized void addSlotListener(SlotListener l) {
@@ -315,7 +316,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * The slot listener will be removed from the list of listeners which are
      * invoked whenever a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be removed
      */
     public synchronized void removeSlotListener(SlotListener l) {
@@ -435,7 +436,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Checks a LocoNet message to see if it encodes a DCC "direct function" packet.
-     * <p>
+     *
      * @param m  a LocoNet Message
      * @return the loco address if the LocoNet message encodes a "direct function" packet,
      * else returns -1

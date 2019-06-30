@@ -300,10 +300,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         String name;
         if (namedSensor == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getSensor().getUserName() == null) {
-            name = getSensor().getSystemName();
         } else {
-            name = getSensor().getUserName() + " (" + getSensor().getSystemName() + ")";
+            name = getSensor().getFullyFormattedDisplayName();
         }
         return name;
     }
@@ -483,7 +481,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
                 if (log.isDebugEnabled()) {
-                    log.debug("key= " + entry.getKey());
+                    log.debug("key= {}", entry.getKey());
                 }
                 NamedIcon newIcon = entry.getValue();
                 NamedIcon oldIcon = oldMap.get(entry.getKey());
@@ -532,12 +530,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         setSensor(_iconEditor.getTableSelection().getDisplayName());
         Hashtable<String, NamedIcon> iconMap = _iconEditor.getIconMap();
 
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            if (log.isDebugEnabled()) {
-                log.debug("key= " + entry.getKey());
-            }
+        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
+            log.debug("key= {}", entry.getKey());
             NamedIcon newIcon = entry.getValue();
             NamedIcon oldIcon = oldMap.get(entry.getKey());
             newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
@@ -599,7 +593,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             try {
                 getSensor().setKnownState(jmri.Sensor.ACTIVE);
             } catch (jmri.JmriException reason) {
-                log.warn("Exception setting momentary sensor: " + reason);
+                log.warn("Exception setting momentary sensor: {}", reason);
             }
         }
         super.doMousePressed(e);
@@ -612,7 +606,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             try {
                 getSensor().setKnownState(jmri.Sensor.INACTIVE);
             } catch (jmri.JmriException reason) {
-                log.warn("Exception setting momentary sensor: " + reason);
+                log.warn("Exception setting momentary sensor: {}", reason);
             }
         }
         super.doMouseReleased(e);
@@ -630,7 +624,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                         getSensor().setKnownState(jmri.Sensor.INACTIVE);
                     }
                 } catch (jmri.JmriException reason) {
-                    log.warn("Exception flipping sensor: " + reason);
+                    log.warn("Exception flipping sensor: {}", reason);
                 }
             }
         }
@@ -763,13 +757,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return backgroundColorInconsistent;
     }
 
-    String activeText;
-
-    String inactiveText;
-
-    String inconsistentText;
-
-    String unknownText;
+    private String activeText;
+    private String inactiveText;
+    private String inconsistentText;
+    private String unknownText;
 
     public String getActiveText() {
         return activeText;
@@ -832,79 +823,86 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return menu;
     }
 
-    private void setColor(Color desiredColor, int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
-        switch (state) {
-           case PositionablePopupUtil.FONT_COLOR:
-              util.setForeground(desiredColor);
-              break;
-           case PositionablePopupUtil.BACKGROUND_COLOR:
-              util.setBackgroundColor(desiredColor);
-              break;
-           case PositionablePopupUtil.BORDER_COLOR:
-              util.setBorderColor(desiredColor);
-              break;
-           case UNKOWN_FONT_COLOR:
-              setTextUnknown(desiredColor);
-              break;
-           case UNKOWN_BACKGROUND_COLOR:
-              util.setHasBackground(desiredColor != null);
-              setBackgroundUnknown(desiredColor);
-              break;
-           case ACTIVE_FONT_COLOR:
-              setTextActive(desiredColor);
-              break;
-           case ACTIVE_BACKGROUND_COLOR:
-              util.setHasBackground(desiredColor != null);
-              setBackgroundActive(desiredColor);
-              break;
-           case INACTIVE_FONT_COLOR:
-              setTextInActive(desiredColor);
-              break;
-           case INACTIVE_BACKGROUND_COLOR:
-              util.setHasBackground(desiredColor != null);
-              setBackgroundInActive(desiredColor);
-              break;
-           case INCONSISTENT_FONT_COLOR:
-              setTextInconsistent(desiredColor);
-              break;
-           case INCONSISTENT_BACKGROUND_COLOR:
-              util.setHasBackground(desiredColor != null);
-              setBackgroundInconsistent(desiredColor);
-              break;
-           default:
-              break;
-       }
+    private void setColor(Color desiredColor, int state) {
+        PositionablePopupUtil pop = getPopupUtility();
+        if (pop instanceof SensorPopupUtil) {
+            SensorPopupUtil util = (SensorPopupUtil) pop;
+            switch (state) {
+                case PositionablePopupUtil.FONT_COLOR:
+                    util.setForeground(desiredColor);
+                    break;
+                case PositionablePopupUtil.BACKGROUND_COLOR:
+                    util.setBackgroundColor(desiredColor);
+                    break;
+                case PositionablePopupUtil.BORDER_COLOR:
+                    util.setBorderColor(desiredColor);
+                    break;
+                case UNKOWN_FONT_COLOR:
+                    setTextUnknown(desiredColor);
+                    break;
+                case UNKOWN_BACKGROUND_COLOR:
+                    util.setHasBackground(desiredColor != null);
+                    setBackgroundUnknown(desiredColor);
+                    break;
+                case ACTIVE_FONT_COLOR:
+                    setTextActive(desiredColor);
+                    break;
+                case ACTIVE_BACKGROUND_COLOR:
+                    util.setHasBackground(desiredColor != null);
+                    setBackgroundActive(desiredColor);
+                    break;
+                case INACTIVE_FONT_COLOR:
+                    setTextInActive(desiredColor);
+                    break;
+                case INACTIVE_BACKGROUND_COLOR:
+                    util.setHasBackground(desiredColor != null);
+                    setBackgroundInActive(desiredColor);
+                    break;
+                case INCONSISTENT_FONT_COLOR:
+                    setTextInconsistent(desiredColor);
+                    break;
+                case INCONSISTENT_BACKGROUND_COLOR:
+                    util.setHasBackground(desiredColor != null);
+                    setBackgroundInconsistent(desiredColor);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private Color getColor(int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
-        switch (state) {
-           case PositionablePopupUtil.FONT_COLOR:
-              return util.getForeground();
-           case PositionablePopupUtil.BACKGROUND_COLOR:
-              return util.getBackground();
-           case PositionablePopupUtil.BORDER_COLOR:
-              return util.getBorderColor();
-           case UNKOWN_FONT_COLOR:
-              return getTextUnknown();
-           case UNKOWN_BACKGROUND_COLOR:
-              return getBackgroundUnknown();
-           case ACTIVE_FONT_COLOR:
-              return getTextActive();
-           case ACTIVE_BACKGROUND_COLOR:
-              return getBackgroundActive();
-           case INACTIVE_FONT_COLOR:
-              return getTextInActive();
-           case INACTIVE_BACKGROUND_COLOR:
-              return getBackgroundInActive();
-           case INCONSISTENT_FONT_COLOR:
-              return getTextInconsistent();
-           case INCONSISTENT_BACKGROUND_COLOR:
-              return getBackgroundInconsistent();
-           default:
-              return null;
-       }
+        PositionablePopupUtil pop = getPopupUtility();
+        if (pop instanceof SensorPopupUtil) {
+            SensorPopupUtil util = (SensorPopupUtil) pop;
+            switch (state) {
+                case PositionablePopupUtil.FONT_COLOR:
+                    return util.getForeground();
+                case PositionablePopupUtil.BACKGROUND_COLOR:
+                    return util.getBackground();
+                case PositionablePopupUtil.BORDER_COLOR:
+                    return util.getBorderColor();
+                case UNKOWN_FONT_COLOR:
+                    return getTextUnknown();
+                case UNKOWN_BACKGROUND_COLOR:
+                    return getBackgroundUnknown();
+                case ACTIVE_FONT_COLOR:
+                    return getTextActive();
+                case ACTIVE_BACKGROUND_COLOR:
+                    return getBackgroundActive();
+                case INACTIVE_FONT_COLOR:
+                    return getTextInActive();
+                case INACTIVE_BACKGROUND_COLOR:
+                    return getBackgroundInActive();
+                case INCONSISTENT_FONT_COLOR:
+                    return getTextInconsistent();
+                case INCONSISTENT_BACKGROUND_COLOR:
+                    return getBackgroundInconsistent();
+                default:
+                    return null;
+            }
+        }
+        return null;
     }
 
     void changeLayoutSensorType() {
@@ -933,11 +931,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    int flashStateOn = -1;
-    int flashStateOff = -1;
-    boolean flashon = false;
-    ActionListener taskPerformer;
-    Timer flashTimer;
+    private int flashStateOn = -1;
+    private int flashStateOff = -1;
+    private boolean flashon = false;
+    private ActionListener taskPerformer;
+    private Timer flashTimer;
 
     synchronized public void flashSensor(int tps, int state1, int state2) {
         if ((flashTimer != null) && flashTimer.isRunning()) {
@@ -1057,4 +1055,5 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private final static Logger log = LoggerFactory.getLogger(SensorIcon.class);
+
 }

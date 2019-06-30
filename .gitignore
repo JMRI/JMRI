@@ -18,6 +18,7 @@ jmri-fb.html
 coveragereport
 tests.log
 cucumber-results.xml
+cucumber-results.json
 
 # runtime artifacts
 messages.log*
@@ -45,6 +46,7 @@ nohup.out
 
 # private / per-user configuration files
 /nbproject/private
+/nbproject/nbjdk.properties
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
 /.idea/workspace.xml

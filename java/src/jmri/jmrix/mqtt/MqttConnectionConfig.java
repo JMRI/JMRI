@@ -25,6 +25,9 @@ public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionCo
         return("MQTT Connection");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
@@ -43,6 +46,9 @@ public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionCo
         return(MqttConnectionTypeList.GENMAN);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         super.loadDetails(details);

@@ -732,7 +732,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         log.warn("notifyControllerAddressDeclined: "+ reason);
         sendAlertMessage(reason); // let the client know why the request failed
         if (multiThrottles != null) {   //  Should exist by this point
-            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
+            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, tc);
             multiThrottles.get(tc.whichThrottle).canceledThrottleRequest(tc.locoKey);
         }
     }

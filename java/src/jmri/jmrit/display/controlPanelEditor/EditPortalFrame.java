@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.SortedSet;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,9 +43,8 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2011
  *
+ * @author Pete Cressman Copyright: Copyright (c) 2011
  */
 public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelectionListener {
 
@@ -259,9 +259,10 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         
     }
 
-    /**
+    /*
      * *********************** end setup *************************
      */
+
     private void changePortalName() {
         Portal portal = _portalList.getSelectedValue();
         String oldName = null;
@@ -308,8 +309,9 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     portal.dispose();
                     _portalList.dataChange();
                     _portalName.setText(null);
-                    _currentPortalName = null;
+                    // fall through to remove icon
                 case 1:
+                    _currentPortalName = null;
                     PortalIcon icon = _parent.getPortalIconMap().get(name);
                     if (icon != null) {
                         deletePortalIcon(icon);
@@ -376,12 +378,15 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             }
         }
         _parent.closePortalFrame(_homeBlock);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
+        storeLocDim(getLocation(_loc), getSize(_dim));
         dispose();
     }
 
-    /**
+    private static void storeLocDim(@Nonnull Point location, @Nonnull Dimension size) {
+        _loc = location;
+        _dim = size;
+    }
+    /*
      * ***************** end button actions **********
      */
     private String checkPortal(PortalIcon icon) {
@@ -512,7 +517,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     /*
-     * If icon is on the home block, find another intersecting block
+     * If icon is on the home block, find another intersecting block.
      */
     private OBlock findAdjacentBlock(PortalIcon icon) {
         ArrayList<OBlock> neighbors = new ArrayList<>();
@@ -559,7 +564,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     /**
-     * Query whether icon intersects any track icons of block
+     * Query whether icon intersects any track icons of block.
      *
      * @return null if intersection, otherwise a messages
      */
@@ -635,6 +640,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             }
             return true;
         }
+
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
@@ -679,4 +685,5 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class);
+
 }

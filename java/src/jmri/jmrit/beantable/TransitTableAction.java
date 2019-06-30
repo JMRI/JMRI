@@ -1755,7 +1755,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel11.add(new JLabel("    " + rbx.getString("OptionalDelay") + ": "));
             panel11.add(whenDataSpinner);
             whenDataSpinner.setToolTipText(rbx.getString("HintDelayData"));
-            panel11.add(new JLabel(rbx.getString("Milliseconds")));
+            panel11.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             panelx.add(panel11);
             JPanel spacer = new JPanel();
             spacer.setLayout(new FlowLayout());
@@ -1973,21 +1973,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 whatMinuteSpinner1.setToolTipText(rbx.getString("HintPauseData"));
                 break;
             case TransitSectionAction.SETMAXSPEED:
-                if (editActionMode) {
-                    float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);
-                    whatPercentSpinner.setValue(maxPerc);
-                }
-                whatPercentSpinner.setVisible(true);
-                whatPercentSpinner.setToolTipText(rbx.getString("HintSetSpeedData1"));
-                break;
             case TransitSectionAction.SETCURRENTSPEED:
-                if (editActionMode) {
-                    float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);
-                    whatPercentSpinner.setValue(maxPerc);
-                }
-                whatPercentSpinner.setVisible(true);
-                whatPercentSpinner.setToolTipText(rbx.getString("HintSetSpeedData1"));
-                break;
             case TransitSectionAction.RAMPTRAINSPEED:
                 if (editActionMode) {
                     float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);

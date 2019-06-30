@@ -70,9 +70,6 @@ public abstract class LayoutTrack {
     //protected static double maxDashLength = 10;
     protected boolean hidden = false;
 
-    // package-private
-    static Color defaultTrackColor = Color.black;
-
     /**
      * constructor method
      */
@@ -80,7 +77,6 @@ public abstract class LayoutTrack {
         this.ident = ident;
         this.center = c;
         this.layoutEditor = layoutEditor;
-        defaultTrackColor = ColorUtil.stringToColor(layoutEditor.getDefaultTrackColor());
     }
 
     /**
@@ -137,10 +133,6 @@ public abstract class LayoutTrack {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
-
-    public static void setDefaultTrackColor(@Nullable Color color) {
-        defaultTrackColor = color;
-    }
 
     protected Color getColorForTrackBlock(
             @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
@@ -291,6 +283,33 @@ public abstract class LayoutTrack {
             result = Bundle.getMessage("BeanStateUnknown");
         }
         return result;
+    }
+
+    /**
+     * Check for active block boundaries.
+     * <p>
+     * If any connection point of a layout track object has attached objects, such as
+     * signal masts, signal heads or NX sensors, the layout track object cannot be deleted.
+     * @return true if the layout track object can be deleted.
+     */
+    public abstract boolean canRemove();
+
+    /**
+     * Display the attached items that prevent removing the layout track item.
+     * @param itemList A list of the attached heads, masts and/or sensors.
+     * @param typeKey The object type such as Turnout, Level Crossing, etc.
+     */
+    public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
+        itemList.sort(null);
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+                Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
+        for (String item : itemList) {
+            msg.append("\n    " + item);  // NOI18N
+        }
+        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+                msg.toString(),
+                Bundle.getMessage("WarningTitle"),  // NOI18N
+                javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
     /**

@@ -674,7 +674,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
-    // this table listens for changes to a schedule and it's car types
+    // this table listens for changes to a schedule and its car types
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {

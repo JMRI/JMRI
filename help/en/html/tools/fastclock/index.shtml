@@ -89,6 +89,10 @@
       clock is running (ACTIVE) or stopped (INACTIVE). The
       IMCURRENTTIME memory contains the current fast-clock time,
       and can be easily accessed from Logix and scripts.</p>
+      
+      <p>Lights can be an easy way to set up Fast Clock Logic, see
+      <a href="../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
+        >Light Controller - Fast Clock Follower</a>.</p>
 
       <p>Happy timekeeping!</p>
       <!--#include virtual="/Footer" -->

@@ -55,23 +55,23 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Dispatcher serves as the manager for ActiveTrains. All allocation of Sections
  * to ActiveTrains is performed here.
- * <P>
+ * <p>
  * Programming Note: Use the managed instance returned by
  * {@link jmri.InstanceManager#getDefault(java.lang.Class)} to access the
  * running Dispatcher.
- * <P>
+ * <p>
  * Dispatcher listens to fast clock minutes to handle all ActiveTrain items tied
  * to fast clock time.
- * <P>
+ * <p>
  * Delayed start of manual and automatic trains is enforced by not allocating
  * Sections for trains until the fast clock reaches the departure time.
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -1401,7 +1401,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     /**
      * Creates an Allocation Request, and registers it with Dispatcher
-     * <P>
+     * <p>
      * Required input entries:
      *
      * @param activeTrain       ActiveTrain requesting the allocation
@@ -1504,6 +1504,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 at.initializeRestartSensor();
             }
         }
+        activeTrainsTableModel.fireTableDataChanged();
     }
 
     /**
@@ -2249,19 +2250,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /**
-     * This method tests time assuming both times are on the same day (ignoring
-     * midnight).
+     * This method tests time
      *
      * @param hr  the hour to test against (0-23)
      * @param min the minute to test against (0-59)
-     * @return true if fast clock time and tested time are in same day
+     * @return true if fast clock time and tested time are the same
      */
     protected boolean isFastClockTimeGE(int hr, int min) {
         Calendar now = Calendar.getInstance();
         now.setTime(fastClock.getTime());
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = now.get(Calendar.MINUTE);
-        return ((nowHours * 60) + nowMinutes) >= ((hr * 60) + min);
+        return ((nowHours * 60) + nowMinutes) == ((hr * 60) + min);
     }
 
     // option access methods

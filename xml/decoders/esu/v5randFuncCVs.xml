@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <variable CV="16.13.257" mask="XXXVVVVV" default="0" item="Random Function 1">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.257" mask="XVXXXXXX" default="0" item="Random Function 1 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.257" mask="VXXXXXXX" default="0" item="Random Function 1 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.257" mask="XXVXXXXX" default="0" item="Random Function 1 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.258" default="40" item="Random Function 1 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.259" default="60" item="Random Function 1 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.260" default="1" item="Random Function 1 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.261" default="2" item="Random Function 1 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.265" mask="XXXVVVVV" default="0" item="Random Function 2">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.265" mask="XVXXXXXX" default="0" item="Random Function 2 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.265" mask="VXXXXXXX" default="0" item="Random Function 2 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.265" mask="XXVXXXXX" default="0" item="Random Function 2 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.266" default="40" item="Random Function 2 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.267" default="60" item="Random Function 2 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.268" default="1" item="Random Function 2 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.269" default="2" item="Random Function 2 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.273" mask="XXXVVVVV" default="0" item="Random Function 3">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.273" mask="XVXXXXXX" default="0" item="Random Function 3 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.273" mask="VXXXXXXX" default="0" item="Random Function 3 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.273" mask="XXVXXXXX" default="0" item="Random Function 3 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.274" default="40" item="Random Function 3 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.275" default="60" item="Random Function 3 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.276" default="1" item="Random Function 3 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.277" default="2" item="Random Function 3 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.281" mask="XXXVVVVV" default="0" item="Random Function 4">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.281" mask="XVXXXXXX" default="0" item="Random Function 4 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.281" mask="VXXXXXXX" default="0" item="Random Function 4 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.281" mask="XXVXXXXX" default="0" item="Random Function 4 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.282" default="40" item="Random Function 4 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.283" default="60" item="Random Function 4 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.284" default="1" item="Random Function 4 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.285" default="2" item="Random Function 4 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.289" mask="XXXVVVVV" default="0" item="Random Function 5">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.289" mask="XVXXXXXX" default="0" item="Random Function 5 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.289" mask="VXXXXXXX" default="0" item="Random Function 5 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.289" mask="XXVXXXXX" default="0" item="Random Function 5 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.290" default="40" item="Random Function 5 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.291" default="60" item="Random Function 5 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.292" default="1" item="Random Function 5 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.293" default="2" item="Random Function 5 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.297" mask="XXXVVVVV" default="0" item="Random Function 6">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.297" mask="XVXXXXXX" default="0" item="Random Function 6 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.297" mask="VXXXXXXX" default="0" item="Random Function 6 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.297" mask="XXVXXXXX" default="0" item="Random Function 6 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.298" default="40" item="Random Function 6 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.299" default="60" item="Random Function 6 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.300" default="1" item="Random Function 6 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.301" default="2" item="Random Function 6 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.305" mask="XXXVVVVV" default="0" item="Random Function 7">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.305" mask="XVXXXXXX" default="0" item="Random Function 7 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.305" mask="VXXXXXXX" default="0" item="Random Function 7 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.305" mask="XXVXXXXX" default="0" item="Random Function 7 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.306" default="40" item="Random Function 7 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.307" default="60" item="Random Function 7 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.308" default="1" item="Random Function 7 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.309" default="2" item="Random Function 7 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.313" mask="XXXVVVVV" default="0" item="Random Function 8">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v5fnEnum.xml"/>
+        <label>Activate</label>
+        <label xml:lang="de">F-Taste</label>
+    </variable>
+    <variable CV="16.13.313" mask="XVXXXXXX" default="0" item="Random Function 8 Stopped">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Stopped</label>
+        <label xml:lang="ca">Aturat</label>
+        <label xml:lang="cs">Zastaveno</label>
+        <label xml:lang="da">Stopped</label>
+        <label xml:lang="fr">Arrêté</label>
+        <label xml:lang="nl">Gestopt</label>
+        <label xml:lang="de">Im Stand</label>
+    </variable>
+    <variable CV="16.13.313" mask="VXXXXXXX" default="0" item="Random Function 8 Moving">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>When Moving</label>
+        <label xml:lang="ca">Movent</label>
+        <label xml:lang="cs">Pohyblivý</label>
+        <label xml:lang="da">Moving</label>
+        <label xml:lang="fr">En mouvement</label>
+        <label xml:lang="nl">In beweging</label>
+        <label xml:lang="de">Bei Fahrt</label>
+    </variable>
+    <variable CV="16.13.313" mask="XXVXXXXX" default="0" item="Random Function 8 Drive Sound">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Requires Drive Sound</label>
+        <label xml:lang="it">Richiede unità.Suono</label>
+        <label xml:lang="de">Nur mit Fahrgeräusch</label>
+        <label xml:lang="ca">Requereix so de conducció</label>
+    </variable>
+    <variable CV="16.13.314" default="40" item="Random Function 8 Off Min">
+        <decVal/>
+        <label>Minimum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.315" default="60" item="Random Function 8 Off Max">
+        <decVal/>
+        <label>Maximum Off Time</label>
+        <label xml:lang="de">Einschaltzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.316" default="1" item="Random Function 8 On Min">
+        <decVal/>
+        <label>Minimum On Time</label>
+        <label xml:lang="de">Pausenzeit Min.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+    <variable CV="16.13.317" default="2" item="Random Function 8 On Max">
+        <decVal/>
+        <label>Maximum On Time</label>
+        <label xml:lang="de">Pausenzeit Max.</label>
+        <tooltip>Unit is seconds.</tooltip>
+        <tooltip xml:lang="de">Wert in Sekunden.</tooltip>
+    </variable>
+</variables>
