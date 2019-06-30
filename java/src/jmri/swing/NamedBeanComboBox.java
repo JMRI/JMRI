@@ -22,7 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.text.JTextComponent;
 
 import com.alexandriasoftware.swing.JInputValidatorPreferences;
-import com.alexandriasoftware.swing.NonVerifyingValidator;
+import com.alexandriasoftware.swing.JInputValidator;
 import com.alexandriasoftware.swing.Validation;
 
 import org.slf4j.Logger;
@@ -126,7 +126,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         Component ec = getEditor().getEditorComponent();
         if (ec instanceof JComponent) {
             JComponent jc = (JComponent) ec;
-            jc.setInputVerifier(new NonVerifyingValidator(jc, true) {
+            jc.setInputVerifier(new JInputValidator(jc, true, false) {
                 @Override
                 protected Validation getValidation(JComponent component, JInputValidatorPreferences preferences) {
                     if (component instanceof JTextComponent) {
