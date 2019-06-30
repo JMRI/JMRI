@@ -2372,16 +2372,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case SENSOR:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case TURNOUT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case LIGHT:
+            case CONDITIONAL:
+            case WARRANT:
                 _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
@@ -2414,16 +2408,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 _variableCompareOpBox.setSelectedIndex(num1);
                 _variableData1Field.setText(_curVariable.getDataString());
-                break;
-
-            case CONDITIONAL:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
-            case WARRANT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
                 break;
 
             case CLOCK:
@@ -2875,37 +2859,23 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case TURNOUT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case LIGHT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALHEAD:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALMAST:
+            case CONDITIONAL:
+            case WARRANT:
+            case ENTRYEXIT:
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
                 testType = _variableCompareTypeBox.getItemAt(_variableCompareTypeBox.getSelectedIndex());
-                break;
-            case CONDITIONAL:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
-            case WARRANT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case CLOCK:
                 testType = Conditional.Type.FAST_CLOCK_RANGE;
                 break;
             case OBLOCK:
                 testType = Conditional.Type.BLOCK_STATUS_EQUALS;
-                break;
-            case ENTRYEXIT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             default:
                 JOptionPane.showMessageDialog(_editLogixFrame,
@@ -2989,17 +2959,19 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 if (testType == Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     String appStr = (String) _variableSignalBox.getSelectedItem();
-                    Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
-                    if (type == Conditional.Type.ERROR) {
-                        JOptionPane.showMessageDialog(_editLogixFrame,
-                                Bundle.getMessage("ErrorAppearance"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                JOptionPane.ERROR_MESSAGE);
-                        return false;
+                    if (appStr != null) {
+                        Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
+                        if (type == Conditional.Type.ERROR) {
+                            JOptionPane.showMessageDialog(_editLogixFrame, Bundle.getMessage("ErrorAppearance"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                                    JOptionPane.ERROR_MESSAGE);
+                            return false;
+                        }
+                        _curVariable.setType(type);
+                        _curVariable.setDataString(appStr);
+                        log.debug("SignalHead \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}", name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
+                    } else {
+                        log.warn("null selection in _variableSignalBox");
                     }
-                    _curVariable.setType(type);
-                    _curVariable.setDataString(appStr);
-                    log.debug("SignalHead \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
-                            name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
                 }
                 break;
             case SIGNALMAST:
@@ -3030,10 +3002,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                String stri18n = _variableStateBox.getSelectedItem().toString();
-                _curVariable.setDataString(OBlock.getSystemStatusName(stri18n));
-                log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
-                        name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
+                String stri18n = (String) _variableStateBox.getSelectedItem();
+                if (stri18n != null) {
+                    _curVariable.setDataString(OBlock.getSystemStatusName(stri18n));
+                    log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}", name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
+                }
                 break;
             case ENTRYEXIT:
                 name = validateEntryExitReference(name);
@@ -3573,6 +3546,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case SIGNALMAST:
+            case LOGIX:
                 _actionTypeBox.setSelectedItem(actionType);
                 break;
 
@@ -3588,10 +3562,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case MEMORY:
                 _actionTypeBox.setSelectedItem(actionType);
                 _shortActionString.setText(_curAction.getActionString());
-                break;
-
-            case LOGIX:
-                _actionTypeBox.setSelectedItem(actionType);
                 break;
 
             case WARRANT:

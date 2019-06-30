@@ -1846,15 +1846,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _variableItemBox.setSelectedItem(itemType);
         switch (itemType) {
             case SENSOR:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case TURNOUT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case LIGHT:
                 _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
@@ -2394,37 +2386,23 @@ public class ConditionalListEdit extends ConditionalEditBase {
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case TURNOUT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case LIGHT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALHEAD:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALMAST:
+            case CONDITIONAL:
+            case WARRANT:
+            case ENTRYEXIT:
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
                 testType = _variableCompareTypeBox.getItemAt(_variableCompareTypeBox.getSelectedIndex());
-                break;
-            case CONDITIONAL:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
-            case WARRANT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case CLOCK:
                 testType = Conditional.Type.FAST_CLOCK_RANGE;
                 break;
             case OBLOCK:
                 testType = Conditional.Type.BLOCK_STATUS_EQUALS;
-                break;
-            case ENTRYEXIT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             default:
                 JOptionPane.showMessageDialog(_editConditionalFrame,
@@ -2916,10 +2894,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case SIGNALHEAD:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
-
             case SIGNALMAST:
+            case LOGIX:
                 _actionTypeBox.setSelectedItem(actionType);
                 break;
 
@@ -2937,9 +2913,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _shortActionString.setText(_curAction.getActionString());
                 break;
 
-            case LOGIX:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
 
             case WARRANT:
                 _actionTypeBox.setSelectedItem(actionType);
