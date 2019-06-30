@@ -5,6 +5,8 @@ import jmri.implementation.DccSignalMast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * Extend jmri.SignalMast for signals implemented by an LNCP
  * <p>
@@ -90,13 +92,13 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         if (myAddress(packet[0], packet[1])) {
             packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
             int aspect = packet[2];
-            for (String appearance : appearanceToOutput.keySet()) {
-                if (appearanceToOutput.get(appearance) == aspect) {
-                    setKnownState(appearance);
+            for (Map.Entry<String, Integer> entry : appearanceToOutput.entrySet()) {
+                if (entry.getValue() == aspect) {
+                    setKnownState(entry.getKey());
                     return;
                 }
             }
-            log.error("Aspect for id " + aspect + "on signal mast " + this.getDisplayName() + " not found");
+            log.error("Aspect for id {} on signal mast {} not found", aspect, this.getDisplayName());
         }
     }
 
@@ -105,7 +107,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
-            log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
+            log.warn("Trying to set aspect ({}) that has not been configured on mast {}", aspect, getDisplayName());
         }
     }
 
@@ -119,6 +121,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
+        super.dispose();
     }
 
     byte dccByteAddr1;
@@ -128,10 +131,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         if (a1 != dccByteAddr1) {
             return false;
         }
-        if (a2 != dccByteAddr2) {
-            return false;
-        }
-        return true;
+        return (a2 == dccByteAddr2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class);
