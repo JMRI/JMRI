@@ -79,7 +79,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                 Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(pName);
                 setTurnout(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, turnout));
             } catch (IllegalArgumentException ex) {
-                log.error("Turnout '" + pName + "' not available, icon won't see changes");
+                log.error("Turnout '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No TurnoutManager for this protocol, icon won't see changes");
@@ -129,8 +129,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
      */
     public void setIcon(String name, NamedIcon icon) {
         if (log.isDebugEnabled()) {
-            log.debug("setIcon for name \"" + name
-                    + "\" state= " + _name2stateMap.get(name));
+            log.debug("setIcon for name \"{}\" state= {}", name, _name2stateMap.get(name));
         }
         _iconStateMap.put(_name2stateMap.get(name), icon);
         displayState(turnoutState());
@@ -185,8 +184,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now "
-                    + e.getNewValue());
+            log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
         }
 
         // when there's feedback, transition through inconsistent icon for better
@@ -350,9 +348,9 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     @Override
     public void displayState(int state) {
         if (getNamedTurnout() == null) {
-            log.debug("Display state " + state + ", disconnected");
+            log.debug("Display state {}, disconnected", state);
         } else {
-//            log.debug(getNameString() +" displayState "+_state2nameMap.get(state));
+            // log.debug("{} displayState {}", getNameString(), _state2nameMap.get(state));
             if (isText()) {
                 super.setText(_state2nameMap.get(state));
             }
@@ -421,7 +419,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
                 if (log.isDebugEnabled()) {
-                    log.debug("key= " + entry.getKey());
+                    log.debug("key= {}", entry.getKey());
                 }
                 NamedIcon newIcon = entry.getValue();
                 NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
@@ -449,11 +447,9 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     protected void edit() {
         makeIconEditorFrame(this, "Turnout", true, null); // NOI18N
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
-        Iterator<Integer> e = _iconStateMap.keySet().iterator();
         int i = 0;
-        while (e.hasNext()) {
-            Integer key = e.next();
-            _iconEditor.setIcon(i++, _state2nameMap.get(key), _iconStateMap.get(key));
+        for (Entry<Integer, NamedIcon> entry : _iconStateMap.entrySet()) {
+            _iconEditor.setIcon(i++, _state2nameMap.get(entry.getKey()), entry.getValue());
         }
         _iconEditor.makeIconPanel(false);
 
@@ -477,7 +473,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             if (log.isDebugEnabled()) {
-                log.debug("key= " + entry.getKey());
+                log.debug("key= {}", entry.getKey());
             }
             NamedIcon newIcon = entry.getValue();
             NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
