@@ -14,7 +14,9 @@ import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ThrottleListener;
+import jmri.ThrottleListener.DecisionType;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -256,6 +258,12 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         //
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
+
+    @Override
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question){
+        log.warn("Decision required[{}][{}]",address,question);
+    }
+
 
     // control sequence operation
     int mNextSequenceElement = 0;
