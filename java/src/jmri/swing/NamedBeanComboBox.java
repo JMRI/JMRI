@@ -146,9 +146,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                             } else {
                                 if (validatingInput) {
                                     if (providing) {
-                                        // Once #6974 is merged, isValidSystemNameFormat can be expected to be honest
-                                        // and the test that text starts with the correct system prefix can be removed
-                                        if (!manager.isValidSystemNameFormat(text) && !text.startsWith(manager.getSystemPrefix()) && !text.equals(NamedBean.normalizeUserName(text))) {
+                                        if (!manager.isValidSystemNameFormat(text) && !text.equals(NamedBean.normalizeUserName(text))) {
                                             return new Validation(Validation.Type.DANGER,
                                                     Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text), preferences);
                                         }
@@ -242,9 +240,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 JTextComponent jtc = (JTextComponent) ec;
                 String text = jtc.getText();
                 if (text != null && !text.isEmpty()) {
-                    // Once #6974 is merged, isValidSystemNameFormat can be expected to be honest
-                    // and the test that text starts with the correct system prefix can be removed
-                    if ((manager.isValidSystemNameFormat(text) && text.startsWith(manager.getSystemPrefix())) || text.equals(NamedBean.normalizeUserName(text))) {
+                    if ((manager.isValidSystemNameFormat(text)) || text.equals(NamedBean.normalizeUserName(text))) {
                         ProvidingManager<B> pm = (ProvidingManager<B>) manager;
                         item = pm.provide(jtc.getText());
                     }
