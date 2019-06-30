@@ -1,21 +1,25 @@
 package jmri.jmrix.loconet;
 
+import java.util.Map;
+import javax.annotation.Nonnull;
 import jmri.NmraPacket;
 import jmri.implementation.DccSignalMast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 /**
- * Extend jmri.SignalMast for signals implemented by an LNCP
+ * Extend jmri.SignalMast for signals implemented by an LNCP.
  * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.
  * <p>
- * This is a specific implementation for the RR-cirkits LNCP interface board A
- * more general implementation, which can work with any system(s), is available
+ * {@link #setAspect} does not immediately change the local aspect.  Instead, it produces
+ * the message on the network, waiting for that to return and do the local state change,
+ * notification, etc.
+ * <p>
+ * This is a specific implementation for the RR-cirkits LNCP interface board.
+ * A more general implementation, which can work with any system(s), is available
  * in {@link jmri.implementation.DccSignalMast}.
  *
  * @author Kevin Dickerson Copyright (C) 2002
@@ -103,12 +107,13 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
             log.warn("Trying to set aspect ({}) that has not been configured on mast {}", aspect, getDisplayName());
         }
+        // super.setAspect(aspect); // see note in class description
     }
 
     public void setKnownState(String aspect) {
