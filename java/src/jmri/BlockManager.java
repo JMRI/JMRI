@@ -282,8 +282,8 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @Override
     @CheckReturnValue
     @Nonnull
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameBlocks" : "BeanNameBlock");
     }
 
     /**

@@ -62,6 +62,7 @@ import org.junit.runners.Suite;
         LocoAddressComparatorTest.class,
         MouseInputAdapterInstallerTest.class,
         NamedBeanComparatorTest.class,
+        NamedBeanUserNameComparatorTest.class,
         NonNullArrayListTest.class,
         NoArchiveFileFilterTest.class,
         OrderedPropertiesTest.class,

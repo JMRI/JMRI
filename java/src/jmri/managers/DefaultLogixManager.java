@@ -224,8 +224,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLogix");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);

@@ -133,6 +133,16 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         propertyListenerList.stream().forEach((l) -> {
             m.addPropertyChangeListener(l);
         });
+        namedPropertyVetoListenerMap.entrySet().forEach((e) -> {
+            e.getValue().forEach((l) -> {
+                m.addVetoableChangeListener(e.getKey(), l);
+            });
+        });
+        namedPropertyListenerMap.entrySet().forEach((e) -> {
+            e.getValue().forEach((l) -> {
+                m.addPropertyChangeListener(e.getKey(), l);
+            });
+        });
 
         m.addDataListener(this);
         updateOrderList();

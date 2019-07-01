@@ -209,6 +209,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        fireIndexedPropertyChange("beans", position, null, s);
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
@@ -287,6 +288,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         
         // notifications
         fireDataListenersRemoved(position, position, s);
+        fireIndexedPropertyChange("beans", position, s, null);
         firePropertyChange("length", null, _beans.size());
     }
 
@@ -397,7 +399,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    abstract public String getBeanTypeHandled();
+    abstract public String getBeanTypeHandled(boolean plural);
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -446,6 +448,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
+        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     VetoableChangeSupport vcs = new VetoableChangeSupport(this);

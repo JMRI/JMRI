@@ -5,7 +5,6 @@ import java.util.*;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.*;
 
@@ -80,7 +79,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         s1.setUserName("Sensor 1");
         
         l.addDataListener(this);
-        l.addPropertyChangeListener(this);
+        // listen to explicitly selected property changes
+        l.addPropertyChangeListener("length", this);
+        l.addPropertyChangeListener("DisplayListName", this);
 
         // add an item
         Sensor s2 = l.provideSensor("IS2");
@@ -256,7 +257,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     String lastCall;
     
     @Override
-    public void intervalAdded(Manager.ManagerDataEvent e) {
+    public void intervalAdded(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -264,7 +265,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Added";
     }
     @Override
-    public void intervalRemoved(Manager.ManagerDataEvent e) {
+    public void intervalRemoved(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -272,7 +273,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Removed";
     }
     @Override
-    public void contentsChanged(Manager.ManagerDataEvent e) {
+    public void contentsChanged(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();

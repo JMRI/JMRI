@@ -170,8 +170,8 @@ public class WarrantManager extends AbstractManager<Warrant>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");
     }
     
     protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
