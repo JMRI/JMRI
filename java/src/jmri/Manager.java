@@ -474,11 +474,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         int p = startsWithLegacySystemPrefix(inputName);
         if (p > 0) {
             if (legacyNameSet.size() == 0) {
-                if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
-                // for migration purposes, we don't insist that apps (and tests)
-                // be preconfigured with a shutdown manager before getting here
-                    InstanceManager.setDefault(ShutDownManager.class, new jmri.managers.DefaultShutDownManager());
-                }
                 // register our own shutdown
                 InstanceManager.getDefault(ShutDownManager.class)
                                 .register(legacyReportTask);

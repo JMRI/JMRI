@@ -1,4 +1,4 @@
-package jmri.managers;
+package jmri.util;
 
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
@@ -10,25 +10,23 @@ import org.junit.Test;
 
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
-import jmri.util.JUnitUtil;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author Randall Wood Copyright 2019
  */
-public class DefaultShutDownManagerTest {
+public class MockShutDownManagerTest {
 
     @Test
     public void testCTor() {
-        DefaultShutDownManager dsdm = new DefaultShutDownManager();
-        // remove the default shutdown hook to prevent crashes stopping tests
-        Runtime.getRuntime().removeShutdownHook(dsdm.shutdownHook);
+        MockShutDownManager dsdm = new MockShutDownManager();
         Assert.assertNotNull("exists", dsdm);
     }
 
     @Test
     public void testRegister() {
-        DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        MockShutDownManager dsdm = new MockShutDownManager();
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
@@ -50,7 +48,7 @@ public class DefaultShutDownManagerTest {
 
     @Test
     public void testDeregister() {
-        DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        MockShutDownManager dsdm = new MockShutDownManager();
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
@@ -65,15 +63,22 @@ public class DefaultShutDownManagerTest {
         Assert.assertEquals(0, dsdm.tasks().size());
     }
 
+    /**
+     * Test that isShuttingDown is correct. Note that if this is last test
+     * before the JVM actually shuts down, it is an indication that someone
+     * incorrectly modified jmri.util.MockShutDownManager.shutdown() or
+     * jmri.managers.DefaultShutDownManager.shutdown(int, boolean) incorrectly
+     * to forcably call System.exit()
+     */
     @Test
     public void testIsShuttingDown() {
-        DefaultShutDownManager dsdm = new DefaultShutDownManager();
+        MockShutDownManager dsdm = new MockShutDownManager();
         Frame frame = null;
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new Frame("Shutdown test frame");
         }
         Assert.assertFalse(dsdm.isShuttingDown());
-        dsdm.shutdown(0, false);
+        dsdm.shutdown();
         Assert.assertTrue(dsdm.isShuttingDown());
         if (frame != null) {
             JUnitUtil.dispose(frame);
@@ -91,6 +96,6 @@ public class DefaultShutDownManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(MockShutDownManagerTest.class);
 
 }
