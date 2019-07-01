@@ -716,7 +716,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         }
 
         // attempt to create the new Section
-        String sName = InstanceManager.getDefault(jmri.SectionManager.class).normalizeSystemName(sysName.getText()); // N11N
+        String sName = sysName.getText();
         try {
             if (_autoSystemName.isSelected()) {
                 curSection = sectionManager.createNewSection(uName);

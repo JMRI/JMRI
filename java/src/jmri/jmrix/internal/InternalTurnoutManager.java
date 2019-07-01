@@ -57,17 +57,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
-    /** 
-     * {@inheritDoc} 
-     * No changes to what was given; we can take it all
-     */
-    @CheckReturnValue
-    @Override
-    @Nonnull
-    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
     /**
      * {@inheritDoc}
      *

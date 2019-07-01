@@ -75,6 +75,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
+     * Create a SystemName by prepending the system name prefix to the name if
+     * not already present.
+     * 
      * @param name the item to make the system name for
      * @return A system name from a user input, typically a number.
      * @throws IllegalArgumentException if a valid name can't be created
@@ -434,19 +437,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckReturnValue
     @Nonnull
     public String getBeanTypeHandled(boolean plural);
-
-    /**
-     * Enforces, and as a user convenience converts to, the standard form for a
-     * system name for the NamedBeans handled by this manager.
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
-     * @return A system name in standard normalized form
-     */
-    @CheckReturnValue
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
 
     /**
      * Provides length of the system prefix of the given system name.

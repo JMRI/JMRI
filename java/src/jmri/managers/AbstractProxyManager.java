@@ -185,18 +185,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         return getBeanBySystemName(name);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        int index = matchTentative(inputName);
-        if (index >= 0) {
-            return getMgr(index).normalizeSystemName(inputName);
-        }
-        log.debug("normalizeSystemName did not find manager for name {}, defer to default", inputName); // NOI18N
-        return getDefaultManager().normalizeSystemName(inputName);
-    }
-
     /**
      * Locate via user name, then system name if needed. If that fails, create a
      * new NamedBean: If the name is a valid system name, it will be used for
@@ -242,10 +230,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         int index = matchTentative(systemName);
         if (index >= 0) {
             Manager<E> m = getMgr(index);
-            return m.getBeanBySystemName(m.normalizeSystemName(systemName));
+            return m.getBeanBySystemName(systemName);
         }
         log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
-        return getDefaultManager().getBeanBySystemName(getDefaultManager().normalizeSystemName(systemName));
+        return getDefaultManager().getBeanBySystemName(systemName);
     }
 
     /** {@inheritDoc} */

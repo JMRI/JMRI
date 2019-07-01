@@ -1,8 +1,6 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -97,22 +95,6 @@ public class DefaultRouteManager extends AbstractManager<Route>
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     int lastAutoRouteRef = 0;
-
-    /**
-     * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IR prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IR")) {
-            inputName = "IR" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
 
     /**
      * Remove an existing route. Route must have been deactivated before

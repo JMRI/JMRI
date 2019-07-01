@@ -25,7 +25,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
      * @param memo   associated connection memo
      */
     public SRCPSensor(int number, SRCPBusConnectionMemo memo) {
-        super(memo.getSystemPrefix() + "s" + number);
+        super(memo.getSystemPrefix() + "S" + number);
         _number = number;
         _bus = memo.getBus();
         tc = memo.getTrafficController();

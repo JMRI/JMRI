@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.Manager.NameValidity;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -56,32 +57,21 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
 
     @Test
-    public void testLowerLower() {
-        Sensor t = l.provideSensor("ms+n1e77;-n1e45");
-        Assert.assertNotNull("exists",t);
-        Assert.assertTrue("event lowercase",t == l.getSensor(t.getSystemName()));
-        Sensor t2 = l.provideSensor("msxabcdef;xfedcba");
-        Assert.assertNotNull("exists",t2);
-        Assert.assertTrue("hex lowercase",t2 == l.getSensor(t2.getSystemName()));
-    }
-
-    @Test
-    public void testLowerUpper() {
-        Sensor t = l.provideSensor("ms+n1e77;-n1e45");
-        Assert.assertNotNull("exists",t);
-        Assert.assertTrue("event lower upper",t == l.getSensor(t.getSystemName().toUpperCase()));
-        Sensor t2 = l.provideSensor("msxabcdef;xfedcba");
-        Assert.assertNotNull("exists",t2);
-        Assert.assertTrue("hex lower upper",t2 == l.getSensor(t2.getSystemName().toUpperCase()));
-    }
-
-    @Override
-    @Test
-    public void testUpperLower() {
-        Sensor t = l.provideSensor("MSXABCDEF01;XFFEDCCBA");
-        Assert.assertTrue(" hex upper lower",t == l.getSensor(t.getSystemName().toLowerCase()));
-        Sensor t2 = l.provideSensor("MS-N66E1;+N15E789");
-        Assert.assertTrue("event upper lower",t2 == l.getSensor(t2.getSystemName().toLowerCase()));
+    public void testLowercaseSystemName() {
+        String name1 = "ms+n1e77;-n1e45";
+        try {
+            l.provideSensor(name1);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            // passes, so do nothing
+        }
+        String name2 = "msxabcdef;xfedcba";
+        try {
+            l.provideSensor(name2);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            // passes, so do nothing
+        }
     }
 
     @Override
@@ -104,7 +94,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         try {
             Sensor t1 = l.provideSensor("MS+N15E6");
             Assert.assertTrue( t1 != null );
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             Assert.fail("Should NOT have thrown an exception");
         }
 
