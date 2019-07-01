@@ -43,18 +43,18 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             // build the list, with default at start and internal at end (if present)
             jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) getManager();
 
-            tabbedTableArray.add(new TabbedTableItem<E>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
+            tabbedTableArray.add(new TabbedTableItem<>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
 
             List<jmri.Manager<E>> managerList = proxy.getDisplayOrderManagerList();
             for (Manager<E> manager : managerList) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
-                TabbedTableItem<E> itemModel = new TabbedTableItem<E>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
+                TabbedTableItem<E> itemModel = new TabbedTableItem<>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
             
         } else {
             String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
-            tabbedTableArray.add(new TabbedTableItem<E>(manuName, true, getManager(), getNewTableAction(manuName)));
+            tabbedTableArray.add(new TabbedTableItem<>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             AbstractTableAction<E> table = tabbedTableArray.get(x).getAAClass();
@@ -83,7 +83,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         return dataPanel;
     }
 
-    protected ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<TabbedTableItem<E>>();
+    protected ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<>();
 
     @Override
     protected void setTitle() {
@@ -101,7 +101,10 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
     @Override
     public void addToFrame(BeanTableFrame<E> f) {
         try {
-            tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().addToFrame(f);
+            TabbedTableItem<E> table = tabbedTableArray.get(dataTabs.getSelectedIndex());
+            if (table != null) {
+                table.getAAClass().addToFrame(f);
+            }
         } catch (ArrayIndexOutOfBoundsException ex) {
             log.error(ex.toString() + " in add to Frame " + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
         }
@@ -117,11 +120,12 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
     }
 
     public void addToBottomBox(JComponent c, String str) {
-        for (int x = 0; x < tabbedTableArray.size(); x++) {
-            if (tabbedTableArray.get(x).getItemString().equals(str)) {
-                tabbedTableArray.get(x).addToBottomBox(c);
+        tabbedTableArray.forEach((table) -> {
+            String item = table.getItemString();
+            if (item != null && item.equals(str)) {
+                table.addToBottomBox(c);
             }
-        }
+        });
     }
 
     @Override

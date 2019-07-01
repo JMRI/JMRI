@@ -184,6 +184,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
+     * @return the number to test
      */
     protected int getNumToTest1() {
         return 9;

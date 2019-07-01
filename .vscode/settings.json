@@ -8,7 +8,8 @@
             "env": {
                 "user.language": "en",
                 "user.region": "US",
-                "jmri.prefsdir": "${workspaceFolder}/temp"
+                "jmri.prefsdir": "${workspaceFolder}/temp",
+                "jmri.shutdownmanager": "jmri.util.MockShutDownManager"
             }
         }
     ],

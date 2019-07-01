@@ -263,14 +263,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
     }

@@ -44,9 +44,9 @@ import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
 import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.SplitButtonColorChooserPanel;
 import org.slf4j.Logger;
@@ -926,8 +926,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private final JTextField sensorDebounceActiveField = new JTextField(5);
     private final JCheckBox sensorDebounceGlobalCheck = new JCheckBox(Bundle.getMessage("SensorUseGlobalDebounce"));
 
-    private final JmriBeanComboBox memoryComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<Memory> memoryComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(MemoryManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private final JTextField metricField = new JTextField(10);
 
@@ -1045,17 +1045,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         //check if Memory changed
-        newName = memoryComboBox.getDisplayName();
+        newName = memoryComboBox.getSelectedItemDisplayName();
         if (!memoryName.equals(newName)) {
             //memory has changed
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
             if (getMemory() == null) {
                 //invalid memory entered
                 memoryName = "";
-                memoryComboBox.setText("");
+                memoryComboBox.setSelectedItem(null);
                 return;
             } else {
-                memoryComboBox.setText(memoryName);
+                memoryComboBox.setSelectedItem(getMemory());
                 needsRedraw = true;
             }
         }
@@ -1201,17 +1201,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         JmriColorChooser.addRecentColor(blockExtraColor);
                     }
                     //check if Memory changed
-                    String newName = memoryComboBox.getDisplayName();
+                    String newName = memoryComboBox.getSelectedItemDisplayName();
                     if (!memoryName.equals(newName)) {
                         //memory has changed
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
                         if (getMemory() == null) {
                             //invalid memory entered
                             memoryName = "";
-                            memoryComboBox.setText("");
+                            memoryComboBox.setSelectedItem(null);
                             return;
                         } else {
-                            memoryComboBox.setText(memoryName);
+                            memoryComboBox.setSelectedItem(getMemory());
                             needsRedraw = true;
                         }
                     }
@@ -1225,7 +1225,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             layout.setResetItem(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    memoryComboBox.setText(memoryName);
+                    memoryComboBox.setSelectedItem(getMemory());
                     trackColorChooser.setColor(blockTrackColor);
                     occupiedColorChooser.setColor(blockOccupiedColor);
                     extraColorChooser.setColor(blockExtraColor);

@@ -62,8 +62,8 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
 
     @Override
     public void windowClosing(WindowEvent e) {
-        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
-        if (!editConnectionPreferences.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+        if (!editConnectionPreferences.isPreferencesValid() && !sdm.isShuttingDown()) {
             for (PreferencesPanel panel : editConnectionPreferences.getPreferencesPanels().values()) {
                 if (!panel.isPreferencesValid()) {
                     switch (JOptionPane.showConfirmDialog(this,

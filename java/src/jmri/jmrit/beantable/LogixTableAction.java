@@ -1088,7 +1088,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @return false if name has length &lt; 1 after displaying a dialog
      */
     boolean checkLogixSysName() {
-        String sName = InstanceManager.getDefault(LogixManager.class).normalizeSystemName(_systemName.getText());
+        String sName = _systemName.getText();
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             JOptionPane.showMessageDialog(addLogixFrame,

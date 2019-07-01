@@ -332,8 +332,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameConditional");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
     }
 
     // --- Conditional Where Used processes ---

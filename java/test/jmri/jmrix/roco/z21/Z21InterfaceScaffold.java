@@ -39,7 +39,8 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
 
     // test control member functions
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * forward a message to the listeners, e.g.test receipt
+     * @param m the message to test
      */
     public void sendTestMessage(Z21Reply m) {
         // forward a test message to Z21Listeners
@@ -47,7 +48,6 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
             log.debug("sendTestMessage    [" + m + "]");
         }
         notifyReply(m, null);
-        return;
     }
 
     /*

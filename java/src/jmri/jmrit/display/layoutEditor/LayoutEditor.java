@@ -96,6 +96,7 @@ import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.ColorUtil;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
@@ -103,7 +104,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.swing.JComboBoxUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,13 +166,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
 
     //top row of check boxes
-    private transient JmriBeanComboBox turnoutNameComboBox = new JmriBeanComboBox(
-            InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
+            InstanceManager.turnoutManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
     private transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
-    private transient JmriBeanComboBox extraTurnoutNameComboBox = new JmriBeanComboBox(
-            InstanceManager.turnoutManagerInstance(), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Turnout> extraTurnoutNameComboBox = new NamedBeanComboBox<>(
+            InstanceManager.turnoutManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
     private transient JComboBox<String> rotationComboBox = null;
     private transient JPanel rotationPanel = new JPanel(leftRowLayout);
 
@@ -187,14 +187,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
 
     private transient JLabel blockNameLabel = new JLabel();
-    private transient JmriBeanComboBox blockIDComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Block> blockIDComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
     private transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
     private transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
     private transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
-    private transient JmriBeanComboBox blockSensorComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
     private transient JLabel nodesLabel = new JLabel();
@@ -207,27 +207,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JTextField textLabelTextField = new JTextField(12);
 
     private transient JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
-    private transient JmriBeanComboBox textMemoryComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Memory> textMemoryComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(MemoryManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
-    private transient JmriBeanComboBox blockContentsComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(BlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Block> blockContentsComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     //4th row of radio buttons (and any associated text fields)
     private transient JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private transient JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
-    private transient JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
-    private transient JmriBeanComboBox sensorComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<Sensor> sensorComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
-    private transient JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private transient NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(SignalHeadManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
     private transient JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
@@ -730,44 +730,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         turnoutNameComboBox.setToolTipText(Bundle.getMessage("TurnoutNameToolTip"));
         turnoutNamePanel.add(turnoutNameComboBox);
 
-        // disable items that are already in use
-        PopupMenuListener pml = new PopupMenuListener() {
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent event) {
-                // This method is called before the popup menu becomes visible.
-                log.debug("PopupMenuWillBecomeVisible");
-                Object o = event.getSource();
-                if (o instanceof JmriBeanComboBox) {
-                    JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
-                    for (int idx = 0; idx < jbcb.getItemCount(); idx++) {
-                        jbcb.setItemEnabled(idx, validatePhysicalTurnout(jbcb.getItemAt(idx), null));
-                    }
-                }
-            }
+        // disable turnouts that are already in use
 
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent event) {
-                // This method is called before the popup menu becomes invisible
-                log.debug("PopupMenuWillBecomeInvisible");
-            }
-
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent event) {
-                // This method is called when the popup menu is canceled
-                log.debug("PopupMenuCanceled");
-            }
-        };
-
-        turnoutNameComboBox.addPopupMenuListener(pml);
-        turnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
-        turnoutNameComboBox.setDisabledColor(Color.red);
+        turnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox));
+        // turnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
+        // turnoutNameComboBox.setDisabledColor(Color.red);
 
         setupComboBox(extraTurnoutNameComboBox, false, true);
         extraTurnoutNameComboBox.setToolTipText(Bundle.getMessage("SecondTurnoutNameToolTip"));
 
-        extraTurnoutNameComboBox.addPopupMenuListener(pml);
-        extraTurnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
-        extraTurnoutNameComboBox.setDisabledColor(Color.red);
+        extraTurnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox));
+        // extraTurnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
+        // extraTurnoutNameComboBox.setDisabledColor(Color.red);
 
         //this is enabled/disabled via selectionListAction above
         JLabel extraTurnoutLabel = new JLabel(Bundle.getMessage("SecondName"));
@@ -828,7 +802,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (highlightSelectedBlockFlag) {
                 highlightBlockInComboBox(blockIDComboBox);
             }
-            String newName = blockIDComboBox.getDisplayName();
+            String newName = blockIDComboBox.getSelectedItemDisplayName();
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
             if (b != null) {
                 //if there is an occupancy sensor assigned already
@@ -836,9 +810,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 if (!sensorName.isEmpty()) {
                     //update the block sensor ComboBox
-                    blockSensorComboBox.setText(sensorName);
+                    blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
                 } else {
-                    blockSensorComboBox.setText("");
+                    blockSensorComboBox.setSelectedItem(null);
                 }
             }
         });
@@ -1977,12 +1951,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Set up editable JmriBeanComboBoxes
      *
      * @param inComboBox     the editable JmriBeanComboBoxes to set up
-     * @param inValidateMode boolean: if true, valid text == green, invalid text
-     *                       == red background; if false, valid text == green,
-     *                       invalid text == yellow background
-     * @param inEnable       boolean to enable / disable the JmriBeanComboBox
+     * @param inValidateMode true to validate typed inputs; false otherwise
+     * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      */
-    public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable) {
+    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable) {
         setupComboBox(inComboBox, inValidateMode, inEnable, !inValidateMode);
     }
 
@@ -1990,24 +1962,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Set up editable JmriBeanComboBoxes
      *
      * @param inComboBox     the editable JmriBeanComboBoxes to set up
-     * @param inValidateMode boolean: if true, valid text == green, invalid text
-     *                       == red background; if false, valid text == green,
-     *                       invalid text == yellow background
-     * @param inEnable       boolean to enable / disable the JmriBeanComboBox
+     * @param inValidateMode true to validate typed inputs; false otherwise
+     * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      * @param inFirstBlank   boolean to enable / disable the first item being
      *                       blank
      */
-    public static void setupComboBox(@Nonnull JmriBeanComboBox inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
         log.debug("LE setupComboBox called");
 
         inComboBox.setEnabled(inEnable);
-        inComboBox.setEditable(true);
-        inComboBox.setValidateMode(inValidateMode);
-        inComboBox.setText("");
+        inComboBox.setEditable(false);
+        inComboBox.setValidatingInput(inValidateMode);
+        inComboBox.setSelectedIndex(-1);
 
         // This has to be set before calling setupComboBoxMaxRows
         // (otherwise if inFirstBlank then the  number of rows will be wrong)
-        inComboBox.setFirstItemBlank(inFirstBlank);
+        inComboBox.setAllowNull(inFirstBlank);
 
         // set the max number of rows that will fit onscreen
         JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
@@ -2225,7 +2195,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 JRadioButtonMenuItem ddldoMenuItem = (JRadioButtonMenuItem) event.getSource();
                 JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
                 int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem) + 1;
-                JmriBeanComboBox.DisplayOptions ddldo = JmriBeanComboBox.DisplayOptions.valueOf(ddldoInt);
+                NamedBeanComboBox.DisplayOptions ddldo = NamedBeanComboBox.DisplayOptions.valueOf(ddldoInt);
 
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                     //change this comboboxes ddldo
@@ -2241,8 +2211,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         focusedComponent = SwingUtilities.getUnwrappedParent(focusedComponent);
                     }
 
-                    if (focusedComponent instanceof JmriBeanComboBox) {
-                        JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
+                    if (focusedComponent instanceof NamedBeanComboBox) {
+                        NamedBeanComboBox<?> focusedJBCB = (NamedBeanComboBox<?>) focusedComponent;
 
                         //now try to get a preference specific to this combobox
                         String ttt = focusedJBCB.getToolTipText();
@@ -2980,13 +2950,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     //update drop down menu display order menu
     //
-    private transient JmriBeanComboBox.DisplayOptions gDDMDO = JmriBeanComboBox.DisplayOptions.DISPLAYNAME;
+    private transient NamedBeanComboBox.DisplayOptions gDDMDO = NamedBeanComboBox.DisplayOptions.DISPLAYNAME;
 
     private void updateDropDownMenuDisplayOrderMenu() {
         Component focusedComponent = getFocusOwner();
 
-        if (focusedComponent instanceof JmriBeanComboBox) {
-            JmriBeanComboBox focusedJBCB = (JmriBeanComboBox) focusedComponent;
+        if (focusedComponent instanceof NamedBeanComboBox) {
+            NamedBeanComboBox<?> focusedJBCB = (NamedBeanComboBox<?>) focusedComponent;
             gDDMDO = focusedJBCB.getDisplayOrder();
         }
 
@@ -3019,7 +2989,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     private void updateComboBoxDropDownListDisplayOrderFromPrefs(
             @Nonnull Component inComponent) {
-        if (inComponent instanceof JmriBeanComboBox) {
+        if (inComponent instanceof NamedBeanComboBox) {
             //try to get the preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 String windowFrameRef = getWindowFrameRef();
@@ -3041,9 +3011,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
 
                 //now try to get a preference specific to this combobox
-                JmriBeanComboBox jbcb = (JmriBeanComboBox) inComponent;
+                NamedBeanComboBox<?> jbcb = (NamedBeanComboBox<?>) inComponent;
                 if (inComponent instanceof JTextField) {
-                    jbcb = (JmriBeanComboBox) SwingUtilities.getUnwrappedParent(jbcb);
+                    jbcb = (NamedBeanComboBox<?>) SwingUtilities.getUnwrappedParent(jbcb);
                 }
                 if (jbcb != null) {
                     String ttt = jbcb.getToolTipText();
@@ -3063,25 +3033,25 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     //now set the combo box display order
                     switch (ddldoPref) {
                         case "DISPLAYNAME":
-                            jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
                             break;
                         case "USERNAME":
-                            jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAME);
+                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAME);
                             break;
                         case "SYSTEMNAME":
-                            jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAME);
+                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAME);
                             break;
                         case "USERNAMESYSTEMNAME":
-                            jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
                             break;
                         case "SYSTEMNAMEUSERNAME":
-                            jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
+                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
                             break;
                         default:
                             //must be a bogus value... lets re-set everything to DISPLAYNAME
                             ddldoPref = "DISPLAYNAME";
                             prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                            jbcb.setDisplayOrder(JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
                             break;
                     }
                 }
@@ -3752,7 +3722,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Assign the block from the toolbar to all selected layout tracks
      */
     protected void assignBlockToSelection() {
-        String newName = blockIDComboBox.getDisplayName();
+        String newName = blockIDComboBox.getSelectedItemDisplayName();
         LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
         _layoutTrackSelection.forEach((lt) -> {
             lt.setAllLayoutBlocks(b);
@@ -4816,9 +4786,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     protected void setOptionMenuTurnoutCircleSize() {
         String tcs = Integer.toString(getTurnoutCircleSize());
-        Enumeration e = turnoutCircleSizeButtonGroup.getElements();
+        Enumeration<AbstractButton> e = turnoutCircleSizeButtonGroup.getElements();
         while (e.hasMoreElements()) {
-            AbstractButton button = (AbstractButton) e.nextElement();
+            AbstractButton button = e.nextElement();
             String buttonName = button.getText();
             button.setSelected(buttonName.equals(tcs));
         }
@@ -6995,7 +6965,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setLink(foundTrack, foundHitPointType, newTrack, LayoutTrack.TRACK);
 
         //check on layout block
-        String newName = blockIDComboBox.getDisplayName();
+        String newName = blockIDComboBox.getSelectedItemDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -7003,13 +6973,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             getLEAuxTools().setBlockConnectivityChanged();
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getDisplayName();
+            String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
                 }
             }
             newTrack.updateBlockInfo();
@@ -7031,7 +7001,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setDirty();
 
         //check on layout block
-        String newName = blockIDComboBox.getDisplayName();
+        String newName = blockIDComboBox.getSelectedItemDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -7039,13 +7009,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             o.setLayoutBlockBD(b);
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getDisplayName();
+            String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
                 }
             }
         }
@@ -7084,50 +7054,50 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setDirty();
 
         //check on layout block
-        String newName = blockIDComboBox.getDisplayName();
+        String newName = blockIDComboBox.getSelectedItemDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getDisplayName();
+            String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
                 }
             }
         }
 
-        String turnoutName = turnoutNameComboBox.getDisplayName();
+        String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
             o.setTurnout(turnoutName);
 
             if (o.getTurnout().getSystemName().equals(turnoutName)) {
-                turnoutNameComboBox.setText(turnoutName);
+                turnoutNameComboBox.setSelectedItem(o.getTurnout());
             }
         } else {
             o.setTurnout("");
-            turnoutNameComboBox.setText("");
+            turnoutNameComboBox.setSelectedItem(null);
             turnoutNameComboBox.setSelectedIndex(-1);
         }
-        turnoutName = extraTurnoutNameComboBox.getDisplayName();
+        turnoutName = extraTurnoutNameComboBox.getSelectedItemDisplayName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
             o.setTurnoutB(turnoutName);
 
             if (o.getTurnoutB().getSystemName().equals(turnoutName)) {
-                extraTurnoutNameComboBox.setText(turnoutName);
+                extraTurnoutNameComboBox.setSelectedItem(o.getTurnoutB());
             }
         } else {
             o.setTurnoutB("");
-            extraTurnoutNameComboBox.setText("");
+            extraTurnoutNameComboBox.setSelectedItem(null);
             extraTurnoutNameComboBox.setSelectedIndex(-1);
         }
     }
@@ -7165,20 +7135,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setDirty();
 
         //check on layout block
-        String newName = blockIDComboBox.getDisplayName();
+        String newName = blockIDComboBox.getSelectedItemDisplayName();
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
             o.setLayoutBlock(b);
 
             //check on occupancy sensor
-            String sensorName = blockSensorComboBox.getDisplayName();
+            String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
                     b.setOccupancySensorName("");
                 } else {
-                    blockSensorComboBox.setText(b.getOccupancySensorName());
+                    blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
                 }
             }
         }
@@ -7187,18 +7157,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         o.setContinuingSense(Turnout.CLOSED);
 
         //check on a physical turnout
-        String turnoutName = turnoutNameComboBox.getDisplayName();
+        String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
             o.setTurnout(turnoutName);
 
             if (o.getTurnout().getSystemName().equals(turnoutName)) {
-                turnoutNameComboBox.setText(turnoutName);
+                turnoutNameComboBox.setSelectedItem(turnoutName);
             }
         } else {
             o.setTurnout("");
-            turnoutNameComboBox.setText("");
+            turnoutNameComboBox.setSelectedItem(null);
             turnoutNameComboBox.setSelectedIndex(-1);
         }
     }
@@ -8373,7 +8343,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Add a sensor indicator to the Draw Panel
      */
     void addSensor() {
-        String newName = sensorComboBox.getDisplayName();
+        String newName = sensorComboBox.getSelectedItemDisplayName();
 
         if (newName.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"),
@@ -8394,12 +8364,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //(Note: I don't see the point of this section of code because...
         if (l.getSensor() != null) {
             if (!newName.equals(l.getNamedSensor().getName())) {
-                sensorComboBox.setText(l.getNamedSensor().getName());
+                sensorComboBox.setSelectedItem(l.getSensor());
             }
         }
 
         //...because this is called regardless of the code above
-        sensorComboBox.setText(l.getNamedSensor().getName());
+        sensorComboBox.setSelectedItem(l.getSensor());
         setNextLocation(l);
         putItem(l); // note: this calls unionToPanelBounds & setDirty()
     }
@@ -8415,7 +8385,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     void addSignalHead() {
         //check for valid signal head entry
-        String newName = signalHeadComboBox.getDisplayName();
+        String newName = signalHeadComboBox.getSelectedItemDisplayName();
         SignalHead mHead = null;
 
         if (!newName.isEmpty()) {
@@ -8425,7 +8395,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             /*if (mHead == null)
  mHead = InstanceManager.getDefault(SignalHeadManager.class).getByUserName(newName);
  else */
-            signalHeadComboBox.setText(newName);
+            signalHeadComboBox.setSelectedItem(mHead);
         }
 
         if (mHead == null) {
@@ -8506,13 +8476,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     void addSignalMast() {
         //check for valid signal head entry
-        String newName = signalMastComboBox.getDisplayName();
+        String newName = signalMastComboBox.getSelectedItemDisplayName();
         SignalMast mMast = null;
 
         if (!newName.isEmpty()) {
             mMast = InstanceManager.getDefault(SignalMastManager.class
             ).getSignalMast(newName);
-            signalMastComboBox.setText(newName);
+            signalMastComboBox.setSelectedItem(mMast);
         }
 
         if (mMast == null) {
@@ -8621,7 +8591,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
-        String memoryName = textMemoryComboBox.getDisplayName();
+        String memoryName = textMemoryComboBox.getSelectedItemDisplayName();
 
         if (memoryName.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
@@ -8636,7 +8606,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             String uname = xMemory.getDisplayName();
             if (!uname.equals(memoryName)) {
                 //put the system name in the memory field
-                textMemoryComboBox.setText(xMemory.getSystemName());
+                textMemoryComboBox.setSelectedItem(xMemory);
             }
         }
         setNextLocation(l);
@@ -8648,7 +8618,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     void addBlockContents() {
-        String newName = blockContentsComboBox.getDisplayName();
+        String newName = blockContentsComboBox.getSelectedItemDisplayName();
 
         if (newName.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
@@ -8663,7 +8633,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             String uname = xMemory.getDisplayName();
             if (!uname.equals(newName)) {
                 //put the system name in the memory field
-                blockContentsComboBox.setText(xMemory.getSystemName());
+                blockContentsComboBox.setSelectedItem(xMemory);
             }
         }
         setNextLocation(l);
@@ -9482,8 +9452,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     //highlight the block selected by the specified combo Box
     //
-    private boolean highlightBlockInComboBox(@Nonnull JmriBeanComboBox inComboBox) {
-        return highlightBlock((Block) inComboBox.getNamedBean());
+    private boolean highlightBlockInComboBox(@Nonnull NamedBeanComboBox<Block> inComboBox) {
+        return highlightBlock(inComboBox.getSelectedItem());
     }
 
     /**
@@ -9492,18 +9462,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlock the block
      * @return true if block was highlighted
      */
-    @SuppressWarnings("unchecked") // Annotate the List<Block> l assignment
-    // First, make JmriBeanComboBox generic on <E extends NamedBean> (and manager) to fix this.
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
-        blockIDComboBox.setSelectedBean(inBlock);
+        blockIDComboBox.setSelectedItem(inBlock);
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class
         );
-        Set<NamedBean> l = blockIDComboBox.getManager().getNamedBeanSet();
-        for (NamedBean nb : l) {
-            Block b = (Block) nb;
+        Set<Block> l = blockIDComboBox.getManager().getNamedBeanSet();
+        for (Block b : l) {
             LayoutBlock lb = lbm.getLayoutBlock(b);
             if (lb != null) {
                 boolean enable = ((inBlock != null) && b.equals(inBlock));
@@ -10923,6 +10890,45 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;
     @Deprecated // 4.11.3
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
+
+    // package protected
+    class TurnoutComboBoxPopupMenuListener implements PopupMenuListener {
+
+        private final NamedBeanComboBox<Turnout> comboBox;
+
+        public TurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
+            this.comboBox = comboBox;
+        }
+
+        @Override
+        public void popupMenuWillBecomeVisible(PopupMenuEvent event) {
+            // This method is called before the popup menu becomes visible.
+            log.debug("PopupMenuWillBecomeVisible");
+            Set<Turnout> l = new HashSet<>();
+            comboBox.getManager().getNamedBeanSet().forEach((turnout) -> {
+                if (!validatePhysicalTurnout(turnout.getDisplayName(), null)) {
+                    l.add(turnout);
+                }
+            });
+            comboBox.setExcludedItems(l);
+        }
+
+        @Override
+        public void popupMenuWillBecomeInvisible(PopupMenuEvent event) {
+            // This method is called before the popup menu becomes invisible
+            log.debug("PopupMenuWillBecomeInvisible");
+        }
+
+        @Override
+        public void popupMenuCanceled(PopupMenuEvent event) {
+            // This method is called when the popup menu is canceled
+            log.debug("PopupMenuCanceled");
+        }
+    }
+
+    public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
+        return new TurnoutComboBoxPopupMenuListener(comboBox);
+    }
 
     //initialize logging
     private transient final static Logger log = LoggerFactory.getLogger(LayoutEditor.class);

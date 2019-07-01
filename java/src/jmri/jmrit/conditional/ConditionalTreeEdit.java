@@ -1,6 +1,5 @@
 package jmri.jmrit.conditional;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -12,11 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -40,6 +38,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Audio;
 import jmri.Conditional;
 import jmri.Conditional.Operator;
@@ -60,10 +64,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.*;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * A tree based editor for maintaining Logix Conditionals, State Variables and
@@ -2631,7 +2632,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             return;
         }
         // Select the current entry, add the listener
-        _comboNameBox.setSelectedBeanByName(_curVariable.getName());
+        _comboNameBox.setSelectedItemByName(_curVariable.getName());
         _comboNameBox.addActionListener(new NameBoxListener(_variableNameField));
         _comboNameBox.addFocusListener(detailFocusEvent);
     }
@@ -4088,7 +4089,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             return;
         }
         // Select the current entry
-        _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
+        _comboNameBox.setSelectedItemByName(_curAction.getDeviceName());
         _comboNameBox.addActionListener(new NameBoxListener(_actionNameField));
         _comboNameBox.addFocusListener(detailFocusEvent);
     }

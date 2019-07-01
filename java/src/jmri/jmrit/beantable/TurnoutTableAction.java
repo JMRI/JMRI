@@ -49,8 +49,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
@@ -60,7 +60,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -824,11 +824,11 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
                     protected void loadRenderEditMaps(Hashtable<Turnout, TableCellRenderer> r, Hashtable<Turnout, TableCellEditor> e,
                             Turnout t, Sensor s) {
-                        JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), s, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                        c.setFirstItemBlank(true);
+                        NamedBeanComboBox<Sensor> c = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), s, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        c.setAllowNull(true);
 
-                        TableCellRenderer renderer = new BeanBoxRenderer();
-                        ((JmriBeanComboBox) renderer).setSelectedBean(s);
+                        BeanBoxRenderer renderer = new BeanBoxRenderer();
+                        renderer.setSelectedItem(s);
                         r.put(t, renderer);
 
                         TableCellEditor editor = new BeanComboBoxEditor(c);
@@ -1966,11 +1966,11 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         return Bundle.getMessage("TitleTurnoutTable");
     }
 
-    static class BeanBoxRenderer extends JmriBeanComboBox implements TableCellRenderer {
+    static class BeanBoxRenderer extends NamedBeanComboBox<Sensor> implements TableCellRenderer {
 
         public BeanBoxRenderer() {
-            super(InstanceManager.sensorManagerInstance());
-            setFirstItemBlank(true);
+            super(InstanceManager.getDefault(SensorManager.class));
+            setAllowNull(true);
         }
 
         @Override
@@ -1983,10 +1983,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 setForeground(table.getForeground());
                 setBackground(table.getBackground());
             }
-            if (value instanceof NamedBean) {
-                setSelectedBean((NamedBean) value);
+            if (value instanceof Sensor) {
+                setSelectedItem(value);
             } else {
-                setSelectedBean(null);
+                setSelectedItem(null);
             }
             return this;
         }
@@ -1994,7 +1994,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     static class BeanComboBoxEditor extends DefaultCellEditor {
 
-        public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
+        public BeanComboBoxEditor(NamedBeanComboBox<Sensor> beanBox) {
             super(beanBox);
         }
     }
