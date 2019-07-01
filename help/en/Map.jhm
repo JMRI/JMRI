@@ -496,6 +496,8 @@
 
 <mapID target="Acknowledgements_W" url="Acknowledgements.shtml#W"/>
 
+<mapID target="releasenotes.jmri4.17-master" url="releasenotes/jmri4.17-master.shtml"/>
+
 <mapID target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame" url="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_ChannelField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#ChannelField"/>
@@ -1017,6 +1019,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_TrainEdit" url="package/jmri/jmrit/operations/Operations.shtml#TrainEdit"/>
 
 <mapID target="html.doc.Technical.StartUpScripts_old_DecoderPro" url="html/doc/Technical/StartUpScripts.shtml#old_DecoderPro"/>
+
+<mapID target="releasenotes.warnings-master" url="releasenotes/warnings-master.shtml"/>
 
 <mapID target="html.hardware.bachrus.index_hardware" url="html/hardware/bachrus/index.shtml#hardware"/>
 
@@ -3520,6 +3524,8 @@
 
 <mapID target="manual.DecoderPro3.index_SettingUp" url="manual/DecoderPro3/index.shtml#SettingUp"/>
 
+<mapID target="html.doc.Technical.IntelliJ_spotbugs" url="html/doc/Technical/IntelliJ.shtml#spotbugs"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_newUserAdvice" url="package/jmri/jmrit/operations/Operations.shtml#newUserAdvice"/>
 
 <mapID target="html.hardware.can.cbus.Names_turnout" url="html/hardware/can/cbus/Names.shtml#turnout"/>
@@ -3681,6 +3687,8 @@
 <mapID target="html.doc.Technical.IntelliJ_push" url="html/doc/Technical/IntelliJ.shtml#push"/>
 
 <mapID target="manual.DecoderPro3.Programmer_Setup" url="manual/DecoderPro3/Programmer_Setup.shtml"/>
+
+<mapID target="releasenotes.current-draft-warnings" url="releasenotes/current-draft-warnings.shtml"/>
 
 <mapID target="html.tools.Transits" url="html/tools/Transits.shtml"/>
 
@@ -4339,6 +4347,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.images.arrow" url="manual/JMRI_OPS_UsersGuide/images/arrow.gif"/>
 
 <mapID target="manual.DecoderPro3.images.btn_lanch_throttle" url="manual/DecoderPro3/images/btn_lanch_throttle.png"/>
+
+<mapID target="html.doc.Technical.images.IntelliJ.IjDebug7StepInto" url="html/doc/Technical/images/IntelliJ/IjDebug7StepInto.png"/>
 
 <mapID target="html.tools.signaling.ldt.output3_html_11be9e7b" url="html/tools/signaling/ldt/output3_html_11be9e7b.png"/>
 

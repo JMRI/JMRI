@@ -667,14 +667,15 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         if (newPath == null) {
             return true;  // proper OPath cannot be made
         }
+        OPath otherPath = null;
         // is this path already defined?
-        Iterator<Path> iter = _block.getPaths().iterator();
-        OPath otherPath = null; 
-        while (iter.hasNext()) {
-            OPath p = (OPath) iter.next();
-            if (newPath.equals(p)) {
-                otherPath = p;
-                break;
+        for (Path p : _block.getPaths()){
+            if (p instanceof OPath) {
+                OPath op = (OPath) p;
+                if (newPath.equals(op)) {
+                    otherPath = op;
+                    break;
+                }
             }
         }
         if (log.isDebugEnabled()) {

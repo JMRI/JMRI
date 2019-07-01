@@ -27,6 +27,7 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.sensor.JsonSensor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -204,7 +205,8 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             service.doPut(JsonBlock.BLOCK, "", message, locale, 0); // use an empty name to trigger exception
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
-            assertEquals(404, ex.getCode()); // should be 400 or 500, but until BlockManager throws on creating Block with empty system name suffix, is 404
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Block");
+            assertEquals(400, ex.getCode());
         }
     }
 

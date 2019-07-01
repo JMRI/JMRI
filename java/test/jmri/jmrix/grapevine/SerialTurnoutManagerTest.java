@@ -2,6 +2,9 @@ package jmri.jmrix.grapevine;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,6 +61,23 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         Assert.assertTrue(null != l.getBySystemName("GT1105"));
         Assert.assertTrue(null != l.getByUserName("my name"));
 
+    }
+
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("1107"),
+                l.makeSystemName("1109"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1107");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
     }
 
     /**
