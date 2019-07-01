@@ -932,38 +932,23 @@ public class AcelaNode extends AbstractNode {
                             }
                             case WIGWAG: {
                                 switch (outputSpecial[c]) {
-                                    case 1:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Red
-                                    case 2:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Flashing red
+                                    case 1: // Red
+                                    case 2: // Flashing red
                                     case 3:
+                                    case 4: // Flashing Yellow
+                                    case 5: // Green
+                                    case 6: // Flashing Green
                                         cmdcode = 0x0c;
                                         settinglo = 0x0B;
-                                        break; // Yellow
-                                    case 4:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Flashing Yellow
-                                    case 5:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Green
-                                    case 6:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Flashing Green
-                                    case 7:
+                                        break;
+                                    case 7: // Dark
                                         cmdcode = 0x0c;
                                         settinglo = 0x00;
-                                        break; // Dark
-                                    default:
+                                        break;
+                                    default: // Flashing red
                                         cmdcode = 0x0c;
                                         settinglo = 0x0F;
-                                        break; // Flashing red
+                                        break;
                                 }
                                 break;
                             }
@@ -973,10 +958,6 @@ public class AcelaNode extends AbstractNode {
                                         cmdcode = 0x0d;
                                         settinglo = 0x01;
                                         break; // Red
-                                    case 2:
-                                        cmdcode = 0x0d;
-                                        settinglo = 0x03;
-                                        break; // Flashing red
                                     case 3:
                                         cmdcode = 0x0d;
                                         settinglo = 0x04;
@@ -997,10 +978,11 @@ public class AcelaNode extends AbstractNode {
                                         cmdcode = 0x0d;
                                         settinglo = 0x00;
                                         break; // Dark
+                                    case 2: // Flashing red
                                     default:
                                         cmdcode = 0x0d;
                                         settinglo = 0x03;
-                                        break; // Flashing red
+                                        break;
                                 }
                             }
                         }

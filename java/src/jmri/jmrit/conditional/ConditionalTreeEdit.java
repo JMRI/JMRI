@@ -3545,11 +3545,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case SIGNALMAST:
-            case LOGIX:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
-
             case CLOCK:
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.SET_FAST_CLOCK_TIME) {
@@ -3645,9 +3640,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case OTHER:
+            case SIGNALMAST:
+            case LOGIX:
+            case OTHER: // ACTION_TRIGGER_ROUTE
                 _actionTypeBox.setSelectedItem(actionType);
-                // ACTION_TRIGGER_ROUTE
                 break;
 
             default:
