@@ -26,7 +26,7 @@ public class ApplicationTestAcceptanceSteps implements En {
    String[] tags = {"@apptest"};
    File tempFolder;
    
-   public ApplicationTestAcceptanceSteps(jmri.InstanceManager instance) {
+   public ApplicationTestAcceptanceSteps() {
 
    Before(tags,() -> {
       JUnitUtil.setUp();
