@@ -444,8 +444,8 @@ public class DefaultSignalMastLogicManager
 
     /** {@inheritDoc} */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalMastLogic");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalMastLogics" : "BeanNameSignalMastLogic");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);

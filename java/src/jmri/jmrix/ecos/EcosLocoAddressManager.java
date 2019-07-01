@@ -881,7 +881,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     }
 
     @Override
-    public String getBeanTypeHandled() {
+    public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage("EcosLocoAddresses");
     }
 

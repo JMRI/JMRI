@@ -233,8 +233,8 @@ public class TransitManager extends AbstractManager<Transit> implements Property
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);

@@ -514,13 +514,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private JTextField systemNameTextField = new JTextField(5);
     private JTextField userNameTextField = new JTextField(10);
     private JTextField ato1TextField = new JTextField(5);
-    private BeanSelectCreatePanel to1;
-    private BeanSelectCreatePanel to2;
-    private BeanSelectCreatePanel to3;
-    private BeanSelectCreatePanel to4;
-    private BeanSelectCreatePanel to5;
-    private BeanSelectCreatePanel to6;
-    private BeanSelectCreatePanel to7;
+    private BeanSelectCreatePanel<Turnout> to1;
+    private BeanSelectCreatePanel<Turnout> to2;
+    private BeanSelectCreatePanel<Turnout> to3;
+    private BeanSelectCreatePanel<Turnout> to4;
+    private BeanSelectCreatePanel<Turnout> to5;
+    private BeanSelectCreatePanel<Turnout> to6;
+    private BeanSelectCreatePanel<Turnout> to7;
 
     private FlowLayout defaultFlow = new FlowLayout(FlowLayout.CENTER, 5, 0);
 
@@ -1263,7 +1263,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void addTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
-        String msg = Bundle.getMessage("AddNoTurnout", new Object[]{s1, s2});
+        String msg = Bundle.getMessage("AddNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
@@ -1587,12 +1587,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         if (prefix != null) {
             systemNameText = ConnectionNameFromSystemName.getPrefixFromName(prefix);
         }
-        if (systemNameText == null) {
-            log.error("could not retrieve systemName");
-            return;
-        }
         // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
-        if (systemNameText.equals("\0")) {
+        if (systemNameText == null) {
             systemNameText = "I";
         }
         systemNameText = systemNameText + "H$" + systemNameTextField.getText();
@@ -1781,13 +1777,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private JTextField etot = new JTextField(5);
 
-    private BeanSelectCreatePanel eto1;
-    private BeanSelectCreatePanel eto2;
-    private BeanSelectCreatePanel eto3;
-    private BeanSelectCreatePanel eto4;
-    private BeanSelectCreatePanel eto5;
-    private BeanSelectCreatePanel eto6;
-    private BeanSelectCreatePanel eto7;
+    private BeanSelectCreatePanel<Turnout> eto1;
+    private BeanSelectCreatePanel<Turnout> eto2;
+    private BeanSelectCreatePanel<Turnout> eto3;
+    private BeanSelectCreatePanel<Turnout> eto4;
+    private BeanSelectCreatePanel<Turnout> eto5;
+    private BeanSelectCreatePanel<Turnout> eto6;
+    private BeanSelectCreatePanel<Turnout> eto7;
 
     private JPanel ev1Panel = new JPanel();
     private JPanel ev2Panel = new JPanel();
@@ -2670,7 +2666,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void noTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
-        String msg = Bundle.getMessage("WarningNoTurnout", new Object[]{s1, s2});
+        String msg = Bundle.getMessage("WarningNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(editFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
@@ -2800,27 +2796,25 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
      * @param title      for warning pane
      * @return The newly defined output as Turnout object
      */
-    protected Turnout updateTurnoutFromPanel(BeanSelectCreatePanel bp, String reference, Turnout oldTurnout, String title) {
+    protected Turnout updateTurnoutFromPanel(BeanSelectCreatePanel<Turnout> bp, String reference, Turnout oldTurnout, String title) {
         Turnout newTurnout = getTurnoutFromPanel(bp, reference);
         if (newTurnout == null) {
             noTurnoutMessage(title, bp.getDisplayName());
         }
-        else {
-            String comment = newTurnout.getComment();
-            if (comment == null || comment.isEmpty()) {
+        String comment;
+        if (newTurnout != null) {
+            comment = newTurnout.getComment();
+            if  (comment == null || comment.isEmpty()) {
                 newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
             }
         }
         if (oldTurnout == null || newTurnout == oldTurnout) {
             return newTurnout;
         }
-        String oldComment = oldTurnout.getComment();
-        if ((oldComment != null) && (reference != null)) {
-            if (oldComment.equals(reference)) {
-                // won't delete old Turnout Comment if Locale or Bundle was changed since filling it in
-                // user could have typed something in the Comment as well
-                oldTurnout.setComment(null); // deletes current Comment in bean
-            }
+        comment = oldTurnout.getComment();
+        if (comment != null && comment.equals(reference)) {
+            // wont delete old Turnout Comment if Locale or Bundle was changed in between, but user could have type something in the Comment as well
+            oldTurnout.setComment(null); // deletes current Comment in bean
         }
         return newTurnout;
     }
@@ -2832,13 +2826,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
      * @param reference Turnout application description
      * @return The new output as Turnout object
      */
-    protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel bp, String reference) {
+    protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel<Turnout> bp, String reference) {
         if (bp == null) {
             return null;
         }
         bp.setReference(reference); // pass turnout application description to be put into turnout Comment
         try {
-            return (Turnout) bp.getNamedBean();
+            return bp.getNamedBean();
         } catch (jmri.JmriException ex) {
             log.warn("skipping creation of turnout not found for " + reference);
             return null;

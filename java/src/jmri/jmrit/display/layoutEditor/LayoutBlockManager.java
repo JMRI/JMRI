@@ -2639,8 +2639,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     @Override
     @Nonnull
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLayoutBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLayoutBlocks" : "BeanNameLayoutBlock");
     }
 
     /**

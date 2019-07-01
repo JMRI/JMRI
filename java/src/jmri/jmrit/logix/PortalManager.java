@@ -159,8 +159,8 @@ public class PortalManager extends AbstractManager<Portal>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNamePortal");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNamePortals" : "BeanNamePortal");
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class);

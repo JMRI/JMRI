@@ -203,8 +203,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalGroup");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalGroups" : "BeanNameSignalGroup");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
