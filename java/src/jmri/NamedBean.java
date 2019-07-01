@@ -78,9 +78,17 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public static final int INCONSISTENT = 0x08;
 
     /**
-     * Format used for {@link #getFullyFormattedDisplayName(boolean)}.
+     * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
+     * the user name and system name without quoation marks around the user
+     * name.
      */
     public static final String DISPLAY_NAME_FORMAT = "%s (%s)";
+
+    /**
+     * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
+     * the user name and system name with quoation marks around the user name.
+     */
+    public static final String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
     /**
      * User's identification for the item. Bound parameter so manager(s) can
@@ -128,37 +136,74 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      */
     @CheckReturnValue
     @Nonnull
-    public String getDisplayName();
+    public default String getDisplayName() {
+        return getDisplayName(DisplayOptions.DISPLAYNAME);
+    }
 
     /**
-     * Get a fully formatted display that includes the SystemName and,
-     * if set, the UserName.
-     * <p>
-     * This is the same as calling
-     * {@link #getFullyFormattedDisplayName(boolean)} with the parameter true.
-     *
-     * @return {@code UserName (SystemName)} or {@code SystemName} if the
-     *         UserName is null, empty, or matches the SystemName
+     * Get the name to display, formatted per {@link NamedBean.DisplayOptions}.
+     * 
+     * @param options the DisplayOptions to use
+     * @return the display name formatted per options
      */
     @CheckReturnValue
     @Nonnull
+    public default String getDisplayName(DisplayOptions options) {
+        String userName = getUserName();
+        String systemName = getSystemName();
+        switch (options) {
+            case USERNAME_SYSTEMNAME:
+                return userName != null ? String.format(DISPLAY_NAME_FORMAT, userName, systemName) : systemName;
+            case QUOTED_USERNAME_SYSTEMNAME:
+                return userName != null ? String.format(QUOTED_NAME_FORMAT, userName, systemName) : systemName;
+            case SYSTEMNAME:
+                return systemName;
+            case QUOTED_SYSTEMNAME:
+                return String.format("\"%s\"", systemName);
+            case USERNAME:
+                return userName != null ?  userName : String.format(QUOTED_NAME_FORMAT, "", systemName);
+            case QUOTED_USERNAME:
+                return userName != null ? String.format("\"%s\"", userName) : String.format(QUOTED_NAME_FORMAT, "", systemName);
+            case QUOTED_DISPLAYNAME:
+                return String.format("\"%s\"", userName != null ? userName : systemName);
+            case DISPLAYNAME:
+            default:
+                return userName != null ? userName : systemName;
+        }
+    }
+    
+    /**
+     * Get a fully formatted display that includes the SystemName and, if set,
+     * the UserName.
+     * <p>
+     * This is the same as calling {@link #getDisplayName(DisplayOptions)} with
+     * the parameter {@link DisplayOptions#USERNAME_SYSTEMNAME}.
+     *
+     * @return {@code UserName (SystemName)} or {@code SystemName} if the
+     *         UserName is null, empty, or matches the SystemName
+     * @deprecated since 4.17.2; use {@link #getDisplayName(DisplayOptions)}
+     *             with {@link DisplayOptions#USERNAME_SYSTEMNAME} instead
+     */
+    @CheckReturnValue
+    @Nonnull
+    @Deprecated
     public default String getFullyFormattedDisplayName() {
-        return getFullyFormattedDisplayName(true);
+        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
 
     /**
      * Returns a fully formatted display that includes the SystemName and
      * UserName if set. This uses the format {@value #DISPLAY_NAME_FORMAT}
      *
-     * @param userNameFirst returns UserName followed by SystemName if true;
-     *                          otherwise returns SystemName followed by
-     *                          UserName
-     * @return {@code UserName (SystemName)} or {@code SystemName (UserName)}
-     *         based on value of userNameFirst, or {@code SystemName} if the
+     * @param userNameFirst ignored; retained for compatibility until removed
+     * @return {@code UserName (SystemName)} or {@code SystemName} if the
      *         UserName is null, empty, or matches the SystemName
+     * @deprecated since 4.17.2; use {@link #getDisplayName(DisplayOptions)}
+     *             with {@link DisplayOptions#USERNAME_SYSTEMNAME} instead
      */
     @CheckReturnValue
     @Nonnull
+    @Deprecated
     public String getFullyFormattedDisplayName(boolean userNameFirst);
 
     /**
@@ -444,6 +489,56 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     }
 
     public class BadSystemNameException extends IllegalArgumentException {
+    }
+
+    /**
+     * Display options for {@link #getDisplayName(DisplayOptions)}. The quoted
+     * forms are intended to be used in sentances and messages, while the
+     * unquoted forms are intended for use in user inteface elements like lists
+     * and combo boxes.
+     */
+    public enum DisplayOptions {
+        /**
+         * Display the user name; if the user name is null or empty, display the
+         * system name.
+         */
+        DISPLAYNAME,
+        /**
+         * Display the user name in quotes; if the user name is null or empty,
+         * display the system name in quotes.
+         */
+        QUOTED_DISPLAYNAME,
+        /**
+         * Display the user name; if the user name is null or empty, display the
+         * system name.
+         */
+        USERNAME,
+        /**
+         * Display the user name in quotes; if the user name is null or empty,
+         * display the system name.
+         */
+        QUOTED_USERNAME,
+        /**
+         * Display the system name. This should be used only when the context
+         * would cause displaying the user name to be more confusing than not or
+         * in text input fields for editing the system name.
+         */
+        SYSTEMNAME,
+        /**
+         * Display the system name in quotes. This should be used only when the
+         * context would cause displaying the user name to be more confusing
+         * than not or in text input fields for editing the system name.
+         */
+        QUOTED_SYSTEMNAME,
+        /**
+         * Display the user name followed by the system name in parenthesis.
+         */
+        USERNAME_SYSTEMNAME,
+        /**
+         * Display the user name in quotes followed by the system name in
+         * parenthesis.
+         */
+        QUOTED_USERNAME_SYSTEMNAME;
     }
 
 }

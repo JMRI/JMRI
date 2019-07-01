@@ -76,6 +76,7 @@ import jmri.SignalMastManager;
 import jmri.TransitManager;
 import jmri.Turnout;
 import jmri.UserPreferencesManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
@@ -167,12 +168,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //top row of check boxes
     private transient NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.turnoutManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.turnoutManagerInstance(), null, DisplayOptions.DISPLAYNAME);
 
     private transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
     private transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
     private transient NamedBeanComboBox<Turnout> extraTurnoutNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.turnoutManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.turnoutManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private transient JComboBox<String> rotationComboBox = null;
     private transient JPanel rotationPanel = new JPanel(leftRowLayout);
 
@@ -188,13 +189,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient JLabel blockNameLabel = new JLabel();
     private transient NamedBeanComboBox<Block> blockIDComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
     private transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
     private transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
     private transient NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
     private transient JLabel nodesLabel = new JLabel();
@@ -208,26 +209,26 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient JRadioButton memoryButton = new JRadioButton(Bundle.getMessage("BeanNameMemory"));
     private transient NamedBeanComboBox<Memory> textMemoryComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(MemoryManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton blockContentsButton = new JRadioButton(Bundle.getMessage("BlockContentsLabel"));
     private transient NamedBeanComboBox<Block> blockContentsComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
 
     //4th row of radio buttons (and any associated text fields)
     private transient JRadioButton multiSensorButton = new JRadioButton(Bundle.getMessage("MultiSensor") + "...");
 
     private transient JRadioButton signalMastButton = new JRadioButton(Bundle.getMessage("SignalMastIcon"));
     private transient NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton sensorButton = new JRadioButton(Bundle.getMessage("SensorIcon"));
     private transient NamedBeanComboBox<Sensor> sensorComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton signalButton = new JRadioButton(Bundle.getMessage("SignalIcon"));
     private transient NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(SignalHeadManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
     private transient JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
@@ -1037,7 +1038,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //float toolBarFontSize = Float.parseFloat(prefsProp.toString());
                 //setupToolBarFontSizes(toolBarFontSize);
                 //}
-                updateAllComboBoxesDropDownListDisplayOrderFromPrefs();
             }); //InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
@@ -2178,84 +2178,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
-        //toolBarMenu.add(toolBarFontSizeMenu); //<<== disabled as per
-        //<https://github.com/JMRI/JMRI/pull/3145#issuecomment-283940658>
-        //
-        //setup drop down list display order menu
-        //
-        ButtonGroup dropDownListsDisplayOrderGroup = new ButtonGroup();
-
-        String[] ddldoChoices = {"DropDownListsDisplayOrderDisplayName", "ColumnUserName",
-            "ColumnSystemName", "DropDownListsDisplayOrderUserNameSystemName",
-            "DropDownListsDisplayOrderSystemNameUserName"};
-
-        for (String ddldoChoice : ddldoChoices) {
-            JRadioButtonMenuItem ddldoChoiceMenuItem = new JRadioButtonMenuItem(Bundle.getMessage(ddldoChoice));
-            ddldoChoiceMenuItem.addActionListener((ActionEvent event) -> {
-                JRadioButtonMenuItem ddldoMenuItem = (JRadioButtonMenuItem) event.getSource();
-                JPopupMenu parentMenu = (JPopupMenu) ddldoMenuItem.getParent();
-                int ddldoInt = parentMenu.getComponentZOrder(ddldoMenuItem) + 1;
-                NamedBeanComboBox.DisplayOptions ddldo = NamedBeanComboBox.DisplayOptions.valueOf(ddldoInt);
-
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                    //change this comboboxes ddldo
-                    String windowFrameRef = getWindowFrameRef();
-
-                    //this is the preference name
-                    String ddldoPrefName = "DropDownListsDisplayOrder";
-
-                    //make a focused component specific preference name
-                    Component focusedComponent = getFocusOwner();
-
-                    if (focusedComponent instanceof JTextField) {
-                        focusedComponent = SwingUtilities.getUnwrappedParent(focusedComponent);
-                    }
-
-                    if (focusedComponent instanceof NamedBeanComboBox) {
-                        NamedBeanComboBox<?> focusedJBCB = (NamedBeanComboBox<?>) focusedComponent;
-
-                        //now try to get a preference specific to this combobox
-                        String ttt = focusedJBCB.getToolTipText();
-
-                        if (ttt != null) {
-                            //change the name of the preference based on the tool tip text
-                            ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
-                        }
-
-                        //now set the combo box display order
-                        focusedJBCB.setDisplayOrder(ddldo);
-                    }
-
-                    //update the users preference
-                    String[] ddldoPrefs = {"DISPLAYNAME", "USERNAME", "SYSTEMNAME", "USERNAMESYSTEMNAME", "SYSTEMNAMEUSERNAME"};
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPrefs[ddldoInt]);
-                });
-            }); //addActionListener
-
-            dropDownListsDisplayOrderMenu.add(ddldoChoiceMenuItem);
-            dropDownListsDisplayOrderGroup.add(ddldoChoiceMenuItem);
-
-            //if it matches the 1st choice then select it (for now; it will be updated later)
-            ddldoChoiceMenuItem.setSelected(ddldoChoice.equals(ddldoChoices[0]));
-        }
-        //TODO: update menu item based on focused combobox (if any)
-        //note: commented out to avoid findbug warning
-        //dropDownListsDisplayOrderMenu.addMenuListener(new MenuListener() {
-        //    @Override
-        //    public void menuSelected(MenuEvent event) {
-        //        log.debug("update menu item based on focused combobox");
-        //    }
-        //
-        //    @Override
-        //    public void menuDeselected(MenuEvent event) {
-        //    }
-        //
-        //    @Override
-        //    public void menuCanceled(MenuEvent event) {
-        //    }
-        //});
-        toolBarMenu.add(dropDownListsDisplayOrderMenu);
-
         //
         // Scroll Bars
         //
@@ -2947,127 +2869,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }
 
-    //
-    //update drop down menu display order menu
-    //
-    private transient NamedBeanComboBox.DisplayOptions gDDMDO = NamedBeanComboBox.DisplayOptions.DISPLAYNAME;
-
-    private void updateDropDownMenuDisplayOrderMenu() {
-        Component focusedComponent = getFocusOwner();
-
-        if (focusedComponent instanceof NamedBeanComboBox) {
-            NamedBeanComboBox<?> focusedJBCB = (NamedBeanComboBox<?>) focusedComponent;
-            gDDMDO = focusedJBCB.getDisplayOrder();
-        }
-
-        int idx = 0, ddmdoInt = gDDMDO.getValue();
-
-        for (Component c : dropDownListsDisplayOrderMenu.getMenuComponents()) {
-            if (c instanceof JRadioButtonMenuItem) {
-                JRadioButtonMenuItem crb = (JRadioButtonMenuItem) c;
-                crb.setSelected(ddmdoInt == idx);
-                idx++;
-            }
-        }
-    }
-
-    //
-    //update drop down menu display order for all combo boxes (from prefs)
-    //
-    private void updateAllComboBoxesDropDownListDisplayOrderFromPrefs() {
-        //1st call the recursive funtion starting from the edit toolbar container
-        updateComboBoxDropDownListDisplayOrderFromPrefs(editToolBarContainerPanel);
-        updateComboBoxDropDownListDisplayOrderFromPrefs(floatingEditContentScrollPane);
-
-        //and now that that's done update the drop down menu display order menu
-        updateDropDownMenuDisplayOrderMenu();
-    }
-
-    //
-    //update drop down menu display order for all combo boxes (from prefs)
-    //note: recursive function that walks down the component / container tree
-    //
-    private void updateComboBoxDropDownListDisplayOrderFromPrefs(
-            @Nonnull Component inComponent) {
-        if (inComponent instanceof NamedBeanComboBox) {
-            //try to get the preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-                String windowFrameRef = getWindowFrameRef();
-
-                //this is the preference name
-                String ddldoPrefName = "DropDownListsDisplayOrder";
-
-                //this is the default value if we can't find it in any preferences
-                String ddldoPref = "DISPLAYNAME";
-
-                Object ddldoProp = prefsMgr.getProperty(windowFrameRef, ddldoPrefName);
-
-                if (ddldoProp != null) {
-                    //this will be the value if this combo box doesn't have a saved preference.
-                    ddldoPref = ddldoProp.toString();
-                } else {
-                    //save a default preference
-                    prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                }
-
-                //now try to get a preference specific to this combobox
-                NamedBeanComboBox<?> jbcb = (NamedBeanComboBox<?>) inComponent;
-                if (inComponent instanceof JTextField) {
-                    jbcb = (NamedBeanComboBox<?>) SwingUtilities.getUnwrappedParent(jbcb);
-                }
-                if (jbcb != null) {
-                    String ttt = jbcb.getToolTipText();
-                    if (ttt != null) {
-                        //change the name of the preference based on the tool tip text
-                        ddldoPrefName = String.format("%s.%s", ddldoPrefName, ttt);
-                        //try to get the preference
-                        ddldoProp = prefsMgr.getProperty(getWindowFrameRef(), ddldoPrefName);
-                        if (ddldoProp != null) { //if we found it...
-                            ddldoPref = ddldoProp.toString(); //get its (string value
-                        } else { //otherwise...
-                            //save it in the users preferences
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                        }
-                    }
-
-                    //now set the combo box display order
-                    switch (ddldoPref) {
-                        case "DISPLAYNAME":
-                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
-                            break;
-                        case "USERNAME":
-                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAME);
-                            break;
-                        case "SYSTEMNAME":
-                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAME);
-                            break;
-                        case "USERNAMESYSTEMNAME":
-                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
-                            break;
-                        case "SYSTEMNAMEUSERNAME":
-                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
-                            break;
-                        default:
-                            //must be a bogus value... lets re-set everything to DISPLAYNAME
-                            ddldoPref = "DISPLAYNAME";
-                            prefsMgr.setProperty(windowFrameRef, ddldoPrefName, ddldoPref);
-                            jbcb.setDisplayOrder(NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
-                            break;
-                    }
-                }
-            });
-        } else if (inComponent instanceof Container) {
-            for (Component c : ((Container) inComponent).getComponents()) {
-                updateComboBoxDropDownListDisplayOrderFromPrefs(c);
-            }
-        } else {
-            //nothing to do here... move along...
-        }
-    }
-
-    //
-    //
-    //
     private void setToolBarSide(ToolBarSide newToolBarSide) {
         // null if edit toolbar is not setup yet...
         if ((editModeCheckBoxMenuItem != null) && !newToolBarSide.equals(toolBarSide)) {

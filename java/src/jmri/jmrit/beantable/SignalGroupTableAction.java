@@ -38,6 +38,7 @@ import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.AlphanumComparator;
@@ -462,7 +463,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         // Set up Add/Edit Signal Group window
         if (addFrame == null) { // if it's not yet present, create addFrame
 
-            mainSignalComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            mainSignalComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
             mainSignalComboBox.setAllowNull(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);

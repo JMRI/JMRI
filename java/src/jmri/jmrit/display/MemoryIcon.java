@@ -16,6 +16,7 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.Reportable;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -193,7 +194,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (namedMemory == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getMemory().getFullyFormattedDisplayName();
+            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

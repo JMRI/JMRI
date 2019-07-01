@@ -44,6 +44,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -150,9 +151,9 @@ public class SignallingPanel extends JmriPanel {
             sml = null;
         }
 
-        sourceMastBox = new NamedBeanComboBox<>(smm, sourceMast, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        sourceMastBox = new NamedBeanComboBox<>(smm, sourceMast, DisplayOptions.DISPLAYNAME);
         sourceMastBox.setMaximumSize(sourceMastBox.getPreferredSize());
-        destMastBox = new NamedBeanComboBox<>(smm, destMast, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        destMastBox = new NamedBeanComboBox<>(smm, destMast, DisplayOptions.DISPLAYNAME);
         destMastBox.setMaximumSize(destMastBox.getPreferredSize());
 
         // directly add sub-panes onto JFrame's content pane to allow resizing (2018)

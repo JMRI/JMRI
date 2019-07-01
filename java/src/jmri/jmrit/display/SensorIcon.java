@@ -18,6 +18,7 @@ import javax.swing.Timer;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
@@ -301,7 +302,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (namedSensor == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getSensor().getFullyFormattedDisplayName();
+            name = getSensor().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

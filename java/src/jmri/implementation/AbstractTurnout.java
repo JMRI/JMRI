@@ -109,7 +109,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedState(int s) {
-        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
+        log.debug("set commanded state for turnout {} to {}", getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
                 (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread

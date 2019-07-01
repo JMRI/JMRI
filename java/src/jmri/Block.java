@@ -130,7 +130,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     // this should only be used for debugging...
     public String toDebugString() {
-        String result = getFullyFormattedDisplayName() + " ";
+        String result = getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME) + " ";
         switch (getState()) {
             case UNDETECTED: {
                 result += "UNDETECTED";
