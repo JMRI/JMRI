@@ -173,15 +173,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @Nonnull
-    public String normalizeSystemName(@Nonnull String systemName) {
-        return systemName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return "";
     }

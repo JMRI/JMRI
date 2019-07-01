@@ -945,7 +945,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             }
         }
         // check if a Route with this system name already exists
-        sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+        sName = InstanceManager.getDefault(jmri.RouteManager.class).makeSystemName(sName);
         g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
@@ -977,7 +977,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 return null;
             }
             try {
-                sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+                sName = InstanceManager.getDefault(jmri.RouteManager.class).makeSystemName(sName);
                 g = InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check

@@ -75,9 +75,15 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     private RosterEntry _re;
     private boolean addLocoToRoster = false;
 
+    /**
+     * EcosLocoAddresses have no system prefix, so return input unchanged.
+     * 
+     * @param s the input to make a system name
+     * @return the resultant system name
+     */
     @Override
     public String makeSystemName(String s) {
-        return "";
+        return s;
     }
 
     @Override
