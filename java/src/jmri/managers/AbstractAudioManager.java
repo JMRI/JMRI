@@ -156,8 +156,8 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     /** {@inheritDoc} */
     @Override
     @Nonnull 
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameAudio");  // NOI18N
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameAudios" : "BeanNameAudio");  // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);

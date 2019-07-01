@@ -221,22 +221,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IB prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IB")) {
-            inputName = "IB" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
      * @return the default BlockManager instance
      * @deprecated since 4.9.1; use
      * {@link InstanceManager#getDefault(Class)} instead
@@ -282,8 +266,8 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @Override
     @CheckReturnValue
     @Nonnull
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameBlocks" : "BeanNameBlock");
     }
 
     /**

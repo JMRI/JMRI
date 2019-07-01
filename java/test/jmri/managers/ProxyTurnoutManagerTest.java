@@ -58,14 +58,6 @@ public class ProxyTurnoutManagerTest {
     }
 
     @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideTurnout("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
     public void testProvideFailure() {
         boolean correct = false;
         try {

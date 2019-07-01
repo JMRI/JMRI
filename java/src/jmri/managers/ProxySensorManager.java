@@ -204,8 +204,8 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSensor");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
     }
 
     /**

@@ -3,12 +3,7 @@ package jmri;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import jmri.managers.AbstractManager;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Implementation of a Transit Manager
@@ -156,20 +151,6 @@ public class TransitManager extends AbstractManager<Transit> implements Property
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
      * Remove an existing Transit.
      *
      * @param z the transit to remove
@@ -233,8 +214,8 @@ public class TransitManager extends AbstractManager<Transit> implements Property
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);

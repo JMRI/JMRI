@@ -105,17 +105,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

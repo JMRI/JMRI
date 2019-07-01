@@ -199,8 +199,8 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameCatalog");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");
     }
 
     @Override
@@ -223,32 +223,31 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
-        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
-            if (changed) {
-                if (_shutDownTask == null) {
-                    _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
-                            Bundle.getMessage("IndexChanged"),
-                            Bundle.getMessage("SaveAndQuit"), null) {
-                        @Override
-                        public boolean checkPromptNeeded() {
-                            return !_indexChanged;
-                        }
+        jmri.ShutDownManager sdm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+        if (changed) {
+            if (_shutDownTask == null) {
+                _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                        Bundle.getMessage("IndexChanged"),
+                        Bundle.getMessage("SaveAndQuit"), null) {
+                    @Override
+                    public boolean checkPromptNeeded() {
+                        return !_indexChanged;
+                    }
 
-                        @Override
-                        public boolean doPrompt() {
-                            storeImageIndex();
-                            return true;
-                        }
-                    };
-                    sdm.register(_shutDownTask);
-                }
-            } else {
-                if (_shutDownTask != null) {
-                    sdm.deregister(_shutDownTask);
-                    _shutDownTask = null;
-                }
+                    @Override
+                    public boolean doPrompt() {
+                        storeImageIndex();
+                        return true;
+                    }
+                };
+                sdm.register(_shutDownTask);
             }
-        });
+        } else {
+            if (_shutDownTask != null) {
+                sdm.deregister(_shutDownTask);
+                _shutDownTask = null;
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);

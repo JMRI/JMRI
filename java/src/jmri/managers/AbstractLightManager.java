@@ -173,15 +173,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @Nonnull
-    public String normalizeSystemName(@Nonnull String systemName) {
-        return systemName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return "";
     }
@@ -208,8 +199,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @return a string for the type of object handled by this manager
      */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLight");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
     }
 
     /**

@@ -79,17 +79,6 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, prefix));
-    }
-
-    /**
      * Convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
