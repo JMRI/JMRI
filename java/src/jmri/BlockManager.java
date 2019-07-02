@@ -196,8 +196,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     @CheckReturnValue
     @CheckForNull
-    public Block getBySystemName(@Nonnull String name) {
-        String key = name.toUpperCase();
+    public Block getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 

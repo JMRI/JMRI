@@ -662,8 +662,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Edit user name on a switch using N11N. Copied from
-     * BeanTableDataModel.
+     * Edit user name on a switch.
      */
     public void renameBean() {
         NamedBean nb;
@@ -676,7 +675,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             log.debug("NewName dialog returned Null, cancelled");
             return;
         }
-        newUserName = newUserName.trim(); // N11N
         log.debug("New name: {}", newUserName);
         if (newUserName.length() == 0) {
             log.debug("new user name is empty");
@@ -883,8 +881,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected void okAddPressed(ActionEvent e) {
         NamedBean nb;
         String manuPrefix = _editor.getSwitchManu();
-        String user = userName.getText().trim();
-        if (user.equals("")) {
+        String user = userName.getText();
+        if (user.trim().equals("")) {
             user = null;
         }
         String sName = sysName.getText(); // can't be changed, but pick it up from panel

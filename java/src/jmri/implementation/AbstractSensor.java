@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
- * <p>
- * Sensor system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */

@@ -328,8 +328,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
         Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
          */
-        Warrant startW = _model.getWarrant(_startWarrant.getText().trim());
-        Warrant endW = _model.getWarrant(_endWarrant.getText().trim());
+        Warrant startW = _model.getWarrant(_startWarrant.getText());
+        Warrant endW = _model.getWarrant(_endWarrant.getText());
         if (startW == null || endW == null) {
             showWarning("BadWarrantNames");
             return;

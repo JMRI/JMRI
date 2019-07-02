@@ -3,8 +3,6 @@ package apps;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 
 /**
  * Trigger file for Cucumber tests.
@@ -26,6 +24,7 @@ import org.junit.BeforeClass;
 @CucumberOptions(plugin = {"junit:cucumber-results.xml","progress","json:cucumber-results.json"},
                  features="java/acceptancetest/features/apps",
                  tags = {"not @webtest", "not @Ignore", "not @ignore"},
-                 glue = {"apps","jmri"} )
+                 glue = {"apps"})
 public class RunCucumberTest {
+
 }

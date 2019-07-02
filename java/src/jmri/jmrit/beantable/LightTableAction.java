@@ -52,6 +52,7 @@ import jmri.LightManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.LightControl;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.ConnectionNameFromSystemName;
@@ -921,7 +922,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         status1.setText("");
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
-        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
+        String curAddress = hardwareAddressTextField.getText();
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
@@ -936,7 +937,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setBackground(Color.white);
         }
         String suName = lightPrefix + curAddress;
-        String uName = userName.getText().trim(); // N11N
+        String uName = userName.getText();
         if (uName.isEmpty()) {
             uName = null;   // a blank field means no user name
         }
@@ -1044,14 +1045,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
             // convert numerical hardware address
             try {
-                startingAddress = Integer.parseInt(hardwareAddressTextField.getText().trim()); // N11N
+                startingAddress = Integer.parseInt(hardwareAddressTextField.getText());
 
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert '{}' to a number.", hardwareAddressTextField.getText().trim());
+                log.error("Unable to convert '{}' to a number.", hardwareAddressTextField.getText());
                 return;
             }
             // check that requested address range is available
@@ -1112,7 +1113,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
         }
         // provide feedback to user
-        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getFullyFormattedDisplayName();
+        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // create additional lights if requested
         if (numberOfLights > 1) {
             String sxName = "";
@@ -1245,7 +1246,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
     void updatePressed(ActionEvent e) {
         Light g = curLight;
         // Check if the User Name has been changed
-        String uName = userName.getText().trim(); // N11N
+        String uName = userName.getText();
         if (uName.isEmpty()) {
             uName = null; // a blank field means no user name
         }
@@ -1355,9 +1356,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private boolean inEditControlMode = false;
     private LightControl lc = null;
     private final NamedBeanComboBox<Sensor> sensor1Box = new NamedBeanComboBox<>( // Sensor (1 or only)
-            InstanceManager.sensorManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Sensor> sensor2Box = new NamedBeanComboBox<>( // Sensor 2
-            InstanceManager.sensorManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
 
     private SpinnerNumberModel fastHourSpinnerModel1 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
     private final JSpinner fastHourSpinner1 = new JSpinner(fastHourSpinnerModel1); // Fast Clock1 hours
@@ -1366,9 +1367,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private final JLabel clockSep1 = new JLabel(" : ");
 
     private final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>( // Turnout
-            InstanceManager.turnoutManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.turnoutManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Sensor> sensorOnBox = new NamedBeanComboBox<>( // Timed ON
-            InstanceManager.sensorManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // for 1 sensor
     private final JLabel f1aLabel = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", " 2"))); // for 2nd sensor
 

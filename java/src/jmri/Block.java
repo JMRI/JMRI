@@ -110,11 +110,11 @@ import org.slf4j.LoggerFactory;
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public Block(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     static final public int OCCUPIED = Sensor.ACTIVE;
@@ -130,7 +130,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     // this should only be used for debugging...
     public String toDebugString() {
-        String result = getFullyFormattedDisplayName() + " ";
+        String result = getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME) + " ";
         switch (getState()) {
             case UNDETECTED: {
                 result += "UNDETECTED";

@@ -144,7 +144,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
      * special logic
      *
-     * @param name  system name of Conditional (must be trimmed and upper case)
+     * @param name  system name of Conditionals
      * @return the parent Logix or null
      */
     @Override

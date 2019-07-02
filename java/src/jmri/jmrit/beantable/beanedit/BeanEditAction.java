@@ -37,6 +37,7 @@ import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandleManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JmriJFrame;
@@ -380,7 +381,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
 
     public void save() {
         String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
-                + " " + bean.getFullyFormattedDisplayName();
+                + " " + bean.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // provide feedback to user, can be overwritten by save action error handler
         statusBar.setText(feedback);
         statusBar.setForeground(Color.gray);
