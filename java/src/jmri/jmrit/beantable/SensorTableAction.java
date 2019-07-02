@@ -238,8 +238,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String uName = userNameField.getText().trim();
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String uName = userNameField.getText();
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));

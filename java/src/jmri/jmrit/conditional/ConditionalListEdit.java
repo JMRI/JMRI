@@ -8,11 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -35,10 +34,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Audio;
 import jmri.Conditional;
-import jmri.Conditional.State;
 import jmri.Conditional.Operator;
+import jmri.Conditional.State;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
@@ -50,7 +53,6 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
@@ -58,11 +60,9 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.*;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The traditional list based conditional editor based on the original editor
@@ -1277,7 +1277,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // Check if the User Name has been changed
-        String uName = _conditionalUserName.getText().trim(); // N11N
+        String uName = _conditionalUserName.getText();
         if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
             if (!checkConditionalUserName(uName, _curLogix)) {
@@ -2123,7 +2123,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Update the name combo box selection based on the current contents of the
-     * name field. Called by {@link #variableItemChanged(Conditional.ItemType)}.
+     * name field.
      *
      * @since 4.7.3
      * @param itemType The type of name box to be created.
@@ -2137,7 +2137,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         _comboNameBox.addActionListener(new NameBoxListener(_variableNameField));
-        _comboNameBox.setSelectedBeanByName(_curVariable.getName());
+        _comboNameBox.setSelectedItemByName(_curVariable.getName());
         _variableComboNamePanel.remove(1);
         _variableComboNamePanel.add(_comboNameBox, null, 1);
         _variableNamePanel.setVisible(false);
@@ -3375,7 +3375,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_comboNameBox == null) {
             return;
         }
-        _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
+        _comboNameBox.setSelectedItemByName(_curAction.getDeviceName());
         _comboNameBox.addActionListener(new NameBoxListener(_actionNameField));
         _actionComboNamePanel.remove(1);
         _actionComboNamePanel.add(_comboNameBox, null, 1);
@@ -4205,11 +4205,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
             } else if (col == UNAME_COLUMN) {
                 String uName = (String) value;
-                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName.trim()); // N11N
+                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName);
                 if (cn == null) {
                     String sName = _curLogix.getConditionalByNumberOrder(row);
                     Conditional cdl = _conditionalManager.getBySystemName(sName);
-                    cdl.setUserName(uName.trim()); // N11N
+                    cdl.setUserName(uName);
                     fireTableRowsUpdated(row, row);
 
                     // Update any conditional references

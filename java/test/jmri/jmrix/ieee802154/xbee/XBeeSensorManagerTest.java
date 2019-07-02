@@ -45,7 +45,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t ,l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -54,8 +54,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide("ASNode 1:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNODE 1:2"));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNode 1:2"));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide("AS00 02:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t,l.getBySystemName("AS00 02:2"));
     }
 
@@ -72,7 +72,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide("AS00 13 A2 00 40 A0 4D 2D:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t ,l.getBySystemName("AS00 13 A2 00 40 A0 4D 2D:2"));
     }
 
@@ -82,7 +82,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -99,6 +99,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));

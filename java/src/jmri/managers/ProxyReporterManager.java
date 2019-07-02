@@ -163,7 +163,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
 }

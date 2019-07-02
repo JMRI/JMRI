@@ -133,6 +133,16 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         propertyListenerList.stream().forEach((l) -> {
             m.addPropertyChangeListener(l);
         });
+        namedPropertyVetoListenerMap.entrySet().forEach((e) -> {
+            e.getValue().forEach((l) -> {
+                m.addVetoableChangeListener(e.getKey(), l);
+            });
+        });
+        namedPropertyListenerMap.entrySet().forEach((e) -> {
+            e.getValue().forEach((l) -> {
+                m.addPropertyChangeListener(e.getKey(), l);
+            });
+        });
 
         m.addDataListener(this);
         updateOrderList();
@@ -173,18 +183,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             return t;
         }
         return getBeanBySystemName(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        int index = matchTentative(inputName);
-        if (index >= 0) {
-            return getMgr(index).normalizeSystemName(inputName);
-        }
-        log.debug("normalizeSystemName did not find manager for name {}, defer to default", inputName); // NOI18N
-        return getDefaultManager().normalizeSystemName(inputName);
     }
 
     /**
@@ -232,10 +230,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
         int index = matchTentative(systemName);
         if (index >= 0) {
             Manager<E> m = getMgr(index);
-            return m.getBeanBySystemName(m.normalizeSystemName(systemName));
+            return m.getBeanBySystemName(systemName);
         }
         log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
-        return getDefaultManager().getBeanBySystemName(getDefaultManager().normalizeSystemName(systemName));
+        return getDefaultManager().getBeanBySystemName(systemName);
     }
 
     /** {@inheritDoc} */

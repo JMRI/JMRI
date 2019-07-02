@@ -60,17 +60,17 @@ public class SimpleSensorServer extends AbstractSensorServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor INACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else if (statusString.contains("ACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor ACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else {
             // default case, return status for this sensor/
-            String sensorName = statusString.substring(index,statusString.length()-1).toUpperCase(); // remove the \n
+            String sensorName = statusString.substring(index,statusString.length()-1); // remove the \n
             if( sensorName.contains(" ") ){
                 // remove anything following the space.
                 sensorName = sensorName.substring(0,sensorName.indexOf(" "));

@@ -329,7 +329,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         setButtonStates(false);
         if (sensorA == null) {
             try {
-                sensorA = new SensorDetails((Sensor) sensorAPanel.getNamedBean());
+                sensorA = new SensorDetails(sensorAPanel.getNamedBean());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelStartSensor")));
                 setButtonStates(true);
@@ -338,7 +338,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         } else {
             Sensor tmpSen = null;
             try {
-                tmpSen = (Sensor) sensorAPanel.getNamedBean();
+                tmpSen = sensorAPanel.getNamedBean();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelStartSensor")));
                 setButtonStates(true);
@@ -351,7 +351,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         if (sensorB == null) {
             try {
-                sensorB = new SensorDetails((Sensor) sensorBPanel.getNamedBean());
+                sensorB = new SensorDetails(sensorBPanel.getNamedBean());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelFinishSensor")));
                 setButtonStates(true);
@@ -361,7 +361,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         } else {
             Sensor tmpSen = null;
             try {
-                tmpSen = (Sensor) sensorBPanel.getNamedBean();
+                tmpSen = sensorBPanel.getNamedBean();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelFinishSensor")));
                 setButtonStates(true);
@@ -374,7 +374,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         if (middleBlockSensor == null) {
             try {
-                middleBlockSensor = new SensorDetails((Sensor) sensorCPanel.getNamedBean());
+                middleBlockSensor = new SensorDetails(sensorCPanel.getNamedBean());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelBlockSensor")));
                 setButtonStates(true);
@@ -383,7 +383,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         } else {
             Sensor tmpSen = null;
             try {
-                tmpSen = (Sensor) sensorCPanel.getNamedBean();
+                tmpSen = sensorCPanel.getNamedBean();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelBlockSensor")));
                 setButtonStates(true);

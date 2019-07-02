@@ -173,9 +173,7 @@ public class LnTcpServer {
                     }
                 };
             }
-            InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((manager) -> {
-                manager.register(this.shutDownTask);
-            });
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
 
@@ -205,9 +203,7 @@ public class LnTcpServer {
         if (this.service != null) {
             this.service.stop();
         }
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((manager) -> {
-            manager.deregister(this.shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
     }
 
     private void updateServerStateListeners() {

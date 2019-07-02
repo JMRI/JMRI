@@ -46,7 +46,7 @@ import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -1296,7 +1296,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         if (_autoSystemName.isSelected()) {
             curTransit = transitManager.createNewTransit(uName);
         } else {
-            String sName = InstanceManager.getDefault(jmri.TransitManager.class).normalizeSystemName(sysName.getText());
+            String sName = sysName.getText();
             curTransit = transitManager.createNewTransit(sName, uName);
         }
         if (curTransit == null) {
@@ -1698,7 +1698,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private JmriJFrame addEditActionFrame = null;
     private TransitSectionAction curTSA = null;
     private final JComboBox<String> whenBox = new JComboBox<>();
-    private final JmriBeanComboBox whenSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<Sensor> whenSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
     private final JSpinner whenDataSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65500, 1)); // delay
     private final JComboBox<String> whatBox = new JComboBox<>();
     private final JSpinner whatPercentSpinner = new JSpinner(); // speed
@@ -1715,9 +1715,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
     private final JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
     private JPanel signalPanel;
-    private final JmriBeanComboBox doneSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private final JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private final JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<Sensor> doneSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private void addEditActionWindow() {
         if (addEditActionFrame == null) {
@@ -1745,7 +1745,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             });
             whenBox.setToolTipText(rbx.getString("WhenBoxTip"));
             panel1.add(whenSensorComboBox);
-            whenSensorComboBox.setFirstItemBlank(true);
+            whenSensorComboBox.setAllowNull(true);
             initializeBlockBox();
             panel1.add(blockBox);
             panelx.add(panel1);
@@ -1791,7 +1791,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             signalPanel.setBorder(border);
             signalPanel.add(new JLabel(rbx.getString("MastLabel")));
             signalPanel.add(signalMastComboBox);
-            signalMastComboBox.setFirstItemBlank(true);
+            signalMastComboBox.setAllowNull(true);
             signalMastComboBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1802,7 +1802,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             });
             signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
             signalPanel.add(signalHeadComboBox);
-            signalHeadComboBox.setFirstItemBlank(true);
+            signalHeadComboBox.setAllowNull(true);
             signalHeadComboBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1822,7 +1822,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panel21.add(offButton);
             panel21.add(doneSensorLabel);
             panel21.add(doneSensorComboBox);
-            doneSensorComboBox.setFirstItemBlank(true);
+            doneSensorComboBox.setAllowNull(true);
             panelx.add(panel21);
             contentPane.add(panelx);
             contentPane.add(new JSeparator());
@@ -1863,7 +1863,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             updateActionButton.setVisible(true);
             createActionButton.setVisible(false);
             whenDataSpinner.setValue(curTSA.getDataWhen());
-            whenSensorComboBox.setSelectedBeanByName(curTSA.getStringWhen());
+            whenSensorComboBox.setSelectedItemByName(curTSA.getStringWhen());
             // spinners are set in setWhat()
             whatStringField.setText(curTSA.getStringWhat());
             onButton.setSelected(true);
@@ -1984,7 +1984,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 break;
             case TransitSectionAction.TOMANUALMODE:
                 if (editActionMode) {
-                    doneSensorComboBox.setSelectedBeanByName(curTSA.getStringWhat());
+                    doneSensorComboBox.setSelectedItemByName(curTSA.getStringWhat());
                 }
                 doneSensorLabel.setVisible(true);
                 doneSensorComboBox.setVisible(true);
@@ -2044,7 +2044,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.SETSENSORACTIVE:
             case TransitSectionAction.SETSENSORINACTIVE:
                 if (editActionMode) {
-                    doneSensorComboBox.setSelectedBeanByName(curTSA.getStringWhat());
+                    doneSensorComboBox.setSelectedItemByName(curTSA.getStringWhat());
                 }
                 doneSensorComboBox.setVisible(true);
                 doneSensorComboBox.setToolTipText(rbx.getString("HintSensorEntry"));
@@ -2055,12 +2055,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     SignalMast sm = null;
                     sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(curTSA.getStringWhat());
                     if (sm != null) { // name is an existing mast
-                        signalMastComboBox.setSelectedBeanByName(curTSA.getStringWhat());
+                        signalMastComboBox.setSelectedItemByName(curTSA.getStringWhat());
                     } else {
                         SignalHead sh = null;
                         sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(curTSA.getStringWhat());
                         if (sh != null) { // name is an existing head
-                            signalHeadComboBox.setSelectedBeanByName(curTSA.getStringWhat());
+                            signalHeadComboBox.setSelectedItemByName(curTSA.getStringWhat());
                         }
                     }
                 }
@@ -2132,7 +2132,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         tWhenString = "";
         if ((tWhen == TransitSectionAction.SENSORACTIVE) || (tWhen == TransitSectionAction.SENSORINACTIVE)) {
             if (whenSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0
-                tWhenString = whenSensorComboBox.getSelectedSystemName();
+                tWhenString = whenSensorComboBox.getSelectedItemSystemName();
             }
             if (!validateSensor(tWhenString, true)) {
                 return false;
@@ -2162,9 +2162,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         if (!sName.equals(s.getUserName())) {
             if (when) {
-                tWhenString = sName.toUpperCase();
+                tWhenString = sName;
             } else {
-                tWhatString = sName.toUpperCase();
+                tWhatString = sName;
             }
         }
         return true;
@@ -2213,7 +2213,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 break;
             case TransitSectionAction.TOMANUALMODE:
                 if (doneSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0
-                    tWhatString = doneSensorComboBox.getSelectedSystemName(); // sensor system name
+                    tWhatString = doneSensorComboBox.getSelectedItemSystemName(); // sensor system name
                 }
                 if (tWhatString.length() >= 1) {
                     if (!validateSensor(tWhatString, false)) {
@@ -2243,7 +2243,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                tWhatString = tWhatString.trim().toLowerCase(); // N11N
+                tWhatString = tWhatString.trim().toLowerCase();
                 for (int i = 0; i < tWhatString.length(); i++) {
                     char c = tWhatString.charAt(i);
                     if ((c != 's') && (c != 'l')) {
@@ -2264,7 +2264,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.SETSENSORACTIVE:
             case TransitSectionAction.SETSENSORINACTIVE:
                 if (doneSensorComboBox.getSelectedIndex() != 0) {
-                    tWhatString = doneSensorComboBox.getSelectedSystemName();
+                    tWhatString = doneSensorComboBox.getSelectedItemSystemName();
                 }
                 if (!validateSensor(tWhatString, false)) {
                     return false;
@@ -2273,9 +2273,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.HOLDSIGNAL:
             case TransitSectionAction.RELEASESIGNAL:
                 if (signalMastComboBox.getSelectedIndex() != 0) {
-                    tWhatString = signalMastComboBox.getSelectedSystemName();
+                    tWhatString = signalMastComboBox.getSelectedItemSystemName();
                 } else if (signalHeadComboBox.getSelectedIndex() != 0) {
-                    tWhatString = signalHeadComboBox.getSelectedSystemName();
+                    tWhatString = signalHeadComboBox.getSelectedItemSystemName();
                 }
                 if (!validateSignal(tWhatString, false)) {
                     return false;

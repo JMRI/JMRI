@@ -67,7 +67,7 @@ public class OBlockManager extends AbstractManager<OBlock>
                 return null;
             }
         }
-        String sName = systemName.toUpperCase();
+        String sName = systemName;
         if (!sName.startsWith("OB")) {
             return null;
         }
@@ -101,17 +101,10 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     public OBlock getBySystemName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            return null;
-        }
-        String key = name.toUpperCase();
-        return _tsys.get(key);
+        return _tsys.get(name);
     }
 
     public OBlock getByUserName(String key) {
-        if (key == null || key.trim().length() == 0) {
-            return null;
-        }
         return  _tuser.get(key);
     }
 
@@ -131,7 +124,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameOBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameOBlocks" : "BeanNameOBlock");
     }
 }

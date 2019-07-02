@@ -50,6 +50,13 @@ After that, add and commit the additional files that were created within lib/
 - from https://github.com/rhwood/jsplitbutton
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1
 
+##### jinputvalidator-0.4.0.jar
+- version 0.4.0
+- provides validation for JComponents
+- contributed by Randall Wood
+- from https://github.com/rhwood/jinputvalidator
+- javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0
+
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3

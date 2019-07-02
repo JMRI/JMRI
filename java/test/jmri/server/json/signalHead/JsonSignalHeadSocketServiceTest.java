@@ -84,7 +84,7 @@ public class JsonSignalHeadSocketServiceTest {
         }
 
         // trap JsonException error
-        http.setThrowException(true);
+        http.setThrowException(1);
         s.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(() -> {
             return s.getState() == SignalHead.GREEN;
@@ -137,8 +137,8 @@ public class JsonSignalHeadSocketServiceTest {
         Assert.assertEquals("One SignalHead", 1, message.size());
 
         // trap JsonException error
-        http.setThrowException(true);
-        manager.register(s1);
+        http.setThrowException(2);
+        manager.register(s1); // triggers two change reports
         message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals("Deliberately thrown error", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
@@ -209,7 +209,7 @@ public class JsonSignalHeadSocketServiceTest {
 
     private static class TestJsonSignalHeadHttpService extends JsonSignalHeadHttpService {
 
-        private boolean throwException = false;
+        private int throwException = 0;
 
         public TestJsonSignalHeadHttpService(ObjectMapper mapper) {
             super(mapper);
@@ -217,14 +217,14 @@ public class JsonSignalHeadSocketServiceTest {
 
         @Override
         public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-            if (throwException) {
-                throwException = false;
+            if (throwException > 0) {
+                throwException--;
                 throw new JsonException(499, "Mock Exception", id);
             }
             return super.doGet(type, name, data, locale, id);
         }
 
-        public void setThrowException(boolean throwException) {
+        public void setThrowException(int throwException) {
             this.throwException = throwException;
         }
 

@@ -831,16 +831,14 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     private transient jmri.implementation.AbstractShutDownTask task = null;
 
     protected void setShutDownTask() {
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdm -> {
-            task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
-                @Override
-                public boolean execute() {
-                    handleModified();
-                    return true;
-                }
-            };
-            sdm.register(task);
-        });
+        task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
+            @Override
+            public boolean execute() {
+                handleModified();
+                return true;
+            }
+        };
+        InstanceManager.getDefault(ShutDownManager.class).register(task);
     }
 
     protected boolean reuseFrameSavedPosition = true;
