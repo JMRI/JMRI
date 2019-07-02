@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -11,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -30,16 +33,26 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
     private JRadioButton _noButton;
+    private boolean _canEdit;
 
     private PortalList _portalList;
-
-    static int STRUT_SIZE = 10;
-    static Point _loc = new Point(-1, -1);
-    static Dimension _dim = null;
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
+        _canEdit = _parent.queryConvertTrackIcons(block, "PortalOrPath");
+        String msg = null;
+        if (_canEdit) {
+            msg = _parent.checkForPortals(block, "BlockPaths");
+            _canEdit = false;
+        }
+        if (msg == null) {
+            msg = _parent.checkForPortalIcons(block, "BlockPaths");
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private JPanel makeArrowPanel() {
@@ -134,8 +147,14 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
             java.util.List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
-            for (PortalIcon icon : piArray) {
-                setPortalIcon(icon, false);
+            if (piArray.isEmpty()) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getDisplayName()),
+                        Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+                clearListSelection();
+            } else {
+                for (PortalIcon icon : piArray) {
+                    setPortalIcon(icon, false);
+                }
             }
         }
     }
@@ -166,6 +185,10 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     }
 
     protected void setPortalIcon(PortalIcon icon, boolean setValue) {
+        if (!_canEdit) {
+            closingEvent(true);
+            return;
+        }
         _parent._editor.highlight(icon);
         if (_icon != null) {
             _icon.setStatus(PortalIcon.VISIBLE);
@@ -191,7 +214,19 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     }
 
     protected void closingEvent(boolean close) {
-        closingEvent(close, null);
+        String msg = null;
+        if(!_parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath")) {
+            close = true;
+        } else {
+            msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
+            if (msg == null) {
+                msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
+            }
+            if (msg != null) {
+                close = true;
+            }
+        }
+        closingEvent(close, msg);
     }
 
     protected OBlock getHomeBlock() {

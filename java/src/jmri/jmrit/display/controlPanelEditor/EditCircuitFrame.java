@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import jmri.Sensor;
+import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
@@ -44,6 +45,7 @@ public class EditCircuitFrame extends EditFrame {
 
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
+        updateContentPanel();
         pack();
     }
 
@@ -190,7 +192,8 @@ public class EditCircuitFrame extends EditFrame {
     }
 
     private void convertIcons() {
-        _parent.convertIcons(_parent._editor.getSelectionGroup());
+        _parent.setIconGroup(_homeBlock);
+        _parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath");
         this.toFront();
     }
 
@@ -237,7 +240,7 @@ public class EditCircuitFrame extends EditFrame {
         }
     }
 
-    protected void updateContentPanel() {
+    private void updateContentPanel() {
         updateIconList(_parent._editor.getSelectionGroup());
         String name = "";
         Sensor sensor = _homeBlock.getSensor();
@@ -293,8 +296,12 @@ public class EditCircuitFrame extends EditFrame {
     }
 
     protected void closingEvent(boolean close) {
-        String msg = _parent.setIconGroup(_homeBlock);
-        if (msg == null) {
+        _parent.setIconGroup(_homeBlock);
+        boolean iconsConverted = _parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath");
+        String msg = null;
+        if(!iconsConverted) {
+            close = true;
+        } else {
             String name = _length.getText();
             try {
                 float f = Float.parseFloat(name);
@@ -313,13 +320,8 @@ public class EditCircuitFrame extends EditFrame {
                 msg = Bundle.getMessage("MustBeFloat", name);
             }
         }
-        if (msg == null) {
-            if (!_parent.iconsConverted(_homeBlock)) {
-                msg = Bundle.getMessage("pathsNeedConversion");
-            }
-        }
         // check Sensors
-        if (msg == null) {
+        if (iconsConverted && msg == null) {
             msg = checkForSensors();
         }
         closingEvent(close, msg);

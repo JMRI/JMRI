@@ -325,7 +325,7 @@ public abstract class ItemPanel extends JPanel {
             log.debug("resize by {} Dim= ({}, {}) \"{}\" OldDim= ({}, {}) NewDim= ({}, {})",
                     (isPalette?"TabPane":"JFrame"), totalDim.width, totalDim.height,
                     this._itemType, oldDim.width, oldDim.height, newDim.width, newDim.height);
-        if (_update) {
+        if (_update || _initialized) {
             _paletteFrame.reSize(_paletteFrame, deltaDim, newDim, _editor);                            
         } else if (isPalette && _initialized) {
             _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim, _editor);            

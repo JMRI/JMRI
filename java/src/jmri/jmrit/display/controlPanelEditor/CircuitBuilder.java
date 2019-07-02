@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.SortedSet;
 
 import javax.annotation.Nonnull;
@@ -41,27 +40,19 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalMast;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Editor.TargetPane;
 import jmri.jmrit.display.IndicatorTrack;
-import jmri.jmrit.display.IndicatorTrackIcon;
-import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.TurnoutIcon;
-import jmri.jmrit.display.palette.FamilyItemPanel;
-import jmri.jmrit.display.palette.IndicatorItemPanel;
-import jmri.jmrit.display.palette.IndicatorTOItemPanel;
-import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,7 +92,7 @@ public class CircuitBuilder {
     // list of misplaced PortalIcons
     private final ArrayList<PortalIcon> _misplacedPortalIcon = new ArrayList<>();
 
-    // map of PortalIcons by portal name
+    // map of PortalIcons by portal. A Portal may have 2 icons to connect non-adjacent blocks
     private final HashMap<Portal, ArrayList<PortalIcon>> _portalIconMap = new HashMap<>();
     
     // map of SignalMastIcon by Mast name
@@ -123,15 +114,6 @@ public class CircuitBuilder {
 
     // "Editing Frames" - Called from menu in Main Frame
     private EditFrame _editFrame;
-    /*
-    private EditCircuitFrame _editCircuitFrame;
-    private EditPortalFrame _editPortalFrame;
-    private EditCircuitPaths _editPathsFrame;
-    private EditPortalDirection _editDirectionFrame;
-    private EditSignalFrame _editSignalFrame;*/
-
-    // list of all icons associated with a circuit (OBlock) currently being edited
-    private ArrayList<Positionable> _circuitIcons;
 
     private final JTextField _sysNameBox = new JTextField();
     private final JTextField _userNameBox = new JTextField();
@@ -439,7 +421,7 @@ public class CircuitBuilder {
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);
-                targetPane.setHighlightColor(_editGroupColor);
+                targetPane.setHighlightColor(_highlightColor);
                 _editFrame = new EditCircuitFrame(Bundle.getMessage("newCircuitItem"), this, _currentBlock);
             }
         }
@@ -455,7 +437,7 @@ public class CircuitBuilder {
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);
-                targetPane.setHighlightColor(_editGroupColor);
+                targetPane.setHighlightColor(_highlightColor);
                 _editFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
             } else if (!fromMenu) {
                 selectPrompt();
@@ -481,11 +463,7 @@ public class CircuitBuilder {
                 editCircuitDialog(title);
             }
             if (_currentBlock != null) {
-                _circuitIcons = getCircuitIcons(_currentBlock);
                 // check icons to be indicator type
-                if (!iconsConverted(_currentBlock)) {
-                    queryConvertIcons(_currentBlock);
-                }
                 _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true, false));
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
@@ -515,7 +493,6 @@ public class CircuitBuilder {
             _currentBlock = block;
             if (_currentBlock != null) {
                 _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true, false));
-                _circuitIcons = getCircuitIcons(_currentBlock);
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);
@@ -533,11 +510,6 @@ public class CircuitBuilder {
                 editCircuitDialog(title);
             }
             if (_currentBlock != null) {
-                _circuitIcons = getCircuitIcons(_currentBlock);
-                // check icons to be indicator type
-                if (!iconsConverted(_currentBlock)) {
-                    queryConvertIcons(_currentBlock);
-                }
                 _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true, false));
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
@@ -557,11 +529,7 @@ public class CircuitBuilder {
                 editCircuitDialog(title);
             }
             if (_currentBlock != null) {
-                _circuitIcons = getCircuitIcons(_currentBlock);
                 // check icons to be indicator type
-                if (!iconsConverted(_currentBlock)) {
-                    queryConvertIcons(_currentBlock);
-                }
                 _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true, false));
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
@@ -581,23 +549,16 @@ public class CircuitBuilder {
             }
             if (_currentBlock != null) {
                 // check icons to be indicator type
-                _circuitIcons = getCircuitIcons(_currentBlock);
                 // must have converted icons for paths
-                if (!iconsConverted(_currentBlock)) {
-                    JOptionPane.showMessageDialog(_editor,
-                            Bundle.getMessage("needConversion", _currentBlock.getDisplayName(), Bundle.getMessage("ButtonEdit"), Bundle.getMessage("EditTrackSegment")),
-                            Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true, false));
-                    // A temporary path "TEST_PATH" is used to display the icons representing a path
-                    _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
-                    _editor.disableMenus();
-                    TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
-                    targetPane.setSelectGroupColor(_editGroupColor);
-                    targetPane.setHighlightColor(_editGroupColor);
-                    _currentBlock.setState(OBlock.UNOCCUPIED);
-                    _editFrame = new EditCircuitPaths(Bundle.getMessage("OpenPathTitle"), this, _currentBlock);
-                }
+                _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true, false));
+                // A temporary path "TEST_PATH" is used to display the icons representing a path
+                _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
+                _editor.disableMenus();
+                TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
+                targetPane.setSelectGroupColor(_editGroupColor);
+                targetPane.setHighlightColor(_editGroupColor);
+                _currentBlock.setState(OBlock.UNOCCUPIED);
+                _editFrame = new EditCircuitPaths(Bundle.getMessage("OpenPathTitle"), this, _currentBlock);
             } else if (!fromMenu) {
                 selectPrompt();
             }
@@ -834,12 +795,10 @@ public class CircuitBuilder {
 
     ////////////////////////// Closing Editing Frames //////////////////////////
     /**
-     * Edit frame closing, set block's icons
+     * Edit frame closing, set block's icons to support OBlock's state changes
      * @param block OBlock to set icon selections into data maps
-     * @return error message, if any
      */
-    protected String setIconGroup(OBlock block) {
-        java.util.List<Positionable> selections = _editor.getSelectionGroup();
+    protected void setIconGroup(OBlock block) {
         for (Positionable pos : getCircuitIcons(block)) {
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack) pos).setOccBlockHandle(null);
@@ -847,23 +806,22 @@ public class CircuitBuilder {
         }
         // the selectionGroup for all edit frames is full collection of icons
         // comprising the block.  Gather them and store in the block's hashMap
+        List<Positionable> selections = _editor.getSelectionGroup();
         List<Positionable> icons = getCircuitIcons(block);
-        if (selections == null || selections.size() == 0) {
-             return Bundle.getMessage("needIcons", block.getDisplayName());
-        }
-        NamedBeanHandle<OBlock> handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(block.getSystemName(), block);
-        for (int i = 0; i < selections.size(); i++) {
-            Positionable pos = selections.get(i);
-            if (pos instanceof IndicatorTrack) {
-                ((IndicatorTrack) pos).setOccBlockHandle(handle);
-            }
-            icons.add(pos);
+        icons.clear();
+        if (!selections.isEmpty()) {
+            NamedBeanHandle<OBlock> handle = 
+                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(block.getSystemName(), block);
+             for (Positionable pos : selections) {
+                 if (pos instanceof IndicatorTrack) {
+                     ((IndicatorTrack) pos).setOccBlockHandle(handle);
+                 }
+                 icons.add(pos);
+             }
         }
         if (log.isDebugEnabled()) {
             log.debug("setIconGroup: block \"{}\" has {} icons.", block.getDisplayName(), icons.size());
         }
-        return null;
     }
 
     protected SignalMast getProtectingSignal(OBlock block, Portal portal) {
@@ -883,7 +841,6 @@ public class CircuitBuilder {
 
     protected void closeCircuitBuilder(OBlock block) {
         _currentBlock = null;
-        _circuitIcons = null;
         _editFrame = null;
         checkCircuits();
         setPortalsPositionable(block, false);
@@ -1113,10 +1070,6 @@ public class CircuitBuilder {
         return array;
     }
 
-    protected ArrayList<Positionable> getCircuitGroup() {
-        return _circuitIcons;
-    }
-
     @Nonnull 
     protected List<PortalIcon> getPortalIconMap(@Nonnull Portal portal) {
         ArrayList<PortalIcon> array = _portalIconMap.get(portal);
@@ -1135,12 +1088,6 @@ public class CircuitBuilder {
             _signalIconMap.put(mast, array);
         }
         return array;
-    }
-
-    protected void removeIcon(PortalIcon icon) {
-        if (_editFrame != null && _editFrame instanceof EditPortalFrame) {
-            ((EditPortalFrame)_editFrame).deletePortalIcon(icon);
-        }
     }
 
     /**
@@ -1165,214 +1112,136 @@ public class CircuitBuilder {
         }
     }
 
-     /********************* convert plain track to indicator track
-      * */
-    FamilyItemPanel _trackPanel;
-    IndicatorTOItemPanel _trackTOPanel;
-    PositionableLabel _oldIcon;
-    ConvertFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
-
-    /**
-     * Check if the block being edited has all its icons converted to indicator
-     * icons
-     * @param block OBlock to check
-     * @return true if all track icons are all Indicator Track icons
-     */
-    protected boolean iconsConverted(OBlock block) {
-        if (block == null) {
-            return true;
-        }
-        for (Positionable pos : getCircuitIcons(block)) {
-            if (!(pos instanceof IndicatorTrack) && !(pos instanceof PortalIcon)) {
-                if (log.isDebugEnabled()) {
-                    log.debug("icon needs Convertion " + pos.getClass().getName());
-                }
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Icons need conversion. ask if user wants to convert them
-     */
-    private void queryConvertIcons(OBlock block) {
-        if (block == null) {
-            return;
-        }
-        if (!getCircuitIcons(block).isEmpty()) {
-            int result = JOptionPane.showConfirmDialog(_editor, Bundle.getMessage("notIndicatorIcon"),
-                    Bundle.getMessage("incompleteCircuit"), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
-                convertIcons(getCircuitIcons(block));
-            }
+    protected String checkForPortals(@Nonnull OBlock block, String key) {
+        List<Portal> portals = block.getPortals();
+        if (portals.isEmpty()) {
+            return Bundle.getMessage("needPortal", block.getDisplayName(), Bundle.getMessage(key));
         } else {
-            JOptionPane.showMessageDialog(_editor, Bundle.getMessage("needIcons", block.getDisplayName()),
-                    Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
-    protected void convertIcons(List<Positionable> iconList) {
-        if (iconList == null || iconList.isEmpty()) {
-            return;
-        }
-        // since iconList will be modified, use a copy to find unconverted icons
-        ArrayList<Positionable> list = new ArrayList<>(iconList);
-        if (list.size() > 0) {
-            TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
-            targetPane.setHighlightColor(_highlightColor);
-
-            for (int i = 0; i < list.size(); i++) {
-                Positionable pos = list.get(i);
-                if (!(pos instanceof IndicatorTrack) && !(pos instanceof PortalIcon) && !(pos instanceof SignalMastIcon)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("convertIcons: #" + i + " pos= " + pos.getClass().getName());
-                    }
-                    convertIcon(pos);
+            for (Portal portal : portals) {
+                if (portal.getToBlock() == null || portal.getFromBlock() == null) {
+                    return  Bundle.getMessage("portalNeedsBlock", portal.getDisplayName());
                 }
             }
-            targetPane.setHighlightColor(_editGroupColor);
-            _editor.highlight(null);
+            for (Portal portal : portals) {
+                if (!block.equals(portal.getToBlock()) && !block.equals(portal.getFromBlock())) {
+                    return Bundle.getMessage("portalNotInCircuit", portal.getDisplayName(), block.getDisplayName());
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Check that there is at least one PortalIcon
+     * @param block check icons of this block
+     * @param key properties key
+     * @return true if at least one PortalIcon found
+     */
+    protected String checkForPortalIcons(@Nonnull OBlock block, String key) {
+        List<Portal> portals = block.getPortals();
+        for (Portal portal : portals) {
+            List<PortalIcon> iconMap = getPortalIconMap(portal);
+            if (iconMap.isEmpty()) {
+                return Bundle.getMessage("noPortalIcon", portal.getName(), Bundle.getMessage(key));
+            } else {
+                for (PortalIcon icon : iconMap) {
+                    Portal p = icon.getPortal();
+                    if (p == null) {
+                        deletePortalIcon(icon);
+                    } else if (_editFrame instanceof EditPortalFrame) {
+                        return ((EditPortalFrame)_editFrame).checkPortalIconForUpdate(icon, false);
+                    } 
+                }
+            }
+        }
+        // block has pPortals
+        boolean ok = false;
+        List<Positionable> list = getCircuitIcons(block);
+        if (!list.isEmpty()) {
+            for (Positionable pos : list) {
+                if ((pos instanceof PortalIcon)) {
+                    ok = true;
+                }
+            }
+        }
+        if (!ok) {
+            return Bundle.getMessage("needPortalIcons", block.getDisplayName(), Bundle.getMessage(key));
+        }
+        return null;
+    }
+ 
+    protected void deletePortalIcon(PortalIcon icon) {
+        if (log.isDebugEnabled()) {
+            log.debug("deletePortalIcon: " + icon.getName());
+        }
+        Portal portal = icon.getPortal();
+        if (portal != null) {
+            getCircuitIcons(portal.getToBlock()).remove(icon);
+            getCircuitIcons(portal.getFromBlock()).remove(icon);
+            getPortalIconMap(portal).remove(icon);
+        }
+        List<Positionable> selections = _editor.getSelectionGroup();
+        if (selections != null) {
+            _editor.getSelectionGroup().remove(icon);
+        }
+        _editor.repaint();
+    }
+
+    /**
+      * Check if the block being edited has all its track icons converted to indicator icons
+     * If icons need conversion. ask if user wants to convert them
+     * @param block OBlock to check
+     * @param key properties key
+     * @return true if all track icons are IndicatorTrack icons
+     */
+    protected boolean queryConvertTrackIcons(@Nonnull OBlock block, String key) {
+        // since iconList will be modified, use a copy to find unconverted icons
+        ArrayList<Positionable> list = new ArrayList<>(getCircuitIcons(block));
+        String msg = null;
+        if (list.isEmpty()) {
+            msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key));
+        } else {
+            for (Positionable p : list) {
+                PositionableLabel pos = (PositionableLabel) p;
+               if (!(pos instanceof IndicatorTrack) && !(pos instanceof PortalIcon) && !(pos instanceof SignalMastIcon)) {
+                   if (CircuitBuilder.isUnconvertedTrack(pos)) {
+                       _editor.highlight(pos);
+                       int result = JOptionPane.showConfirmDialog(_editFrame, Bundle.getMessage("notIndicatorIcon"),
+                                Bundle.getMessage("incompleteCircuit"), JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE);
+                       if (result == JOptionPane.YES_OPTION) {
+                            convertIcon(pos, block);
+                       } else {
+                            msg = Bundle.getMessage("cantSaveIcon", Bundle.getMessage(key));
+                            _editor.highlight(null);
+                       }
+                   }
+                }
+            }
+            if (msg != null) {
+                msg.concat(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
+            }
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(_editFrame, msg,
+                    Bundle.getMessage("noIcons"), JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        } else {
+            return true;
         }
     }
 
     /**
      * Converts icon to IndicatorTrack
      */
-    private void convertIcon(Positionable p) {
-        PositionableLabel pos = (PositionableLabel) p;
-        _oldIcon = pos;
-        _editor.highlight(_oldIcon);
+    private void convertIcon(PositionableLabel pos, OBlock block) {
         _editor.toFront();
         _editor.repaint();
-        if (pos instanceof TurnoutIcon) {
-            _convertFrame = new ConvertFrame("IndicatorTO", pos);
-            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame._paletteFrame, "IndicatorTO", null, null, _editor);
-            ActionListener updateAction = (ActionEvent a) -> {
-                convertTO();
-            };
-            initConvertFrame(_trackTOPanel, updateAction);
-        } else {
-            _convertFrame = new ConvertFrame("IndicatorTrack", pos);
-            _trackPanel = new IndicatorItemPanel(_convertFrame._paletteFrame, "IndicatorTrack", null, _editor);
-            ActionListener updateAction = (ActionEvent a) -> {
-                convertSeg();
-            };
-            initConvertFrame(_trackPanel, updateAction);
-        }
+        new ConvertDialog(this, pos, block);
         _editor.repaint();
     }
 
 
-    private void initConvertFrame(ItemPanel itemPanel, ActionListener updateAction) {
-        itemPanel.init(updateAction);
-        Dimension dim = itemPanel.getPreferredSize();
-        JScrollPane sp = new JScrollPane(itemPanel);
-        dim = new Dimension(dim.width +25, dim.height + 25);
-        sp.setPreferredSize(dim);
-        _convertFrame._dialog.add(sp);
-        _convertFrame._dialog.pack();
-        _convertFrame._dialog.setVisible(true);
-    }
-
-    /*
-     * gimmick to get JDialog to wait until user makes a decision to convert each track icon.
-     * Holding the modal dialog does the trick.
-     * Also does re-layout contents and repaint
-     */
-    class ConvertFrame extends JmriJFrame {
-
-        JDialog _dialog;
-        DisplayFrame _paletteFrame;
-
-        ConvertFrame(String title, PositionableLabel pos) {
-            super(false, false);
-            jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
-            _paletteFrame = pos.makePaletteFrame(title);
-            _dialog = new JDialog(_editor, java.text.MessageFormat.format(
-                    Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
-
-            _dialog.setLocationRelativeTo(_editor);
-            _dialog.toFront();
-        }
-
-        @Override
-        public void dispose() {
-            _dialog.dispose();
-            super.dispose();
-        }
-    }
-
-    private void convertTO() {
-        IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
-        t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
-        t.setTurnout(((TurnoutIcon) _oldIcon).getNamedTurnout());
-        t.setFamily(_trackTOPanel.getFamilyName());
-
-        HashMap<String, HashMap<String, NamedIcon>> iconMap = _trackTOPanel.getIconMaps();
-        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
-            String status = entry.getKey();
-            Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, NamedIcon> ent = iter.next();
-                t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
-            }
-        }
-        t.setLevel(Editor.TURNOUTS);
-        t.setScale(_oldIcon.getScale());
-        t.rotate(_oldIcon.getDegrees());
-        finishConvert(t);
-    }
-
-    private void convertSeg() {
-        IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
-        t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
-        t.setFamily(_trackPanel.getFamilyName());
-
-        HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            if (log.isDebugEnabled()) {
-                log.debug("key= " + entry.getKey());
-            }
-            t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
-        }
-        t.setLevel(Editor.TURNOUTS);
-        t.setScale(_oldIcon.getScale());
-        t.rotate(_oldIcon.getDegrees());
-        finishConvert(t);
-    }
-
-    /*
-     * Replace references to _oldIcon with pos
-     */
-    private void finishConvert(Positionable pos) {
-        ArrayList<Positionable> selectionGroup = _editor.getSelectionGroup();
-        selectionGroup.remove(_oldIcon);
-        selectionGroup.add(pos);
-        _circuitIcons.remove(_oldIcon);
-        _circuitIcons.add(pos);
-        pos.setLocation(_oldIcon.getLocation());
-        _oldIcon.remove();
-        _editor.putItem(pos);
-        pos.updateSize();
-
-        _oldIcon = null;
-        _trackPanel = null;
-        _trackTOPanel = null;
-        _convertFrame.dispose();
-        _convertFrame = null;
-    }
-
-    /**
-     * ************* end convert icons ******************
-     */
     /**
      * ************** select - deselect track icons ***********************
      */
@@ -1422,7 +1291,7 @@ public class CircuitBuilder {
         return false;
     }
 
-    private static boolean isUnconvertedTrack(Positionable pos) {
+    protected static boolean isUnconvertedTrack(Positionable pos) {
         if (pos instanceof IndicatorTrack) {
             return false;
         } else if (pos instanceof TurnoutIcon) {
@@ -1515,7 +1384,7 @@ public class CircuitBuilder {
 
     public boolean doMouseReleased(Positionable selection, boolean dragging) {
         if (_editFrame != null) {
-            if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
+            if (selection instanceof PortalIcon && getCircuitIcons(_editFrame._homeBlock).contains(selection)) {
                 if (_editFrame instanceof EditSignalFrame) {
                     ((EditSignalFrame)_editFrame).setSelected((PortalIcon)selection);
                 } else if (_editFrame instanceof EditPortalFrame) {
@@ -1682,12 +1551,13 @@ public class CircuitBuilder {
             EditPortalDirection editDirectionFrame = (EditPortalDirection)_editFrame;
             if (selection instanceof PortalIcon) {
                 PortalIcon icon = (PortalIcon) selection;
-                if (_circuitIcons.contains(selection)) {
+                if (getCircuitIcons(_editFrame._homeBlock).contains(selection)) {
                     editDirectionFrame.setPortalIcon(icon, true);
                 } else {
                     editDirectionFrame.setPortalIcon(null, false);
+                    Portal p = icon.getPortal();
                     JOptionPane.showMessageDialog(editDirectionFrame, Bundle.getMessage("iconNotOnBlock",
-                            editDirectionFrame.getHomeBlock().getDisplayName(), icon.getPortal().getDescription()),
+                            editDirectionFrame.getHomeBlock().getDisplayName(), p.getDescription()),
                             Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
@@ -1761,7 +1631,7 @@ public class CircuitBuilder {
                     if (_which == NONE) {
                         newCircuit();
                     } else if (_which == OBLOCK) {
-                        editCircuit("editCircuitItem", true);
+                        editCircuit("editCircuitItem", false);
                     } else if (_which == PORTAL) {
                         editPortals("editPortalsItem", false);
                     } else if (_which == OPATH) {

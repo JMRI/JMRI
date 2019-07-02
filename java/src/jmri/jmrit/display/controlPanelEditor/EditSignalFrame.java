@@ -8,6 +8,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -34,10 +35,21 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     private JTextField _mastName;
     private PortalList _portalList;
     OpenPickListButton<SignalMast> _pickTable;
+    private boolean _canEdit;
 
     public EditSignalFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
+        _canEdit = _parent.queryConvertTrackIcons(block, "PortalOrPath");
+        String msg = null;
+        if (_canEdit) {
+            msg = _parent.checkForPortals(block, "ItemTypeSignalMast");
+            _canEdit = false;
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @Override
@@ -92,6 +104,10 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     }
 
     protected void setSelected(PortalIcon icon) {
+        if (!_canEdit) {
+            closingEvent(true);
+            return;
+        }
         Portal portal = icon.getPortal();
         _portalList.setSelectedValue(portal, true);
         if (log.isDebugEnabled()) {
@@ -143,13 +159,13 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
 
     protected void closingEvent(boolean close) {
         String msg = null;
-        java.util.List<Portal> portals = _homeBlock.getPortals();
-        if (log.isDebugEnabled()) {
-            log.debug("checkPortalIcons: block {} has {} portals",
-                    _homeBlock.getDisplayName(), portals.size());
-        }
-        if (portals.size() == 0) {
-            msg = Bundle.getMessage("needPortal", _homeBlock.getDisplayName());
+        if(!_parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath")) {
+            close = true;
+        } else {
+            msg = _parent.checkForPortals(_homeBlock, "ItemTypeSignalMast");
+            if (msg != null) {
+                close = true;
+            }
         }
         closingEvent(close, msg);
     }

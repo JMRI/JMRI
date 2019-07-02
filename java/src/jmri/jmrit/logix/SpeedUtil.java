@@ -759,7 +759,7 @@ public class SpeedUtil {
             }*/
             // check for legitimate speed - derailing, abort, etc. can make bogus measurement.
             float ratio = getTrackSpeed(aveSettings) / measuredSpeed;
-            if (ratio > 0.0f && (ratio < 0.667f || ratio > 1.5f)) {
+            if (ratio > 0.0f && (ratio < 0.5f || ratio > 2.0f)) {
                 mergeOK = false;    // discard
             }
             measuredSpeed *= 1000;    // SpeedProfile is mm/sec

@@ -156,7 +156,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     @Override
     public void remove() {
-        ((ControlPanelEditor)_editor).getCircuitBuilder().removeIcon(this);
+        ((ControlPanelEditor)_editor).getCircuitBuilder().deletePortalIcon(this);
         super.remove();
     }
 

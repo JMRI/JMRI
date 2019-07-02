@@ -426,11 +426,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int r, int column) {
-            // If table has been sorted, table row no longer is the same as array index
-            int row = r;
-            if (table.getRowSorter() != null) {
-                row = table.convertRowIndexToModel(row);
-            }
             Component component = getComponent();
             if (component instanceof JComboBox<?>) {
                 @SuppressWarnings("unchecked")
@@ -439,6 +434,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 comboBox.insertItemAt((String)value, 0);
                 comboBox.setSelectedIndex(0);
                 if (log.isDebugEnabled()) {
+                    // If table has been sorted, table row no longer is the same as array index
+                    int row = r;
+                    if (table.getRowSorter() != null) {
+                        row = table.convertRowIndexToModel(row);
+                    }
                     WarrantTableModel model = (WarrantTableModel)table.getModel();
                     Warrant warrant = model.getWarrantAt(row);
                     log.debug("getTableCellEditorComponent warrant= {}, selection= {}", 

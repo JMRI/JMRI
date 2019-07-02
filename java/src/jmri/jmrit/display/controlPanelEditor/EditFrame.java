@@ -94,7 +94,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected boolean closingEvent(boolean close, String msg) {
         if (msg != null) {
             if (close) {
-                JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 StringBuilder sb = new StringBuilder(msg);
                 sb.append(" ");
