@@ -25,6 +25,7 @@ import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.swing.NamedBeanComboBox;
@@ -53,7 +54,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     JSlider _lineSlider;
     JSlider _alphaSlider;
     private transient NamedBeanComboBox<Sensor> _sensorBox = new NamedBeanComboBox<>(
-        InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     JRadioButton _hideShape;
     JRadioButton _changeLevel;
     JComboBox<String> _levelComboBox;

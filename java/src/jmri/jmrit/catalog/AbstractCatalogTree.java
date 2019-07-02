@@ -108,33 +108,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
     private String comment;
 
-    @CheckReturnValue
-    @Override
-    public String getDisplayName() {
-        String name = getUserName();
-        if (name != null && name.length() > 0) {
-            return name;
-        } else {
-            return getSystemName();
-        }
-    }
-
-    @CheckReturnValue
-    @Override
-    public String getFullyFormattedDisplayName(boolean userNameFirst) {
-        String name = getUserName();
-        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
-            if (userNameFirst) {
-                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, name, getSystemName());
-            } else {
-                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, getSystemName(), name);
-            }
-        } else {
-            name = getSystemName();
-        }
-        return name;
-    }
-
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //  public void firePropertyChange(String propertyName,

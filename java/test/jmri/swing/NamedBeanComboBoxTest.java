@@ -26,6 +26,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.util.JUnitUtil;
 
 /**
@@ -52,7 +53,7 @@ public class NamedBeanComboBoxTest {
         s.setUserName("Sensor 2");
         m.provideSensor("IS3").setUserName("Sensor 3");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s, DisplayOptions.DISPLAYNAME);
 
         assertNotNull("exists", t);
         assertEquals(s, t.getSelectedItem());
@@ -72,7 +73,7 @@ public class NamedBeanComboBoxTest {
         Sensor s3 = m.provideSensor("IS3");
         s3.setUserName("Sensor 3");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s2, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s2, DisplayOptions.DISPLAYNAME);
         assertNotNull("exists", t);
 
         // s2 checked in prior test, change selection without repeating
@@ -96,7 +97,7 @@ public class NamedBeanComboBoxTest {
         Sensor s4 = m.provideSensor("IS4");
         s4.setUserName("Sensor 4");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s2, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s2, DisplayOptions.DISPLAYNAME);
 
         assertEquals(4, t.getItemCount());
         assertEquals(s2, t.getSelectedItem());
@@ -120,27 +121,22 @@ public class NamedBeanComboBoxTest {
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, DisplayOptions.DISPLAYNAME);
         JList<Sensor> l = new JList<>(t.getModel());
         assertNotNull("exists", t);
-        assertEquals(NamedBeanComboBox.DisplayOptions.DISPLAYNAME, t.getDisplayOrder());
+        assertEquals(DisplayOptions.DISPLAYNAME, t.getDisplayOrder());
 
         assertEquals("Sensor 1",
                 ((JLabel) t.getRenderer().getListCellRendererComponent(l, s1, 0, false, false)).getText());
 
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAME);
-        assertEquals(NamedBeanComboBox.DisplayOptions.SYSTEMNAME, t.getDisplayOrder());
+        t.setDisplayOrder(DisplayOptions.SYSTEMNAME);
+        assertEquals(DisplayOptions.SYSTEMNAME, t.getDisplayOrder());
         assertEquals("IS1",
                 ((JLabel) t.getRenderer().getListCellRendererComponent(l, s1, 0, false, false)).getText());
 
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
-        assertEquals(NamedBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME, t.getDisplayOrder());
+        t.setDisplayOrder(DisplayOptions.USERNAME_SYSTEMNAME);
+        assertEquals(DisplayOptions.USERNAME_SYSTEMNAME, t.getDisplayOrder());
         assertEquals("Sensor 1 (IS1)",
-                ((JLabel) t.getRenderer().getListCellRendererComponent(l, s1, 0, false, false)).getText());
-
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
-        assertEquals(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME, t.getDisplayOrder());
-        assertEquals("IS1 (Sensor 1)",
                 ((JLabel) t.getRenderer().getListCellRendererComponent(l, s1, 0, false, false)).getText());
     }
 
@@ -173,7 +169,7 @@ public class NamedBeanComboBoxTest {
         s3.setUserName("Sensor 3");
 
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAME);
+        t.setDisplayOrder(DisplayOptions.SYSTEMNAME);
         t.setAllowNull(true);
         t.setEditable(true);
         JTextField c = ((JTextField) t.getEditor().getEditorComponent());
@@ -192,7 +188,7 @@ public class NamedBeanComboBoxTest {
             SecurityException {
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
+        t.setDisplayOrder(DisplayOptions.USERNAME_SYSTEMNAME);
         t.setAllowNull(true);
         t.setEditable(true);
         t.setProviding(true);
@@ -308,7 +304,7 @@ public class NamedBeanComboBoxTest {
             SecurityException {
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
+        t.setDisplayOrder(DisplayOptions.USERNAME_SYSTEMNAME);
         t.setAllowNull(true);
         t.setEditable(true);
         t.setProviding(false);
@@ -419,26 +415,22 @@ public class NamedBeanComboBoxTest {
         Sensor s4 = m.provideSensor("IS4");
         s4.setUserName("Sensor 4");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, DisplayOptions.DISPLAYNAME);
 
         assertEquals("Sensor 1", t.getSelectedItemDisplayName());
 
         t.setSelectedItem(s2);
         assertEquals(s2, t.getSelectedItem());
 
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAME);
+        t.setDisplayOrder(DisplayOptions.SYSTEMNAME);
         t.setSelectedItem(s3);
         assertEquals(s3, t.getSelectedItem());
 
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+        t.setDisplayOrder(DisplayOptions.USERNAME_SYSTEMNAME);
         t.setSelectedItem(s4);
         assertEquals(s4, t.getSelectedItem());
 
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.SYSTEMNAMEUSERNAME);
-        t.setSelectedItem(s3);
-        assertEquals(s3, t.getSelectedItem());
-
-        t.setDisplayOrder(NamedBeanComboBox.DisplayOptions.USERNAME);
+        t.setDisplayOrder(DisplayOptions.USERNAME);
         t.setSelectedItem(s2);
         assertEquals(s2, t.getSelectedItem());
     }
@@ -449,7 +441,7 @@ public class NamedBeanComboBoxTest {
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, DisplayOptions.DISPLAYNAME);
 
         assertEquals("IS1", t.getSelectedItemDisplayName());
 
@@ -467,7 +459,7 @@ public class NamedBeanComboBoxTest {
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
 
-        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m, s1, DisplayOptions.DISPLAYNAME);
         assertEquals(1, t.getItemCount());
 
         Sensor s2 = m.provideSensor("IS2");

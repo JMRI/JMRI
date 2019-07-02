@@ -45,7 +45,7 @@ public class MatrixSignalMastTest {
 
         Assert.assertEquals("system name", "IF$xsm:basic:one-low($0001)-3t", m.getSystemName());
         Assert.assertEquals("user name", "user", m.getUserName());
-        //System.out.println(it11.getFullyFormattedDisplayName()); //debug
+        //System.out.println(it11.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)); //debug
         Assert.assertEquals("output2", "IT12", m.outputsToBeans.get("output2").getName());
     }
 
