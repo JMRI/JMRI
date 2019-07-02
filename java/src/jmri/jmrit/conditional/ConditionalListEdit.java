@@ -1277,7 +1277,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // Check if the User Name has been changed
-        String uName = _conditionalUserName.getText().trim(); // N11N
+        String uName = _conditionalUserName.getText();
         if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
             if (!checkConditionalUserName(uName, _curLogix)) {
@@ -4249,11 +4249,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
             } else if (col == UNAME_COLUMN) {
                 String uName = (String) value;
-                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName.trim()); // N11N
+                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName);
                 if (cn == null) {
                     String sName = _curLogix.getConditionalByNumberOrder(rx);
                     Conditional cdl = _conditionalManager.getBySystemName(sName);
-                    cdl.setUserName(uName.trim()); // N11N
+                    cdl.setUserName(uName);
                     fireTableRowsUpdated(rx, rx);
 
                     // Update any conditional references

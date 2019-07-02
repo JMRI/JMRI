@@ -370,8 +370,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         box.setSelectedItem(result);
     }
 
-    JTextField _systemName = new JTextField(10); // N11N
-    JTextField _userName = new JTextField(22); // N11N
+    JTextField _systemName = new JTextField(10);
+    JTextField _userName = new JTextField(22);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     jmri.UserPreferencesManager pref;
@@ -839,7 +839,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
         String sName = _systemName.getText();
-        String uName = _userName.getText(); // may be empty // N11N
+        String uName = _userName.getText(); // may be empty
         if (sName.length() == 0) { // show warning in status bar
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
             status1.setForeground(Color.red);

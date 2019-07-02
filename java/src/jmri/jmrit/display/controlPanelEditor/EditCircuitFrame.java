@@ -445,8 +445,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     }
     
     private String checkForSensors() {
-        String name = _detectorSensorName.getText().trim();
-        String errName = _errorSensorName.getText().trim();
+        String name = _detectorSensorName.getText();
+        String errName = _errorSensorName.getText();
         String msg = null;
         if (!_block.setSensor(name)) {
             msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), name);

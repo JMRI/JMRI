@@ -47,11 +47,11 @@ public abstract class AbstractLight extends AbstractNamedBean
         implements Light {
 
     public AbstractLight(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public AbstractLight(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     @Override

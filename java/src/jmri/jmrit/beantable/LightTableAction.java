@@ -921,7 +921,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         status1.setText("");
         String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
         String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
-        String curAddress = hardwareAddressTextField.getText().trim(); // N11N
+        String curAddress = hardwareAddressTextField.getText();
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
@@ -936,7 +936,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setBackground(Color.white);
         }
         String suName = lightPrefix + curAddress;
-        String uName = userName.getText().trim(); // N11N
+        String uName = userName.getText();
         if (uName.isEmpty()) {
             uName = null;   // a blank field means no user name
         }
@@ -1044,14 +1044,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
             // convert numerical hardware address
             try {
-                startingAddress = Integer.parseInt(hardwareAddressTextField.getText().trim()); // N11N
+                startingAddress = Integer.parseInt(hardwareAddressTextField.getText());
 
             } catch (NumberFormatException ex) {
                 status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
-                log.error("Unable to convert '{}' to a number.", hardwareAddressTextField.getText().trim());
+                log.error("Unable to convert '{}' to a number.", hardwareAddressTextField.getText());
                 return;
             }
             // check that requested address range is available
@@ -1245,7 +1245,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
     void updatePressed(ActionEvent e) {
         Light g = curLight;
         // Check if the User Name has been changed
-        String uName = userName.getText().trim(); // N11N
+        String uName = userName.getText();
         if (uName.isEmpty()) {
             uName = null; // a blank field means no user name
         }

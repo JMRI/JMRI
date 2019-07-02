@@ -710,7 +710,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         if (!checkSectionInformation()) {
             return;
         }
-        String uName = userName.getText().trim(); // N11N
+        String uName = userName.getText();
         if (uName.equals("")) {
             uName = null;
         }

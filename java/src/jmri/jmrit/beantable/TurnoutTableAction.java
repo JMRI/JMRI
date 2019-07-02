@@ -1699,7 +1699,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
-        String curAddress = hardwareAddressTextField.getText(); // N11N
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -1710,7 +1710,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             hardwareAddressTextField.setBackground(Color.white);
         }
 
-        String uName = userNameTextField.getText().trim(); // N11N
+        String uName = userNameTextField.getText();
         if (uName.isEmpty()) {
             uName = null;
         }

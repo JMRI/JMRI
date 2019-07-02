@@ -4220,7 +4220,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // get reporter name
         Reporter reporter = null;
-        String rName = reporterNameField.getText().trim();
+        String rName = reporterNameField.getText();
 
         if (InstanceManager.getNullableDefault(ReporterManager.class) != null) {
             try {
@@ -4232,10 +4232,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            if (!rName.equals(reporter.getDisplayName())) {
-                rName = rName.toUpperCase();
-            }
         } else {
             JOptionPane.showMessageDialog(enterReporterFrame,
                     Bundle.getMessage("Error17"), Bundle.getMessage("ErrorTitle"),
@@ -4245,7 +4241,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         //add the reporter icon
-        addReporter(rName, xx, yy);
+        addReporter(reporter, xx, yy);
 
         //success - repaint the panel
         redrawPanel();
@@ -8650,9 +8646,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Add a Reporter Icon to the panel
      */
-    void addReporter(@Nonnull String textReporter, int xx, int yy) {
+    void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
-        l.setReporter(textReporter);
+        l.setReporter(reporter);
         l.setLocation(xx, yy);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(Editor.LABELS);

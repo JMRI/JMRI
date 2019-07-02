@@ -27,7 +27,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
-        mSystemName = sysname.toUpperCase();
+        mSystemName = sysname;
         // use this form to prevent subclass from overriding setUserName
         // during construction
         AbstractCatalogTree.this.setUserName(username);

@@ -34,12 +34,12 @@ public class DefaultIdTag extends AbstractIdTag {
     private int currentState = UNKNOWN;
 
     public DefaultIdTag(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         setWhereLastSeen(null);
     }
 
     public DefaultIdTag(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         setWhereLastSeen(null);
     }
 

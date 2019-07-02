@@ -33,8 +33,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical turnout on the layout.
- * <p>
- * Turnout system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */

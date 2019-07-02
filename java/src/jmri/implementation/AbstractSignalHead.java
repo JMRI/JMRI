@@ -6,8 +6,6 @@ import jmri.Turnout;
 
 /**
  * Abstract class providing the basic logic of the SignalHead interface.
- * <p>
- * SignalHead system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */

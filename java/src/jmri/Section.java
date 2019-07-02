@@ -86,16 +86,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This Section implementation provides for delayed initialization of blocks and
  * direction sensors to be independent of order of items in panel files.
- * <p>
- * This file is part of JMRI.
- * <p>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Dave Duchamp Copyright (C) 2008,2010
  */
@@ -121,11 +111,11 @@ public class Section extends AbstractNamedBean {
     public static final int REVERSE = 0X08;
 
     public Section(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public Section(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     /**
@@ -378,7 +368,7 @@ public class Section extends AbstractNamedBean {
             return null;
         }
         if (!tempSensorName.equals(s.getUserName())) {
-            tempSensorName = tempSensorName.toUpperCase();
+            tempSensorName = s.getUserName();
         }
         return s;
     }

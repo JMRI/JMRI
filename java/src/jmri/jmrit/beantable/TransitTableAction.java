@@ -2162,9 +2162,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         if (!sName.equals(s.getUserName())) {
             if (when) {
-                tWhenString = sName.toUpperCase();
+                tWhenString = sName;
             } else {
-                tWhatString = sName.toUpperCase();
+                tWhatString = sName;
             }
         }
         return true;
@@ -2243,7 +2243,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
-                tWhatString = tWhatString.trim().toLowerCase(); // N11N
+                tWhatString = tWhatString.trim().toLowerCase();
                 for (int i = 0; i < tWhatString.length(); i++) {
                     char c = tWhatString.charAt(i);
                     if ((c != 's') && (c != 'l')) {

@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * implemented, instead of being system-specific.
  * <p>
  * Note that Section system names must begin with IY, and be followed by a
- * string, usually, but not always, a number. All alphabetic characters in a
- * Section system name must be upper case. This is enforced when a Section is
+ * string, usually, but not always, a number. This is enforced when a Section is
  * created.
  * <br>
  * <hr>
@@ -84,16 +83,12 @@ public class SectionManager extends AbstractManager<Section> implements Property
                 return null;
             }
         }
-        String sName = sysName.toUpperCase().trim();
         y = getBySystemName(sysName);
-        if (y == null) {
-            y = getBySystemName(sName);
-        }
         if (y != null) {
             return null;
         }
         // Section does not exist, create a new Section
-        y = new Section(sName, userName);
+        y = new Section(sysName, userName);
         // save in the maps
         register(y);
         /*The following keeps trace of the last created auto system name.
@@ -151,8 +146,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
         return getBySystemName(name);
     }
 
-    public Section getBySystemName(String name) {
-        String key = name.toUpperCase();
+    public Section getBySystemName(String key) {
         return _tsys.get(key);
     }
 

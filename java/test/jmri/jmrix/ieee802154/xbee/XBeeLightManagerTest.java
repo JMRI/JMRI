@@ -51,7 +51,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provide("ALNode 1:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ALNODE 1:2"));
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ALNode 1:2"));
     }
 
     @Test
