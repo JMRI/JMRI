@@ -319,7 +319,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient JMenu toolBarFontSizeMenu = new JMenu(Bundle.getMessage("FontSize"));
     private transient JCheckBoxMenuItem wideToolBarCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ToolBarWide"));
-    private transient JMenu dropDownListsDisplayOrderMenu = new JMenu(Bundle.getMessage("DropDownListsDisplayOrder"));
 
     private transient JCheckBoxMenuItem positionableCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem controlCheckBoxMenuItem = null;
