@@ -346,7 +346,7 @@ public class AcelaNode extends AbstractNode {
         int newbitNumber = 0;
         newbitNumber = bitNumber - startingOutputAddress;
         byte testByte = outputArray[newbitNumber];
-        return  (testByte == 0);
+        return  (testByte != 0);
     }
 
     /**
@@ -682,7 +682,7 @@ public class AcelaNode extends AbstractNode {
         //  If we are going to do a bulk command then the address will be
         //  the starting address.  If we are not going to do a bulk command
         //  then the address will start from the starting address.
-        Integer tempint = (Integer) startingOutputAddress;
+        Integer tempint = startingOutputAddress;
         addrlo = tempint.byteValue();
 
         // For each nodetype set up variables that will end up in the msg
@@ -733,7 +733,7 @@ public class AcelaNode extends AbstractNode {
                     // Need to adjust addr to address the actual output
                     // circuit rather than the starting output address
                     // That it currently points to.
-                    Integer tempaddr = (Integer) c + addrlo;
+                    Integer tempaddr = c + addrlo;
                     addrlo = tempaddr.byteValue();
 
                     // Reset the needtosend flag for this output circuit
