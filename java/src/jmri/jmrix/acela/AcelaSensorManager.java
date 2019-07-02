@@ -46,8 +46,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
-        // validate the system name, and normalize it
-        String sName = normalizeSystemName(systemName);
+        // TODO: validate the system name
+        String sName = systemName;
         if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Acela Sensor system name: {}", systemName);
@@ -104,17 +104,6 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**

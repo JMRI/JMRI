@@ -17,11 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 import java.util.Map.Entry;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -71,27 +67,27 @@ import org.slf4j.LoggerFactory;
  */
 public class IconAdder extends JPanel implements ListSelectionListener {
 
-    int ROW_HEIGHT;
+    private int ROW_HEIGHT;
 
     HashMap<String, JToggleButton> _iconMap;
     ArrayList<String> _order;
-    JScrollPane _pickTablePane;
-    PickListModel _pickListModel;
+    private JScrollPane _pickTablePane;
+    private PickListModel _pickListModel;
     CatalogTreeNode _defaultIcons;      // current set of icons user has selected
     JPanel _iconPanel;
-    JPanel _buttonPanel;
-    String _type;
-    boolean _userDefaults;
-    JTextField _sysNametext;
-    Manager _manager;
+    private JPanel _buttonPanel;
+    private String _type;
+    private boolean _userDefaults;
+    protected JTextField _sysNameText; // is set in IconAdderTest
+    //Manager _manager;
     JTable _table;
     JButton _addButton;
-    JButton _addTableButton;
-    JButton _changeButton;
-    JButton _closeButton;
-    CatalogPanel _catalog;
-    JFrame _parent;
-    boolean _allowDeletes;
+    private JButton _addTableButton;
+    private JButton _changeButton;
+    private JButton _closeButton;
+    private CatalogPanel _catalog;
+    private JFrame _parent;
+    private boolean _allowDeletes;
     boolean _update;    // updating existing icon from popup
 
     public IconAdder() {
@@ -147,11 +143,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     private CatalogTreeNode getDefaultIconNodeFromMap() {
         log.debug("getDefaultIconNodeFromMap for node= {}, _order.size()= {}", _type, _order.size());
         _defaultIcons = new CatalogTreeNode(_type);
-        Iterator<Entry<String, JToggleButton>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, JToggleButton> e = it.next();
-            NamedIcon icon = (NamedIcon) e.getValue().getIcon();
-            _defaultIcons.addLeaf(new CatalogTreeLeaf(e.getKey(), icon.getURL(), _order.indexOf(e.getKey())));
+        for (Map.Entry<String, JToggleButton> entry : _iconMap.entrySet()) {
+            NamedIcon icon = (NamedIcon) entry.getValue().getIcon();
+            _defaultIcons.addLeaf(new CatalogTreeLeaf(entry.getKey(), icon.getURL(), _order.indexOf(entry.getKey())));
         }
         return _defaultIcons; // may return null Node
     }
@@ -308,6 +302,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             try {
                 labelName = Bundle.getMessage(key);
             } catch (java.util.MissingResourceException mre) {
+                log.warn("doIconPanel() property key {} missing", key);
             }
             p.add(new JLabel(labelName));
             p.add(_iconMap.get(key));
@@ -479,16 +474,18 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
             this.revalidate();
-            log.debug("getTableSelection: row= {}, bean= {}", row, b.getDisplayName());
+            if (b != null) {
+                log.debug("getTableSelection: row = {}, bean = {}", row, b.getDisplayName());
+            }
             return b;
         } else {
-            log.debug("getTableSelection: row= 0");
+            log.debug("getTableSelection: row = 0");
         }
         return null;
     }
 
     /**
-     * Returns a new NamedIcon object for your own use.
+     * Get a new NamedIcon object for your own use.
      *
      * @param key Name of key (label)
      * @return Unique object
@@ -499,33 +496,31 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     /**
-     * Returns a new Hashtable of only the icons selected for display.
+     * Get a new Hashtable of only the icons selected for display.
      *
      * @return a map of icons using the icon labels as keys
      */
     public Hashtable<String, NamedIcon> getIconMap() {
         log.debug("getIconMap: _allowDeletes= {}", _allowDeletes);
         Hashtable<String, NamedIcon> iconMap = new Hashtable<>();
-        Iterator<String> iter = _iconMap.keySet().iterator();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            JToggleButton button = _iconMap.get(key);
-            log.debug("getIconMap: key= {}, button.isSelected()= {}", key, button.isSelected());
+        for (Map.Entry<String, JToggleButton> entry : _iconMap.entrySet()) {
+            JToggleButton button = entry.getValue();
+            log.debug("getIconMap: key= {}, button.isSelected()= {}", entry.getKey(), button.isSelected());
             if (!_allowDeletes || !button.isSelected()) {
-                iconMap.put(key, new NamedIcon((NamedIcon) button.getIcon()));
+                iconMap.put(entry.getKey(), new NamedIcon((NamedIcon) button.getIcon()));
             }
         }
         return iconMap;
     }
 
     /*
-     * Supports selection of NamedBean from a pick list table.
+     * Support selection of NamedBean from a pick list table.
      *
      * @param addIconAction ActionListener that adds an icon to the panel -
-     * representing either an entity as pick list selection, an
-     * arbitrary image, or a value, such as a memory value
+     *          representing either an entity as pick list selection, an
+     *          arbitrary image, or a value, such as a memory value
      * @param changeIconAction ActionListener that displays sources from
-     * which to select an image file
+     *          which to select an image file
      */
     public void complete(ActionListener addIconAction, boolean changeIcon,
             boolean addToTable, boolean update) {
@@ -538,20 +533,20 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         if (addToTable) {
-            _sysNametext = new JTextField();
-            _sysNametext.setPreferredSize(
-                    new Dimension(150, _sysNametext.getPreferredSize().height + 2));
+            _sysNameText = new JTextField();
+            _sysNameText.setPreferredSize(
+                    new Dimension(150, _sysNameText.getPreferredSize().height + 2));
             _addTableButton = new JButton(Bundle.getMessage("addToTable"));
             _addTableButton.addActionListener((ActionEvent a) -> {
                 addToTable();
             });
             _addTableButton.setEnabled(false);
             _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
-            p.add(_sysNametext);
-            _sysNametext.addKeyListener(new KeyAdapter() {
+            p.add(_sysNameText);
+            _sysNameText.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyReleased(KeyEvent a) {
-                    if (_sysNametext.getText().length() > 0) {
+                    if (_sysNameText.getText().length() > 0) {
                         _addTableButton.setEnabled(true);
                         _addTableButton.setToolTipText(null);
                         _table.clearSelection();
@@ -624,14 +619,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     void addToTable() {
-        String name = _sysNametext.getText();
+        String name = _sysNameText.getText();
         if (name != null && name.length() > 0) {
             NamedBean bean = _pickListModel.addBean(name);
-            int setRow = _pickListModel.getIndexOf(bean);
-            _table.setRowSelectionInterval(setRow, setRow);
-            _pickTablePane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+            if (bean != null) {
+                int setRow = _pickListModel.getIndexOf(bean);
+                _table.setRowSelectionInterval(setRow, setRow);
+                _pickTablePane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
+            }
         }
-        _sysNametext.setText("");
+        _sysNameText.setText("");
         _addTableButton.setEnabled(false);
         _addTableButton.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
     }

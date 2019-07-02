@@ -3,8 +3,7 @@ package apps;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.*;
 
 /**
  * Trigger file for Cucumber tests.
@@ -28,4 +27,14 @@ import org.junit.BeforeClass;
                  tags = {"not @webtest", "not @Ignore", "not @ignore"},
                  glue = {"apps","jmri"} )
 public class RunCucumberTest {
+
+    @BeforeClass
+    public static void setUpClass() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }
