@@ -98,19 +98,6 @@ public class UsbLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @param systemName the system name to normalize
-     * @return a normalized system name if system name has a valid format, else
-     *         returns ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        log.debug("*    UsbLightManager.normalizeSystemName() called");
-        return _memo.normalizeSystemName(systemName);
-    }
-
-    /**
      * Public method to convert system name to its alternate format
      *
      * @param systemName the system name to convert

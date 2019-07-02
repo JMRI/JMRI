@@ -59,14 +59,6 @@ public class ProxyLightManagerTest {
     }
 
     @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideLight("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
     public void testProvideFailure() {
         boolean correct = false;
         try {

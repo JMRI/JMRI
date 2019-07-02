@@ -19,11 +19,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractSensor(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override

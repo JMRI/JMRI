@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -20,6 +22,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
 import jmri.util.NamedBeanComparator;
 import jmri.util.PropertyChangeListenerScaffold;
+import jmri.util.ThreadingUtil;
 import jmri.util.junit.rules.RetryRule;
 
 /**
@@ -314,6 +317,58 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(Sensor.UNKNOWN, t.getState());
         ti.sendMessage(":X19544123N0102030405060709;");
         Assert.assertEquals(Sensor.INACTIVE, t.getState());
+    }
+
+    /**
+     * In this test we simulate the following scenario: A sensor T that is being changed locally
+     * by JMRI (e.g. due to a panel icon action), which triggers a Logix, and in that Logix there
+     * is an action that sets a second Sensor U.
+     * We check that the messages sent to the layout are in the order of T:=Active, U:=Active.
+     * There was a multiple-year-long regression that caused these two events to be sent to the
+     * network out of order (U first then T).
+     *
+     * @throws JmriException
+     */
+    @Test
+    public void testListenerOutOfOrder() throws JmriException {
+        final OlcbSensor u = new OlcbSensor("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", ti.iface);
+        u.finishLoad();
+        t.setKnownState(Sensor.INACTIVE);
+        u.setKnownState(Sensor.INACTIVE);
+
+        ti.clearSentMessages();
+
+        t.addPropertyChangeListener("KnownState", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
+                try {
+                    u.setKnownState(Sensor.ACTIVE);
+                } catch (JmriException e) {
+                    Assert.fail("failed sending dependent sensor message: " + e);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        ThreadingUtil.runOnLayout(new ThreadingUtil.ThreadAction() {
+            @Override
+            public void run() {
+                try {
+                    t.setKnownState(Sensor.ACTIVE);
+                } catch (JmriException e) {
+                    Assert.fail("failed sending main sensor message: " + e);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
+        Assert.assertEquals(Sensor.ACTIVE, u.getKnownState());
+
+        // Ensures that the last sent message is U==Active. Particularly important that it is NOT
+        // the message ending with 0708.
+        ti.assertSentMessage(":X195B4C4CN010203040506070A;");
     }
 
     @Test

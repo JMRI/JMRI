@@ -514,13 +514,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     private JTextField systemNameTextField = new JTextField(5);
     private JTextField userNameTextField = new JTextField(10);
     private JTextField ato1TextField = new JTextField(5);
-    private BeanSelectCreatePanel to1;
-    private BeanSelectCreatePanel to2;
-    private BeanSelectCreatePanel to3;
-    private BeanSelectCreatePanel to4;
-    private BeanSelectCreatePanel to5;
-    private BeanSelectCreatePanel to6;
-    private BeanSelectCreatePanel to7;
+    private BeanSelectCreatePanel<Turnout> to1;
+    private BeanSelectCreatePanel<Turnout> to2;
+    private BeanSelectCreatePanel<Turnout> to3;
+    private BeanSelectCreatePanel<Turnout> to4;
+    private BeanSelectCreatePanel<Turnout> to5;
+    private BeanSelectCreatePanel<Turnout> to6;
+    private BeanSelectCreatePanel<Turnout> to7;
 
     private FlowLayout defaultFlow = new FlowLayout(FlowLayout.CENTER, 5, 0);
 
@@ -1172,12 +1172,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
     }
 
     private boolean checkBeforeCreating(String sysName) {
-        String sName;
         if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
-            sName = sysName;
             try {
                 Integer.parseInt(sysName.substring(sysName.indexOf("$") + 1, sysName.length()));
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{"Hardware Address"});
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1186,35 +1184,34 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             }
 
         } else {
-            sName = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(sysName);
 
             boolean ok = true;
             try {
-                int i = jmri.Manager.getSystemPrefixLength(sName);
-                if (sName.length() < i+2) {
+                int i = jmri.Manager.getSystemPrefixLength(sysName);
+                if (sysName.length() < i+2) {
                     ok = false;
                 } else {
-                    if (!sName.substring(i, i+1).equals("H")) ok = false;
+                    if (!sysName.substring(i, i+1).equals("H")) ok = false;
                 }
             } catch (NamedBean.BadSystemNameException e) {
                 ok = false;
             }
             if (!ok) {
-                String msg = Bundle.getMessage("InvalidSignalSystemName", new Object[]{sName});
+                String msg = Bundle.getMessage("InvalidSignalSystemName", new Object[]{sysName});
                 JOptionPane.showMessageDialog(addFrame, msg,
                         Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
         // check for pre-existing signal head with same system name
-        SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sName);
+        SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getBySystemName(sysName);
         // return true if signal head does not exist
         if (s == null) {
             //Need to check that the Systemname doesn't already exists as a UserName
-            SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sName);
+            SignalHead nB = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(sysName);
             if (nB != null) {
-                log.error("System name is not unique " + sName + " It already exists as a User name");
-                String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sName)});
+                log.error("System name is not unique " + sysName + " It already exists as a User name");
+                String msg = Bundle.getMessage("WarningSystemNameAsUser", new Object[]{("" + sysName)});
                 JOptionPane.showMessageDialog(editFrame, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -1223,8 +1220,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             return true;
         }
         // inform the user if signal head already exists, and return false so creation can be bypassed
-        log.warn("Attempt to create signal with duplicate system name " + sName);
-        String msg = Bundle.getMessage("DuplicateSignalSystemName", new Object[]{sName});
+        log.warn("Attempt to create signal with duplicate system name " + sysName);
+        String msg = Bundle.getMessage("DuplicateSignalSystemName", new Object[]{sysName});
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
         return false;
@@ -1263,7 +1260,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void addTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
-        String msg = Bundle.getMessage("AddNoTurnout", new Object[]{s1, s2});
+        String msg = Bundle.getMessage("AddNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(addFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
@@ -1281,7 +1278,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 handleSE8cOkPressed();
             } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
                 String inputusername = userNameTextField.getText();
-                String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(ato1TextField.getText());
+                String inputsysname = ato1TextField.getText();
                 int headnumber;
                 //int aspecttype;
 
@@ -1349,7 +1346,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     log.warn("must supply a signalhead number (i.e. GH23)");
                     return;
                 }
-                String inputsysname = InstanceManager.getDefault(SignalHeadManager.class).normalizeSystemName(systemNameTextField.getText());
+                String inputsysname = systemNameTextField.getText();
                 int offset = jmri.Manager.getSystemPrefixLength(inputsysname);
                 if (!inputsysname.substring(0, 1).equals("G") || !inputsysname.substring(offset, offset + 1).equals("H")) { // TODO add real check for G123H
                     log.warn("skipping creation of signal head, '{}' does not start with GxH", inputsysname);
@@ -1587,12 +1584,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
         if (prefix != null) {
             systemNameText = ConnectionNameFromSystemName.getPrefixFromName(prefix);
         }
-        if (systemNameText == null) {
-            log.error("could not retrieve systemName");
-            return;
-        }
         // if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
-        if (systemNameText.equals("\0")) {
+        if (systemNameText == null) {
             systemNameText = "I";
         }
         systemNameText = systemNameText + "H$" + systemNameTextField.getText();
@@ -1781,13 +1774,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private JTextField etot = new JTextField(5);
 
-    private BeanSelectCreatePanel eto1;
-    private BeanSelectCreatePanel eto2;
-    private BeanSelectCreatePanel eto3;
-    private BeanSelectCreatePanel eto4;
-    private BeanSelectCreatePanel eto5;
-    private BeanSelectCreatePanel eto6;
-    private BeanSelectCreatePanel eto7;
+    private BeanSelectCreatePanel<Turnout> eto1;
+    private BeanSelectCreatePanel<Turnout> eto2;
+    private BeanSelectCreatePanel<Turnout> eto3;
+    private BeanSelectCreatePanel<Turnout> eto4;
+    private BeanSelectCreatePanel<Turnout> eto5;
+    private BeanSelectCreatePanel<Turnout> eto6;
+    private BeanSelectCreatePanel<Turnout> eto7;
 
     private JPanel ev1Panel = new JPanel();
     private JPanel ev2Panel = new JPanel();
@@ -2670,7 +2663,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
     private void noTurnoutMessage(String s1, String s2) {
         log.warn("Could not provide turnout " + s2);
-        String msg = Bundle.getMessage("WarningNoTurnout", new Object[]{s1, s2});
+        String msg = Bundle.getMessage("WarningNoTurnout", s1, s2);
         JOptionPane.showMessageDialog(editFrame, msg,
                 Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
     }
@@ -2800,27 +2793,25 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
      * @param title      for warning pane
      * @return The newly defined output as Turnout object
      */
-    protected Turnout updateTurnoutFromPanel(BeanSelectCreatePanel bp, String reference, Turnout oldTurnout, String title) {
+    protected Turnout updateTurnoutFromPanel(BeanSelectCreatePanel<Turnout> bp, String reference, Turnout oldTurnout, String title) {
         Turnout newTurnout = getTurnoutFromPanel(bp, reference);
         if (newTurnout == null) {
             noTurnoutMessage(title, bp.getDisplayName());
         }
-        else {
-            String comment = newTurnout.getComment();
-            if (comment == null || comment.isEmpty()) {
+        String comment;
+        if (newTurnout != null) {
+            comment = newTurnout.getComment();
+            if  (comment == null || comment.isEmpty()) {
                 newTurnout.setComment(reference); // enter turnout application description into new turnout Comment
             }
         }
         if (oldTurnout == null || newTurnout == oldTurnout) {
             return newTurnout;
         }
-        String oldComment = oldTurnout.getComment();
-        if ((oldComment != null) && (reference != null)) {
-            if (oldComment.equals(reference)) {
-                // won't delete old Turnout Comment if Locale or Bundle was changed since filling it in
-                // user could have typed something in the Comment as well
-                oldTurnout.setComment(null); // deletes current Comment in bean
-            }
+        comment = oldTurnout.getComment();
+        if (comment != null && comment.equals(reference)) {
+            // wont delete old Turnout Comment if Locale or Bundle was changed in between, but user could have type something in the Comment as well
+            oldTurnout.setComment(null); // deletes current Comment in bean
         }
         return newTurnout;
     }
@@ -2832,13 +2823,13 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
      * @param reference Turnout application description
      * @return The new output as Turnout object
      */
-    protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel bp, String reference) {
+    protected Turnout getTurnoutFromPanel(BeanSelectCreatePanel<Turnout> bp, String reference) {
         if (bp == null) {
             return null;
         }
         bp.setReference(reference); // pass turnout application description to be put into turnout Comment
         try {
-            return (Turnout) bp.getNamedBean();
+            return bp.getNamedBean();
         } catch (jmri.JmriException ex) {
             log.warn("skipping creation of turnout not found for " + reference);
             return null;

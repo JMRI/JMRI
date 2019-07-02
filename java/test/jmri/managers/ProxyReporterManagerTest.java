@@ -70,14 +70,6 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
     }
 
     @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideReporter("" + getNameToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
