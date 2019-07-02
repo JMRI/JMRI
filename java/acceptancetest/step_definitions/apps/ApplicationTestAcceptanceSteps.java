@@ -7,7 +7,6 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.nio.file.Files;
 import java.lang.reflect.Method;
-import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.util.JmriJFrame;
 import jmri.util.MockShutDownManager;
@@ -26,7 +25,7 @@ public class ApplicationTestAcceptanceSteps implements En {
    String[] tags = {"@apptest"};
    File tempFolder;
    
-   public ApplicationTestAcceptanceSteps(jmri.InstanceManager instance) {
+   public ApplicationTestAcceptanceSteps() {
 
    Before(tags,() -> {
       JUnitUtil.setUp();
@@ -75,7 +74,7 @@ public class ApplicationTestAcceptanceSteps implements En {
         dismissClosingDialogs(); // this method starts a new thread
         try {
             // gracefully shutdown, but don't exit
-            ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+            ShutDownManager sdm = jmri.InstanceManager.getDefault(ShutDownManager.class);
             if (sdm instanceof MockShutDownManager) {
                 // ShutDownManagers other than MockShutDownManager really shutdown
                 sdm.shutdown();
