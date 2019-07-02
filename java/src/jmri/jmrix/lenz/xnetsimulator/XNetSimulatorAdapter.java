@@ -311,8 +311,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 break;
             case XNetConstants.EMERGENCY_STOP:
             case XNetConstants.EMERGENCY_STOP_XNETV1V2:
-                reply = okReply();
-                break;
+//                reply = okReply(); // TODO Next occurrence will eventually be replaced
+//                break;
             case XNetConstants.ACC_OPER_REQ:
                 // LZ100 and LZV100 respond with an ACC_INFO_RESPONSE.
                 // but XpressNet standard says to no response (which causes
