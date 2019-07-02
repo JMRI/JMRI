@@ -151,21 +151,25 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public default String getDisplayName(DisplayOptions options) {
         String userName = getUserName();
         String systemName = getSystemName();
+        // since there are two undisplayable states for the user name,
+        // empty or null, if user name is empty, make it null to avoid
+        // repeatedly checking for both those states later
+        if (userName != null && userName.isEmpty()) {
+            userName = null;
+        }
         switch (options) {
             case USERNAME_SYSTEMNAME:
                 return userName != null ? String.format(DISPLAY_NAME_FORMAT, userName, systemName) : systemName;
             case QUOTED_USERNAME_SYSTEMNAME:
-                return userName != null ? String.format(QUOTED_NAME_FORMAT, userName, systemName) : systemName;
+                return userName != null ? String.format(QUOTED_NAME_FORMAT, userName, systemName) : getDisplayName(DisplayOptions.QUOTED_SYSTEMNAME);
             case SYSTEMNAME:
                 return systemName;
             case QUOTED_SYSTEMNAME:
                 return String.format("\"%s\"", systemName);
-            case USERNAME:
-                return userName != null ?  userName : String.format(QUOTED_NAME_FORMAT, "", systemName);
             case QUOTED_USERNAME:
-                return userName != null ? String.format("\"%s\"", userName) : String.format(QUOTED_NAME_FORMAT, "", systemName);
             case QUOTED_DISPLAYNAME:
                 return String.format("\"%s\"", userName != null ? userName : systemName);
+            case USERNAME:
             case DISPLAYNAME:
             default:
                 return userName != null ? userName : systemName;
@@ -204,7 +208,9 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     @CheckReturnValue
     @Nonnull
     @Deprecated
-    public String getFullyFormattedDisplayName(boolean userNameFirst);
+    public default String getFullyFormattedDisplayName(boolean userNameFirst) {
+        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+    }
 
     /**
      * Request a call-back when a bound property changes. Bound properties are
@@ -515,7 +521,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
         USERNAME,
         /**
          * Display the user name in quotes; if the user name is null or empty,
-         * display the system name.
+         * display the system name in quotes.
          */
         QUOTED_USERNAME,
         /**
@@ -531,12 +537,15 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
          */
         QUOTED_SYSTEMNAME,
         /**
-         * Display the user name followed by the system name in parenthesis.
+         * Display the user name followed by the system name in parenthesis. If
+         * the user name is null or empty, display the system name without
+         * parenthesis.
          */
         USERNAME_SYSTEMNAME,
         /**
          * Display the user name in quotes followed by the system name in
-         * parenthesis.
+         * parenthesis. If the user name is null or empty, display the system
+         * name in quotes.
          */
         QUOTED_USERNAME_SYSTEMNAME;
     }
