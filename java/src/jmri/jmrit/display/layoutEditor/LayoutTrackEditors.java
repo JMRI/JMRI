@@ -42,6 +42,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import jmri.*;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
@@ -162,7 +163,7 @@ public class LayoutTrackEditors {
     private JCheckBox editTrackSegmentHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTrack"));  // NOI18N
 
     private NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JTextField editTrackSegmentArcTextField = new JTextField(5);
     private JButton editTrackSegmentSegmentEditBlockButton;
 
@@ -417,13 +418,13 @@ public class LayoutTrackEditors {
     private NamedBeanComboBox<Turnout> editLayoutTurnout2ndTurnoutComboBox = null;
     private JLabel editLayoutTurnout2ndTurnoutLabel = null;
     private NamedBeanComboBox<Block> editLayoutTurnoutBlockNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private NamedBeanComboBox<Block> editLayoutTurnoutBlockBNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private NamedBeanComboBox<Block> editLayoutTurnoutBlockCNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private NamedBeanComboBox<Block> editLayoutTurnoutBlockDNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JComboBox<String> editLayoutTurnoutStateComboBox = new JComboBox<String>();
     private JCheckBox editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTurnout"));  // NOI18N
     private JButton editLayoutTurnoutBlockButton;
@@ -464,7 +465,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout1stTurnoutComboBox = new NamedBeanComboBox<>(
                     InstanceManager.turnoutManagerInstance(),
                     layoutTurnout.getTurnout(),
-                    NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, true, true);
 
             editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox));
@@ -480,7 +481,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout2ndTurnoutComboBox = new NamedBeanComboBox<>(
                     InstanceManager.turnoutManagerInstance(),
                     layoutTurnout.getSecondTurnout(),
-                    NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, true, false);
 
             editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
@@ -919,7 +920,7 @@ public class LayoutTrackEditors {
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutBComboBox;
     private JCheckBox editLayoutSlipHiddenBox = new JCheckBox(Bundle.getMessage("HideSlip"));
     private NamedBeanComboBox<Block> editLayoutSlipBlockNameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private boolean editLayoutSlipOpen = false;
     private boolean editLayoutSlipNeedsRedraw = false;
@@ -949,7 +950,7 @@ public class LayoutTrackEditors {
             editLayoutSlipTurnoutAComboBox = new NamedBeanComboBox<>(
                     InstanceManager.turnoutManagerInstance(),
                     layoutSlip.getTurnout(),
-                    NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, true, true);
 
             editLayoutSlipTurnoutAComboBox.addPopupMenuListener(
@@ -968,7 +969,7 @@ public class LayoutTrackEditors {
             editLayoutSlipTurnoutBComboBox = new NamedBeanComboBox<>(
                     InstanceManager.turnoutManagerInstance(),
                     layoutSlip.getTurnoutB(),
-                    NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, true, true);
 
             editLayoutSlipTurnoutBComboBox.addPopupMenuListener(
@@ -1357,9 +1358,9 @@ public class LayoutTrackEditors {
     private JCheckBox editLevelXingHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideCrossing"));  // NOI18N
 
     private NamedBeanComboBox<Block> editLevelXingBlock1NameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private NamedBeanComboBox<Block> editLevelXingBlock2NameComboBox = new NamedBeanComboBox<>(
-            InstanceManager.getDefault(BlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLevelXingDoneButton;
     private JButton editLevelXingCancelButton;
     private JButton editLevelXingBlock1Button;
@@ -1909,7 +1910,7 @@ public class LayoutTrackEditors {
             turnoutNameComboBox = new NamedBeanComboBox<>(
                     InstanceManager.turnoutManagerInstance(),
                     rayTrack.getTurnout(),
-                    NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(turnoutNameComboBox, true, true);
             turnoutNameComboBox.setSelectedItem(rayTrack.getTurnout());
 

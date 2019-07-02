@@ -12,6 +12,7 @@ import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
@@ -222,7 +223,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         if (namedTurnout == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getTurnout().getFullyFormattedDisplayName();
+            name = getTurnout().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

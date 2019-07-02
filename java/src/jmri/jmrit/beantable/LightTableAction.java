@@ -52,6 +52,7 @@ import jmri.LightManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.LightControl;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.ConnectionNameFromSystemName;
@@ -1112,7 +1113,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
         }
         // provide feedback to user
-        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getFullyFormattedDisplayName();
+        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         // create additional lights if requested
         if (numberOfLights > 1) {
             String sxName = "";
@@ -1355,9 +1356,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private boolean inEditControlMode = false;
     private LightControl lc = null;
     private final NamedBeanComboBox<Sensor> sensor1Box = new NamedBeanComboBox<>( // Sensor (1 or only)
-            InstanceManager.sensorManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Sensor> sensor2Box = new NamedBeanComboBox<>( // Sensor 2
-            InstanceManager.sensorManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
 
     private SpinnerNumberModel fastHourSpinnerModel1 = new SpinnerNumberModel(0, 0, 23, 1); // 0 - 23 h
     private final JSpinner fastHourSpinner1 = new JSpinner(fastHourSpinnerModel1); // Fast Clock1 hours
@@ -1366,9 +1367,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private final JLabel clockSep1 = new JLabel(" : ");
 
     private final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>( // Turnout
-            InstanceManager.turnoutManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.turnoutManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Sensor> sensorOnBox = new NamedBeanComboBox<>( // Timed ON
-            InstanceManager.sensorManagerInstance(), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            InstanceManager.sensorManagerInstance(), null, DisplayOptions.DISPLAYNAME);
     private final JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // for 1 sensor
     private final JLabel f1aLabel = new JLabel(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", " 2"))); // for 2nd sensor
 

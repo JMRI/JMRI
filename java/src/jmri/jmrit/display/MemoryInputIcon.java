@@ -14,6 +14,8 @@ import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean.DisplayOptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,7 +152,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (namedMemory == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getMemory().getFullyFormattedDisplayName();
+            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

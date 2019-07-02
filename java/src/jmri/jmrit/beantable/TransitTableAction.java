@@ -45,6 +45,7 @@ import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
+import jmri.NamedBean.DisplayOptions;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.table.ButtonEditor;
@@ -1698,7 +1699,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private JmriJFrame addEditActionFrame = null;
     private TransitSectionAction curTSA = null;
     private final JComboBox<String> whenBox = new JComboBox<>();
-    private final NamedBeanComboBox<Sensor> whenSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<Sensor> whenSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JSpinner whenDataSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65500, 1)); // delay
     private final JComboBox<String> whatBox = new JComboBox<>();
     private final JSpinner whatPercentSpinner = new JSpinner(); // speed
@@ -1715,9 +1716,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
     private final JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
     private JPanel signalPanel;
-    private final NamedBeanComboBox<Sensor> doneSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<Sensor> doneSensorComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalMast> signalMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalHead> signalHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private void addEditActionWindow() {
         if (addEditActionFrame == null) {

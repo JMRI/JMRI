@@ -2,11 +2,8 @@ package jmri.swing;
 
 import java.awt.Component;
 import java.beans.PropertyChangeListener;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -31,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProvidingManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.util.NamedBeanComparator;
 import jmri.util.NamedBeanUserNameComparator;
 import jmri.util.ThreadingPropertyChangeListener;
@@ -140,7 +138,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                     jtc.setText(text);
                                     if (validatingInput) {
                                         return new Validation(Validation.Type.DANGER, Bundle.getMessage(beanInUse,
-                                                manager.getBeanTypeHandled(), bean.getFullyFormattedDisplayName()));
+                                                manager.getBeanTypeHandled(), bean.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
                                     }
                                 }
                             } else {
@@ -344,7 +342,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private void sort() {
         B selectedItem = getSelectedItem();
         Comparator<B> comparator = new NamedBeanComparator<>();
-        if (displayOptions == DisplayOptions.USERNAME || displayOptions == DisplayOptions.USERNAMESYSTEMNAME) {
+        if (displayOptions != DisplayOptions.SYSTEMNAME &&
+                displayOptions != DisplayOptions.QUOTED_SYSTEMNAME) {
             comparator = new NamedBeanUserNameComparator<>();
         }
         TreeSet<B> set = new TreeSet<>(comparator);
@@ -367,8 +366,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      * @param beanInUseKey a translatable bundle key where {@code {0}} is the
      *                     result of {@link jmri.Manager#getBeanTypeHandled()}
      *                     and {1} is the result of
-     *                     {@link jmri.NamedBean#getFullyFormattedDisplayName()}
-     *                     for the matching bean
+     *                     {@link jmri.NamedBean#getDisplayName(DisplayOptions)}
+     *                     with {@link DisplayOptions#QUOTED_DISPLAYNAME} for
+     *                     the matching bean
      */
     public void setNoMatchingToolTipBeanInUse(String beanInUseKey) {
         beanInUse = beanInUseKey;
@@ -420,60 +420,6 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         sort();
     }
 
-    public enum DisplayOptions {
-        /**
-         * Format the entries in the combo box using the display name.
-         */
-        DISPLAYNAME(1),
-        /**
-         * Format the entries in the combo box using the username. If the
-         * username value is blank for a bean then the system name is used.
-         */
-        USERNAME(2),
-        /**
-         * Format the entries in the combo box using the system name.
-         */
-        SYSTEMNAME(3),
-        /**
-         * Format the entries in the combo box with the username followed by the
-         * system name.
-         */
-        USERNAMESYSTEMNAME(4),
-        /**
-         * Format the entries in the combo box with the system name followed by
-         * the username.
-         */
-        SYSTEMNAMEUSERNAME(5);
-
-        //
-        // following code maps enum to int and int to enum
-        //
-        private final int value;
-        private static final Map<Integer, DisplayOptions> enumMap;
-
-        private DisplayOptions(int value) {
-            this.value = value;
-        }
-
-        //Build an immutable map of String name to enum pairs.
-        static {
-            Map<Integer, DisplayOptions> map = new HashMap<>();
-
-            for (DisplayOptions instance : DisplayOptions.values()) {
-                map.put(instance.getValue(), instance);
-            }
-            enumMap = Collections.unmodifiableMap(map);
-        }
-
-        public static DisplayOptions valueOf(int inDisplayOptionInt) {
-            return enumMap.get(inDisplayOptionInt);
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     private class NamedBeanRenderer implements ListCellRenderer<B>, JComboBox.KeySelectionManager {
 
         private final ListCellRenderer<? super B> renderer;
@@ -493,24 +439,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 boolean cellHasFocus) {
             JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value != null) {
-                switch (displayOptions) {
-                    case SYSTEMNAMEUSERNAME:
-                        label.setText(value.getFullyFormattedDisplayName(false));
-                        break;
-                    case DISPLAYNAME:
-                        label.setText(value.getDisplayName());
-                        break;
-                    case USERNAME:
-                        String userName = value.getUserName();
-                        label.setText((userName != null && !userName.isEmpty()) ? userName : value.getSystemName());
-                        break;
-                    case USERNAMESYSTEMNAME:
-                        label.setText(value.getFullyFormattedDisplayName());
-                        break;
-                    case SYSTEMNAME:
-                    default:
-                        label.setText(value.getSystemName());
-                }
+                label.setText(value.getDisplayName(displayOptions));
             }
             return label;
         }
