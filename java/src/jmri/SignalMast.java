@@ -54,7 +54,7 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
      * @param aspect the new aspect shown
      * @throws IllegalArgumentException if not a valid aspect name
      */
-    public void setAspect(String aspect);
+    public void setAspect(@Nonnull String aspect);
 
     /**
      * Get current aspect name. Changes to this property can be listened to
