@@ -2693,7 +2693,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void showToolTip(Positionable selection, MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        if (tip.getText() == null || tip.getText().isEmpty()) {
+        String txt = tip.getText();
+        if (txt == null || txt.isEmpty()) {
             return;
         }
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());

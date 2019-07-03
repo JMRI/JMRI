@@ -10192,7 +10192,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             @Nonnull Positionable selection,
             @Nonnull MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        if (tip.getText() == null || tip.getText().isEmpty()) {
+        String txt = tip.getText();
+        if (txt == null || txt.isEmpty()) {
             return;
         }
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
