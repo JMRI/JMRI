@@ -414,7 +414,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
         String rName = null;
         String reporterPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "R" later
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.isEmpty()) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -428,7 +428,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
         String errorMessage = null;
-        String uName = userNameTextField.getText().trim();
+        String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             curAddress = reportManager.getNextValidAddress(curAddress, reporterPrefix);
             if (curAddress == null) {

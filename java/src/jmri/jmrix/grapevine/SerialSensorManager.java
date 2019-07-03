@@ -49,20 +49,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager.
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException if the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form
-     */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return SerialAddress.normalizeSystemName(inputName, getSystemPrefix());
-    }
-
-    /**
      * Create a new sensor if all checks are passed.
      * System name is normalized to ensure uniqueness.
      *

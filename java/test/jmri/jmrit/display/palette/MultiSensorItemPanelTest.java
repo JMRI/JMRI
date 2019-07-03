@@ -21,7 +21,7 @@ public class MultiSensorItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel<jmri.Sensor> tableModel = PickListModel.sensorPickModelInstance(); // N11N
+        PickListModel<jmri.Sensor> tableModel = PickListModel.sensorPickModelInstance();
         DisplayFrame df = new DisplayFrame("MultiSensor Item Panel Test");
         Editor editor = new EditorScaffold();
         MultiSensorItemPanel t = new MultiSensorItemPanel(df,"IS01","",tableModel,editor);

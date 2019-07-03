@@ -55,21 +55,20 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     private JTextField _length;
     private boolean _lengthKeyedIn = false;
     private JToggleButton _units;
-    private boolean _canEdit;
 
     public static final String TEST_PATH = "TEST_PATH";
 
     public EditCircuitPaths(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
-        String msg = null;
-        _canEdit = _parent.queryConvertTrackIcons(block, "BlockPaths");
-        if (_canEdit) {
+        String msg = _parent.checkForTrackIcons(_homeBlock, "BlockPaths");
+        if (msg == null) {
             msg = _parent.checkForPortals(block, "BlockPaths");
-            _canEdit = false;
         }
         if (msg == null) {
             msg = _parent.checkForPortalIcons(block, "BlockPaths");
+        } else {
+            _canEdit = false;
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
@@ -393,8 +392,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         // the OBlock has allocated TEST_PATH
         // pathGroup collects the icons and the actual path is edited or
         // created with a save in _editPathsFrame
-        if (!_canEdit) {
-            closingEvent(true);
+        if (!canEdit()) {
             return;
         }
         if (noShift) {
@@ -829,8 +827,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
     protected void closingEvent(boolean close) {
         checkForSavePath();
-        String msg = null;
-        if(!_parent.queryConvertTrackIcons(_homeBlock, "BlockPaths")) {
+        String msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
+        if(msg != null) {
             close = true;
         } else {
             msg = _parent.checkForPortals(_homeBlock, "BlockPaths");

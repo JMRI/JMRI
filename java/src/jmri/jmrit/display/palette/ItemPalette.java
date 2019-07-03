@@ -147,9 +147,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     protected static JTabbedPane _tabPane;
     private static HashMap<String, ItemPanel> _tabIndex;
 
-    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
+    static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
-    static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     private ItemPanel _currentItemPanel;
 
     /**
@@ -220,7 +220,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         return typeNode;
     }
 
-    static public void loadIcons(Editor ed) {
+    public static void loadIcons(Editor ed) {
         if (_iconMaps == null) {
             // long t = System.currentTimeMillis();
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
@@ -323,8 +323,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
         };
         Element root = xf.rootFromURL(file);
-        List<Element> typeList = root.getChild("ItemTypes").getChildren();
-        return typeList;
+        return (root.getChild("ItemTypes").getChildren());
     }
 
     static void loadDefaultIcons(Editor ed) {
@@ -375,10 +374,8 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 loadFamilies(itemType, families, ed);
                 InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             }
-        } catch (org.jdom2.JDOMException e) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
-        } catch (java.io.IOException ioe) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + ioe);
+        } catch (org.jdom2.JDOMException | java.io.IOException ex) {
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: ", ex);
         }
     }
 

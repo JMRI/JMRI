@@ -21,7 +21,7 @@ public class IndicatorTOIconDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance(); // N11N
+        PickListModel<jmri.Turnout> tableModel = PickListModel.turnoutPickModelInstance();
         DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test");
         Editor editor = new EditorScaffold();
         IndicatorTOItemPanel itp = new IndicatorTOItemPanel(df,"IT01","",tableModel,editor);

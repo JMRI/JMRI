@@ -91,8 +91,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li>OpenLCB Light startup tweak aims to stop occasional Light flickering 
-		if their status is set during intialisation.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -324,8 +323,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>When a train is scheduled to re-start every X minutes this behaviour now continues over midnight times.<br>
-	     Eg. a train which restarts every 10 minutes and completes the route at 23:55 will resume at 00:05.</li>
+             <li></li>
         </ul>
 
    <h3>Internationalization</h3>
@@ -384,9 +382,12 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Improved behaviour of multiple <a 
-              href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
-              >Fast Clock following Light Controllers</a> on a single Light.</li>
+            <li>JMRI no longer modifies "system names" as provided by the user.
+                There may be cases where a script or panel file is creating an
+                object with a system name that is slightly different than a system
+                name used elsewhere, and JMRI used to change these to be the same.
+                Users may have to modify scripts and panel files to ensure system
+                names match in all places.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -474,7 +475,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>If using a non-default look and feel; it may need to be reset. Note that the look and feel stored by JMRI 4.17.1 and
-                later will be ignored by JMRI 4.16 and earlier.</li>
+            <li></li>
         </ul>
 

@@ -1,11 +1,10 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -33,25 +32,20 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
     private JRadioButton _noButton;
-    private boolean _canEdit;
 
     private PortalList _portalList;
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
-        _canEdit = _parent.queryConvertTrackIcons(block, "PortalOrPath");
-        String msg = null;
-        if (_canEdit) {
-            msg = _parent.checkForPortals(block, "BlockPaths");
-            _canEdit = false;
-        }
+        String msg = _parent.checkForPortals(block, "DirectionArrow");
         if (msg == null) {
-            msg = _parent.checkForPortalIcons(block, "BlockPaths");
+            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
+            _canEdit = false;
         }
     }
 
@@ -146,7 +140,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
-            java.util.List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
+            List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
             if (piArray.isEmpty()) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getDisplayName()),
                         Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
@@ -185,8 +179,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     }
 
     protected void setPortalIcon(PortalIcon icon, boolean setValue) {
-        if (!_canEdit) {
-            closingEvent(true);
+        if (!canEdit()) {
             return;
         }
         _parent._editor.highlight(icon);
@@ -214,22 +207,14 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     }
 
     protected void closingEvent(boolean close) {
-        String msg = null;
-        if(!_parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath")) {
+        String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
+        if (msg == null) {
+            msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
+        }
+        if (msg != null) {
             close = true;
-        } else {
-            msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-            if (msg == null) {
-                msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
-            }
-            if (msg != null) {
-                close = true;
-            }
         }
         closingEvent(close, msg);
     }
 
-    protected OBlock getHomeBlock() {
-        return _homeBlock;
-    }
 }

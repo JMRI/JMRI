@@ -464,6 +464,10 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
+    public SignalHead getSignalA1() {
+        return signalA1HeadNamed != null ? signalA1HeadNamed.getBean() : null;
+    }
+
     public String getSignalA1Name() {
         if (signalA1HeadNamed != null) {
             return signalA1HeadNamed.getName();
@@ -484,6 +488,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalA1HeadNamed = null;
             log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalA2() {
+        return signalA2HeadNamed != null ? signalA2HeadNamed.getBean() : null;
     }
 
     public String getSignalA2Name() {
@@ -508,6 +516,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalA3() {
+        return signalA3HeadNamed != null ? signalA3HeadNamed.getBean() : null;
+    }
+
     public String getSignalA3Name() {
         if (signalA3HeadNamed != null) {
             return signalA3HeadNamed.getName();
@@ -528,6 +540,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalA3HeadNamed = null;
             log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalB1() {
+        return signalB1HeadNamed != null ? signalB1HeadNamed.getBean() : null;
     }
 
     public String getSignalB1Name() {
@@ -552,6 +568,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalB2() {
+        return signalB2HeadNamed != null ? signalB2HeadNamed.getBean() : null;
+    }
+
     public String getSignalB2Name() {
         if (signalB2HeadNamed != null) {
             return signalB2HeadNamed.getName();
@@ -572,6 +592,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalB2HeadNamed = null;
             log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalC1() {
+        return signalC1HeadNamed != null ? signalC1HeadNamed.getBean() : null;
     }
 
     public String getSignalC1Name() {
@@ -596,6 +620,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalC2() {
+        return signalC2HeadNamed != null ? signalC2HeadNamed.getBean() : null;
+    }
+
     public String getSignalC2Name() {
         if (signalC2HeadNamed != null) {
             return signalC2HeadNamed.getName();
@@ -618,6 +646,10 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    public SignalHead getSignalD1() {
+        return signalD1HeadNamed != null ? signalD1HeadNamed.getBean() : null;
+    }
+
     public String getSignalD1Name() {
         if (signalD1HeadNamed != null) {
             return signalD1HeadNamed.getName();
@@ -638,6 +670,10 @@ public class LayoutTurnout extends LayoutTrack {
             signalD1HeadNamed = null;
             log.error("Signal Head {} Not found for turnout {}", signalHead, getTurnoutName());
         }
+    }
+
+    public SignalHead getSignalD2() {
+        return signalD2HeadNamed != null ? signalD2HeadNamed.getBean() : null;
     }
 
     public String getSignalD2Name() {
@@ -1549,9 +1585,11 @@ public class LayoutTurnout extends LayoutTrack {
             }
 
             blockA = newLayoutBlock;
-            if ((newLayoutBlock != null) &&
-                    (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock) != null)) {
-                namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+            if (newLayoutBlock != null) {
+                String userName = newLayoutBlock.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, newLayoutBlock);
+                }
             } else {
                 namedLayoutBlockA = null;
                 setDisableWhenOccupied(false);
@@ -2467,9 +2505,12 @@ public class LayoutTurnout extends LayoutTrack {
         LayoutBlock lb;
         if (!tBlockAName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockAName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
-                lb.incrementUse();
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                    lb.incrementUse();
+                }
             } else {
                 log.error("bad blockname '{}' in layoutturnout {}", tBlockAName, getId());
                 namedLayoutBlockA = null;
@@ -2479,8 +2520,11 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockBName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockBName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                }
                 if (namedLayoutBlockB != namedLayoutBlockA) {
                     lb.incrementUse();
                 }
@@ -2493,8 +2537,11 @@ public class LayoutTurnout extends LayoutTrack {
 
         if (!tBlockCName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockCName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
+                }
                 if ((namedLayoutBlockC != namedLayoutBlockA)
                         && (namedLayoutBlockC != namedLayoutBlockB)) {
                     lb.incrementUse();
@@ -2503,13 +2550,16 @@ public class LayoutTurnout extends LayoutTrack {
                 log.error("bad blockname '{}' in layoutturnout {}", tBlockCName, getId());
                 namedLayoutBlockC = null;
             }
-            tBlockCName = null; //release this memory
+            tBlockCName = null; // release this memory
         }
 
         if (!tBlockDName.isEmpty()) {
             lb = p.provideLayoutBlock(tBlockDName);
-            if ((lb != null) && (InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb) != null)) {
-                namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+            if (lb != null) {
+                String userName = lb.getUserName();
+                if (userName != null) {
+                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                }
                 if ((namedLayoutBlockD != namedLayoutBlockA)
                         && (namedLayoutBlockD != namedLayoutBlockB)
                         && (namedLayoutBlockD != namedLayoutBlockC)) {

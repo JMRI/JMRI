@@ -382,10 +382,6 @@ public class Maintenance {
         NamedBean bean = manager.getBeanBySystemName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
-        // special case  - check for upper case system name - not recommended, but here for historical reasons
-        bean = manager.getBeanBySystemName(beanName.toUpperCase());
-        if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
-
         bean = manager.getBeanByUserName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 

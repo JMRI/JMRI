@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -77,13 +78,13 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     /**
-     * Build iconMap and orderArray from user's choice of defaults (override)
+     * Build iconMap and orderArray from user's choice of defaults (override).
      */
     @Override
     protected void makeIcons(CatalogTreeNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("makeIcons from node= " + n.toString() + ", numChildren= "
-                    + n.getChildCount() + ", NumLeaves= " + n.getNumLeaves());
+            log.debug("makeIcons from node= {}, numChildren= {}, NumLeaves= {}",
+                    n.toString(), n.getChildCount(), n.getNumLeaves());
         }
         _iconMap = new HashMap<>(10);
         _order = new ArrayList<>();
@@ -110,12 +111,15 @@ public class MultiSensorIconAdder extends IconAdder {
         for (int i = 0; i < icons.size(); i++) {
             MultiSensorIcon.Entry entry = icons.get(i);
             String label = "MultiSensorPosition " + i;
-            setIcon(i + 3, label, entry.icon.getURL());
-            _sensorMap.put(label, entry.namedSensor);
+            String url = entry.icon.getURL();
+            if (url != null) {
+                setIcon(i + 3, label, url);
+                _sensorMap.put(label, entry.namedSensor);
+            }
         }
         if (log.isDebugEnabled()) {
-            log.debug("setMultiIcon: Size: sensors= " + _sensorMap.size()
-                    + ", icons= " + _iconMap.size());
+            log.debug("setMultiIcon: Size: sensors= {}, icons= {}",
+                    _sensorMap.size(), _iconMap.size());
         }
     }
 
@@ -126,9 +130,8 @@ public class MultiSensorIconAdder extends IconAdder {
     @Override
     protected void doIconPanel() {
         if (log.isDebugEnabled()) {
-            log.debug("doIconPanel: Sizes: _iconMap= " + _iconMap.size()
-                    + " _order.size()= " + _order.size()
-                    + ", _sensorMap.size()= " + _sensorMap.size());
+            log.debug("doIconPanel: Sizes: _iconMap= {} _order.size()= {}, _sensorMap.size()= {}",
+                    _iconMap.size(), _order.size(), _sensorMap.size());
         }
         Dimension dim = null;
         JPanel rowPanel = null;
@@ -300,21 +303,19 @@ public class MultiSensorIconAdder extends IconAdder {
 
         @Override
         public DataFlavor[] getTransferDataFlavors() {
-            //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.getTransferDataFlavors ");
+            //log.debug("TransferableNamedBean.getTransferDataFlavors");
             return new DataFlavor[]{dataFlavor};
         }
 
         @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
-            //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.isDataFlavorSupported ");
+            //log.debug("TransferableNamedBean.isDataFlavorSupported");
             return dataFlavor.equals(flavor);
         }
 
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-            if (log.isDebugEnabled()) {
-                log.debug("TransferableNamedBean.getTransferData ");
-            }
+            log.debug("TransferableNamedBean.getTransferData");
             if (isDataFlavorSupported(flavor)) {
                 return getTableSelection();
             }
@@ -371,7 +372,7 @@ public class MultiSensorIconAdder extends IconAdder {
                     String path = leaves.get(i).getPath();
                     _defaultIcons.deleteLeaves(label);
                     _defaultIcons.addLeaf("MultiSensorPosition " + (k - 3), path);
-//                    break;
+                    // break;
                 }
             }
             InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
@@ -380,8 +381,8 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     /**
-     * Returns a new NamedIcon object for your own use. see NamedIcon
-     * getIcon(String key) in super
+     * Get a new NamedIcon object for your own use. see NamedIcon
+     * getIcon(String key) in super.
      *
      * @param index of key
      * @return Unique object
@@ -398,8 +399,8 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     /**
-     * Returns a Sensor object for your own use. see NamedIcon getIcon(String
-     * key) in super
+     * Get a Sensor object for your own use. see NamedIcon getIcon(String
+     * key) in super.
      *
      * @param index of key
      * @return Unique object
@@ -421,9 +422,7 @@ public class MultiSensorIconAdder extends IconAdder {
 
     private boolean putSensor(String key, Sensor sensor) {
         String name = sensor.getDisplayName();
-        if (log.isDebugEnabled()) {
-            log.debug("putSensor: key= " + key + " sensor= " + name);
-        }
+        log.debug("putSensor: key= {} sensor= {}", key, name);
         Iterator<NamedBeanHandle<Sensor>> iter = _sensorMap.values().iterator();
         while (iter.hasNext()) {
             if (name.equals(iter.next().getName())) {
@@ -440,7 +439,7 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     /**
-     * Enables the active MultiSensor icons to receive dragged icons
+     * Enable the active MultiSensor icons to receive dragged icons.
      */
     class DropPanel extends JPanel implements DropTargetListener {
 
@@ -453,7 +452,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 log.error("Class not found.", cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropPanel ctor");
+            //log.debug("DropPanel ctor");
         }
 
         @Override
@@ -466,7 +465,7 @@ public class MultiSensorIconAdder extends IconAdder {
 
         @Override
         public void dragOver(DropTargetDragEvent dtde) {
-            //if (log.isDebugEnabled()) log.debug("DropPanel.dragOver");
+            //log.debug("DropPanel.dragOver");
         }
 
         @Override
@@ -489,20 +488,15 @@ public class MultiSensorIconAdder extends IconAdder {
                         }
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) {
-                            log.debug("DropPanel.drop COMPLETED for "
-                                    + comp.getName());
+                            log.debug("DropPanel.drop COMPLETED for {}", comp.getName());
                         }
                     } else {
-                        if (log.isDebugEnabled()) {
-                            log.debug("DropPanel.drop REJECTED!");
-                        }
+                        log.debug("DropPanel.drop REJECTED!");
                         e.rejectDrop();
                     }
                 }
             } catch (IOException | UnsupportedFlavorException ioe) {
-                if (log.isDebugEnabled()) {
-                    log.debug("DropPanel.drop REJECTED!");
-                }
+                log.debug("DropPanel.drop REJECTED!");
                 e.rejectDrop();
             }
         }
@@ -510,4 +504,5 @@ public class MultiSensorIconAdder extends IconAdder {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class);
+
 }

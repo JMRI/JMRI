@@ -224,6 +224,7 @@
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
         <pathelement location="${libdir}/json-schema-validator-1.0.10.jar"/>
+        <pathelement location="${libdir}/jinputvalidator-0.4.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
     </path>
@@ -759,6 +760,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -1351,6 +1353,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
@@ -1376,6 +1379,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed'"/>
 
@@ -1403,6 +1407,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
@@ -1484,6 +1489,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1511,6 +1517,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1548,6 +1555,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1580,6 +1588,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1602,6 +1611,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1632,6 +1642,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1870,6 +1881,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0" packagelistLoc="lib/jinputvalidator-0.4.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
@@ -1940,6 +1952,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0" packagelistLoc="lib/jinputvalidator-0.4.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
@@ -2022,6 +2035,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0" packagelistLoc="lib/jinputvalidator-0.4.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">

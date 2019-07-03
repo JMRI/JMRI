@@ -160,7 +160,11 @@ public class CircuitBuilder {
     }
 
     protected void openWindow() {
-        _cbFrame = new CBFrame(Bundle.getMessage("CircuitBuilder"));
+        if (_cbFrame != null) {
+            _cbFrame.toFront();
+        } else {
+            _cbFrame = new CBFrame(Bundle.getMessage("CircuitBuilder"));
+        }
     }
 
     private void makeNoOBlockMenu() {
@@ -471,6 +475,7 @@ public class CircuitBuilder {
                 targetPane.setHighlightColor(_highlightColor);
                 setPortalsPositionable(_currentBlock, true);
                 _editFrame = new EditPortalFrame(Bundle.getMessage("OpenPortalTitle"), this, _currentBlock);
+                _editFrame.canEdit();   // will close _editFrame if editing cannot be done
             } else if (!fromMenu) {
                 selectPrompt();
             }
@@ -517,6 +522,7 @@ public class CircuitBuilder {
                 targetPane.setHighlightColor(_highlightColor);
                 setPortalsPositionable(_currentBlock, true);
                 _editFrame = new EditPortalDirection(Bundle.getMessage("OpenDirectionTitle"), this, _currentBlock);
+                _editFrame.canEdit();   // will close _editFrame if editing cannot be done
             } else if (!fromMenu) {
                 selectPrompt();
             }
@@ -536,6 +542,7 @@ public class CircuitBuilder {
                 targetPane.setSelectGroupColor(_editGroupColor);
                 targetPane.setHighlightColor(_highlightColor);
                 _editFrame = new EditSignalFrame(Bundle.getMessage("OpenSignalsTitle"), this, _currentBlock);
+                _editFrame.canEdit();   // will close _editFrame if editing cannot be done
             } else if (!fromMenu) {
                 selectPrompt();
             }
@@ -559,6 +566,7 @@ public class CircuitBuilder {
                 targetPane.setHighlightColor(_editGroupColor);
                 _currentBlock.setState(OBlock.UNOCCUPIED);
                 _editFrame = new EditCircuitPaths(Bundle.getMessage("OpenPathTitle"), this, _currentBlock);
+                _editFrame.canEdit();   // will close _editFrame if editing cannot be done
             } else if (!fromMenu) {
                 selectPrompt();
             }
@@ -1169,7 +1177,30 @@ public class CircuitBuilder {
         }
         return null;
     }
- 
+
+    protected String checkForTrackIcons(@Nonnull OBlock block, String key) {
+        String msg = null;
+        List<Positionable> list = getCircuitIcons(block);
+        if (list.isEmpty()) {
+            msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key));
+        } else {
+            boolean ok = true;
+            for (Positionable p : list) {
+                PositionableLabel pos = (PositionableLabel) p;
+               if (!(pos instanceof IndicatorTrack) && !(pos instanceof PortalIcon) && !(pos instanceof SignalMastIcon)) {
+                   if (CircuitBuilder.isUnconvertedTrack(pos)) {
+                       ok = false;
+                       break;
+                   }
+               }
+            }
+            if (!ok) {
+                msg = Bundle.getMessage("cantSaveIcon", block.getDisplayName(), Bundle.getMessage(key));
+            }
+        }
+        return msg;
+    }
+
     protected void deletePortalIcon(PortalIcon icon) {
         if (log.isDebugEnabled()) {
             log.debug("deletePortalIcon: " + icon.getName());
@@ -1212,14 +1243,11 @@ public class CircuitBuilder {
                        if (result == JOptionPane.YES_OPTION) {
                             convertIcon(pos, block);
                        } else {
-                            msg = Bundle.getMessage("cantSaveIcon", Bundle.getMessage(key));
+                            msg = Bundle.getMessage("cantSaveIcon", block.getDisplayName(), Bundle.getMessage(key));
                             _editor.highlight(null);
                        }
                    }
                 }
-            }
-            if (msg != null) {
-                msg.concat(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
             }
         }
         if (msg != null) {
@@ -1524,7 +1552,7 @@ public class CircuitBuilder {
                 }
                 if (selectionGroup.contains(selection)) {
                     selectionGroup.remove(selection);
-                } else if (okToAdd(selection, editCircuitFrame.getBlock())) {
+                } else if (okToAdd(selection, editCircuitFrame._homeBlock)) {
                     selectionGroup.add(selection);
                 }
             }
@@ -1557,7 +1585,7 @@ public class CircuitBuilder {
                     editDirectionFrame.setPortalIcon(null, false);
                     Portal p = icon.getPortal();
                     JOptionPane.showMessageDialog(editDirectionFrame, Bundle.getMessage("iconNotOnBlock",
-                            editDirectionFrame.getHomeBlock().getDisplayName(), p.getDescription()),
+                            editDirectionFrame._homeBlock.getDisplayName(), p.getDescription()),
                             Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {

@@ -164,7 +164,6 @@ public class OlcbSensor extends AbstractSensor {
      */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
-        setOwnState(s);
         if (s == Sensor.ACTIVE) {
             sensorListener.setFromOwnerWithForceNotify(true);
             if (addrInactive == null) {
@@ -177,6 +176,7 @@ public class OlcbSensor extends AbstractSensor {
                 pc.resetToDefault();
             }
         }
+        setOwnState(s);
     }
 
     /**

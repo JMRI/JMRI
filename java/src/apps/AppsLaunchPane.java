@@ -175,7 +175,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         } else {
             cs.setForeground(Color.red);
             String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
-            cf = cf.toUpperCase();
             cs.setText(cf);
         }
 

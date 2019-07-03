@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
 
     protected final OBlock _homeBlock;
     protected final CircuitBuilder _parent;
+    protected boolean _canEdit = true;
 
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(-1, -1);
@@ -89,6 +91,17 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
     protected void clearListSelection() {
     }
 
+    /**
+     * Close frame if editing cannot be done
+     * @return  whether editing can be done
+     */
+    protected boolean canEdit() {
+        if (!_canEdit) {
+            closingEvent(true, null);
+        }
+        return _canEdit;
+    }
+
     protected abstract void closingEvent(boolean close);
 
     protected boolean closingEvent(boolean close, String msg) {
@@ -97,7 +110,7 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
                 JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 StringBuilder sb = new StringBuilder(msg);
-                sb.append(" ");
+                sb.append("\n");
                 sb.append(Bundle.getMessage("exitQuestion"));
                 int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage("continue"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -106,15 +119,15 @@ public abstract class EditFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
-        getLocation(_loc);
-        getSize(_dim);
+        storeLocDim(getLocation(_loc), getSize(_dim));
         _parent.closeCircuitBuilder(_homeBlock);
         dispose();
         return true;
     }
 
-    protected OBlock getBlock() {
-        return _homeBlock;
+    private static void storeLocDim(@Nonnull Point location, @Nonnull Dimension size) {
+        _loc = location;
+        _dim = size;
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(EditFrame.class);

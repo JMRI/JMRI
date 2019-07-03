@@ -35,16 +35,15 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     private JTextField _mastName;
     private PortalList _portalList;
     OpenPickListButton<SignalMast> _pickTable;
-    private boolean _canEdit;
 
     public EditSignalFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
-        _canEdit = _parent.queryConvertTrackIcons(block, "PortalOrPath");
-        String msg = null;
-        if (_canEdit) {
-            msg = _parent.checkForPortals(block, "ItemTypeSignalMast");
+        String msg = _parent.checkForTrackIcons(block, "PortalOrPath");
+        if (msg != null) {
             _canEdit = false;
+        } else {
+            msg = _parent.checkForPortals(block, "ItemTypeSignalMast");
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
@@ -104,8 +103,7 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     }
 
     protected void setSelected(PortalIcon icon) {
-        if (!_canEdit) {
-            closingEvent(true);
+        if (!canEdit()) {
             return;
         }
         Portal portal = icon.getPortal();
@@ -158,15 +156,7 @@ public class EditSignalFrame extends EditFrame implements ActionListener, ListSe
     }
 
     protected void closingEvent(boolean close) {
-        String msg = null;
-        if(!_parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath")) {
-            close = true;
-        } else {
-            msg = _parent.checkForPortals(_homeBlock, "ItemTypeSignalMast");
-            if (msg != null) {
-                close = true;
-            }
-        }
+        String msg = _parent.checkForPortals(_homeBlock, "ItemTypeSignalMast");
         closingEvent(close, msg);
     }
 

@@ -23,11 +23,11 @@ import jmri.IdTag;
 public class TranspondingTag extends jmri.implementation.DefaultIdTag implements jmri.AddressedIdTag {
 
     public TranspondingTag(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public TranspondingTag(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     /**

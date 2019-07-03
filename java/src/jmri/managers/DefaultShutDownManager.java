@@ -99,6 +99,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<ShutDownTask> tasks() {
         return java.util.Collections.unmodifiableList(tasks);
     }
@@ -139,7 +140,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * @return false if shutdown or restart failed
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
-    public boolean shutdown(int status, boolean exit) {
+    protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} tasks", this.tasks.size());
@@ -262,7 +263,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      *
      * @param state true if shutting down; false otherwise
      */
-    private static void setShuttingDown(boolean state) {
+    protected static void setShuttingDown(boolean state) {
         shuttingDown = state;
         log.debug("Setting shuttingDown to {}", state);
     }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -40,7 +42,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  *
  * @author Pete Cressman Copyright: Copyright (c) 2011
- *
  */
 public class EditPortalFrame extends EditFrame implements ListSelectionListener {
 
@@ -48,7 +49,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     private PortalList _portalList;
     private JTextField _portalName;
     private JPanel _dndPanel;
-    private boolean _canEdit = true;
 
     /* Ctor for fix a portal error  */
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block, Portal portal, PortalIcon icon) {
@@ -57,9 +57,8 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         _portalName.setText(name);
         _adjacentBlock = portal.getOpposingBlock(block);
 
-        String msg;
+        String msg = null;
         if (icon != null) {
-            msg =  Bundle.getMessage("portalIconPosition");
             setSelected(icon);
         } else {
             msg = Bundle.getMessage("portalHasNoIcon", name); 
@@ -70,10 +69,18 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     public EditPortalFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
-        String msg = null;
-        _canEdit = _parent.queryConvertTrackIcons(block, "PortalOrPath");
+        String msg = _parent.checkForTrackIcons(block, "PortalOrPath");
+        if (msg != null) {
+            _canEdit = false;
+        }
         if (_canEdit) {
             msg = _parent.checkForPortals(block, "BlockPaths");
+            if (msg != null) {
+                StringBuilder sb = new StringBuilder(msg);
+                sb.append("\n");
+                sb.append(Bundle.getMessage("portalIconPosition"));
+                msg = sb.toString();
+            }
         }
         if (_canEdit && msg == null) {
             msg = _parent.checkForPortalIcons(block, "DirectionArrow");
@@ -189,8 +196,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     }
 
     protected void setSelected(PortalIcon icon) {
-        if (!_canEdit) {
-            closingEvent(true);
+        if (!canEdit()) {
             return;
         }
         Portal portal = icon.getPortal();
@@ -199,9 +205,10 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         
     }
 
-    /**
+    /*
      * *********************** end setup *************************
      */
+
     private void changePortalName() {
         Portal portal = _portalList.getSelectedValue();
         String name = _portalName.getText();
@@ -250,21 +257,12 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     }
 
     protected void closingEvent(boolean close) {
-        String msg = null;
-        if(!_parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath")) {
-            close = true;
-        } else {
-            msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        }
+        String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
         if (_canEdit && msg == null) {
             msg = _parent.checkForPortalIcons(_homeBlock, "BlockPaths");
         }
         closingEvent(close, msg);
     }
-
-    /*
-     * ***************** end button actions **********
-     */
 
     /**
      * Called after click on portal icon moved recheck block connections.
@@ -384,7 +382,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     }
 
     /*
-     * If icon is on the home block, find another intersecting block
+     * If icon is on the home block, find another intersecting block.
      */
     private OBlock findAdjacentBlock(PortalIcon icon) {
         ArrayList<OBlock> neighbors = new ArrayList<>();
@@ -510,6 +508,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             }
             return false;
         }
+
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {

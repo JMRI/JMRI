@@ -297,12 +297,9 @@ public class EditCircuitFrame extends EditFrame {
 
     protected void closingEvent(boolean close) {
         _parent.setIconGroup(_homeBlock);
-        boolean iconsConverted = _parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath");
-        String msg = null;
-        if(!iconsConverted) {
-            close = true;
-        } else {
-            String name = _length.getText();
+        String msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
+        if(msg == null) {
+           String name = _length.getText();
             try {
                 float f = Float.parseFloat(name);
                 if (_units.isSelected()) {
@@ -321,15 +318,15 @@ public class EditCircuitFrame extends EditFrame {
             }
         }
         // check Sensors
-        if (iconsConverted && msg == null) {
+        if (msg == null) {
             msg = checkForSensors();
         }
         closingEvent(close, msg);
     }
     
     private String checkForSensors() {
-        String name = _detectorSensorName.getText().trim();
-        String errName = _errorSensorName.getText().trim();
+        String name = _detectorSensorName.getText();
+        String errName = _errorSensorName.getText();
         String msg = null;
         if (!_homeBlock.setSensor(name)) {
             msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), name);
