@@ -117,20 +117,69 @@ public class XNetSimulatorAdapterTest {
     }
 
     @Test
+    public void testGenerateRegisterModeReadReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("22 11 01 33"));
+        // not currently supported
+        Assert.assertEquals("Register Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGenerateRegisterModeWriteReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("23 12 01 30"));
+        // not currently supported
+        Assert.assertEquals("Register Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGeneratePagedModeReadReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("22 14 01 37"));
+        // not currently supported
+        Assert.assertEquals("Paged Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGeneratePagedModeWriteReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("23 17 01 36"));
+        // not currently supported
+        Assert.assertEquals("Paged Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGenerateDirectModeReadReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("22 15 01 36"));
+        // not currently supported
+        Assert.assertEquals("Direct Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGenerateDirectModeWriteReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("23 16 01 34"));
+        // not currently supported
+        Assert.assertEquals("Direct Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testRequestServiceModeResultsReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("21 10 31"));
+        // not currently supported
+        Assert.assertEquals("Direct Mode Read Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
     public void testGenerateDoubleHeaderReply(){
-        XNetReply r = getReplyForMessage(new XNetMessage("C5 04 00 01 00 02 C2"));
+        XNetReply r = getReplyForMessage(new XNetMessage("E5 43 00 01 00 02 A5"));
         // not currently supported
         Assert.assertEquals("Establish Double Header Reply",new XNetReply("61 82 E3"),r);
     }
 
     @Test
-    public void testGenerateAccOperRequetReply(){
+    public void testGenerateAccOperRequestReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("52 01 80 D3"));
         Assert.assertEquals("Accessory Decoder Info Reply",new XNetReply("42 01 10 53"),r);
     }
 
     @Test
-    public void testGenerateAccInfoRequetReply(){
+    public void testGenerateAccInfoRequestReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("42 42 81 81"));
         Assert.assertEquals("Accessory Decoder Info Reply",new XNetReply("42 42 50 50"),r);
     }
