@@ -2,6 +2,8 @@ package jmri.jmrit.timetable;
 
 import org.junit.*;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Tests for the Layout Class
  * @author Dave Sand Copyright (C) 2018
@@ -49,12 +51,13 @@ public class LayoutTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTest.class);
 }

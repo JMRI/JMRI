@@ -282,8 +282,13 @@ public class ProfileManagerDialog extends JDialog {
                 countDownLbl.setText(Integer.toString(countDown));
             } else {
                 setVisible(false);
-                ProfileManager.getDefault().setActiveProfile(profiles.getSelectedValue());
-                log.info("Automatically starting with profile " + ProfileManager.getDefault().getActiveProfile().getId() + " after timeout.");
+                Profile profile = profiles.getSelectedValue();
+                ProfileManager.getDefault().setActiveProfile(profile);
+                if (profile != null) {
+                    log.info("Automatically starting with profile " + profile.getId() + " after timeout.");
+                } else {
+                    log.info("Automatically starting without a profile");
+                }
                 timer.stop();
                 countDown = -1;
                 dispose();

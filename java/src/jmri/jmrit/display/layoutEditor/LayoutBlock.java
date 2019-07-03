@@ -44,9 +44,9 @@ import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
 import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.SplitButtonColorChooserPanel;
 import org.slf4j.Logger;
@@ -147,11 +147,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Note: initializeLayoutBlock() must be called to complete the process. They are split
      *       so  that loading of panel files will be independent of whether LayoutBlocks or
      *       Blocks are loaded first.
-     * @param sName System name of this LayoutBlock; will be converted to upper case
+     * @param sName System name of this LayoutBlock
      * @param uName User name of this LayoutBlock but also the user name of the associated Block
      */
     public LayoutBlock(String sName, String uName) {
-        super(sName.toUpperCase(), uName);
+        super(sName, uName);
         //_instance = this;
     }
 
@@ -334,8 +334,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Validate that the supplied occupancy sensor name corresponds to an
      * existing sensor and is unique among all blocks. If valid, returns the
      * sensor and sets the block sensor name in the block. Else returns null,
-     * and does nothing to the block. This method also converts the sensor name
-     * to upper case if it is a system name.
+     * and does nothing to the block.
      *
      * @param sensorName to check
      * @param openFrame  determines the <code>Frame</code> in which the dialog
@@ -366,10 +365,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return null;
         }
 
-        if (!theSensorName.equals(s.getUserName())) {
-            //TODO: Should this be theSensorName = s.getUserName.toUpperCase(); ?
-            theSensorName = theSensorName.toUpperCase();
-        }
         //ensure that this sensor is unique among defined Layout Blocks
         NamedBeanHandle<Sensor> savedNamedSensor = occupancyNamedSensor;
         occupancyNamedSensor = null;
@@ -404,9 +399,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Validate that the memory name corresponds to an existing memory. If
-     * valid, returns the memory. Else returns null, and notifies the user. This
-     * method also converts the memory name to upper case if it is a system
-     * name.
+     * valid, returns the memory. Else returns null, and notifies the user.
      *
      * @param memName   the memory name
      * @param openFrame the frame to display any error dialog in
@@ -933,8 +926,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private final JTextField sensorDebounceActiveField = new JTextField(5);
     private final JCheckBox sensorDebounceGlobalCheck = new JCheckBox(Bundle.getMessage("SensorUseGlobalDebounce"));
 
-    private final JmriBeanComboBox memoryComboBox = new JmriBeanComboBox(
-            InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<Memory> memoryComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private final JTextField metricField = new JTextField(10);
 
@@ -1052,17 +1045,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         //check if Memory changed
-        newName = memoryComboBox.getDisplayName();
+        newName = memoryComboBox.getSelectedItemDisplayName();
         if (!memoryName.equals(newName)) {
             //memory has changed
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
             if (getMemory() == null) {
                 //invalid memory entered
                 memoryName = "";
-                memoryComboBox.setText("");
+                memoryComboBox.setSelectedItem(null);
                 return;
             } else {
-                memoryComboBox.setText(memoryName);
+                memoryComboBox.setSelectedItem(getMemory());
                 needsRedraw = true;
             }
         }
@@ -1208,17 +1201,17 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         JmriColorChooser.addRecentColor(blockExtraColor);
                     }
                     //check if Memory changed
-                    String newName = memoryComboBox.getDisplayName();
+                    String newName = memoryComboBox.getSelectedItemDisplayName();
                     if (!memoryName.equals(newName)) {
                         //memory has changed
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
                         if (getMemory() == null) {
                             //invalid memory entered
                             memoryName = "";
-                            memoryComboBox.setText("");
+                            memoryComboBox.setSelectedItem(null);
                             return;
                         } else {
-                            memoryComboBox.setText(memoryName);
+                            memoryComboBox.setSelectedItem(getMemory());
                             needsRedraw = true;
                         }
                     }
@@ -1232,7 +1225,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             layout.setResetItem(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    memoryComboBox.setText(memoryName);
+                    memoryComboBox.setSelectedItem(getMemory());
                     trackColorChooser.setColor(blockTrackColor);
                     occupiedColorChooser.setColor(blockOccupiedColor);
                     extraColorChooser.setColor(blockExtraColor);

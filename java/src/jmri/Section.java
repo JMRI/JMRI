@@ -86,16 +86,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This Section implementation provides for delayed initialization of blocks and
  * direction sensors to be independent of order of items in panel files.
- * <p>
- * This file is part of JMRI.
- * <p>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Dave Duchamp Copyright (C) 2008,2010
  */
@@ -121,11 +111,11 @@ public class Section extends AbstractNamedBean {
     public static final int REVERSE = 0X08;
 
     public Section(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public Section(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     /**
@@ -148,7 +138,7 @@ public class Section extends AbstractNamedBean {
     private final List<EntryPoint> mReverseEntryPoints = new NonNullArrayList<>();
 
     /**
-     * Operational instance variables (not saved between runs)
+     * Operational instance variables (not saved between runs).
      */
     private int mState = FREE;
     private int mOccupancy = UNOCCUPIED;
@@ -165,7 +155,7 @@ public class Section extends AbstractNamedBean {
     protected jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     /**
-     * Get the state of the Section
+     * Get the state of the Section.
      *
      * @return the section state
      */
@@ -175,7 +165,7 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * Set the state of the Section
+     * Set the state of the Section.
      *
      * @param state the state to set
      */
@@ -232,7 +222,7 @@ public class Section extends AbstractNamedBean {
     }
 
     /**
-     * Get the occupancy of a section.
+     * Get the occupancy of a Section.
      *
      * @return {@link #OCCUPIED}, {@link #UNOCCUPIED}, or the state of the first
      *         block that is neither occupied or unoccupied
@@ -378,7 +368,7 @@ public class Section extends AbstractNamedBean {
             return null;
         }
         if (!tempSensorName.equals(s.getUserName())) {
-            tempSensorName = tempSensorName.toUpperCase();
+            tempSensorName = s.getUserName();
         }
         return s;
     }
@@ -687,8 +677,8 @@ public class Section extends AbstractNamedBean {
         initializationNeeded = false;
     }
     /**
-     * Gets Blocks in order If state is FREE or FORWARD, returns Blocks in
-     * forward order If state is REVERSE, returns Blocks in reverse order First
+     * Gets Blocks in order. If state is FREE or FORWARD, returns Blocks in
+     * forward order. If state is REVERSE, returns Blocks in reverse order. First
      * call getEntryBlock, then call getNextBlock until null is returned.
      */
     private int blockIndex = 0;  // index of last block returned
@@ -957,7 +947,6 @@ public class Section extends AbstractNamedBean {
      * go to the same Block, or not all Blocks set. An error message is logged
      * if EntryPoint.UNKNOWN is returned.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     private int getDirectionStandardTurnout(LayoutTurnout t, ConnectivityUtil cUtil) {
         LayoutBlock aBlock = ((TrackSegment) t.getConnectA()).getLayoutBlock();
         LayoutBlock bBlock = ((TrackSegment) t.getConnectB()).getLayoutBlock();
@@ -987,10 +976,13 @@ public class Section extends AbstractNamedBean {
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
                 }
             }
-            if (tBlock != null && tBlock.getUserName()!=null) {
-                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                if (lb != null) {
-                    dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+            if (tBlock != null) {
+                String userName = tBlock.getUserName();
+                if (userName != null) {
+                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                    if (lb != null) {
+                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                    }
                 }
             }
             if (dir == EntryPoint.UNKNOWN) {
@@ -1002,10 +994,13 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
                 }
-                if (tBlock != null && tBlock.getUserName()!=null) {
-                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                    if (lb != null) {
-                        dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                if (tBlock != null) {
+                    String userName = tBlock.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                        if (lb != null) {
+                            dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                        }
                     }
                 }
             }
@@ -1096,7 +1091,6 @@ public class Section extends AbstractNamedBean {
      * the same Block, or not all Blocks set. An error message is logged if
      * EntryPoint.UNKNOWN is returned.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     private int getDirectionXoverTurnout(LayoutTurnout t, ConnectivityUtil cUtil) {
         LayoutBlock aBlock = ((TrackSegment) t.getConnectA()).getLayoutBlock();
         LayoutBlock bBlock = ((TrackSegment) t.getConnectB()).getLayoutBlock();
@@ -1129,22 +1123,28 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName() != null) {
-                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                    if (lb != null) {
-                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                if (tBlock != null) {
+                    String userName = tBlock.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                        if (lb != null) {
+                            dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                        }
                     }
-                } else {
+                } else { // no tBlock found on leg A
                     tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
                             false, Turnout.CLOSED);
                     while ((tBlock == null) && (tn != null) && (!tn.reachedEndOfTrack())) {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName()!=null) {
-                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                        if (lb != null) {
-                            dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                    if (tBlock != null) {
+                        String userName = tBlock.getUserName();
+                        if (userName != null) {
+                            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                            if (lb != null) {
+                                dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                            }
                         }
                     }
                 }
@@ -1205,10 +1205,13 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName() != null) {
-                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                    if (lb != null) {
-                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                if (tBlock != null) {
+                    String userName = tBlock.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                        if (lb != null) {
+                            dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                        }
                     }
                 } else {
                     tn = new TrackNode(t, LayoutTrack.TURNOUT_C, (TrackSegment) t.getConnectC(),
@@ -1217,10 +1220,13 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if ((tBlock != null) && (tBlock.getUserName() != null)) {
-                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                        if (lb != null) {
-                            dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                    if (tBlock != null) {
+                        String userName = tBlock.getUserName();
+                        if (userName != null) {
+                            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                            if (lb != null) {
+                                dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                            }
                         }
                     }
                 }
@@ -1278,7 +1284,6 @@ public class Section extends AbstractNamedBean {
      *
      * @param t Actually of type LayoutSlip, this is the track segment to check.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     private int getDirectionSlip(LayoutTurnout t, ConnectivityUtil cUtil) {
         LayoutBlock aBlock = ((TrackSegment) t.getConnectA()).getLayoutBlock();
         LayoutBlock bBlock = ((TrackSegment) t.getConnectB()).getLayoutBlock();
@@ -1311,10 +1316,13 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName() != null) {
-                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                    if (lb != null) {
-                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                if (tBlock != null) {
+                    String userName = tBlock.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                        if (lb != null) {
+                            dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                        }
                     }
                 } else {
                     tn = new TrackNode(t, LayoutTrack.SLIP_C, (TrackSegment) t.getConnectC(),
@@ -1323,10 +1331,13 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName() != null) {
-                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                        if (lb != null) {
-                            dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                    if (tBlock != null) {
+                        String userName = tBlock.getUserName();
+                        if (userName != null) {
+                            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                            if (lb != null) {
+                                dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                            }
                         }
                     }
                 }
@@ -1378,10 +1389,13 @@ public class Section extends AbstractNamedBean {
                     tn = cUtil.getNextNode(tn, 0);
                     tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                 }
-                if (tBlock != null && tBlock.getUserName() != null) {
-                    LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                    if (lb != null) {
-                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                if (tBlock != null) {
+                    String userName = tBlock.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                        if (lb != null) {
+                            dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                        }
                     }
                 } else {
                     tn = new TrackNode(t, LayoutTrack.TURNOUT_B, (TrackSegment) t.getConnectB(),
@@ -1390,10 +1404,13 @@ public class Section extends AbstractNamedBean {
                         tn = cUtil.getNextNode(tn, 0);
                         tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
                     }
-                    if (tBlock != null && tBlock.getUserName() != null) {
-                        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                        if (lb != null) {
-                            dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                    if (tBlock != null) {
+                        String userName = tBlock.getUserName();
+                        if (userName != null) {
+                            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                            if (lb != null) {
+                                dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
+                            }
                         }
                     }
                 }
@@ -1566,7 +1583,6 @@ public class Section extends AbstractNamedBean {
      * @return 'true' if successfully checked direction sensor by follow connectivity from specified
      * track node; 'false' if an error occurred
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     private boolean setDirectionSensorByConnectivity(TrackNode tNode, TrackNode altNode, SignalHead sh,
             Block cBlock, ConnectivityUtil cUtil) {
         boolean successful = false;
@@ -1580,9 +1596,12 @@ public class Section extends AbstractNamedBean {
                 tBlock = (tn == null) ? null : cUtil.getExitBlockForTrackNode(tn, null);
             }
             if (tBlock != null) {
-                lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                if (lb != null) {
-                    dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                String userName = tBlock.getUserName();
+                if (userName != null) {
+                    lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                    if (lb != null) {
+                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                    }
                 }
             } else {
                 tn = altNode;
@@ -1591,13 +1610,16 @@ public class Section extends AbstractNamedBean {
                     tBlock = (tn == null) ? null : cUtil.getExitBlockForTrackNode(tn, null);
                 }
                 if (tBlock != null) {
-                    lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(tBlock.getUserName());
-                    if (lb != null) {
-                        dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
-                        if (dir == EntryPoint.REVERSE) {
-                            dir = EntryPoint.FORWARD;
-                        } else if (dir == EntryPoint.FORWARD) {
-                            dir = EntryPoint.REVERSE;
+                    String userName = tBlock.getUserName();
+                    if (userName != null) {
+                        lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                        if (lb != null) {
+                            dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
+                            if (dir == EntryPoint.REVERSE) {
+                                dir = EntryPoint.FORWARD;
+                            } else if (dir == EntryPoint.FORWARD) {
+                                dir = EntryPoint.REVERSE;
+                            }
                         }
                     }
                 }
@@ -1632,7 +1654,6 @@ public class Section extends AbstractNamedBean {
      * @return the number or errors placing sensors; 1 is returned if no
      *         direction sensor is defined for this section
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     public int placeDirectionSensors(LayoutEditor panel) {
         int missingSignalsBB = 0;
         int missingSignalsTurnouts = 0;
@@ -1652,10 +1673,14 @@ public class Section extends AbstractNamedBean {
         }
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
         ConnectivityUtil cUtil = panel.getConnectivityUtil();
+        LayoutBlock lBlock = null;
         for (Block cBlock : mBlockEntries) {
-            LayoutBlock lBlock = layoutBlockManager.getByUserName(cBlock.getUserName());
-            if (layoutBlockManager.getByUserName(cBlock.getUserName()) == null) {
-                continue;
+            String userName = cBlock.getUserName();
+            if (userName != null) {
+                lBlock = layoutBlockManager.getByUserName(userName);
+                if (lBlock == null) {
+                    continue;
+                }
             }
             List<PositionablePoint> anchorList = cUtil.getAnchorBoundariesThisBlock(cBlock);
             for (int j = 0; j < anchorList.size(); j++) {
@@ -2398,7 +2423,6 @@ public class Section extends AbstractNamedBean {
      *                initialized; if null no blocks are checked
      * @return an error description or empty string if there are no errors
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     public String validate(LayoutEditor lePanel) {
         if (initializationNeeded) {
             initializeBlocks();
@@ -2406,12 +2430,14 @@ public class Section extends AbstractNamedBean {
         // validate Paths and Bean Settings if a Layout Editor panel is available
         if (lePanel != null) {
             for (int i = 0; i < (mBlockEntries.size() - 1); i++) {
-                LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(
-                        getBlockBySequenceNumber(i).getUserName());
-                if (lBlock == null) {
-                    log.error("Layout Block {} not found. Paths not checked.", i);
-                } else {
-                    lBlock.updatePathsUsingPanel(lePanel);
+                String userName = getBlockBySequenceNumber(i).getUserName();
+                if (userName != null) {
+                    LayoutBlock lBlock = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                    if (lBlock == null) {
+                        log.error("Layout Block {} not found. Paths not checked.", i);
+                    } else {
+                        lBlock.updatePathsUsingPanel(lePanel);
+                    }
                 }
             }
         }
@@ -2513,11 +2539,11 @@ public class Section extends AbstractNamedBean {
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     public void setAlternateColor(boolean set) {
         for (Block b : mBlockEntries) {
-            if (b.getUserName() != null) {
-                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
+            String userName = b.getUserName();
+            if (userName != null) {
+                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
                 if (lb != null) {
                     lb.setUseExtraColor(set);
                 }
@@ -2536,7 +2562,6 @@ public class Section extends AbstractNamedBean {
      *
      * @param set true to use alternate unoccupied color; false otherwise
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     public void setAlternateColorFromActiveBlock(boolean set) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         boolean beenSet = false;
@@ -2548,9 +2573,12 @@ public class Section extends AbstractNamedBean {
                     beenSet = true;
                 }
                 if (beenSet) {
-                    LayoutBlock lb = lbm.getByUserName(b.getUserName());
-                    if (lb != null) {
-                        lb.setUseExtraColor(set);
+                    String userName = b.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = lbm.getByUserName(userName);
+                        if (lb != null) {
+                            lb.setUseExtraColor(set);
+                        }
                     }
                 }
             }
@@ -2560,9 +2588,12 @@ public class Section extends AbstractNamedBean {
                     beenSet = true;
                 }
                 if (beenSet) {
-                    LayoutBlock lb = lbm.getByUserName(b.getUserName());
-                    if (lb != null) {
-                        lb.setUseExtraColor(set);
+                    String userName = b.getUserName();
+                    if (userName != null) {
+                        LayoutBlock lb = lbm.getByUserName(userName);
+                        if (lb != null) {
+                            lb.setUseExtraColor(set);
+                        }
                     }
                 }
             }
@@ -2639,12 +2670,14 @@ public class Section extends AbstractNamedBean {
      *
      * @param set true to suppress the update; false otherwise
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed after method")
     public void suppressNameUpdate(boolean set) {
         for (Block b : mBlockEntries) {
-            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(b.getUserName());
-            if (lb != null) {
-                lb.setSuppressNameUpdate(set);
+            String userName = b.getUserName();
+            if (userName != null) {
+                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
+                if (lb != null) {
+                    lb.setSuppressNameUpdate(set);
+                }
             }
         }
     }

@@ -1,8 +1,13 @@
 package jmri.jmrix.powerline;
 
+import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.*;
 
 /**
@@ -98,7 +103,30 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue(null == t1.getUserName());
     }
 
-    // The minimal setup for log4J
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("B1");
+        String s2 = l.makeSystemName("B2");
+        testRegisterDuplicateSystemName(l, s1, s2);
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        try {
+            l.makeSystemName("1");
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            Assert.assertEquals("Invalid system name for Sensor: name \"PS1\" has incorrect format", ex.getMessage());
+        }
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PS1");
+        String s = l.makeSystemName("B1");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+
     @Override
     @Before
     public void setUp() {

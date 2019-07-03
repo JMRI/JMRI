@@ -99,7 +99,6 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
             new CbusTurnout("MT",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
     

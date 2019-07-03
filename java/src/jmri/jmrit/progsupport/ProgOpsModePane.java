@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -335,20 +336,20 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     void setProgrammerFromGui(Programmer programmer
     ) {
-        for (ProgrammingMode mode : buttonMap.keySet()) {
-            if (buttonMap.get(mode).isSelected()) {
-                if (mode == ProgrammingMode.OPSACCBYTEMODE) {
+        for (Map.Entry<ProgrammingMode, JRadioButton> entry : buttonMap.entrySet()) {
+            if (entry.getValue().isSelected()) {
+                if (entry.getKey() == ProgrammingMode.OPSACCBYTEMODE) {
                     log.debug("OPS ACCY was selected in setProgrammerFromGui");
                     opsAccyMode = true;
                     opsSigMode = false;
-                } else if (mode == ProgrammingMode.OPSACCEXTBYTEMODE) {
+                } else if (entry.getKey() == ProgrammingMode.OPSACCEXTBYTEMODE) {
                     log.debug("OPS SIG was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = true;
                 } else {
                     opsAccyMode = false;
                     opsSigMode = false;
-                    getProgrammer().setMode(mode);
+                    getProgrammer().setMode(entry.getKey());
                 }
             }
         }

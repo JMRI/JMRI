@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -242,12 +243,17 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
 
     protected void closingEvent() {
         _parent.closePortalDirection(_homeBlock);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
+        storeLocDim(getLocation(_loc), getSize(_dim));
         dispose();
+    }
+
+    private static void storeLocDim(@Nonnull Point location, @Nonnull Dimension size) {
+        _loc = location;
+        _dim = size;
     }
 
     protected OBlock getHomeBlock() {
         return _homeBlock;
     }
+
 }

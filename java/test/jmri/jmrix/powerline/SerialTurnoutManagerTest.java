@@ -1,8 +1,13 @@
 package jmri.jmrix.powerline;
 
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,9 +18,9 @@ import org.slf4j.LoggerFactory;
 /**
  * SerialTurnoutManagerTest.java
  *
- * Description:	tests for the SerialTurnoutManager class
+ * Description: tests for the SerialTurnoutManager class
  *
- * @author	Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
+ * @author Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
@@ -93,8 +98,30 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("B1");
+        String s2 = l.makeSystemName("B2");
+        testRegisterDuplicateSystemName(l, s1, s2);
+    }
 
-    // The minimal setup for log4J
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        try {
+            l.makeSystemName("1");
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            Assert.assertEquals("Invalid system name for Turnout: name \"PT1\" has incorrect format", ex.getMessage());
+        }
+        JUnitAppender.assertWarnMessage("address did not match any valid forms: PT1");
+        String s = l.makeSystemName("B1");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

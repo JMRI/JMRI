@@ -5,9 +5,7 @@ import org.junit.*;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.ConnectionConfig;
 
 /**
- * ConnectionConfigXmlTest.java
- *
- * Description: tests for the ConnectionConfigXml class
+ * Tests for the ConnectionConfigXml class.
  *
  * @author   Paul Bender  Copyright (C) 2016
  */

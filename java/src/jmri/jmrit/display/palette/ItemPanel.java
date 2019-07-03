@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -262,6 +263,7 @@ public abstract class ItemPanel extends JPanel {
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
+    @Nonnull
     static private String[] getNames(String type) {
         if (type.equals("Turnout")) {
             return TURNOUT;
@@ -287,12 +289,13 @@ public abstract class ItemPanel extends JPanel {
             return PORTAL;
         } else {
             log.error("Item type \"{}\" cannot create icon sets!", type);
-            return null;
+            return new String[]{};
         }
     }
 
     static String redX = "resources/icons/misc/X-red.gif";
 
+    @Nonnull
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap<String, NamedIcon> newMap = new HashMap<>();
         String[] names = getNames(type);

@@ -175,7 +175,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private ReporterManager reporterManager = null;
 
     public void setTransmitPrefix(String tPrefix) {
-        transmitPrefix = tPrefix.toUpperCase();
+        transmitPrefix = tPrefix;
     }
 
     public String getTransmitPrefix() {

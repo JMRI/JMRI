@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.17.1-SNAPSHOT</version>
+    <version>4.17.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -27,6 +27,7 @@
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
@@ -323,6 +324,7 @@
                     <systemPropertyVariables>
                         <jmri.path.program>${basedir}</jmri.path.program>
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+                        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
@@ -1111,14 +1113,19 @@
             <version>1.0.10</version>
         </dependency>
         <dependency>
-	         <groupId>org.eclipse.paho</groupId>
-	         <artifactId>mqtt-client</artifactId>
-	         <version>0.4.0</version>
+	        <groupId>org.eclipse.paho</groupId>
+	        <artifactId>mqtt-client</artifactId>
+	        <version>0.4.0</version>
 	    </dependency>
         <dependency>
-             <groupId>com.alexandriasoftware.swing</groupId>
-             <artifactId>jsplitbutton</artifactId>
-             <version>1.3.1</version>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jsplitbutton</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jinputvalidator</artifactId>
+            <version>0.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
