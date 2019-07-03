@@ -90,12 +90,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 ta.restoreEventsFromXmlTablestart();
         }
         
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            ShutDownTask shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-        } else {
-            log.info("No ShutDownManager to Save Events on close");
-        }
+        ShutDownTask shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
         
     }
 

@@ -4,12 +4,12 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -17,6 +17,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Audio;
 import jmri.Conditional;
 import jmri.ConditionalManager;
@@ -38,7 +42,9 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.beantable.LRouteTableAction;
+import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -47,10 +53,9 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.picker.PickFrame;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * This is the base class for the Conditional edit view classes. Contains shared
@@ -89,7 +94,7 @@ public class ConditionalEditBase {
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
 
-    JmriBeanComboBox _comboNameBox = null;
+    NamedBeanComboBox<?> _comboNameBox = null;
 
     /**
      * Input selection names.
@@ -376,57 +381,57 @@ public class ConditionalEditBase {
      * @param itemType The selected variable or action type
      * @return nameBox A combo box based on the item type
      */
-    JmriBeanComboBox createNameBox(Conditional.ItemType itemType) {
-        JmriBeanComboBox nameBox;
+    NamedBeanComboBox<?> createNameBox(Conditional.ItemType itemType) {
+        NamedBeanComboBox<?> nameBox;
         switch (itemType) {
             case SENSOR:      // 1
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Sensor>(
+                        InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case TURNOUT:     // 2
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Turnout>(
+                        InstanceManager.getDefault(TurnoutManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case LIGHT:       // 3
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Light>(
+                        InstanceManager.getDefault(LightManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case SIGNALHEAD:  // 4
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<SignalHead>(
+                        InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case SIGNALMAST:  // 5
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<SignalMast>(
+                        InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case MEMORY:      // 6
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Memory>(
+                        InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case LOGIX:       // 7
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Logix>(
+                        InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case WARRANT:     // 8
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Warrant>(
+                        InstanceManager.getDefault(WarrantManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case OBLOCK:      // 10
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<OBlock>(
+                        InstanceManager.getDefault(OBlockManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case ENTRYEXIT:   // 11
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<DestinationPoints>(
+                        InstanceManager.getDefault(EntryExitPairs.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case OTHER:   // 14
-                nameBox = new JmriBeanComboBox(
-                        InstanceManager.getDefault(jmri.RouteManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                nameBox = new NamedBeanComboBox<Route>(
+                        InstanceManager.getDefault(jmri.RouteManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             default:
                 return null;             // Skip any other items.
         }
-        nameBox.setFirstItemBlank(true);
+        nameBox.setAllowNull(true);
         JComboBoxUtil.setupComboBoxMaxRows(nameBox);
         return nameBox;
     }
@@ -454,11 +459,11 @@ public class ConditionalEditBase {
         public void actionPerformed(ActionEvent e) {
             // Get the combo box and display name
             Object src = e.getSource();
-            if (!(src instanceof JmriBeanComboBox)) {
+            if (!(src instanceof NamedBeanComboBox)) {
                 return;
             }
-            JmriBeanComboBox srcBox = (JmriBeanComboBox) src;
-            String newName = srcBox.getSelectedDisplayName();
+            NamedBeanComboBox<?> srcBox = (NamedBeanComboBox<?>) src;
+            String newName = srcBox.getSelectedItemDisplayName();
 
             if (log.isDebugEnabled()) {
                 log.debug("NameBoxListener: new name = '{}'", newName);  // NOI18N
@@ -490,7 +495,7 @@ public class ConditionalEditBase {
             }
         }
 
-        PickSinglePanel _pickSingle;
+        PickSinglePanel<?> _pickSingle;
 
         switch (itemType) {
             case SENSOR:      // 1
@@ -1379,7 +1384,7 @@ public class ConditionalEditBase {
                 }
             }
         }
-        messageInvalidActionItemName(name, "EntryExit"); // NOI18N
+        messageInvalidActionItemName(name, "BeanNameEntryExit"); // NOI18N
         return null;
     }
 

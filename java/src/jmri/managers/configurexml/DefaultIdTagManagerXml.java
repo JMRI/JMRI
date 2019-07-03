@@ -3,34 +3,20 @@ package jmri.managers.configurexml;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import jmri.Application;
-import jmri.Disposable;
-import jmri.IdTag;
-import jmri.IdTagManager;
-import jmri.InstanceInitializer;
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.implementation.AbstractInstanceInitializer;
-import jmri.implementation.DefaultIdTag;
-import jmri.managers.DefaultIdTagManager;
-import jmri.jmrit.XmlFile;
-import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.Application;
+import jmri.IdTag;
+import jmri.IdTagManager;
+import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 /**
  * Concrete implementation of abstract {@link jmri.jmrit.XmlFile} for

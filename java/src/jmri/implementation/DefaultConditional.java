@@ -1283,7 +1283,7 @@ public class DefaultConditional extends AbstractNamedBean
             contentPanel.add(panel);
 
             panel = new JPanel();
-            panel.add(new JLabel(getFullyFormattedDisplayName()));
+            panel.add(new JLabel(getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));
             contentPanel.add(panel);
 
             panel = new JPanel();
@@ -1349,12 +1349,7 @@ public class DefaultConditional extends AbstractNamedBean
      * case
      */
     static private Memory getMemory(String name) {
-        Memory m = InstanceManager.memoryManagerInstance().getMemory(name);
-        if (m == null) {
-            String sName = name.toUpperCase().trim();  // N11N
-            m = InstanceManager.memoryManagerInstance().getMemory(sName);
-        }
-        return m;
+        return InstanceManager.memoryManagerInstance().getMemory(name);
     }
 
     /**

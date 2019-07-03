@@ -272,20 +272,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return NameValidity.VALID;
     }
 
-    /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager.
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form
-     */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
@@ -1421,8 +1407,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");  // NOI18N
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
     }
 
     /** {@inheritDoc} */

@@ -57,8 +57,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue("4th UA 3", n3.getSensorsActive());
 
         // some equality tests
-        Assert.assertTrue("GS1p7 == GS1007", l.getSensor("GS1p7") == l.getSensor("GS1007"));
-        Assert.assertTrue("GS1B7 == GS1007", l.getSensor("GS1B7") == l.getSensor("GS1007"));
+        // TODO: should these be the same bean, or should different beans point to same physical device?
+        Assert.assertNotEquals("GS1p7 == GS1007", l.getSensor("GS1p7"), l.getSensor("GS1007"));
+        Assert.assertNotEquals("GS1B7 == GS1007", l.getSensor("GS1B7"), l.getSensor("GS1007"));
     }
 
     @Override

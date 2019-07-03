@@ -9,17 +9,7 @@ import jmri.Reporter;
 
 /**
  * Abstract implementation of {@link jmri.IdTag} containing code common to all
- * concrete implementations.  This implementation also implements {@link jmri.Reportable}.
- * <hr>
- * This file is part of JMRI.
- * <p>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * concrete implementations. This implementation implements {@link jmri.Reportable}.
  *
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
@@ -31,11 +21,11 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     protected Date whenLastSeen = null;
 
     public AbstractIdTag(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractIdTag(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override

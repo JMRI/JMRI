@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
@@ -133,7 +134,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         if (namedBlock == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getBlock().getFullyFormattedDisplayName();
+            name = getBlock().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

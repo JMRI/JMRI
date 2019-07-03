@@ -162,31 +162,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
 
     /**
      * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace, adding +/- if not present.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        String address = inputName.toUpperCase().trim();
-        // check Cbus hardware address parts
-        if ((!address.startsWith(prefix + typeLetter()) || (address.length() < prefix.length() + 2))) {
-            return address;
-        }
-        try {
-            address = CbusAddress.validateSysName(address.substring(prefix.length() + 1));
-        } catch (IllegalArgumentException e) {
-            return address;
-        } catch (StringIndexOutOfBoundsException e) {
-            return address;
-        }
-        return prefix + typeLetter() + address;
-    }
-
-    /**
-     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
