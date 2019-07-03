@@ -84,7 +84,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @Nonnull
     public default String makeSystemName(@Nonnull String name) {
-        return validateSystemName(name.startsWith(getSystemNamePrefix()) ? name : getSystemNamePrefix() + name);
+        return validateSystemNameFormat(name.startsWith(getSystemNamePrefix()) ? name : getSystemNamePrefix() + name);
     }
 
     /**
@@ -96,7 +96,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @throws IllegalArgumentException if the name is not valid
      */
     @Nonnull
-    public default String validateSystemName(@Nonnull String name) {
+    public default String validateSystemNameFormat(@Nonnull String name) {
         if (validSystemNameFormat(name) != NameValidity.VALID) {
             throw new NamedBean.BadSystemNameException();
         }
