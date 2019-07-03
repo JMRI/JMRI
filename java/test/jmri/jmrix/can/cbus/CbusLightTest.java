@@ -538,6 +538,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();

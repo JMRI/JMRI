@@ -87,18 +87,21 @@ public class RouteTableActionTest extends AbstractTableActionBase {
     @Test
     @Ignore("Route create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name")
+    @Override
     public void testAddThroughDialog() {
     }
 
     @Test
     @Ignore("Route create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name, or add without dialog")
+    @Override
     public void testEditButton() {
     }
 
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -108,6 +111,7 @@ public class RouteTableActionTest extends AbstractTableActionBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

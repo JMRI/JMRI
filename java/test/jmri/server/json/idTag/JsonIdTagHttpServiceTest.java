@@ -54,6 +54,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     }
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, IOException, JsonException {
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
         IdTag idTag1 = manager.provide("ID1");

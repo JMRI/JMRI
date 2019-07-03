@@ -103,7 +103,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
         return current_float;
     }
 
-    // @Override
+    @Override
     public CurrentUnits getCurrentUnits() {
         return currentUnits;
     }

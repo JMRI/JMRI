@@ -39,6 +39,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
 
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
@@ -50,6 +51,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 
 

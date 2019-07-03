@@ -29,10 +29,12 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
+    @Override
     protected int getNumToTest1() {
         return 8;
     }
 
+    @Override
     protected int getNumToTest2() {
         return 9;
     }
@@ -63,6 +65,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -91,6 +94,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));

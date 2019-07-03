@@ -565,6 +565,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @CheckReturnValue
+    @Override
     public int getObjectCount() {
         int count = 0;
         for (Manager<E> m : mgrs) { count += m.getObjectCount(); }
@@ -655,11 +656,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
@@ -733,6 +736,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     private boolean muted = false;
     /** {@inheritDoc} */
+    @Override
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
