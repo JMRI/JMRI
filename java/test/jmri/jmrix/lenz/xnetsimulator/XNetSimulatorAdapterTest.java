@@ -18,18 +18,28 @@ import org.junit.Test;
  */
 public class XNetSimulatorAdapterTest {
 
+    private XNetSimulatorAdapter a = null;
+ 
     @Test
     public void testCtor() {
-        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
         Assert.assertNotNull(a);
     }
 
     @Test
     public void testOkToSend() {
-        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
         Assert.assertTrue(a.okToSend());
     }
 
+    @Test
+    public void testStatus(){
+        Assert.assertTrue(a.status());
+        // if the status returns true, then we MUST have a connected
+        // input and output stream.
+        Assert.assertNotNull(a.getInputStream());
+        Assert.assertNotNull(a.getOutputStream());
+    }
+
+    // tests of generation of specific replies.
     @Test
     public void testGenerateCSVersionReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("21 21 00"));
@@ -39,13 +49,13 @@ public class XNetSimulatorAdapterTest {
     @Test
     public void testGenerateResumeOperationsReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("21 81 A0"));
-        Assert.assertEquals("CS Resume Operations Reply",new XNetReply("61 82 E3"),r);
+        Assert.assertEquals("CS Resume Operations Reply",new XNetReply("61 01 60"),r);
     }
 
     @Test
     public void testGenerateEmergencyStopReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("21 80 A1"));
-        Assert.assertEquals("CS Emergency Stop Reply",new XNetReply("61 82 E3"),r);
+        Assert.assertEquals("CS Emergency Stop Reply",new XNetReply("61 00 61"),r);
     }
 
     @Test
@@ -58,6 +68,13 @@ public class XNetSimulatorAdapterTest {
     public void testCSStatusReply(){
         XNetReply r = getReplyForMessage(new XNetMessage("21 24 05"));
         Assert.assertEquals("CS Emergency Stop All Reply ",new XNetReply("62 22 00 40"),r);
+    }
+
+    @Test
+    public void testSetCSModeReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("22 22 00 00"));
+        // not currently supported
+        Assert.assertEquals("set CS Power Up Mode Reply",new XNetReply("61 82 E3"),r);
     }
 
     @Test
@@ -184,9 +201,103 @@ public class XNetSimulatorAdapterTest {
         Assert.assertEquals("Accessory Decoder Info Reply",new XNetReply("42 42 50 50"),r);
     }
 
+    @Test
+    public void testGenerateLocoInfoRequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply",new XNetReply("E4 13 00 00 00 F7"),r);
+    }
+
+    @Test
+    public void testGenerateLocoInfoV1RequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("A1 01 A0"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive Info V1 Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGenerateLocoInfoV1V2RequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("A2 01 01 A2"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive Info V1/V2 Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testGenerateLocoFunctionStatusRequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E3 07 01 01 E4"));
+        Assert.assertEquals("LocoMotive Function Status Reply",new XNetReply("E3 50 00 00 B3"),r);
+    }
+
+    @Test
+    public void testSetLocoSpeedRequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 11 01 11 01 E4"));
+        Assert.assertEquals("LocoMotive set speed Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after speed set",new XNetReply("E4 11 01 00 00 F4"),r);
+    }
+
+    @Test
+    public void testSetLocoFunctionRequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 20 01 20 01 E4"));
+        Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after function set",new XNetReply("E4 13 00 01 00 F6"),r);
+    }
+
+    @Test
+    public void testSetLocoMomentaryFunctionRequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 24 01 24 01 E4"));
+        Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
+        // loco momentary function status should change.
+        r = getReplyForMessage(new XNetMessage("E3 07 01 01 E4"));
+        Assert.assertEquals("LocoMotive Function Status after set Reply",new XNetReply("E3 50 01 00 B2"),r);
+    }
+
+    @Test
+    public void testAddToMURequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 40 01 40 01 E4"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive Add to MU Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testRemoveFromMURequestReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 42 01 40 01 E6"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive Remove from MU Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testMUMemberAddressInquiryReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 01 01 01 01 E4"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive MU Member inquiry Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testMUAddressInquiryReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E2 03 01 E0"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive MU Address inquiry Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testCSSearchStackReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E3 05 01 03 E4"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive Search Stack Reply",new XNetReply("61 82 E3"),r);
+    }
+
+    @Test
+    public void testCSDeleteStackReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E3 44 01 44 E2"));
+        // not currently supported
+        Assert.assertEquals("LocoMotive Delete Stack Reply",new XNetReply("61 82 E3"),r);
+    }
+
     private XNetReply getReplyForMessage(XNetMessage m){
         XNetReply r = null;
-        XNetSimulatorAdapter a = new XNetSimulatorAdapter();
         // NOTE: this test uses reflection to test a private method.
         java.lang.reflect.Method generateReplyMethod = null;
         try {
@@ -215,10 +326,13 @@ public class XNetSimulatorAdapterTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        a = new XNetSimulatorAdapter();
     }
 
     @After
     public void tearDown() {
+        a.dispose();
+        a = null;
         JUnitUtil.tearDown();
     }
 

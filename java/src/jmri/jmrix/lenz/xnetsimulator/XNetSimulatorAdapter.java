@@ -207,7 +207,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         switch (m.getElement(0) & 0xff) {
 
             case XNetConstants.CS_REQUEST:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.CS_VERSION:
                         reply = xNetVersionReply();
                         break;
@@ -235,7 +235,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.LOCO_SPEED_14:
                         currentSpeedStepMode = XNetConstants.LOCO_SPEED_14;
                         currentSpeedStep = m.getElement(4);
@@ -320,7 +320,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply = accInfoReply(m);
                 break;
             case XNetConstants.LOCO_STATUS_REQ:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.LOCO_INFO_REQ_V3:
                         reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
                         reply.setElement(1, currentSpeedStepMode);
@@ -364,7 +364,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 break;
             case XNetConstants.OPS_MODE_PROG_REQ:
                     int operation = m.getElement(4) & 0xFC;
-                    switch(operation) {
+                    switch(operation & 0xff ) {
                          case 0xEC:
                            log.debug("Write CV in Ops Mode Request Received");
                            reply = okReply();
