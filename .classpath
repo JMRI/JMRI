@@ -53,7 +53,7 @@
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
 	<classpathentry kind="lib" path="lib/jinput.jar"/>
-	<classpathentry kind="lib" path="lib/jinputvalidator-0.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jinputvalidator-0.5.0.jar"/>
 
 	<classpathentry kind="lib" path="lib/joal.jar"/>
 	<classpathentry kind="lib" path="lib/jsr305.jar"/>
