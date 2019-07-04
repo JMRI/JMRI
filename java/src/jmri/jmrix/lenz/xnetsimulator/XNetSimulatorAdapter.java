@@ -207,7 +207,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         switch (m.getElement(0) & 0xff) {
 
             case XNetConstants.CS_REQUEST:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.CS_VERSION:
                         reply = xNetVersionReply();
                         break;
@@ -235,7 +235,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.LOCO_SPEED_14:
                         currentSpeedStepMode = XNetConstants.LOCO_SPEED_14;
                         currentSpeedStep = m.getElement(4);
@@ -311,16 +311,16 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 break;
             case XNetConstants.EMERGENCY_STOP:
             case XNetConstants.EMERGENCY_STOP_XNETV1V2:
-//                reply = okReply(); // TODO Next occurrence will eventually be replaced
-//                break;
+                reply = okReply();
+                break;
             case XNetConstants.ACC_OPER_REQ:
                 // LZ100 and LZV100 respond with an ACC_INFO_RESPONSE.
                 // but XpressNet standard says to no response (which causes
                 // the interface to send an OK reply).
-                reply = okReply();
+                reply = accInfoReply(m);
                 break;
             case XNetConstants.LOCO_STATUS_REQ:
-                switch (m.getElement(1)) {
+                switch (m.getElement(1) & 0xff ) {
                     case XNetConstants.LOCO_INFO_REQ_V3:
                         reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
                         reply.setElement(1, currentSpeedStepMode);
@@ -360,29 +360,11 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 }
                 break;
             case XNetConstants.ACC_INFO_REQ:
-                reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
-                reply.setElement(1, m.getElement(1));
-                if (m.getElement(1) < 64) {
-                    // treat as turnout feedback request.
-                    if (m.getElement(2) == 0x80) {
-                        reply.setElement(2, 0x00);
-                    } else {
-                        reply.setElement(2, 0x10);
-                    }
-                } else {
-                    // treat as feedback encoder request.
-                    if (m.getElement(2) == 0x80) {
-                        reply.setElement(2, 0x40);
-                    } else {
-                        reply.setElement(2, 0x50);
-                    }
-                }
-                reply.setElement(3, 0x00);
-                reply.setParity();
+                reply = accInfoReply(m); 
                 break;
             case XNetConstants.OPS_MODE_PROG_REQ:
                     int operation = m.getElement(4) & 0xFC;
-                    switch(operation) {
+                    switch(operation & 0xff ) {
                          case 0xEC:
                            log.debug("Write CV in Ops Mode Request Received");
                            reply = okReply();
@@ -483,6 +465,32 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         reply.setElement(2, csStatus);
         reply.setElement(3, 0x00); // set the parity byte to 0
         reply.setParity();
+        return reply;
+    }
+
+    // Create a reply to a request for the accessory device Status
+    private XNetReply accInfoReply(XNetMessage m) {
+        XNetReply reply = new XNetReply();
+        reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+        reply.setElement(1, m.getElement(1));
+           if (m.getOpCode() == XNetConstants.ACC_OPER_REQ || 
+               m.getElement(1) < 64) {
+              // treat as turnout feedback request.
+              if (m.getElement(2) == 0x80) {
+                 reply.setElement(2, 0x00);
+              } else {
+                 reply.setElement(2, 0x10);
+              }
+           } else {
+              // treat as feedback encoder request.
+              if (m.getElement(2) == 0x80) {
+                 reply.setElement(2, 0x40);
+              } else {
+                 reply.setElement(2, 0x50);
+              }
+           }
+           reply.setElement(3, 0x00);
+           reply.setParity();
         return reply;
     }
 
