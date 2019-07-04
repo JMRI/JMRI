@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
@@ -493,23 +494,69 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
 
     public class BadUserNameException extends IllegalArgumentException {
 
+        private final String localizedMessage;
+
         public BadUserNameException() {
             super();
+            localizedMessage = getMessage();
         }
 
-        public BadUserNameException(String message) {
-            super(message);
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the same arguments as
+         * {@link jmri.Bundle#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)}
+         * as it uses that method to create both the localized and loggable
+         * messages.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param locale  the locale to be used
+         * @param message bundle key to be translated
+         * @param subs    One or more objects to be inserted into the message
+         */
+        public BadUserNameException(Locale locale, String message, Object... subs) {
+            super(Bundle.getMessage(Locale.ENGLISH, message, subs));
+            localizedMessage = Bundle.getMessage(locale, message, subs);
+        }
+
+        @Override
+        public String getLocalizedMessage() {
+            return localizedMessage;
         }
     }
 
     public class BadSystemNameException extends IllegalArgumentException {
 
+        private final String localizedMessage;
+
         public BadSystemNameException() {
             super();
+            localizedMessage = getMessage();
         }
 
-        public BadSystemNameException(String message) {
-            super(message);
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the same arguments as
+         * {@link jmri.Bundle#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)}
+         * as it uses that method to create both the localized and loggable
+         * messages.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param locale  the locale to be used
+         * @param message bundle key to be translated
+         * @param subs    One or more objects to be inserted into the message
+         */
+        public BadSystemNameException(Locale locale, String message, Object... subs) {
+            super(Bundle.getMessage(Locale.ENGLISH, message, subs));
+            localizedMessage = Bundle.getMessage(locale, message, subs);
+        }
+
+        @Override
+        public String getLocalizedMessage() {
+            return localizedMessage;
         }
     }
 

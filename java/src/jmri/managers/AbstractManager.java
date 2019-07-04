@@ -80,18 +80,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
-        String prefix = getSystemNamePrefix();
-        // do some basic format checking that can throw explicit exception with feedback to user
-        if (s.trim().isEmpty()) {
-            log.error("Invalid system name for {}: \"\" needed non-empty suffix to follow {}", getBeanTypeHandled(), prefix);
-            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty suffix to follow " + prefix);
+        try {
+            return Manager.super.makeSystemName(s);
+        } catch (IllegalArgumentException ex) {
+            // debug logging because this will get called frequently
+            // and will be called while user is typing in a name
+            log.debug("Invalid system name for {}: {}", getBeanTypeHandled(), ex.getMessage());
+            throw ex;
         }
-        String name = prefix + s;
-        // verify name format is valid
-        if (validSystemNameFormat(name) != NameValidity.VALID) {
-            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": name \"" + name + "\" has incorrect format");
-        }
-        return name;
     }
 
     /** {@inheritDoc} */
@@ -117,23 +113,29 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Now obsolete. Used {@link #getBeanBySystemName} instead.
-     * @param systemName the system name, but don't call this method
-	 * @return the results of a {@link #getBeanBySystemName} call, which you should use instead of this
-     * @deprecated 4.15.6
+     * Get a NamedBean by its system name.
+     *
+     * @param systemName the system name
+     * @return the result of {@link #getBeanBySystemName(java.lang.String)}
+     *         with systemName
+     * @deprecated since 4.15.6; use
+     * {@link #getBeanBySystemName(java.lang.String)} instead
      */
-    @Deprecated // since 4.15.6
+    @Deprecated
     protected E getInstanceBySystemName(String systemName) {
         return getBeanBySystemName(systemName);
     }
 
     /**
-     * Now obsolete. Used {@link #getBeanByUserName} instead.
-     * @param userName the system name, but don't call this method
-	 * @return the results of a {@link #getBeanByUserName} call, which you should use instead of this
-     * @deprecated 4.15.6
+     * Get a NamedBean by its user name.
+     *
+     * @param userName the user name
+     * @return the result of {@link #getBeanByUserName(java.lang.String)} call,
+     *         with userName
+     * @deprecated since 4.15.6; use
+     * {@link #getBeanByUserName(java.lang.String)} instead
      */
-    @Deprecated // since 4.15.6
+    @Deprecated
     protected E getInstanceByUserName(String userName) {
         return getBeanByUserName(userName);
     }
