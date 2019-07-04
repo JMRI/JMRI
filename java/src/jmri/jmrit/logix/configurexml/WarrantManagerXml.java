@@ -297,16 +297,17 @@ public class WarrantManagerXml //extends XmlFile
             if (elem.getAttribute("systemName") == null) {
                 break;
             }
-            String sysName = null;
-            if (elem.getAttribute("systemName") != null)
-                sysName = elem.getAttribute("systemName").getValue();
-            Warrant warrant = manager.getBySystemName(sysName);
-            List<Element> throttleCmds = elem.getChildren("throttleCommand");
-            if (throttleCmds != null) {
-                for (int k=0; k<throttleCmds.size(); k++) {
-                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
-                    warrant.addThrottleCommand(ts);
-                }                
+            if (elem.getAttribute("systemName") != null) {
+                String sysName = elem.getAttribute("systemName").getValue();
+                if (sysName != null) {
+                    Warrant warrant = manager.getBySystemName(sysName);
+                    List<Element> throttleCmds = elem.getChildren("throttleCommand");
+                    if (throttleCmds != null) {
+                        throttleCmds.forEach((e) -> {
+                            warrant.addThrottleCommand(loadThrottleCommand(e));
+                        });
+                    }
+                }
             }
         }
         return true;

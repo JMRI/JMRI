@@ -105,12 +105,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         } else {
             // try the supplied system name
-            result = getBySystemName((systemName.toUpperCase()));
+            result = getBySystemName((systemName));
 
             if (result != null) {
                 return null;
             }
-            sName = systemName.toUpperCase();
+            sName = systemName;
         }
 
         // LayoutBlock does not exist, create a new LayoutBlock
@@ -181,8 +181,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     @CheckReturnValue
     @Nullable
-    public LayoutBlock getBySystemName(@Nonnull String name) {
-        String key = name.toUpperCase();
+    public LayoutBlock getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 

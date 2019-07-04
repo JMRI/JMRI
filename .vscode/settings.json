@@ -5,12 +5,12 @@
         {
             "name": "JMRI",
             "workingDirectory": "${workspaceFolder}",
-            "env": {
-                "user.language": "en",
-                "user.region": "US",
-                "jmri.prefsdir": "${workspaceFolder}/temp",
-                "jmri.shutdownmanager": "jmri.util.MockShutDownManager"
-            }
+            "vmargs": [
+                "-Duser.language=en",
+                "-Duser.region=US",
+                "-Djmri.prefsdir=${workspaceFolder}/temp",
+                "-Djmri.shutdownmanager=jmri.util.MockShutDownManager"
+            ]
         }
     ],
     "java.test.defaultConfig": "JMRI"

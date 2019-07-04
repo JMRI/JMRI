@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * Basic Implementation of a LogixManager.
  * <p>
  * Note that Logix system names must begin with IX, and be followed by a string,
- * usually, but not always, a number. All alphabetic characters in a Logix
- * system name must be upper case. This is enforced when a Logix is created.
+ * usually, but not always, a number. This is enforced when a Logix is created.
  * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
@@ -73,9 +72,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             }
         }
         x = getBySystemName(systemName);
-        if (x == null) {
-            x = getBySystemName(systemName.toUpperCase());   // for compatibility?
-        }
         if (x != null) {
             return null;
         }

@@ -165,8 +165,8 @@
       a system connection in the preferences to any other uppercase or lowercase
       letter. You can call your NCE connection "P" if you want to.
       If you have two of them, you can call one "X" and the other
-      "Y". You can also use an upper case letter followed by
-      digits, e.g. "N1" and "N2".</p>
+      "Y". You can also use a lower case or upper case letter followed by
+      digits, e.g. "N1" and "n2".</p>
 
       <h4>Default System Letters</h4>
       <p>Note that some of these are placeholders, and have no underlying
@@ -290,7 +290,7 @@
 
         <li>B Block - A software object that keeps track of the
         contents of a specific block of track.
-        Block system names are all upper case, have no trailing whitespace and start with IB.</li>
+        Block system names start with IB.</li>
 
         <li>D iDentity - A software object that holds information
         about an identity tag that is, typically, attached to a
@@ -309,20 +309,19 @@
         name is "IG12". For historical reasons, Groups were not required to have
         a system prefix or type letter until late;
         <span class="since">Since JMRI 4.13.4</span>Using only one single letter
-        in the system name is no longer compatible with system name normalization.
+        in the system name is no longer compatible with system name validation.
 
         <li>H signal Head - One part of a signal (which may have
         multiple heads). Also interpreted to include indicators on
         control panels that are acting to display signal
         aspects.
-        SignalHead system names are all upper case, have no trailing whitespace and mostly, 
-        but not always, start with IH.
+        SignalHead system names mostly, but not always, start with IH.
         </li>
 
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
         information temporarily and display it on panels, etc.
-        Memory system names are all upper case, have no trailing whitespace and start with IM.</li>
+        Memory system names start with IM.</li>
 
         <li>L Light - another form of output, used to e.g. control
         lights on a layout</li>
@@ -349,14 +348,14 @@
         commonly used for block occupancy detectors.</li>
 
         <li>Y Sections - holds a map of trackwork.
-        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
+        Section system names start with IY.</li>
         
         <li>T Turnout - actually a general purpose output on the
         layout</li>
 
         <li>X logiX - a set of logic equations used to control the
         layout.
-        Logix system names are all upper case, have no trailing whitespace and start with IX.</li>
+        Logix system names start with IX.</li>
       </ul>
 
 

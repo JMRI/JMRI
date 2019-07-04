@@ -24,7 +24,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
     
     public String getSystemName(int on, int off) {
-        return "MLX010203040506070" + on +";X010203040506070" + off;
+        return "MLx010203040506070" + on +";x010203040506070" + off;
     }
 
     @Test
@@ -39,8 +39,8 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // olcb addresses are hex values requirng 16 digits.
         Light t = l.provide("MLx010203040506070" + getNumToTest1() +";x010203040506070" + getNumToTest2());
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct " + t.getSystemName(), t, l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
     }
 
     @Override
@@ -50,8 +50,8 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // olcb addresses are hex values requirng 16 digits.
         Light t = l.provideLight("MLx010203040506070" + getNumToTest1() +";x010203040506070" + getNumToTest2());
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct " + t.getSystemName(), t, l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
     }
 
     @Override
@@ -68,14 +68,14 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testSingleObject() {
         // test that you always get the same representation
         Light t1 = l.newLight(getSystemName(getNumToTest1(), getNumToTest2()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
+        Assert.assertNotNull("t1 real object returned ", t1);
+        Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
+        Assert.assertEquals("same by system ", t1, l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
 
         Light t2 = l.newLight(getSystemName(getNumToTest1(), getNumToTest2()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2);
         // check
-        Assert.assertTrue("same new ", t1 == t2);
+        Assert.assertEquals("same new ", t1, t2);
     }
     
     @Override
@@ -84,9 +84,9 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create
         Light t = l.newLight(getSystemName(getNumToTest1(), getNumToTest2()), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
     }
     
     @Override
@@ -139,6 +139,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }

@@ -42,6 +42,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
@@ -385,47 +386,47 @@ public class ConditionalEditBase {
         switch (itemType) {
             case SENSOR:      // 1
                 nameBox = new NamedBeanComboBox<Sensor>(
-                        InstanceManager.getDefault(SensorManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case TURNOUT:     // 2
                 nameBox = new NamedBeanComboBox<Turnout>(
-                        InstanceManager.getDefault(TurnoutManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(TurnoutManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case LIGHT:       // 3
                 nameBox = new NamedBeanComboBox<Light>(
-                        InstanceManager.getDefault(LightManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(LightManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case SIGNALHEAD:  // 4
                 nameBox = new NamedBeanComboBox<SignalHead>(
-                        InstanceManager.getDefault(SignalHeadManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(SignalHeadManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case SIGNALMAST:  // 5
                 nameBox = new NamedBeanComboBox<SignalMast>(
-                        InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case MEMORY:      // 6
                 nameBox = new NamedBeanComboBox<Memory>(
-                        InstanceManager.getDefault(MemoryManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case LOGIX:       // 7
                 nameBox = new NamedBeanComboBox<Logix>(
-                        InstanceManager.getDefault(LogixManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(LogixManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case WARRANT:     // 8
                 nameBox = new NamedBeanComboBox<Warrant>(
-                        InstanceManager.getDefault(WarrantManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(WarrantManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case OBLOCK:      // 10
                 nameBox = new NamedBeanComboBox<OBlock>(
-                        InstanceManager.getDefault(OBlockManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(OBlockManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case ENTRYEXIT:   // 11
                 nameBox = new NamedBeanComboBox<DestinationPoints>(
-                        InstanceManager.getDefault(EntryExitPairs.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(EntryExitPairs.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             case OTHER:   // 14
                 nameBox = new NamedBeanComboBox<Route>(
-                        InstanceManager.getDefault(jmri.RouteManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                        InstanceManager.getDefault(jmri.RouteManager.class), null, DisplayOptions.DISPLAYNAME);
                 break;
             default:
                 return null;             // Skip any other items.

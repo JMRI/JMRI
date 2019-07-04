@@ -32,12 +32,12 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
     private int currentState = 0x00;
 
     public DefaultRailCom(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         setWhereLastSeen(null);
     }
 
     public DefaultRailCom(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         setWhereLastSeen(null);
     }
 

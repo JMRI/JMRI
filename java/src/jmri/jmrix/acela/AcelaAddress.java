@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,6 +145,7 @@ public class AcelaAddress {
      * @return 'true' if system name has a valid meaning in current
      * configuration, else return 'false'
      */
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification="false postive, complex if inside switch")
     public static boolean validSystemNameConfig(String systemName, char type, AcelaSystemConnectionMemo memo) {
         if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present

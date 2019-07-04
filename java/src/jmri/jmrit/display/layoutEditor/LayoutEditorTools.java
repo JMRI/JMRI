@@ -61,6 +61,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.catalog.NamedIcon;
@@ -204,20 +205,20 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Turnout> turnoutComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final NamedBeanComboBox<SignalHead> throatContinuingSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> throatDivergingSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> continuingSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> divergingSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setPlaceAllHeads = new JCheckBox(Bundle.getMessage("PlaceAllHeads"));
     private final JCheckBox setupAllLogic = new JCheckBox(Bundle.getMessage("SetAllLogic"));
@@ -674,7 +675,6 @@ public class LayoutEditorTools {
             } else {
                 String uname = turnout.getUserName();
                 if ((uname == null) || uname.isEmpty() || !uname.equals(str)) {
-                    str = str.toUpperCase();
                     if (isCrossover) {
                         xoverTurnoutName = str;
                     } else {
@@ -1163,7 +1163,6 @@ public class LayoutEditorTools {
         if (result != null) {
             String uname = result.getUserName();
             if ((uname == null) || uname.isEmpty() || !uname.equals(signalName)) {
-                signalName = signalName.toUpperCase();
                 signalNameTextField.setText(signalName);
             }
         }
@@ -1995,17 +1994,17 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Block> block1IDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> block2IDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final NamedBeanComboBox<SignalHead> eastBoundSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> westBoundSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setEastBound = new JCheckBox(Bundle.getMessage("PlaceHead"));
     private final JCheckBox setupLogicEastBound = new JCheckBox(Bundle.getMessage("SetLogic"));
@@ -2569,28 +2568,28 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<SignalHead> a1SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> a2SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b1SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b2SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c1SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c2SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d1SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d2SignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setA1Head = new JCheckBox(Bundle.getMessage("PlaceHead"));
     private final JCheckBox setA2Head = new JCheckBox(Bundle.getMessage("PlaceHead"));
@@ -3649,23 +3648,23 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Block> blockACComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> blockBDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final NamedBeanComboBox<SignalHead> aSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> bSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> cSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> dSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setAHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
     private final JCheckBox setBHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
@@ -4445,43 +4444,43 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Turnout> turnout1ComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Turnout> turnout2ComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final NamedBeanComboBox<SignalHead> a1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> a2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d1TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d2TToTSignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setA1TToTHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
     private final JCheckBox setA2TToTHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
@@ -5914,35 +5913,35 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Turnout> turnoutAComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Turnout> turnoutBComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final NamedBeanComboBox<SignalHead> a1_3WaySignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> a2_3WaySignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> a3_3WaySignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b_3WaySignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c_3WaySignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d_3WaySignalHeadComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SignalHeadManager.class
             ),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setA13WayHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
     private final JCheckBox setupA13WayLogic = new JCheckBox(Bundle.getMessage("SetLogic"));
@@ -6283,7 +6282,6 @@ public class LayoutEditorTools {
             String uname = turnoutB.getUserName();
             if ((uname == null) || uname.isEmpty()
                     || !uname.equals(str)) {
-                str = str.toUpperCase();
                 turnoutBComboBox.setSelectedItem(str);
             }
             layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayTurnoutFrame);
@@ -6335,7 +6333,6 @@ public class LayoutEditorTools {
             String uname = turnoutA.getUserName();
             if ((uname == null) || uname.isEmpty()
                     || !uname.equals(str)) {
-                str = str.toUpperCase();
                 turnoutAComboBox.setSelectedItem(str);
             }
             // have turnout A - get corresponding layoutTurnout
@@ -6392,7 +6389,6 @@ public class LayoutEditorTools {
                 uname = turnoutB.getUserName();
                 if ((uname == null) || uname.isEmpty()
                         || !uname.equals(str)) {
-                    str = str.toUpperCase();
                     turnoutBComboBox.setSelectedItem(str);
                 }
                 layoutTurnoutB = getLayoutTurnoutFromTurnout(turnoutB, false, str, setSignalsAt3WayTurnoutFrame);
@@ -8869,7 +8865,7 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Turnout> signalMastsTurnoutComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null,
-            NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            DisplayOptions.DISPLAYNAME);
 
     private JButton setSignalMastsDone;
     private JButton getSavedSignalMasts;
@@ -9470,19 +9466,19 @@ public class LayoutEditorTools {
     private final NamedBeanComboBox<Block> slipSignalBlockAComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> slipSignalBlockBComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> slipSignalBlockCComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> slipSignalBlockDComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
 
     private JLabel slipSignalBlockANameLabel = null;
     private JLabel slipSignalBlockBNameLabel = null;
@@ -10015,10 +10011,10 @@ public class LayoutEditorTools {
 
     private final NamedBeanComboBox<Block> xingBlockACComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> xingBlockBDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class),
-            null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            null, DisplayOptions.DISPLAYNAME);
 
     private JButton getSavedXingSignalMasts = null;
     private JButton setXingSignalMastsDone = null;
@@ -10544,7 +10540,7 @@ public class LayoutEditorTools {
     private final NamedBeanComboBox<Turnout> sensorsTurnoutComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.turnoutManagerInstance(),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
 
     private JButton setSensorsDone;
     private JButton getSavedSensors;
@@ -10970,11 +10966,11 @@ public class LayoutEditorTools {
     private final NamedBeanComboBox<Block> xingSensorsBlockACComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> xingSensorsBlockBDComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
 
     private JButton getSavedXingSensors = null;
     private JButton setXingSensorsDone = null;
@@ -11503,19 +11499,19 @@ public class LayoutEditorTools {
     private final NamedBeanComboBox<Block> slipSensorsBlockAComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> slipSensorsBlockBComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> slipSensorsBlockCComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<Block> slipSensorsBlockDComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(BlockManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
 
     private String[] slipSensorBlocks = new String[4];
 
@@ -12054,35 +12050,35 @@ public class LayoutEditorTools {
     private final NamedBeanComboBox<SignalHead> a1SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> a2SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b1SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> b2SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c1SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> c2SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d1SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<SignalHead> d2SlipSignalHeadComboBox
             = new NamedBeanComboBox<>(
                     InstanceManager.getDefault(SignalHeadManager.class),
-                    null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                    null, DisplayOptions.DISPLAYNAME);
 
     private final JCheckBox setA1SlipHead = new JCheckBox(Bundle.getMessage("PlaceHead"));
     private final JCheckBox setupA1SlipLogic = new JCheckBox(Bundle.getMessage("SetLogic"));

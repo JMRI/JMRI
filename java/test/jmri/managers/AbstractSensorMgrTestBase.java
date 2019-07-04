@@ -126,7 +126,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
         Assert.assertNotNull("t1 real object returned ", t1);
         Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
-        System.out.println(t1.getSystemName());
         Assert.assertEquals("same by system ", t1, l.getBySystemName(getSystemName(getNumToTest1())));
 
         Sensor t2 = l.newSensor(getSystemName(getNumToTest1()), "mine");

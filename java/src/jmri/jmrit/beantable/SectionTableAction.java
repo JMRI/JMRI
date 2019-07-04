@@ -38,6 +38,7 @@ import jmri.Section;
 import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.Transit;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
@@ -710,7 +711,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         if (!checkSectionInformation()) {
             return;
         }
-        String uName = userName.getText().trim(); // N11N
+        String uName = userName.getText();
         if (uName.equals("")) {
             uName = null;
         }
@@ -1130,7 +1131,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
      */
     private void deleteSectionPressed(String sName) {
         final Section s = jmri.InstanceManager.getDefault(jmri.SectionManager.class).getBySystemName(sName);
-        String fullName = s.getFullyFormattedDisplayName();
+        String fullName = s.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         ArrayList<Transit> affectedTransits = jmri.InstanceManager.getDefault(jmri.TransitManager.class).getListUsingSection(s);
         final JDialog dialog = new JDialog();
         String msg = "";
@@ -1146,7 +1147,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             dialog.add(p1);
             for (int i = 0; i < affectedTransits.size(); i++) {
                 Transit aTransit = affectedTransits.get(i);
-                String tFullName = aTransit.getFullyFormattedDisplayName();
+                String tFullName = aTransit.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
                 p1 = new JPanel();
                 p1.setLayout(new FlowLayout());
                 iLabel = new JLabel("   " + tFullName);

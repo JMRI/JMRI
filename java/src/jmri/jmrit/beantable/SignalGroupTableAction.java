@@ -38,6 +38,7 @@ import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.AlphanumComparator;
@@ -370,8 +371,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         box.setSelectedItem(result);
     }
 
-    JTextField _systemName = new JTextField(10); // N11N
-    JTextField _userName = new JTextField(22); // N11N
+    JTextField _systemName = new JTextField(10);
+    JTextField _userName = new JTextField(22);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     jmri.UserPreferencesManager pref;
@@ -462,7 +463,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         // Set up Add/Edit Signal Group window
         if (addFrame == null) { // if it's not yet present, create addFrame
 
-            mainSignalComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+            mainSignalComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
             mainSignalComboBox.setAllowNull(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
@@ -839,7 +840,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
         String sName = _systemName.getText();
-        String uName = _userName.getText(); // may be empty // N11N
+        String uName = _userName.getText(); // may be empty
         if (sName.length() == 0) { // show warning in status bar
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
             status1.setForeground(Color.red);

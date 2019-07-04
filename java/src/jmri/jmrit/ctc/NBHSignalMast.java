@@ -44,7 +44,7 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     protected NBHSignalMast(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal.trim());
+            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal);
             if (signalMast != null) {
                 _mNamedBeanHandleSignalMast = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalMast);
                 _mDangerAppearance = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);

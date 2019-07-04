@@ -27,7 +27,7 @@ public class AbstractAudioTest {
         // Check that audio.setState() triggers stateChanged()
         Assert.assertTrue("state has changed", stateHasChanged.get());
         Assert.assertTrue("toString() matches",
-                "jmri.implementation.AbstractAudioTest$MyAbstractAudio (MYSYSTEMNAME)".equals(audio.toString()));
+                "jmri.implementation.AbstractAudioTest$MyAbstractAudio (MySystemName)".equals(audio.toString()));
         
         Assert.assertTrue("getBeanType() matches", "Audio".equals(audio.getBeanType()));
     }

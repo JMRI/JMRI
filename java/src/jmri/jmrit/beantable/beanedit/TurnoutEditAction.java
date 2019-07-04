@@ -14,6 +14,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.swing.NamedBeanComboBox;
@@ -112,7 +113,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         sensorFeedBack1ComboBox = new NamedBeanComboBox<>(
                 InstanceManager.sensorManagerInstance(),
                 bean.getFirstSensor(),
-                NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                DisplayOptions.DISPLAYNAME);
         sensorFeedBack1ComboBox.setAllowNull(true);
         feedback.addItem(new BeanEditItem(sensorFeedBack1ComboBox,
                 Bundle.getMessage("FeedbackSensor1"),
@@ -121,7 +122,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         sensorFeedBack2ComboBox = new NamedBeanComboBox<>(
                 InstanceManager.sensorManagerInstance(),
                 bean.getSecondSensor(),
-                NamedBeanComboBox.DisplayOptions.DISPLAYNAME);
+                DisplayOptions.DISPLAYNAME);
         sensorFeedBack2ComboBox.setAllowNull(true);
         feedback.addItem(new BeanEditItem(sensorFeedBack2ComboBox,
                 Bundle.getMessage("FeedbackSensor2"),

@@ -122,7 +122,7 @@ public class NBHSensor {
     private static Sensor getExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor.trim());
+            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor);
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
         } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorRequiredSensorMissing")); }  // NOI18N
@@ -132,7 +132,7 @@ public class NBHSensor {
     private static Sensor getOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor.trim());
+            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor);
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
         } else { return null; }

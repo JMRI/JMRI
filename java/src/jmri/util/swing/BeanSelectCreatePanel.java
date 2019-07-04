@@ -17,10 +17,11 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.MemoryManager;
 import jmri.ProvidingManager;
-//import jmri.NamedBean;
+// import jmri.NamedBean;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 import jmri.UserPreferencesManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.managers.AbstractProxyManager;
 import jmri.swing.NamedBeanComboBox;
@@ -65,7 +66,7 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
 
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
-        existingCombo = new NamedBeanComboBox<E>(_manager, defaultSelect, NamedBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+        existingCombo = new NamedBeanComboBox<E>(_manager, defaultSelect, DisplayOptions.USERNAME_SYSTEMNAME);
         LayoutEditor.setupComboBox(existingCombo, false, true);
         // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
