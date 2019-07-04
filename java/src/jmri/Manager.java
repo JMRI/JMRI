@@ -179,7 +179,16 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return enum indicating current validity, which might be just as a prefix
      */
     @CheckReturnValue
-    public NameValidity validSystemNameFormat(@Nonnull String systemName);
+    @OverrideMustInvoke
+    public default NameValidity validSystemNameFormat(@Nonnull String systemName) {
+        String prefix = getSystemNamePrefix();
+        if (prefix.equals(systemName)) {
+            return NameValidity.VALID_AS_PREFIX_ONLY;
+        }
+        return systemName.startsWith(prefix)
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
+    }
 
     /**
      * Test if a given name is in a valid format for this Manager.
