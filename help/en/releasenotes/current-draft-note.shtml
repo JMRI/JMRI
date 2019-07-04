@@ -382,7 +382,12 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>JMRI no longer modifies "system names" as provided by the user.
+                There may be cases where a script or panel file is creating an
+                object with a system name that is slightly different than a system
+                name used elsewhere, and JMRI used to change these to be the same.
+                Users may have to modify scripts and panel files to ensure system
+                names match in all places.</li>
         </ul>
 
     <h3>Scripting</h3>

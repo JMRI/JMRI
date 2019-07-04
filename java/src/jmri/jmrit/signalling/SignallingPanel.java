@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,7 +32,6 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -46,12 +44,13 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
-import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,8 +64,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SignallingPanel extends JmriPanel {
 
-    JmriBeanComboBox sourceMastBox;
-    JmriBeanComboBox destMastBox;
+    NamedBeanComboBox<SignalMast> sourceMastBox;
+    NamedBeanComboBox<SignalMast> destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
     JLabel sourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")), JLabel.TRAILING);  // NOI18N
@@ -152,9 +151,9 @@ public class SignallingPanel extends JmriPanel {
             sml = null;
         }
 
-        sourceMastBox = new JmriBeanComboBox(smm, sourceMast, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        sourceMastBox = new NamedBeanComboBox<>(smm, sourceMast, DisplayOptions.DISPLAYNAME);
         sourceMastBox.setMaximumSize(sourceMastBox.getPreferredSize());
-        destMastBox = new JmriBeanComboBox(smm, destMast, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+        destMastBox = new NamedBeanComboBox<>(smm, destMast, DisplayOptions.DISPLAYNAME);
         destMastBox.setMaximumSize(destMastBox.getPreferredSize());
 
         // directly add sub-panes onto JFrame's content pane to allow resizing (2018)
@@ -187,8 +186,8 @@ public class SignallingPanel extends JmriPanel {
             public void actionPerformed(ActionEvent e) {
                 if (useLayoutEditor.isSelected()) {
                     try {
-                        boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(),
-                                destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
+                        boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
+                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
                         if (!valid) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
                         }
@@ -240,8 +239,8 @@ public class SignallingPanel extends JmriPanel {
                             JOptionPane.showMessageDialog(null, je.toString());
                         }
                         try {
-                            valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(),
-                                    destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
+                            valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
+                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
                             if (!valid) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
                             }
@@ -838,8 +837,8 @@ public class SignallingPanel extends JmriPanel {
      * @param e the event heard
      */
     void updatePressed(ActionEvent e) {
-        sourceMast = (SignalMast) sourceMastBox.getSelectedBean();
-        destMast = (SignalMast) destMastBox.getSelectedBean();
+        sourceMast = sourceMastBox.getSelectedItem();
+        destMast = destMastBox.getSelectedItem();
         boolean smlPairAdded = false;
         destOK = true;
 
@@ -961,7 +960,7 @@ public class SignallingPanel extends JmriPanel {
         sml.initialise(destMast);
         if (smlPairAdded) {
             log.debug("New SML");  // NOI18N
-            firePropertyChange("newDestination", null, destMastBox.getSelectedBean()); // to show new SML in underlying table  // NOI18N
+            firePropertyChange("newDestination", null, destMastBox.getSelectedItem()); // to show new SML in underlying table  // NOI18N
         }
     }
 

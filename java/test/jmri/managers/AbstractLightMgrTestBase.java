@@ -110,7 +110,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     @Test
     public void testUpperLower() {
-        Light t = l.provideLight("" + getNumToTest2());
+        Light t = l.provideLight(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }

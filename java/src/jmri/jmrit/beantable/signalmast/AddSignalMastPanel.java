@@ -30,7 +30,7 @@ import org.jdom2.Element;
 public class AddSignalMastPanel extends JPanel {
     
     // head matter
-    JTextField userName = new JTextField(20); // N11N
+    JTextField userName = new JTextField(20);
     JComboBox<String> sigSysBox = new JComboBox<>();  // the basic signal system
     JComboBox<String> mastBox = new JComboBox<>(new String[]{Bundle.getMessage("MastEmpty")}); // the mast within the system NOI18N
     boolean mastBoxPassive = false; // if true, mastBox doesn't process updates

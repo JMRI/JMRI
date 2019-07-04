@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class implements a SignalMast that use <B>OpenLCB Events</B>
- * to set aspects
+ * to set aspects.
  * <p>
  * This implementation writes out to the OpenLCB when it's commanded to
  * change appearance, and updates its internal state when it hears Events from
@@ -49,8 +49,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * EventIDs are returned in format in which they were provided.
  * <p>
- * To keep OpenLCB distributed state consistent, setAspect does not immediately
- * change the local aspect.  Instead, it produced the relevant EventId on the 
+ * To keep OpenLCB distributed state consistent, {@link #setAspect} does not immediately
+ * change the local aspect.  Instead, it produces the relevant EventId on the
  * network, waiting for that to return and do the local state change, notification, etc.
  * <p>
  * Needs to have held/unheld, lit/unlit state completed - those need to Produce and Consume events as above
@@ -172,7 +172,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         aspectMachine.setState(aspect);
         // Normally, the local state is changed by super.setAspect(aspect); here; see comment at top
     }

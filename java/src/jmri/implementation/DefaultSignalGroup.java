@@ -30,7 +30,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * @param userName   provided user name
      */
     public DefaultSignalGroup(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     /**
@@ -39,7 +39,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * @param systemName suggested system name
      */
     public DefaultSignalGroup(String systemName) {
-        super(systemName.toUpperCase(), null);
+        super(systemName, null);
         log.debug("default SignalGroup {} created", systemName);
     }
 

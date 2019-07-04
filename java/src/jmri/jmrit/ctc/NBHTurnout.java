@@ -69,7 +69,7 @@ public class NBHTurnout {
     static private Turnout getExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(turnout)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            Turnout returnValue = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnout.trim());
+            Turnout returnValue = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnout);
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHTurnoutDoesNotExist") + " " + turnout); }    // NOI18N
             return returnValue;
         } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("RequiredTurnoutMissing")); }    // NOI18N

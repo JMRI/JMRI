@@ -311,7 +311,7 @@ public class TrackerTableAction extends AbstractAction {
             boolean retOK = false;
             String blockName = _trainLocationBox.getText();
             if (blockName != null) {
-                OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName.trim());
+                OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName);
                 if (block == null) {
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", blockName),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);

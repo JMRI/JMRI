@@ -120,8 +120,8 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalMast");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");
     }
 
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();

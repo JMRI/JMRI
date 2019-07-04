@@ -75,6 +75,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
+     * Create a SystemName by prepending the system name prefix to the name if
+     * not already present.
+     * 
      * @param name the item to make the system name for
      * @return A system name from a user input, typically a number.
      * @throws IllegalArgumentException if a valid name can't be created
@@ -133,6 +136,16 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     public NameValidity validSystemNameFormat(@Nonnull String systemName);
+
+    /**
+     * Test if a given name is in a valid format for this Manager.
+     * 
+     * @param systemName the name to check
+     * @return {@code true} if {@link #validSystemNameFormat(java.lang.String)} equals {@link NameValidity#VALID}; {@code false} otherwise
+     */
+    public default boolean isValidSystemNameFormat(@Nonnull String systemName) {
+        return validSystemNameFormat(systemName) == NameValidity.VALID;
+    }
 
     /**
      * Free resources when no longer used. Specifically, remove all references
@@ -261,7 +274,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Locate an existing instance based on a name. Returns null if no instance already
      * exists.
      *
-     * @param name System Name of the required NamedBean
+     * @param name User Name or System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
     @CheckReturnValue
@@ -404,20 +417,26 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @Nonnull
-    public String getBeanTypeHandled();
+    public default String getBeanTypeHandled() {
+        return getBeanTypeHandled(false);
+    }
 
     /**
-     * Enforces, and as a user convenience converts to, the standard form for a
-     * system name for the NamedBeans handled by this manager.
+     * Returns the user-readable name of the type of NamedBean handled by this
+     * manager.
+     * <p>
+     * For instance, in the code where we are dealing with just a bean and a
+     * message that needs to be passed to the user or in a log.
+     * 
+     * @param plural true to return plural form of the type; false to return
+     *                   singular form
      *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
-     * @return A system name in standard normalized form
+     * @return a string of the bean type that the manager handles, eg Turnout,
+     *         Sensor etc
      */
     @CheckReturnValue
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException;
+    @Nonnull
+    public String getBeanTypeHandled(boolean plural);
 
     /**
      * Provides length of the system prefix of the given system name.
@@ -445,11 +464,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         int p = startsWithLegacySystemPrefix(inputName);
         if (p > 0) {
             if (legacyNameSet.size() == 0) {
-                if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
-                // for migration purposes, we don't insist that apps (and tests)
-                // be preconfigured with a shutdown manager before getting here
-                    InstanceManager.setDefault(ShutDownManager.class, new jmri.managers.DefaultShutDownManager());
-                }
                 // register our own shutdown
                 InstanceManager.getDefault(ShutDownManager.class)
                                 .register(legacyReportTask);

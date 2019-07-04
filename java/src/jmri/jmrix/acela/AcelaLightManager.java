@@ -90,17 +90,6 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
      * Public method to convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
