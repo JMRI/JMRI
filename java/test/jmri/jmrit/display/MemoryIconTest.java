@@ -202,6 +202,8 @@ public class MemoryIconTest extends PositionableTestBase {
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
+
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
