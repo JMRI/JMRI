@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Frame displaying (and logging) CMRI serial command messages
+ * Frame displaying (and logging) CMRI serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Chuck Catania  Copyright (C) 2014, 2016, 2017
@@ -85,7 +85,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
     
     /**
-     * Define system-specific help item
+     * Define system-specific help item.
      */
     @Override
     protected void setHelp() {
@@ -93,7 +93,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     /**
-     * Method to initialize packet type filters
+     * Initialize packet type filters.
      */  
     public void initializePacketFilters()
     {
@@ -119,7 +119,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 	}
     }
     /**
-    * Open the node/packet filter window
+    * Open the node/packet filter window.
     */
     public void openPacketFilterPerformed(ActionEvent e) {
 		// create a SerialFilterFrame
@@ -137,146 +137,117 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     //  Transmit Packets
     //-------------------
     @Override
-    public synchronized void message(SerialMessage l) 
-    { 
+    public synchronized void message(SerialMessage l) {
         int aPacketTypeID = 0;
         SerialNode monitorNode = (SerialNode) _memo.getTrafficController().getNodeFromAddress(l.getUA());
         
-     // Test for node and packets being monitored 
-     //------------------------------------------
+        // Test for node and packets being monitored
+        //------------------------------------------
         if (monitorNode == null) return;       
         if (!monitorNode.getMonitorNodePackets()) return;
 
         aPacketTypeID = l.getElement(1);
         
-	 // check for valid length
-        if (l.getNumDataElements() < 2)
-	{
+        // check for valid length
+        if (l.getNumDataElements() < 2) {
             nextLine("Truncated message of length "+l.getNumDataElements()+"\n",l.toString());
             return;
         }
         		
-	switch(aPacketTypeID)
-	{
-	case 0x50:        // (P) Poll
-            if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktPoll))
-            {                
-                nextLine("Poll ua="+l.getUA()+"\n", l.toString());
-            }
-	break;
+        switch(aPacketTypeID) {
+            case 0x50:        // (P) Poll
+                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktPoll))
+                {
+                    nextLine("Poll ua="+l.getUA()+"\n", l.toString());
+                }
+                break;
 
-	case 0x54:        // (T) Transmit
-            if (monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktTransmit))
-            {
-                StringBuilder sb = new StringBuilder("Transmit ua=");
-                sb.append(l.getUA());
-                sb.append(" OB=");
-                for (int i=2; i<l.getNumDataElements(); i++)
-                {                
-                    if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE )) //c2
+            case 0x54:        // (T) Transmit
+                if (monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktTransmit))
+                {
+                    StringBuilder sb = new StringBuilder("Transmit ua=");
+                    sb.append(l.getUA());
+                    sb.append(" OB=");
+                    for (int i=2; i<l.getNumDataElements(); i++)
                     {
-                        sb.append("<dle>");  // Convert DLE (0x10) to text
-                        i++;
-                    }
-                    
-                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
-                    sb.append(" ");
-                }   
-                sb.append("\n");
-                nextLine(new String(sb), l.toString());
-            }
-	break;
-
-	case 0x49:        // (I) Initialize 
-            if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktInit))
-            {
-                StringBuilder sb = new StringBuilder("Init ua=");
-                sb.append(l.getUA());
-                sb.append(" type=");
-                int ndp=l.getElement(2); // ndp node type
-                sb.append((char)ndp);
-                int len = l.getNumDataElements();
-
-		switch (ndp)
-		{
-                // SMINI/SUSIC/USIC
-                    case SerialNode.NDP_USICSUSIC24:
-                    case SerialNode.NDP_USICSUSIC32:
-                    case SerialNode.NDP_SMINI:
-					
-                    if (len>=5) 
-                    {
-                        sb.append(" DL=");
-                        sb.append(l.getElement(3)*256+l.getElement(4));
-                    }
-                
-                    if (len>=6) 
-                    {
-                        sb.append(" NS=");
-                        sb.append(l.getElement(5));
-                        sb.append(" CT: ");
-                        for (int i=6; i<l.getNumDataElements(); i++)
+                        if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE )) //c2
                         {
-                            sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
-                            sb.append(" ");
+                            sb.append("<dle>");  // Convert DLE (0x10) to text
+                            i++;
                         }
-                    }
-                    break;
-					
-		// CPNODE
-                    case SerialNode.NDP_CPNODE:
-                    if (len>=5) 
-                    {                    
-                        sb.append(" DL=");
-                        sb.append(l.getElement(3)*256+l.getElement(4));
-                    }
-                    sb.append(" Opts=");
-                    int i=5;
-                    while (i<l.getNumDataElements())
-                    {                   
-                        if (l.getElement(i) != _DLE) // skip DLE
-                        {    
-                            sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
-                            sb.append(" ");
-                        }
-                    i++;
-                    }
-                    break;
-					
-                // CPMEGA
-                    case SerialNode.NDP_CPMEGA:
-                    if (len>=5) 
-                    {                    
-                        sb.append(" DL=");
-                        sb.append(l.getElement(3)*256+l.getElement(4));
-                    }
-                    sb.append(" Opts=");
-                    i=5;
-                    while (i<l.getNumDataElements())
-                    {
-			if (l.getElement(i) != _DLE) // skip DLE
-			{    
-                            sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
-                            sb.append(" ");
-			}
-                    i++;
-                    }
-                    break;
-					
-                    default:
-			sb.append("Unrecognized node type NDP: ["+ndp+"] ");
-                    break;
 
-                } //ndp case
-				
-            sb.append("\n");
-            nextLine(new String(sb), l.toString());
-            }
-        break;
-		
-	default: 
-            nextLine("Unrecognized cmd: \""+l.toString()+"\"\n", "");
-          
+                        sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
+                        sb.append(" ");
+                    }
+                    sb.append("\n");
+                    nextLine(new String(sb), l.toString());
+                }
+                break;
+
+            case 0x49:        // (I) Initialize
+                if (monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktInit)) {
+                    StringBuilder sb = new StringBuilder("Init ua=");
+                    sb.append(l.getUA());
+                    sb.append(" type=");
+                    int ndp=l.getElement(2); // ndp node type
+                    sb.append((char)ndp);
+                    int len = l.getNumDataElements();
+
+                    switch (ndp) {
+                        // SMINI/SUSIC/USIC
+                        case SerialNode.NDP_USICSUSIC24:
+                        case SerialNode.NDP_USICSUSIC32:
+                        case SerialNode.NDP_SMINI:
+                            if (len>=5)
+                            {
+                                sb.append(" DL=");
+                                sb.append(l.getElement(3)*256+l.getElement(4));
+                            }
+
+                            if (len>=6)
+                            {
+                                sb.append(" NS=");
+                                sb.append(l.getElement(5));
+                                sb.append(" CT: ");
+                                for (int i=6; i<l.getNumDataElements(); i++)
+                                {
+                                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
+                                    sb.append(" ");
+                                }
+                            }
+                            break;
+
+                        case SerialNode.NDP_CPNODE: // CPNODE
+                        case SerialNode.NDP_CPMEGA: // CPMEGA
+                            if (len>=5)
+                            {
+                                sb.append(" DL=");
+                                sb.append(l.getElement(3)*256+l.getElement(4));
+                            }
+                            sb.append(" Opts=");
+                            int i=5;
+                            while (i<l.getNumDataElements()) {
+                                if (l.getElement(i) != _DLE) { // skip DLE
+                                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase()); //c2
+                                    sb.append(" ");
+                                }
+                                i++;
+                            }
+                            break;
+
+                        default:
+                            sb.append("Unrecognized node type NDP: ["+ndp+"] ");
+                            break;
+
+                        } //ndp case
+
+                    sb.append("\n");
+                    nextLine(new String(sb), l.toString());
+                }
+                break;
+
+            default:
+                nextLine("Unrecognized cmd: \""+l.toString()+"\"\n", "");
         }  // end packet ID case
     }
 
@@ -301,46 +272,46 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (l.getNumDataElements() < 2) 
         {
             nextLine("Truncated reply of length "+l.getNumDataElements()+"\n",l.toString());
-//       CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricTruncReply );
-		return;
+            // CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricTruncReply );
+		    return;
         }		
 	switch(aPacketTypeID)
 	{
-            case 0x52:  // (R) Receive (poll reply)
-                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktRead))
-                {
-                    StringBuilder sb = new StringBuilder("Receive ua=");
-                    sb.append(l.getUA());
-                    sb.append(" IB=");
-                    for (int i=2; i<l.getNumDataElements(); i++)
-                    {
-                        if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE))  //c2
-                        {
-                            sb.append("<dle>");
-                            i++;
-                        }
-                        sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
-                        sb.append(" ");
-                    }
-                sb.append("\n");
-                nextLine(new String(sb), l.toString());
-                }
-            break; 
-				
-            case 0x45:  // (E) EOT c2
-                if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktEOT))
-                {
+        case 0x52:  // (R) Receive (poll reply)
+            if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktRead))
+            {
                 StringBuilder sb = new StringBuilder("Receive ua=");
                 sb.append(l.getUA());
-                sb.append(" eot");            
+                sb.append(" IB=");
+                for (int i=2; i<l.getNumDataElements(); i++)
+                {
+                    if ((rawCheckBox.isSelected()) && ( l.getElement(i) == _DLE))  //c2
+                    {
+                        sb.append("<dle>");
+                        i++;
+                    }
+                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff).toUpperCase());  //c2
+                    sb.append(" ");
+                }
                 sb.append("\n");
                 nextLine(new String(sb), l.toString());
-                }
+            }
             break; 
 				
-            default:
-//                CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricUnrecResponse );
-                nextLine("Unrecognized response: \""+l.toString()+"\"\n", "");
+        case 0x45:  // (E) EOT c2
+            if(monitorNode.getMonitorPacketBit(SerialFilterFrame.monPktEOT))
+            {
+                StringBuilder sb = new StringBuilder("Receive ua=");
+                sb.append(l.getUA());
+                sb.append(" eot");
+                sb.append("\n");
+                nextLine(new String(sb), l.toString());
+            }
+            break; 
+				
+        default:
+            // CMRInetMetricsData.incMetricErrValue( CMRInetMetricsData.CMRInetMetricUnrecResponse );
+            nextLine("Unrecognized response: \""+l.toString()+"\"\n", "");
             break;
         }
     }

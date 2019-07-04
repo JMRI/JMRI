@@ -90,8 +90,6 @@ public class AutoTrainAction {
                         break;
                     case TransitSectionAction.BLOCKENTRY:
                         // on entry to specified Block in the Section
-                        tsa.setWaitingForBlock(true);
-                        break;
                     case TransitSectionAction.BLOCKEXIT:
                         // on exit from specified Block in the Section
                         tsa.setWaitingForBlock(true);
