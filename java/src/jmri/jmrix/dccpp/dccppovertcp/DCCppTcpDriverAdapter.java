@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the DCCppOverTcp system network
+ * Implements DCCppPortController for the DCCppOverTcp system network
  * connection.
  * <p>
  * This connects a DCC++ via a telnet connection. Normally controlled by the

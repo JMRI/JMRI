@@ -1,6 +1,7 @@
 package jmri.jmrix.dcc4pc;
 
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
@@ -410,8 +411,8 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         if ((actual_speed != -1)) {
             rcTag.setActualSpeed(actual_speed);
         }
-        for (Integer cv : cvValues.keySet()) {
-            rcTag.setCV(cv, cvValues.get(cv));
+        for (Map.Entry<Integer, Integer> entry : cvValues.entrySet()) {
+            rcTag.setCV(entry.getKey(), entry.getValue());
             if (cvvalue != -1) {
                 rcTag.setCvValue(cvvalue);
             }

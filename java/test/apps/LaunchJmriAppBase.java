@@ -1,27 +1,24 @@
 package apps;
 
 import java.awt.GraphicsEnvironment;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
-import org.apache.commons.io.*;
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.Rule;
-import org.junit.rules.Timeout;
 import org.junit.rules.TemporaryFolder;
+import org.junit.rules.Timeout;
+
 import jmri.InstanceManager;
-import jmri.profile.ProfileManager;
-import jmri.managers.DefaultShutDownManager;
+import jmri.ShutDownManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.JUnitAppender;
+import jmri.util.MockShutDownManager;
 import jmri.util.junit.rules.RetryRule;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
@@ -84,7 +81,11 @@ abstract public class LaunchJmriAppBase {
             cleanup();
 
             // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager) InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+            if (sdm instanceof MockShutDownManager) {
+                // ShutDownManagers other than MockShutDownManager really shutdown
+                sdm.shutdown();
+            }
 
         } finally {
             // wait for threads, etc

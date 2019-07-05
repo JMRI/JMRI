@@ -218,13 +218,13 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Sensor Control type selected ", Bundle.getMessage("LightSensorControl"),
             new JComboBoxOperator(jfof3, 0).getSelectedItem());
         
-        Assert.assertEquals("Sensor selected ", "ISS2",
+        Assert.assertEquals("Sensor selected ", sTwo,
             new JComboBoxOperator(jfof3, 1).getSelectedItem());
         
         Assert.assertEquals("Sensor active ", Bundle.getMessage("SensorStateActive"),
             new JComboBoxOperator(jfof3, 2).getSelectedItem());
         
-        new JComboBoxOperator(jfof3, 1).selectItem(("ISS1")); // select Sensor S1
+        new JComboBoxOperator(jfof3, 1).setSelectedItem(sOne); // select Sensor S1
         jmri.util.swing.JemmyUtil.pressButton(jfof3,Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
         
@@ -451,12 +451,12 @@ public class LightTableActionTest extends AbstractTableActionBase {
         
         Assert.assertEquals("Turnout type selected ", Bundle.getMessage("LightTurnoutStatusControl"),
             new JComboBoxOperator(jfof3, 0).getSelectedItem());
-        Assert.assertEquals("Turnout selected ", "ITT2",
+        Assert.assertEquals("Turnout selected ", tTwo,
             new JComboBoxOperator(jfof3, 1).getSelectedItem());
         Assert.assertEquals("Turnout thrown ", InstanceManager.getDefault(jmri.TurnoutManager.class).getThrownText(),
             new JComboBoxOperator(jfof3, 2).getSelectedItem());
         
-        new JComboBoxOperator(jfof3, 1).selectItem(("ITT1")); // select Turnout T2
+        new JComboBoxOperator(jfof3, 1).selectItem(("ITT1")); // select Turnout T1
         new JComboBoxOperator(jfof3, 2).selectItem(
             InstanceManager.getDefault(jmri.TurnoutManager.class).getClosedText());
         
@@ -545,7 +545,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
             new JComboBoxOperator(jfof3, 0).getSelectedItem());
         Assert.assertEquals("Correct duration ", "20",new JTextFieldOperator(jfof3,0).getText());
         
-        new JComboBoxOperator(jfof3, 1).selectItem(("ISS1")); // select Sensor S1
+        new JComboBoxOperator(jfof3, 1).setSelectedItem(sOne); // select Sensor S1
         
         new JTextFieldOperator(jfof3,0).clearText();
         new JTextFieldOperator(jfof3,0).typeText("777");
@@ -638,16 +638,16 @@ public class LightTableActionTest extends AbstractTableActionBase {
         // edit window should have the 2 sensor control selected
         Assert.assertEquals("2 Sensor Control type selected ", Bundle.getMessage("LightTwoSensorControl"),
             new JComboBoxOperator(jfof3, 0).getSelectedItem());
-        Assert.assertEquals("Sensor slot 1 selected ", "ISS3",
+        Assert.assertEquals("Sensor slot 1 selected ", sThree,
             new JComboBoxOperator(jfof3, 1).getSelectedItem());
-        Assert.assertEquals("Sensor slot 2 selected ", "ISS1",
+        Assert.assertEquals("Sensor slot 2 selected ", sOne,
             new JComboBoxOperator(jfof3, 2).getSelectedItem());
             
         Assert.assertEquals("Sensor active", Bundle.getMessage("SensorStateActive"),
             new JComboBoxOperator(jfof3, 3).getSelectedItem());
             
-        new JComboBoxOperator(jfof3, 1).selectItem(("ISS2")); // select Sensor S2
-        new JComboBoxOperator(jfof3, 2).selectItem(("ISS3")); // select Sensor S3
+        new JComboBoxOperator(jfof3, 1).setSelectedItem(sTwo); // select Sensor S2
+        new JComboBoxOperator(jfof3, 2).setSelectedItem(sThree); // select Sensor S3
         
         new JComboBoxOperator(jfof3, 3).selectItem(Bundle.getMessage("SensorStateInactive"));
         
@@ -692,7 +692,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 777 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        new JTextFieldOperator(hwAddressField).typeText("777");
+        hwAddressField.setText("777");
+//        new JTextFieldOperator(hwAddressField).typeText("777");
         JFrameOperator jfob = new JFrameOperator(f1);
         jmri.util.swing.JemmyUtil.pressButton(jfob,Bundle.getMessage("LightAddControlButton"));
         JFrame fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
@@ -700,8 +701,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         
         // create a new LightControl
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTwoSensorControl"));
-        new JComboBoxOperator(jfoc, 1).selectItem(("My Sensor Two")); // select Sensor S2
-        new JComboBoxOperator(jfoc, 2).selectItem(("My Sensor One")); // select Sensor S1
+        new JComboBoxOperator(jfoc, 1).setSelectedItem(sTwo); // select Sensor S2
+        new JComboBoxOperator(jfoc, 2).setSelectedItem(sOne); // select Sensor S1
         new JComboBoxOperator(jfoc, 3).selectItem(Bundle.getMessage("SensorStateActive"));
         
         jmri.util.swing.JemmyUtil.pressButton(jfoc,Bundle.getMessage("ButtonCreate"));

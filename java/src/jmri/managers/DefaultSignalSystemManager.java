@@ -270,8 +270,8 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalSystem");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalSystems" : "BeanNameSignalSystem");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);

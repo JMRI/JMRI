@@ -205,7 +205,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         }
         Logix logix = getSystemLogix();
         logix.deActivateLogix();
-        String cSystemName = ConditionalSystemPrefix + group.toUpperCase();
+        String cSystemName = ConditionalSystemPrefix + group;
         String cUserName = ConditionalUserPrefix + group;
         // add new Conditional
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
@@ -250,12 +250,12 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         // look for name in List panel
         String group = _sensorGroupList.getSelectedValue();
         if (group == null) { // not there, look in text field
-            group = _nameField.getText().toUpperCase().trim();
+            group = _nameField.getText();
         }
         _nameField.setText(group);
         // Look for Sensor group in Route table
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
         boolean isRoute = false;
         int setRow = 0;
         for (Route r : rm.getNamedBeanSet()) {
@@ -276,7 +276,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         // look for  Sensor group in SYSTEM Logix
         if (!isRoute) {
             Logix logix = getSystemLogix();
-            String cSystemName = (ConditionalSystemPrefix + group).toUpperCase();
+            String cSystemName = (ConditionalSystemPrefix + group);
             String cUserName = ConditionalUserPrefix + group;
             for (int i = 0; i < logix.getNumConditionals(); i++) {
                 String name = logix.getConditionalByNumberOrder(i);
@@ -343,7 +343,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
             }
             return;
         }
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
 
         // remove the old routes
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
@@ -355,7 +355,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 rm.deleteRoute(r);
             }
         }
-        String cSystemName = (ConditionalSystemPrefix + group).toUpperCase();
+        String cSystemName = (ConditionalSystemPrefix + group);
         String cUserName = ConditionalUserPrefix + group;
         Logix logix = getSystemLogix();
         for (int i = 0; i < logix.getNumConditionals(); i++) {

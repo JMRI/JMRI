@@ -46,7 +46,7 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
             InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("AAR-1946"));
         vp.setMast(s1);
         
-        vp.setAspectNames(s1.getAppearanceMap(), 
+        vp.setAspectNames(m1.getAppearanceMap(),
             InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");

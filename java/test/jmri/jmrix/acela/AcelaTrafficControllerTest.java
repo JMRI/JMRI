@@ -104,7 +104,12 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected AcelaPortControllerScaffold() throws Exception {

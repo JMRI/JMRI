@@ -45,10 +45,6 @@ public class FindAndReplace {
     }
     
     public static ArrayList<SearchResults> doSearch(CTCSerialData ctcSerialData, String stringToSearchFor, boolean caseSensitive, boolean exactMatch) {
-/*  Serious bug in Java's documentationof String.  Quote:
-"public String toUpperCase() Converts all of the characters in this String to upper case".
-    Notice that it says "IN THIS STRING".  That is wrong.  Strings are supposedly IMMUTABLE.
-*/        
         String actualStringToSearchFor = caseSensitive ? stringToSearchFor : stringToSearchFor.toUpperCase();
         ArrayList<SearchResults> results = new ArrayList<>();
         ArrayList <CodeButtonHandlerData> codeButtonHandlerDataList = ctcSerialData.getCodeButtonHandlerDataArrayList();

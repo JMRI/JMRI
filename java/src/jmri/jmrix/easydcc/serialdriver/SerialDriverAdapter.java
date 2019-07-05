@@ -147,11 +147,20 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 9,600 bps.
+     * {@inheritDoc}
+     * Currently only 9,600 bps.
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{Bundle.getMessage("Baud9600")};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
     }
 
     // private control members

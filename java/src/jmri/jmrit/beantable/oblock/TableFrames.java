@@ -407,13 +407,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     openPathTurnoutFrame(pathTurnoutName);
                 }
             };
-            Iterator<Path> iter = block.getPaths().iterator();
-            while (iter.hasNext()) {
-                OPath path = (OPath) iter.next();
-                JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
-                mi.setActionCommand(makePathTurnoutName(block.getSystemName(), path.getName()));
-                mi.addActionListener(openFrameAction);
-                openTurnoutMenu.add(mi);
+            for (Path p : block.getPaths()) {
+                if (p instanceof OPath){
+                    OPath path = (OPath) p;
+                    JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
+                    mi.setActionCommand(makePathTurnoutName(block.getSystemName(), path.getName()));
+                    mi.addActionListener(openFrameAction);
+                    openTurnoutMenu.add(mi);
+                }
             }
         }
         _openMenu.add(openTurnoutPath);
@@ -849,8 +850,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (name != null && name.startsWith("OB")) {
             _blockPathMap.remove(name);
             WarrantTableAction.initPathPortalCheck();
-            WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
-            ((BlockPathFrame) frame).getModel().removeListener();
+            if (frame instanceof BlockPathFrame) {
+                WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
+                ((BlockPathFrame) frame).getModel().removeListener();
+            }
             if (_showWarnings) {
                 WarrantTableAction.showPathPortalErrors();
             }
@@ -880,7 +883,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         if (name != null && name.startsWith("OB")) {
             WarrantTableAction.initPathPortalCheck();
-            WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
+            if (frame instanceof BlockPathFrame) {
+                WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
+            }
             if (_showWarnings) {
                 WarrantTableAction.showPathPortalErrors();
             }

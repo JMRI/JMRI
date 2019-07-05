@@ -77,7 +77,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.managers.DefaultShutDownManager;
 import jmri.plaf.macosx.Application;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -192,17 +191,17 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile.getId());
+            if (profile != null) {
+                log.info("Starting with profile {}", profile.getId());
+            } else {
+                log.info("Starting without a profile");
+            }
             
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
-
-        // install shutdown manager
-        log.trace("about to install ShutDownManager");
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
 
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
@@ -797,7 +796,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             cs.setForeground(Color.red);
             String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
-            cf = cf.toUpperCase();
             cs.setText(cf);
         }
 
@@ -838,8 +836,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
 
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
+        String name = ProfileManager.getDefault().getActiveProfileName();
+        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", name)));
 
         // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);

@@ -16,20 +16,24 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.NamedBean;
+import jmri.JmriException;
 import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.Sensor;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
-import jmri.util.swing.JmriBeanComboBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.swing.NamedBeanComboBox;
 
 /**
  * Provides an edit panel for a Block object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class BlockEditAction extends BeanEditAction {
+public class BlockEditAction extends BeanEditAction<Block> {
 
     private String noneText = Bundle.getMessage("BlockNone");
     private String gradualText = Bundle.getMessage("BlockGradual");
@@ -57,12 +61,12 @@ public class BlockEditAction extends BeanEditAction {
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
-        return jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
+    public Block getByUserName(String name) {
+        return InstanceManager.getDefault(BlockManager.class).getByUserName(name);
     }
 
     JTextField userNameField = new JTextField(20);
-    JmriBeanComboBox reporterComboBox;
+    NamedBeanComboBox<Reporter> reporterComboBox;
     JCheckBox useCurrent = new JCheckBox();
     JTextArea commentField = new JTextArea(3, 30);
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
@@ -71,15 +75,15 @@ public class BlockEditAction extends BeanEditAction {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
 
-        reporterComboBox = new JmriBeanComboBox(InstanceManager.getDefault(jmri.ReporterManager.class), ((Block) bean).getReporter(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        reporterComboBox.setFirstItemBlank(true);
+        reporterComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(ReporterManager.class), bean.getReporter(), DisplayOptions.DISPLAYNAME);
+        reporterComboBox.setAllowNull(true);
 
         reporter.addItem(new BeanEditItem(reporterComboBox, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
 
         reporterComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (reporterComboBox.getSelectedBean() != null) {
+                if (reporterComboBox.getSelectedItem() != null) {
                     useCurrent.setEnabled(true);
                 } else {
                     useCurrent.setEnabled(false);
@@ -89,28 +93,27 @@ public class BlockEditAction extends BeanEditAction {
 
         reporter.addItem(new BeanEditItem(useCurrent, Bundle.getMessage("BlockReporterCurrent"), Bundle.getMessage("BlockUseCurrentText")));
 
-        if (reporterComboBox.getSelectedBean() == null) {
+        if (reporterComboBox.getSelectedItem() == null) {
             useCurrent.setEnabled(false);
         }
 
         reporter.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reporterComboBox.setSelectedBean(((Block) bean).getReporter());
-                useCurrent.setSelected(((Block) bean).isReportingCurrent());
+                reporterComboBox.setSelectedItem(bean.getReporter());
+                useCurrent.setSelected(bean.isReportingCurrent());
             }
         });
 
         reporter.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Block blk = (Block) bean;
-                blk.setReporter((Reporter) reporterComboBox.getSelectedBean());
-                blk.setReportingCurrent(useCurrent.isSelected());
+                bean.setReporter(reporterComboBox.getSelectedItem());
+                bean.setReportingCurrent(useCurrent.isSelected());
             }
         });
         bei.add(reporter);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ReporterManager.class) == null) {
+        if (InstanceManager.getNullableDefault(ReporterManager.class) == null) {
             setEnabled(false);
         }
         return reporter;
@@ -128,9 +131,9 @@ public class BlockEditAction extends BeanEditAction {
 
     BeanItemPanel physicalDetails() {
 
-        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
+        defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.getDefault(BlockManager.class).getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
-        java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
+        java.util.Vector<String> _speedMap = InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedList.contains(_speedMap.get(i))) {
                 speedList.add(_speedMap.get(i));
@@ -177,27 +180,26 @@ public class BlockEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(speedField = new JComboBox<String>(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
         basic.addItem(new BeanEditItem(permissiveField, Bundle.getMessage("BlockPermColName"), Bundle.getMessage("BlockPermissiveText")));
 
-        permissiveField.setSelected(((Block) bean).getPermissiveWorking());
+        permissiveField.setSelected(bean.getPermissiveWorking());
 
         basic.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Block blk = (Block) bean;
                 String cName = (String) curvatureField.getSelectedItem();
                 if (cName.equals(noneText)) {
-                    blk.setCurvature(Block.NONE);
+                    bean.setCurvature(Block.NONE);
                 } else if (cName.equals(gradualText)) {
-                    blk.setCurvature(Block.GRADUAL);
+                    bean.setCurvature(Block.GRADUAL);
                 } else if (cName.equals(tightText)) {
-                    blk.setCurvature(Block.TIGHT);
+                    bean.setCurvature(Block.TIGHT);
                 } else if (cName.equals(severeText)) {
-                    blk.setCurvature(Block.SEVERE);
+                    bean.setCurvature(Block.SEVERE);
                 }
 
                 String speed = (String) speedField.getSelectedItem();
                 try {
-                    blk.setBlockSpeed(speed);
-                } catch (jmri.JmriException ex) {
+                    bean.setBlockSpeed(speed);
+                } catch (JmriException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                     return;
                 }
@@ -207,30 +209,29 @@ public class BlockEditAction extends BeanEditAction {
                 float len = 0.0f;
                 len = (Float) lengthSpinner.getValue();
                 if (inch.isSelected()) {
-                    blk.setLength(len * 25.4f);
+                    bean.setLength(len * 25.4f);
                 } else {
-                    blk.setLength(len * 10.0f);
+                    bean.setLength(len * 10.0f);
                 }
-                blk.setPermissiveWorking(permissiveField.isSelected());
+                bean.setPermissiveWorking(permissiveField.isSelected());
             }
         });
         basic.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Block blk = (Block) bean;
-                lengthSpinner.setValue(((Block) bean).getLengthMm());
+                lengthSpinner.setValue(bean.getLengthMm());
 
-                if (blk.getCurvature() == Block.NONE) {
+                if (bean.getCurvature() == Block.NONE) {
                     curvatureField.setSelectedItem(0);
-                } else if (blk.getCurvature() == Block.GRADUAL) {
+                } else if (bean.getCurvature() == Block.GRADUAL) {
                     curvatureField.setSelectedItem(gradualText);
-                } else if (blk.getCurvature() == Block.TIGHT) {
+                } else if (bean.getCurvature() == Block.TIGHT) {
                     curvatureField.setSelectedItem(tightText);
-                } else if (blk.getCurvature() == Block.SEVERE) {
+                } else if (bean.getCurvature() == Block.SEVERE) {
                     curvatureField.setSelectedItem(severeText);
                 }
 
-                String speed = blk.getBlockSpeed();
+                String speed = bean.getBlockSpeed();
                 if (!speedList.contains(speed)) {
                     speedList.add(speed);
                 }
@@ -239,12 +240,12 @@ public class BlockEditAction extends BeanEditAction {
                 speedField.setSelectedItem(speed);
                 float len = 0.0f;
                 if (inch.isSelected()) {
-                    len = blk.getLengthIn();
+                    len = bean.getLengthIn();
                 } else {
-                    len = blk.getLengthCm();
+                    len = bean.getLengthCm();
                 }
                 lengthSpinner.setValue(len);
-                permissiveField.setSelected(((Block) bean).getPermissiveWorking());
+                permissiveField.setSelected(bean.getPermissiveWorking());
             }
         });
         bei.add(basic);
@@ -253,24 +254,23 @@ public class BlockEditAction extends BeanEditAction {
 
     private void updateLength() {
         float len = 0.0f;
-        Block blk = (Block) bean;
         if (inch.isSelected()) {
-            len = blk.getLengthIn();
+            len = bean.getLengthIn();
         } else {
-            len = blk.getLengthCm();
+            len = bean.getLengthCm();
         }
         lengthSpinner.setValue(len);
     }
 
-    JmriBeanComboBox sensorComboBox;
+    NamedBeanComboBox<Sensor> sensorComboBox;
 
     BeanItemPanel sensor() {
 
         BeanItemPanel basic = new BeanItemPanel();
         basic.setName(Bundle.getMessage("BeanNameSensor"));
 
-        sensorComboBox = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Block) bean).getSensor(), JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        sensorComboBox.setFirstItemBlank(true);
+        sensorComboBox = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance(), bean.getSensor(), DisplayOptions.DISPLAYNAME);
+        sensorComboBox.setAllowNull(true);
         basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 
       final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
@@ -280,7 +280,7 @@ public class BlockEditAction extends BeanEditAction {
         sensorComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                debounce.setBean(sensorComboBox.getSelectedBean());
+                debounce.setBean(sensorComboBox.getSelectedItem());
                 debounce.resetDebounceItems(e);
             }
         });
@@ -288,13 +288,12 @@ public class BlockEditAction extends BeanEditAction {
         basic.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Block blk = (Block) bean;
-                jmri.jmrit.display.layoutEditor.LayoutBlock lBlk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
+                LayoutBlock lBlk = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(bean);
                 //If the block is related to a layoutblock then set the sensor details there and allow that to propagate the changes down.
                 if (lBlk != null) {
-                    lBlk.validateSensor(sensorComboBox.getSelectedDisplayName(), null);
+                    lBlk.validateSensor(sensorComboBox.getSelectedItemDisplayName(), null);
                 } else {
-                    blk.setSensor(sensorComboBox.getSelectedDisplayName());
+                    bean.setSensor(sensorComboBox.getSelectedItemDisplayName());
                 }
                 debounce.saveDebounceItems(e);
             }
@@ -302,10 +301,9 @@ public class BlockEditAction extends BeanEditAction {
         basic.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Block blk = (Block) bean;
                 //From basic details
-                sensorComboBox.setSelectedBean(blk.getSensor());
-                debounce.setBean(blk.getSensor());
+                sensorComboBox.setSelectedItem(bean.getSensor());
+                debounce.setBean(bean.getSensor());
                 debounce.resetDebounceItems(e);
             }
         });

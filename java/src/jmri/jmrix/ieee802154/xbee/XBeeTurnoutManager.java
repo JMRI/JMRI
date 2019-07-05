@@ -218,17 +218,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        return inputName; // toUpperCase and trim don't behave well with 
-                          // the XBee Node Identifier based addresses.
-    }
-
     private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);
 
 }

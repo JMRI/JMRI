@@ -7,8 +7,6 @@ import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 
