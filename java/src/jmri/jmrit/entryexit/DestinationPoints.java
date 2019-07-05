@@ -30,7 +30,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DestinationPoints extends jmri.implementation.AbstractNamedBean implements NamedBean {
+public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     @Override
     public String getBeanType() {
