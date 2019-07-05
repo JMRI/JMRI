@@ -1125,7 +1125,7 @@
         <dependency>
             <groupId>com.alexandriasoftware.swing</groupId>
             <artifactId>jinputvalidator</artifactId>
-            <version>0.5.0</version>
+            <version>0.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

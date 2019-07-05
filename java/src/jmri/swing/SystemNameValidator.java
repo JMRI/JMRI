@@ -31,7 +31,7 @@ import jmri.ProxyManager;
  */
 public class SystemNameValidator extends JInputValidator {
 
-    private final Manager<?> manager;
+    private Manager<?> manager;
     private boolean required = false;
 
     /**
@@ -68,7 +68,6 @@ public class SystemNameValidator extends JInputValidator {
             String text = jtc.getText();
             if (text != null && !text.isEmpty()) {
                 try {
-                    manager.validateSystemNameFormat(text);
                     if (manager instanceof ProxyManager) {
                         ProxyManager proxyManager = (ProxyManager) manager;
                         proxyManager.validateSystemNameFormat(text);
@@ -97,5 +96,23 @@ public class SystemNameValidator extends JInputValidator {
 
     public void setRequired(boolean required) {
         this.required = required;
+    }
+
+    /**
+     * Set the Manager used to validate system names.
+     * <p>
+     * If the manager changes, fires the a property change for the property
+     * {@code manager} and calls {@link #verify(javax.swing.JComponent)} to
+     * verify any text against the new manager.
+     *
+     * @param manager the new manager
+     */
+    public void setManager(@Nonnull Manager<?> manager) {
+        Manager<?> old = this.manager;
+        if (!old.equals(manager)) {
+            this.manager = manager;
+            getPropertyChangeSupport().firePropertyChange("manager", old, this.manager);
+            verify(getComponent());
+        }
     }
 }
