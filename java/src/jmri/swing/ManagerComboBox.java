@@ -3,7 +3,6 @@ package jmri.swing;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -34,7 +33,7 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
         super();
         ManagerRenderer managerRenderer = new ManagerRenderer(getRenderer());
         setRenderer(managerRenderer);
-        setModel(new DefaultComboBoxModel(new Vector<>(list)));
+        setModel(new DefaultComboBoxModel<>(list.toArray(new Manager[list.size()])));
         if (!list.isEmpty()) {
             if (selection == null) {
                 setSelectedIndex(0);

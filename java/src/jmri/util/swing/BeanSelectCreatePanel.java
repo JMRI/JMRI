@@ -78,13 +78,13 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
         if (manager instanceof ProxyManager) {
             ProxyManager<E> proxy = (ProxyManager<E>) manager;
             List<Manager<E>> managerList = proxy.getManagerList();
-            prefixBox.setModel(new DefaultComboBoxModel(managerList.toArray(new Manager[managerList.size()])));
+            prefixBox.setModel(new DefaultComboBoxModel<>(managerList.toArray(new Manager[managerList.size()])));
             prefixBox.setSelectedItem(proxy.getDefaultManager());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
         } else { // not a proxy, just one
-            prefixBox.setModel(new DefaultComboBoxModel(new Manager[]{manager}));
+            prefixBox.setModel(new DefaultComboBoxModel<>(new Manager[]{manager}));
             prefixBox.setSelectedItem(manager);
         }
         
