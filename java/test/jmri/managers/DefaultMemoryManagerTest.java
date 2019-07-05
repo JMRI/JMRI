@@ -18,7 +18,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test

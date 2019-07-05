@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Sensor;
 import jmri.util.JUnitAppender;
-import jmri.util.ThreadingUtil;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.Turnout;
@@ -264,7 +263,7 @@ public class LightControlTest {
         
         l.addLightControl(lc);
         l.activateLight();
-        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: \"\" needed non-empty suffix to follow IT");
+        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: System name \"IT\" is missing suffix.");
         JUnitAppender.assertErrorMessageStartsWith("Light ILL1 is linked to a Turnout that does not exist");
         
         lc.setControlTurnoutState(999);
