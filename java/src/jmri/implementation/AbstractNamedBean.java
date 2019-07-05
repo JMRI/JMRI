@@ -106,6 +106,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     /** {@inheritDoc} */
+    // The reason for having this method here, and the reason for the
+    // SuppressWarning, is to prevent subclasses from implementing it.
+    @SuppressWarnings("deprecation")
     @Override
     @CheckReturnValue
     @Nonnull
@@ -115,6 +118,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     /** {@inheritDoc} */
+    // The reason for having this method here, and the reason for the
+    // SuppressWarning, is to prevent subclasses from implementing it.
+    @SuppressWarnings("deprecation")
     @Override
     @CheckReturnValue
     @Nonnull
