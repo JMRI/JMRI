@@ -68,6 +68,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      *
      * @return the list of managers
      */
+    @Override
     public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
@@ -103,17 +104,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * Returns the set default or, if not present, the internal manager as
-     * defacto default
-     * 
-     * @return the default manager or the internal manager if no default set
+     * {@inheritDoc}
      */
+    @Override
     public Manager<E> getDefaultManager() {
-        if (defaultManager != null) return defaultManager;
-
-        return getInternalManager();
+        return defaultManager != null ? defaultManager : getInternalManager();
     }
 
+    @Override
     public void addManager(Manager<E> m) {
         Objects.requireNonNull(m, "Can only add non-null manager");
         // check for already present
