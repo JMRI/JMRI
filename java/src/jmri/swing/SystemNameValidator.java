@@ -69,10 +69,10 @@ public class SystemNameValidator extends JInputValidator {
             if (text != null && !text.isEmpty()) {
                 try {
                     if (manager instanceof ProxyManager) {
-                        ProxyManager proxyManager = (ProxyManager) manager;
-                        proxyManager.validateSystemNameFormat(text);
+                        ProxyManager<?> proxyManager = (ProxyManager<?>) manager;
+                        proxyManager.validateSystemNameFormat(text, false);
                     } else {
-                        manager.makeSystemName(text);
+                        manager.makeSystemName(text, false);
                     }
                 } catch (IllegalArgumentException ex) {
                     if (manager.validSystemNameFormat(text) == NameValidity.VALID_AS_PREFIX_ONLY) {

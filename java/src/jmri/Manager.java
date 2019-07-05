@@ -80,7 +80,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * not already present.
      * <p>
      * <strong>Note:</strong> implementations <em>must</em> call
-     * {@link #validateSystemNameFormat(java.lang.String)} to ensure the
+     * {@link #validateSystemNameFormat(java.lang.String, boolean)} to ensure the
      * returned name is valid. 
      *
      * @param name the item to make the system name for
@@ -89,7 +89,29 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @Nonnull
     public default String makeSystemName(@Nonnull String name) {
-        return validateSystemNameFormat(name.startsWith(getSystemNamePrefix()) ? name : getSystemNamePrefix() + name);
+        return makeSystemName(name, true);
+    }
+
+    /**
+     * Create a SystemName by prepending the system name prefix to the name if
+     * not already present.
+     * <p>
+     * The {@code logErrors} parameter is present to allow user interface input
+     * validation to use this method without logging system name validation
+     * errors as the user types.
+     * <p>
+     * <strong>Note:</strong> implementations <em>must</em> call
+     * {@link #validateSystemNameFormat(java.lang.String, boolean)} to ensure
+     * the returned name is valid.
+     *
+     * @param name      the item to make the system name for
+     * @param logErrors true to log errors; false to not log errors
+     * @return A system name from a user input, typically a number.
+     * @throws IllegalArgumentException if a valid name can't be created
+     */
+    @Nonnull
+    public default String makeSystemName(@Nonnull String name, boolean logErrors) {
+        return validateSystemNameFormat(name.startsWith(getSystemNamePrefix()) ? name : getSystemNamePrefix() + name, logErrors);
     }
 
     /**
@@ -102,19 +124,20 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * prefix to be invalid.
      * <p>
      * This method should not be overridden;
-     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
+     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
      * should be overridden instead.
      *
-     * @param name the system name to validate
+     * @param name      the system name to validate
+     * @param logErrors true to log errors; false to not log errors
      * @return the system name unchanged from its input so that this method can
      *         be chained or used as an parameter to another method
      * @throws IllegalArgumentException if the name is not valid with error
-     *                                  messages in the default locale
+     *                                      messages in the default locale
      */
     @OverrideMustInvoke
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name) throws IllegalArgumentException {
-        return Manager.this.validateSystemNameFormat(name, Locale.getDefault());
+    public default String validateSystemNameFormat(@Nonnull String name, boolean logErrors) throws IllegalArgumentException {
+        return Manager.this.validateSystemNameFormat(name, logErrors, Locale.getDefault());
     }
 
     /**
@@ -131,15 +154,16 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * provide an actionable message in the thrown exception if that method does
      * not return {@link NameValidity#VALID}.
      *
-     * @param name   the system name to validate
-     * @param locale the locale for a localized exception; this is needed for
-     *               the JMRI web server, which supports multiple locales
+     * @param name      the system name to validate
+     * @param logErrors true to log errors; false to not log errors
+     * @param locale    the locale for a localized exception; this is needed for
+     *                      the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
      * @throws IllegalArgumentException if provided name is an invalid format
      */
     @OverrideMustInvoke
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws IllegalArgumentException {
+    public default String validateSystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) throws IllegalArgumentException {
         String prefix = getSystemNamePrefix();
         if (name.equals(prefix)) {
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameMatchesPrefix", name);
