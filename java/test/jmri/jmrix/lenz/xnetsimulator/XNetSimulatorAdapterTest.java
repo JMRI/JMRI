@@ -229,29 +229,117 @@ public class XNetSimulatorAdapterTest {
 
     @Test
     public void testSetLocoSpeedRequestReply(){
-        XNetReply r = getReplyForMessage(new XNetMessage("E4 11 01 11 01 E4"));
+        // 14 speed step mode
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 10 01 11 01 E4"));
+        Assert.assertEquals("LocoMotive set speed Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after speed set",new XNetReply("E4 10 01 00 00 F5"),r);
+        // 27 speed step mode
+        r = getReplyForMessage(new XNetMessage("E4 11 01 11 01 E4"));
         Assert.assertEquals("LocoMotive set speed Reply",new XNetReply("01 04 05"),r);
         // loco status should change.
         r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
         Assert.assertEquals("LocoMotive Info Reply after speed set",new XNetReply("E4 11 01 00 00 F4"),r);
+
+        // 28 speed step mode
+        r = getReplyForMessage(new XNetMessage("E4 12 01 11 01 E7"));
+        Assert.assertEquals("LocoMotive set speed Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after speed set",new XNetReply("E4 12 01 00 00 F7"),r);
+        // 128 speed step mode
+        r = getReplyForMessage(new XNetMessage("E4 13 01 11 01 E6"));
+        Assert.assertEquals("LocoMotive set speed Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after speed set",new XNetReply("E4 13 01 00 00 F6"),r);
     }
 
     @Test
     public void testSetLocoFunctionRequestReply(){
+        // group 1
         XNetReply r = getReplyForMessage(new XNetMessage("E4 20 01 20 01 E4"));
         Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
         // loco status should change.
         r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
         Assert.assertEquals("LocoMotive Info Reply after function set",new XNetReply("E4 13 00 01 00 F6"),r);
+        // group 2
+        r = getReplyForMessage(new XNetMessage("E4 21 01 20 01 E5"));
+        Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after function set",new XNetReply("E4 13 00 01 01 F7"),r);
+        // group 3
+        r = getReplyForMessage(new XNetMessage("E4 22 01 20 01 E5"));
+        Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
+        // loco status should change.
+        r = getReplyForMessage(new XNetMessage("E3 00 01 01 E3"));
+        Assert.assertEquals("LocoMotive Info Reply after function set",new XNetReply("E4 13 00 01 11 E7"),r);
     }
 
     @Test
     public void testSetLocoMomentaryFunctionRequestReply(){
+        // group 1
         XNetReply r = getReplyForMessage(new XNetMessage("E4 24 01 24 01 E4"));
         Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
         // loco momentary function status should change.
         r = getReplyForMessage(new XNetMessage("E3 07 01 01 E4"));
         Assert.assertEquals("LocoMotive Function Status after set Reply",new XNetReply("E3 50 01 00 B2"),r);
+        // group 2
+        r = getReplyForMessage(new XNetMessage("E4 25 01 24 01 E5"));
+        Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
+        // loco momentary function status should change.
+        r = getReplyForMessage(new XNetMessage("E3 07 01 01 E4"));
+        Assert.assertEquals("LocoMotive Function Status after set Reply",new XNetReply("E3 50 01 01 B3"),r);
+        // group 3
+        r = getReplyForMessage(new XNetMessage("E4 26 01 24 01 E6"));
+        Assert.assertEquals("LocoMotive set function Reply",new XNetReply("01 04 05"),r);
+        // loco momentary function status should change.
+        r = getReplyForMessage(new XNetMessage("E3 07 01 01 E4"));
+        Assert.assertEquals("LocoMotive Function Status after set Reply",new XNetReply("E3 50 01 F1 43"),r);
+    }
+
+    @Test
+    public void testLocoFunctionHighMomentryStatusReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E3 08 01 08 E2"));
+        Assert.assertEquals("LocoMotive High Momentary Function Status",new XNetReply("E4 51 00 00 B5"),r);
+    }
+
+    @Test
+    public void testLocoFunctionHighStatusReply(){
+        XNetReply r = getReplyForMessage(new XNetMessage("E3 09 01 09 ED"));
+        Assert.assertEquals("LocoMotive High Function Status",new XNetReply("E3 52 00 00 B1"),r);
+    }
+
+    @Test
+    public void testSetLocoFunctionHighReply(){
+        // set group 4
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 23 01 23 01 E4"));
+        Assert.assertEquals("LocoMotive High Function Status set",new XNetReply("01 04 05"),r);
+        // status should change
+        r = getReplyForMessage(new XNetMessage("E3 09 01 09 E2"));
+        Assert.assertEquals("LocoMotive group 4 Function Status after set",new XNetReply("E3 52 01 00 B0"),r);
+        // set group 5
+        r = getReplyForMessage(new XNetMessage("E4 28 01 23 01 EF"));
+        Assert.assertEquals("LocoMotive High Function Status set",new XNetReply("01 04 05"),r);
+        // status should change
+        r = getReplyForMessage(new XNetMessage("E3 09 01 09 E2"));
+        Assert.assertEquals("LocoMotive group 5 Function Status after set",new XNetReply("E3 52 01 01 B1"),r);
+    }
+
+    @Test
+    public void testSetLocoFunctionHighMomentryReply(){
+        // group 4
+        XNetReply r = getReplyForMessage(new XNetMessage("E4 27 01 09 01 CD"));
+        Assert.assertEquals("LocoMotive High Momentary Function Status set",new XNetReply("01 04 05"),r);
+        r = getReplyForMessage(new XNetMessage("E3 08 01 08 E2"));
+        Assert.assertEquals("LocoMotive group 4 Momentary Function Status",new XNetReply("E4 51 01 00 B4"),r);
+        // group 5
+        r = getReplyForMessage(new XNetMessage("E4 2C 01 09 01 C0"));
+        Assert.assertEquals("LocoMotive High Momentary Function Status set",new XNetReply("01 04 05"),r);
+        r = getReplyForMessage(new XNetMessage("E3 08 01 08 E2"));
+        Assert.assertEquals("LocoMotive Group 5 Momentary Function Status",new XNetReply("E4 51 01 01 B5"),r);
     }
 
     @Test
