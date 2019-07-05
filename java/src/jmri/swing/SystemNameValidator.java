@@ -3,10 +3,12 @@ package jmri.swing;
 import com.alexandriasoftware.swing.JInputValidator;
 import com.alexandriasoftware.swing.JInputValidatorPreferences;
 import com.alexandriasoftware.swing.Validation;
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.text.JTextComponent;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
+import jmri.ProxyManager;
 
 /**
  * A {@link com.alexandriasoftware.swing.JInputValidator} that validates a
@@ -40,7 +42,7 @@ public class SystemNameValidator extends JInputValidator {
      * @param component the component to validate has a valid system name
      * @param manager   the manager that will be used for validation
      */
-    public SystemNameValidator(JComponent component, Manager<?> manager) {
+    public SystemNameValidator(@Nonnull JComponent component, @Nonnull Manager<?> manager) {
         this(component, manager, false);
     }
 
@@ -53,7 +55,7 @@ public class SystemNameValidator extends JInputValidator {
      *                  {@link javax.swing.InputVerifier#verify(javax.swing.JComponent)}
      *                  must return true to allow focus change; false otherwise
      */
-    public SystemNameValidator(JComponent component, Manager<?> manager, boolean required) {
+    public SystemNameValidator(@Nonnull JComponent component, @Nonnull Manager<?> manager, boolean required) {
         super(component, true, required);
         this.manager = manager;
         this.required = required;
@@ -67,10 +69,16 @@ public class SystemNameValidator extends JInputValidator {
             if (text != null && !text.isEmpty()) {
                 try {
                     manager.validateSystemNameFormat(text);
+                    if (manager instanceof ProxyManager) {
+                        ProxyManager proxyManager = (ProxyManager) manager;
+                        proxyManager.validateSystemNameFormat(text);
+                    } else {
+                        manager.makeSystemName(text);
+                    }
                 } catch (IllegalArgumentException ex) {
                     if (manager.validSystemNameFormat(text) == NameValidity.VALID_AS_PREFIX_ONLY) {
-                        return new Validation(Validation.Type.WARNING, Bundle.getMessage("SystemNameValidatorValidPrefix", text, manager.getBeanTypeHandled(), 
-                                        trimHtmlTags(getToolTipText())), preferences);
+                        return new Validation(Validation.Type.WARNING, Bundle.getMessage("SystemNameValidatorValidPrefix", text, manager.getBeanTypeHandled(),
+                                trimHtmlTags(getToolTipText())), preferences);
                     }
                     return new Validation(Validation.Type.DANGER, Bundle.getMessage("SystemNameValidatorInvalid", ex.getMessage(), trimHtmlTags(getToolTipText())), preferences);
                 }

@@ -78,6 +78,10 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     /**
      * Create a SystemName by prepending the system name prefix to the name if
      * not already present.
+     * <p>
+     * <strong>Note:</strong> implementations <em>must</em> call
+     * {@link #validateSystemNameFormat(java.lang.String)} to ensure the
+     * returned name is valid. 
      *
      * @param name the item to make the system name for
      * @return A system name from a user input, typically a number.

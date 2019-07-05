@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import jmri.ProxyManager;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @param <E> the supported type of NamedBean
  * @author Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
-abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener<E> {
+abstract public class AbstractProxyManager<E extends NamedBean> implements ProxyManager<E>, ProvidingManager<E>, Manager.ManagerDataListener<E> {
 
     /**
      * Number of managers available through getManager(i) and getManagerList(),
