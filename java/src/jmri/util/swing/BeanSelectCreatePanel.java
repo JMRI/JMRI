@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.util.List;
+import java.util.Vector;
+
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -78,13 +80,15 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
         if (manager instanceof ProxyManager) {
             ProxyManager<E> proxy = (ProxyManager<E>) manager;
             List<Manager<E>> managerList = proxy.getManagerList();
-            prefixBox.setModel(new DefaultComboBoxModel<>(managerList.toArray(new Manager[managerList.size()])));
+            prefixBox.setModel(new DefaultComboBoxModel<Manager<E>>(new Vector<Manager<E>>(managerList)));
             prefixBox.setSelectedItem(proxy.getDefaultManager());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
         } else { // not a proxy, just one
-            prefixBox.setModel(new DefaultComboBoxModel<>(new Manager[]{manager}));
+            Vector<Manager<E>> v = new Vector<>();
+            v.add(manager);
+            prefixBox.setModel(new DefaultComboBoxModel<Manager<E>>(v));
             prefixBox.setSelectedItem(manager);
         }
         
@@ -178,7 +182,6 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
     private E createBean() throws JmriException {
         Manager<E> manager = prefixBox.getSelectedItem();
-        String prefix = manager.getSystemNamePrefix();
         E nBean = null;
         if (manager instanceof ProvidingManager) {
             ProvidingManager<E> provider = (ProvidingManager<E>) manager;
