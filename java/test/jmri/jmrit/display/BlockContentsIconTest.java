@@ -44,7 +44,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
 
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         jf.pack();
@@ -69,13 +69,14 @@ public class BlockContentsIconTest extends PositionableLabelTest {
 
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(tag);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         jf.pack();
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -112,10 +113,11 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         JUnitUtil.initConfigureManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new EditorScaffold();
-            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("B1");
+            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
             BlockContentsIcon bci = new BlockContentsIcon("foo", editor);
-            bci.setBlock(new jmri.NamedBeanHandle<>("B1", block));
-            bci.setMemory("B1");
+            bci.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
+            // set the memory value for testClone in PositionableTestBase
+            bci.setMemory("IB1");
             p = to = bci;
         }
     }
