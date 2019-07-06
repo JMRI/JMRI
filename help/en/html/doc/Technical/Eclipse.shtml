@@ -152,14 +152,24 @@
 
 				<li>Click "Run" to run the application. Eclipse will retain the
 					build in the Run menu.</li>
-			</ol>
+               </ol>
+               <p> To run an application native to Eclipse you might need the communication library.  For for the application you want to run,
+              select the "Arguments" tab, and under VM argments enter (You should probably cut and paste): If you're
+               using a 32 bit windows system add the library path:</p>
+               <pre>
+          -Djava.library.path=.;lib;lib/windows/x86 
+          </pre> Note if you're using a 64 bit windows system change the library path to: 
+          <pre>
+          -Djava.library.path=.;lib;lib/windows/x64
+          </pre>
+   
 
-			If during the launch of DecoderPro or PanelPro the program hangs, or
+			<p>If during the launch of DecoderPro or PanelPro the program hangs, or
 			errors are reported to the console, there's a good chance that the
 			META-INT files weren't created. To fix, run the Ant "build.xml" as
 			described below with only two targets selected, "realclean" followed
 			by "panelpro". If the Ant build succeeds, you should see the program
-			launch the main PanelPro panel.
+			launch the main PanelPro panel.</p>
 			
 			<p>We also recommend that you deselect
 			"Scrub output folders when cleaning projects" found under

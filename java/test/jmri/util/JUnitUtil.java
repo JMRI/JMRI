@@ -238,7 +238,10 @@ public class JUnitUtil {
         if(initPrefsDir==null){
            initPrefsDir = System.getProperty("jmri.prefsdir");
         }
-        System.setProperty("jmri.prefsdir",initPrefsDir);
+        
+        if (initPrefsDir != null) {
+            System.setProperty("jmri.prefsdir", initPrefsDir);
+        }
         
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
