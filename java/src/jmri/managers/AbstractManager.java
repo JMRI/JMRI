@@ -12,6 +12,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.CheckReturnValue;
@@ -88,6 +89,98 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             }
             throw ex;
         }
+    }
+
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * that verifies name has no trailing white space and no white space between
+     * the prefix and suffix.
+     * <p>
+     * <strong>Note</strong> this <em>must</em> only be used if the connection
+     * type is externally documented to require these restrictions.
+     * 
+     * @param name   the system name to validate
+     * @param logErrors {@code true} to log errors; {@code false} otherwise
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws IllegalArgumentException if provided name is an invalid format
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String validateTrimmedSystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) {
+        name = Manager.super.validateSystemNameFormat(name, logErrors, locale);
+        String prefix = getSystemNamePrefix();
+        String suffix = name.substring(prefix.length());
+        if (!suffix.equals(suffix.trim())) {
+            throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameTrailingWhitespace", name, prefix);
+        }
+        return name;
+    }
+
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * that verifies name is upper case and has no trailing white space and not
+     * white space between the prefix and suffix.
+     * <p>
+     * <strong>Note</strong> this <em>must</em> only be used if the connection
+     * type is externally documented to require these restrictions.
+     *
+     * @param name   the system name to validate
+     * @param logErrors {@code true} to log errors; {@code false} otherwise
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws IllegalArgumentException if provided name is an invalid format
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) {
+        name = validateTrimmedSystemNameFormat(name, logErrors, locale);
+        String prefix = getSystemNamePrefix();
+        String suffix = name.substring(prefix.length());
+        if (!suffix.equals(suffix.toUpperCase())) {
+            throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotUpperCase", name, prefix);
+        }
+        return name;
+    }
+
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * that verifies name is an integer after the prefix.
+     * <p>
+     * <strong>Note</strong> this <em>must</em> only be used if the connection
+     * type is externally documented to require these restrictions.
+     *
+     * @param name   the system name to validate
+     * @param min    the minimum valid integer value
+     * @param max    the maximum valid integer value
+     * @param logErrors {@code true} to log errors; {@code false} otherwise
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws IllegalArgumentException if provided name is an invalid format
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, boolean logErrors, @Nonnull Locale locale) {
+        name = validateTrimmedSystemNameFormat(name, logErrors, locale);
+        String prefix = getSystemNamePrefix();
+        String suffix = name.substring(prefix.length());
+        try {
+            int number = Integer.parseInt(suffix);
+            if (number < min) {
+                throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameIntegerLessThan", name, min);
+            } else if (number > max) {
+                throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameIntegerGreaterThan", name, max);
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotInteger", name, prefix);
+        }
+        return name;
     }
 
     /** {@inheritDoc} */

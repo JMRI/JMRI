@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -69,9 +70,23 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINOUTPUTADDRESS} to
+     * {@value AcelaAddress#MAXOUTPUTADDRESS}.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINOUTPUTADDRESS,
+                AcelaAddress.MAXOUTPUTADDRESS,
+                logErrors,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
