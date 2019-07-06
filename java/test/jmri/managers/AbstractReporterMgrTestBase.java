@@ -80,7 +80,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         try {
             l.provideReporter("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
           throw ex;
         }
     }

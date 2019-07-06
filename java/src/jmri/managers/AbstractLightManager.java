@@ -77,8 +77,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @CheckForNull
-    public Light getByUserName(@Nonnull String key
-    ) {
+    public Light getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 

@@ -111,7 +111,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         try {
             l.provideSensor("");
         } catch (IllegalArgumentException ex) {
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
+            jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
             throw ex;
         }
     }
