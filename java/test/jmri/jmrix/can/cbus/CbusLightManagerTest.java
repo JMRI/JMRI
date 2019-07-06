@@ -101,7 +101,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("ML+7;-5;+11");
             Assert.fail("3 split Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
     }
 
@@ -118,70 +118,70 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("MLX;+N15E6");
             Assert.fail("X Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXA;+N15E6");
             Assert.fail("A Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXABC;+N15E6");
             Assert.fail("AC Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXABCDE;+N15E6");
             Assert.fail("ABCDE Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
         
         try {
             l.provideLight("MLXABCDEF0;+N15E6");
             Assert.fail("ABCDEF0 Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXABCDEF");
             Assert.fail("Single hex Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXABCDEF;");
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXABCDEF;");
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
         
         try {
             l.provideLight("ML;");
             Assert.fail("; no arg Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }        
         
         try {
             l.provideLight("ML;+N15E6");
             Assert.fail("ML Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
         
         try {
@@ -209,35 +209,35 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("ML++N156E77");
             Assert.fail("++ Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("ML--N156E77");
             Assert.fail("-- Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLN156E+77");
             Assert.fail("E+ Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLN156+E77");
             Assert.fail("+E Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
 
         try {
             l.provideLight("MLXLKJK;XLKJK");
             Assert.fail("LKJK Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for newLight:");
+            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Light:");
         }
     }
 

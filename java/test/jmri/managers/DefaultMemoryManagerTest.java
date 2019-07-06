@@ -18,7 +18,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Memory: \"\" needed non-empty suffix to follow IM");
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test
