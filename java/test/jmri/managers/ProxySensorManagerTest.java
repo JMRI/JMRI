@@ -85,17 +85,15 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideSensor("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
-        Assert.assertTrue("Exception thrown properly", correct);
     }
 
     @Test
