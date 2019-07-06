@@ -248,6 +248,38 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation locates a specific Manager based on the system name
+     * and validates against that. If no matching Manager exists, the default Manager attempts to validate the system name.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, boolean logError, Locale locale) {
+        int i = matchTentative(systemName);
+        Manager manager = getDefaultManager();
+        if (i >= 0) {
+            manager = getMgr(i);
+        }
+        return manager.validateSystemNameFormat(systemName, logError, locale);
+    }
+
+    /**
+     * Validate system name format. Locate a system specific Manager based on a
+     * system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     *         system name format. Return INVALID if no manager exists.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return getMgr(i).validSystemNameFormat(systemName);
+        }
+        return NameValidity.INVALID;
+    }
+
+    /**
      * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * i.e. only one Sensor object representing a given physical sensor and
