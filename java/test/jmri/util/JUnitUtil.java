@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -237,15 +236,7 @@ public class JUnitUtil {
         // make sure the jmri.prefsdir property match the property passed 
         // to the tests.
         if (initPrefsDir == null) {
-            initPrefsDir = System.getProperty("jmri.prefsdir");
-            // running test outside of ant?
-            if (initPrefsDir == null) {
-                try {
-                    initPrefsDir = Files.createTempDirectory("tempJmriTests").toFile().getAbsolutePath();
-                } catch (IOException e) {
-                    System.err.println("Could not create temp directory, but test continues:\n" + e);
-                }
-            }
+            initPrefsDir = System.getProperty("jmri.prefsdir", "./temp");
         }
         System.setProperty("jmri.prefsdir",initPrefsDir);
         
