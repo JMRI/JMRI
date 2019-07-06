@@ -45,17 +45,9 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light provideLight(@Nonnull String name) {
-        Light t = getLight(name);
-        if (t == null) {
-            if (name.startsWith(getSystemPrefix() + typeLetter())) {
-                return newLight(name, null);
-            } else if (name.length() > 0) {
-                return newLight(makeSystemName(name), null);
-            } else {
-                throw new IllegalArgumentException("\"" + name + "\" is invalid");
-            }
-        }
-        return t;
+        Light light = getLight(name);
+        // makeSystemName checks for validity
+        return light == null ? newLight(makeSystemName(name, true), null) : light;
     }
 
     /**

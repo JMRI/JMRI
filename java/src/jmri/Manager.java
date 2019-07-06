@@ -106,12 +106,17 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param name      the item to make the system name for
      * @param logErrors true to log errors; false to not log errors
-     * @return A system name from a user input, typically a number.
+     * @return a valid system name
      * @throws IllegalArgumentException if a valid name can't be created
      */
     @Nonnull
     public default String makeSystemName(@Nonnull String name, boolean logErrors) {
-        return validateSystemNameFormat(name.startsWith(getSystemNamePrefix()) ? name : getSystemNamePrefix() + name, logErrors);
+        String prefix = getSystemNamePrefix();
+        // the one special case that is not caught by validation here
+        if (name.trim().isEmpty()) {
+            throw new NamedBean.BadSystemNameException(Locale.getDefault(), "InvalidSystemNameInvalidPrefix", prefix);
+        }
+        return validateSystemNameFormat(name.startsWith(prefix) ? name : prefix + name, logErrors);
     }
 
     /**
