@@ -142,36 +142,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to normalize a anyma dmx system name.
-     * <p>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one anyma dmx channel, by removing any extra zeros inserted by the
-     * user.
-     *
-     * @return "" (empty string) if the supplied system name does not have a
-     *         valid format. Otherwise a normalized name is returned in the same
-     *         format as the input name.
-     */
-    public String normalizeSystemName(String systemName) {
-        String result = "";
-
-        log.debug("* normalizeSystemName('{}')", systemName);
-
-        int offset = checkSystemPrefix(systemName);
-        if (offset > 0) {
-            if (validSystemNameFormat(systemName, systemName.charAt(offset)) == NameValidity.VALID) {
-                int channelNum = Integer.parseInt(systemName.substring(offset + 1));
-                result = systemName.substring(0, offset + 1) + Integer.toString(channelNum);
-            } else {
-                // No point in normalizing if a valid system name format is not present
-            }
-        } else {
-            log.error("invalid system prefix in anyma dmx system name in normalizeSystemName: '{}'", systemName); // fix test first
-        }
-        return result;
-    }
-
-    /**
      * Public static method to convert one format anyma dmx system name to the
      * alternate format.
      *

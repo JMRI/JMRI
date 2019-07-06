@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient;
 
+import java.util.Locale;
 import jmri.Light;
 
 /**
@@ -35,13 +36,20 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (systemName.startsWith(prefix + "L")
                 && Integer.parseInt(systemName.substring(prefix.length() + 1)) > 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
+        return super.validateIntegerSystemNameFormat(name, 0, Integer.MAX_VALUE, logErrors, locale);
     }
 
     /**
