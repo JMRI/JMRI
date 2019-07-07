@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import static jmri.jmrix.dccpp.DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR;
+
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -199,43 +202,33 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Get the bit address from the system name.
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
-            // here if an illegal DCC++ sensor system name
-            log.error("illegal character in header field of DCC++ sensor system name: {} prefix {} type {}",
-                    systemName, getSystemPrefix(), typeLetter());
-            return (0);
-        }
-        // name must be in the DCCppSnnnnn format (DCCPP prefix is user configurable)
-        int num = 0;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length()));
-        } catch (Exception e) {
-            log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.debug("invalid DCC++ sensor system name: {}", systemName);
-            return (0);
-        } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.debug("bit number out of range in DCC++ sensor system name: {}", systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @return VALID if system name has a valid format, else returns INVALID
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_JMRI_ADDR, logErrors, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Turnout System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, true, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**

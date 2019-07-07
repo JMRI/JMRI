@@ -1,5 +1,6 @@
 package jmri.jmrix.easydcc;
 
+import java.util.Locale;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,43 +70,33 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     }
 
     /**
-     * Get the bit address from the system name.
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(prefix + typeLetter()))) {
-            // here if an illegal EasyDCC turnout system name
-            log.error("illegal character in header field of EasyDCC turnout system name: {} prefix {} type {}",
-                    systemName, getSystemPrefix(), typeLetter());
-            return (0);
-        }
-        // name must be in the ETnnnnn format (E is user configurable)
-        int num = 0;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length()));
-        } catch (Exception e) {
-            log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.debug("invalid EasyDCC turnout system name: {}", systemName);
-            return (0);
-        } else if (num > MAX_ACC_DECODER_ADDRESS) {
-            log.debug("bit number out of range in EasyDCC turnout system name: {}", systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Public method to validate system name format.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_ADDRESS, logErrors, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Turnout System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, true, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**

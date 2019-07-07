@@ -3,8 +3,6 @@ package jmri.jmrix.loconet;
 import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement LightManager for LocoNet systems.
@@ -84,7 +82,7 @@ public class LnLightManager extends AbstractLightManager {
         } catch (IllegalArgumentException ex) {
             return 0;
         }
-        return Integer.parseInt(getSystemNamePrefix());
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**
@@ -119,7 +117,5 @@ public class LnLightManager extends AbstractLightManager {
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LnLightManager.class);
 
 }

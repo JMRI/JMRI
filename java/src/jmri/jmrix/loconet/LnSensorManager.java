@@ -198,7 +198,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         } catch (IllegalArgumentException ex) {
             return 0;
         }
-        return Integer.parseInt(getSystemNamePrefix());
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     @Override

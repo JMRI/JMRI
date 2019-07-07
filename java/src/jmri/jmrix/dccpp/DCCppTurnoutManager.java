@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
+
+import java.util.Locale;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,45 +154,33 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     }
 
     /**
-     * Get the bit address from the system name.
-     *
-     * @return -1 for failure
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix() + typeLetter()))) {
-            // here if an illegal DCC++ turnout system name
-            log.error("illegal character in header field of DCC++ turnout system name: {} prefix {} type {}",
-                    systemName, getSystemPrefix(), typeLetter());
-            return -1;
-        }
-        // name must be in the DCCppTnnnnn format (DCCPP is user configurable)
-        int num = 0;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length()));
-        } catch (Exception e) {
-            log.error("invalid character in number field of system name: {}", systemName);
-            return -1;
-        }
-        if (num < 0) {
-            log.error("invalid DCC++ turnout system name: {}", systemName);
-            return -1;
-        } else if (num > DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR) {
-            log.error("bit number out of range in DCC++ turnout system name: {}", systemName);
-            return -1;
-        }
-        return num;
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+        return (getBitFromSystemName(systemName) != -1) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 0, MAX_TURNOUT_ADDRESS, logErrors, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Turnout System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, true, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return -1;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /** {@inheritDoc} */
@@ -197,13 +188,6 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    @Deprecated
-    static public DCCppTurnoutManager instance() {
-        //if (_instance == null) _instance = new DCCppTurnoutManager();
-        return _instance;
-    }
-    static DCCppTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class);
 

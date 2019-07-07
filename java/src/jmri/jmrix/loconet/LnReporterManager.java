@@ -86,7 +86,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         } catch (IllegalArgumentException ex) {
             return 0;
         }
-        return Integer.parseInt(getSystemNamePrefix());
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**

@@ -220,7 +220,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         } catch (IllegalArgumentException ex) {
             return 0;
         }
-        return Integer.parseInt(getSystemNamePrefix());
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**
