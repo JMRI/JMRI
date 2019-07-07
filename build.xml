@@ -334,6 +334,9 @@
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
         <classpath> 
            <pathelement location="${libdir}/org.jacoco.ant-0.8.4.201905082037.jar" />
+           <pathelement location="${libdir}/org.jacoco.core-0.8.4.201905082037.jar" />
+           <pathelement location="${libdir}/org.jacoco.report-0.8.4.201905082037.jar" />
+           <pathelement location="${libdir}/org.jacoco.agent-0.8.4.201905082037.jar" />
            <pathelement location="${libdir}/asm-7.1.jar" />
         </classpath>
     </taskdef>
