@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013
  */
-public class CompositeVariableValue extends EnumVariableValue implements ActionListener {
+public class CompositeVariableValue extends EnumVariableValue {
 
     public CompositeVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
