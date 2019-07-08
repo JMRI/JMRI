@@ -254,13 +254,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * and validates against that. If no matching Manager exists, the default Manager attempts to validate the system name.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logError, Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         int i = matchTentative(systemName);
         Manager manager = getDefaultManager();
         if (i >= 0) {
             manager = getMgr(i);
         }
-        return manager.validateSystemNameFormat(systemName, logError, locale);
+        return manager.validateSystemNameFormat(systemName, locale);
     }
 
     /**

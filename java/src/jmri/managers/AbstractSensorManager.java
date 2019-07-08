@@ -83,7 +83,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
         java.util.Objects.requireNonNull(sysName, "Generated systemName may not be null, started with "+sysName);
 
-        sysName = validateSystemNameFormat(sysName, true);
+        sysName = validateSystemNameFormat(sysName);
         // return existing if there is one
         Sensor s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {

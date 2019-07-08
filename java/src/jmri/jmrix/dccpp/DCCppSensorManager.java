@@ -213,8 +213,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_JMRI_ADDR, logErrors, locale);
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_JMRI_ADDR, locale);
     }
 
     /**
@@ -224,7 +224,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     public int getBitFromSystemName(String systemName) {
         try {
-            validateSystemNameFormat(systemName, true, Locale.getDefault());
+            validateSystemNameFormat(systemName, Locale.getDefault());
         } catch (IllegalArgumentException ex) {
             return 0;
         }

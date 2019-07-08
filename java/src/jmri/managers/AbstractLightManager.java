@@ -90,7 +90,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         log.debug("newLight: {};{}",
                 ((systemName == null) ? "null" : systemName),
                 ((userName == null) ? "null" : userName));
-        systemName = validateSystemNameFormat(systemName, true);
+        systemName = validateSystemNameFormat(systemName);
 
         // return existing if there is one
         Light s;

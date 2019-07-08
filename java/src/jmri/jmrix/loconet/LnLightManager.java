@@ -67,8 +67,8 @@ public class LnLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, 4096, logErrors, locale);
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
     /**
@@ -78,7 +78,7 @@ public class LnLightManager extends AbstractLightManager {
      */
     public int getBitFromSystemName(String systemName) {
         try {
-            validateSystemNameFormat(systemName, true, Locale.getDefault());
+            validateSystemNameFormat(systemName, Locale.getDefault());
         } catch (IllegalArgumentException ex) {
             return 0;
         }

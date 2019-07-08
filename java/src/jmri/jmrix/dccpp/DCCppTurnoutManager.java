@@ -165,8 +165,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 0, MAX_TURNOUT_ADDRESS, logErrors, locale);
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 0, MAX_TURNOUT_ADDRESS, locale);
     }
 
     /**
@@ -176,7 +176,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      */
     public int getBitFromSystemName(String systemName) {
         try {
-            validateSystemNameFormat(systemName, true, Locale.getDefault());
+            validateSystemNameFormat(systemName, Locale.getDefault());
         } catch (IllegalArgumentException ex) {
             return -1;
         }

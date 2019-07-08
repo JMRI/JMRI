@@ -90,8 +90,8 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
-        return super.validateNmraAccessorySystemNameFormat(name, logErrors, locale);
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return super.validateNmraAccessorySystemNameFormat(name, locale);
     }
 
     /**

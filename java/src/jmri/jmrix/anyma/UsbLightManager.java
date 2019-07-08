@@ -89,8 +89,8 @@ public class UsbLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, 512, logErrors, locale);
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 512, locale);
     }
 
     /**

@@ -433,11 +433,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         String parts[];
         int num;
         if (name.contains(":")) {
-            parts = super.validateSystemNameFormat(name, logErrors, locale)
+            parts = super.validateSystemNameFormat(name, locale)
                     .substring(getSystemNamePrefix().length()).split(":");
             if (parts.length != 2) {
                 throw new NamedBean.BadSystemNameException(
@@ -447,7 +447,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             parts = new String[]{"0", "0"};
             try {
-                num = Integer.parseInt(super.validateSystemNameFormat(name, logErrors, locale)
+                num = Integer.parseInt(super.validateSystemNameFormat(name, locale)
                         .substring(getSystemNamePrefix().length()));
                 parts[0] = Integer.toString((num / 16) + 1); // aiu cab
                 parts[1] = Integer.toString((num % 16) + 1); // aiu pin
@@ -491,7 +491,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     public NameValidity validSystemNameFormat(String systemName) {
         if (super.validSystemNameFormat(systemName) == NameValidity.VALID) {
             try {
-                validateSystemNameFormat(systemName, true);
+                validateSystemNameFormat(systemName);
             } catch (IllegalArgumentException ex) {
                 if (systemName.endsWith(":")) {
                     try {

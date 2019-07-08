@@ -43,7 +43,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name
-        String sName = validateSystemNameFormat(systemName, true);
+        String sName = validateSystemNameFormat(systemName);
         // does this turnout already exist?
         Turnout t = getBySystemName(sName);
         if (t != null) {
@@ -92,8 +92,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(name, 1, 99, logErrors, locale);
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return validateIntegerSystemNameFormat(name, 1, 99, locale);
     }
 
     /**

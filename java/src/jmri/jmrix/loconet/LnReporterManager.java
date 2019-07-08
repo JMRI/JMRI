@@ -71,8 +71,8 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, 4096, logErrors, locale);
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
     /**
@@ -82,7 +82,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      */
     public int getBitFromSystemName(String systemName) {
         try {
-            validateSystemNameFormat(systemName, true, Locale.getDefault());
+            validateSystemNameFormat(systemName, Locale.getDefault());
         } catch (IllegalArgumentException ex) {
             return 0;
         }

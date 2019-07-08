@@ -77,11 +77,10 @@ public class AcelaLightManager extends AbstractLightManager {
      * {@value AcelaAddress#MAXOUTPUTADDRESS}.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINOUTPUTADDRESS,
                 AcelaAddress.MAXOUTPUTADDRESS,
-                logErrors,
                 locale);
     }
 

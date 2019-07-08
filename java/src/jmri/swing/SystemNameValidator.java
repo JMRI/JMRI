@@ -70,7 +70,7 @@ public class SystemNameValidator extends JInputValidator {
                 try {
                     if (manager instanceof ProxyManager) {
                         ProxyManager<?> proxyManager = (ProxyManager<?>) manager;
-                        proxyManager.validateSystemNameFormat(text, false);
+                        proxyManager.validateSystemNameFormat(text);
                     } else {
                         manager.makeSystemName(text, false);
                     }

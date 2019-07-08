@@ -81,8 +81,8 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, boolean logErrors, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_ADDRESS, logErrors, locale);
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_ADDRESS, locale);
     }
 
     /**
@@ -92,7 +92,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      */
     public int getBitFromSystemName(String systemName) {
         try {
-            validateSystemNameFormat(systemName, true, Locale.getDefault());
+            validateSystemNameFormat(systemName, Locale.getDefault());
         } catch (IllegalArgumentException ex) {
             return 0;
         }

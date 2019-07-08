@@ -102,7 +102,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * type is externally documented to require these restrictions.
      * 
      * @param name   the system name to validate
-     * @param logErrors {@code true} to log errors; {@code false} otherwise
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
@@ -110,8 +109,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @CheckReturnValue
     @Nonnull
-    public String validateTrimmedSystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) {
-        name = Manager.super.validateSystemNameFormat(name, logErrors, locale);
+    public String validateTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        name = Manager.super.validateSystemNameFormat(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
         if (!suffix.equals(suffix.trim())) {
@@ -130,7 +129,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * type is externally documented to require these restrictions.
      *
      * @param name   the system name to validate
-     * @param logErrors {@code true} to log errors; {@code false} otherwise
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
@@ -138,8 +136,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @CheckReturnValue
     @Nonnull
-    public String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) {
-        name = validateTrimmedSystemNameFormat(name, logErrors, locale);
+    public String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        name = validateTrimmedSystemNameFormat(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
         if (!suffix.equals(suffix.toUpperCase())) {
@@ -159,7 +157,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * @param name   the system name to validate
      * @param min    the minimum valid integer value
      * @param max    the maximum valid integer value
-     * @param logErrors {@code true} to log errors; {@code false} otherwise
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
@@ -167,8 +164,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @CheckReturnValue
     @Nonnull
-    public String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, boolean logErrors, @Nonnull Locale locale) {
-        name = validateTrimmedSystemNameFormat(name, logErrors, locale);
+    public String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, @Nonnull Locale locale) {
+        name = validateTrimmedSystemNameFormat(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
         try {
@@ -197,7 +194,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * type is externally documented to require these restrictions.
      *
      * @param name   the system name to validate
-     * @param logErrors {@code true} to log errors; {@code false} otherwise
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
@@ -205,8 +201,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      */
     @CheckReturnValue
     @Nonnull
-    public String validateNmraAccessorySystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) {
-        return this.validateIntegerSystemNameFormat(name, NmraPacket.accIdLowLimit, NmraPacket.accIdHighLimit, logErrors, locale);
+    public String validateNmraAccessorySystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        return this.validateIntegerSystemNameFormat(name, NmraPacket.accIdLowLimit, NmraPacket.accIdHighLimit, locale);
     }
 
     /** {@inheritDoc} */

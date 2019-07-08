@@ -48,8 +48,8 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
-        return super.validateIntegerSystemNameFormat(name, 0, Integer.MAX_VALUE, logErrors, locale);
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return super.validateIntegerSystemNameFormat(name, 0, Integer.MAX_VALUE, locale);
     }
 
     /**
