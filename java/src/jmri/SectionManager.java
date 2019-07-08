@@ -1,6 +1,5 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class SectionManager extends AbstractManager<Section> implements InstanceManagerAutoDefault {
 
     public SectionManager() {
         super();
