@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends EasyDccPortController implements Runnable {
 
     // private control members
     private boolean opened = false;

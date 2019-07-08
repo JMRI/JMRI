@@ -29,7 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class MS100Adapter extends LnPortController {
 
     public MS100Adapter() {
         super(new LocoNetSystemConnectionMemo());

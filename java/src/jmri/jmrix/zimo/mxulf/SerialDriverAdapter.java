@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * Adapted for use with Zimo MXULF by Kevin Dickerson
  */
-public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends Mx1PortController {
 
     public SerialDriverAdapter() {
         super(new Mx1SystemConnectionMemo());
