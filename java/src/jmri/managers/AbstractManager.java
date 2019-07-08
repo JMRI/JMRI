@@ -23,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,6 +182,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotInteger", name, prefix);
         }
         return name;
+    }
+
+
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * that verifies name is a valid NMRA Accessory address after the prefix. A
+     * name is considered a valid NMRA accessory address if it is an integer
+     * between {@value NmraPacket#accIdLowLimit} and
+     * {@value NmraPacket#accIdHighLimit}, inclusive.
+     * <p>
+     * <strong>Note</strong> this <em>must</em> only be used if the connection
+     * type is externally documented to require these restrictions.
+     *
+     * @param name   the system name to validate
+     * @param logErrors {@code true} to log errors; {@code false} otherwise
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws IllegalArgumentException if provided name is an invalid format
+     */
+    @CheckReturnValue
+    @Nonnull
+    public String validateNmraAccessorySystemNameFormat(@Nonnull String name, boolean logErrors, @Nonnull Locale locale) {
+        return this.validateIntegerSystemNameFormat(name, NmraPacket.accIdLowLimit, NmraPacket.accIdHighLimit, logErrors, locale);
     }
 
     /** {@inheritDoc} */

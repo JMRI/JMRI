@@ -544,6 +544,9 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
          * <p>
          * Use {@link #getLocalizedMessage()} to display the message to the
          * user, and use {@link #getMessage()} to record the message in logs.
+         * <p>
+         * <strong>Note</strong> the message must be accessible by
+         * {@link jmri.Bundle}.
          *
          * @param locale  the locale to be used
          * @param message bundle key to be translated
@@ -552,6 +555,21 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
         public BadSystemNameException(Locale locale, String message, Object... subs) {
             super(Bundle.getMessage(Locale.ENGLISH, message, subs));
             localizedMessage = Bundle.getMessage(locale, message, subs);
+        }
+
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the non-localized message followed by the localized message.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param logging the English message for logging
+         * @param display the localized message for display
+         */
+        public BadSystemNameException(String logging, String display) {
+            super(logging);
+            localizedMessage = display;
         }
 
         @Override

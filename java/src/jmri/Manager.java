@@ -204,7 +204,8 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
 
     /**
      * Test if parameter is a properly formatted system name. Implementations of
-     * this method <em>must not</em> throw an exception.
+     * this method <em>must not</em> throw an exception, log an error, or
+     * otherwise disrupt the user.
      *
      * @since 4.9.5, although similar methods existed previously in lower-level
      * classes

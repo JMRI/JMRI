@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import java.util.Locale;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,9 +87,15 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
+        return super.validateNmraAccessorySystemNameFormat(name, logErrors, locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {

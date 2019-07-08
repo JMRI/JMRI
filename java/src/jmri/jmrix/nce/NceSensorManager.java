@@ -1,6 +1,8 @@
 package jmri.jmrix.nce;
 
+import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRReply;
 import org.slf4j.Logger;
@@ -428,67 +430,83 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Get the bit address from the system name.
-     * Does not support the M:p format, so preprocess that beforehand.
-     *
-     * @param systemName system name for sensor
-     * @return index value for sensor
+     * {@inheritDoc}
      */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
-            // here if an illegal nce light system name
-            log.error("illegal character in header field of nce sensor system name: " + systemName);
-            return (0);
+    @Override
+    public String validateSystemNameFormat(String name, boolean logErrors, Locale locale) {
+        String parts[];
+        int num;
+        if (name.contains(":")) {
+            parts = super.validateSystemNameFormat(name, logErrors, locale)
+                    .substring(getSystemNamePrefix().length()).split(":");
+            if (parts.length != 2) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNeedCabAndPin", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameNeedCabAndPin", name));
+            }
+        } else {
+            parts = new String[]{"0", "0"};
+            try {
+                num = Integer.parseInt(super.validateSystemNameFormat(name, logErrors, locale)
+                        .substring(getSystemNamePrefix().length()));
+                parts[0] = Integer.toString((num / 16) + 1); // aiu cab
+                parts[1] = Integer.toString((num % 16) + 1); // aiu pin
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNeedCabAndPin", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameNeedCabAndPin", name));
+            }
         }
-        // system name must be in the NLnnnnn format (N is user configurable)
-        int num = 0;
         try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())
-                  );
-        } catch (Exception e) {
-            log.debug("illegal character in number field of system name: " + systemName);
-            return (0);
+            num = Integer.parseInt(parts[0]);
+            if (num < MINAIU || num > MAXAIU) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name));
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name),
+                    Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name));
         }
-        if (num <= 0) {
-            log.error("invalid nce sensor system name: " + systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.warn("bit number out of range in nce sensor system name: " + systemName);
-            return (0);
+        try {
+            num = Integer.parseInt(parts[1]);
+            if (num < 1 || num > MAXPIN) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUPin", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameBadAIUPin", name));
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name),
+                    Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name));
         }
-        return (num);
+        return name;
     }
-
+    
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.contains(":") && !systemName.endsWith(":")) { // prevent to try parsing too soon
-            // If sensor address is presented in the AIU Cab Address:Pin Number On AIU format,
-            // translate it into nnnn. Copied from createSystemName()
-            String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
-            int seperator = curAddress.indexOf(":"); // assuming the ":" is not in the prefix
-            int _aiucab;
-            int _pin;
-            log.debug(curAddress);
+        if (super.validSystemNameFormat(systemName) == NameValidity.VALID) {
             try {
-                _aiucab = Integer.parseInt(curAddress.substring(0, seperator));
-                _pin = Integer.parseInt(curAddress.substring(seperator + 1));
-            } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
+                validateSystemNameFormat(systemName, true);
+            } catch (IllegalArgumentException ex) {
+                if (systemName.endsWith(":")) {
+                    try {
+                        int num = Integer.parseInt(systemName.substring(getSystemNamePrefix().length(), systemName.length() - 1));
+                        if (num >= MINAIU && num <= MAXAIU) {
+                            return NameValidity.VALID_AS_PREFIX_ONLY;
+                        }
+                    } catch (NumberFormatException | IndexOutOfBoundsException iex) {
+                        // do nothing; will return INVALID
+                    }
+                }
                 return NameValidity.INVALID;
             }
-            systemName = getSystemPrefix() + "S" + ((_aiucab - 1) * 16 + _pin - 1);
         }
-        return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+        return NameValidity.VALID;
     }
 
     /**
