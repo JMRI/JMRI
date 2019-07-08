@@ -1,7 +1,6 @@
 package jmri;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.VetoableChangeListener;
 import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, VetoableChangeListener, InstanceManagerAutoDefault {
+public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
     private final String powerManagerChangeName;
 
