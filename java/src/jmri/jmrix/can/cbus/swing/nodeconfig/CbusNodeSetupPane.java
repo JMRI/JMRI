@@ -55,6 +55,10 @@ public class CbusNodeSetupPane extends JPanel {
 
     public void initComponents(int node) {
         
+        if (node == _nodeNum){
+            return;
+        }
+        
         if (eventScroll != null ){ 
             eventScroll.setVisible(false);
         }

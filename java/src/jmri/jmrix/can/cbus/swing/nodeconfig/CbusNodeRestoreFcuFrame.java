@@ -34,7 +34,7 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeFromFcu;
+import jmri.jmrix.can.cbus.node.CbusNodeFromBackup;
 import jmri.jmrix.can.cbus.node.CbusNodeFromFcuTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.util.JmriJFrame;
@@ -60,7 +60,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     private JTabbedPane tabbedPane;
     private CbusNodeTableDataModel nodeModel = null;
     private CanSystemConnectionMemo _memo;
-    private CbusNodeNVTableDataModel nodeNVModel;
     private NodeConfigToolPane mainpane;
     private CbusNodeNVTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
@@ -96,8 +95,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
             
-            nodeNVModel = new CbusNodeNVTableDataModel(memo, 5,
-            CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
             
         } catch (NullPointerException e) {
             log.error("Unable to get Node Table from Instance Manager");
@@ -151,9 +148,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         ArrayList<String> nodeTableNodeArr = new ArrayList<String>();
         
         for (String ref : nodeModel.getListOfNodeNumberNames()) {
-          //  if (!nodeTableNodeArr.contains(ref)) {
-                nodeTableNodeArr.add(ref);
-          //  }
+            nodeTableNodeArr.add(ref);
         }
         
         if ( nodeTableNodeArr.size()==0 ){
@@ -204,11 +199,12 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         nodeinfoPane = new CbusNodeInfoPane();
         
+        CbusNodeNVTableDataModel nodeNVModel = new CbusNodeNVTableDataModel(_memo, 5,
+            CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
         nodevarPane = new CbusNodeNVTablePane(nodeNVModel);
         
         CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, _memo, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
-        
         nodeEventPane = new CbusNodeEventTablePane(nodeEvModel);
         
         nodeEventPane.setHideEditButton();
@@ -216,7 +212,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         nodeEventPane.initComponents(_memo);
         
         tabbedPane.addTab(("Node Info"), nodeinfoPane);
-        tabbedPane.addTab(("Node Variables "), nodevarPane);
+        tabbedPane.addTab(("Node Variables"), nodevarPane);
         tabbedPane.addTab(("Node Events"), nodeEventPane);
         
         tabbedPane.addChangeListener((ChangeEvent e) -> {
@@ -224,7 +220,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         });
         
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fcuPane, tabbedPane);
-        split.setDividerLocation(0.5);
+        
+        // not processor intensive
         split.setContinuousLayout(true);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
@@ -293,6 +290,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         
         nodeTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if ( !e.getValueIsAdjusting() ) {
                     updateTabs();
@@ -302,6 +300,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         });
         
         list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if ( !e.getValueIsAdjusting() ) {
                     updateRestoreNodeButton();
@@ -443,7 +442,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                 int nodenum = Integer.parseInt(nodeNum);
                 int nodetype = Integer.parseInt(moduleIdNum);
                 if ( nodenum>0 ) {
-                    CbusNodeFromFcu actualnode = cbusNodeFcuDataModel.provideNodeByNodeNum( nodenum );
+                    CbusNodeFromBackup actualnode = cbusNodeFcuDataModel.provideNodeByNodeNum( nodenum );
                     actualnode.setNameIfNoName( nodeName );
                     actualnode.resetNodeEvents();
                     
@@ -483,7 +482,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     int eventNodeNum = Integer.parseInt(eventNode);
                     log.debug("event host {} event {} event node {} vars {}",hostNodeNum,eventNum,eventNodeNum,eventVars);
                     
-                    CbusNodeFromFcu hostNode = cbusNodeFcuDataModel.provideNodeByNodeNum( hostNodeNum );
+                    CbusNodeFromBackup hostNode = cbusNodeFcuDataModel.provideNodeByNodeNum( hostNodeNum );
                     
                     if ( !eventVars.isEmpty() ) {
                         int[] evVarArray = StringUtil.intBytesWithTotalFromNonSpacedHexString(eventVars,false);

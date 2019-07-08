@@ -30,35 +30,29 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListener {
+public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
     
-    private JPanel infoPane = new JPanel();
+    private JPanel infoPane;
     private JTabbedPane tabbedPane;
-    private CbusNodeTableDataModel nodeModel = null;
-    private int _nodeNum;
     private CanSystemConnectionMemo _memo;
     private CbusNodeNVTableDataModel nodeNVModel;
     private JButton saveNvButton;
     private JButton resetNvButton;
-    private NodeConfigToolPane mainpane;
     private jmri.util.swing.BusyDialog busy_dialog;
+    private CbusNode nodeOfInterest = null;
 
     /**
      * Create a new instance of CbusEventHighlightPanel.
      */
-    protected CbusNodeEditNVarFrame( NodeConfigToolPane main ) {
+    protected CbusNodeEditNVarPane( NodeConfigToolPane main ) {
         super();
-        mainpane = main;
     }
 
     public void initComponents(CanSystemConnectionMemo memo) {
         
         _memo = memo;
-        mainpane.setEditNvActive(true);
         
         try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            
             nodeNVModel = new CbusNodeNVTableDataModel(memo, 5,
             CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
             
@@ -67,27 +61,36 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         } catch (NullPointerException e) {
             log.error("Unable to get Node Table from Instance Manager");
         }
+        infoPane = new JPanel();
+        setLayout(new BorderLayout() );
         
-        this.add(infoPane);
+        // this.add(infoPane);
         
     }
     
     public void setNode( CbusNode node ) {
         
-        log.debug("setnode {}",node);
+        if (node == nodeOfInterest) {
+            return;
+        }
         
-        _nodeNum = node.getNodeNumber();
+        nodeOfInterest = node;
+        
+        nodeNVModel.setNode(nodeOfInterest);
+        
+        log.debug("setnode {}",nodeOfInterest);
 
         if (infoPane != null ){ 
             infoPane.setVisible(false);
-            infoPane = null;
+            
         }
+        infoPane = null;
 
         infoPane = new JPanel();
         infoPane.setLayout(new BorderLayout() );
 
         JPanel nvMenuPane = new JPanel();
-        nvMenuPane.setLayout(new BoxLayout(nvMenuPane, BoxLayout.Y_AXIS));
+       // nvMenuPane.setLayout(new BoxLayout(nvMenuPane, BoxLayout.Y_AXIS));
         JPanel buttonPane = new JPanel();
       
         saveNvButton = new JButton(("Save"));
@@ -107,50 +110,34 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         JPanel generic = new JPanel();
         JPanel template = new JPanel();
         
-        generic.setLayout( new BorderLayout() );
-        template.setLayout( new BorderLayout() );
+      //  generic.setLayout( new BorderLayout() );
+      //  template.setLayout( new BorderLayout() );
         
         CbusNodeNVEditTablePane genericNVTable = new CbusNodeNVEditTablePane(nodeNVModel);
         genericNVTable.initComponents(_memo);
-        genericNVTable.setNode( node , mainpane );
+        genericNVTable.setNode( nodeOfInterest );
         generic.add( genericNVTable );
         
+        tabbedPane.addTab(("Generic"), genericNVTable);
         tabbedPane.addTab(("Template"), template);
-        tabbedPane.addTab(("Generic"), generic);
         
-        tabbedPane.setEnabledAt(0,false);
-        tabbedPane.setSelectedIndex(1);
+        tabbedPane.setEnabledAt(1,false);
+        tabbedPane.setSelectedIndex(0);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
         infoPane.add(tabbedPane, BorderLayout.CENTER);
         
-        setPreferredSize(new Dimension(530, 300));
+       // setPreferredSize(new Dimension(530, 300));
         
         this.add(infoPane);
-        
-        pack();
-        this.setResizable(true);
         
         validate();
         repaint();
         
-        setTitle(getTitle());
         setVisible(true);
         
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                mainpane.setEditNvActive(false);
-            }
-            
-            @Override
-            public void windowClosing(WindowEvent e) {
-                mainpane.setEditNvActive(false);
-            }
-        });
-        
         ActionListener reset = ae -> {
-            nodeNVModel.resetNewNvs();
+            resetNVs();
         };
         resetNvButton.addActionListener(reset);
         
@@ -161,11 +148,20 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         
     }
     
+    public boolean areNvsDirty(){
+        log.debug("Table Dirty {}",nodeNVModel.isTableDirty());
+        return nodeNVModel.isTableDirty();
+    }
+    
+    public void resetNVs(){
+        nodeNVModel.resetNewNvs();
+    }
+    
     private void showConfirmThenSave(){
         
-        String nodeName = nodeModel.getNodeNumberName( _nodeNum );
+        String nodeName = nodeOfInterest.getNodeNumberName();
         
-        busy_dialog = new jmri.util.swing.BusyDialog(this, "Write NV "+nodeName, false);
+        busy_dialog = new jmri.util.swing.BusyDialog(null, "Write NV "+nodeName, false);
         
         int changedtot = nodeNVModel.getCountDirty();
         StringBuffer buf = new StringBuffer();
@@ -201,8 +197,7 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
     
     public void nVTeachComplete(int numErrors){
         
-        this.dispose();
-        mainpane.setEditNvActive(false);
+       // this.dispose();
         busy_dialog.finish();
         
         if ( numErrors > 0 ) {
@@ -212,16 +207,6 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
                 JOptionPane.ERROR_MESSAGE);
         }
         
-    }
-    
-    @Override
-    public String getTitle() {
-        if ( nodeModel != null ) {
-            return "Edit NVs " + nodeModel.getNodeNumberName( _nodeNum );
-        }
-        else {
-            return("Edit NVs");
-        }
     }
     
     public void setSaveCancelButtonsActive ( Boolean newstate ) {
@@ -234,16 +219,14 @@ public class CbusNodeEditNVarFrame extends JmriJFrame implements TableModelListe
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
     }
     
-    @Override
     public void dispose(){
         if ( nodeNVModel !=null ) {
             nodeNVModel.removeTableModelListener(this);
             nodeNVModel.dispose();
         }
         
-        super.dispose();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarPane.class);
     
 }

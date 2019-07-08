@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -39,7 +40,7 @@ public class CbusNodeEventTest {
         t.setEvArr(newArr);
         
         Assert.assertEquals("new Arr string","1, 2, 3, 4",t.getEvVarString() );
-        
+        Assert.assertTrue("next outstanding 0",t.getNextOutstanding()== 0 );
         Assert.assertTrue("EvVars 2 -1",t.getEvVar(2)== 2 );
         t.setEvVar(2,255);
         Assert.assertTrue("EvVars 2 255",t.getEvVar(2)== 255 );
@@ -48,7 +49,59 @@ public class CbusNodeEventTest {
         t.setTempFcuNodeName("Alonso");
         Assert.assertTrue("temp name set",t.getTempFcuNodeName()=="Alonso" );
         
-    }    
+        t.setEvVar(1,256);
+        JUnitAppender.assertErrorMessageStartsWith("Event Variable value needs to be less than 255 (oxff)");
+        
+    }
+    
+    @Test
+    public void testEventHexString(){
+        
+        CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
+        
+        Assert.assertEquals("4 Ev Vars Unset","FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",t.getHexEvVarString());
+        t.setEvArr(new int[]{0,0,0,0});
+        Assert.assertEquals("4 Ev Vars 0000","00000000",t.getHexEvVarString());
+        t.setEvArr(new int[]{1,2,3,4});
+        Assert.assertEquals("4 Ev Vars 1234","01020304",t.getHexEvVarString());
+        t.setEvArr(new int[]{10,256,255,123});
+        Assert.assertEquals("4 Ev Vars larger","0A100FF7B",t.getHexEvVarString());
+        
+        t.setEvArr(null);
+        Assert.assertEquals("4 Ev Vars null","",t.getHexEvVarString());
+        
+    }
+    
+    @Test
+    public void testNodeEventEquals() {
+        
+        CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
+        // t.setEvArr(new int[]{1,2,3,4});
+        CbusNodeEvent tt = new CbusNodeEvent(0,7,256,-1,4);
+        // tt.setEvArr(new int[]{1,2,3,4});
+        
+        Assert.assertFalse("Null Equals",t.equals(null));
+        Assert.assertTrue("Equals t",t.equals(t));
+        Assert.assertTrue("Equals tt",t.equals(tt));
+        
+        Assert.assertTrue("Same hashcode tt",t.hashCode()==tt.hashCode());
+        
+        
+        Assert.assertFalse("Equals Node different",t.equals(new CbusNodeEvent(1,7,256,-1,4)));
+        Assert.assertFalse("Equals Event Different",t.equals(new CbusNodeEvent(0,8,256,-1,4)));
+        Assert.assertFalse("Equals Host different",t.equals(new CbusNodeEvent(0,7,257,-1,4)));
+        Assert.assertFalse("Equals Event Length different",t.equals(new CbusNodeEvent(0,7,256,-1,5)));
+        
+        t.setEvArr(new int[]{1,2,3,4});
+        tt.setEvArr(new int[]{1,2,3,4});
+        Assert.assertTrue("Equals ev var 1234",t.equals(tt));
+        Assert.assertTrue("Same hashcode tt",t.hashCode()==tt.hashCode());
+        tt.setEvArr(new int[]{1,2,3,5});
+        Assert.assertFalse("Equals ev var 1235",t.equals(tt));
+        Assert.assertTrue("Same hashcode tt",t.hashCode()!=tt.hashCode());
+        Assert.assertFalse("Equals different object",t.equals("Random String"));
+        
+    }
     
 
     // The minimal setup for log4J

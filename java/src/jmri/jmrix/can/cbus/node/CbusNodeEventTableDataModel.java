@@ -226,8 +226,11 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     
     public void setNode( CbusNode node){
         
+        if (node == nodeOfInterest){
+            return;
+        }
         if ( nodeOfInterest != null ){
-            nodeOfInterest.setNodeEventTable(null);
+            nodeOfInterest.removeNodeEventTable(this);
         }
         nodeOfInterest = node;
         if ( nodeOfInterest != null ){

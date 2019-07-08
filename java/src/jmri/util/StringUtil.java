@@ -572,6 +572,28 @@ public class StringUtil {
         }
         return new String(retval);
     }
+    
+    /**
+     * Convert an array of integers into a single hex. string. 
+     * Each element is displayed consecutively, no spaces.
+     * <p>
+     * eg. int[]{1,2,3,10} will return String "0102030A"
+     * eg. int[]{-1} will return "FFFFFFFF"
+     * eg. int[]{256} will return "100"
+     * eg. int[]{257} will return "101"
+     *
+     * @param v the array of integers
+     * @return the formatted String or an empty String
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public String arrayToHexString(@Nonnull int[] v) {
+        StringBuilder retval = new StringBuilder();
+        for (int e : v) {
+            retval.append(String.format("%02X", e));
+        }
+        return new String(retval);
+    }
 
     /**
      * Trim a text string to length provided and (if shorter) pad with trailing spaces.

@@ -124,7 +124,7 @@ public class CbusNodeTablePane extends JPanel {
         setLayout(new BorderLayout());
         JScrollPane eventScroll = new JScrollPane(nodeTable);
         eventScroll.setVisible(true);
-        setPreferredSize(new Dimension(300, 80));
+        eventScroll.setPreferredSize(new Dimension(300, 40));
         add(eventScroll);
         
         validate();

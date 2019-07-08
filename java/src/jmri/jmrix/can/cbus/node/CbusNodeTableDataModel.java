@@ -376,9 +376,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 removeRow( getNodeRowFromNodeNum(nodenum) );
             }
         }
-        else {
-            // ignore
-        }
     }
     
     /**
@@ -531,7 +528,8 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
     
     /**
-     * Returns a string ArrayList of all Node Number and User Names on the table
+     * Notify the GUI for main Node Table contents changing
+     *
      * @param node Node Number, NOT row number
      * @param col Table Column Number
      */
@@ -545,6 +543,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     /**
      * Single Node User Name
+     *
      * @param nn Node Number, NOT row number
      * @return Node Username, if unset returns node type name
      */
@@ -641,6 +640,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             return;
         }
         for (int i = 0; i < getRowCount(); i++) {
+            _mainArray.get(i).startLoadFromXml();
             if ( _mainArray.get(i).hasActiveTimers() ){
                 return;
             }
@@ -675,7 +675,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         // If a node is selected in the node manager the details for this are fetched next
         if ( getNodeByNodeNum(urgentNode) != null ) {
             
-            if (urgentTab==1) { // NV's selected
+            if (urgentTab==2) { // NV's selected
                 if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
                     getNodeByNodeNum(urgentNode).sendNextNVToFetch();
                     return;
@@ -695,7 +695,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 }
             }
             
-            if (urgentTab==1) { // NV's selected
+            if (urgentTab==2) { // NV's selected
                 if ( nodeafter > -1 ) {
                     if ( getNodeByNodeNum(nodeafter).getOutstandingNvCount() > 0 ){ // below nv
                         getNodeByNodeNum(nodeafter).sendNextNVToFetch();

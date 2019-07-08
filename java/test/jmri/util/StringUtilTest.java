@@ -453,6 +453,16 @@ public class StringUtilTest {
         Assert.assertEquals("010F03 3", 15, StringUtil.getHexDigit(3,"010F03") );
         
     }
+    
+    @Test
+    public void testarrayToHexString(){
+        Assert.assertEquals("Zero Length Array", "", StringUtil.arrayToHexString(new int[] {}) );
+        Assert.assertEquals("-1", "FFFFFFFF", StringUtil.arrayToHexString(new int[] {-1}) );
+        Assert.assertEquals("0", "00", StringUtil.arrayToHexString(new int[] {0}) );
+        Assert.assertEquals("0,1", "0001", StringUtil.arrayToHexString(new int[] {0,1}) );
+        Assert.assertEquals("45,123,129,217", "2D7B81D9", StringUtil.arrayToHexString(new int[] {45,123,129,217}) );
+        Assert.assertEquals("255,256,257", "FF100101", StringUtil.arrayToHexString(new int[] {255,256,257}) );
+    }
 
     // The minimal setup for log4J
     @Before

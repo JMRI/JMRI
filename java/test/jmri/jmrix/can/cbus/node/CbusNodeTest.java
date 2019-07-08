@@ -10,6 +10,7 @@ import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -21,6 +22,9 @@ public class CbusNodeTest {
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    
+    @Rule
+    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testCTor() {
@@ -707,9 +711,17 @@ public class CbusNodeTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch(java.io.IOException ioe){
+            Assert.fail("failed to setup profile for test");
+        }
+        
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        
         
     }
 

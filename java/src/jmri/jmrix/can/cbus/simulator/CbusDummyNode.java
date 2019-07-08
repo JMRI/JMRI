@@ -155,10 +155,10 @@ public class CbusDummyNode extends CbusNode implements CanListener {
      */
     @Override
     public void addNewEvent( CbusNodeEvent newEvent ) {
-        if (_nodeEvents == null) {
+        if (getTotalNodeEvents() == -1) {
             resetNodeEvents();
         }
-        _nodeEvents.add(newEvent);
+        super.addNewEvent(newEvent);
     }
     
     private void sendENRSP(){
@@ -189,6 +189,18 @@ public class CbusDummyNode extends CbusNode implements CanListener {
             sendCMDERR(7);
             return;
         }
+        
+        
+        if (varIndex>40) {
+            
+            sendCMDERR(5);
+            return;
+            
+        }
+        
+        
+        
+        
         try {
             CanReply r = new CanReply(6);
             r.setElement(0, CbusConstants.CBUS_NEVAL);

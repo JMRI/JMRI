@@ -676,6 +676,71 @@ public class CbusNodeConstants {
         result.put(65535, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
     }
+    
+    private static final Map<String, BackupType> nameIndex =
+            new HashMap<String, BackupType>(BackupType.values().length);
+    static {
+        for (BackupType t : BackupType.values()) {
+            nameIndex.put(t.name(), t);
+        }
+    }
+    
+    private static final Map<BackupType, String> displayPhraseIndex =
+            new HashMap<BackupType, String>(BackupType.values().length);
+    static {
+        displayPhraseIndex.put(BackupType.Incomplete, Bundle.getMessage("BackupIncomplete"));
+        displayPhraseIndex.put(BackupType.Complete, Bundle.getMessage("BackupComplete"));
+        displayPhraseIndex.put(BackupType.CompletedWithError, Bundle.getMessage("BackupCompleteError"));
+        displayPhraseIndex.put(BackupType.NotOnNetwork, Bundle.getMessage("BackupNotOnNetwork"));
+    }
+    
+    /*
+     * Get the display phrase for an enum value
+     * <p>
+     * eg. displayPhrase(BackupType.Incomplete) will return "Backup InComplete"
+     *
+     * @param type The enum to translate
+     * @return The phrase
+     *
+     */
+    public static String displayPhrase(BackupType type) {
+        return displayPhraseIndex.get(type);
+    }
+    
+    /*
+     * Get the enum type for a String value
+     * <p>
+     * eg. lookupByName("Complete") will return BackupType.Complete
+     *
+     * @param name The String to lookup
+     * @return The BackupType enum, else null
+     *
+     */
+    public static BackupType lookupByName(String name) {
+        return nameIndex.get(name);
+    }
+    
+    /*
+     * enum to represent Node Backup Conditions in a CBUS Node XML File
+     *
+     */
+    public enum BackupType{
+        Incomplete(0),
+        Complete(1),
+        CompletedWithError(2),
+        NotOnNetwork(3);
+        
+        private final int v;
+
+        private BackupType(final int v) {
+            this.v = v;
+        }
+    
+        public int getValue() {
+            return v;
+        }
+    
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeConstants.class);
 }
