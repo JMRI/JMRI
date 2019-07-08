@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
-public class EngineSoundEvent extends SoundEvent implements PropertyChangeListener {
+public class EngineSoundEvent extends SoundEvent {
 
     EnginePane engine_pane;
 
