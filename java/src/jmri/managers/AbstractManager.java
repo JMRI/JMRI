@@ -94,7 +94,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Convenience implementation of
-     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name has no trailing white space and no white space between
      * the prefix and suffix.
      * <p>
@@ -121,7 +121,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Convenience implementation of
-     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name is upper case and has no trailing white space and not
      * white space between the prefix and suffix.
      * <p>
@@ -148,7 +148,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Convenience implementation of
-     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name is an integer after the prefix.
      * <p>
      * <strong>Note</strong> this <em>must</em> only be used if the connection
@@ -184,7 +184,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Convenience implementation of
-     * {@link #validateSystemNameFormat(java.lang.String, boolean, java.util.Locale)}
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name is a valid NMRA Accessory address after the prefix. A
      * name is considered a valid NMRA accessory address if it is an integer
      * between {@value NmraPacket#accIdLowLimit} and

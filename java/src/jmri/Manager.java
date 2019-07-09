@@ -7,6 +7,7 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.NamedBean.BadSystemNameException;
 import jmri.beans.PropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
 
@@ -80,9 +81,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * not already present.
      * <p>
      * <strong>Note:</strong> implementations <em>must</em> call
-     * {@link #validateSystemNameFormat(java.lang.String, boolean)} to ensure the
-     * returned name is valid. 
-     *
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)} to
+     * ensure the returned name is valid.
+       *
      * @param name the item to make the system name for
      * @return A system name from a user input, typically a number.
      * @throws IllegalArgumentException if a valid name can't be created
@@ -164,7 +165,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @OverrideMustInvoke
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name) throws IllegalArgumentException {
+    public default String validateSystemNameFormat(@Nonnull String name) throws BadSystemNameException {
         return Manager.this.validateSystemNameFormat(name, Locale.getDefault());
     }
 
@@ -192,7 +193,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @OverrideMustInvoke
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws IllegalArgumentException {
+    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         String prefix = getSystemNamePrefix();
         if (name.equals(prefix)) {
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameMatchesPrefix", name);
