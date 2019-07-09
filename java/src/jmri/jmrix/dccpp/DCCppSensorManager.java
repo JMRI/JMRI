@@ -1,6 +1,6 @@
 package jmri.jmrix.dccpp;
 
-import static jmri.jmrix.dccpp.DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR;
+import static jmri.jmrix.dccpp.DCCppConstants.MAX_SENSOR_ID;
 
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -44,12 +44,6 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         return prefix;
     }
 
-    @Deprecated
-    static public DCCppSensorManager instance() {
-        return mInstance;
-    }
-    static private DCCppSensorManager mInstance = null;
-
     // to free resources when no longer used
     @Override
     public void dispose() {
@@ -75,6 +69,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     /**
      * Listen for sensors, creating them as needed.
+     * 
+     * @param l the message to parse
      */
     @Override
     public void message(DCCppReply l) {
@@ -115,6 +111,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     /**
      * Listen for the messages to the LI100/LI101.
+     * 
+     * @param l the message to parse
      */
     @Override
     public void message(DCCppMessage l) {
@@ -122,12 +120,12 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     /**
      * Handle a timeout notification.
+     * 
+     * @param msg the message to parse
      */
     @Override
     public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message {}", msg.toString());
-        }
+        log.debug("Notified of timeout on message {}", msg);
     }
 
     @Override
@@ -169,13 +167,17 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     int iName; // must synchronize to avoid race conditions.
 
     /**
-     * Provide next valid DCC++ address.
-     * Does not enforce any rules on the encoder or input values.
+     * Provide next valid DCC++ address. Does not enforce any rules on the
+     * encoder or input values.
+     *
+     * @param curAddress the current address
+     * @param prefix     the system connection prefix
+     * @return the next valid address after the current address
      */
     @Override
     synchronized public String getNextValidAddress(String curAddress, String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -214,7 +216,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      */
     @Override
     public String validateSystemNameFormat(String systemName, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_JMRI_ADDR, locale);
+        return validateIntegerSystemNameFormat(systemName, 1, MAX_SENSOR_ID, locale);
     }
 
     /**

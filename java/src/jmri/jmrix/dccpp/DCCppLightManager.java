@@ -1,12 +1,10 @@
 package jmri.jmrix.dccpp;
 
-import static jmri.jmrix.dccpp.DCCppConstants.MAX_ACC_DECODER_JMRI_ADDR;
+import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
 
 import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement LightManager for DCC++ systems.
@@ -36,7 +34,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns the system prefix for DCC++.
+     * {@inheritDoc}
      */
     @Override
     public String getSystemPrefix() {
@@ -52,16 +50,15 @@ public class DCCppLightManager extends AbstractLightManager {
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
-        Light lgt = null;
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return (null);
+            return null;
         }
         // Normalize the systemName
         String sName = prefix + typeLetter() + bitNum;   // removes any leading zeros
         // make the new Light object
-        lgt = new DCCppLight(tc, this, sName, userName);
+        Light lgt = new DCCppLight(tc, this, sName, userName);
         return lgt;
     }
 
@@ -78,7 +75,7 @@ public class DCCppLightManager extends AbstractLightManager {
      */
     @Override
     public String validateSystemNameFormat(String systemName, Locale locale) {
-        return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_JMRI_ADDR, locale);
+        return validateIntegerSystemNameFormat(systemName, 1, MAX_TURNOUT_ADDRESS, locale);
     }
 
     /**
@@ -96,11 +93,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Validate system name for configuration.
-     * Needed for the Abstract Light class.
-     *
-     * @return 'true' if system name has a valid meaning in current configuration,
-     * else returns 'false' for now, this method always returns 'true'
+     * {@inheritDoc}
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
@@ -108,10 +101,7 @@ public class DCCppLightManager extends AbstractLightManager {
     }
 
     /**
-     * Determine if it is possible to add a range of lights in
-     * numerical order eg 11 thru 18, primarily used to enable/disable the add
-     * range box in the add Light window
-     *
+     * {@inheritDoc}
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -125,15 +115,5 @@ public class DCCppLightManager extends AbstractLightManager {
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    /**
-     * Allow access to DCCppLightManager.
-     */
-    @Deprecated
-    static public DCCppLightManager instance() {
-        return null;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManager.class);
 
 }
