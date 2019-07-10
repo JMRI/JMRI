@@ -71,6 +71,9 @@
 -err:+includeAssertNull
 -err:+inheritNullAnnot
 -err:+intfAnnotation
+  # redundant super-interfaces
+-err:+intfRedundant
+
 -err:+intfNonInherited
 -err:+maskedCatchBlocks
 -err:+noEffectAssign
@@ -95,7 +98,6 @@
 
 # Checks we choose not to enforce as our common style
 -warn:-boxing
--warn:-intfRedundant
 -warn:-nls
 -warn:-paramAssign
 -warn:-serial
