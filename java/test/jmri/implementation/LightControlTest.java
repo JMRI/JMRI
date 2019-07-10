@@ -263,7 +263,7 @@ public class LightControlTest {
         
         l.addLightControl(lc);
         l.activateLight();
-        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: System name \"IT\" is missing suffix.");
+        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: System name must start with \"IT\".");
         JUnitAppender.assertErrorMessageStartsWith("Light ILL1 is linked to a Turnout that does not exist");
         
         lc.setControlTurnoutState(999);

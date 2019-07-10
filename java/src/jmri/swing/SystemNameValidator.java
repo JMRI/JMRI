@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.text.JTextComponent;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import jmri.ProxyManager;
 
 /**
@@ -74,7 +75,7 @@ public class SystemNameValidator extends JInputValidator {
                     } else {
                         manager.makeSystemName(text, false);
                     }
-                } catch (IllegalArgumentException ex) {
+                } catch (NamedBean.BadSystemNameException ex) {
                     if (manager.validSystemNameFormat(text) == NameValidity.VALID_AS_PREFIX_ONLY) {
                         return new Validation(Validation.Type.WARNING, Bundle.getMessage("SystemNameValidatorValidPrefix", text, manager.getBeanTypeHandled(),
                                 trimHtmlTags(getToolTipText())), preferences);
