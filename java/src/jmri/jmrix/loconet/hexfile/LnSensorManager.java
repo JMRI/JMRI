@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2001
  */
-public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implements LocoNetListener {
+public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
 
     public LnSensorManager(LnTrafficController tc, String prefix) {
         super(tc, prefix);

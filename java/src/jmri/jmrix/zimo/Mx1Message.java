@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Adapted by Sip Bosch for use with zimo MX-1
  *
  */
-public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
+public class Mx1Message extends jmri.jmrix.NetMessage {
 
     public Mx1Message(int len) {
         this(len, Mx1Packetizer.ASCII);

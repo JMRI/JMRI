@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
-        implements PowerManager, LocoNetListener {
+        implements LocoNetListener {
 
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
