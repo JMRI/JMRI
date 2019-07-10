@@ -81,9 +81,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public String makeSystemName(@Nonnull String s, boolean logErrors) {
+    public String makeSystemName(@Nonnull String s, boolean logErrors, Locale locale) {
         try {
-            return Manager.super.makeSystemName(s, logErrors);
+            return Manager.super.makeSystemName(s, logErrors, locale);
         } catch (IllegalArgumentException ex) {
             if (logErrors || log.isTraceEnabled()) {
                 log.error("Invalid system name for {}: {}", getBeanTypeHandled(), ex.getMessage());
