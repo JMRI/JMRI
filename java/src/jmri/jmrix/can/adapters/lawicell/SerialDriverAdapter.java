@@ -20,7 +20,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Andrew Crosland Copyright (C) 2008
  */
-public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends PortController {
 
     SerialPort activeSerialPort = null;
 

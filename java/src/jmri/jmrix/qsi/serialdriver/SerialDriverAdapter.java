@@ -29,7 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends QsiPortController {
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());

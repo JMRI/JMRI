@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson
  */
-public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedBean> implements java.beans.PropertyChangeListener, EcosListener {
+public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedBean> implements EcosListener {
 
     private Hashtable<String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids

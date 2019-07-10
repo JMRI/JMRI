@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
+public class Z21XNetTurnout extends XNetTurnout {
 
     public Z21XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {  
         super(prefix,pNumber,controller);

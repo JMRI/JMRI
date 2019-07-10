@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2016 
  */
-public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
+public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
     public Z21XNetTurnoutManager(XNetTrafficController controller, String prefix) {
         super(controller, prefix);
