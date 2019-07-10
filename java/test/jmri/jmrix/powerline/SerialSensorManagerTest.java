@@ -123,9 +123,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
             l.makeSystemName("1");
             Assert.fail("Expected exception not thrown");
         } catch (NamedBean.BadSystemNameException ex) {
-            Assert.assertEquals("Invalid system name for Sensor: name \"PS1\" has incorrect format", ex.getMessage());
+            Assert.assertEquals("\"PS1\" is not a recognized format.", ex.getMessage());
         }
-        JUnitAppender.assertWarnMessage("address did not match any valid forms: PS1");
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"PS1\" is not a recognized format.");
         String s = l.makeSystemName("B1");
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());
