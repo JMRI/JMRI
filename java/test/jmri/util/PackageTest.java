@@ -12,7 +12,6 @@ import org.junit.runners.Suite;
         IntlUtilitiesTest.class,
         Log4JUtilTest.class,
         MockShutDownManagerTest.class,
-        OrderedHashtableTest.class,
         PreferNumericComparatorTest.class,
         StringUtilTest.class,
         ThreadingUtilTest.class,
