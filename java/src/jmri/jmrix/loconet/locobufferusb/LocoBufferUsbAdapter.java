@@ -25,7 +25,7 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validBaudNumbers().length; i++) {
             if (validBaudRates()[i].equals(mBaudRate)) {
                 baud = validBaudNumbers()[i];
