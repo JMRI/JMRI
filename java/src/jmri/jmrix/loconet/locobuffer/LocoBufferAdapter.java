@@ -27,7 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
-public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class LocoBufferAdapter extends LnPortController {
 
     public LocoBufferAdapter() {
         this(new LocoNetSystemConnectionMemo());

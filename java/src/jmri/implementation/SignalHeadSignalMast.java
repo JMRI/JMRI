@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
+public class SignalHeadSignalMast extends AbstractSignalMast {
 
     public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);

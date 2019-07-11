@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
-public class SerialDriverAdapter extends AcelaPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends AcelaPortController {
 
     public SerialDriverAdapter() {
         super(new AcelaSystemConnectionMemo());

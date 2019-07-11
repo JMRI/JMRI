@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
  */
-public class SpurEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class SpurEditFrame extends TrackEditFrame {
 
     // labels, buttons, etc. for spurs
     JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));

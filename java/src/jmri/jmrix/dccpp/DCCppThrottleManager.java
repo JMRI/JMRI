@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetThrottleManager by Paul Bender
  */
-public class DCCppThrottleManager extends AbstractThrottleManager implements ThrottleManager, DCCppListener {
+public class DCCppThrottleManager extends AbstractThrottleManager implements DCCppListener {
 
     protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
 

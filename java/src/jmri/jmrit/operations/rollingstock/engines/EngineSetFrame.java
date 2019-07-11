@@ -12,8 +12,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010
  */
-public class EngineSetFrame extends RollingStockSetFrame<Engine> implements
-        java.beans.PropertyChangeListener {
+public class EngineSetFrame extends RollingStockSetFrame<Engine> {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");

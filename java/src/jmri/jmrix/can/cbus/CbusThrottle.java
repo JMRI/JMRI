@@ -505,25 +505,26 @@ public class CbusThrottle extends AbstractThrottle {
         }
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-            
-            int new_spd = intSpeed(speed);
-            if (this.isForward) {
-                new_spd = new_spd | 0x80;
-            }
-            log.debug("Sending speed/dir for speed: {}",new_spd);
-            // reset timeout
-            mRefreshTimer.stop();
-            mRefreshTimer.setRepeats(true);
-            mRefreshTimer.start();
-            if (cs != null ) {
-                cs.setSpeedDir(_handle, new_spd);
-            }    
-            
+            sendToLayout();
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
-            
         }
-        
+    }
+    
+    // following a speed or direction change, sends to layout
+    private void sendToLayout(){
+        int new_spd = intSpeed(this.speedSetting);
+        if (this.isForward) {
+            new_spd = new_spd | 0x80;
+        }
+        log.debug("Sending speed/dir for speed: {}",new_spd);
+        // reset timeout
+        mRefreshTimer.stop();
+        mRefreshTimer.setRepeats(true);
+        mRefreshTimer.start();
+        if (cs != null ) {
+            cs.setSpeedDir(_handle, new_spd);
+        }
     }
 
     /**
@@ -551,14 +552,9 @@ public class CbusThrottle extends AbstractThrottle {
             setDispatchActive(true);
         }
 
-        // int new_spd = speed;
-        // if (this.isForward) {
-        //     new_spd = new_spd | 0x80;
-        // }
-        // log.debug("Updated speed/dir for speed: " + new_spd);
-
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            record(this.speedSetting); // float
         }
     }
 
@@ -568,10 +564,10 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public void setIsForward(boolean forward) {
-        boolean old = isForward;
-        isForward = forward;
-        setSpeedSetting(speedSetting);
-        if (old != isForward) {
+        boolean old = this.isForward;
+        this.isForward = forward;
+        if (old != this.isForward) {
+            sendToLayout();
             notifyPropertyChangeListener("IsForward", old, isForward);
         }
     }

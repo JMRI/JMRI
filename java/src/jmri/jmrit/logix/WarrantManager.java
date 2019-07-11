@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  */
 public class WarrantManager extends AbstractManager<Warrant>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
     
     private HashMap<String, RosterSpeedProfile> _mergeProfiles;
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;

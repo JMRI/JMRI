@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends TamsPortController {
 
     SerialPort activeSerialPort = null;
 

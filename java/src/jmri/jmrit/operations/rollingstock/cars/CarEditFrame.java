@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014, 2018
  */
-public class CarEditFrame extends RollingStockEditFrame implements java.beans.PropertyChangeListener {
+public class CarEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
