@@ -366,15 +366,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     }
 
     /**
-     * @deprecated since 4.7.2 without replacement. Classes interested in
-     * changes to the warrant preferences listen for those changes.
-     */
-    @Deprecated
-    public void apply() {
-        log.error("Using deprecated apply() method");
-    }
-
-    /**
      * Get the layout scale.
      *
      * @return the scale
@@ -414,34 +405,12 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         this.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
     }
 
-    /**
-     * @return the time increment
-     * @deprecated since 4.7.1; use {@link #getTimeIncrement()} instead
-     */
-    @Deprecated
-    int getTimeIncre() {
-        log.error("Using deprecated getTimeIncre() method");
-        return getTimeIncrement();
-    }
-
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         List<Entry<String, Float>> vec = new java.util.ArrayList<>();
         _speedNames.entrySet().forEach((entry) -> {
             vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
-    }
-
-    /**
-     *
-     * @return the number of speed names
-     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
-     * result of {@link #getSpeedNames()} instead.
-     */
-    @Deprecated
-    int getSpeedNamesSize() {
-        log.error("Using deprecated getSpeedNamesSize() method");
-        return _speedNames.size();
     }
 
     Float getSpeedNameValue(String key) {
@@ -478,18 +447,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
-    }
-
-    /**
-     *
-     * @return the number of signal head appearances
-     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
-     * results of {@link #getAppearances()} instead
-     */
-    @Deprecated
-    int getAppeaancesSize() {
-        log.error("Using deprecated getAppearencesSize() method");
-        return _headAppearances.size();
     }
 
     String getAppearanceValue(String key) {
