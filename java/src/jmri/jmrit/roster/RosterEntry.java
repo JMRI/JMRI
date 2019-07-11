@@ -580,10 +580,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Set the date last updated.
      *
      * @param s the string to parse into a date
-     * @deprecated since 4.7.1; not for removal, but to make access protected
      */
-    @Deprecated // 4.7.1
-    public void setDateUpdated(String s) {
+    protected void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
         try {
