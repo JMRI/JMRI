@@ -73,7 +73,7 @@ public class JmriUserPreferencesManagerTest {
     public void testDisallowSave() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         Assert.assertTrue(m.isSaveAllowed());
-        m.setSaveAllowed(false)
+        m.setSaveAllowed(false);
         Assert.assertFalse(m.isSaveAllowed());
         m.setSaveAllowed(true);
         Assert.assertTrue(m.isSaveAllowed());
