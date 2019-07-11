@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 

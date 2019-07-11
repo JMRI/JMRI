@@ -25,7 +25,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  *
  * @author Paul Bender Copyright (c) 2008
  */
-public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
+public class EliteXNetProgrammer extends XNetProgrammer {
 
     // Message timeout lengths.  These have been determined by
     // experimentation, and may need to be adjusted

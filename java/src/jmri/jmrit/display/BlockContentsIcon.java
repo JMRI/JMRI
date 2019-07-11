@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */
-public class BlockContentsIcon extends MemoryIcon implements java.beans.PropertyChangeListener {
+public class BlockContentsIcon extends MemoryIcon {
 
     private NamedIcon defaultIcon = null;
     java.util.HashMap<String, NamedIcon> map = null;

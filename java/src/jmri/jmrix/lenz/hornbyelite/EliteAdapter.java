@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003,2008-2010
  */
-public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class EliteAdapter extends XNetSerialPortController {
 
     public EliteAdapter() {
         super(new EliteXNetSystemConnectionMemo());

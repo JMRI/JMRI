@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2009
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener {
+public class CbusThrottleManager extends AbstractThrottleManager implements  CanListener {
 
     private boolean _handleExpected = false;
     private boolean _handleExpectedSecondLevelRequest = false;

@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
-public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class DCCppAdapter extends DCCppSerialPortController {
 
     public DCCppAdapter() {
         super();
