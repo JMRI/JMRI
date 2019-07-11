@@ -49,7 +49,6 @@ import org.junit.runners.Suite;
         DnDTableExportHandlerTest.class,
         DnDTableImportExportHandlerTest.class,
         FileUtilSupportTest.class,
-        FontUtilTest.class,
         GetArgumentListTest.class,
         GetClassPathTest.class,
         GetJavaPropertyTest.class,
