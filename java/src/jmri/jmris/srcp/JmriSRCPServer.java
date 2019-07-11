@@ -24,8 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriSRCPServer extends JmriServer {
 
-    private static JmriServer _instance = null;
-
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
 
     // Create a new server using the default port

@@ -29,8 +29,6 @@ public class JmriServer {
     private Thread listenThread = null;
     protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
 
-    private static JmriServer _instance = null;
-
     // Create a new server using the default port
     public JmriServer() {
         this(3000);
