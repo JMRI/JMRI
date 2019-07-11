@@ -70,7 +70,6 @@ import org.junit.runners.Suite;
         PortNameMapperTest.class,
         ResizableImagePanelTest.class,
         SerialUtilTest.class,
-        SocketUtilTest.class,
         SystemNameComparatorTest.class,
         SystemTypeTest.class,
         TimerUtilTest.class,
