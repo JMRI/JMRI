@@ -517,9 +517,6 @@ public class SerialNodeTest {
         r.setElement(3, 0x50);
         b.markChanges(r);
 
-        for (Sensor s : sm.getNamedBeanSet()) {
-            System.out.println(s.getSystemName());
-        }
         // created first four only
         s1 = sm.getSensor("GS1001");
         Assert.assertNotNull("s1 exists", s1);
