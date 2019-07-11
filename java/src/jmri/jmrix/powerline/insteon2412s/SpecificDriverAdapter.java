@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SpecificDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 

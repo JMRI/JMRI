@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Paul Bender Copyright (C) 2005-2010
  */
-public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class LIUSBAdapter extends XNetSerialPortController {
 
     public LIUSBAdapter() {
         super();
