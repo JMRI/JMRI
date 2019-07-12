@@ -49,11 +49,6 @@ public class VerticalLabelUI extends BasicLabelUI {
     public static final int ANTICLOCKWISE = 2;
 
     /**
-     * Static variable to define default instance
-     */
-    private static ComponentUI verticalLabelUI = new VerticalLabelUI();
-
-    /**
      * Variable to determine rotation direction
      */
     private int rotation;
