@@ -97,19 +97,6 @@ public class WebServerPreferences extends PreferencesBean {
         this.readPreferences(sharedPreferences);
     }
 
-    /**
-     * Get the current default WebServerPreferences object.
-     *
-     * @return the default WebServerPrefeences instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with an argument
-     * of {@code WebServerPreferences.class} instead
-     */
-    @Deprecated
-    public static WebServerPreferences getDefault() {
-        return InstanceManager.getDefault(WebServerPreferences.class);
-    }
-
     private void readPreferences(Preferences sharedPreferences) {
         this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(CLICK_DELAY, this.clickDelay);
