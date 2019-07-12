@@ -172,17 +172,5 @@ public class VerticalLabelUI extends BasicLabelUI {
         }
     }
 
-    /**
-     * Return default VerticalLabelUI instance
-     *
-     * @param component ignored
-     * @return default VerticalLabelUI instance
-     * @deprecated since 4.9.5; construct a new VerticalLabelUI object instead
-     */
-    @Deprecated // 4.9.5
-    public static ComponentUI createUI(JComponent component) {
-        return verticalLabelUI;
-    }
-
     //private static final Logger log = LoggerFactory.getLogger(VerticalLabelUI.class);
 }
