@@ -82,11 +82,16 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public String makeSystemName(@Nonnull String s) {
         String prefix = getSystemNamePrefix();
         // do some basic format checking that can throw explicit exception with feedback to user
-        if (s.trim().isEmpty()) {
+        if (s.trim().isEmpty() || s.equals(prefix)) {
             log.error("Invalid system name for {}: \"\" needed non-empty suffix to follow {}", getBeanTypeHandled(), prefix);
             throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty suffix to follow " + prefix);
         }
-        String name = prefix + s;
+        //prepend system name if not already present
+        String name = s;
+        if (!name.startsWith(prefix)) {
+            name = prefix + s;      
+        }
+
         // verify name format is valid
         if (validSystemNameFormat(name) != NameValidity.VALID) {
             throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": name \"" + name + "\" has incorrect format");
