@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with Throttle Direction Changes ( while moving ) not being sent to Command Station</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -475,6 +475,13 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>We "deprecate" certain methods and members in the Java code when they're
+                no longer recommended for use.  After some time, we then remove them.
+                This version of JMRI removes all deprecated methods and members up
+                through JMRI 4.10, which was released in December 2017.
+                If you still have code or scripts that reference these, please
+                look at
+                <a href="https://github.com/JMRI/JMRI/tree/v4.16">the code in JMRI 4.16</a>
+                for suggestions on what to substitute.</li>
         </ul>
 

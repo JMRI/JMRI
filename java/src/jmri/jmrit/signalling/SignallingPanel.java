@@ -751,7 +751,7 @@ public class SignallingPanel extends JmriPanel {
 
         _signalMastModel = new SignalMastModel();
         TableRowSorter<SignalMastModel> sorter = new TableRowSorter<>(_signalMastModel);
-        JTable manualSignalMastTable = new JTable(_signalMastModel); // don't use makeTable() since 4.7.1
+        JTable manualSignalMastTable = new JTable(_signalMastModel);
         // configure (extra) row height for comboBox
         manualSignalMastTable.setRowHeight(sizer.getPreferredSize().height - 2);
         // row height has to be greater than plain tables to properly show comboBox shape, but tightened a bit over preferred
@@ -2324,51 +2324,6 @@ public class SignallingPanel extends JmriPanel {
                 default:
                     return null;
             }
-        }
-    }
-
-    /**
-     * Class to provide a cell editor with a drop down list of signal mast
-     * aspects.
-     *
-     * @deprecated since 4.7.1, use
-     * {@link SignalMastModel#getAspectEditorBox(int)}
-     */
-    @Deprecated // 4.7.1
-    public static class MyComboBoxEditor extends DefaultCellEditor {
-
-        public MyComboBoxEditor(Vector<String> items) {
-            super(new JComboBox<String>(items));
-        }
-    }
-
-    /**
-     * Class to provide a cell renderer looking like a drop down list showing
-     * the current value.
-     *
-     * @deprecated since 4.7.1, use
-     * {@link SignalMastModel#getAspectEditorBox(int)}
-     */
-    @Deprecated // 4.7.1
-    public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
-
-        public MyComboBoxRenderer(Vector<String> items) {
-            super(items);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                super.setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(table.getBackground());
-            }
-            // Select the current value
-            setSelectedItem(value);
-            return this;
         }
     }
 

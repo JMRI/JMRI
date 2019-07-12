@@ -17,7 +17,7 @@ import jmri.SignalHeadManager;
  * @author Bob Jacobsen Copyright (C) 2003
  */
 public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
-        implements SignalHeadManager, java.beans.PropertyChangeListener {
+        implements SignalHeadManager {
 
     public AbstractSignalHeadManager() {
         super();
