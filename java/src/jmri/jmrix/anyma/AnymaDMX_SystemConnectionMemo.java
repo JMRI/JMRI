@@ -112,7 +112,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 if (k > offset) {    // k = position of "L" char in name
                     try {
                         result = Integer.parseInt(systemName.substring(k));
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         log.warn("invalid character in channel number field of anyma dmx system name: {}", systemName);
                     }
                 }
@@ -189,9 +189,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                     } else {
                         log.debug("number field out of range in anyma dmx system name: {}", systemName);
                     }
-                } catch (RuntimeException e) {
-                    throw e;
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.debug("invalid character in number field of anyma dmx system name: {}", systemName);
                 }
             } else {
@@ -201,38 +199,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
             log.error("invalid system prefix in anyma dmx system name in validSystemNameFormat: {}", systemName);
         }
         return result;
-    }
-
-    /**
-     * Public static method to construct a anyma dmx system name from type
-     * character, node address, and channel number.
-     * <p>
-     * If the supplied character is not valid, or the node address is out of the
-     * 0 - 127 range, or the channel number is out of the 1 - 512 range, an
-     * error message is logged and the null string "" is returned.
-     *
-     * @return a system name in the DaLnnnxxx format
-     */
-    public String makeSystemName(String type, int nAddress, int channelNum) {
-        log.debug("* makeSystemName('{}', {}, {})", type, nAddress, channelNum);
-        String nName = "";
-        if (type.equals("L")) {
-            if ((nAddress >= 0) && (nAddress < 1000)) {
-                if ((channelNum >= 1) && (channelNum <= 512)) {
-                    nName = getSystemPrefix() + nAddress + type + Integer.toString(channelNum);
-                } else {
-                    log.warn("invalid channel number proposed for system name");
-                    return nName;
-                }
-            } else {
-                log.warn("invalid node address proposed for system name");
-                return nName;
-            }
-        } else {
-            log.error("invalid type character proposed for system name");
-            return nName;
-        }
-        return nName;
     }
 
     /**
