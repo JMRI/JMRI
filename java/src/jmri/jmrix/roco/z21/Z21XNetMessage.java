@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetMessage;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  */
-public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Serializable {
+public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
 //    static private int _nRetries = 5;
 

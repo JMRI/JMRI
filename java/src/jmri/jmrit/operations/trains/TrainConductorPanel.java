@@ -175,6 +175,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     if (rl != null) {
                         textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
                         textTrainRouteLocationCommentPane.setText(rl.getComment());
+                        textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
                         textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
                                 ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
                         pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() &&

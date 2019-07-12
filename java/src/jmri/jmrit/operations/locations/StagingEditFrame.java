@@ -18,7 +18,7 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
  */
-public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class StagingEditFrame extends TrackEditFrame {
 
     // check boxes
     JCheckBox swapLoadsCheckBox = new JCheckBox(Bundle.getMessage("SwapCarLoads"));

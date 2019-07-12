@@ -650,9 +650,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                 wrapTest= true;
                 break;
             case testType_SendCommand:
-                outTest = false;
-                wrapTest= false;
-                break;
             case testType_WriteBytes:
                 outTest = false;
                 wrapTest= false;

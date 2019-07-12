@@ -107,15 +107,13 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     }
                     int nxType = p.getEntryExitType(key, panel, keyDest);
                     switch (nxType) {
-                        case 0x00:
-                            dest.setAttribute("nxType", "turnoutsetting");  // NOI18N
-                            break;
                         case 0x01:
                             dest.setAttribute("nxType", "signalmastlogic");  // NOI18N
                             break;
                         case 0x02:
                             dest.setAttribute("nxType", "fullinterlocking");  // NOI18N
                             break;
+                        case 0x00:
                         default:
                             dest.setAttribute("nxType", "turnoutsetting");  // NOI18N
                             break;

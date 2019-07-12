@@ -13,7 +13,7 @@ import purejavacomm.*;
  *
  * @author Paul Bender Copyright (C) 2013
  */
-public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, IConnectionInterface, SerialPortEventListener {
+public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements IConnectionInterface, SerialPortEventListener {
 
     private boolean iConnectionOpened = false;
 

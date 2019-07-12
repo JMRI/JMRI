@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
+public class LnHexFilePort extends LnPortController implements Runnable {
 
     volatile BufferedReader sFile = null;
 

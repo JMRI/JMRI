@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to LocoNet via a LocoNet Bluetooth adapter.
  */
-public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class LocoNetBluetoothAdapter extends LnPortController {
 
     public LocoNetBluetoothAdapter() {
         this(new LocoNetSystemConnectionMemo());

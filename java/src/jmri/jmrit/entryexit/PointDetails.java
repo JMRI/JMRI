@@ -287,15 +287,15 @@ public class PointDetails {
                 }
             }
         }
-        if (refLoc != null) {
-            if (refLoc instanceof PositionablePoint) {
-                //((PositionablePoint)refLoc).addPropertyChangeListener(this);
-            } else if (refLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
-                //((LayoutTurnout)refLoc).addPropertyChangeListener(this);
-            } else if (refLoc instanceof LevelXing) {
-                //((LevelXing)refLoc).addPropertyChangeListener(this);
-            }
-        }
+//        if (refLoc != null) {
+//            if (refLoc instanceof PositionablePoint) {
+//                //((PositionablePoint)refLoc).addPropertyChangeListener(this);
+//            } else if (refLoc instanceof LayoutTurnout) {  //<== this includes LayoutSlips
+//                //((LayoutTurnout)refLoc).addPropertyChangeListener(this);
+//            } else if (refLoc instanceof LevelXing) {
+//                //((LevelXing)refLoc).addPropertyChangeListener(this);
+//            }
+//        }
         //With this set ref we can probably add a listener to it, so that we can detect when a change to the point details takes place
     }
 

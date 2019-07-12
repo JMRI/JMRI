@@ -66,7 +66,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2007
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  */
-public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, NceListener {
+public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceListener {
 
     public static final int CS_CLOCK_MEM_ADDR = 0xDC00;
     public static final int CS_CLOCK_MEM_SIZE = 0x10;

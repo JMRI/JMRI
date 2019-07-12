@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  *
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeFromFcu extends CbusNode implements CanListener {
+public class CbusNodeFromFcu extends CbusNode {
     
     public CbusNodeFromFcu ( CanSystemConnectionMemo connmemo, int nodenumber ){
         super( connmemo, nodenumber );  

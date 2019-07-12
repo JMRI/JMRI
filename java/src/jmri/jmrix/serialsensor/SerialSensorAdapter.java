@@ -28,8 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
-public class SerialSensorAdapter extends AbstractSerialPortController
-        implements jmri.jmrix.SerialPortAdapter {
+public class SerialSensorAdapter extends AbstractSerialPortController {
 
     SerialPort activeSerialPort = null;
 

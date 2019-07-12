@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Alex Shepherd Copyright (C) 2003, 2006
  * @author Mark Underwood Copyright (C) 2015
  */
-public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements DCCppPortController {
+public class DCCppTcpDriverAdapter extends DCCppNetworkPortController {
     
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());

@@ -369,14 +369,35 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     public void testSendFunctionGroup5() {
     }
+    
+    @Test
+    public void testSendsDirectionChangeWhileMoving() {
+        
+        Assert.assertEquals(2,tc.outbound.size());
+        instance.setIsForward(false);
+        Assert.assertEquals(3, tc.outbound.size());
+        instance.setSpeedSetting(0.5f);
+        Assert.assertEquals(4, tc.outbound.size());
+        instance.setIsForward(true);
+        Assert.assertEquals(5, tc.outbound.size());
+        instance.setIsForward(false);
+        Assert.assertEquals(6, tc.outbound.size());
+        
+        Assert.assertNotEquals("Different message sent",
+            tc.outbound.elementAt(tc.outbound.size() - 2).toString(),
+            tc.outbound.elementAt(tc.outbound.size() - 1).toString());
+        
+    }
 
+    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.MERGCBUS);
         memo.configureManagers();

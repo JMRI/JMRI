@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Paul Bender Copyright (C) 2004
  */
-public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends XpaPortController {
 
     public SerialDriverAdapter() {
 

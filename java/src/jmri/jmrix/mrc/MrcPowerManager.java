@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class MrcPowerManager
         extends jmri.managers.AbstractPowerManager
-        implements PowerManager, MrcTrafficListener {
+        implements MrcTrafficListener {
 
     public MrcPowerManager(MrcSystemConnectionMemo memo) {
         super(memo);
