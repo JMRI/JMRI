@@ -158,20 +158,6 @@ public interface Sensor extends DigitalIO {
     public boolean getUseDefaultTimerSettings();
 
     /**
-     * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
-     * @param flag true to set to current defaults if not previously true
-     */
-    @Deprecated // 4.9.2
-    public void useDefaultTimerSettings(boolean flag);
-    
-    /**
-     * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
-     * @return true if using default debounce values from the
-     *         {@link jmri.SensorManager}
-     */
-    @Deprecated // 4.9.2
-    public boolean useDefaultTimerSettings();
-    /**
      * Some sensor boards also serve the function of being able to report back
      * train identities via such methods as RailCom. The setting and creation of
      * the reporter against the sensor should be done when the sensor is
