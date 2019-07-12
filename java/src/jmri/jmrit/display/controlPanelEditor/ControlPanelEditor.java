@@ -1368,7 +1368,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 showPopUp(selection, event);
             }
         } else if (selection != null) {
-            if (!_circuitBuilder.doMouseClicked(getSelectedItems(event), event)) {
+            if (_circuitBuilder.doMouseClicked(getSelectedItems(event), event)) {
+                return;
+            } else {
                 selection.doMouseClicked(event);
             }
             if (selection instanceof IndicatorTrack) {

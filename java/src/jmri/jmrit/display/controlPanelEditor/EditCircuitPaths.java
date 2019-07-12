@@ -52,10 +52,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     private OPath _currentPath;
 
     private boolean _pathChange = false;
-    private JTextField _length;
-    private boolean _lengthKeyedIn = false;
-    private JToggleButton _units;
-
+    private LengthPanel _lengthPanel;
     public static final String TEST_PATH = "TEST_PATH";
 
     public EditCircuitPaths(String title, CircuitBuilder parent, OBlock block) {
@@ -139,32 +136,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         pathPanel.add(panel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        JPanel pp = new JPanel();
-        _length = new JTextField();
-        _length.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                _lengthKeyedIn = true;
-            }
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-          });
-
-        _length.setText("0.0");
-        pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "Length", true, "TooltipPathLength"));
-        _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
-        _units = new JToggleButton("", !_homeBlock.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
-        _units.addActionListener((ActionEvent event) -> {
-            changeUnits();
-        });
-        pp.add(_units);
-        pathPanel.add(pp);
+        _lengthPanel = new LengthPanel(_homeBlock, "pathLength");
+        pathPanel.add(_lengthPanel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
@@ -198,33 +171,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         pathPanel.add(makeDoneButtonPanel());
-        changeUnits();
+        _lengthPanel.changeUnits();
         return pathPanel;
-    }
-
-    private void changeUnits() {
-        String len = _length.getText();
-        if (len == null || len.length() == 0) {
-            if (_homeBlock.isMetric()) {
-                _units.setText("cm");
-            } else {
-                _units.setText("in");
-            }
-            return;
-        }
-        try {
-            float f = Float.parseFloat(len);
-            if (_units.isSelected()) {
-                _length.setText(Float.toString(f / 2.54f));
-                _units.setText("in");
-            } else {
-                _length.setText(Float.toString(f * 2.54f));
-                _units.setText("cm");
-            }
-        } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", len),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
     private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
@@ -289,16 +237,12 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         _currentPath = path;
         if (path != null) {
             _pathName.setText(path.getName());
-            if (_units.isSelected()) {
-                _length.setText(Float.toString(path.getLengthIn()));
-            } else {
-                _length.setText(Float.toString(path.getLengthCm()));
-            }
+            _lengthPanel.setLength(path.getLengthMm());
             _pathGroup = showPath(path);
             updatePath();
         } else {
             _pathName.setText(null);
-            _length.setText("");
+            _lengthPanel.setLength(0);
         }
         int oldState = _homeBlock.getState();
         int newState = oldState | OBlock.ALLOCATED;
@@ -499,9 +443,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (_currentPath != null) {
             if (!pathIconsEqual(_pathGroup, _savePathGroup)) {
                 _pathChange = true;
-            } else if (_lengthKeyedIn && 
-                    Math.abs(_currentPath.getLengthMm() - getPathLength()) > 0.499) {
-                _pathChange = true;
+                if (_lengthPanel.isChanged()) {
+                    _pathChange = true;
+                }
             }
         } else if(_pathGroup.size() > 0){
             _pathChange = true;
@@ -516,7 +460,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                 addNewPath(false);
             }
             _pathChange = false;
-            _lengthKeyedIn = false;
+            _lengthPanel.setChanged(false);
         }
         return;
     }
@@ -525,7 +469,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     protected void clearListSelection() {
         log.debug("clearListSelection");
         _pathList.clearSelection();
-        _length.setText("");
+        _lengthPanel.setLength(0);
     }
 
     private String checkIcons(String name, ArrayList<Positionable> pathGp) {
@@ -628,7 +572,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
      */
     private void addNewPath(boolean fromButton) {
         String name = _pathName.getText();
-        _lengthKeyedIn = false;
+        _lengthPanel.setChanged(false);
         if (log.isDebugEnabled()) {
             log.debug("addPath({}) for path \"{}\"", fromButton, name);
         }
@@ -739,30 +683,8 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
     }
 
-    private float getPathLength() {
-        try {
-            String num = _length.getText();
-            if (num == null || num.length() == 0) {
-                num = "0.0";
-            }
-            return Float.parseFloat(num);
-        } catch (NumberFormatException nfe) {
-            return -1.0f;
-        }
-        
-    }
     private void setPathLength(OPath path) {
-        float f = getPathLength();
-        if (f < 0.0f) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", _length.getText()),
-                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            if (_units.isSelected()) {
-                path.setLength(f * 25.4f);
-            } else {
-                path.setLength(f * 10f);
-            }
-        }
+        path.setLength(_lengthPanel.getLength());
     }
 
     private void changePathName() {

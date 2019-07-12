@@ -37,8 +37,7 @@ public class EditCircuitFrame extends EditFrame {
     private JTextField _blockState;
     private JTextField _numTrackSeg;
     private JTextField _numTurnouts;
-    private JTextField _length;
-    private JToggleButton _units;
+    private LengthPanel _lengthPanel;
 
     // Sensor list
     OpenPickListButton<Sensor> _pickTable;
@@ -59,7 +58,6 @@ public class EditCircuitFrame extends EditFrame {
         _blockState = new JTextField();
         _numTrackSeg = new JTextField();
         _numTurnouts = new JTextField();
-        _length = new JTextField();
         JPanel p = new JPanel();
         
         p.add(new JLabel(Bundle.getMessage("AddRemoveIcons")));
@@ -124,23 +122,13 @@ public class EditCircuitFrame extends EditFrame {
 //        contentPane.add(makePickListPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        JPanel pp = new JPanel();
-        // pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        _length.setText(Float.toString(_homeBlock.getLengthIn()));
-        pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "Length", true, "TooltipBlockLength"));
-        _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
-        _units = new JToggleButton("foo", !_homeBlock.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
-        _units.addActionListener((ActionEvent event) -> {
-            changeUnits();
-        });
-        pp.add(_units);
-        contentPane.add(pp);
+        _lengthPanel = new LengthPanel(_homeBlock, "blockLength");
+        _lengthPanel.changeUnits();
+        _lengthPanel.setLength(_homeBlock.getLengthMm());
+        contentPane.add(_lengthPanel);
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         contentPane.add(makeDoneButtonPanel());
-        changeUnits();
         return contentPane;
     }
     private JPanel makeButtonPanel() {
@@ -195,16 +183,6 @@ public class EditCircuitFrame extends EditFrame {
         _parent.setIconGroup(_homeBlock);
         _parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath");
         this.toFront();
-    }
-
-    private void changeUnits() {
-        if (_units.isSelected()) {
-            _units.setText("in");
-            _length.setText(Float.toString(_homeBlock.getLengthIn()));
-        } else {
-            _units.setText("cm");
-            _length.setText(Float.toString(_homeBlock.getLengthCm()));
-        }
     }
 
     /*
@@ -299,29 +277,16 @@ public class EditCircuitFrame extends EditFrame {
         _parent.setIconGroup(_homeBlock);
         String msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
         if(msg == null) {
-           String name = _length.getText();
-            try {
-                float f = Float.parseFloat(name);
-                if (_units.isSelected()) {
-                    f *= 25.4f;
-                } else {
-                    f *= 10f;
-                }
-                if (f < 0) {
-                    msg = Bundle.getMessage("MustBeFloat", name);
-                } else if (f < .0001) {
-                    msg = Bundle.getMessage("needLength", name);
-                }
-                _homeBlock.setLength(Math.max(f, 0.0f));
-            } catch (NumberFormatException nfe) {
-                msg = Bundle.getMessage("MustBeFloat", name);
-            }
+            _homeBlock.setLength(_lengthPanel.getLength());
         }
         // check Sensors
         if (msg == null) {
             msg = checkForSensors();
         }
         closingEvent(close, msg);
+        if (_pickTable != null) {
+            _pickTable.closePickList();
+        }
     }
     
     private String checkForSensors() {
