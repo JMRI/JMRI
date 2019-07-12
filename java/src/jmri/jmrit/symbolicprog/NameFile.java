@@ -46,18 +46,6 @@ public class NameFile extends XmlFile {
     }
 
     /**
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public synchronized static NameFile instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(NameFile.class);
-    }
-
-    /**
      * Check to see if a name is present in the file.
      *
      * @param name the name to check
