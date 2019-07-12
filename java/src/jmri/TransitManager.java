@@ -199,5 +199,5 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
 }
