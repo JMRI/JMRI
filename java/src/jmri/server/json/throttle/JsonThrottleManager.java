@@ -36,6 +36,7 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
      */
     @Deprecated
     public static JsonThrottleManager getDefault() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getDefault");        
         return InstanceManager.getDefault(JsonThrottleManager.class);
     }
 
