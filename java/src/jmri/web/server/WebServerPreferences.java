@@ -27,71 +27,16 @@ public class WebServerPreferences extends PreferencesBean {
 
     // preferences elements
     public static final String DISALLOWED_FRAMES = "disallowedFrames"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #DISALLOWED_FRAMES} instead
-     */
-    @Deprecated
-    public static final String DisallowedFrames = DISALLOWED_FRAMES;
     public static final String WEB_SERVER_PREFERENCES = "WebServerPreferences"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #WEB_SERVER_PREFERENCES} instead
-     */
-    @Deprecated
-    public static final String WebServerPreferences = WEB_SERVER_PREFERENCES;
     public static final String FRAME = "frame"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #FRAME} instead
-     */
-    @Deprecated
-    public static final String Frame = FRAME;
     public static final String PORT = "port"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #PORT} instead
-     */
-    @Deprecated
-    public static final String Port = PORT;
     public static final String CLICK_DELAY = "clickDelay"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #CLICK_DELAY} instead
-     */
-    @Deprecated
-    public static final String ClickDelay = CLICK_DELAY;
     public static final String REFRESH_DELAY = "refreshDelay"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #REFRESH_DELAY} instead
-     */
-    @Deprecated
-    public static final String RefreshDelay = REFRESH_DELAY;
     public static final String USE_AJAX = "useAjax"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #USE_AJAX} instead
-     */
-    @Deprecated
-    public static final String UseAjax = USE_AJAX;
     public static final String SIMPLE = "simple"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #SIMPLE} instead
-     */
-    @Deprecated
-    public static final String Simple = SIMPLE;
     public static final String RAILROAD_NAME = "railroadName"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #RAILROAD_NAME} instead
-     */
-    @Deprecated
-    public static final String RailRoadName = RAILROAD_NAME;
     public static final String ALLOW_REMOTE_CONFIG = "allowRemoteConfig"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #ALLOW_REMOTE_CONFIG} instead
-     */
-    @Deprecated
-    public static final String AllowRemoteConfig = ALLOW_REMOTE_CONFIG;
     public static final String READONLY_POWER = "readonlyPower"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #READONLY_POWER} instead
-     */
-    @Deprecated
-    public static final String ReadonlyPower = READONLY_POWER;
     public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
     public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
     public static final String USE_ZERO_CONF = "useZeroConf"; // NOI18N

@@ -127,29 +127,6 @@ public class WarrantManager extends AbstractManager<Warrant>
         });
     }
 
-    /**
-     * Get the default WarrantManager.
-     *
-     * @return the default WarrantManager, creating it if necessary
-     * @deprecated since 4.7.1; use {@link #getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantManager instance() {
-        return getDefault();
-    }
-
-    /**
-     * Get the default warrant preferences.
-     *
-     * @return the default preferences, created if necessary
-     * @deprecated since 4.7.1; use
-     * {@link jmri.jmrit.logix.WarrantPreferences#getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantPreferences warrantPreferencesInstance() {
-        return WarrantPreferences.getDefault();
-    }
-
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");
