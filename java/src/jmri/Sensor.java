@@ -141,7 +141,7 @@ public interface Sensor extends DigitalIO {
     /**
      * Use the timers specified in the {@link jmri.SensorManager} for the
      * debounce delay.
-     * @since 4.9.2 (replaces {@link #useDefaultTimerSettings(boolean)})
+     * @since 4.9.2
      *
      * @param flag true to set to current defaults if not previously true
      */
@@ -150,7 +150,7 @@ public interface Sensor extends DigitalIO {
     /**
      * Does this sensor use the default timers values? (A remarkably unfortunate
      * name given the one above)
-     * @since 4.9.2 (replaces {@link #useDefaultTimerSettings()})
+     * @since 4.9.2
      *
      * @return true if using default debounce values from the
      *         {@link jmri.SensorManager}
