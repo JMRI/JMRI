@@ -1231,5 +1231,5 @@ public final class MathUtil {
     public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
     }
-    private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
+    // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }
