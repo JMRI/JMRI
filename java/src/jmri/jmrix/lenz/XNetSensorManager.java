@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -33,12 +34,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     public String getSystemPrefix() {
         return prefix;
     }
-
-    @Deprecated
-    static public XNetSensorManager instance() {
-        return mInstance;
-    }
-    static private XNetSensorManager mInstance = null;
 
     // to free resources when no longer used
     @Override
@@ -125,10 +120,17 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Validate Sensor system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return validateIntegerSystemNameFormat(name,
+                XNetAddress.MINSENSORADDRESS,
+                XNetAddress.MAXSENSORADDRESS,
+                locale);
+    }
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {

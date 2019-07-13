@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
 
-    //private RpsSystemConnectionMemo memo = null;
+    private RpsSystemConnectionMemo memo = null;
     protected String prefix = "R";
 
     public RpsReporterManager(RpsSystemConnectionMemo memo) {
         super();
-        //this.memo = memo;
+        this.memo = memo;
         prefix = memo.getSystemPrefix();
     }
 
@@ -55,15 +55,11 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'.
-     *
-     * @param systemName the address to check
-     * @throws IllegalArgumentException when delimiter is not found
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (RpsAddress.validSystemNameFormat(systemName, 'R', prefix));
+        return (memo.validSystemNameFormat(systemName, typeLetter()));
     }
 
     /**
