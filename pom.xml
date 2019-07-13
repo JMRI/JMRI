@@ -23,7 +23,7 @@
         <jackson.version>2.9.8</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.25</openlcb.version>
-        <netbeans.version>RELEASE82</netbeans.version>
+        <netbeans.version>RELEASE110</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
@@ -1156,16 +1156,6 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
-        </repository>
-        <!--
-        Repository hosting NetBeans modules, especially APIs.
-        Versions are based on IDE releases, e.g.: RELEASE691
-        To create your own repository, use: nbm:populate-repository
-        -->
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
         </repository>
         <!--
         Repository hosting libraries not available through maven.org
