@@ -21,20 +21,14 @@ import org.slf4j.LoggerFactory;
  * This class doesn't provide tools for defining the names and aliases; that's
  * done manually, or at least not done here, to create the file.
  * <p>
- * Initially, we only need one of these, so we use an "instance" method to
- * locate the one associated with the "xml/names.xml" file.
+ * This automatically initializes from the default file if requested
+ * from the InstanceManager.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NameFile extends XmlFile {
 
-    // fill in abstract members
-    //protected List<Element> nameElementList = new ArrayList<Element>();
-    //public int numNames() { return nameElementList.size(); }
     public Set<String> names() {
-        //List<String> list = new ArrayList<String>();
-        //for (int i = 0; i<nameElementList.size(); i++)
-        //    list.add(nameElementList.get());
         return _nameHash.keySet();
     }
 
@@ -111,8 +105,6 @@ public class NameFile extends XmlFile {
 
     static String fileLocation = "";
     static String nameFileName = "names.xml";
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NameFile.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
@@ -144,4 +136,6 @@ public class NameFile extends XmlFile {
         }
 
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(NameFile.class);
 }
