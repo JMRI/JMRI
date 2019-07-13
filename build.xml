@@ -250,7 +250,7 @@
         <pathelement location="${libdir}/jsr305.jar"/>
         <pathelement location="${libdir}/spotbugs-annotations.jar"/>
         <!-- ServiceProvider annotations -->
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE110.jar"/>
     </path>
 
     <!-- path to run regular executables -->
