@@ -1079,10 +1079,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
         speedoDialDisplay.update(currentSpeed);
         speedoDialDisplay.repaint();
-
-        // using profile timer to trigger each next step
-        profileTimer.setRepeats(true);
-        profileTimer.start();
     }
 
     /**
