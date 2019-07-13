@@ -442,7 +442,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
                 num = Integer.parseInt(address);
                 node = num / 1000;
                 bit = num - ((num / 1000) * 1000);
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ex) {
                 throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNotInteger", systemName, prefix),
                         Bundle.getMessage(locale, "InvalidSystemNameNotInteger", systemName, prefix));
@@ -468,8 +468,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
             try {
                 node = Integer.parseInt(parts[0]);
-            } catch (NumberFormatException e) {
-                log.debug("invalid character in node address field of CMRI system name: {}", systemName);
+            } catch (NumberFormatException ex) {
                 throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, parts[0]),
                         Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, parts[0]));
@@ -477,20 +476,17 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             try {
                 bit = Integer.parseInt(parts[1]);
             } catch (NumberFormatException ex) {
-                log.debug("invalid character in bit number field of CMRI system name: {}", systemName);
                 throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, parts[1]),
                         Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, parts[1]));
             }
         }
         if (node < 0 || node >= 128) {
-            log.debug("node address field out of range in CMRI system name: {}", systemName);
             throw new NamedBean.BadSystemNameException(
                     Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, node),
                     Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, node));
         }
         if (bit < 1 || bit > 2048) {
-            log.debug("bit number field out of range in CMRI system name: {}", systemName);
             throw new NamedBean.BadSystemNameException(
                     Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, bit),
                     Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, bit));
