@@ -172,17 +172,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use.
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

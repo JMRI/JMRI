@@ -110,6 +110,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     // SuppressWarning, is to prevent subclasses from implementing it.
     @SuppressWarnings("deprecation")
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
     final public String getFullyFormattedDisplayName() {
@@ -121,6 +122,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     // SuppressWarning, is to prevent subclasses from implementing it.
     @SuppressWarnings("deprecation")
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
     final public String getFullyFormattedDisplayName(boolean userNameFirst) {

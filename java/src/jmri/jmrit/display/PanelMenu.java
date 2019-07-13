@@ -68,29 +68,6 @@ public class PanelMenu extends JMenu {
     private final ArrayList<Editor> panelsList = new ArrayList<>();
 
     /**
-     * Provide method to reference this panel menu.
-     *
-     * @return get the single instance of this menu
-     * @deprecated since 4.9.3; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated // 4.9.3
-    static public PanelMenu instance() {
-        return InstanceManager.getDefault(PanelMenu.class);
-    }
-
-    /**
-     * Has no effect; retained for backwards compatibility.
-     *
-     * @deprecated since 4.9.3; use
-     * {@link jmri.InstanceManager#reset(java.lang.Class)} instead
-     */
-    @Deprecated // 4.9.3
-    static public void dispose() {
-        // do nothing
-    }
-
-    /**
      * Utility routine for getting the number of panels in the Panels sub menu.
      *
      * @return the number of panels
