@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -67,19 +68,22 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to notify user of Turnout creation error. use it somewhere TODO
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINOUTPUTADDRESS} to
+     * {@value AcelaAddress#MAXOUTPUTADDRESS}.
      */
-//    public void notifyTurnoutCreationError(String conflict, int bitNum) {
-//        javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("AcelaAssignDialog", bitNum, conflict,
-//                Bundle.getMessage("BeanNameTurnout")),
-//                Bundle.getMessage("AcelaAssignDialogTitle"),
-//                javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
-//    }
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINOUTPUTADDRESS,
+                AcelaAddress.MAXOUTPUTADDRESS,
+                locale);
+    }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -109,15 +113,6 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
-    }
-
-    /**
-     * Allow access to AcelaTurnoutManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaTurnoutManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class);

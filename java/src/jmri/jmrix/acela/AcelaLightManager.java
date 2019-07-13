@@ -114,15 +114,6 @@ public class AcelaLightManager extends AbstractLightManager {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
-    /**
-     * Allow access to AcelaLightManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaLightManager instance() {
-        return null; 
-    }
-
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);
 
 }
