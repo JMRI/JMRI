@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SpecificDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -125,9 +125,20 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     // base class methods for the SerialPortController interface

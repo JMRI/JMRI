@@ -88,23 +88,11 @@ abstract public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

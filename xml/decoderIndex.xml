@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.15.7ish+jake+20190516T1249Z+R6f6b241aaf on Thu May 16 05:49:25 PDT 2019-->
-  <decoderIndex version="954">
+  <!--Written by JMRI version 4.17.1ish+jake+20190627T0000Z+Rac30ab547a on Wed Jun 26 17:01:31 PDT 2019-->
+  <decoderIndex version="966">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -6721,6 +6721,8 @@
             <label xml:lang="da">Shift Mode 6</label>
             <label xml:lang="nl">Shift Mode 6</label>
           </output>
+          <output name="3,23" label="|" />
+          <output name="3,24" label="|" />
         </outputs>
         <functionlabels>
           <functionlabel num="0" lockable="true">
@@ -8857,6 +8859,12 @@
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
+        <model model="Hornby TTS Class 50" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="189">
+          <versionCV lowVersionID="10" highVersionID="132" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
         <model model="Hornby TTS Class 60" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="163">
           <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
@@ -8869,7 +8877,7 @@
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
         </model>
-        <model model="Hornby TTS Class 66" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
+        <model model="Hornby TTS Class 66" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
           <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
@@ -22015,6 +22023,79 @@
           <functionlabel num="8" lockable="true">Mute</functionlabel>
           <functionlabel num="9" lockable="true">Brake Squeal</functionlabel>
           <functionlabel num="10" lockable="true">Coupler</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Tsunami Electric Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; with SoundTraxx OEM DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Tsu_Electric_Bachmann_SndVal.xml">
+        <model model="PCC Trolley [HO]" numOuts="4" numFns="14" connector="other" productID="PCC" formFactor="HO" comment="&lt;html&gt;PCC, HO scale">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| " />
+          <output name="4" label="FX6| " />
+          <output name="5" label="|" />
+          <!-- Not used for this decoder -->
+          <output name="6" label="Bell| " />
+          <output name="7" label="Stop Request| " />
+          <output name="8" label="|" />
+          <!-- Not used for this decoder -->
+          <output name="9" label="Doors| " />
+          <output name="10" label="Generator| " />
+          <output name="11" label="Pantograph| " />
+          <output name="12" label="|" />
+          <!-- Not used for this decoder -->
+          <output name="13" label="Dimm| " />
+          <output name="14" label="Mute| " />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Hdlight/RrLight/IntLight</functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="false">Stop Request</functionlabel>
+            <functionlabel num="3" lockable="true">Doors</functionlabel>
+            <functionlabel num="4" lockable="true">Pantograph</functionlabel>
+            <functionlabel num="5" lockable="true">Generator</functionlabel>
+            <functionlabel num="8" lockable="true">Mute</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="GG1 [HO][N]" numOuts="2" numFns="14" connector="other" productID="GG1" formFactor="HO" comment="GE-Altoona Electric">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="Fans|RPM +" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Compressor|RPM -" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Pantograph</functionlabel>
+            <functionlabel num="5" lockable="true">Fans</functionlabel>
+            <functionlabel num="6" lockable="true">Air Compressor</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Air Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="7" lockable="true">Dimming</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
         </functionlabels>
       </family>
       <family name="Tsunami SoundCar" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami SoundCar decoders" file="SoundTraxx_Tsu_SoundCar.xml">
@@ -39803,6 +39884,42 @@
           <size length="20" width="11" height="4" units="mm" />
         </model>
         <model model="MX648R version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648 Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648F Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="28" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MX648P16 Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <size length="20" width="11" height="4" units="mm" />
+        </model>
+        <model model="MX648R Rev. C,D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="249">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />

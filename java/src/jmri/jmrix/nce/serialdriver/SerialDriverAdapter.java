@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author ken ccameron Copyright (C) 2013
  */
-public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends NcePortController {
 
     SerialPort activeSerialPort = null;
 
@@ -150,9 +150,20 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     private String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};

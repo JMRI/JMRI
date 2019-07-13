@@ -80,7 +80,18 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
-        return getSystemPrefix() + typeLetter() + s;
+        String prefix = getSystemNamePrefix();
+        // do some basic format checking that can throw explicit exception with feedback to user
+        if (s.trim().isEmpty()) {
+            log.error("Invalid system name for {}: \"\" needed non-empty suffix to follow {}", getBeanTypeHandled(), prefix);
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty suffix to follow " + prefix);
+        }
+        String name = prefix + s;
+        // verify name format is valid
+        if (validSystemNameFormat(name) != NameValidity.VALID) {
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": name \"" + name + "\" has incorrect format");
+        }
+        return name;
     }
 
     /** {@inheritDoc} */
@@ -95,7 +106,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
-    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
+    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
     // Storage for getSystemNameOriginalList
@@ -198,9 +209,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        fireIndexedPropertyChange("beans", position, null, s);
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
-        s.addPropertyChangeListener(this, "", "Manager");
+        s.addPropertyChangeListener(this);
     }
 
     // not efficient, but does job for now
@@ -276,6 +288,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         
         // notifications
         fireDataListenersRemoved(position, position, s);
+        fireIndexedPropertyChange("beans", position, s, null);
         firePropertyChange("length", null, _beans.size());
     }
 
@@ -386,7 +399,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    abstract public String getBeanTypeHandled();
+    abstract public String getBeanTypeHandled(boolean plural);
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -435,6 +448,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
+        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     VetoableChangeSupport vcs = new VetoableChangeSupport(this);
@@ -564,23 +582,19 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
-    /** {@inheritDoc} */
-    @CheckReturnValue
-    @Override
-    @Nonnull
-    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
     /**
      * {@inheritDoc}
      *
-     * @return always 'VALID' to let undocumented connection system
-     *         managers pass entry validation.
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name suffix
+     *         is empty or all white space; otherwise returns
+     *         {@link jmri.Manager.NameValidity#VALID} to let undocumented
+     *         connection system managers pass entry validation.
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
+        return !getSystemNamePrefix().equals(systemName.trim())
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
     }
 
     /** {@inheritDoc} */

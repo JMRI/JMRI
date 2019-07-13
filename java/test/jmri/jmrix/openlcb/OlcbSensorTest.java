@@ -1,24 +1,29 @@
 package jmri.jmrix.openlcb;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Iterator;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
-
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.jmrix.can.CanMessage;
-import jmri.util.JUnitUtil;
-import jmri.util.PropertyChangeListenerScaffold;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.jmrix.can.CanMessage;
+import jmri.util.JUnitUtil;
+import jmri.util.NamedBeanComparator;
+import jmri.util.PropertyChangeListenerScaffold;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.rules.RetryRule;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensor class.
@@ -28,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Rule
-    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries of tests
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries of tests
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
     protected PropertyChangeListenerScaffold l; 
@@ -314,6 +319,58 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals(Sensor.INACTIVE, t.getState());
     }
 
+    /**
+     * In this test we simulate the following scenario: A sensor T that is being changed locally
+     * by JMRI (e.g. due to a panel icon action), which triggers a Logix, and in that Logix there
+     * is an action that sets a second Sensor U.
+     * We check that the messages sent to the layout are in the order of T:=Active, U:=Active.
+     * There was a multiple-year-long regression that caused these two events to be sent to the
+     * network out of order (U first then T).
+     *
+     * @throws JmriException
+     */
+    @Test
+    public void testListenerOutOfOrder() throws JmriException {
+        final OlcbSensor u = new OlcbSensor("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", ti.iface);
+        u.finishLoad();
+        t.setKnownState(Sensor.INACTIVE);
+        u.setKnownState(Sensor.INACTIVE);
+
+        ti.clearSentMessages();
+
+        t.addPropertyChangeListener("KnownState", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
+                try {
+                    u.setKnownState(Sensor.ACTIVE);
+                } catch (JmriException e) {
+                    Assert.fail("failed sending dependent sensor message: " + e);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        ThreadingUtil.runOnLayout(new ThreadingUtil.ThreadAction() {
+            @Override
+            public void run() {
+                try {
+                    t.setKnownState(Sensor.ACTIVE);
+                } catch (JmriException e) {
+                    Assert.fail("failed sending main sensor message: " + e);
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Assert.assertEquals(Sensor.ACTIVE, t.getKnownState());
+        Assert.assertEquals(Sensor.ACTIVE, u.getKnownState());
+
+        // Ensures that the last sent message is U==Active. Particularly important that it is NOT
+        // the message ending with 0708.
+        ti.assertSentMessage(":X195B4C4CN010203040506070A;");
+    }
+
     @Test
     public void testEventTable() {
         EventTable.EventTableEntry[] elist = ti.iface.getEventTable()
@@ -341,14 +398,14 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void testSystemSpecificComparisonOfSpecificFormats() {
 
         // test by putting into a tree set, then extracting and checking order
-        java.util.TreeSet<Sensor> set = new java.util.TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<Sensor> set = new TreeSet<>(new NamedBeanComparator<>());
         
         set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface));
         set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", ti.iface));
         set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", ti.iface));
         set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", ti.iface));
         
-        java.util.Iterator<Sensor> it = set.iterator();
+        Iterator<Sensor> it = set.iterator();
         
         Assert.assertEquals("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", it.next().getSystemName());
         Assert.assertEquals("MS1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", it.next().getSystemName());

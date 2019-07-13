@@ -158,13 +158,12 @@ public class ThrottleFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedSlider(28);
 
         to.pushStopButton();
 	// should verify the throttle is set to stop.
         Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
         Assert.assertTrue("Throttle Speed Stop",to.getAttachedThrottle().getSpeedSetting()<0);
-
-        to.setSpeedSlider(28);
 
         to.pushReleaseButton();	
     }
@@ -197,7 +196,6 @@ public class ThrottleFrameTest {
 	// should verify the throttle is set to Idle.
         Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
         Assert.assertEquals("Throttle Speed Idle",0.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
-
 
         to.pushReleaseButton();	
     }
@@ -250,6 +248,31 @@ public class ThrottleFrameTest {
 
         to.pushReverseButton(); // need to verify this took effect.	
         Assert.assertFalse("Reverse Direction",to.getAttachedThrottle().getIsForward());
+        to.pushReleaseButton();	
+    }
+
+    @Test
+    public void testDirectionChangeWhileMoving() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedSlider(28);
+
+        Assert.assertEquals("Speed setting 28",28,to.getSpeedSliderValue());
+        float speed = to.getAttachedThrottle().getSpeedSetting();
+
+        to.pushForwardButton();	// need to verify this took effect.	
+        Assert.assertTrue("Forward Direction",to.getAttachedThrottle().getIsForward());
+        // and the absolute value of the speed is the same.
+        
+        Assert.assertEquals("Throttle Speed Setting after forward",Math.abs(speed),Math.abs(to.getAttachedThrottle().getSpeedSetting()),0.0);
+
+        to.pushReverseButton();	// need to verify this took effect.	
+        Assert.assertFalse("Reverse Direction",to.getAttachedThrottle().getIsForward());
+        // and the absolute value of the speed is the same.
+        
+        Assert.assertEquals("Throttle Speed Setting after reverse",Math.abs(speed),Math.abs(to.getAttachedThrottle().getSpeedSetting()),0.0);
+
         to.pushReleaseButton();	
     }
 
@@ -307,6 +330,30 @@ public class ThrottleFrameTest {
         panel.setLastUsedSaveFile(fileName);
         // right now, just verify no error
         panel.saveThrottle();
+    }
+    
+    @Test
+    public void testDispatchReleaseButtonPropertyChangeListener() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Assert.assertFalse("Release button NOT enabled as no loco",to.releaseButtonEnabled());
+        Assert.assertFalse("Dispatch button NOT enabled as no loco",to.dispatchButtonEnabled());
+        
+        to.setAddressValue(new DccLocoAddress(1234,true));
+        
+        Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
+        
+        to.getAttachedThrottle().notifyThrottleReleaseEnabled(true);
+        to.getAttachedThrottle().notifyThrottleDispatchEnabled(true);
+        
+        Assert.assertTrue("Dispatch button enabled",to.dispatchButtonEnabled());
+        Assert.assertTrue("Release button enabled",to.releaseButtonEnabled());
+        
+        to.getAttachedThrottle().notifyThrottleDispatchEnabled(false);
+        to.getAttachedThrottle().notifyThrottleReleaseEnabled(false);
+        
+        Assert.assertFalse("Release button NOT enabled",to.releaseButtonEnabled());
+        Assert.assertFalse("Dispatch button NOT enabled",to.dispatchButtonEnabled());
     }
 
     @Before

@@ -101,7 +101,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
     public void requestThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
         boolean result;
-        result = t.requestThrottle(l, this); 
+        result = t.requestThrottle(l, this, false); 
         if (!result) {
             try {
                 sendErrorStatus();
@@ -119,7 +119,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      */
     public void releaseThrottle(LocoAddress l) {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
-        t.cancelThrottleRequest(l.getNumber(), this);
+        t.cancelThrottleRequest(l, this);
         if (l instanceof DccLocoAddress) {
             throttleList.forEach(throttle -> {
                 if (throttle.getLocoAddress() == l) {
@@ -135,7 +135,9 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         }
     }
 
-    // implementation of ThrottleListener
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyThrottleFound(DccThrottle t) {
         throttleList.add(t);
@@ -147,6 +149,9 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         try {
@@ -156,10 +161,25 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         }
     }
 
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
+    @Deprecated
     public void notifyStealThrottleRequired(LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
     }
 
     // internal class used to propagate back end throttle changes

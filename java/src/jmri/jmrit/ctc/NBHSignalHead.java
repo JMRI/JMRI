@@ -38,7 +38,7 @@ public class NBHSignalHead extends NBHAbstractSignalCommon {
     protected NBHSignalHead(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal.trim());
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
             if (signalHead != null) {
                 _mNamedBeanHandleSignalHead = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalHead);
                 return;

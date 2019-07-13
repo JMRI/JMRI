@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
  */
-public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends IEEE802154PortController {
 
     protected SerialPort activeSerialPort = null;
 
@@ -165,9 +165,20 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**

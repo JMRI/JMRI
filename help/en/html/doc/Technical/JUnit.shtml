@@ -103,7 +103,7 @@
 
         <li style="list-style: none">
           <ul>
-            <li><a href="#sampleScriptTesting">Testing Jython
+            <li><a href="#sampleJythonScriptTesting">Testing Jython
             sample scripts</a></li>
           </ul>
         </li>
@@ -189,6 +189,10 @@
             <dd>When set true, run some extra tests; usually used during code migration,
                 where not everything is right yet but you want to be able to include
                 tests for individual running.  </dd>
+        <dt>jmri.shutdownmanager</dt>
+            <dd>When set, use the specified class as the default ShutDownManager. The specified class
+              must implement the jmri.ShutDownManager interface and have a public default constructor.
+            </dd>
         <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
             <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which

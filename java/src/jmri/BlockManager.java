@@ -1,8 +1,6 @@
 package jmri;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
+public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
     private final String powerManagerChangeName;
 
@@ -196,8 +194,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     @CheckReturnValue
     @CheckForNull
-    public Block getBySystemName(@Nonnull String name) {
-        String key = name.toUpperCase();
+    public Block getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
@@ -218,34 +215,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         }
         // If it's not in the system list, go ahead and return null
         return (retv);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IB prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IB")) {
-            inputName = "IB" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
-     * @return the default BlockManager instance
-     * @deprecated since 4.9.1; use
-     * {@link InstanceManager#getDefault(Class)} instead
-     */
-    @Deprecated
-    @CheckForNull
-    static public BlockManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(BlockManager.class);
     }
 
     String defaultSpeed = "Normal";
@@ -282,8 +251,8 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @Override
     @CheckReturnValue
     @Nonnull
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameBlocks" : "BeanNameBlock");
     }
 
     /**

@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  */
-public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+public class Mx1Adapter extends Mx1PortController {
 
     public Mx1Adapter() {
         super(new Mx1SystemConnectionMemo());
@@ -185,9 +185,20 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),

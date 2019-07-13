@@ -32,7 +32,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Andrew Crosland Copyright (C) 2010
  */
-public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SpeedoPortController {
 
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
@@ -166,11 +166,20 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     * Currently only 9,600 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
     }
 
     private boolean opened = false;

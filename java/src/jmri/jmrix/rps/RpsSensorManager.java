@@ -88,19 +88,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Static function returning the RpsSensorManager instance to use.
-     *
-     * @return The registered RpsSensorManager instance for general use
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public RpsSensorManager instance() {
-        return null;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsSensorManager.class);

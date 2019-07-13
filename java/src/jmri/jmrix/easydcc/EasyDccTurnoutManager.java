@@ -113,24 +113,8 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EasyDccTurnoutManager instance() {
-        log.warn("deprecated instance() call for EasyDccTurnoutManager");
-        return null;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static EasyDccTurnoutManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManager.class);
 

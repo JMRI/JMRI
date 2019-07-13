@@ -43,7 +43,19 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(0, CbusConstants.CBUS_RLOC); 
         r.setElement(1, 0x00);
         r.setElement(2, 0x03);
+        
+        r.setExtended(true);
         t.reply(r);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        
+        Assert.assertTrue("reply ext rtr",t.getRowCount()==0);
+        
+        r.setRtr(false);
+        t.reply(r);
+        
         Assert.assertTrue("reply rloc 3",t.getRowCount()==1);
         
         int locoId = (Integer) t.getValueAt(0,CbusSlotMonitorDataModel.LOCO_ID_COLUMN);
@@ -59,7 +71,18 @@ public class CbusSlotMonitorDataModelTest {
         m.setElement(0, CbusConstants.CBUS_RLOC); 
         m.setElement(1, 0x00);
         m.setElement(2, 0x07);
+        
+        m.setExtended(true);
         t.message(m);
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertTrue("msg ext rtr",t.getRowCount()==1);
+        
+        m.setRtr(false);
+        t.message(m);
+        
         Assert.assertTrue("msg rloc 7",t.getRowCount()==2);
         
         CanMessage ma = new CanMessage( tcis.getCanid() );
@@ -477,13 +500,13 @@ public class CbusSlotMonitorDataModelTest {
         t.tablefeedback().setText("");
         r.setElement(3, 2); // error byte 3 loco address taken
         t.reply(r);
-        Assert.assertTrue(t.tablefeedback().getText().contains("Loco address taken for address 777"));
+        Assert.assertTrue(t.tablefeedback().getText().contains("Loco address 777 taken"));
         
         
         t.tablefeedback().setText("");
         r.setElement(3, 3); // error byte 3 session not present
         t.reply(r);
-        Assert.assertTrue(t.tablefeedback().getText().contains("Session not present for session 195"));
+        Assert.assertTrue(t.tablefeedback().getText().contains("Session 195 not present"));
         
         t.tablefeedback().setText("");
         r.setElement(3, 4); // error byte 3 consist empty

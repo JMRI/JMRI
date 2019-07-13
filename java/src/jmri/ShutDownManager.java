@@ -55,7 +55,15 @@ public interface ShutDownManager {
 
     /**
      * Provide access to the current registered shutdown tasks.
+     * <p>
+     * Note that implementations are free to provide a copy of the list of
+     * registered tasks and do not need to provide modifiable live access to the
+     * internal list of registered tasks.
+     * 
+     * @return the list of shutdown tasks or an empty list if no shutdown tasks
+     *         are registered
      */
+    @Nonnull
     public List<ShutDownTask> tasks();
     
     /**
@@ -65,10 +73,10 @@ public interface ShutDownManager {
      * should continue to operate.
      * <p>
      * By exiting the program with status 100, the batch file (MS Windows) or
-     * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
+     * shell script (Linux/macOS/UNIX) can catch the exit status and restart
      * the java program.
      * <p>
-     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
      *
      * @return boolean which should be false
@@ -83,7 +91,7 @@ public interface ShutDownManager {
      * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
      * <p>
-     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
      *
      * @return false if any shutdown task aborts the shutdown or if anything goes

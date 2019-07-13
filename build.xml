@@ -223,7 +223,8 @@
         <pathelement location="${libdir}/usb4java-javax-1.2.0.jar"/>
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
-        <pathelement location="${libdir}/json-schema-validator-1.0.4.jar"/>
+        <pathelement location="${libdir}/json-schema-validator-1.0.10.jar"/>
+        <pathelement location="${libdir}/jinputvalidator-0.4.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
     </path>
@@ -249,7 +250,7 @@
         <pathelement location="${libdir}/jsr305.jar"/>
         <pathelement location="${libdir}/spotbugs-annotations.jar"/>
         <!-- ServiceProvider annotations -->
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE110.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -273,17 +274,21 @@
         <pathelement location="${libdir}/jemmy-22-00c9f753cd0a.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
-        <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
-        <pathelement location="${libdir}/cucumber-java-2.0.1.jar"/>
-        <pathelement location="${libdir}/cucumber-java8-2.0.1.jar"/>
-        <pathelement location="${libdir}/cucumber-junit-2.0.1.jar"/>
+        <pathelement location="${libdir}/cucumber-core-4.3.1.jar"/>
+        <pathelement location="${libdir}/cucumber-java-4.3.1.jar"/>
+        <pathelement location="${libdir}/cucumber-java8-4.3.1.jar"/>
+        <pathelement location="${libdir}/cucumber-junit-4.3.1.jar"/>
         <pathelement location="${libdir}/cucumber-jvm-deps-1.0.6.jar"/>
-        <pathelement location="${libdir}/cucumber-picocontainer-2.0.1.jar"/>
-        <pathelement location="${libdir}/gherkin-4.1.3.jar"/>
+        <pathelement location="${libdir}/cucumber-picocontainer-4.3.1.jar"/>
+        <pathelement location="${libdir}/cucumber-html-0.2.7.jar"/>
+        <pathelement location="${libdir}/cucumber-expressions-6.2.2.jar"/>
+        <pathelement location="${libdir}/gherkin-5.1.0.jar"/>
         <pathelement location="${libdir}/gherkin-jvm-deps-1.0.4.jar"/>
         <pathelement location="${libdir}/picocontainer-2.15.jar"/>
-        <pathelement location="${libdir}/tag-expressions-1.0.1.jar"/>
+        <pathelement location="${libdir}/tag-expressions-1.1.1.jar"/>
         <pathelement location="${libdir}/typetools-0.5.0.jar"/>
+        <pathelement location="${libdir}/datatable-1.1.12.jar"/>
+        <pathelement location="${libdir}/datatable-dependencies-1.1.12.jar"/>
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
         <pathelement location="${libdir}/webdrivermanager-3.4.0.jar"/>
@@ -755,6 +760,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <classpath refid="test.class.path"/>
@@ -770,6 +776,37 @@
             </condition>
         </fail>
     </target>
+
+    <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single-coverage">
+        <property name="test-single.jvmargs" value=""/>
+        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <classpath refid="test.class.path"/>
+
+            <test name="${test.test}">
+                <formatter usefile="no" type="brief"/>
+            </test>
+            <jvmarg line="${test-single.jvmargs}"/>
+        </junit>
+        </jacoco:coverage>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
+
+    <target name="single-test-coveragereport" depends="test-single-coverage, coveragereport" description="Generate Test Coverage Report from a single test" />
+
+    <target name="single-test-coveragecheck" depends="test-single-coverage, coveragecheck" description="Generate Test Coverage check from a single test" />
 
     <!-- The java/ecj.warning.options and java/ecj.warning.options-ci files defines which warnings are on and off -->
     <!-- By default, we set them explicitly, so that new ones will show up -->
@@ -1347,6 +1384,8 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1371,7 +1410,9 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed'"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
 
@@ -1397,6 +1438,8 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+            <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="java.awt.headless" value="true"/>
@@ -1477,6 +1520,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1504,6 +1548,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1541,6 +1586,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1573,6 +1619,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1595,6 +1642,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1625,6 +1673,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <sysproperty key="user.language" value="en"/>
@@ -1633,6 +1682,9 @@
             <classpath refid="test.class.path"/>
 
             <test name="jmri.RunCucumberTest">
+                <formatter usefile="no" type="brief"/>
+            </test>
+            <test name="apps.RunCucumberTest">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
@@ -1647,9 +1699,9 @@
 
     <target name="alltest-coveragecheck" depends="logalltest, coveragecheck" description="Test Coverage check from logalltest" />
 
-    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis, coveragecheck" description="Test Coverage check from logalltest for Appveyor" />
+    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis, coveragecheck" description="Test Coverage check from ci-test-travis for Appveyor" />
 
-    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor, coveragecheck" description="Test Coverage check from logalltest for Travis" />
+    <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor, coveragecheck" description="Test Coverage check from ci-test-appveyor for Travis" />
 
     <!-- end of test execution targets -->
 
@@ -1818,7 +1870,7 @@
             </packageset>
             <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="1650"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             <arg value="-J-Dhttp.agent=javadoc"/>
@@ -1860,6 +1912,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0" packagelistLoc="lib/jinputvalidator-0.4.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
@@ -1889,7 +1942,7 @@
             </packageset>
             <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="1650"/><!-- change from default 100 warnings -->
+            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             
@@ -1930,6 +1983,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0" packagelistLoc="lib/jinputvalidator-0.4.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
@@ -1959,11 +2013,9 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
-            <arg value="-Xdoclint:all,-missing,-accessibility"/> <!-- dropping some 1.8 warnings -->
+            <arg value="-Xdoclint:all,-missing"/><!-- remove -missing to get warnings about missing javadoc tags -->
             <arg value="-Xmaxwarns"/>
-            <arg value="500"/><!-- change from default 100 warnings -->
-            <arg value="-Xmaxerrs"/>
-            <arg value="500"/><!-- change from default 100 errors -->
+            <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
             
@@ -2014,6 +2066,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.4.0" packagelistLoc="lib/jinputvalidator-0.4.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">

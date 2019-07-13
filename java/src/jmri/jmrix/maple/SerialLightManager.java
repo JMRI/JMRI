@@ -106,17 +106,8 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

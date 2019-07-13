@@ -365,17 +365,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

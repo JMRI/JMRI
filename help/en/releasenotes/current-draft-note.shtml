@@ -39,6 +39,11 @@
                 <li></li>
             </ul>
 
+        <h4>Hornby</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -61,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with Throttle Direction Changes ( while moving ) not being sent to Command Station</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -161,8 +166,7 @@
 
         <h4>CT Elektronik</h4>
             <ul>
-                <li>Nigel Cliffe added a decoder definition for the 
-                    NGS custom CT decoder</li>
+                <li></li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -331,7 +335,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li>Color for new tracks is now consistent within a single Layout Editor.</li>
+	        <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -378,7 +382,12 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>JMRI no longer modifies "system names" as provided by the user.
+                There may be cases where a script or panel file is creating an
+                object with a system name that is slightly different than a system
+                name used elsewhere, and JMRI used to change these to be the same.
+                Users may have to modify scripts and panel files to ensure system
+                names match in all places.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -448,14 +457,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>JSON clients can now add, edit, or remove IdTags, LayoutBlocks, Operations Locations, Operations Cars, Operations
-                Engines, Operations Tracks, and Reporters.</li>
-            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
-                to a message to the original message.</li>
-            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
-                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
-                objects. See the JSON <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">Version
-                    History</a> for more details.</li>
+            <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -473,8 +475,13 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
-                <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
-            </li>
+            <li>We "deprecate" certain methods and members in the Java code when they're
+                no longer recommended for use.  After some time, we then remove them.
+                This version of JMRI removes all deprecated methods and members up
+                through JMRI 4.10, which was released in December 2017.
+                If you still have code or scripts that reference these, please
+                look at
+                <a href="https://github.com/JMRI/JMRI/tree/v4.16">the code in JMRI 4.16</a>
+                for suggestions on what to substitute.</li>
         </ul>
 

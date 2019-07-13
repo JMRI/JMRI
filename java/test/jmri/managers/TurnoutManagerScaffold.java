@@ -115,11 +115,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String normalizeSystemName(String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
-    @Override
     public void dispose() {
     }
 
@@ -256,17 +251,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return "Turnout";
+    public String getBeanTypeHandled(boolean plural) {
+        return plural ? "Turnouts" : "Turnout";
     }
 
     @Override
     public String getEntryToolTip() { return "No Help"; }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {}
+    public void addDataListener(ManagerDataListener<Turnout> e) {}
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {}
+    public void removeDataListener(ManagerDataListener<Turnout> e) {}
 
 }

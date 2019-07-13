@@ -1,8 +1,6 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -18,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 public class DefaultRouteManager extends AbstractManager<Route>
-        implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
+        implements RouteManager {
 
     public DefaultRouteManager() {
         super();
@@ -99,22 +97,6 @@ public class DefaultRouteManager extends AbstractManager<Route>
     int lastAutoRouteRef = 0;
 
     /**
-     * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IR prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IR")) {
-            inputName = "IR" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
      * Remove an existing route. Route must have been deactivated before
      * invoking this.
      */
@@ -157,8 +139,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameRoute");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
     }
 
     @Override

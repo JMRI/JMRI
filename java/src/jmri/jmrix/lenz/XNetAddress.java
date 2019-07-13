@@ -41,7 +41,8 @@ public class XNetAddress {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix)) {
             // here if an invalid XpressNet system name
-            log.error("invalid character in header field of XpressNet system name: {}", systemName);
+            log.error("invalid character in header field of XpressNet system name: {} wants prefix {}", 
+                systemName, prefix);
             return (-1);
         }
         // name must be in the Xtnnnnn or XSmm:pp format (X is user 
@@ -81,7 +82,8 @@ public class XNetAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 
-            log.error("invalid character in header field of system name: {}", systemName);
+            log.error("invalid character in header field of system name: {} wants prefix {} type {}", 
+                systemName, prefix, type);
             return NameValidity.INVALID;
         }
         if (getBitFromSystemName(systemName, prefix) > 0) {

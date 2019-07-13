@@ -2,16 +2,15 @@ package jmri.managers;
 
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
-import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.ShutDownTask;
+import jmri.implementation.QuietShutDownTask;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -30,8 +29,6 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testRegister() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
-        List<?> tasks = this.exposeTasks(dsdm);
-        Assert.assertEquals(0, tasks.size());
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
@@ -40,10 +37,8 @@ public class DefaultShutDownManagerTest {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, tasks.size());
         Assert.assertEquals(1, dsdm.tasks().size());
         dsdm.register(task);
-        Assert.assertEquals(1, tasks.size());
         Assert.assertEquals(1, dsdm.tasks().size());
         try {
             dsdm.register(null);
@@ -56,8 +51,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testDeregister() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
-        List<?> tasks = this.exposeTasks(dsdm);
-        Assert.assertEquals(0, tasks.size());
+        Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
             public boolean execute() {
@@ -65,10 +59,10 @@ public class DefaultShutDownManagerTest {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, tasks.size());
-        Assert.assertTrue(tasks.contains(task));
+        Assert.assertEquals(1, dsdm.tasks().size());
+        Assert.assertTrue(dsdm.tasks().contains(task));
         dsdm.deregister(task);
-        Assert.assertEquals(0, tasks.size());
+        Assert.assertEquals(0, dsdm.tasks().size());
     }
 
     @Test
@@ -95,18 +89,6 @@ public class DefaultShutDownManagerTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
-    }
-
-    private ArrayList<?> exposeTasks(DefaultShutDownManager manager) {
-        ArrayList<?> tasks = null;
-        try {
-            Field f = manager.getClass().getDeclaredField("tasks");
-            f.setAccessible(true);
-            tasks = (ArrayList<?>) f.get(manager);
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            Assert.fail("Unable to introspect tasks field");
-        }
-        return tasks;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManagerTest.class);

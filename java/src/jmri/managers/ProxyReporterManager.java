@@ -159,12 +159,11 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
 }

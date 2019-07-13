@@ -171,8 +171,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override
@@ -205,8 +204,8 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSensor");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
     }
 
     /**

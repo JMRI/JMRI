@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson
  */
-public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedBean> implements java.beans.PropertyChangeListener, EcosListener {
+public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedBean> implements EcosListener {
 
     private Hashtable<String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
@@ -75,9 +75,15 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     private RosterEntry _re;
     private boolean addLocoToRoster = false;
 
+    /**
+     * EcosLocoAddresses have no system prefix, so return input unchanged.
+     * 
+     * @param s the input to make a system name
+     * @return the resultant system name
+     */
     @Override
     public String makeSystemName(String s) {
-        return "";
+        return s;
     }
 
     @Override
@@ -230,9 +236,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                 }
             };
         }
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
-        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
     }
 
     public void monitorLocos(boolean monitor) {
@@ -881,7 +885,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     }
 
     @Override
-    public String getBeanTypeHandled() {
+    public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage("EcosLocoAddresses");
     }
 

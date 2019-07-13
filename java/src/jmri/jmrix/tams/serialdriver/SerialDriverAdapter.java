@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends TamsPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -152,9 +152,20 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),

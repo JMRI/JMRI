@@ -46,8 +46,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     @Nonnull
-    public Light provideLight(@Nonnull String key) {
-        String name = normalizeSystemName(key);
+    public Light provideLight(@Nonnull String name) {
         //log.debug("passed name {}", name);
         Light result = getLight(name);
         if (result == null) {
@@ -146,34 +145,7 @@ public class CbusLightManager extends AbstractLightManager {
     @Override
     @CheckForNull
     public Light getBySystemName(@Nonnull String key ) {
-        String name = normalizeSystemName(key);
-        return _tsys.get(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace, adding +/- if not present.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        String address = inputName.toUpperCase().trim();
-        // check Cbus hardware address parts
-        if ((!address.startsWith(prefix + typeLetter()) || (address.length() < prefix.length() + 2))) {
-            return address;
-        }
-        try {
-            log.debug("Normalize address = {}", address);
-            address = CbusAddress.validateSysName(address.substring(prefix.length() + 1));
-        } catch (IllegalArgumentException e){
-            return address;
-        } catch (StringIndexOutOfBoundsException e){
-            return address;
-        }
-        return prefix + typeLetter() + address;
+        return _tsys.get(key);
     }
 
     /**
@@ -181,8 +153,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusLightManager.class);

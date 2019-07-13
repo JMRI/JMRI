@@ -200,8 +200,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.Xml;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
@@ -137,7 +138,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                             // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
                             builder.append(String.format(strings.getProperty("TrainDepartsCars"), routeLocationName,
                                     strings.getProperty("Heading"
-                                            + Setup.getDirectionString(location.path(JSON.DIRECTION).intValue())),
+                                            + Setup.getDirectionString(location.path(JSON.TRAIN_DIRECTION).intValue())),
                                     location.path(JSON.LENGTH).path(JSON.LENGTH).intValue(), location.path(JSON.LENGTH)
                                     .path(JSON.UNIT).asText().toLowerCase(), location.path(JsonOperations.WEIGHT)
                                     .intValue(), location.path(JsonOperations.CARS).path(JSON.TOTAL).intValue()));
@@ -146,7 +147,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                             // tons
                             builder.append(String.format(strings.getProperty("TrainDepartsLoads"), routeLocationName,
                                     strings.getProperty("Heading"
-                                            + Setup.getDirectionString(location.path(JSON.DIRECTION).intValue())),
+                                            + Setup.getDirectionString(location.path(JSON.TRAIN_DIRECTION).intValue())),
                                     location.path(JSON.LENGTH).path(JSON.LENGTH).intValue(), location.path(JSON.LENGTH)
                                     .path(JSON.UNIT).asText().toLowerCase(), location.path(JsonOperations.WEIGHT)
                                     .intValue(), location.path(JsonOperations.CARS).path(JSON.LOADS).intValue(), location
@@ -307,6 +308,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.LOCATION),
                                             ShowLocation.both))).append(" "); // NOI18N
+                } else if (attribute.equals(Xml.TYPE)) {
+                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
@@ -432,7 +435,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return this.getFormattedAttribute(JSON.FINAL_DESTINATION, this.getFormattedLocation(rollingStock
                     .path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination")); // NOI18N
         }
-        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).textValue());
+        return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
 
     protected String getFormattedAttribute(String attribute, String value) {

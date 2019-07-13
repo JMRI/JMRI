@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
  */
-public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class LI101Adapter extends XNetSerialPortController {
 
     public LI101Adapter() {
         super();
@@ -171,14 +171,22 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         }
 
         configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        /*if (getOptionState(option2Name).equals(validOption2[0]))
-         checkBuffer = true;*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("LIBaud19200"), Bundle.getMessage("Baud38400"),

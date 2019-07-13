@@ -13,7 +13,7 @@ import purejavacomm.*;
  *
  * @author Paul Bender Copyright (C) 2013
  */
-public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, IConnectionInterface, SerialPortEventListener {
+public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements IConnectionInterface, SerialPortEventListener {
 
     private boolean iConnectionOpened = false;
 
@@ -201,9 +201,20 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     @Override

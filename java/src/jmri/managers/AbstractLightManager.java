@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 public abstract class AbstractLightManager extends AbstractManager<Light>
-        implements LightManager, java.beans.PropertyChangeListener {
+        implements LightManager {
 
     /**
      * Create a new LightManager instance.
@@ -76,8 +76,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @CheckForNull
-    public Light getBySystemName(@Nonnull String name
-    ) {
+    public Light getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
@@ -173,15 +172,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @Nonnull
-    public String normalizeSystemName(@Nonnull String systemName) {
-        return systemName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return "";
     }
@@ -208,8 +198,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @return a string for the type of object handled by this manager
      */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLight");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
     }
 
     /**

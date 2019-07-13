@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class NdPane extends JPanel {
         _selectNd = new JComboBox<String>();
         _selectNd.setEditable(false);
         
-        SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
+        ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectNd.setRenderer(renderer);
         
         _node.setPane(this);

@@ -49,18 +49,19 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -139,7 +140,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      */
     @Override
     public void setManager(@Nonnull Manager<Turnout> man) {
-        turnManager = (TurnoutManager) man;
+        if (man instanceof TurnoutManager) {
+            turnManager = (TurnoutManager) man;
+        }
     }
 
     static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
@@ -585,20 +588,24 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
 
             @Override
-            public String getValue(String name) {
-                int val = turnManager.getBySystemName(name).getCommandedState();
-                switch (val) {
-                    case Turnout.CLOSED:
-                        return closedText;
-                    case Turnout.THROWN:
-                        return thrownText;
-                    case Turnout.UNKNOWN:
-                        return Bundle.getMessage("BeanStateUnknown");
-                    case Turnout.INCONSISTENT:
-                        return Bundle.getMessage("BeanStateInconsistent");
-                    default:
-                        return "Unexpected value: " + val;
+            public String getValue(@Nonnull String name) {
+                Turnout turn = turnManager.getBySystemName(name);
+                if (turn != null) {
+                    int val = turn.getCommandedState();
+                    switch (val) {
+                        case Turnout.CLOSED:
+                            return closedText;
+                        case Turnout.THROWN:
+                            return thrownText;
+                        case Turnout.UNKNOWN:
+                            return Bundle.getMessage("BeanStateUnknown");
+                        case Turnout.INCONSISTENT:
+                            return Bundle.getMessage("BeanStateInconsistent");
+                        default:
+                            return "Unexpected value: " + val;
+                    }
                 }
+                return "Turnout not found";
             }
 
             @Override
@@ -818,11 +825,11 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
                     protected void loadRenderEditMaps(Hashtable<Turnout, TableCellRenderer> r, Hashtable<Turnout, TableCellEditor> e,
                             Turnout t, Sensor s) {
-                        JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), s, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-                        c.setFirstItemBlank(true);
+                        NamedBeanComboBox<Sensor> c = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), s, DisplayOptions.DISPLAYNAME);
+                        c.setAllowNull(true);
 
-                        TableCellRenderer renderer = new BeanBoxRenderer();
-                        ((JmriBeanComboBox) renderer).setSelectedBean(s);
+                        BeanBoxRenderer renderer = new BeanBoxRenderer();
+                        renderer.setSelectedItem(s);
                         r.put(t, renderer);
 
                         TableCellEditor editor = new BeanComboBoxEditor(c);
@@ -1200,12 +1207,17 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
         if (t.getInhibitOperation()) {
             cb.setSelectedIndex(0);
-        } else if (t.getTurnoutOperation() == null) {
-            cb.setSelectedIndex(1);
-        } else if (t.getTurnoutOperation().isNonce()) {
-            cb.setSelectedIndex(2);
         } else {
-            cb.setSelectedItem(t.getTurnoutOperation().getName());
+            TurnoutOperation turnOp = t.getTurnoutOperation();
+            if (turnOp == null) {
+                cb.setSelectedIndex(1);
+            } else {
+                if (turnOp.isNonce()) {
+                    cb.setSelectedIndex(2);
+                } else {
+                    cb.setSelectedItem(turnOp.getName());
+                }
+            }
         }
     }
 
@@ -1688,7 +1700,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         String sName = null;
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "T" later
-        String curAddress = hardwareAddressTextField.getText(); // N11N
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -1699,8 +1711,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             hardwareAddressTextField.setBackground(Color.white);
         }
 
-        String uName = userNameTextField.getText().trim(); // N11N
-        if ((uName != null) && uName.isEmpty()) {
+        String uName = userNameTextField.getText();
+        if (uName.isEmpty()) {
             uName = null;
         }
 
@@ -1879,10 +1891,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // Tab All or first time opening, use default tooltip
             connectionChoice = "TBD";
         }
+        String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
         if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
             List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Turnout> turnout : managerList) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) turnout;
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
@@ -1893,7 +1905,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     break;
                 }
             }
-        } else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
+        } else if (turnManager.allowMultipleAdditions(systemPrefix)) {
             rangeBox.setEnabled(true);
             log.debug("T Add box enabled2");
             // get tooltip from turnout manager
@@ -1955,11 +1967,11 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         return Bundle.getMessage("TitleTurnoutTable");
     }
 
-    static class BeanBoxRenderer extends JmriBeanComboBox implements TableCellRenderer {
+    static class BeanBoxRenderer extends NamedBeanComboBox<Sensor> implements TableCellRenderer {
 
         public BeanBoxRenderer() {
-            super(InstanceManager.sensorManagerInstance());
-            setFirstItemBlank(true);
+            super(InstanceManager.getDefault(SensorManager.class));
+            setAllowNull(true);
         }
 
         @Override
@@ -1972,10 +1984,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 setForeground(table.getForeground());
                 setBackground(table.getBackground());
             }
-            if (value instanceof NamedBean) {
-                setSelectedBean((NamedBean) value);
+            if (value instanceof Sensor) {
+                setSelectedItem(value);
             } else {
-                setSelectedBean(null);
+                setSelectedItem(null);
             }
             return this;
         }
@@ -1983,7 +1995,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     static class BeanComboBoxEditor extends DefaultCellEditor {
 
-        public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
+        public BeanComboBoxEditor(NamedBeanComboBox<Sensor> beanBox) {
             super(beanBox);
         }
     }
@@ -2077,10 +2089,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-
-                    boolean inputOK = verify(input);
-                    if (inputOK) {
+                if (input instanceof CheckedTextField ) {
+                    if (verify(input)) {
                         input.setBackground(Color.white);
                         return true;
                     } else {
@@ -2096,7 +2106,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
-                    return ((CheckedTextField) input).isValid();
+                    return input.isValid();
                 } else {
                     return false;
                 }

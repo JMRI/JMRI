@@ -81,6 +81,12 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
     }
 
     @Override
+    protected void doDelete(Sensor bean, String name, String type, JsonNode data, Locale locale, int id)
+            throws JsonException {
+        deleteBean(bean, name, type, data, locale, id);
+    }
+
+    @Override
     public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case SENSOR:

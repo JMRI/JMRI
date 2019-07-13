@@ -77,17 +77,6 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * returns ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
      * Public method to convert system name to its alternate format
      *
      * @return a normalized system name if system name is valid and has a valid
@@ -103,8 +92,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

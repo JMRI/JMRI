@@ -105,23 +105,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**
@@ -226,18 +214,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             return Integer.toString(iName);
         }
-    }
-
-    /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use, if
-     *         need be creating one.
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);

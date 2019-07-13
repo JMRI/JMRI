@@ -10,8 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
-import jmri.jmrix.can.cbus.swing.simulator.DirectionPane;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +49,7 @@ public class CsPane extends JPanel {
         _selectCs = new JComboBox<String>();
         _selectCs.setEditable(false);
         
-        SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
+        ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectCs.setRenderer(renderer);
         
         updateSessionTotal();

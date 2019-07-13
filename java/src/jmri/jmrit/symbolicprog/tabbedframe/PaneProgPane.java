@@ -2527,7 +2527,7 @@ public class PaneProgPane extends javax.swing.JPanel
             int interval = spaces.length() - heading1.length();
             w.setFontStyle(Font.BOLD);
             // write the section name and dividing line
-            s = mName.toUpperCase();
+            s = mName;
             w.write(s, 0, s.length());
             w.writeBorders();
             //Draw horizontal dividing line for each Pane section
@@ -2565,7 +2565,7 @@ public class PaneProgPane extends javax.swing.JPanel
                         alreadyPrinted = true;
                     }
                 }
-                //If already printed, skip it.  If not, store it and print
+                // If already printed, skip it.  If not, store it and print
                 if (alreadyPrinted == true) {
                     continue;
                 }
@@ -2576,7 +2576,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String originalValue = value;
                 name = name + " (CV" + var.getCvNum() + ")"; // NO I18N
 
-                //define index values for name and value substrings
+                // define index values for name and value substrings
                 int nameLeftIndex = 0;
                 int nameRightIndex = name.length();
                 int valueLeftIndex = 0;

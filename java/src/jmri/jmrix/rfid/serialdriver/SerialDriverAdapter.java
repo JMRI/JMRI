@@ -39,7 +39,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author B. Milhaupt Copyright (C) 2017
  * @since 2.11.4
  */
-public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends RfidPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -300,9 +300,20 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**

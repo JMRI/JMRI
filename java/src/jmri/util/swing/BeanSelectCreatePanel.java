@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -15,39 +16,42 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.MemoryManager;
-import jmri.NamedBean;
+import jmri.ProvidingManager;
+// import jmri.NamedBean;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 import jmri.UserPreferencesManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.managers.AbstractProxyManager;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.ConnectionNameFromSystemName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
+public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
 
     Manager<E> _manager;
-    NamedBean _defaultSelect;
+    E _defaultSelect;
     String _reference = null;
     JRadioButton existingItem = new JRadioButton();
     JRadioButton newItem;
     ButtonGroup selectcreate = new ButtonGroup();
 
-    JmriBeanComboBox existingCombo;
+    NamedBeanComboBox<E> existingCombo;
     JTextField hardwareAddress = new JTextField(8);
     JComboBox<String> prefixBox = new JComboBox<>();
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
 
     /**
-     * Create a JPanel, that provides the option to the user to either select an
+     * Create a JPanel that provides the option to the user to either select an
      * already created bean, or to create one on the fly. This only currently
      * works with Turnouts, Sensors, Memories and Blocks.
      *
      * @param manager       the bean manager
      * @param defaultSelect the bean that is selected by default
      */
-    public BeanSelectCreatePanel(Manager<E> manager, NamedBean defaultSelect) {
+    public BeanSelectCreatePanel(Manager<E> manager, E defaultSelect) {
         _manager = manager;
         _defaultSelect = defaultSelect;
         UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -62,13 +66,13 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
-        existingCombo = new JmriBeanComboBox(_manager, defaultSelect, JmriBeanComboBox.DisplayOptions.USERNAMESYSTEMNAME);
+        existingCombo = new NamedBeanComboBox<E>(_manager, defaultSelect, DisplayOptions.USERNAME_SYSTEMNAME);
         LayoutEditor.setupComboBox(existingCombo, false, true);
         // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);
         }
-        existingCombo.setFirstItemBlank(true);
+        existingCombo.setAllowNull(true);
 
         JPanel radio = new JPanel();
         radio.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
@@ -142,21 +146,21 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     }
 
     public void refresh() {
-        existingCombo.refreshCombo();
+        // existingCombo.refreshCombo();
     }
 
     /**
      * Get the display name of the bean that has either been selected in the
-     * drop down list or has been created.
+     * drop down list or was asked to be created.
      *
      * @return the name of the bean
      */
     public String getDisplayName() {
         if (existingItem.isSelected()) {
-            return existingCombo.getSelectedDisplayName();
+            return existingCombo.getSelectedItemDisplayName();
         } else {
             try {
-                NamedBean nBean = createBean();
+                E nBean = createBean();
                 return nBean.getDisplayName();
             } catch (JmriException e) {
                 return "";
@@ -166,14 +170,14 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
     /**
      * Get the named bean that has either been selected in the drop down list or
-     * has been created.
+     * was asked to be created.
      *
      * @return the selected bean or a new bean
      * @throws JmriException if a bean needs to be created but can't be
      */
-    public NamedBean getNamedBean() throws JmriException {
+    public E getNamedBean() throws JmriException {
         if (existingItem.isSelected()) {
-            return existingCombo.getSelectedBean();
+            return existingCombo.getSelectedItem();
         }
         try {
             return createBean();
@@ -182,48 +186,49 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
         }
     }
 
-    private NamedBean createBean() throws JmriException {
+    private E createBean() throws JmriException {
         String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
-        NamedBean nBean = null;
-        if (prefix != null) {
-            if (_manager instanceof TurnoutManager) {
+        E nBean = null;
+        if (prefix != null && _manager instanceof ProvidingManager) {
+            ProvidingManager<E> provider = (ProvidingManager<E>) _manager;
+            if (provider instanceof TurnoutManager) {
                 String sName = "";
                 try {
-                    sName = ((TurnoutManager) _manager).createSystemName(hardwareAddress.getText(), prefix);
+                    sName = ((TurnoutManager) provider).createSystemName(hardwareAddress.getText(), prefix);
                 } catch (JmriException e) {
                     throw e;
                 }
                 try {
-                    nBean = ((TurnoutManager) _manager).provideTurnout(sName);
+                    nBean = provider.provide(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     throw new JmriException("ErrorTurnoutAddFailed");
                 }
-            } else if (_manager instanceof SensorManager) {
+            } else if (provider instanceof SensorManager) {
                 String sName = "";
                 try {
-                    sName = ((SensorManager) _manager).createSystemName(hardwareAddress.getText(), prefix);
+                    sName = ((SensorManager) provider).createSystemName(hardwareAddress.getText(), prefix);
                 } catch (JmriException e) {
                     throw e;
                 }
                 try {
-                    nBean = ((SensorManager) _manager).provideSensor(sName);
+                    nBean = provider.provide(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     throw new JmriException("ErrorSensorAddFailed");
                 }
             } else {
-                String sName = _manager.makeSystemName(hardwareAddress.getText());
-                if (_manager instanceof MemoryManager) {
+                String sName = provider.makeSystemName(hardwareAddress.getText());
+                if (provider instanceof MemoryManager) {
                     try {
-                        nBean = ((MemoryManager) _manager).provideMemory(sName);
+                        nBean = provider.provide(sName);
                     } catch (IllegalArgumentException ex) {
                         // user input no good
                         throw new JmriException("ErrorMemoryAddFailed");
                     }
-                } else if (_manager instanceof BlockManager) {
+                } else if (provider instanceof BlockManager) {
                     try {
-                        nBean = ((BlockManager) _manager).provideBlock(sName);
+                        nBean = provider.provide(sName);
                     } catch (IllegalArgumentException ex) {
                         // user input no good
                         throw new JmriException("ErrorBlockAddFailed");
@@ -234,18 +239,13 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
         if (nBean == null) {
             throw new JmriException("Unable to create bean");
         }
-        // Update comment if there's content, and there's not already a comment
-        String comment = nBean.getComment();
-        if ((_reference != null && !_reference.isEmpty()) && (comment == null || comment.isEmpty())) {
-            nBean.setComment(_reference);
-        }
+        updateComment(nBean, _reference);
         setDefaultNamedBean(nBean);
         return nBean;
     }
 
     /**
-     * Set a reference that can be set against the comment for a bean, only if
-     * the bean has no previous comment.
+     * Set a reference that can be set against the comment for a bean.
      *
      * @param ref the default comment for a bean without a comment
      */
@@ -254,17 +254,51 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     }
 
     /**
-     * Sets the default selected item in the combo box, when this is set the
-     * combo box becomes active and the add hardware box details are then
+     * Set the default selected item in the combo box. After it has been set,
+     * the combo box becomes active and the Add Hardware box details are then
      * hidden.
      *
      * @param nBean the bean that is selected by default
      */
-    public void setDefaultNamedBean(NamedBean nBean) {
+    public void setDefaultNamedBean(E nBean) {
         _defaultSelect = nBean;
-        existingCombo.setSelectedBean(_defaultSelect);
+        existingCombo.setSelectedItem(_defaultSelect);
         existingItem.setSelected(true);
         update();
+    }
+
+    /**
+     * Check that the user selected something in this BeanSelectCreatePanel.
+     *
+     * @return true if not empty
+     */
+    public boolean isEmpty() {
+        if (existingItem.isSelected() && existingCombo.getSelectedItem() != null) { // use existing
+            log.debug("existingCombo.getSelectedBean() = {}", existingCombo.getSelectedItem().getDisplayName());
+            return false;
+        } else if (newItem.isSelected() && // create new
+                !hardwareAddress.getText().isEmpty() && hardwareAddress.getText() != null) {
+            log.debug("newBeanEntry = {}", hardwareAddress.getText());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Update comment on bean if there's content AND there's not already a comment.
+     *
+     * @param nBean   the bean to edit
+     * @param content comment to add
+     */
+    public void updateComment(@Nonnull E nBean, String content) {
+        String comment = nBean.getComment();
+        log.debug((comment == null || comment.isEmpty()) ? "comment was empty" : "comment already filled");
+        if((content != null && !content.isEmpty()) && (comment ==null || comment.isEmpty())) {
+            log.debug("new comment added to bean {}", nBean.getDisplayName());
+            nBean.setComment(content);
+        } else {
+            log.debug("empty _reference received");
+        }
     }
 
     public void dispose() {
@@ -272,5 +306,6 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     }
 
     //initialize logging
-    // private final static Logger log = LoggerFactory.getLogger(BeanSelectCreatePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanSelectCreatePanel.class.getName());
+
 }

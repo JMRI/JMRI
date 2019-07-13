@@ -1,11 +1,15 @@
 package jmri.jmrit.simplelightctrl;
 
-import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.swing.NamedBeanComboBox;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
-public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
+public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
 
     DecimalFormat threeDigits = new DecimalFormat("000");
     DecimalFormat oneDigits = new DecimalFormat("0");
@@ -27,15 +31,12 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
     String newState = "";
 
     // GUI member declarations
-    javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
-    javax.swing.JTextField adrTextField = new javax.swing.JTextField(5);
-    javax.swing.JButton statusButton = new javax.swing.JButton();
-
     javax.swing.JButton onButton = new javax.swing.JButton();
     javax.swing.JButton offButton = new javax.swing.JButton();
 
     javax.swing.JLabel textStateLabel = new javax.swing.JLabel();
     javax.swing.JLabel nowStateTextField = new javax.swing.JLabel();
+    javax.swing.JLabel nowControllersTextField = new javax.swing.JLabel();
     javax.swing.JLabel textIsEnabledLabel = new javax.swing.JLabel();
     javax.swing.JCheckBox statusIsEnabledCheckBox = new javax.swing.JCheckBox();
     javax.swing.JLabel textIsVariableLabel = new javax.swing.JLabel();
@@ -60,36 +61,39 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
     javax.swing.JTextField transitionTimeTextField = new javax.swing.JTextField(4);
 
     javax.swing.JButton applyButton = new javax.swing.JButton();
+    private final NamedBeanComboBox<Light> to1;
+    private PropertyChangeListener _parentLightListener = null;
 
     public SimpleLightCtrlFrame() {
         super();
 
-        // configure items for GUI
-        textAdrLabel.setText(Bundle.getMessage("LightAdrLabel"));
-        textAdrLabel.setVisible(true);
-
-        adrTextField.setText("");
-        adrTextField.setVisible(true);
-        adrTextField.setToolTipText(Bundle.getMessage("LightAdrTextToolTip"));
-
-        statusButton.setText(Bundle.getMessage("LightGetStatusButton"));
-        statusButton.setVisible(true);
-        statusButton.setToolTipText(Bundle.getMessage("LightGetStatusToolTip"));
-        statusButton.addActionListener(new java.awt.event.ActionListener() {
+        to1 = new NamedBeanComboBox<>(InstanceManager.lightManagerInstance());
+        to1.setAllowNull(true);
+        to1.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                statusButtonActionPerformed(e);
+            public void actionPerformed(ActionEvent e) {
+                log.info("actionevent");
+                resetLightToCombo();
             }
         });
 
+        // configure items for GUI
         textStateLabel.setText(Bundle.getMessage("LightStatusLabel"));
         textStateLabel.setVisible(true);
         nowStateTextField.setText(Bundle.getMessage("BeanStateUnknown"));
         nowStateTextField.setVisible(true);
+        nowControllersTextField.setText("");
+        nowControllersTextField.setVisible(true);
         textIsEnabledLabel.setText(Bundle.getMessage("LightIsEnabledLabel"));
+        textIsEnabledLabel.setToolTipText(Bundle.getMessage("LightIsEnabledLabelToolTip"));
         textIsEnabledLabel.setVisible(true);
         statusIsEnabledCheckBox.setVisible(true);
-        statusIsEnabledCheckBox.setEnabled(false);
+        statusIsEnabledCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledCheckboxActionPerformed(e);
+            }
+        });
         textIsVariableLabel.setText(Bundle.getMessage("LightIsVariableLabel"));
         textIsVariableLabel.setVisible(true);
         statusIsVariableCheckBox.setVisible(true);
@@ -102,9 +106,9 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         onButton.setText(Bundle.getMessage("StateOn"));
         onButton.setVisible(true);
         onButton.setToolTipText(Bundle.getMessage("LightOnButtonToolTip"));
-        onButton.addActionListener(new java.awt.event.ActionListener() {
+        onButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 onButtonActionPerformed(e);
             }
         });
@@ -112,9 +116,9 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         offButton.setText(Bundle.getMessage("StateOff"));
         offButton.setVisible(true);
         offButton.setToolTipText(Bundle.getMessage("LightOffButtonToolTip"));
-        offButton.addActionListener(new java.awt.event.ActionListener() {
+        offButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 offButtonActionPerformed(e);
             }
         });
@@ -150,9 +154,9 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         intensityButton.setText(Bundle.getMessage("LightSetButton"));
         intensityButton.setVisible(true);
         intensityButton.setToolTipText(Bundle.getMessage("LightSetButtonToolTip"));
-        intensityButton.addActionListener(new java.awt.event.ActionListener() {
+        intensityButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 intensityButtonActionPerformed(e);
             }
         });
@@ -160,40 +164,51 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         applyButton.setText(Bundle.getMessage("ButtonApply"));
         applyButton.setVisible(true);
         applyButton.setToolTipText(Bundle.getMessage("LightApplyButtonToolTip"));
-        applyButton.addActionListener(new java.awt.event.ActionListener() {
+        applyButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 applyButtonActionPerformed(e);
             }
         });
+
+        // set buttons inactive as no Light yet selected
+        setControlFrameActive(false);
 
         // general GUI config
         setTitle(Bundle.getMessage("LightBorder"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        // install items in GUI
+        // Light select
         JPanel pane2 = new JPanel();
-        pane2.add(textAdrLabel);
-        pane2.add(adrTextField);
-        pane2.add(statusButton);
+        pane2.add(to1);
         getContentPane().add(pane2);
 
+        // status text
         pane2 = new JPanel();
         pane2.add(textStateLabel);
         pane2.add(nowStateTextField);
-        pane2.add(textIsEnabledLabel);
-        pane2.add(statusIsEnabledCheckBox);
-        pane2.add(textIsVariableLabel);
-        pane2.add(statusIsVariableCheckBox);
-        pane2.add(textIsTransitionLabel);
-        pane2.add(statusIsTransitionCheckBox);
         getContentPane().add(pane2);
 
+        // on off buttons
         pane2 = new JPanel();
         pane2.add(onButton);
         pane2.add(offButton);
         getContentPane().add(pane2);
+        getContentPane().add(new javax.swing.JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
+        // Controllers enabled checkbox
+        pane2 = new JPanel();
+        pane2.add(textIsEnabledLabel);
+        pane2.add(statusIsEnabledCheckBox);
+        getContentPane().add(pane2);
+
+        // Controllers text
+        pane2 = new JPanel();
+        pane2.add(nowControllersTextField);
+        getContentPane().add(pane2);
+        getContentPane().add(new javax.swing.JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+
+        // intensity field and button
         pane2 = new JPanel();
         pane2.add(intensityTextLabel1);
         pane2.add(nowIntensityLabel);
@@ -201,7 +216,9 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         pane2.add(intensityTextLabel2);
         pane2.add(intensityButton);
         getContentPane().add(pane2);
+        getContentPane().add(new javax.swing.JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
+        // min max textfields
         pane2 = new JPanel();
         pane2.add(intensityMinTextLabel);
         pane2.add(nowIntensityMinLabel);
@@ -209,181 +226,179 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         pane2.add(intensityMaxTextLabel);
         pane2.add(nowIntensityMaxLabel);
         pane2.add(intensityMaxTextField);
+        getContentPane().add(pane2);
+
+        // time textfield, apply button
+        pane2 = new JPanel();
         pane2.add(transitionTimeTextLabel);
         pane2.add(nowTransitionTimeLabel);
         pane2.add(transitionTimeTextField);
-        getContentPane().add(pane2);
-
-        pane2 = new JPanel();
         pane2.add(applyButton);
         getContentPane().add(pane2);
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.simplelightctrl.SimpleLightCtrl", true);
 
-        setMinimumSize(new Dimension(600, 200));
-        setSize(700, 300);
         pack();
 
     }
 
-    public void offButtonActionPerformed(java.awt.event.ActionEvent e) {
-        // load address from switchAddrTextField
-        if (adrTextField.getText().length() < 1) {
-            nowStateTextField.setText(Bundle.getMessage("NoAddressHint"));
+    private void setControlFrameActive(boolean showLight) {
+        log.debug("selected light is {}", to1.getSelectedItem());
+        onButton.setEnabled(showLight);
+        offButton.setEnabled(showLight);
+        statusIsEnabledCheckBox.setEnabled(showLight);
+
+        if (showLight && light.isIntensityVariable()) {
+            intensityButton.setEnabled(true);
+            intensityMinTextField.setEnabled(true);
+            intensityMaxTextField.setEnabled(true);
+            intensityTextField.setEnabled(true);
+            applyButton.setEnabled(true);
+        } else {
+            intensityButton.setEnabled(false);
+            intensityMinTextField.setEnabled(false);
+            intensityMaxTextField.setEnabled(false);
+            intensityTextField.setEnabled(false);
+            intensityButton.setEnabled(false);
+            applyButton.setEnabled(false);
+        }
+
+        if (showLight && light.isTransitionAvailable()) {
+            transitionTimeTextField.setEnabled(true);
+        } else {
+            transitionTimeTextField.setEnabled(false);
+        }
+
+    }
+
+    public void offButtonActionPerformed(ActionEvent e) {
+        if (to1.getSelectedItem() == null) {
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
             return;
         }
         try {
-            if (light != null) {
-                // we're changing the light we're watching
-                light.removePropertyChangeListener(this);
-            }
-            try {
-                light = InstanceManager.lightManagerInstance().provideLight(
-                    adrTextField.getText());
-
-            } catch (IllegalArgumentException ex) {
-                log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
-            }
-            light.addPropertyChangeListener(this);
-            if (log.isDebugEnabled()) {
-                log.debug("about to command OFF"); // NOI18N
-            }
-            // and set commanded state to OFF (CLOSED)
+            // and set commanded state to ON
             light.setState(Light.OFF);
-
         } catch (Exception ex) {
-            log.error(Bundle.getMessage("LightErrorOffButtonException") + ex.toString());
+            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
-    public void onButtonActionPerformed(java.awt.event.ActionEvent e) {
-        // load address from switchAddrTextField
-        if (adrTextField.getText().length() < 1) {
-            nowStateTextField.setText(Bundle.getMessage("NoAddressHint"));
+    public void onButtonActionPerformed(ActionEvent e) {
+        if (to1.getSelectedItem() == null) {
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
             return;
         }
         try {
-            if (light != null) {
-                // we're changing the light we're watching
-                light.removePropertyChangeListener(this);
-            }
-            try {
-                light = InstanceManager.lightManagerInstance().provideLight(
-                    adrTextField.getText());
-
-            } catch (IllegalArgumentException ex) {
-                log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
-            } 
-            light.addPropertyChangeListener(this);
-            if (log.isDebugEnabled()) {
-                log.debug("about to command ON"); // NOI18N
-            }
             // and set commanded state to ON
             light.setState(Light.ON);
         } catch (Exception ex) {
-            log.error(Bundle.getMessage("LightErrorOnButtonException") + ex.toString());
+            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
-    public void intensityButtonActionPerformed(java.awt.event.ActionEvent e) {
-        // load address from switchAddrTextField
+    public void intensityButtonActionPerformed(ActionEvent e) {
+        if (to1.getSelectedItem() == null) {
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
+            return;
+        }
         try {
-            if (light != null) {
-                // we're changing the light we're watching
-                light.removePropertyChangeListener(this);
-            }
-            try {
-                light = InstanceManager.lightManagerInstance().provideLight(
-                    adrTextField.getText());
-
-            } catch (IllegalArgumentException ex) {
-                log.error(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
-            }
-            light.addPropertyChangeListener(this);
-            if (log.isDebugEnabled()) {
-                log.debug("about to command DIM"); // NOI18N
-            }
+            log.debug("about to command DIM"); // NOI18N
             // and set commanded state to DIM
             light.setTargetIntensity(Double.parseDouble(intensityTextField.getText().trim()) / 100);
-
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             log.error(Bundle.getMessage("LightErrorIntensityButtonException") + ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
+        }
+    }
+
+    private void enabledCheckboxActionPerformed(ActionEvent e) {
+        if (statusIsEnabledCheckBox.isSelected()) {
+            light.setEnabled(true);
+        } else {
+            light.setEnabled(false);
         }
     }
 
     /**
      * Handle changes for intensity, rate, etc.
      */
-    public void applyButtonActionPerformed(java.awt.event.ActionEvent e) {
+    public void applyButtonActionPerformed(ActionEvent e) {
+        if (to1.getSelectedItem() == null) {
+            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
+            resetLightToCombo();
+            return;
+        }
         // load address from switchAddrTextField
         try {
-            if (light != null) {
-                // we're changing the light we're watching
-                light.removePropertyChangeListener(this);
-            }
-            try {
-                light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
-
-            } catch (IllegalArgumentException ex) {
-                nowStateTextField.setText(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
-            }
-            
             double min = Double.parseDouble(intensityMinTextField.getText()) / 100.;
             double max = Double.parseDouble(intensityMaxTextField.getText()) / 100.;
             double time = Double.parseDouble(transitionTimeTextField.getText());
-            if (log.isDebugEnabled()) {
-                log.debug("setting min: " + min + " max: " + max + " transition: " + time); // NOI18N
+            log.debug("setting min: {} max: {} transition: {}", min, max, time); // NOI18N
+            if (!light.isTransitionAvailable()) {
+                time = 0.0d;
             }
+
             light.setMinIntensity(min);
             light.setMaxIntensity(max);
             light.setTransitionTime(time);
             updateLightStatusFields(false);
 
-        } catch (Exception ex) {
-            log.error(Bundle.getMessage("LightErrorApplyButtonException") + ex.toString());
+        } catch (NumberFormatException ex) {
+            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
-    /**
-     * Handle request to update status.
-     */
-    public void statusButtonActionPerformed(java.awt.event.ActionEvent e) {
-        // load address from switchAddrTextField
-        try {
-            if (light != null) {
-                // we're changing the light we're watching
-                light.removePropertyChangeListener(this);
-            }
-            try {
-                light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
-
-            } catch (IllegalArgumentException ex) {
-                nowStateTextField.setText(Bundle.getMessage("LightErrorButtonNameBad") + adrTextField.getText());
-            }
+    private void resetLightToCombo() {
+        if (light != null && light == to1.getSelectedItem()) {
+            return;
+        }
+        log.debug("Light changed in combobox to {}", to1.getSelectedItem());
+        // remove changelistener from previous Light
+        if (light != null) {
+            light.removePropertyChangeListener(_parentLightListener);
+        }
+        light = to1.getSelectedItem();
+        if (light != null) {
+            light.addPropertyChangeListener(
+                    _parentLightListener = new PropertyChangeListener() {
+                @Override
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    log.debug("recv propChange: {} {} -> {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
+                    updateLightStatusFields(false);
+                }
+            });
+            setControlFrameActive(true);
             updateLightStatusFields(true);
 
-        } catch (Exception ex) {
-            log.error(Bundle.getMessage("LightErrorStatusButtonException") + ex.toString());
-            nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
+            StringBuilder name = new StringBuilder("<html>");
+            light.getLightControlList().forEach((otherLc) -> {
+                name.append(jmri.jmrit.beantable.LightTableAction.getDescriptionText(otherLc, otherLc.getControlType()));
+                name.append("<br>");
+            });
+
+            if (light.getLightControlList().isEmpty()) {
+                name.append("None");
+            }
+            name.append("</html>");
+            nowControllersTextField.setText(name.toString());
+
+            repaint();
+            revalidate();
+            pack();
+
+        } else {
+            setControlFrameActive(false);
+            nowStateTextField.setText(Bundle.getMessage("BeanStateUnknown"));
+            nowControllersTextField.setText("");
         }
     }
 
-    /**
-     * Update state field in GUI as state of light changes.
-     */
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("recv propertyChange: " + e.getPropertyName() + " " + e.getOldValue() + " -> " + e.getNewValue());
-        }
-        updateLightStatusFields(false);
-    }
-
+    // if flag true, sets intensity and time fields
     private void updateLightStatusFields(boolean flag) {
         int knownState = light.getState();
         switch (knownState) {

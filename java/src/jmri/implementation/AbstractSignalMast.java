@@ -2,9 +2,7 @@ package jmri.implementation;
 
 import java.util.*;
 import java.util.List;
-
 import javax.annotation.*;
-
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
@@ -32,7 +30,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
         this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
@@ -105,7 +103,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             // notify listeners, if any
             firePropertyChange("Lit", oldLit, newLit);
         }
-
     }
 
     /**

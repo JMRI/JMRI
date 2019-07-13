@@ -250,8 +250,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**

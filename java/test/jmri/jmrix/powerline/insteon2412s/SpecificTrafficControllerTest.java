@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JUnit tests for the SpecificTrafficController class
+ * JUnit tests for the SpecificTrafficController class.
  *
  * @author	Bob Jacobsen Copyright 2005, 2007, 2008, 2009 Converted to multiple
  * connection
@@ -210,7 +210,12 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected SerialPortControllerScaffold() throws Exception {

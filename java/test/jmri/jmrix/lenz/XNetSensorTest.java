@@ -78,7 +78,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Test
     public void testXNetSensorStatusRequest2() {
         XNetInterfaceScaffold xnis2 = new XNetInterfaceScaffold(new LenzCommandStation());
-        XNetSensor s = new XNetSensor("XS513", xnis2);
+        XNetSensor s = new XNetSensor("XS513", xnis2, "X");
 
         s.requestUpdateFromLayout();
         // check that the correct message was sent
@@ -102,7 +102,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        t = new XNetSensor("XS042", xnis);
+        t = new XNetSensor("XS042", xnis, "X");
     }
 
     @Override

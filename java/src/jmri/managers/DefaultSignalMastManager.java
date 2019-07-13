@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalMastManager extends AbstractManager<SignalMast>
-        implements SignalMastManager, java.beans.PropertyChangeListener {
+        implements SignalMastManager {
 
     public DefaultSignalMastManager() {
         super();
@@ -120,8 +120,8 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalMast");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");
     }
 
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();

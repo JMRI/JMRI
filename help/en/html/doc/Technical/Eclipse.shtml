@@ -11,302 +11,246 @@
 <!--#include virtual="/Header.shtml" -->
 
 <body>
-	<div id="mBody">
-		<!--#include virtual="Sidebar.shtml" -->
+ <div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
 
-		<div id="mainContent">
-			<h1>JMRI Code: Building with Eclipse</h1>
+  <div id="mainContent">
+   <h1>JMRI Code: Building with Eclipse</h1>
 
-			<p>
-				Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>)
-				can be used for working with JMRI. Due to the lack of integration
-				between Ant (the primary JMRI build tool) and Eclipse, <a
-					href="Netbeans.shtml">NetBeans</a> is recommended unless you are
-				already familiar with Eclipse.
-			</p>
+   <p>
+    Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>) can be used for working with JMRI. Due
+    to the lack of integration between Ant (the primary JMRI build tool) and Eclipse, <a href="NetBeans.shtml">NetBeans</a>
+    is recommended unless you are already familiar with Eclipse.
+   </p>
 
-			<p>
-				Eclipse is a complex environment to work with. If you're already
-				familiar with IDEs like Microsoft Visual Studio it won't be too hard
-				to get used to, but it is definitely worth buying a textbook (e.g. <a
-					href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
-					The Java Developer's Guide to Eclipse</a>).
-			</p>
+   <p>
+    Eclipse is a complex environment to work with. If you're already familiar with IDEs like Microsoft Visual Studio it
+    won't be too hard to get used to, but it is definitely worth buying a textbook (e.g. <a
+     href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635"> The Java Developer's Guide to
+     Eclipse</a>).
+   </p>
 
-			<p>
-				JMRI developers use Git for source control. Source control using Git
-				is including as part of the Eclipse "Oxygen" download. For more
-				information or an alternate method for getting the JMRI source, see
-				<a href="getgitcode.shtml">JMRI: Getting the Code</a>.
-			</p>
+   <p>
+    JMRI developers use Git for source control. Source control using Git is including as part of the Eclipse "Oxygen"
+    download. For more information or an alternate method for getting the JMRI source, see <a href="getgitcode.shtml">JMRI:
+     Getting the Code</a>.
+   </p>
 
-			<p>These instructions were developed and tested using "Eclipse
-				IDE for Java Developers" version "Oxygen Release (4.7.0)".</p>
+   <p>These instructions were developed and tested using "Eclipse IDE for Java Developers" version "Oxygen Release
+    (4.7.0)".</p>
 
-			<p>
-				Note that you must also install the <a
-					href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
-					Development Kit</a> (not included with Eclipse) to build JMRI with
-				Eclipse.
-			<p>
-				If using versions of Eclipse older than "Mars", the <a
-					href="http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must be
-				installed in Eclipse.
-			</p>
+   <p>
+    Note that you must also install the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
+     Development Kit</a> (not included with Eclipse) to build JMRI with Eclipse.
+   <p>
+    If using versions of Eclipse older than "Mars", the <a href="http://www.eclipse.org/m2e/">M2Eclipse</a> plugin must
+    be installed in Eclipse.
+   </p>
 
-			<p>Also note that at the time of writing this help document that
-				JMRI requires Java version 8. You must confirm that JRE 8 is the
-				default Java Runtime Environment. Eclipse recommends installing
-				release "Luna" or later for Java 8, but there are workarounds
-				described online.</p>
-			<a name="getwgit" id="getwgit"></a>
+   <p>Also note that at the time of writing this help document that JMRI requires Java version 8. You must confirm
+    that JRE 8 is the default Java Runtime Environment. Eclipse recommends installing release "Luna" or later for Java
+    8, but there are workarounds described online.</p>
+   <a name="getwgit" id="getwgit"></a>
 
-			<h2>Eclipse version "Proton"</h2>
+   <h2>Eclipse version "Proton"</h2>
 
-			The "Proton" version of Eclipse released in the summer of 2018
-			requires a Maven project update after downloading the JMRI source
-			files. To do this, right click "jmri [...]" in the Package Explorer,
-			then in the menu, select "Maven" and in the sub menu "Update project
-			...". After the update is complete, do a project clean to rebuild the
-			source files.
+   The "Proton" version of Eclipse released in the summer of 2018 requires a Maven project update after downloading the
+   JMRI source files. To do this, right click "jmri [...]" in the Package Explorer, then in the menu, select "Maven" and
+   in the sub menu "Update project ...". After the update is complete, do a project clean to rebuild the source files.
 
 
-			<h2>Getting the JMRI Source using Git</h2>
-			To get the source code from GitHub using Git you need to do the
-			following:
+   <h2>Getting the JMRI Source using Git</h2>
+   To get the source code from GitHub using Git you need to do the following:
 
-			<ol>
-				<li>Go to <a href="https://github.com/">GitHub.com</a> and
-					create an account.
-				</li>
+   <ol>
+    <li>Go to <a href="https://github.com/">GitHub.com</a> and create an account.
+    </li>
 
-				<li>Then open Eclipse.</li>
+    <li>Then open Eclipse.</li>
 
-				<li>From the main menu bar select "File" then "Import..."</li>
+    <li>From the main menu bar select "File" then "Import..."</li>
 
-				<li>Click on "Git" then "Project from Git" then the "Next"
-					button.</li>
+    <li>Click on "Git" then "Project from Git" then the "Next" button.</li>
 
-				<li>Now select the repository source by clicking on "Clone
-					URI". The Source Git Repository screen should appear.</li>
-			</ol>
-			<a href="images/EclipseSourceGitRepository.png"><img
-				src="images/EclipseSourceGitRepository.png" width="350" height="312"
-				alt="Eclipse Git pane"></a>
+    <li>Now select the repository source by clicking on "Clone URI". The Source Git Repository screen should
+     appear.</li>
+   </ol>
+   <a href="images/EclipseSourceGitRepository.png"><img src="images/EclipseSourceGitRepository.png" width="350"
+    height="312" alt="Eclipse Git pane"></a>
 
-			<ol>
-				<li>Enter the URI "https://github.com/JMRI/JMRI".</li>
+   <ol>
+    <li>Enter the URI "https://github.com/JMRI/JMRI".</li>
 
-				<li>Enter your GitHub username and password in the
-					authentication fields.</li>
+    <li>Enter your GitHub username and password in the authentication fields.</li>
 
-				<li>Click the "Next" button and the Branch Selection screen
-					should appear.</li>
-			</ol>
-			<a href="images/EclipseGitBranchSelection.png"><img
-				src="images/EclipseGitBranchSelection.png" width="350" height="312"
-				alt="Eclipse Branch pane"></a>
+    <li>Click the "Next" button and the Branch Selection screen should appear.</li>
+   </ol>
+   <a href="images/EclipseGitBranchSelection.png"><img src="images/EclipseGitBranchSelection.png" width="350"
+    height="312" alt="Eclipse Branch pane"></a>
 
-			<ol>
-				<li>Select the branches you want to install. If you're not sure
-					which branches you need, select just the "master" branch. This
-					branch contains the latest code for JMRI.</li>
+   <ol>
+    <li>Select the branches you want to install. If you're not sure which branches you need, select just the
+     "master" branch. This branch contains the latest code for JMRI.</li>
 
-				<li>Click the "Next" button and the Local Destination screen
-					should appear.</li>
+    <li>Click the "Next" button and the Local Destination screen should appear.</li>
 
-				<li>Press the "Next" button if the local destination is
-					acceptable to you.</li>
+    <li>Press the "Next" button if the local destination is acceptable to you.</li>
 
-				<li>The download will now happen. It might take a while.</li>
+    <li>The download will now happen. It might take a while.</li>
 
-				<li>Next select the "Wizard for project import", use "Import
-					existing Eclipse project" then "Next"</li>
+    <li>Next select the "Wizard for project import", use "Import existing Eclipse project" then "Next"</li>
 
-				<li>Select "Finish" to complete the import.</li>
-			</ol>
+    <li>Select "Finish" to complete the import.</li>
+   </ol>
 
-			<p>After the import is complete the Eclipse Package Explorer
-				should look like this:</p>
-			<a href="images/EclipsePackageExplorer.png"><img
-				src="images/EclipsePackageExplorer.png" width="350" height="312"
-				alt="Eclipse Package Explorer pane"></a>
+   <p>After the import is complete the Eclipse Package Explorer should look like this:</p>
+   <a href="images/EclipsePackageExplorer.png"><img src="images/EclipsePackageExplorer.png" width="350" height="312"
+    alt="Eclipse Package Explorer pane"></a>
 
-			<p>Note that the first build can take a while and will require
-				Internet access.</p>
+   <p>Note that the first build can take a while and will require Internet access.</p>
 
-			<p>If you get the error "Cannot read lifecycle mapping for
-				artifact", open the "Run" menu, select "Run As", and then select
-				"Maven generate-sources" to fix the error and start the first build.</p>
+   <p>If you get the error "Cannot read lifecycle mapping for artifact", open the "Run" menu, select "Run As", and
+    then select "Maven generate-sources" to fix the error and start the first build.</p>
 
-			<p>To run an application do the following:</p>
+   <p>To run an application do the following:</p>
 
-			<ol>
-				<li>From the "Run" menu, select "Run Configurations..."
-				<li>On the left side, expand "Maven Build".</li>
+   <ol>
+    <li>From the "Run" menu, select "Run Configurations..."
+    <li>On the left side, expand "Maven Build".</li>
 
-				<li>Select "JMRI DecoderPro" or "JMRI PanelPro".</li>
+    <li>Select "JMRI DecoderPro" or "JMRI PanelPro".</li>
 
-				<li>Optional, select the "Common" tab, the section on "Display
-					in favorites menu", check the box next to "Run"</li>
+    <li>Optional, select the "Common" tab, the section on "Display in favorites menu", check the box next to "Run"</li>
 
-				<li>Click "Run" to run the application. Eclipse will retain the
-					build in the Run menu.</li>
-			</ol>
+    <li>Click "Run" to run the application. Eclipse will retain the build in the Run menu.</li>
+   </ol>
+   <p>To run an application native to Eclipse you might need the communication library. For for the application you
+    want to run, select the "Arguments" tab, and under VM argments enter (You should probably cut and paste): If you're
+    using a 32 bit windows system add the library path:</p>
+   <pre>
+          -Djava.library.path=.;lib;lib/windows/x86 
+          </pre>
+   Note if you're using a 64 bit windows system change the library path to:
+   <pre>
+          -Djava.library.path=.;lib;lib/windows/x64
+          </pre>
 
-			If during the launch of DecoderPro or PanelPro the program hangs, or
-			errors are reported to the console, there's a good chance that the
-			META-INT files weren't created. To fix, run the Ant "build.xml" as
-			described below with only two targets selected, "realclean" followed
-			by "panelpro". If the Ant build succeeds, you should see the program
-			launch the main PanelPro panel.
-			
-			<p>We also recommend that you deselect
-			"Scrub output folders when cleaning projects" found under
-			Window->Preferences->Java->Building->Output folder. This keeps the
-			META-INT files in place after they are created by the Ant build.</p>
-			
-			
-			<p>Afterwards refresh the project, and then do a project clean. The clean should
-			fire off a build and hopefully cleanup the errors.</p>
 
-			<h2>Building and running JMRI using Ant</h2>
+   <p>If during the launch of DecoderPro or PanelPro the program hangs, or errors are reported to the console,
+    there's a good chance that the META-INT files weren't created. To fix, run the Ant "build.xml" as described below
+    with only two targets selected, "realclean" followed by "panelpro". If the Ant build succeeds, you should see the
+    program launch the main PanelPro panel.</p>
 
-			<ol>
-				<li>Ant needs a JDK (Java Development Kit) in order to run the
-					supplied "build.xml" file. The Eclipse download doesn't include a
-					JDK, so you must download and install a JDK, and then configure ant
-					to use the JDK.</li>
+   <p>We also recommend that you deselect "Scrub output folders when cleaning projects" found under
+    Window->Preferences->Java->Building->Output folder. This keeps the META-INT files in place after they are created by
+    the Ant build.</p>
 
-				<li>Here's a link to the Oracle site that can provide you with
-					a JDK:
 
-					<p>
-						<a
-							href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
-							http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>
-					</p>
-				</li>
+   <p>Afterwards refresh the project, and then do a project clean. The clean should fire off a build and hopefully
+    cleanup the errors.</p>
 
-				<li>Select the build.xml file using the Package Explorer, then
-					right click, and a menu should appear.</li>
+   <h2>Building and running JMRI using Ant</h2>
 
-				<li>Now select "Run As" then "2 Ant Build".</li>
+   <ol>
+    <li>Ant needs a JDK (Java Development Kit) in order to run the supplied "build.xml" file. The Eclipse download
+     doesn't include a JDK, so you must download and install a JDK, and then configure ant to use the JDK.</li>
 
-				<li>Confirm under the menu tab "JRE" that you've selected a
-					JDK, not a JRE.</li>
+    <li>Here's a link to the Oracle site that can provide you with a JDK:
 
-				<li>Now press the "Run" button, this should start the ant
-					build.</li>
-			</ol>
+     <p>
+      <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">
+       http://www.oracle.com/technetwork/java/javase/downloads/index.html</a>
+     </p>
+    </li>
 
-			<p>
-				If the ant build fails, most likely it is because you need a JDK
-				(Java Development Kit) rather than a JRE (Java Runtime Environment)
-				which is the default. To change the JRE, select "Run As" "2 Ant
-				Build" and a new window should appear. Select the "JRE" tab. The
-				change the JRE, select the "Separate JRE:" radio button, and then
-				press the "Installed JREs" button. If you don't see a JDK, you need
-				to add one (from site above).<br> A new JMRI checkout should
-				build cleanly. If not, please check with the JMRIusers or
-				jmri-developers mailings lists for help.
-			</p>
+    <li>Select the build.xml file using the Package Explorer, then right click, and a menu should appear.</li>
 
-			<p>If the ant build succeeds, you can now launch any of the JMRI
-				applications from ant, and create a jmri.jar file if you wish. Use
-				the "2 Ant Build" and in the window select the "Targets" tab, and
-				use the appropriate checkbox to generate what you want.</p>
-			<a name="build" id="build"></a>
+    <li>Now select "Run As" then "2 Ant Build".</li>
 
-			<h2>Pushing changes to your GitHub branch</h2>
+    <li>Confirm under the menu tab "JRE" that you've selected a JDK, not a JRE.</li>
 
-			<p>
-				The standard practice for getting your changes included in main JMRI
-				code repository is to commit them to your local repository
-				periodically, then when ready to publish "push" an entire set of
-				changes to a repository belonging to you on GitHub, and then finally
-				making a request for somebody to "pull" your changes into the main
-				JMRI repository. See <a href="GitFAQ.shtml">JMRI: Git FAQ</a>
-				"Setting up a Git environment for JMRI Developers" for more
-				information.
-			</p>
+    <li>Now press the "Run" button, this should start the ant build.</li>
+   </ol>
 
-			<p>It is also good practice to "pull" all of the recent changes
-				from the main JMRI repository before performing your commits. After
-				a "pull" your workspace and eventually your remote GitHub repository
-				will be in synch with the main JMRI repository. To perform a "pull"
-				select your project, then "Team" then "Pull" from the menu.</p>
+   <p>
+    If the ant build fails, most likely it is because you need a JDK (Java Development Kit) rather than a JRE (Java
+    Runtime Environment) which is the default. To change the JRE, select "Run As" "2 Ant Build" and a new window should
+    appear. Select the "JRE" tab. The change the JRE, select the "Separate JRE:" radio button, and then press the
+    "Installed JREs" button. If you don't see a JDK, you need to add one (from site above).<br> A new JMRI checkout
+    should build cleanly. If not, please check with the JMRIusers or jmri-developers mailings lists for help.
+   </p>
 
-			<p>If you want to see which files are going to be modified before
-				the "Pull", you can use the "Team Synchronizing" feature. To do so,
-				right click on your project, the "Team" then "Synchronize Workspace"</p>
+   <p>If the ant build succeeds, you can now launch any of the JMRI applications from ant, and create a jmri.jar
+    file if you wish. Use the "2 Ant Build" and in the window select the "Targets" tab, and use the appropriate checkbox
+    to generate what you want.</p>
+   <a name="build" id="build"></a>
 
-			<p>Pushing to your GitHub branch:</p>
+   <h2>Pushing changes to your GitHub branch</h2>
 
-			<ul>
-				<li>First, commit your changes to the local repository on your
-					computer
+   <p>
+    The standard practice for getting your changes included in main JMRI code repository is to commit them to your local
+    repository periodically, then when ready to publish "push" an entire set of changes to a repository belonging to you
+    on GitHub, and then finally making a request for somebody to "pull" your changes into the main JMRI repository. See
+    <a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a Git environment for JMRI Developers" for more information.
+   </p>
 
-					<p>To commit a set of changes, right click on the project that
-						you want to commit, and select "Team" followed by "Commit". Enter
-						a commit message and select the files you wish to commit.</p>
-				</li>
+   <p>It is also good practice to "pull" all of the recent changes from the main JMRI repository before performing
+    your commits. After a "pull" your workspace and eventually your remote GitHub repository will be in synch with the
+    main JMRI repository. To perform a "pull" select your project, then "Team" then "Pull" from the menu.</p>
 
-				<li>Next, "push" a set of changes from your local repository to
-					your repository on GitHub. (You do this so others can access it and
-					pick it up for inclusion into JMRI)
+   <p>If you want to see which files are going to be modified before the "Pull", you can use the "Team
+    Synchronizing" feature. To do so, right click on your project, the "Team" then "Synchronize Workspace"</p>
 
-					<p>
-						Before you can push your changes to GitHub for the first time,
-						you'll have to <a href="gitdeveloper.shtml#repo">create your
-							own GitHub repository</a> (which you may have done above) and "fork"
-						the JMRI repository. Log on to your account at <a
-							href="https://github.com/">GitHub.com</a> and then navigate to
-						the JMRI repository <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
-						In the upper right hand corner of the page you will find a button
-						labeled "Fork". Press the "Fork" button to create your own
-						repository of the JMRI source.
-					</p>
+   <p>Pushing to your GitHub branch:</p>
 
-					<p>To push to your GitHub repository, again select "Team" then
-						"Remote" then "Configure Push to Upstream". In the "Configure
-						Push" window, click on the "Push URIs" and then the "Add" button.
-						In the "New URI" window enter the URL of your GitHub repository
-						along with your username and password. After pressing "Finish" the
-						"Configure Push" window should look like the image below:</p> <a
-					href="images/EclipseConfigurePush.png"><img
-						src="images/EclipseConfigurePush.png" width="350" height="322"
-						alt="Eclipse Error pane"></a>
+   <ul>
+    <li>First, commit your changes to the local repository on your computer
 
-					<p>Press either the "Save and Push" or the "Save" button. Later
-						when you want to push new changes to your repository on GitHub,
-						you can simply commit them as described above, and then use the
-						"Push" icon in the Synchronize window.</p>
-				</li>
+     <p>To commit a set of changes, right click on the project that you want to commit, and select "Team" followed
+      by "Commit". Enter a commit message and select the files you wish to commit.</p>
+    </li>
 
-				<li>Finally, submit a "Pull Request" to the main JMRI code
-					repository on the GitHub website.
+    <li>Next, "push" a set of changes from your local repository to your repository on GitHub. (You do this so
+     others can access it and pick it up for inclusion into JMRI)
 
-					<p>
-						To do this, start by signing on to the <a href="http://github.com">GitHub
-							web site</a>, selecting your repository and clicking the <a
-							href="gitdeveloper.shtml#pull">Pull Request button</a>. For more
-						info, see the <a href="gitdeveloper.shtml#pull">developer
-							instructions,</a>
-					</p>
-				</li>
-			</ul>
-			<a name="errors" id="errors"></a>
+     <p>
+      Before you can push your changes to GitHub for the first time, you'll have to <a href="gitdeveloper.shtml#repo">create
+       your own GitHub repository</a> (which you may have done above) and "fork" the JMRI repository. Log on to your account
+      at <a href="https://github.com/">GitHub.com</a> and then navigate to the JMRI repository <a
+       href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a> In the upper right hand corner of the page
+      you will find a button labeled "Fork". Press the "Fork" button to create your own repository of the JMRI source.
+     </p>
 
-			<h2>Compiler Errors and Warnings</h2>
+     <p>To push to your GitHub repository, again select "Team" then "Remote" then "Configure Push to Upstream". In
+      the "Configure Push" window, click on the "Push URIs" and then the "Add" button. In the "New URI" window enter the
+      URL of your GitHub repository along with your username and password. After pressing "Finish" the "Configure Push"
+      window should look like the image below:</p> <a href="images/EclipseConfigurePush.png"><img
+      src="images/EclipseConfigurePush.png" width="350" height="322" alt="Eclipse Error pane"></a>
 
-			As of 10/18/2017 roughly 4300 warnings were being reported by the
-			Eclipse. You can ignore these for now.
+     <p>Press either the "Save and Push" or the "Save" button. Later when you want to push new changes to your
+      repository on GitHub, you can simply commit them as described above, and then use the "Push" icon in the
+      Synchronize window.</p>
+    </li>
 
-			<!--#include virtual="/Footer.shtml" -->
-		</div>
-		<!-- closes #mainContent-->
-	</div>
-	<!-- closes #mBody-->
+    <li>Finally, submit a "Pull Request" to the main JMRI code repository on the GitHub website.
+
+     <p>
+      To do this, start by signing on to the <a href="http://github.com">GitHub web site</a>, selecting your repository
+      and clicking the <a href="gitdeveloper.shtml#pull">Pull Request button</a>. For more info, see the <a
+       href="gitdeveloper.shtml#pull">developer instructions,</a>
+     </p>
+    </li>
+   </ul>
+   <a name="errors" id="errors"></a>
+
+   <h2>Compiler Errors and Warnings</h2>
+
+   As of 10/18/2017 roughly 4300 warnings were being reported by the Eclipse. You can ignore these for now.
+
+   <!--#include virtual="/Footer.shtml" -->
+  </div>
+  <!-- closes #mainContent-->
+ </div>
+ <!-- closes #mBody-->
 </body>
 </html>

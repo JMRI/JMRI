@@ -121,7 +121,7 @@
         <li>contact -
         </ul>
         <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in
-        the source.  The <a href="http://jmri.org/JavaDoc/doc">Javadoc</a> is one such section, along with some of the
+        the source.  The <a href="http://jmri.org/JavaDoc/doc/">Javadoc</a> is one such section, along with some of the
         <a href="http://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.
 
         <h2>Updating the jmri.org site</h2>

@@ -7,6 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: DecoderPro Frequently Asked Questions</title>
+
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -16,6 +17,13 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
+    <!-- FAQ-Head -->
+    <script type="text/javascript">
+    /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
+  </script>
+    <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
+          media="screen">
+    <!-- /FAQ-Head -->
 </head>
 
 <body>
@@ -33,33 +41,32 @@
       questions" list. Items get listed here if they're asked a
       lot, even if they're also available somewhere else.</p>
 
-      <dl>
-        <dt class="left"><a name="newdecoder" id="newdecoder">How
+      <dl class="faq">
+        <dt class="on"><a name="newdecoder" id="newdecoder">How
         can I get a new decoder type defined?</a></dt>
 
-        <dd class="first">
-                    <p>A completely new decoder needs a new or updated
-          configuration file. You can <a href=
+        <dd>
+          A completely new decoder needs a new or updated
+          decoder configuration file. You can <a href=
           "CreateDecoder.shtml">create your own</a> or ask on
           <a href=
-          "https://groups.io/g/jmriusers">JMRI
-          users</a> for somebody to create one for
-          you.</p>
+          "https://groups.io/g/jmriusers">JMRI users</a> for
+          somebody to create one for you.<br>
 
-          <p>In many cases, you can use an existing decoder that's
+          In many cases, you can use an existing decoder that's
           "close enough". For example, a decoder from the same
           manufacturer that has a different size or current rating
-          might have the same configuration CVs, so it's decoder
-          definition would work fine.</p>
+          might have the same configuration CVs, so its decoder
+          definition would work fine.
         </dd>
 
-        <dt class="left"><a name="newfile" id="newfile">What do I
-        do with this new decoder file?</a></dt>
+        <dt><a name="newfile" id="newfile">What do I do with this
+        new decoder file?</a></dt>
 
-        <dd class="first">
-          <p>For DecoderPro to use the definition of a decoder type
+        <dd>
+          For DecoderPro to use the definition of a decoder type
           in a new decoder file, the new file has to be included in
-          DecoderPro's index of decoder types. To do this:</p>
+          DecoderPro's index of decoder types. To do this:
 
           <ul>
             <li>In your JMRI install directory, you should find a
@@ -75,30 +82,30 @@
             new definition should be available to you.</li>
           </ul>
 
-          <p>Please make sure that the new configuration file has
+          Please make sure that the new configuration file has
           been contributed to the project so it will be included in
           future releases, and so you won't have to remake the
-          index each time you update.</p>
+          index each time you update.
         </dd>
 
-        <dt class="left"><a name="update" id="update">How can I get
+        <dt><a name="update" id="update">How can I get
         the latest decoder definitions?</a></dt>
 
-        <dd class="first">
-          <p>The easiest way to update really is to download a new
+        <dd>
+          The easiest way to update really is to download a new
           version of the program. This is unlikely to cause
           problems, and automatically installs the latest versions
-          of that have been contributed to DecoderPro.</p>
+          of that have been contributed to DecoderPro.<br>
 
-          <p>Updates occur continuously between versions of the
+          Updates occur continuously between versions of the
           program. As files are contributed, we make them available
           on our <a href="http://jmri.org/xml/decoders">collected
           decoder definitions</a> web page. You can download them
           from there, but note that most web browsers will not let
           you directly view them; you really do have to download
-          them.</p>
+          them.<br>
 
-          <p>While people are working on decoder definitions, they
+          While people are working on decoder definitions, they
           often put their draft definitions in the <a href=
           "https://groups.io/g/jmriusers/files">"Files"
           area of JMRI users </a> (log in to
@@ -108,14 +115,14 @@
           Note that as an anti-spam measure, you will have to
           <a href=
           "https://groups.io/g/jmriusers/join">
-          join the group</a> to be able to download the files.</p>
+          join the group</a> to be able to download the files.
         </dd>
 
-        <dt class="left"><a name="lb-xp" id="lb-xp">Why does my
+        <dt><a name="lb-xp" id="lb-xp">Why does my
         LocoBuffer-II not work in Windows XP?</a></dt>
 
-        <dd class="first">
-          <p>With Windows XP, your serial port parameters might not
+        <dd>
+          With Windows XP, your serial port parameters might not
           be properly set for hardware flow control. To fix this,
           right-click on My Computer and select Properties. Go to
           the Hardware tab and click on Device Manager. Open up the
@@ -124,10 +131,13 @@
           select Properties. Go to the Port Settings tab and set
           the options to: <em>19200, 8, None, 1, Hardware</em>.
           Click <em>OK</em>. Close the Properties panel. Restart
-          JMRI and verify your connection settings.</p>
+          JMRI and verify your connection settings.
         </dd>
       </dl><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <!-- FAQ-Tail -->
+  <script type="text/javascript" src="/web/js/faq.js">
+  </script><!-- /FAQ-Tail -->
 </body>
 </html>

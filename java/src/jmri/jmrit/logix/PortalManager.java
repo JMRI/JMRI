@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2014
  */
 public class PortalManager extends AbstractManager<Portal>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
 
     private int _nextSName = 1;
 
@@ -159,8 +159,8 @@ public class PortalManager extends AbstractManager<Portal>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNamePortal");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNamePortals" : "BeanNamePortal");
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class);

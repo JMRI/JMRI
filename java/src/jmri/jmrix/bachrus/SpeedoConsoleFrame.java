@@ -1079,6 +1079,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
         speedoDialDisplay.update(currentSpeed);
         speedoDialDisplay.repaint();
+
+        // using profile timer to trigger each next step
+        profileTimer.setRepeats(true);
+        profileTimer.start();
     }
 
     /**
@@ -1667,7 +1671,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         //release throttle
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
-            //jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
             //throttle.release();
             throttle = null;
@@ -1788,19 +1791,29 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     @Override
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
-
+          
     /**
-     * Called when a throttle must be stolen for the requested address. The
-     * throttle will be automatically stolen
-     *
-     * @param address the requested address
+     * Called when a throttle must be stolen for the requested address. Since this is a 
+     * an automatically stealing implementation, the throttle will be automatically stolen.
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
      */
     @Override
+    @Deprecated
     public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * Called when we must decide to steal the throttle for the requested address. Since this is a 
+     * an automatically stealing implementation, the throttle will be automatically stolen.
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
+      InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
     //</editor-fold>
+          
     //<editor-fold defaultstate="collapsed" desc="Other Timers">
     javax.swing.Timer replyTimer = null;
     javax.swing.Timer displayTimer = null;

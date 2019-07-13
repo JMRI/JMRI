@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import org.slf4j.Logger;
@@ -75,22 +76,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         if (isNumber(key)) {
             key = makeSystemName(key);
         }
-        String name = normalizeSystemName(key);
-        return _tsys.get(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
+        return _tsys.get(key);
     }
 
     /** {@inheritDoc} */
@@ -103,39 +89,37 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Override
     public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
         log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
-        String systemName = normalizeSystemName(sysName);
-        log.debug("    normalized name: \"{}\"", systemName);
 
-        java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with "+systemName);
+        java.util.Objects.requireNonNull(sysName, "Generated systemName may not be null, started with "+sysName);
 
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
-                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
+        if (!sysName.startsWith(getSystemPrefix() + typeLetter()) 
+                || !(sysName.length() > (getSystemPrefix() + typeLetter()).length())) {
             log.debug("Invalid system name for sensor: {} needed {}{} followed by a suffix",
-                    systemName, getSystemPrefix(), typeLetter());
-            throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
+                    sysName, getSystemPrefix(), typeLetter());
+            throw new NamedBean.BadSystemNameException("systemName \""+sysName+"\" bad format in newSensor");
         }
 
         // return existing if there is one
         Sensor s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+            if (getBySystemName(sysName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, sysName, s.getSystemName());
             }
             return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        if ((s = getBySystemName(sysName)) != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
                 log.warn("Found sensor via system name ({}) with non-null user name ({}). Sensor \"{}({})\" cannot be used.",
-                        systemName, s.getUserName(), systemName, userName);
+                        sysName, s.getUserName(), sysName, userName);
             }
             return s;
         }
 
         // doesn't exist, make a new one
-        s = createNewSensor(systemName, userName);
+        s = createNewSensor(sysName, userName);
 
         // if that failed, blame it on the input arguments
         if (s == null) {
@@ -150,8 +134,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSensor");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
     }
 
     /**
@@ -300,8 +284,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);

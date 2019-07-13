@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (C) 2016 
  */
-public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
+public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
     public Z21XNetTurnoutManager(XNetTrafficController controller, String prefix) {
         super(controller, prefix);
@@ -39,18 +39,14 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
     // listen for turnouts, creating them as needed
     @Override
     public void message(XNetReply l) {
-        if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
-        }
+        log.debug("received message: {}", l);
         if (l.getElement(0)==Z21Constants.LAN_X_TURNOUT_INFO) {
           // bytes 2 and 3 are the address.
           int address = (l.getElement(1) << 8) + l.getElement(2);
           // the address sent byte the Z21 is one less than what JMRI's 
           // XpressNet code (and lenz systems) expect.
           address = address + 1; 
-          if(log.isDebugEnabled()) {
-               log.debug("message has address: {}",address);
-          }
+          log.debug("message has address: {}", address);
           // make sure we know about this turnout.
           String s = prefix + typeLetter() + address;
           forwardMessageToTurnout(s,l);

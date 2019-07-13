@@ -58,17 +58,6 @@ public class TrackerTableAction extends AbstractAction {
         super(menuOption);
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static TrackerTableAction xetInstance() {
-        return InstanceManager.getDefault(TrackerTableAction.class);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (_frame != null) {
@@ -311,7 +300,7 @@ public class TrackerTableAction extends AbstractAction {
             boolean retOK = false;
             String blockName = _trainLocationBox.getText();
             if (blockName != null) {
-                OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName.trim());
+                OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName);
                 if (block == null) {
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", blockName),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);

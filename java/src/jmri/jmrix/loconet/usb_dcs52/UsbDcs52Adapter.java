@@ -40,9 +40,9 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validBaudNumber().length; i++) {
+        for (int i = 0; i < validBaudNumbers().length; i++) {
             if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumber()[i];
+                baud = validBaudNumbers()[i];
             }
         }
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
@@ -56,8 +56,8 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
         log.info("USB DCS52 adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
+                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
@@ -134,7 +134,7 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return String[] containing the single valid baud rate, "57,600".
      */
@@ -144,12 +144,12 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
-     * @return int[] containing the single valud baud rate, 57600.
+     * {@inheritDoc}
+     *
+     * @return int[] containing the single valid baud rate, 57600.
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{57600};
     }
 

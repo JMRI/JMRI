@@ -31,6 +31,7 @@ public class AutoTurnoutsTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After

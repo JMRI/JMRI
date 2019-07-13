@@ -304,8 +304,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     @Override
@@ -314,8 +313,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTurnout");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
 
     // initialize logging
