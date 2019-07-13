@@ -312,9 +312,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Speed Matching Memeber Variables">
     //PID Controller Values
-    protected static float Kp = 0.75f;
-    protected static float Ki = 0.3f;
-    protected static float Kd = 0.4f;
+    protected static float kP = 0.75f;
+    protected static float kI = 0.3f;
+    protected static float kD = 0.4f;
     protected float speedMatchIntegral = 0;
     protected float speedMatchDerivative = 0;
     protected float lastSpeedMatchError = 0;
@@ -1220,7 +1220,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedMatchIntegral += speedMatchError;
         speedMatchDerivative = speedMatchError - lastSpeedMatchError;
 
-        int value = (lastValue + Math.round((Kp * speedMatchError) + (Ki * speedMatchIntegral) + (Kd * speedMatchDerivative)));
+        int value = (lastValue + Math.round((kP * speedMatchError) + (kI * speedMatchIntegral) + (kD * speedMatchDerivative)));
 
         if (value > 255) {
             value = 255;
@@ -1922,7 +1922,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * ops mode programmer
      */
     protected synchronized void writeVMid() {
-        int vMid = Math.round((vStart + vHigh) / 2);
+        int vMid = ((vStart + vHigh) / 2);
         progState = ProgState.WRITE6;
         //statusLabel.setText(Bundle.getMessage("ProgSetVMid", vMid));
         startOpsModeWrite("6", vMid);
