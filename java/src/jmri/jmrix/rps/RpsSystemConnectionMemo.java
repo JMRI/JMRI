@@ -116,7 +116,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
      * @param locale  the locale for user messages
      * @return name, unchanged
      */
-    public String validSystemNameFormat(String name, Manager manager, Locale locale) {
+    public String validateSystemNameFormat(String name, Manager manager, Locale locale) {
         manager.validateSystemNamePrefix(name, locale);
         String[] points = name.substring(manager.getSystemNamePrefix().length()).split(";");
         if (points.length < 3) {

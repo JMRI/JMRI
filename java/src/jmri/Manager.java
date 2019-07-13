@@ -242,7 +242,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckReturnValue
     @Nonnull
     public default String validateTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
-        name = validateSystemNameFormat(name, locale);
+        name = validateSystemNamePrefix(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
         if (!suffix.equals(suffix.trim())) {

@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Reporter;
 import org.slf4j.Logger;
@@ -53,13 +54,21 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
         }
         return sys;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return memo.validateSystemNameFormat(name, this, locale);
+    }
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (memo.validSystemNameFormat(systemName, typeLetter()));
+        return memo.validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
