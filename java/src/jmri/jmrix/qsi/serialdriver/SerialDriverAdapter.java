@@ -172,18 +172,6 @@ public class SerialDriverAdapter extends QsiPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    /*
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    SerialDriverAdapter mInstance = null;
-
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }
