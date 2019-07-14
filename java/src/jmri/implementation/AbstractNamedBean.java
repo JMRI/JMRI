@@ -107,6 +107,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
     @SuppressWarnings("deprecation") // overrides deprecated method
@@ -116,6 +117,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
     @SuppressWarnings("deprecation") // overrides deprecated method

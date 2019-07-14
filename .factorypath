@@ -87,7 +87,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/com/github/spotbugs/spotbugs-annotations/3.1.7/spotbugs-annotations-3.1.7.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/digi/xbee/xbee-java-library/1.2.1/xbee-java-library-1.2.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/github/purejavacomm/purejavacomm/1.0.1.RELEASE/purejavacomm-1.0.1.RELEASE.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/netbeans/api/org-openide-util-lookup/RELEASE82/org-openide-util-lookup-RELEASE82.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/netbeans/api/org-openide-util-lookup/RELEASE110/org-openide-util-lookup-RELEASE110.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/hid4java/hid4java/0.5.0/hid4java-0.5.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/networknt/json-schema-validator/1.0.10/json-schema-validator-1.0.10.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/paho/mqtt-client/0.4.0/mqtt-client-0.4.0.jar" enabled="true" runInBatchMode="false"/>

@@ -122,17 +122,6 @@ public class CatalogTreeModel extends DefaultTreeModel implements InstanceManage
     DefaultMutableTreeNode dRoot;
 
     /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public CatalogTreeModel instance() {
-        return InstanceManager.getDefault(CatalogTreeModel.class);
-    }
-
-    /**
      * Starting point in the .jar file for the "icons" part of the tree
      */
     static final String resourceRoot = "resources";

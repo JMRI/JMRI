@@ -217,18 +217,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         return (retv);
     }
 
-    /**
-     * @return the default BlockManager instance
-     * @deprecated since 4.9.1; use
-     * {@link InstanceManager#getDefault(Class)} instead
-     */
-    @Deprecated
-    @CheckForNull
-    static public BlockManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(BlockManager.class);
-    }
-
     String defaultSpeed = "Normal";
 
     /**

@@ -277,16 +277,5 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         }
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static OptionsFile instance() {
-        return InstanceManager.getDefault(OptionsFile.class);
-    }
-
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class);
 }

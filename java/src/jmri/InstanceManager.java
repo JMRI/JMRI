@@ -585,16 +585,6 @@ public final class InstanceManager {
     }
 
     /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setCommandStation(CommandStation p) {
-        store(p, CommandStation.class);
-    }
-
-    /**
      * @param p consist manager to make store
      * @deprecated Since 4.11.4, use
      * {@link #store(java.lang.Object, java.lang.Class)} directly.
@@ -618,17 +608,6 @@ public final class InstanceManager {
         } else {
             log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
         }
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setAddressedProgrammerManager");        
-        store(p, AddressedProgrammerManager.class);
     }
 
     // Needs to have proxy manager converted to work

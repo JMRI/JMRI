@@ -462,45 +462,6 @@ public class StringUtil {
     }
 
     /**
-     * Replace various special characters with their "escaped" counterpart in
-     * UTF-8 character encoding, to facilitate use with web servers.
-     *
-     * @param s String to escape
-     * @return String with escaped values
-     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
-        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
-     * Replace various escaped character in UTF-8 character encoding with their
-     * "regular" counterpart, to facilitate use with web servers.
-     *
-     * @param s String to unescape
-     * @return String with escaped values replaced with regular values
-     * @throws java.io.UnsupportedEncodingException if unable to unescape from
-     *                                              UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
-        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
      * Convert an array of objects into a single string. Each object's toString
      * value is displayed within square brackets and separated by commas.
      *
