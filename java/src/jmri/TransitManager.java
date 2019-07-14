@@ -194,22 +194,10 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         return list;
     }
 
-    /**
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public TransitManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(TransitManager.class);
-    }
-
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
 }

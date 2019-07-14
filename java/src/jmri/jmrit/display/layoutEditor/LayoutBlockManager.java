@@ -192,18 +192,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
-     * Get LayoutBlockManager instance.
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public LayoutBlockManager instance() {
-        return InstanceManager.getDefault(LayoutBlockManager.class);
-    }
-
-    /**
      * Find a LayoutBlock with a specified Sensor assigned as its
      * occupancy sensor.
      *

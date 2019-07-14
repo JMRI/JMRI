@@ -40,17 +40,6 @@ public class JsonServerPreferences extends Bean {
     private int asLoadedPort = DEFAULT_PORT;
     private final static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
-    /**
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.4; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static JsonServerPreferences getDefault() {
-        return InstanceManager.getDefault(JsonServerPreferences.class);
-    }
-
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
