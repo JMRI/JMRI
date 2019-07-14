@@ -32,14 +32,6 @@ public class ThrottleManager extends AbstractThrottleManager {
         jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class, this);
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public ThrottleManager instance() {
-        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
-    }
-
     Throttle currentThrottle = null;
 
     /**

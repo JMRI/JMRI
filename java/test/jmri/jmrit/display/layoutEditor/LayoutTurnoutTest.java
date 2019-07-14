@@ -557,7 +557,7 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltRH.getConnection(invalid type) is null",
-                    ltRH.getConnection(LayoutEditor.NONE));
+                    ltRH.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -565,7 +565,7 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
-                    ltLH.getConnection(LayoutEditor.NONE));
+                    ltLH.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -573,7 +573,7 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
-                    ltWY.getConnection(LayoutEditor.NONE));
+                    ltWY.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -581,7 +581,7 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
-                    ltDX.getConnection(LayoutEditor.NONE));
+                    ltDX.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -589,7 +589,7 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
-                    ltRX.getConnection(LayoutEditor.NONE));
+                    ltRX.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -597,7 +597,7 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
-                    ltLX.getConnection(LayoutEditor.NONE));
+                    ltLX.getConnection(LayoutTrack.NONE));
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
         } catch (JmriException ex) {
         }
@@ -611,42 +611,42 @@ public class LayoutTurnoutTest {
 
         try {
             Assert.assertNull("ltRH.getConnection(valid type) is null",
-                    ltRH.getConnection(LayoutEditor.TURNOUT_A));
+                    ltRH.getConnection(LayoutTrack.TURNOUT_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLH.getConnection(valid type) is null",
-                    ltLH.getConnection(LayoutEditor.TURNOUT_A));
+                    ltLH.getConnection(LayoutTrack.TURNOUT_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltLH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltWY.getConnection(valid type) is null",
-                    ltWY.getConnection(LayoutEditor.TURNOUT_A));
+                    ltWY.getConnection(LayoutTrack.TURNOUT_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltWY.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltDX.getConnection(valid type) is null",
-                    ltDX.getConnection(LayoutEditor.TURNOUT_A));
+                    ltDX.getConnection(LayoutTrack.TURNOUT_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltDX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltRX.getConnection(valid type) is null",
-                    ltRX.getConnection(LayoutEditor.TURNOUT_A));
+                    ltRX.getConnection(LayoutTrack.TURNOUT_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLX.getConnection(valid type) is null",
-                    ltLX.getConnection(LayoutEditor.TURNOUT_A));
+                    ltLX.getConnection(LayoutTrack.TURNOUT_A));
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltLX.getConnection(valid type)");
         }
@@ -659,7 +659,7 @@ public class LayoutTurnoutTest {
 
         try {
             // test invalid connection type
-            ltRH.setConnection(LayoutEditor.NONE, null, LayoutEditor.NONE);
+            ltRH.setConnection(LayoutTrack.NONE, null, LayoutTrack.NONE);
             Assert.fail("No exception thrown on ltRH.setConnection(invalid connection type)");
         } catch (JmriException ex) {
         }
@@ -667,7 +667,7 @@ public class LayoutTurnoutTest {
 
         try {
             // test invalid object type
-            ltRH.setConnection(LayoutEditor.POS_POINT, null, LayoutEditor.POS_POINT);
+            ltRH.setConnection(LayoutTrack.POS_POINT, null, LayoutTrack.POS_POINT);
             Assert.fail("No exception thrown on ltRH.setConnection(invalid object type)");
         } catch (JmriException ex) {
         }
@@ -675,7 +675,7 @@ public class LayoutTurnoutTest {
 
         try {
             // test valid types
-            ltRH.setConnection(LayoutEditor.TURNOUT_A, null, LayoutEditor.NONE);
+            ltRH.setConnection(LayoutTrack.TURNOUT_A, null, LayoutTrack.NONE);
         } catch (JmriException ex) {
             Assert.fail("Exception thrown on ltRH.setConnection(valid types)");
         }
@@ -686,13 +686,13 @@ public class LayoutTurnoutTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
-        ltRH.setConnectA(null, LayoutEditor.POS_POINT);
+        ltRH.setConnectA(null, LayoutTrack.POS_POINT);
         jmri.util.JUnitAppender.assertErrorMessage("unexpected type of A connection to layoutturnout - 1");
-        ltLH.setConnectB(null, LayoutEditor.POS_POINT);
+        ltLH.setConnectB(null, LayoutTrack.POS_POINT);
         jmri.util.JUnitAppender.assertErrorMessage("unexpected type of B connection to layoutturnout - 1");
-        ltWY.setConnectC(null, LayoutEditor.POS_POINT);
+        ltWY.setConnectC(null, LayoutTrack.POS_POINT);
         jmri.util.JUnitAppender.assertErrorMessage("unexpected type of C connection to layoutturnout - 1");
-        ltDX.setConnectD(null, LayoutEditor.POS_POINT);
+        ltDX.setConnectD(null, LayoutTrack.POS_POINT);
         jmri.util.JUnitAppender.assertErrorMessage("unexpected type of D connection to layoutturnout - 1");
     }
 
@@ -701,10 +701,10 @@ public class LayoutTurnoutTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
-        ltRH.setConnectA(null, LayoutEditor.NONE);
-        ltLH.setConnectB(null, LayoutEditor.NONE);
-        ltWY.setConnectC(null, LayoutEditor.NONE);
-        ltDX.setConnectD(null, LayoutEditor.NONE);
+        ltRH.setConnectA(null, LayoutTrack.NONE);
+        ltLH.setConnectB(null, LayoutTrack.NONE);
+        ltWY.setConnectC(null, LayoutTrack.NONE);
+        ltDX.setConnectD(null, LayoutTrack.NONE);
     }
 
     @Test

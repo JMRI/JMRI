@@ -24,16 +24,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         super(memo);
     }
 
-    static private EcosDccThrottleManager mInstance = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EcosDccThrottleManager instance() {
-        return mInstance;
-    }
-
     @Override
     public void reply(EcosReply m) {
         //We are not sending commands from here yet!
@@ -145,7 +135,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
             }
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class);
