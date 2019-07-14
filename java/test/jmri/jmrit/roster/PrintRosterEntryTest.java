@@ -23,6 +23,7 @@ public class PrintRosterEntryTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        r.setFileName("java/test/jmri/jmrit/roster/ACL1012.xml");
         PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);

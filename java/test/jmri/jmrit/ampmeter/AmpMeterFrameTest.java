@@ -1,6 +1,7 @@
 package jmri.jmrit.ampmeter;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import org.junit.*;
@@ -84,6 +85,10 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
              @Override
              public boolean hasVoltage(){
                 return false;
+             }
+             @Override
+             public CurrentUnits getCurrentUnits() {
+                 return  CurrentUnits.CURRENT_UNITS_PERCENTAGE;
              }
              @Override
              public String getHardwareMeterName(){

@@ -1,13 +1,17 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import java.beans.PropertyVetoException;
+
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import jmri.Turnout;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.Turnout;
 
 /**
  * XBeeTurnoutManagerTest.java
@@ -86,6 +90,21 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l, 
+        l.makeSystemName("00 02:1"),
+        l.makeSystemName("00 02:2"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("00 02:1");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
 
     // The minimal setup for log4J
     @Override
@@ -115,5 +134,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         tc.terminate();
         jmri.util.JUnitUtil.tearDown();
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManagerTest.class);
 
 }

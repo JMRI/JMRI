@@ -438,7 +438,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     }
 
     /*
-     * ** Methods that return user interface strings ****
+     * Methods that return user interface strings ****
      */
 
     /**
@@ -489,7 +489,7 @@ public class DefaultConditionalAction implements ConditionalAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (Bundle.getMessage("BeanNameOBlock"));
             case Conditional.ITEM_TYPE_ENTRYEXIT:
-                return (Bundle.getMessage("EntryExit"));
+                return (Bundle.getMessage("BeanNameEntryExit"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (Bundle.getMessage("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:

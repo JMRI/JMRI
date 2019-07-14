@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ThrottleManager for debugging.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2005
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
@@ -27,10 +27,15 @@ public class DebugThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        // Immediately trigger the callback.
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new debug throttle for " + address);
-        notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
+        if (a instanceof DccLocoAddress) {
+            // Immediately trigger the callback.
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new debug throttle for " + address);
+            notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",a);
+        }
     }
 
     /**
@@ -63,9 +68,14 @@ public class DebugThrottleManager extends AbstractThrottleManager {
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
         if (super.disposeThrottle(t, l)) {
-            DebugThrottle lnt = (DebugThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof DebugThrottle) {
+                DebugThrottle lnt = (DebugThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
+            else {
+                log.error("DccThrottle {} is not a DebugThrottle",t);
+            }
         }
         return false;
     }

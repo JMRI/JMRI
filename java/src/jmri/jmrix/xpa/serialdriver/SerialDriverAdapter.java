@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
@@ -26,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Paul Bender Copyright (C) 2004
  */
-public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends XpaPortController {
 
     public SerialDriverAdapter() {
 
@@ -154,11 +156,20 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     * Currently only 9,600 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
     }
 
     private boolean opened = false;

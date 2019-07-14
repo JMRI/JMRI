@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.Manager.NameValidity;
+import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -55,32 +57,21 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
 
     @Test
-    public void testLowerLower() {
-        Sensor t = l.provideSensor("ms+n1e77;-n1e45");
-        Assert.assertNotNull("exists",t);
-        Assert.assertTrue("event lowercase",t == l.getSensor(t.getSystemName()));
-        Sensor t2 = l.provideSensor("msxabcdef;xfedcba");
-        Assert.assertNotNull("exists",t2);
-        Assert.assertTrue("hex lowercase",t2 == l.getSensor(t2.getSystemName()));
-    }
-
-    @Test
-    public void testLowerUpper() {
-        Sensor t = l.provideSensor("ms+n1e77;-n1e45");
-        Assert.assertNotNull("exists",t);
-        Assert.assertTrue("event lower upper",t == l.getSensor(t.getSystemName().toUpperCase()));
-        Sensor t2 = l.provideSensor("msxabcdef;xfedcba");
-        Assert.assertNotNull("exists",t2);
-        Assert.assertTrue("hex lower upper",t2 == l.getSensor(t2.getSystemName().toUpperCase()));
-    }
-
-    @Override
-    @Test
-    public void testUpperLower() {
-        Sensor t = l.provideSensor("MSXABCDEF01;XFFEDCCBA");
-        Assert.assertTrue(" hex upper lower",t == l.getSensor(t.getSystemName().toLowerCase()));
-        Sensor t2 = l.provideSensor("MS-N66E1;+N15E789");
-        Assert.assertTrue("event upper lower",t2 == l.getSensor(t2.getSystemName().toLowerCase()));
+    public void testLowercaseSystemName() {
+        String name1 = "ms+n1e77;-n1e45";
+        try {
+            l.provideSensor(name1);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            // passes, so do nothing
+        }
+        String name2 = "msxabcdef;xfedcba";
+        try {
+            l.provideSensor(name2);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.BadSystemNameException ex) {
+            // passes, so do nothing
+        }
     }
 
     @Override
@@ -103,7 +94,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         try {
             Sensor t1 = l.provideSensor("MS+N15E6");
             Assert.assertTrue( t1 != null );
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             Assert.fail("Should NOT have thrown an exception");
         }
 
@@ -112,7 +103,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("X Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -120,7 +110,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("A Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -128,7 +117,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("AC Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -136,7 +124,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("ABCDE Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
         
         try {
@@ -144,7 +131,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("ABCDEF0 Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -152,7 +138,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("Single hex Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: can't make 2nd event");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -160,7 +145,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException:");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -168,7 +152,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
         
         try {
@@ -176,7 +159,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("; no arg Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }        
         
         try {
@@ -184,28 +166,24 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("MS Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
         
         try {
             l.provideSensor(";+N15E6");
             Assert.fail("; Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
 
         try {
             l.provideSensor("S+N156E77;+N15E6");
             Assert.fail("S Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
         
         try {
             l.provideSensor("M+N156E77;+N15E6");
             Assert.fail("M Should have thrown an exception");
         } catch (Exception e) {
-            Assert.assertTrue(true);
         }
 
         try {
@@ -213,7 +191,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("++ Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -221,7 +198,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("-- Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -229,7 +205,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("E+ Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -237,7 +212,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("+E Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -245,7 +219,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("LKJK Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
         }
 
         try {
@@ -253,7 +226,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.fail("3 split Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Wrong number of events");
-            Assert.assertTrue(true);
         }
     }
     
@@ -301,11 +273,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
         Sensor t14 = l.provideSensor("MSXF00D0A0600100601;XF1FFFFAAFAFFFFFE");
         Assert.assertNotNull("exists",t14);
-        
     }
-
-
-
 
     @Test
     public void testQueryAll() {
@@ -327,7 +295,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists",t1);
         Assert.assertNotNull("exists",t2);
         Assert.assertNotNull("exists",t3);
-
     }
     
     @Test
@@ -336,7 +303,6 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertTrue(x.contains("<html>"));
         
         Assert.assertTrue(l.allowMultipleAdditions("M77"));
-        
     }
     
     @Test
@@ -376,117 +342,73 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS0E17",NameValidity.INVALID,l.validSystemNameFormat("MS0E17"));
         Assert.assertEquals("MS+N65535e65536",NameValidity.INVALID,l.validSystemNameFormat("MS+N65535e65536"));
         Assert.assertEquals("MS+N65536e65535",NameValidity.INVALID,l.validSystemNameFormat("MS+N65536e65535"));
-        
     }
     
     @Test
-    public void testgetNextValidAddress() {
+    public void testgetNextValidAddress() throws JmriException {
         
+        Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
+        Sensor t =  l.provideSensor("MS+17");
+        Assert.assertNotNull("exists",t);
+        Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
+    
+        Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
+        Sensor ta =  l.provideSensor("MS+N45E22");
+        Assert.assertNotNull("exists",ta);
+        Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
+    
         try {
-            Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
-            Sensor t =  l.provideSensor("MS+17");
-            Assert.assertNotNull("exists",t);
-            Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
-        
-            Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
-            Sensor ta =  l.provideSensor("MS+N45E22");
-            Assert.assertNotNull("exists",ta);
-            Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
-        
-        
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-        
-        try {
-            Assert.assertEquals("null",null,l.getNextValidAddress(null,"M"));
-            
-        } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
+            l.getNextValidAddress(null,"M");
+        } catch (JmriException ex) {
+            Assert.assertEquals("java.lang.IllegalArgumentException: No address Passed ", ex.getMessage());
         }
     }
 
     @Test
-    public void testgetNextValidAddressPt2() {
+    public void testgetNextValidAddressPt2() throws JmriException {
         Sensor t =  l.provideSensor("MS+65535");
         Assert.assertNotNull("exists",t);
             
-        try {
-            Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
+        JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
     }
     
     @Test
-    public void testgetNextValidAddressPt3() {
+    public void testgetNextValidAddressPt3() throws JmriException {
         
         Sensor t =  l.provideSensor("MS+10");
         Assert.assertNotNull("exists",t);
             
-        try {
-            Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
     }
     
     @Test
-    public void testgetNextValidAddressPt4() {
+    public void testgetNextValidAddressPt4() throws JmriException {
 
-        Sensor t =  l.provideSensor("MS+9");
-        Sensor ta =  l.provideSensor("MS+10");
+        Sensor t = l.provideSensor("MS+9");
+        Sensor ta = l.provideSensor("MS+10");
         Assert.assertNotNull("exists",t);
         Assert.assertNotNull("exists",ta);
 
-        try {
-            Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(false);
-        }
-        
+        Assert.assertEquals(" null +9 +10","+11",l.getNextValidAddress("+9","M"));
     }    
 
     @Test
-    public void testcreateSystemName() {
+    public void testcreateSystemName() throws JmriException {
         
-        try {
-            Assert.assertEquals("MS+10","MS+10",l.createSystemName("+10","M"));
-            Assert.assertEquals("MS+N34E610","MS+N34E610",l.createSystemName("+N34E610","M"));
-            Assert.assertEquals("MS-N34E610","MS-N34E610",l.createSystemName("-N34E610","M"));
-            Assert.assertEquals("MS+N34E610;-N987E654","MS+N34E610;-N987E654",l.createSystemName("+N34E610;-N987E654","M"));
-            
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-        
-        try {
-            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","M2"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertEquals("MS+10","MS+10",l.createSystemName("+10","M"));
+        Assert.assertEquals("MS+N34E610","MS+N34E610",l.createSystemName("+N34E610","M"));
+        Assert.assertEquals("MS-N34E610","MS-N34E610",l.createSystemName("-N34E610","M"));
+        Assert.assertEquals("MS+N34E610;-N987E654","MS+N34E610;-N987E654",l.createSystemName("+N34E610;-N987E654","M"));
+    
+        Assert.assertEquals("M2S+10","M2S+10",l.createSystemName("+10","M2"));
+
+        Assert.assertEquals("ZZZZZZZZZS+10","ZZZZZZZZZS+10",l.createSystemName("+10","ZZZZZZZZZ"));
 
         try {
-            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","ZZZZZZZZZ"));
-        } catch (Exception e) {
-            Assert.assertTrue(false);
-        }
-        
-        try {
-            Assert.assertEquals("MSS",null,l.createSystemName("S","M"));
-            Assert.assertTrue(false);
-        } catch (Exception e) {
-            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
-            Assert.assertTrue(true);
+            l.createSystemName("S","M");
+        } catch (JmriException ex) {
+            Assert.assertEquals("java.lang.IllegalArgumentException: Wrong number of events in address: S", ex.getMessage());
         }
     }
     
@@ -508,5 +430,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo.dispose();
         JUnitUtil.tearDown();
     }
+
     // private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);
+
 }

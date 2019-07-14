@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -17,7 +18,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (c) 2019
- * testSendPacket modified from Loconet SlotManagerTest
+ * testSendPacket modified from LocoNet SlotManagerTest
  */
 public class CbusCommandStationTest {
 
@@ -46,13 +47,7 @@ public class CbusCommandStationTest {
         memo.setTrafficController(tc);
         CbusCommandStation ta = new CbusCommandStation(memo);
         Assert.assertNotNull("exists",ta);
-        try {
-            CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
-            Assert.assertTrue(true);
-            Assert.assertNotNull("exists",sim);
-        } catch (NullPointerException e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertNotNull(InstanceManager.getDefault(CbusSimulator.class));
         
         tc = null;
         ta = null;

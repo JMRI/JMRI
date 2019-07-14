@@ -2,12 +2,7 @@ package apps.InstallTest;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -16,7 +11,7 @@ import org.junit.Test;
 public class InstallTestTest {
 
     @Test
-    @Ignore("Causes Exception")
+    @Ignore("gives error message about an invalid profile on Travis")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstallTest t = new InstallTest();

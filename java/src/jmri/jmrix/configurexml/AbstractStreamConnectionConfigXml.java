@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract base (and partial implementation) for classes persisting the status
  * of (non-serial) Stream Port adapters.
- * <p>
+ *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author George Warner Copyright: Copyright (c) 2017
  */
@@ -38,7 +38,7 @@ abstract public class AbstractStreamConnectionConfigXml extends AbstractConnecti
      * @return the stream port adapter
      */
     protected AbstractStreamPortController getAdapter() {
-        log.debug("getAdapter({})");
+        log.debug("getAdapter()");
         return adapter;
     }
 
@@ -48,7 +48,7 @@ abstract public class AbstractStreamConnectionConfigXml extends AbstractConnecti
      * @return the stream port adapter
      */
     public AbstractStreamPortController getStreamAdapter() {
-        log.debug("getStreamAdapter({})");
+        log.debug("getStreamAdapter()");
         return adapter;
     }
 

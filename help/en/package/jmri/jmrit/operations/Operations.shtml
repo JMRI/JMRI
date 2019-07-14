@@ -432,7 +432,8 @@
 
    <h3>Display and Help</h3>
    To adjust the display font size or appearance of the JMRI windows, select "Preferences..." found
-   under "Edit" in the main window menu bar. The <a href="../../../apps/TabbedPreferences.shtml">JMRI:
+   under "Edit" (on Windows/Linux) or PanelPro (on macOS) in the main window menu bar.
+   The <a href="../../../apps/TabbedPreferences.shtml">JMRI:
     Preferences Pane</a> will appear with options to make <a
     href="../../../apps/TabbedPreferences.shtml#Connection">Layout Connections</a>, change the
    window <a href="../../../apps/TabbedPreferences.shtml#Display">Display</a> appearance and font
@@ -636,12 +637,12 @@
    </p>
 
    <p>
-    If you want a caboose or car with FRED for your train, first configure some of the cars to be
-    the last car in the train by selecting the "Caboose" or "FRED" <a href="#CabooseFredHazardous">checkbox</a>
-    in the <a href="#CarsEdit">Edit Car</a> window. Now change the optional train requirements radio button to "Caboose"
-    or "FRED" in the <a href="#TrainEdit">Edit Train</a> window. Be sure that the last location in
-    your trains route has a track that will accept the caboose car or the train will not build
-    properly.
+    If you want a caboose or car with FRED for your train, first configure some of the cars to be the last car in the
+    train by selecting the "Caboose" or "FRED" <a href="#CabooseFredHazardous">checkbox</a> in the <a href="#CarsEdit">Edit
+     Car</a> window. Now change the optional train requirements radio button to "Caboose" or "FRED" in the <a
+     href="#TrainEdit">Edit Train</a> window. Place the caboose on a track at the first location in your train's route.
+    Be sure that the last location in your trains route has a track that will accept the caboose or the train will not
+    build properly.
    </p>
 
    <p>
@@ -1821,9 +1822,10 @@
    <a name="AddLogo" id="AddLogo"></a>
    <h3>Add Logo</h3>
    If you want a logo in the top right hand corner of your Manifests and switch lists, press the
-   "Add Logo" button and select a file with the image you want to display. You can also have a
+   "Add Logo" button and select a file with the image you want to display. The supported
+   image file extensions are .gif, .png, .jpg, plus others. You can also have a
    different logo for every train in your roster, see <a href="#TrainManifestOptions">Train
-    Manifest Options</a> for details. 
+    Manifest Options</a> for details.
     
    <a name="MisplacedCarsComment" id="MisplacedCarsComment"></a>
 
@@ -2110,11 +2112,12 @@
    <p>
     <img src="images/AddYard.png">
    </p>
-   <p>Now enter the name of the yard along with the length of the track in scale feet or in
-    actual inches. Append a double quote (") to the length when entering actual inches and the
-    program will convert the length into scale feet. Append cm if you want to convert from
-    centimeters to scale meters. Press the "Add Yard Track" button at the bottom of the window and
-    the disabled fields should now appear.</p>
+   <p>Now enter the name of the yard along with the length of the track in scale feet or in actual inches. Append a
+    double quote (") to the length when entering actual inches and the program will convert the length into scale feet.
+    Append cm if you want to convert from centimeters to scale meters. If you don't want the program to load your yard
+    to capacity with cars or locomotives, enter a smaller value for the track length. This can be useful for large
+    yards where track space for switching cars is needed. Press the "Add Yard Track" button at the bottom of the
+    window and the disabled fields should now appear.</p>
 
    <a name="TrackServiceDirection" id="TrackServiceDirection"></a>
    <h4>Track Service Direction</h4>

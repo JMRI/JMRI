@@ -69,9 +69,11 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      */
     @Override
     public void setManager(@Nonnull Manager<Sensor> s) {
-        senManager = (SensorManager) s;
-        if (m != null) {
-            m.setManager(senManager);
+        if (s instanceof SensorManager) {
+            senManager = (SensorManager) s;
+            if (m != null) {
+                m.setManager(senManager);
+            }
         }
     }
 
@@ -215,7 +217,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     /**
-     * Respond to Create new item pressed on Add Sensor pane
+     * Respond to Create new item button pressed on Add Sensor pane.
      *
      * @param e the click event
      */
@@ -236,8 +238,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
-        String uName = userNameField.getText().trim();
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String uName = userNameField.getText();
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.length() < 1) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -248,7 +250,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             hardwareAddressTextField.setBackground(Color.white);
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the sensorManager
+        // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
         String errorMessage = null;
         for (int x = 0; x < numberOfSensors; x++) {
@@ -343,10 +345,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
+        String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
         if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {            
             jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
             List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Sensor> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     rangeBox.setEnabled(((SensorManager) mgr).allowMultipleAdditions(systemPrefix));
@@ -356,7 +358,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                     break;
                 }
             }
-        } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
+        } else if (senManager.allowMultipleAdditions(systemPrefix)) {
             rangeBox.setEnabled(true);
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
@@ -710,10 +712,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
              */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-
-                    boolean inputOK = verify(input);
-                    if (inputOK) {
+                if (input instanceof CheckedTextField ) {
+                    if (verify(input)) {
                         input.setBackground(Color.white);
                         return true;
                     } else {

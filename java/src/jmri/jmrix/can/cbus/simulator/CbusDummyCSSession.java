@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Command Station Loco Session
+ * Simulating a MERG CBUS Command Station Loco Session.
+ *
  * @author Steve Young Copyright (C) 2018 2019
  * @see CbusDummyCS
  * @see CbusSimulator
@@ -109,4 +110,5 @@ public class CbusDummyCSSession {
     }
     
     private static final Logger log = LoggerFactory.getLogger(CbusDummyCSSession.class);
+
 }

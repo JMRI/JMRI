@@ -2,6 +2,11 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarRosterAction.CarPrintOptionFrame;
@@ -9,9 +14,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -49,6 +51,7 @@ public class PrintCarRosterActionTest extends OperationsTestCase {
         JmriJFrame printPreviewFrame = JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " +Bundle.getMessage("TitleCarRoster"));
         Assert.assertNotNull("exists", printPreviewFrame);
         
+        JUnitUtil.dispose(f);
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ctf);
     }

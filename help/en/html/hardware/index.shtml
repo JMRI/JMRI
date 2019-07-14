@@ -51,7 +51,7 @@
           <dd>&nbsp;</dd>
 
           <dt class="im"><a href=
-          "http://www.atlasrr.com/dccsupport.htm"><img src=
+          "https://shop.atlasrr.com/t-atlascommander.aspx"><img src=
           "images/atlas_logo.gif" width="44" height="34" alt=
           "Atlas"></a></dt>
           <dt><a href="XPressNet/index.shtml">Atlas
@@ -69,7 +69,7 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.bachrus.com/speedometer.php"><img src=
+          "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php"><img src=
           "images/Bachrus_Logo.gif" width="100" height="25" alt=
           "Bachrus"></a></dt>
           <dt><a href="bachrus/index.shtml">Bachrus</a></dt>
@@ -87,8 +87,8 @@
             <p class="dl">Configure: <a href=
             "cmri/CMRI.shtml">Bruce Chubb's C/MRI control
             system</a> for a connection via direct serial, <a href=
-            "cmri/CMRI.shtml#usb">USB-serial adapter</a>, or
-            <a href="cmri/CMRI.shtml#net">network
+            "cmri/CMRI.shtml#L632">USB-serial adapter</a>, or
+            <a href="cmri/CMRI.shtml#L215">network
             connection</a>.</p>
             <p>&nbsp;</p>
           </dd>
@@ -161,7 +161,7 @@
           </dd>
 
           <dt class="im"><a href=
-          "http://www.digikeijs.nl/"><img src=
+          "https://www.digikeijs.com"><img src=
           "images/digikeijs-logo.png" width="50" height="14" alt=
           "Digikeijs"></a></dt>
           <dt><a href="digirails/index.shtml">Digikeijs (Digirails)</a></dt>
@@ -225,7 +225,7 @@
             <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
 
             <p class="dl">Configure: Connecting to a <a href=
-            "StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
+            "loconet/StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
             <p>&nbsp;</p>
           </dd>
 

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Oak Tree serial systems.
+ * Implement LightManager for Oak Tree serial systems.
  * <p>
  * System names are "OLnnn", where O is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -79,17 +79,6 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, prefix));
-    }
-
-    /**
      * Convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
@@ -105,8 +94,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

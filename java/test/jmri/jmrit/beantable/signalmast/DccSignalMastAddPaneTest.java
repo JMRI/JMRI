@@ -20,13 +20,19 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
     
     @Test
     public void testSetMast() {
-        DccSignalMast s1 = new DccSignalMast("IF$dsm:AAR-1946:PL-1-high-abs(1)", "user name");
+        DccSignalMast s1 = new DccSignalMast("IF$dsm:AAR-1946:PL-1-high-abs(77)", "user name");
         // has to have its outputs configured so they exist      
         Enumeration<String> aspects = s1.getAppearanceMap().getAspects();
         while (aspects.hasMoreElements()) {
             s1.setOutputForAppearance(aspects.nextElement(), 0);
         }
-        
+        Assert.assertEquals("DCC Address should be 77",77, s1.getDccSignalMastAddress());
+
+        // PacketSendCount default is 3
+        Assert.assertEquals("Default should be 3",3, s1.getDccSignalMastPacketSendCount());
+        s1.setDccSignalMastPacketSendCount(1);
+        Assert.assertEquals("Should have updated to 1",1, s1.getDccSignalMastPacketSendCount());
+
         MatrixSignalMast m1 = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         DccSignalMastAddPane vp = new DccSignalMastAddPane();
@@ -40,7 +46,7 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
             InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("AAR-1946"));
         vp.setMast(s1);
         
-        vp.setAspectNames(s1.getAppearanceMap(), 
+        vp.setAspectNames(m1.getAppearanceMap(),
             InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
         vp.setMast(m1);
         JUnitAppender.assertErrorMessage("mast was wrong type: IF$xsm:basic:one-low($0001)-3t jmri.implementation.MatrixSignalMast");

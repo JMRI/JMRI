@@ -23,7 +23,7 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.parseInt(systemName.substring(2));
+        int addr = Integer.parseInt(systemName.substring(2)); // fixed length prefix, so (2) is OK here
         t = new DccTurnout(addr);
         t.setUserName(userName);
 
@@ -43,4 +43,3 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     static volatile DccTurnoutManager _instance = null;
 
 }
-

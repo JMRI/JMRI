@@ -1,13 +1,17 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import java.beans.PropertyVetoException;
+
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import jmri.Light;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.Light;
 
 /**
  * XBeeLightManagerTest.java
@@ -47,7 +51,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provide("ALNode 1:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ALNODE 1:2"));
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ALNode 1:2"));
     }
 
     @Test
@@ -86,8 +90,23 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
 
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("00 02:1"),
+                l.makeSystemName("00 02:2"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("00 02:1");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -130,6 +149,5 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         return 7;
     }
 
-
-
+    // private final static Logger log = LoggerFactory.getLogger(XBeeLightManagerTest.class);
 }

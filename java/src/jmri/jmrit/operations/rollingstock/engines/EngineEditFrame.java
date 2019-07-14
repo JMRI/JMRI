@@ -1,29 +1,32 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
 import jmri.jmrit.operations.rollingstock.engines.tools.EngineAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of engine
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2018
  */
-public class EngineEditFrame extends RollingStockEditFrame implements java.beans.PropertyChangeListener {
+public class EngineEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
@@ -126,6 +129,8 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
 
         super.load(engine);
 
+        pBlocking.setVisible(engine.getConsist() != null);
+        blockingTextField.setEnabled(false); // don't allow user to modify, only see
         bUnitCheckBox.setSelected(engine.isBunit());
         hpTextField.setText(engine.getHp());
         groupComboBox.setSelectedItem(engine.getConsistName());
@@ -183,13 +188,15 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
                     engine.setBlocking(Engine.B_UNIT_BLOCKING);
                 else
                     engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
-            } else {
+            } else if (!engine.getConsistName().equals(groupComboBox.getSelectedItem())) {
                 engine.setConsist(engineManager.getConsistByName((String) groupComboBox.getSelectedItem()));
                 if (engine.getConsist() != null) {
                     engine.setBlocking(engine.getConsist().getSize());
+                    blockingTextField.setText(Integer.toString(engine.getBlocking()));
                 }
             }
         }
+        pBlocking.setVisible(engine.getConsist() != null);
 
         // confirm that horsepower is a number
         if (!hpTextField.getText().trim().isEmpty()) {

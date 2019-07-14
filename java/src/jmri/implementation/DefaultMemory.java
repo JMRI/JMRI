@@ -17,11 +17,11 @@ public class DefaultMemory extends AbstractMemory {
 
     /**
      * Provide generic access to internal state.
-     * <P>
+     * <p>
      * This generally shouldn't be used by Java code; use the class-specific
      * form instead. (E.g. getCommandedState in Turnout) This provided to make
      * Jython script access easier to read.
-     * <P>
+     * <p>
      * If the current value can be reduced to an integer, that is returned,
      * otherwise a value of -1 is returned.
      */

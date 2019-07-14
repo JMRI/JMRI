@@ -40,17 +40,15 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
         Turnout o = t.newTurnout("AT11", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
+        log.debug("received turnout value {}", o);
         Assert.assertTrue(null != (AcelaTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("AT11"));
+            log.debug("by system name: {}", t.getBySystemName("AT11"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("AT11"));
@@ -65,7 +63,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     @Before
     public void setUp() {
         JUnitUtil.setUp();
- 
+
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);
 

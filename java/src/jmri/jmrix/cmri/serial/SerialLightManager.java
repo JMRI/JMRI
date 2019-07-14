@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for CMRI serial systems.
+ * Implement LightManager for CMRI serial systems.
  * <p>
  * System names are "CLnnn", where C is the user-configurable system prefix,
  * nnn is the bit number without padding.
@@ -104,16 +104,6 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else returns ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
-    }
-
-    /**
      * Public method to convert system name to its alternate format
      *
      * @return a normalized system name if system name is valid and has a valid
@@ -129,8 +119,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);

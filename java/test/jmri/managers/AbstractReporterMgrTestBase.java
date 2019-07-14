@@ -6,7 +6,7 @@ import jmri.ReporterManager;
 import org.junit.*;
 
 /**
- * Abstract Base Class for LightManager tests in specific jmrix packages. This
+ * Abstract Base Class for ReporterManager tests in specific jmrix packages. This
  * is not itself a test class, e.g. should not be added to a suite. Instead,
  * this forms the base for test classes, including providing some common tests
  *
@@ -17,7 +17,7 @@ import org.junit.*;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBase<ReporterManager, Reporter> {
+public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManagerTestBase<ReporterManager, Reporter> {
 
     /**
      * Max number of Reporters supported.  Override to return 1 if
@@ -60,7 +60,6 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
     }
 
-
     @Test
     public void testReporterProvideReporter() {
         // Create
@@ -81,7 +80,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
         try {
             l.provideReporter("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for reporter: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
           throw ex;
         }
     }
@@ -187,7 +186,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     }
 
     /**
-     * Number of light to test. Made a separate method so it can be overridden
+     * Number of Reporter to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
     protected String getNameToTest1() {
@@ -197,4 +196,5 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
     protected String getNameToTest2() {
         return "2";
     }
+
 }

@@ -29,7 +29,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -228,7 +228,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
         if (uName == null || uName.isEmpty()) {
             uName = null;
         }
-        String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysNameField.getText());
+        String sName = sysNameField.getText();
         // initial check for empty entry
         if (sName.isEmpty() && !autoSystemNameBox.isSelected()) {
             statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));
@@ -252,7 +252,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
                 statusBarLabel.setForeground(Color.red);
                 uName = null; // new Memory objects always receive a valid system name using the next free index, but uName names must not be in use so use none in that case
             }
-            if (sName != null && !sName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
+            if (!sName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
                 // show in status bar

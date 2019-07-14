@@ -29,9 +29,7 @@ public class CbusEventResponderTest {
         
     @Test
     public void testTCSetGet() {    
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
+        
         Assert.assertTrue("0 listeners to start",tc.numListeners()==0);
         CbusEventResponder t = new CbusEventResponder(memo);
         Assert.assertTrue("1 listener",tc.numListeners()==1);
@@ -45,14 +43,12 @@ public class CbusEventResponderTest {
         t.dispose();
         Assert.assertTrue("0 listeners",tc.numListeners()==0);
         t = null;
-        memo = null;
+
     }
     
     @Test
     public void testResponses() {
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
+
         CbusEventResponder t = new CbusEventResponder(memo);
         
         Assert.assertTrue(t.getDelay()>0);
@@ -73,7 +69,18 @@ public class CbusEventResponderTest {
         m.setElement(4, 0x00);
         
         CanReply r   = new CanReply(m);
+        
+        r.setExtended(true);
         t.reply(r);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        
+        r.setRtr(false);
+        t.reply(r);
+        
+        
         t.message(m);
         // as frames passed direct to responder, tc inbound / outbound will just be event responses
         
@@ -116,7 +123,6 @@ public class CbusEventResponderTest {
         
         m = null;
         t.dispose();
-        memo = null;
         
     }
         
@@ -124,9 +130,7 @@ public class CbusEventResponderTest {
         
     @Test
     public void testModes() {
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        final TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
+
         CbusEventResponder t = new CbusEventResponder(memo);
         
         CanMessage m = new CanMessage(120);
@@ -139,6 +143,14 @@ public class CbusEventResponderTest {
     
         t.setMode(0); // off
         t.message(m); // no response should be generated
+        
+        m.setExtended(true);
+        t.message(m); // no response should be generated
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m); // no response should be generated
+        m.setRtr(false);
         
         t.setMode(2); // odd / even
         t.setNode(5777);
@@ -168,18 +180,27 @@ public class CbusEventResponderTest {
         
         m = null;
         t.dispose();
-        memo = null;
     
     }
+
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tc;
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo.setTrafficController(tc);
     }
 
     @After
     public void tearDown() {
+        
+        tc = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

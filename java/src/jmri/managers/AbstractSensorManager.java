@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import org.slf4j.Logger;
@@ -52,7 +53,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 
@@ -76,28 +76,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         if (isNumber(key)) {
             key = makeSystemName(key);
         }
-        String name = normalizeSystemName(key);
-        return _tsys.get(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected Sensor getInstanceBySystemName(String systemName) {
-        return getBySystemName(systemName);
+        return _tsys.get(key);
     }
 
     /** {@inheritDoc} */
@@ -110,42 +89,39 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Override
     public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
         log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
-        String systemName = normalizeSystemName(sysName);
-        log.debug("    normalized name: \"{}\"", systemName);
 
-        java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with "+systemName);
+        java.util.Objects.requireNonNull(sysName, "Generated systemName may not be null, started with "+sysName);
 
         // is system name in correct format?
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter()) 
-                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.debug("Invalid system name for sensor: " + systemName
-                    + " needed " + getSystemPrefix() + typeLetter());
-            throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
+        if (!sysName.startsWith(getSystemPrefix() + typeLetter()) 
+                || !(sysName.length() > (getSystemPrefix() + typeLetter()).length())) {
+            log.debug("Invalid system name for sensor: {} needed {}{} followed by a suffix",
+                    sysName, getSystemPrefix(), typeLetter());
+            throw new NamedBean.BadSystemNameException("systemName \""+sysName+"\" bad format in newSensor");
         }
 
         // return existing if there is one
         Sensor s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+            if (getBySystemName(sysName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, sysName, s.getSystemName());
             }
             return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        if ((s = getBySystemName(sysName)) != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found sensor via system name (" + systemName
-                        + ") with non-null user name (" + s.getUserName() + "). Sensor \""
-                        + systemName + "(" + userName + ")\" cannot be used.");
+                log.warn("Found sensor via system name ({}) with non-null user name ({}). Sensor \"{}({})\" cannot be used.",
+                        sysName, s.getUserName(), sysName, userName);
             }
             return s;
         }
 
         // doesn't exist, make a new one
-        s = createNewSensor(systemName, userName);
+        s = createNewSensor(sysName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
@@ -158,8 +134,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSensor");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
     }
 
     /**
@@ -200,7 +176,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         String tmpSName = "";
@@ -209,7 +185,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", null, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
             return null;
         }
         Sensor s = getBySystemName(tmpSName);
@@ -222,14 +198,14 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         try {
             iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
+        // Check to determine if the systemName is in use, return null if it is,
+        // otherwise return the next valid address.
         s = getBySystemName(prefix + typeLetter() + iName);
         if (s != null) {
             for (int x = 1; x < 10; x++) {
@@ -239,6 +215,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);
@@ -306,8 +284,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
-        return entryToolTip;
+        return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);

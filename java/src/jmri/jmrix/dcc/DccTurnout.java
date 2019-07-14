@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Dcc-only implementation of the Turnout interface.
- * <P>
+ * <p>
  * This object can't listen to the DCC communications. This is because it should
  * be the only object that is sending messages for this turnout; more than one
  * Turnout object pointing to a single device is not allowed.
- *
- * Description: extend jmri.AbstractTurnout for DCC-only layouts
  *
  * @author Bob Jacobsen Copyright (C) 2014
  */
@@ -26,7 +24,7 @@ public class DccTurnout extends AbstractTurnout {
      * identification.
      */
     public DccTurnout(int number) {
-        super("BT" + number);
+        super("BT" + number); // default prefix "B"
         _number = number;
         // At construction, register for messages
     }
@@ -49,7 +47,7 @@ public class DccTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -64,7 +62,7 @@ public class DccTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton BT" + _number);
+            log.debug("Send command to {} Pushbutton BT{}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
         }
     }
 
@@ -82,10 +80,8 @@ public class DccTurnout extends AbstractTurnout {
         }
 
         InstanceManager.getDefault(CommandStation.class).sendPacket(bl, 1);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(DccTurnout.class);
 
 }
-

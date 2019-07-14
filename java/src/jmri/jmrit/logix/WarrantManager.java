@@ -10,25 +10,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a WarrantManager.
- * <P>
+ * <p>
  * Note this is a concrete class.
- *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
  */
 public class WarrantManager extends AbstractManager<Warrant>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
     
     private HashMap<String, RosterSpeedProfile> _mergeProfiles;
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;
@@ -75,16 +63,15 @@ public class WarrantManager extends AbstractManager<Warrant>
                 return null;
             }
         }
-        String sName = systemName.trim().toUpperCase();
-        if ((sName.compareTo(systemName) != 0) || !sName.startsWith("IW") || sName.length() < 3) {
-            log.error("Warrant system name \"" + systemName + "\" must be upper case  begining with \"IW\".");
+        if (!systemName.startsWith("IW") || systemName.length() < 3) {
+            log.error("Warrant system name \"" + systemName + "\" must begin with \"IW\".");
             return null;
         }
         // Warrant does not exist, create a new Warrant
         if (SCWa) {
-            r = new SCWarrant(sName, userName, TTP);
+            r = new SCWarrant(systemName, userName, TTP);
         } else {
-            r = new Warrant(sName, userName);
+            r = new Warrant(systemName, userName);
         }
         // save in the maps
         register(r);
@@ -108,17 +95,10 @@ public class WarrantManager extends AbstractManager<Warrant>
     }
 
     public Warrant getBySystemName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            return null;
-        }
-        String key = name.toUpperCase();
-        return _tsys.get(key);
+        return _tsys.get(name);
     }
 
     public Warrant getByUserName(String key) {
-        if (key == null || key.trim().length() == 0) {
-            return null;
-        }
         return _tuser.get(key);
     }
 
@@ -147,44 +127,17 @@ public class WarrantManager extends AbstractManager<Warrant>
         });
     }
 
-    /**
-     * Get the default WarrantManager.
-     *
-     * @return the default WarrantManager, creating it if necessary
-     * @deprecated since 4.7.1; use {@link #getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantManager instance() {
-        return getDefault();
-    }
-
-    /**
-     * Get the default warrant preferences.
-     *
-     * @return the default preferences, created if necessary
-     * @deprecated since 4.7.1; use
-     * {@link jmri.jmrit.logix.WarrantPreferences#getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantPreferences warrantPreferencesInstance() {
-        return WarrantPreferences.getDefault();
-    }
-
     @Override
-    public String getBeanTypeHandled() {
-        return jmri.jmrit.logix.Bundle.getMessage("BeanNameWarrant");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");
     }
     
     protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
         if (_mergeProfiles == null) {
             _mergeProfiles = new HashMap<>();
             _sessionProfiles = new HashMap<>();
-            if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-                        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-            } else {
-                log.error("No ShutDownManager for WarrantRosterSpeedProfileCheck");
-            }
+            ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
         }
         if (id != null) {
             _mergeProfiles.put(id, merge);

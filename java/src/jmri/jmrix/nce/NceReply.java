@@ -3,7 +3,7 @@ package jmri.jmrix.nce;
 
 /**
  * Carries the reply to an NceMessage.
- * <P>
+ * <p>
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author Bob Jacobsen Copyright (C) 2001

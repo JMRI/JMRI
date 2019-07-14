@@ -38,18 +38,6 @@ public class JsonServer extends JmriServer implements InstanceManagerAutoDefault
     private ObjectMapper mapper;
 
     /**
-     * Get the default JsonServer, creating it if needed.
-     *
-     * @return the default JsonServer instance
-     * @deprecated since 4.9.4; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static JsonServer getDefault() {
-        return InstanceManager.getDefault(JsonServer.class);
-    }
-
-    /**
      * Create a new server using the default port.
      */
     public JsonServer() {

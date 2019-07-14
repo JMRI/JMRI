@@ -3,13 +3,13 @@ package jmri.jmrix.jmriclient;
 import jmri.Sensor;
 
 /**
- * Implement sensor manager for JMRIClient systems
- * <P>
+ * Implement sensor manager for JMRIClient systems.
+ * <p>
  * System names are "prefixnnn", where prefix is the system prefix and nnn is
  * the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -44,5 +44,3 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
     }
 
 }
-
-

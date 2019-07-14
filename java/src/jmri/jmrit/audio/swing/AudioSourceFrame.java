@@ -27,15 +27,14 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -54,11 +53,11 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JSpinner loopMin = new JSpinner();
     JLabel loopMaxLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
     JSpinner loopMax = new JSpinner();
-//    JLabel loopMinDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
-//    JSpinner loopMinDelay = new JSpinner();
-//    JLabel loopMaxDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
-//    JSpinner loopMaxDelay = new JSpinner();
-//    JLabel loopDelayUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
+    //    JLabel loopMinDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
+    //    JSpinner loopMinDelay = new JSpinner();
+    //    JLabel loopMaxDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
+    //    JSpinner loopMaxDelay = new JSpinner();
+    //    JLabel loopDelayUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
     JCheckBox loopInfinite = new JCheckBox(Bundle.getMessage("LabelLoopInfinite"));
     JPanelVector3f position = new JPanelVector3f("",
             Bundle.getMessage("UnitUnits"));
@@ -268,12 +267,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Source frame with default values
+     * Populate the Edit Source frame with default values.
      */
     @Override
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText("IAS" + counter++);
+            sysName.setText("IAS" + nextCounter());
         }
         userName.setText(null);
         assignedBuffer.setSelectedIndex(0);
@@ -297,7 +296,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Source frame with current values
+     * Populate the Edit Source frame with current values.
      */
     @Override
     public void populateFrame(Audio a) {
@@ -315,8 +314,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         loopInfinite.setSelected((s.getMinLoops() == AudioSource.LOOP_CONTINUOUS));
         loopMin.setValue(loopInfinite.isSelected() ? 0 : s.getMinLoops());
         loopMax.setValue(loopInfinite.isSelected() ? 0 : s.getMaxLoops());
-//        loopMinDelay.setValue(s.getMinLoopDelay());
-//        loopMaxDelay.setValue(s.getMaxLoopDelay());
+        //        loopMinDelay.setValue(s.getMinLoopDelay());
+        //        loopMaxDelay.setValue(s.getMaxLoopDelay());
         position.setValue(s.getPosition());
         positionRelative.setSelected(s.isPositionRelative());
         velocity.setValue(s.getVelocity());
@@ -350,7 +349,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
+        String sName = sysName.getText();
         AudioSource s;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -362,7 +361,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             if (newSource && am.getByUserName(user) != null) {
                 am.deregister(s);
                 synchronized (lock) {
-                    counter--;
+                    prevCounter();
                 }
                 throw new AudioException("Duplicate user name - please modify");
             }
@@ -393,5 +392,14 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         }
     }
 
+    private static int nextCounter() {
+        return counter++;
+    }
+
+    private static int prevCounter() {
+        return counter--;
+    }
+
     //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class);
+
 }

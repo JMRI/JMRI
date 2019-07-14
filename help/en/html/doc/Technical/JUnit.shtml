@@ -103,7 +103,7 @@
 
         <li style="list-style: none">
           <ul>
-            <li><a href="#sampleScriptTesting">Testing Jython
+            <li><a href="#sampleJythonScriptTesting">Testing Jython
             sample scripts</a></li>
           </ul>
         </li>
@@ -189,6 +189,10 @@
             <dd>When set true, run some extra tests; usually used during code migration,
                 where not everything is right yet but you want to be able to include
                 tests for individual running.  </dd>
+        <dt>jmri.shutdownmanager</dt>
+            <dd>When set, use the specified class as the default ShutDownManager. The specified class
+              must implement the jmri.ShutDownManager interface and have a public default constructor.
+            </dd>
         <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
             <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which
@@ -728,6 +732,19 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       is a bit time-intensive, so we don't leave it on 
       all the time.
 
+      <p>
+      Tools like heap dumps, thread dumps, and the jvisualvm
+      browser can help you see what's being left over by your tests.
+      But they must be used while the JVM is still running, and it
+      usually terminates right after the tests.
+      To prolong the JVM life, add an instance of 
+      <code>jmri.util.TestWaitsForever</code>
+      at the end of your <code>PackageList</code>
+      list of tests.  <code>TestWaitsForever</code>
+      does what it says on the tin: waits forever, allowing you
+      to look at the state of the JVM. When you're done,
+      you have to kill the test job manually.
+      
       <h3><a id="io" name="io"></a>Testing I/O</h3>
       Some test
       environments don't automatically flush I/O operations such as

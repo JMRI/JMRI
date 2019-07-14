@@ -189,7 +189,12 @@ public class QsiTrafficControllerTest {
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected QsiPortControllerScaffold() throws Exception {

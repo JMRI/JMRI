@@ -125,7 +125,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Absolute path to location of Operations files.
-     * <P>
+     * <p>
      * Default is in the user's files path, but can be set to anything.
      *
      * @return The string path name.
@@ -138,7 +138,7 @@ public abstract class OperationsXml extends XmlFile {
 
     /**
      * Set path to location of Operations files.
-     * <P>
+     * <p>
      * Default is in the user's files path, but can be set to anything.
      *
      * @param location path to file, including trailing file separator.

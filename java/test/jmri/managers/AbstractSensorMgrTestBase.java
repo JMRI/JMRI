@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager, Sensor> {
+public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManagerTestBase<SensorManager, Sensor> {
 
     // implementing classes must provide these abstract members:
     //
@@ -55,9 +55,9 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         // create
         Sensor t = l.newSensor(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     // Quite a few tests overload this to create their own name process
@@ -66,8 +66,8 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         // create
         Sensor t = l.provide("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
@@ -102,8 +102,8 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         // create
         Sensor t = l.provideSensor("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -124,21 +124,21 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     public void testSingleObject() {
         // test that you always get the same representation
         Sensor t1 = l.newSensor(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("t1 real object returned ", t1);
+        Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
+        Assert.assertEquals("same by system ", t1, l.getBySystemName(getSystemName(getNumToTest1())));
 
         Sensor t2 = l.newSensor(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2);
         // check
-        Assert.assertTrue("same new ", t1 == t2);
+        Assert.assertEquals("same new ", t1, t2);
     }
 
     @Test
     public void testMisses() {
         // try to get nonexistant sensors
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -146,12 +146,12 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Sensor t1 = l.provideSensor("" + getNumToTest1());
         Sensor t2 = l.provideSensor("" + getNumToTest2());
         t1.setUserName("UserName");
-        Assert.assertTrue(t1 == l.getByUserName("UserName"));
+        Assert.assertEquals(t1, l.getByUserName("UserName"));
 
         t2.setUserName("UserName");
-        Assert.assertTrue(t2 == l.getByUserName("UserName"));
+        Assert.assertEquals(t2, l.getByUserName("UserName"));
 
-        Assert.assertTrue(null == t1.getUserName());
+        Assert.assertNull(t1.getUserName());
     }
 
     @Test
@@ -160,7 +160,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         String name = t.getSystemName();
         
         int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
-        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        String lowerName = name.substring(0, prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
         
         Assert.assertEquals(t, l.getSensor(lowerName));
     }
@@ -178,12 +178,13 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
 
     @Test
     public void testPullResistanceConfigurable(){
-       Assert.assertFalse("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+       Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
     }
 
     /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
+     * @return the number to test
      */
     protected int getNumToTest1() {
         return 9;

@@ -7,7 +7,7 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Recreate the roster index file if it's been damaged or lost.
- * <P>
+ * <p>
  * Scans the roster directory for xml files, including any that are found.
  *
  * @author Bob Jacobsen Copyright (C) 2001

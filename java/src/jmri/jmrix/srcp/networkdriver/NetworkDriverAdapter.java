@@ -7,14 +7,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
- * <P>
+ * <p>
  * This connects an SRCP server (daemon) via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author	Paul Bender Copyright (C) 2010
  */
-public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter {
+public class NetworkDriverAdapter extends SRCPPortController {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.srcp.SRCPSystemConnectionMemo());

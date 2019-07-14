@@ -537,7 +537,7 @@
           already has one or more UR92 devices installed, this tool
           can be used to help configure all UR92s to the
           previously-configured settings from the old UR92(s).
-          First install the new UR92 on Loconet and then start this
+          First install the new UR92 on LocoNet and then start this
           tool.</p>
 
           <p>If this tool shows the desired Duplex Group Identity

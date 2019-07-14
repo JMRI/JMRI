@@ -1,16 +1,22 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import java.beans.PropertyVetoException;
+
 import com.digi.xbee.api.RemoteXBeeDevice;
-import com.digi.xbee.api.models.XBee16BitAddress;
-import com.digi.xbee.api.models.XBee64BitAddress;
-import com.digi.xbee.api.io.IOLine;
-import com.digi.xbee.api.io.IOValue;
-import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOValue;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.Sensor;
-import jmri.util.junit.annotations.*;
-import org.junit.*;
 
 /**
  * XBeeSensorManagerTest.java
@@ -39,7 +45,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t ,l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -48,8 +54,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide("ASNode 1:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNODE 1:2"));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNode 1:2"));
     }
 
     @Test
@@ -57,7 +63,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide("AS00 02:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t,l.getBySystemName("AS00 02:2"));
     }
 
@@ -66,7 +72,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provide("AS00 13 A2 00 40 A0 4D 2D:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t ,l.getBySystemName("AS00 13 A2 00 40 A0 4D 2D:2"));
     }
 
@@ -76,18 +82,24 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // create
         Sensor t = l.provideSensor(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
-    @Ignore("ignoring this test due to the system name format, needs to be properly coded")
-    @ToDo("fix system name format")
     @Test
     public void testUpperLower() {
+        Sensor t = l.provideSensor(getSystemName(getNumToTest2()));
+        String name = t.getSystemName();
+        
+        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
+        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        
+        Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
@@ -106,9 +118,22 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
        Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
     }
 
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("00 02:1"),
+                l.makeSystemName("00 02:2"));
+    }
 
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("00 02:1");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
 
-    // The minimal setup for log4J
     @Override
     @Before 
     public void setUp() {
@@ -144,6 +169,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         tc.terminate();
         jmri.util.JUnitUtil.tearDown();
     }
+
+    // private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
 
 }
 

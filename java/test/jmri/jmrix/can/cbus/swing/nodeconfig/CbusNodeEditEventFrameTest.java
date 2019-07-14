@@ -73,15 +73,13 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         Assert.assertFalse(getEditButtonEnabled(jfo));
         Assert.assertTrue(getDeleteButtonEnabled(jfo));
         
-        // Ask to close window
-        jfo.requestClose();
+        t.dispose();
+        t = null;
         
         jfo = null;
         eventToEdit = null;
         nodeModel.dispose();
         nodeModel = null;
-        
-        t = null;
         
     }
     
@@ -93,8 +91,8 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         return ( new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).isEnabled() );
     }
     
-    CanSystemConnectionMemo memo;
-    TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Before
     @Override

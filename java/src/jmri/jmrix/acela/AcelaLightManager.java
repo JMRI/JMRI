@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Acela systems.
+ * Implement LightManager for Acela systems.
  * <p>
  * System names are "ALnnn", where A is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -38,7 +38,6 @@ public class AcelaLightManager extends AbstractLightManager {
      * <p>
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
-     * </p>
      *
      * @return null if the system name is not in a valid format
      */
@@ -88,17 +87,6 @@ public class AcelaLightManager extends AbstractLightManager {
     @Override
     public boolean validSystemNameConfig(String systemName) {
         return (AcelaAddress.validSystemNameConfig(systemName, 'L', _memo));
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**

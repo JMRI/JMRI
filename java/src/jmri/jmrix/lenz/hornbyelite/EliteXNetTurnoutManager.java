@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.Turnout;
+import jmri.jmrix.lenz.XNetAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008
  */
-public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
+public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager {
 
     public EliteXNetTurnoutManager(jmri.jmrix.lenz.XNetTrafficController controller, String prefix) {
         super(controller, prefix);
@@ -22,8 +23,13 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(2));
-        Turnout t = new EliteXNetTurnout(prefix, addr, tc);
+        // check if the output bit is available
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        if (bitNum == -1) {
+            return (null);
+        }
+        // create the new Turnout object
+        Turnout t = new EliteXNetTurnout(prefix, bitNum, tc);
         t.setUserName(userName);
         return t;
     }

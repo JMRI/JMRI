@@ -87,29 +87,46 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * {@inheritDoc}
-     * 
-     * @return user name if not null or empty, else return system name
      */
     @Override
+    @CheckReturnValue
+    @Nonnull
     final public String getDisplayName() {
-        String name = getUserName();
-        if (name != null && !name.isEmpty()) {
-            return name;
-        } else {
-            return getSystemName();
-        }
+        return NamedBean.super.getDisplayName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    final public String getDisplayName(DisplayOptions displayOptions) {
+        return NamedBean.super.getDisplayName(displayOptions);
     }
 
     /** {@inheritDoc} */
+    // The reason for having this method here, and the reason for the
+    // SuppressWarning, is to prevent subclasses from implementing it.
+    @SuppressWarnings("deprecation")
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @CheckReturnValue
+    @Nonnull
     final public String getFullyFormattedDisplayName() {
-        String name = getUserName();
-        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
-            name = getSystemName() + "(" + name + ")";
-        } else {
-            name = getSystemName();
-        }
-        return name;
+        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+    }
+
+    /** {@inheritDoc} */
+    // The reason for having this method here, and the reason for the
+    // SuppressWarning, is to prevent subclasses from implementing it.
+    @SuppressWarnings("deprecation")
+    @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @CheckReturnValue
+    @Nonnull
+    final public String getFullyFormattedDisplayName(boolean userNameFirst) {
+        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
 
     // implementing classes will typically have a function/listener to get
@@ -126,7 +143,8 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
+    public synchronized void addPropertyChangeListener(@Nonnull PropertyChangeListener l,
+                                                       String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -138,7 +156,8 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener l, String beanRef, String listenerRef) {
+    public synchronized void addPropertyChangeListener(@Nonnull String propertyName,
+                                                       @Nonnull PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(propertyName, l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -181,7 +200,8 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
         register.entrySet().forEach((entry) -> {
             PropertyChangeListener l = entry.getKey();
@@ -226,17 +246,20 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @Override
+    @Nonnull
     public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
     @Override
+    @Nonnull
     public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     final public String getSystemName() {
         return mSystemName;
     }
@@ -301,7 +324,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(String key,Object value){
+    public void setProperty(@Nonnull String key,Object value){
          if (parameters == null) {
              parameters = new HashMap<>();
          }
@@ -322,7 +345,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public Object getProperty(String key) {
+    public Object getProperty(@Nonnull String key) {
         if (parameters == null) {
             parameters = new HashMap<>();
         }
@@ -331,6 +354,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
+    @Nonnull
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             parameters = new HashMap<>();

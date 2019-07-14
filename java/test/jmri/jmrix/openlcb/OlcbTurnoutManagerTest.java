@@ -2,12 +2,8 @@ package jmri.jmrix.openlcb;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnoutManager class.
@@ -16,7 +12,10 @@ import org.junit.Test;
  */
 public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    private static OlcbSystemConnectionMemo m; 
+    private static OlcbSystemConnectionMemo memo;
+    static Connection connection;
+    static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+    static java.util.ArrayList<Message> messages;
 
     @Override
     public String getSystemName(int i) {
@@ -59,25 +58,47 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Before
     public void setUp() {
-        l = new OlcbTurnoutManager(m);
+        l = new OlcbTurnoutManager(memo);
     }
  
-    @BeforeClass
-    public static void preClassInit() {
-        JUnitUtil.setUp();
-        m = OlcbTestInterface.createForLegacyTests();
-    }
-
     @After
     public void tearDown() {
         l.dispose();
     }
 
+    @BeforeClass
+    static public void preClassInit() {
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
+
+        messages = new java.util.ArrayList<>();
+        connection = new AbstractConnection() {
+            @Override
+            public void put(Message msg, Connection sender) {
+                messages.add(msg);
+            }
+        };
+
+        memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
+        memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        memo.setInterface(new OlcbInterface(nodeID, connection) {
+            public Connection getOutputConnection() {
+                return connection;
+            }
+        });
+    
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+    }
+
     @AfterClass
-    public static void postClassTearDown() {
-        if(m != null && m.getInterface() !=null ) {
-           m.getInterface().dispose();
+    public static void postClassTearDown() throws Exception {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
         }
+        memo = null;
+        connection = null;
+        nodeID = null;
         JUnitUtil.tearDown();
-    } 
+    }
 }

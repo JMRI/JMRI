@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author B. Milhaupt, Copyright (C) 2018
  */
-public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
+public class LnThrottleManager extends AbstractThrottleManager implements SlotListener {
 
     protected SlotManager slotManager;
     protected LnTrafficController tc;
@@ -41,12 +41,21 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     /**
      * LocoNet allows multiple throttles for the same device.
-     *
+     * <p>
+     * {@inheritDoc}
      * @return false always
      */
     @Override
     protected boolean singleUse() {
         return false;
+    }
+    
+    /**
+     * Display the Silent Stealing checkbox option in Throttles Preferences
+     */
+    @Override
+    public boolean enablePrefSilentStealOption() {
+        return true;
     }
 
     /**
@@ -207,7 +216,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             if ((s.id() != 0) && s.id() != throttleID) {
                 // notify the LnThrottleManager about failure of acquisition.
                 // NEED TO TRIGGER THE NEW "STEAL REQUIRED" FUNCITONALITY HERE
-                //note: throttle listener expects to have "callback" method notifyStealThrottleRequired
+                //note: throttle listener expects to have "callback" method notifyDecisionRequired
                 //invoked if a "steal" is required.  Make that happen as part of the "acquisition" process
                 slotForAddress.put(s.locoAddr(),s);
                 notifyStealRequest(s.locoAddr());
@@ -448,21 +457,27 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Cancel a request for a throttle.
      *
      * @param address The decoder address desired.
-     * @param isLong  True if this is a request for a DCC long (extended)
      *                address.
      * @param l       The ThrottleListener cancelling request for a throttle.
      */
-
     @Override
-    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
-        super.cancelThrottleRequest(address, isLong, l);
-        log.debug("cancelThrottleRequest - address {}", address);
-        if (waitingForNotification.containsKey(address)) {
-            waitingForNotification.get(address).interrupt();
-            waitingForNotification.remove(address);
+    public void cancelThrottleRequest(LocoAddress address, ThrottleListener l) {
+        
+        // calling super removes the ThrottleListener from the callback list,
+        // The listener which has just sent the cancel doesn't need notification
+        // of the cancel but other listeners might
+        super.cancelThrottleRequest(address, l);
+        
+        failedThrottleRequest(address, "Throttle Request " + address + " Cancelled.");
+        
+        int loconumber = address.getNumber();
+        log.debug("cancelThrottleRequest - loconumber {}", loconumber);
+        if (waitingForNotification.containsKey(loconumber)) {
+            waitingForNotification.get(loconumber).interrupt();
+            waitingForNotification.remove(loconumber);
         }
-        if (slotForAddress.containsKey(address)) {
-            slotForAddress.remove(address);
+        if (slotForAddress.containsKey(loconumber)) {
+            slotForAddress.remove(loconumber);
         }
         requestOutstanding = false;
         processQueuedThrottleSetupRequest();
@@ -516,7 +531,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             waitingForNotification.get(locoAddr).interrupt();
             waitingForNotification.remove(locoAddr);
 
-            notifyStealRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)));
+            notifyDecisionRequest(new DccLocoAddress(locoAddr, isLongAddress(locoAddr)),ThrottleListener.DecisionType.STEAL);
         }
     }
 
@@ -532,23 +547,15 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * throttle running that address to drop the loco".
      *
      * @param address desired DccLocoAddress
-     * @param l  ThrottleListener requesting the throttle steal occur.
-     * @param steal true if the request should continue, false otherwise.
+     * @param decision made by the ThrottleListener, only listening for STEAL
      * @since 4.9.2
      */
     @Override
-    public void stealThrottleRequest(LocoAddress address, ThrottleListener l, boolean steal){
-        log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
-        if (steal == false) {
-            if (address instanceof DccLocoAddress) {
-                cancelThrottleRequest((DccLocoAddress)address,l);
-                failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
-            } else {
-                log.error("cannot cast address to DccLocoAddress.");
-                requestOutstanding = false;
-                processQueuedThrottleSetupRequest();
-            }
-        } else {
+    public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision){
+        
+        log.debug("{} decision invoked for address {}",decision,address.getNumber() );
+        
+        if ( decision == ThrottleListener.DecisionType.STEAL ) {
             // Steal is currently implemented by using the same method
             // we used to aquire the slot prior to the release of 
             // Digitrax command stations with expanded slots.
@@ -559,6 +566,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
             } else {
                 log.error("Address {} not found in list of slots", address.getNumber());
             }
+        } else {
+            log.error("Invalid DecisionType {} for LnThrottleManager.",decision);
         }
     }
 

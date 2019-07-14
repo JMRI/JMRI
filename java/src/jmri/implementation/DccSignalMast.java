@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
@@ -9,11 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class implements a SignalMast that use <B>Extended Accessory Decoder
- * Control Packet Format</B>
+ * This class implements a SignalMast that uses <b>Extended Accessory Decoder
+ * Control Packet Format</b>
  * and outputs that packet to the DCC System via the generic CommandStation
- * interface
- * <P>
+ * interface.
+ * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.
@@ -23,10 +24,10 @@ import org.slf4j.LoggerFactory;
  * IF$dsm:basic:one-searchlight(123)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
- * <li>IF$dsm - defines signal masts of this type
- * <li>basic - name of the signaling system
- * <li>one-searchlight - name of the particular aspect map
- * <li>(123) - DCC address for the decoder
+ *   <li>IF$dsm - defines signal masts of this type
+ *   <li>basic - name of the signaling system
+ *   <li>one-searchlight - name of the particular aspect map
+ *   <li>(123) - DCC address for the decoder
  * </ul>
  * <p>
  * Based upon {@link jmri.implementation.DccSignalHead} by Alex Shepherd
@@ -51,17 +52,17 @@ public class DccSignalMast extends AbstractSignalMast {
         configureFromName(sys);
     }
 
-    protected String mastType = "F$dsm";
+    private String mastType = "F$dsm";
 
     protected void configureFromName(String systemName) {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) {
-            log.error("SignalMast system name needs at least three parts: " + systemName);
+            log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of SignalMast system name is incorrect " + systemName + " : " + mastType);
+            log.warn("First part of SignalMast system name is incorrect {} : {}", systemName, mastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -90,7 +91,7 @@ public class DccSignalMast extends AbstractSignalMast {
         try {
             dccSignalDecoderAddress = Integer.parseInt(tmp);
         } catch (NumberFormatException e) {
-            log.warn("DCC accessory address SystemName " + systemName + " is not in the correct format");
+            log.warn("DCC accessory address SystemName {} is not in the correct format", systemName);
         }
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
@@ -100,7 +101,7 @@ public class DccSignalMast extends AbstractSignalMast {
 
     public void setOutputForAppearance(String appearance, int number) {
         if (appearanceToOutput.containsKey(appearance)) {
-            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(appearance));
+            log.debug("Appearance {} is already defined as {}", appearance, appearanceToOutput.get(appearance));
             appearanceToOutput.remove(appearance);
         }
         appearanceToOutput.put(appearance, number);
@@ -108,7 +109,7 @@ public class DccSignalMast extends AbstractSignalMast {
 
     public int getOutputForAppearance(String appearance) {
         if (!appearanceToOutput.containsKey(appearance)) {
-            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            log.error("Trying to get appearance {} but it has not been configured", appearance);
             return -1;
         }
         return appearanceToOutput.get(appearance);
@@ -147,15 +148,14 @@ public class DccSignalMast extends AbstractSignalMast {
      29. "Clear"
      30. "Cab-Speed"
      31. "Dark" */
-    protected int packetRepeatCount = 3;
+    protected int packetSendCount = 3;  // default 3
 
     @Override
-    public void setAspect(String aspect) {
-
+    public void setAspect(@Nonnull String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
+            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
-            log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
+            log.warn("Trying to set aspect ({}) that has not been configured on mast {}", aspect, getDisplayName());
         }
         super.setAspect(aspect);
     }
@@ -168,7 +168,7 @@ public class DccSignalMast extends AbstractSignalMast {
         if (newLit) {
             setAspect(getAspect());
         } else {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetRepeatCount);
+            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetSendCount);
         }
         super.setLit(newLit);
     }
@@ -206,8 +206,27 @@ public class DccSignalMast extends AbstractSignalMast {
         return null;
     }
 
+    /**
+     * Set Number of times the packet should be sent.
+     * @param count - less than 1 is treated as 1.
+     */
+    public void setDccSignalMastPacketSendCount(int count) {
+        if (count >= 0) {
+            packetSendCount = count;
+        } else {
+            packetSendCount = 1;
+        }
+    }
+
+    /**
+     * get the number of times the packet should be sent to the track.
+     *
+     * @return the count.
+     */
+    public int getDccSignalMastPacketSendCount() {
+        return packetSendCount;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
 }
-
-

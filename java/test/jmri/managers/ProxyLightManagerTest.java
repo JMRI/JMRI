@@ -12,10 +12,10 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Test the ProxyLightManager
+ * Test the ProxyLightManager.
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
-  */
+ */
 public class ProxyLightManagerTest {
 
     public String getSystemName(int i) {
@@ -56,14 +56,6 @@ public class ProxyLightManagerTest {
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
-    }
-
-    @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideLight("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
     }
 
     @Test

@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>11</minor>
-    <test>2</test>
+    <minor>15</minor>
+    <test>6</test>
     <modifier>ish</modifier>
   </jmriversion>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -203,13 +203,13 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Layout Editor Test" x="4" y="0" height="270" width="580" windowheight="1080" windowwidth="1920" panelheight="270" panelwidth="580" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="yes" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="3" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Layout Editor Test" x="0" y="100" windowheight="360" windowwidth="670" panelheight="1054" panelwidth="1916" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="yes" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="3" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Layout Editor Test" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
       <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
       <mainBlockLineWidth>4</mainBlockLineWidth>
-      <mainRailColor>#000000</mainRailColor>
+      <mainRailColor>#404040</mainRailColor>
       <mainRailCount>1</mainRailCount>
       <mainRailGap>0</mainRailGap>
       <mainRailWidth>4</mainRailWidth>
@@ -221,7 +221,7 @@
       <sideBallastWidth>0</sideBallastWidth>
       <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
       <sideBlockLineWidth>2</sideBlockLineWidth>
-      <sideRailColor>#000000</sideRailColor>
+      <sideRailColor>#404040</sideRailColor>
       <sideRailCount>1</sideRailCount>
       <sideRailGap>0</sideRailGap>
       <sideRailWidth>2</sideRailWidth>
@@ -233,7 +233,7 @@
     <positionablelabel x="260" y="120" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Label Text" fontname="Georgia" size="16" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <memoryicon memory="XYZZY" x="300" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="XYZZY" x="300" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-green.gif">
       <tooltip>XYZZY (IM1)</tooltip>
     </memoryicon>
     <BlockContentsIcon blockcontents="Yard" x="230" y="10" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.BlockContentsIconXml">
@@ -320,5 +320,5 @@
   </LayoutEditor>
   <filehistory>
   </filehistory>
-  <!--Written by JMRI version 4.11.2ish+geowar+20180120T2059Z+R0628e98319 on Sat Jan 20 13:00:25 PST 2018-->
+  <!--Written by JMRI version 4.15.6ish+geowar+20190501T0314Z+R445b7129e3 on Tue Apr 30 20:14:11 PDT 2019-->
 </layout-config>

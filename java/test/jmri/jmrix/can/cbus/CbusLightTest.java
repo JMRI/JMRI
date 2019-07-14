@@ -48,7 +48,6 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
             t = new CbusLight("ML",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 
@@ -341,6 +340,70 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         Assert.assertTrue(t.getState() == Light.OFF);
  
     }
+    
+    @Test
+    public void testCbusLightCanMessageExtendedRtR() throws jmri.JmriException {
+        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
+        Assert.assertTrue(t.getState() == Light.OFF); // Light.UNKNOWN ??
+        
+        CanMessage m = new CanMessage(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, 0x90); // ACON OPC
+        m.setElement(1, 0xd4);
+        m.setElement(2, 0x31);
+        m.setElement(3, 0x30);
+        m.setElement(4, 0x39);
+        
+        m.setExtended(true);
+        
+        t.message(m);
+        Assert.assertTrue(t.getState() == Light.OFF ); 
+
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertTrue(t.getState() == Light.OFF );
+        
+        m.setRtr(false);
+        t.message(m);
+        Assert.assertTrue(t.getState() == Light.ON);
+        
+        t = null;
+        m = null;
+ 
+    }
+    
+        @Test
+    public void testCbusLightCanReplyExtendedRtr() throws jmri.JmriException {
+        CbusLight t = new CbusLight("ML","+N54321E12345",tcis);
+        Assert.assertTrue(t.getState() == Light.OFF);  // Light.UNKNOWN ??
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, 0x90); // ACON OPC
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        r.setExtended(true);
+        
+        t.reply(r);
+        Assert.assertTrue(t.getState() == Light.OFF);   
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertTrue(t.getState() == Light.OFF );
+
+        r.setRtr(false);
+        
+        t.reply(r);
+        Assert.assertTrue(t.getState() == Light.ON);
+        
+        t = null;
+        r = null;
+  
+    }
+    
 
     @Test
     public void testCbusLightCanReply() throws jmri.JmriException {
@@ -463,6 +526,15 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         
          // t.setTargetIntensity(0.25); not currently defined for CBUS
     }
+    
+    @Test
+    public void testDoNewStateinvalid(){
+        
+        CbusLight t = new CbusLight("M","+12345",tcis);
+        t.doNewState(Light.OFF,999);
+        JUnitAppender.assertWarnMessage("illegal state requested for Light: ML+12345");
+        
+    }
 
     // The minimal setup for log4J
     @Before
@@ -474,9 +546,10 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         t.dispose();
         tcis=null;
+        JUnitUtil.tearDown();
+        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusLightTest.class);

@@ -5,8 +5,8 @@ import jmri.jmrix.cmri.serial.SerialNetworkPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
- * Implements SerialPortAdapter for a network connection.
- * <P>
+ * Implements SerialNetworkPortAdapter for a network connection.
+ * <p>
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
@@ -20,7 +20,7 @@ public class NetworkDriverAdapter extends SerialNetworkPortAdapter {
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {

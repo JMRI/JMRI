@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * RaspberryPiAdapter. Note this is named as the XML version of a
  * RaspberryPiConnectionConfig object, but it's actually persisting the
  * RaspberryPiAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.

@@ -1,6 +1,8 @@
 package jmri.jmrit.speedometer;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -87,7 +89,8 @@ public class SpeedometerFrameTest {
              Throwable cause = ite.getCause();
              Assert.fail("verifyInputsValid execution failed reason: " + cause.getMessage());
         }
-        jmri.util.JUnitAppender.assertErrorMessage("Start sensor invalid:");
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty suffix to follow IS");
+        JUnitAppender.assertErrorMessage("Start sensor invalid:");
         JUnitUtil.dispose(frame);
     }
 
@@ -115,5 +118,7 @@ public class SpeedometerFrameTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

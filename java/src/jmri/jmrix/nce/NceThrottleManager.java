@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * NCE implementation of a ThrottleManager.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class NceThrottleManager extends AbstractThrottleManager {
@@ -29,11 +29,17 @@ public class NceThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        // the NCE protocol doesn't require an interaction with the command
-        // station for this, so immediately trigger the callback.
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new NceThrottle for " + address);
-        notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo) adapterMemo, address), address);
+        if (a instanceof DccLocoAddress ) {
+            // the NCE protocol doesn't require an interaction with the command
+            // station for this, so immediately trigger the callback.
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new NceThrottle for " + address);
+            notifyThrottleKnown(new NceThrottle((NceSystemConnectionMemo) adapterMemo, address), address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+        }
     }
 
     /**
@@ -70,9 +76,11 @@ public class NceThrottleManager extends AbstractThrottleManager {
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            NceThrottle nct = (NceThrottle) t;
-            nct.throttleDispose();
-            return true;
+            if (t instanceof NceThrottle) {
+                NceThrottle nct = (NceThrottle) t;
+                nct.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

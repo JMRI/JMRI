@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.can.CanMessage;
@@ -9,21 +11,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the CBUS-specific Sensor implementation.
+ * Implement SensorManager for CAN CBUS systems.
  * <p>
- * System names are "MSnnn", where M is the user-configurable system prefix,
- * nnn is the sensor number without padding.
+ * System names are "MS+n;-m", where M is the user configurable system prefix,
+ * n and m are the events (signed for on/off, separated by ;).
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
+
+    /**
+     * Ctor using a given system connection memo
+     */
+    public CbusSensorManager(CanSystemConnectionMemo memo) {
+        this.memo = memo;
+        prefix = memo.getSystemPrefix();
+    }
+
+    private CanSystemConnectionMemo memo;
+    private String prefix = "M";
 
     /** 
      * {@inheritDoc} 
      */
     @Override
     public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+        return prefix;
     }
 
     /** 
@@ -34,13 +47,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         super.dispose();
     }
 
-    //Implemented ready for new system connection memo
-    public CbusSensorManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-    }
-
-    CanSystemConnectionMemo memo;
-
     // CBUS-specific methods
 
     /** 
@@ -48,7 +54,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        String addr = systemName.substring(getSystemPrefix().length() + 1);
+        String addr = systemName.substring(prefix.length() + 1);
         // first, check validity
         try {
             validateSystemNameFormat(addr);
@@ -56,16 +62,16 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             log.error(e.toString());
             throw e;
         }
-        // validate and add + to int
+        // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Sensor s = new CbusSensor(getSystemPrefix(), newAddress, memo.getTrafficController());
+        Sensor s = new CbusSensor(prefix, newAddress, memo.getTrafficController());
         s.setUserName(userName);
         return s;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
@@ -75,12 +81,12 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // prefix + as service to user
+        // prefix unsigned int with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
-        return getSystemPrefix() + typeLetter() + newAddress;
+        return prefix + typeLetter() + newAddress;
     }
 
-    /** 
+     /**
      * {@inheritDoc} 
      */
     @Override
@@ -89,41 +95,38 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /** 
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String testAddr = curAddress;
         // make sure starting name is valid
         try {
             validateSystemNameFormat(testAddr);
-        } catch (IllegalArgumentException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
         }
-        
-       // log.warn("prefix {} typeLetter() {} testAddr {}",prefix ,typeLetter() , testAddr); // M, S,+123
-        
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
+        testAddr = CbusAddress.validateSysName(testAddr); // normalize Merg address
         Sensor s = getBySystemName(prefix + typeLetter() + testAddr);
-        if (s == null) {
+        if (s != null) {
+            // build local addresses
+            for (int x = 1; x < 10; x++) {
+                testAddr = CbusAddress.getIncrement(testAddr); // getIncrement will perform a max check on the numbers
+                s = getBySystemName(prefix + typeLetter() + testAddr);
+                if (s == null) {
+                    // If the hardware address + x does not already exist,
+                    // then this can be considered the next valid address.
+                    return testAddr;
+                }
+            }
+            // feedback when next address is also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new {} Sensors added", curAddress, memo.getUserName());
+            return null;
+        } else {
+            // If the initially requested hardware address does not already exist,
+            // then this can be considered the next valid address.
             return testAddr;
         }
-
-        // getIncrement will have performed a max check on the numbers
-        String newaddr = CbusAddress.getIncrement(testAddr);
-        if (newaddr==null) {
-            return null;
-        }
-        //If the new hardware address does not already exist then this can
-        //be considered the next valid address.
-        Sensor snew = getBySystemName(prefix + typeLetter() + newaddr);
-        if (snew == null) {
-            return newaddr;
-        }
-        return null;
     }
 
     /** 
@@ -133,7 +136,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            addr = systemName.substring(prefix.length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e){
             return NameValidity.INVALID;
         }
@@ -146,7 +149,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     * Work out the details for Cbus hardware address validation
+     * Work out the details for Cbus hardware address validation.
      * Logging of handled cases no higher than WARN.
      *
      * @param address the hardware address to check
@@ -154,7 +157,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
-        log.debug("validated system name {}",newAddress);
+        log.debug("validated system name {}", newAddress);
     }
 
     /**
@@ -162,14 +165,13 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**
      * {@inheritDoc}
      * Send a query message to each sensor using the active address
-     * eg. for a CBUS address "-7;+5", the query will got to event 7.
+     * eg. for a CBUS address "-7;+5", the query will go to event 7.
      */
     @Override
     public void updateAll() {

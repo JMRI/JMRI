@@ -17,15 +17,14 @@ import org.slf4j.LoggerFactory;
  * system.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
@@ -35,12 +34,12 @@ public class DefaultIdTag extends AbstractIdTag {
     private int currentState = UNKNOWN;
 
     public DefaultIdTag(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         setWhereLastSeen(null);
     }
 
     public DefaultIdTag(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         setWhereLastSeen(null);
     }
 
@@ -83,16 +82,19 @@ public class DefaultIdTag extends AbstractIdTag {
     public Element store(boolean storeState) {
         Element e = new Element("idtag"); //NOI18N
         // e.setAttribute("systemName", this.mSystemName); // not needed from 2.11.1
-        e.addContent(new Element("systemName").addContent(this.mSystemName)); //NOI18N
-        if (this.getUserName() != null && this.getUserName().length() > 0) {
+        e.addContent(new Element("systemName").addContent(this.mSystemName)); // NOI18N
+        String uName = this.getUserName();
+        if (uName != null && !uName.isEmpty()) {
             // e.setAttribute("userName", this.getUserName()); // not needed from 2.11.1
-            e.addContent(new Element("userName").addContent(this.getUserName())); //NOI18N
+            e.addContent(new Element("userName").addContent(uName)); // NOI18N
         }
-        if (this.getComment() != null && this.getComment().length() > 0) {
-            e.addContent(new Element("comment").addContent(this.getComment())); //NOI18N
+        String comment = this.getComment();
+        if ((comment != null) && (!comment.isEmpty())) {
+            e.addContent(new Element("comment").addContent(comment)); // NOI18N
         }
-        if (this.getWhereLastSeen() != null && storeState) {
-            e.addContent(new Element("whereLastSeen").addContent(this.getWhereLastSeen().getSystemName())); //NOI18N
+        Reporter whereLast = this.getWhereLastSeen();
+        if (whereLast != null && storeState) {
+            e.addContent(new Element("whereLastSeen").addContent(whereLast.getSystemName())); // NOI18N
         }
         if (this.getWhenLastSeen() != null && storeState) {
             e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen()))); //NOI18N

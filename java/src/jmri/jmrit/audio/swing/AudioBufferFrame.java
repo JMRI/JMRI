@@ -28,19 +28,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Defines a GUI to edit AudioBuffer objects
+ * Defines a GUI to edit AudioBuffer objects.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -53,18 +52,18 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     private final Object lock = new Object();
 
     // UI components for Add/Edit Buffer
-    JLabel urlLabel = new JLabel(Bundle.getMessage("LabelURL") + ":");
+    JLabel urlLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelURL")));
     JTextField url = new JTextField(40);
     JButton buttonBrowse = new JButton("...");
     JCheckBox stream = new JCheckBox(Bundle.getMessage("LabelStream"));
-//    JLabel formatLabel = new JLabel(Bundle.getMessage("LabelFormat"));
-//    JTextField format = new JTextField(20);
+    // JLabel formatLabel = new JLabel(Bundle.getMessage("LabelFormat"));
+    // JTextField format = new JTextField(20);
     JLabel loopStartLabel = new JLabel(Bundle.getMessage("LabelLoopStart"));
     JSpinner loopStart = new JSpinner();
     JLabel loopEndLabel = new JLabel(Bundle.getMessage("LabelLoopEnd"));
     JSpinner loopEnd = new JSpinner();
     JFileChooser fileChooser;
-//    AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
+    // AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
@@ -183,17 +182,17 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Buffer frame with default values
+     * Populate the Edit Buffer frame with default values.
      */
     @Override
     @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText("IAB" + counter++);
+            sysName.setText("IAB" + nextCounter()); // NOI18N
         }
         userName.setText(null);
         url.setText(null);
-//        format.setText(null);
+        // format.setText(null);
         stream.setSelected(false);
         stream.setEnabled(false); //(true);
         loopStart.setValue(Long.valueOf(0));
@@ -203,7 +202,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Buffer frame with current values
+     * Populate the Edit Buffer frame with current values.
      */
     @Override
     public void populateFrame(Audio a) {
@@ -213,7 +212,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         super.populateFrame(a);
         AudioBuffer b = (AudioBuffer) a;
         url.setText(b.getURL());
-//        format.setText(b.toString());
+        // format.setText(b.toString());
         stream.setSelected(b.isStreamed());
         stream.setEnabled(false); //(!b.isStreamedForced());
         loopStart.setValue(b.getStartLoopPoint());
@@ -259,7 +258,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
+        String sName = sysName.getText();
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -271,7 +270,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             if (newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
                 synchronized (lock) {
-                    counter--;
+                    prevCounter();
                 }
                 throw new AudioException("Duplicate user name - please modify");
             }
@@ -298,6 +297,14 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         } catch (AudioException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private static int nextCounter() {
+        return counter++;
+    }
+
+    private static int prevCounter() {
+        return counter--;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class);

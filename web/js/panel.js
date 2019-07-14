@@ -23,8 +23,8 @@
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
+ *  TODO:    ditto for sensorIcons with text
  *  TODO: add support for slipturnouticon (one2beros)
- *  TODO: improve handling of layoutBlock with systemname != username
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *
  **********************************************************************************************/
@@ -405,6 +405,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
                                     $widget['state'] = item.attributes['value'].value; //use value for initial state
                                 });
+                                $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
@@ -576,9 +577,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['state'] = UNKNOWN;  //add a state member for this block
                                 $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                                 //store these blocks in a persistent var
-                                //id is username, because references use it
-                                $gBlks[$widget.username] = $widget;
-                                jmri.getLayoutBlock($widget.username);
+                                //by both username and systemname since references may be by either
+                                $gBlks[$widget.username] = $widget
+                                $gBlks[$widget.systemname] = $widget;
+                                jmri.getLayoutBlock($widget.systemname);
                                 break;
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name
@@ -1161,10 +1163,13 @@ function $drawIcon($widget) {
 
         $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
 
-        //add in overlay text if specified  (append "overlay" to id to keep them unique)
+        //add overlay text if specified, one layer above, and copy attributes (except background-color)
         if (typeof $widget.text !== "undefined") {
-            $("#panel-area").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
-            $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level - 1)});
+            $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
+			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1.0 + 1, pointerEvents: 'none'};
+			$.extend(ovlCSS, $widget.styles); //append the styles from the widget  
+			delete ovlCSS['background-color'];  //clear the background color
+            $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
         jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
@@ -1810,6 +1815,9 @@ var $getTextCSSFromObj = function($widget) {
     }
     if (typeof $widget.size !== "undefined") {
         $retCSS['font-size'] = $widget.size + "px ";
+    }
+    if (typeof $widget.fontname !== "undefined") {
+        $retCSS['font-family'] = $widget.fontname;
     }
     if (typeof $widget.margin !== "undefined") {
         $retCSS['padding'] = $widget.margin + "px ";

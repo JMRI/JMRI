@@ -216,7 +216,7 @@ public class DetectionPanel extends JPanel {
         if (_pathBoxes != null) {
             for (int i = 0; i < _pathBoxes.size(); i++) {
                 if (_pathBoxes.get(i).isSelected()) {
-                    paths.add(_pathBoxes.get(i).getName().trim());
+                    paths.add(_pathBoxes.get(i).getName());
                 }
             }
         }
@@ -230,7 +230,7 @@ public class DetectionPanel extends JPanel {
         }
         for (int k = 0; k < iconPath.size(); k++) {
             for (int i = 0; i < _pathBoxes.size(); i++) {
-                String name = _pathBoxes.get(i).getName().trim();
+                String name = _pathBoxes.get(i).getName();
                 if (iconPath.get(k).equals(name)) {
                     _pathBoxes.get(i).setSelected(true);
                 }

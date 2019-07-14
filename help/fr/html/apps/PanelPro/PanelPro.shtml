@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
@@ -37,7 +36,8 @@ PanelPro propose deux m&#233;thodes distinctes pour cr&#233;er des panneaux de c
 	vous permet de dessiner graphiquement un panneau exactement 
 	comme vous le voulez, puis animer les pi&#232;ces pour montrer l'&#233;tat de 
 	votre r&#233;seau et vous laissez cliquez dessus pour la commande.</li>
- 	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande </a>travaille comme l'&#201;diteur de Panneau mais fournit une interface 
+ 	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande</a> travaille comme l'&#201;diteur de Panneau mais
+	fournit une interface
 	alternative.</li>
 	<li><a href="#le">L'&#201;diteur de R&#233;seau</a>
 	fournit des outils pour dessiner votre r&#233;seau 
@@ -269,13 +269,13 @@ donneraient des leviers "m&#233;caniques" que vous pourriez basculer avec un cli
 Cela peut &#234;tre un prototype, ou peut &#234;tre simplifi&#233; pour faciliter le fonctionnement et le rendre plus rapide,
 comme vous pr&#233;f&#233;rez.
 
-<p> Il est &#233;galement possible de cr&#233;er un panneau o&#249; les lignes "voie" 
-changent de couleur pour indiquer si la voie est occup&#233;e. La
-proc&#233;dure &#224; suivre est d&#233;crite sur une
-<a href="ColorTrack.shtml"> page s&#233;par&#233;e </a>.
+<p> Il est aussi possible de cr&#233;er un panneau o&#249; les lignes "voie"
+changent de couleur pour indiquer si la voie est occup&#233;e avec le
+<a href="ControlPanelEditor.shtml">L'&eacute;diteur Panneau de Commande</a>.
 
 <a name="cpe"><h2>&#201;diteur de Panneau de Commande</h2></a>
-<p<<b>L'&#201;diteur de Panneau de Commande</b> est simplement une vue alternative et commande avec les m&#234;me donn&#233;es que le <b>&#201;diteur 
+<p><b>L'&#201;diteur de Panneau de Commande</b> est simplement une vue alternative et commande avec les m&#234;me
+donn&#233;es que le <b>&#201;diteur
 de Panneau</b>. L'&#201;diteur de Panneau de Commande vous permet de modifierun Panneau en utilisant des menus au lieu de d'une fen&#234;tre 
 d'&#233;dition s&#233;par&#233;e.</p>
 Pour plus d'information voir la 

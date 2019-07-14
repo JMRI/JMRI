@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultSignalMastLogicManager
         extends AbstractManager<SignalMastLogic>
-        implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
+        implements jmri.SignalMastLogicManager {
 
     public DefaultSignalMastLogicManager() {
         registerSelf();
@@ -444,8 +444,8 @@ public class DefaultSignalMastLogicManager
 
     /** {@inheritDoc} */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalMastLogic");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalMastLogics" : "BeanNameSignalMastLogic");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);

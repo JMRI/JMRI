@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Support for reading PRICOM ".pdi" files
- * <P>
+ * <p>
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp. They
  * have kindly given permission for this use.
  *

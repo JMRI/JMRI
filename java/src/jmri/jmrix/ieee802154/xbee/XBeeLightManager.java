@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for XBee connections.
+ * Implement LightManager for XBee connections.
  * <p>
  *
  * @author Paul Bender Copyright (C) 2014
@@ -182,19 +182,7 @@ public class XBeeLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        return inputName; // toUpperCase and trim don't behave well with 
-                          // the XBee Node Identifier based addresses.
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class);

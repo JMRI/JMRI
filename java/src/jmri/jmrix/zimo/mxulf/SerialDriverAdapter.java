@@ -24,9 +24,8 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author	Bob Jacobsen Copyright (C) 2002
  *
  * Adapted for use with Zimo MXULF by Kevin Dickerson
- *
  */
-public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends Mx1PortController {
 
     public SerialDriverAdapter() {
         super(new Mx1SystemConnectionMemo());
@@ -183,13 +182,26 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"9,600 baud (Default)", "1,200 baud", "2,400 baud", "4,800 baud",
-        "19,200 baud", "38,400 baud"};
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600Zimo"),
+            Bundle.getMessage("Baud1200"), Bundle.getMessage("Baud2400"),
+            Bundle.getMessage("Baud4800"), Bundle.getMessage("Baud19200"),
+            Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{9600, 1200, 2400, 4800, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent

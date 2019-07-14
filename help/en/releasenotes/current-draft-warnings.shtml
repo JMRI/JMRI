@@ -1,0 +1,18 @@
+
+    <!-- contains new warnings for the release under development -->
+
+    <li>JMRI no longer modifies "system names" as provided by the user. There may
+        be cases where a script or panel file is creating an object with a system
+        name that is slightly different than a system name used elsewhere, and
+        JMRI used to change these to be the same. Users may have to modify scripts
+        and panel files to ensure system names match in all places.</li>
+        
+    <li>We "deprecate" certain methods and members in the Java code when they're
+        no longer recommended for use.  After some time, we then remove them.
+        This version of JMRI removes all deprecated methods and members up
+        through JMRI 4.10, which was released in December 2017.
+        If you still have code or scripts that reference these, please
+        look at
+        <a href="https://github.com/JMRI/JMRI/tree/v4.16">the code in JMRI 4.16</a>
+        for suggestions on what to substitute.
+        

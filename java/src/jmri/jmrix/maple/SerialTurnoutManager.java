@@ -102,22 +102,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     * @return a normalized system name if system name has a valid format, else
-     * return "".
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**
@@ -144,7 +133,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //  * the user to specify the type of control to be used.  The routine should 
 //  * return 0 for 'steady state' control, or n for 'pulsed' control, where n
 //  * specifies the duration of the pulse (normally in seconds).  
-//  */
+// */
 //  public int askControlType(String systemName) {
 //  // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
 //  //   'pulsed' output (some turnout controllers).

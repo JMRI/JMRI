@@ -5,6 +5,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.Date;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -12,8 +13,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.TrafficController;
-import jmri.util.swing.TextAreaFIFO;
+import jmri.ShutDownTask;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -29,12 +31,9 @@ import org.slf4j.LoggerFactory;
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
     protected ArrayList<CbusTableEvent> _mainArray;
-    private String _context=null; // event table pane console text
-    static private int MAX_LINES = 500; // tablefeedback screen log size
-    public TextAreaFIFO tablefeedback;
-  //  private CanSystemConnectionMemo _memo;
     private TrafficController tc;
     public CbusEventTableAction ta;
+    private CbusPreferences preferences;
     
     // column order needs to match list in column tooltips
     static public final int NODE_COLUMN = 0; 
@@ -54,12 +53,17 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int SESSION_OFF_COLUMN = 14;
     static public final int SESSION_IN_COLUMN = 15;
     static public final int SESSION_OUT_COLUMN = 16;
-    static public final int DELETE_BUTTON_COLUMN = 17;
-    static public final int STLR_ON_COLUMN = 18;
-    static public final int STLR_OFF_COLUMN = 19;
+    static public final int ALL_TOTAL_COLUMN = 17;
+    static public final int ALL_ON_COLUMN = 18;
+    static public final int ALL_OFF_COLUMN = 19;
+    static public final int ALL_IN_COLUMN = 20;
+    static public final int ALL_OUT_COLUMN = 21;
+    static public final int DELETE_BUTTON_COLUMN = 22;
+    static public final int STLR_ON_COLUMN = 23;
+    static public final int STLR_OFF_COLUMN = 24;
     static public final int STLR_ICON_COLUMN = 99;
     
-    static public final int MAX_COLUMN = 20;
+    static public final int MAX_COLUMN = 25;
     
     // order + which columns to use when saving
     protected static int[] saveColumns = {0,1,2,3,10,4}; // will need to change CVS file order if changed
@@ -69,9 +73,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         
         log.info("Starting MERG CBUS Event Table");
         _mainArray = new ArrayList<CbusTableEvent>();
-        tablefeedback = new TextAreaFIFO(MAX_LINES);
 
-        jmri.InstanceManager.store(this,jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        // jmri.InstanceManager.store(this,jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
         
         // connect to the CanInterface
         tc = memo.getTrafficController();
@@ -79,6 +82,17 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             tc.addCanListener(this);
         }
         ta = new CbusEventTableAction(this);
+        
+        preferences = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        
+        
+        if ( preferences != null && preferences.getSaveRestoreEventTable() ){
+                ta.restoreEventsFromXmlTablestart();
+        }
+        
+        ShutDownTask shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+        
     }
 
     // order needs to match column list top of dtabledatamodel
@@ -100,6 +114,11 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         Bundle.getMessage("ColumnOffSession"),
         Bundle.getMessage("ColumnInSessionTip"),
         Bundle.getMessage("ColumnOutSessionTip"),
+        null,
+        null,
+        null,
+        null,
+        null,
         Bundle.getMessage("ColumnEventDeleteTip"),
         Bundle.getMessage("StlrOnTip"),
         Bundle.getMessage("StlrOffTip")
@@ -124,7 +143,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -139,7 +157,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             eventTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         eventTable.sizeColumnsToFit(-1);
-        tablefeedback.setEditable ( false ); // set textArea non-editable
     }
 
 
@@ -185,6 +202,16 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return Bundle.getMessage("ColumnOutSession");
             case SESSION_TOTAL_COLUMN:
                 return Bundle.getMessage("ColumnTotalSession");
+            case ALL_ON_COLUMN:
+                return ("Alltime On"); 
+            case ALL_OFF_COLUMN:
+                return ("Alltime Off");
+            case ALL_IN_COLUMN:
+                return ("Alltime In"); 
+            case ALL_OUT_COLUMN:
+                return ("Alltime Out");
+            case ALL_TOTAL_COLUMN:
+                return ("Alltime Total");
             case LATEST_TIMESTAMP_COLUMN:
                 return Bundle.getMessage("ColumnLastHeard");
             case STLR_ON_COLUMN:
@@ -211,8 +238,13 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case SESSION_OFF_COLUMN:
             case SESSION_IN_COLUMN:
             case SESSION_OUT_COLUMN:
+            case ALL_ON_COLUMN:
+            case ALL_OFF_COLUMN:
+            case ALL_IN_COLUMN:
+            case ALL_OUT_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case SESSION_TOTAL_COLUMN:
+            case ALL_TOTAL_COLUMN:
             case LATEST_TIMESTAMP_COLUMN:
             case DELETE_BUTTON_COLUMN:
                 return new JTextField(7).getPreferredSize().width;
@@ -242,7 +274,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * in a test, there is 86 chars on a line
      * -1 is invalid
      * 0 is final column extend to end
-     * </p>
+     *
      * @param col int col number
      */
     public static int getColumnWidth(int col) {
@@ -271,10 +303,15 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SESSION_ON_COLUMN:
-            case SESSION_OFF_COLUMN:               
+            case SESSION_OFF_COLUMN:
             case SESSION_IN_COLUMN:
             case SESSION_OUT_COLUMN:
             case SESSION_TOTAL_COLUMN:
+            case ALL_ON_COLUMN:
+            case ALL_OFF_COLUMN:
+            case ALL_IN_COLUMN:
+            case ALL_OUT_COLUMN:
+            case ALL_TOTAL_COLUMN:
             case CANID_COLUMN:
             case NODE_COLUMN:
             case EVENT_COLUMN:
@@ -367,6 +404,16 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return _mainArray.get(row).getSessionOut();
             case SESSION_TOTAL_COLUMN:
                 return (_mainArray.get(row).getSessionOn() + _mainArray.get(row).getSessionOff() );
+            case ALL_ON_COLUMN:
+                return _mainArray.get(row).getTotalOn();
+            case ALL_OFF_COLUMN:
+                return _mainArray.get(row).getTotalOff();
+            case ALL_IN_COLUMN:
+                return _mainArray.get(row).getTotalIn();
+            case ALL_OUT_COLUMN:
+                return _mainArray.get(row).getTotalOut();
+            case ALL_TOTAL_COLUMN:
+                return (_mainArray.get(row).getTotalIn() + _mainArray.get(row).getTotalOut() );
             case LATEST_TIMESTAMP_COLUMN:
                 return _mainArray.get(row).getDate();
             case STLR_ON_COLUMN:
@@ -415,15 +462,21 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             _mainArray.get(row).bumpSessionOn();
             updateGuiCell(row,col);
             updateGuiCell(row,SESSION_TOTAL_COLUMN);
+            updateGuiCell(row,ALL_ON_COLUMN);
+            updateGuiCell(row,ALL_TOTAL_COLUMN);
             }
         else if (col == SESSION_OFF_COLUMN) {
             _mainArray.get(row).bumpSessionOff();
             updateGuiCell(row,col);
             updateGuiCell(row,SESSION_TOTAL_COLUMN);
+            updateGuiCell(row,ALL_OFF_COLUMN);
+            updateGuiCell(row,ALL_TOTAL_COLUMN);
         }
         else if (col == SESSION_IN_COLUMN) {
             _mainArray.get(row).bumpSessionIn();
             updateGuiCell(row,col);
+            updateGuiCell(row,ALL_IN_COLUMN);
+            updateGuiCell(row,ALL_TOTAL_COLUMN);
         }
         else if (col == CANID_COLUMN) {
             _mainArray.get(row).setCanId( (Integer) value);
@@ -432,6 +485,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         else if (col == SESSION_OUT_COLUMN) {
             _mainArray.get(row).bumpSessionOut();
             updateGuiCell(row,col);
+            updateGuiCell(row,ALL_OUT_COLUMN);
+            updateGuiCell(row,ALL_TOTAL_COLUMN);
         }
         else if (col == LATEST_TIMESTAMP_COLUMN) {
             _mainArray.get(row).setDate( new Date() );
@@ -445,8 +500,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             _mainArray.get(row).setStlOff( (String) value );
             updateGuiCell(row,col);
         }
-        // table is dirty
-        ta._saved = false;
     }
     
     private void updateGuiCell( int row, int col){
@@ -455,13 +508,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         });
     }
 
-    /**
-     * Report whether table has changed.
-     * @return boolean
-     */
-    public boolean isTableDirty() {
-        return(ta._saved);
-    }
 
     /**
      * Capture node and event, check if isevent and send to parse from message.
@@ -469,6 +515,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         if (!CbusOpCodes.isEvent(opc)) {
             return;
@@ -496,6 +545,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         if (!CbusOpCodes.isEvent(opc)) {
             return;
@@ -617,7 +669,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         _mainArray.add(newtabev);
         // notify the JTable object that a row has changed; do that in the Swing thread!
         ThreadingUtil.runOnGUI( ()->{ fireTableRowsInserted((getRowCount()-1), (getRowCount()-1)); });
-        addToLog(1,newtabev.toString() + Bundle.getMessage("AddedToTable"));
     }
     
     public CbusTableEvent provideEvent(int nn, int en){
@@ -631,11 +682,16 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         CbusTableEvent newtabev = new CbusTableEvent(nn,en,CbusTableEvent.EvState.UNKNOWN, -1, "", "", 0, 0, 0, 0, null );
         _mainArray.add(newtabev);
         // notify the JTable object that a row has changed; do that in the Swing thread!
-        ThreadingUtil.runOnGUI( ()->{ fireTableRowsInserted((getRowCount()-1), (getRowCount()-1)); });
-        addToLog(1,newtabev.toString() + Bundle.getMessage("AddedToTable"));
+        ThreadingUtil.runOnGUI( ()->{
+            fireTableRowsInserted((getRowCount()-1), (getRowCount()-1)); 
+        });
         
         return newtabev;
         
+    }
+    
+    protected ArrayList<CbusTableEvent> getEvents() {
+        return _mainArray;
     }
     
     /**
@@ -643,37 +699,49 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * @param row int row number
      */    
     void removeRow(int row) {
-        _context = _mainArray.get(row).toString() + " " + Bundle.getMessage("TableConfirmDelete");
         _mainArray.remove(row);
-        ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
-        addToLog(3,_context);
-    }
-        
-    /**
-     * Add to Event Table Console Log
-     * @param cbuserror int
-     * @param cbustext String console message
-     */
-    public void addToLog(int cbuserror, String cbustext) {
-        ThreadingUtil.runOnGUI( ()->{  
-            tablefeedback.append( "\n"+cbustext);
+        ThreadingUtil.runOnGUI( ()->{
+            fireTableRowsDeleted(row,row); 
         });
     }
     
     /**
      * disconnect from the CBUS
+     * check and trigger if need to save table to xml
      */
     public void dispose() {
+        
+        if ( preferences !=null && preferences.getSaveRestoreEventTable() ){
+            ta.storeEventsToXml();
+        }
         // eventTable.removeAllElements();
         // eventTable = null;
-        tablefeedback.dispose();
         if (tc != null) {
             tc.removeCanListener(this);
         }
     }
 
-    public TextAreaFIFO tablefeedback(){
-        return tablefeedback;
+    public static class CbusEventTableShutdownTask extends AbstractShutDownTask {
+
+        /**
+        * Constructor specifies the warning message and action to take
+        *
+        * @param name the name of the task (used in logs)
+        */
+        public CbusEventTableShutdownTask(String name) {
+            super(name);
+        }
+    
+        /**
+        * Checks preferences, saving Table contents if necessary
+        *
+        * @return true as the shutdown should continue
+        */
+        @Override
+        public boolean execute() {
+            jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class).dispose();
+            return true;
+        }
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);

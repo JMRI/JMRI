@@ -20,13 +20,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a ConditionalManager.
- * <P>
+ * <p>
  * Note that Conditionals always have an associated parent Logix.
- * <P>
+ * <p>
  * Logix system names must begin with IX, and be followed by a string, usually,
  * but not always, a number. The system names of Conditionals always begin with
  * the parent Logix's system name, then there is a capital C and a number.
- * <P>
+ * <p>
  * Conditional system names are set automatically when the Conditional is
  * created. All alphabetic characters in a Conditional system name must be upper
  * case. This is enforced when a new Conditional is created via
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cresman Copyright (C) 2009
  */
 public class DefaultConditionalManager extends AbstractManager<Conditional>
-        implements ConditionalManager, java.beans.PropertyChangeListener {
+        implements ConditionalManager {
 
     public DefaultConditionalManager() {
         super();
@@ -144,7 +144,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
      * special logic
      *
-     * @param name  system name of Conditional (must be trimmed and upper case)
+     * @param name  system name of Conditionals
      * @return the parent Logix or null
      */
     @Override
@@ -332,8 +332,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameConditional");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
     }
 
     // --- Conditional Where Used processes ---

@@ -235,7 +235,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             /**
              * Delete the bean after all the checking has been done.
              * <p>
-             * Deactivates the Logix and remove it's conditionals.
+             * Deactivates the Logix and remove its conditionals.
              *
              * @param bean of the Logix to delete
              */
@@ -945,7 +945,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param e the event heard
      */
     void copyLogixPressed(ActionEvent e) {
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
         }
@@ -959,7 +959,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             if (!checkLogixSysName()) {
                 return;
             }
-            String sName = _systemName.getText().trim();
+            String sName = _systemName.getText();
             // check if a Logix with this name already exists
             boolean createLogix = true;
             targetLogix = _logixManager.getBySystemName(sName);
@@ -1088,7 +1088,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @return false if name has length &lt; 1 after displaying a dialog
      */
     boolean checkLogixSysName() {
-        String sName = InstanceManager.getDefault(LogixManager.class).normalizeSystemName(_systemName.getText());
+        String sName = _systemName.getText();
         if ((sName.length() < 1)) {
             // Entered system name is blank or too short
             JOptionPane.showMessageDialog(addLogixFrame,
@@ -1162,7 +1162,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         // possible change
         _showReminder = true;
         String sName = "";
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
         }
@@ -1324,9 +1324,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param sName system name of bean to be deleted
      */
     void deletePressed(String sName) {
-        if (!checkFlags(sName)) {
-            return;
-        }
         if (!checkConditionalReferences(sName)) {
             return;
         }

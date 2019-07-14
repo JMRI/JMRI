@@ -5,14 +5,14 @@ import jmri.Block;
 /**
  * TrackNode is a temporary object specifying and returning track node
  * information
- * <P>
+ * <p>
  * Used in conjunction with ConnectivityUtil.java to return information about
  * track nodes following a search of layout connectivity.
- * <P>
+ * <p>
  * Track nodes are nodes in the layout connectivity diagram. They may be:
  * positionable points - either anchor points that define a block boundary or
  * end bumpers (end of a track), turnouts, -OR_ level crossings
- * <P>
+ * <p>
  * The components of a TrackNode are: Node Object - the object reached by
  * searching connectivity Node Type - connection types defined in Layout Editor,
  * for example, TURNOUT_A, indicates a turnout connected at A (the throat of a
@@ -22,7 +22,7 @@ import jmri.Block;
  * before reaching a Node Object. 'false' otherwise. Node State - if the Node
  * Object can have multiple states, for example, a turnout, this gives the state
  * it was when finding this track node.
- * <P>
+ * <p>
  * Actually you could think of an End Bumper as a 'Node', but End Bumpers are
  * treated differently here. When an End Bumper is reached during a connectivity
  * search, Track Segment is returned, Reached End Bumper is set true, and Node

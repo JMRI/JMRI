@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -20,7 +21,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a MS100 attached to a serial comm port.
- * Normally controlled by the MS100Frame class.
+ * Normally controlled by the jmri.jmrix.loconet.ms100.ConnectionConfig class.
  * <p>
  * By default, this attempts to use 16600 baud. If that fails, it falls back to
  * 16457 baud. Neither the baud rate configuration nor the "option 1" option are
@@ -28,7 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class MS100Adapter extends LnPortController {
 
     public MS100Adapter() {
         super(new LocoNetSystemConnectionMemo());
@@ -171,12 +172,21 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
+     * {@inheritDoc}
+     *
+     * Just a message saying it's fixed
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"fixed at 16600 baud"};
+        return new String[]{"fixed at 16,600 baud"};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{16600};
     }
 
     /**

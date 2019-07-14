@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Acela systems
+ * Implement turnout manager for Acela systems.
  * <p>
  * System names are "ATnnn", where A is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -94,17 +94,6 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      */
     public boolean validSystemNameConfig(String systemName) {
         return (AcelaAddress.validSystemNameConfig(systemName, 'T', _memo));
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * return "" (empty string)
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**

@@ -7,9 +7,8 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 
 /**
- * <p>
- * Tests for XBeeIOStream
- * </P>
+ * Tests for XBeeIOStream.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeIOStreamTest {

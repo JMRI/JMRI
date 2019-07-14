@@ -16,15 +16,15 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Powerline devices via a serial comm port. Derived from the
- * oaktree code.
+ * Provide access to Powerline devices via a serial comm port.
+ * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SpecificDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -46,25 +46,25 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set framing (end) character
             try {
-                log.debug("Serial framing was observed as: " + activeSerialPort.isReceiveFramingEnabled()
-                        + " " + activeSerialPort.getReceiveFramingByte());
+                log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
+                        activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: ", ef);
             }
 
             // set timeout; framing should work before this anyway
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                        activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: ", et);
             }
 
             // get and save stream
@@ -87,8 +87,8 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -107,7 +107,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
@@ -125,9 +125,20 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     // base class methods for the SerialPortController interface
@@ -148,7 +159,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -162,7 +173,8 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     InputStream serialStream = null;
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
+     *
      * @throws purejavacomm.UnsupportedCommOperationException for invalid connection/settings
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
@@ -177,7 +189,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{19200};
     protected String selectedSpeed = validSpeeds[0];
 

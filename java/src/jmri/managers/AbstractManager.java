@@ -80,7 +80,23 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
-        return getSystemPrefix() + typeLetter() + s;
+        String prefix = getSystemNamePrefix();
+        // do some basic format checking that can throw explicit exception with feedback to user
+        if (s.trim().isEmpty() || s.equals(prefix)) {
+            log.error("Invalid system name for {}: \"\" needed non-empty suffix to follow {}", getBeanTypeHandled(), prefix);
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty suffix to follow " + prefix);
+        }
+        //prepend system name if not already present
+        String name = s;
+        if (!name.startsWith(prefix)) {
+            name = prefix + s;      
+        }
+
+        // verify name format is valid
+        if (validSystemNameFormat(name) != NameValidity.VALID) {
+            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": name \"" + name + "\" has incorrect format");
+        }
+        return name;
     }
 
     /** {@inheritDoc} */
@@ -95,7 +111,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
-    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
+    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
     // Storage for getSystemNameOriginalList
@@ -106,30 +122,25 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists. This is intended to be used by concrete classes to
-     * implement their getBySystemName method. We can't call it that here
-     * because Java doesn't have polymorphic return types.
-     *
-     * @param systemName the system name
-     * @return requested NamedBean object or null if none exists
+     * Now obsolete. Used {@link #getBeanBySystemName} instead.
+     * @param systemName the system name, but don't call this method
+	 * @return the results of a {@link #getBeanBySystemName} call, which you should use instead of this
+     * @deprecated 4.15.6
      */
+    @Deprecated // since 4.15.6
     protected E getInstanceBySystemName(String systemName) {
-        return _tsys.get(systemName);
+        return getBeanBySystemName(systemName);
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists. This is intended to be used by concrete classes to
-     * implement their getBySystemName method. We cant call it that here because
-     * Java doesn't have polymorphic return types.
-     *
-     * @param userName the user name
-     * @return requested E (NamedBean, i.e. Turnout) object or null if none exists
+     * Now obsolete. Used {@link #getBeanByUserName} instead.
+     * @param userName the system name, but don't call this method
+	 * @return the results of a {@link #getBeanByUserName} call, which you should use instead of this
+     * @deprecated 4.15.6
      */
+    @Deprecated // since 4.15.6
     protected E getInstanceByUserName(String userName) {
-        String normalizedUserName = NamedBean.normalizeUserName(userName);
-        return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
+        return getBeanByUserName(userName);
     }
 
     /** {@inheritDoc} */
@@ -203,9 +214,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        fireIndexedPropertyChange("beans", position, null, s);
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
-        s.addPropertyChangeListener(this, "", "Manager");
+        s.addPropertyChangeListener(this);
     }
 
     // not efficient, but does job for now
@@ -281,11 +293,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         
         // notifications
         fireDataListenersRemoved(position, position, s);
+        fireIndexedPropertyChange("beans", position, s, null);
         firePropertyChange("length", null, _beans.size());
     }
 
     /**
      * By default there are no custom properties.
+     *
      * @return empty list
      */
     @Override
@@ -349,7 +363,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return cachedSystemNameArray;
     }
 
-    
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -364,7 +377,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return Collections.unmodifiableList(cachedSystemNameList);
     }
 
-
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -372,7 +384,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -393,7 +404,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    abstract public String getBeanTypeHandled();
+    abstract public String getBeanTypeHandled(boolean plural);
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -442,6 +453,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
+        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     VetoableChangeSupport vcs = new VetoableChangeSupport(this);
@@ -571,23 +587,19 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         }
     }
 
-    /** {@inheritDoc} */
-    @CheckReturnValue
-    @Override
-    @Nonnull
-    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
     /**
      * {@inheritDoc}
      *
-     * @return always 'VALID' to let undocumented connection system
-     *         managers pass entry validation.
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name suffix
+     *         is empty or all white space; otherwise returns
+     *         {@link jmri.Manager.NameValidity#VALID} to let undocumented
+     *         connection system managers pass entry validation.
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
+        return !getSystemNamePrefix().equals(systemName.trim())
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
     }
 
     /** {@inheritDoc} */

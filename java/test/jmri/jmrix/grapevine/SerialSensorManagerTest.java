@@ -1,6 +1,9 @@
 package jmri.jmrix.grapevine;
 
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,8 +57,26 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue("4th UA 3", n3.getSensorsActive());
 
         // some equality tests
-        Assert.assertTrue("GS1p7 == GS1007", l.getSensor("GS1p7") == l.getSensor("GS1007"));
-        Assert.assertTrue("GS1B7 == GS1007", l.getSensor("GS1B7") == l.getSensor("GS1007"));
+        // TODO: should these be the same bean, or should different beans point to same physical device?
+        Assert.assertNotEquals("GS1p7 == GS1007", l.getSensor("GS1p7"), l.getSensor("GS1007"));
+        Assert.assertNotEquals("GS1B7 == GS1007", l.getSensor("GS1B7"), l.getSensor("GS1007"));
+    }
+
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("1007"),
+                l.makeSystemName("1009"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1007");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
     }
 
     @Override

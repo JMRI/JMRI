@@ -36,7 +36,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -58,7 +58,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
      */
     @Override
     public void setManager(@Nonnull Manager<Reporter> man) {
-        reportManager = (ReporterManager) man;
+        if (man instanceof ReporterManager) {
+            reportManager = (ReporterManager) man;
+        }
     }
 
     public ReporterTableAction() {
@@ -390,6 +392,11 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         addButton.removePropertyChangeListener(colorChangeListener);
     }
 
+    /**
+     * Respond to Create new item button pressed on Add Reporter pane.
+     *
+     * @param e the click event
+     */
     void createPressed(ActionEvent e) {
 
         int numberOfReporters = 1;
@@ -407,7 +414,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
         String rName = null;
         String reporterPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "R" later
-        String curAddress = hardwareAddressTextField.getText().trim();
+        String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.isEmpty()) {
             statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
@@ -421,7 +428,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
         String errorMessage = null;
-        String uName = userNameTextField.getText().trim();
+        String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             curAddress = reportManager.getNextValidAddress(curAddress, reporterPrefix);
             if (curAddress == null) {
@@ -493,8 +500,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
     /**
      * Activate Add a rangeCheckBox option if manager accepts adding more than 1
- Reporter and set a manager specific tooltip on the AddNewHardwareDevice
- pane.
+     * Reporter and set a manager specific tooltip on the AddNewHardwareDevice pane.
      */
     private void canAddRange(ActionEvent e) {
         rangeCheckBox.setEnabled(false);
@@ -504,10 +510,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
+        String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
         if (InstanceManager.getDefault(ReporterManager.class).getClass().getName().contains("ProxyReporterManager")) {            
             jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(ReporterManager.class);    
             List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
-            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Reporter> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     rangeCheckBox.setEnabled(((ReporterManager) mgr).allowMultipleAdditions(systemPrefix));
@@ -517,7 +523,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     break;
                 }
             }
-        } else if (reportManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
+        } else if (reportManager.allowMultipleAdditions(systemPrefix)) {
             rangeCheckBox.setEnabled(true);
             log.debug("R add box enabled2");
             // get tooltip from reporter manager
@@ -633,10 +639,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-
-                    boolean inputOK = verify(input);
-                    if (inputOK) {
+                if (input instanceof CheckedTextField ) {
+                    if (verify(input)) {
                         input.setBackground(Color.white);
                         return true;
                     } else {
@@ -655,7 +659,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
-                    return ((CheckedTextField) input).isValid();
+                    return input.isValid();
                 } else {
                     return false;
                 }

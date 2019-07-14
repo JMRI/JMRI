@@ -21,7 +21,7 @@
   <!-- V 1 new file - Mark Waters - 27 Dec 2015 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX633 version 25+" lowVersionID="30" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="237">
+      <model model="MX633 version 25+" lowVersionID="30" highVersionID="31" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -34,7 +34,7 @@
         <output name="10" label="FO 8"/>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633R version 25+" lowVersionID="30" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="237">
+      <model model="MX633R version 25+" lowVersionID="30" highVersionID="31" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -47,7 +47,7 @@
         <output name="10" label="FO 8"/>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633P22 version 25+" lowVersionID="30" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="237">
+      <model model="MX633P22 version 25+" lowVersionID="30" highVersionID="31" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>

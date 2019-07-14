@@ -73,7 +73,7 @@
 
       <p><a href="../../html/setup/images/PrefsConnections_en.png"><img src=
       "../../html/setup/images/PrefsConnections_en.png" height="195" width="425"
-      align="right" alt="JMRI v4 Connection Prefs tab"></a>
+      align="right" alt="JMRI v2.14 Connection Prefs tab"></a>
       Each
       connection has its own unique tab. To get started, first
       select your DCC System Manufacturer, followed by the type of
@@ -102,15 +102,20 @@
       <a name="Defaults" id="Defaults"></a>
       <h2 style="float:clear">Defaults</h2>
       <a href="images/JMRI_PrefsDefaults.png">
-          <img src="images/JMRI_PrefsDefaults.png" height="222" width="419"
-               align="right" alt="JMRI v2.14 Defaults Prefs tab">
+          <img src="images/JMRI_PrefsDefaults.png" height="236" width="468"
+               align="right" alt="JMRI v4.15 Defaults Prefs tab">
       </a>
       <p>If you are using multiple connections, e.g. a LocoNet Connection and a
           MERG Connection, the Defaults pane lets you select which connection
-          you want to use for a particular purpose.</p>
-      <p>The Internal connection is the default connection, however, since this
-          is almost always undesirable, JMRI applications will notify you if the
-          Internal connection is the default for every purpose. To silence this
+          you want to use for a particular purpose. For example, you 
+          can select one connection (LocoNet in the figure) for train throttles
+          and consists, 
+          while using a different one (SPROG in the figure) for the 
+          service mode programming track.</p>
+      <p>The Internal connection can be selected as a default. 
+          To avoid a common mis-configuration, JMRI applications will notify you if the
+          Internal connection is selected across all the columns. 
+          If you choose to use an all-Internal set of defaults and want to silence this
           notification, edit the profile properties, setting the property
           <code>jmri-managers.allInternalDefaults</code> to <em>true</em>.</p>
 
@@ -136,14 +141,19 @@
 
       <p>There's a <a href=
       "../../html/setup/Dropbox.shtml">separate Help page</a> with
-      information on sharing files between computers using Dropbox.
-      <a name="Startup" id="Startup"></a></p>
+      information on sharing files between computers using Dropbox.</p>
 
+      <a name="Startup" id="Startup"></a>
       <h2>Start Up</h2>
 
       <p><em>Start Up</em> preferences allow windows and files to
       be opened, scripts to be run, and additional buttons to be
-      placed on the main window when the application starts.</p>
+      placed on the main window when the application starts.<br>
+      A very common use is an Open File action (see below) to
+      automatically load your last stored <a href=
+      "../jmri/jmrit/display/PanelMenuHelp.shtml">layout
+      configuration file</a> at startup, so all your turnouts,
+      sensors, panels etc. are available again.</p>
 
       <p>Click the <strong>Add &#9662;</strong> button and select
       the type of start up action to add. The new action will be
@@ -153,7 +163,9 @@
       should be the last items in the start up order. Start up
       order can be changed by selecting a start up item and moving
       it <em>up</em> or <em>down</em> in the list.</p>
-
+      <a href="images/PrefsStartup4_15.png"><img src=
+      "images/PrefsStartup4_15.png" height="232" width="466" align=
+      "right" alt="JMRI v4.2 Roster Prefs tab"></a>
       <p>There are five types of start up actions:</p>
 
       <dl>
@@ -172,9 +184,10 @@
 
         <dt>Open file</dt>
 
-        <dd>Automatically load panel files when the program starts
-        up. You can load as many panel files as you'd like; each
-        will be completely loaded before the next is started.</dd>
+        <dd>Automatically load a Panel file or Configuration file
+        when the program starts up. You can load as many files
+        as you'd like; each will be completely loaded before
+        the next is started.</dd>
 
         <dt>Run script</dt>
 
@@ -190,12 +203,17 @@
         many routes as you like; each will be set in order. Note
         that any files the route depends upon need to be opened
         before setting the route.</dd>
-      </dl><a name="Display" id="Display"></a>
+      </dl>
 
+      <a name="Display" id="Display"></a>
       <h2>Display</h2>
 
+      <a href="images/PrefsGui4_15.png"><img src=
+      "images/PrefsGui4_15.png" height="194" width="478" align=
+      "right" alt="JMRI v4.15 GUI Prefs tab"></a>
+
       <dl>
-        <dt>GUI</dt>
+        <dt>GUI<a name="Gui" id="Gui"></a></dt>
 
         <dd>
           A row of radio boxes allow you to select how the program
@@ -227,11 +245,14 @@
           <li>Whether you want to use graphics to show the state of turnouts,
           lights, sensors and blocks in the state column of their tables.
           <span class="since">since 4.7.4</span></li>
+          <li>Whether you want to use the values saved in a panel xml file
+          instead of the standard location and size process for JMRI windows.
+          <span class="since">since 4.15.6</span></li>
           <li>How long tooltips (where available) should be shown.</li>
           </ul>
         </dd>
 
-        <dt>Locale</dt>
+        <dt>Locale<a name="locale" id="locale"></a></dt>
 
         <dd><a href="../../Acknowledgements.shtml">Many people</a>
         have contributed "internationalizations" of JMRI. This
@@ -255,10 +276,11 @@
         size and style. Also, you can choose to save both the size
         and location of the System Console window so that it always
         appears in the same place and at the same size.</dd>
-      </dl><a href="images/PrefsMsgPane421.png"><img src=
-      "images/PrefsMsgPane421.png" height="214" width="375" align=
-      "right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name=
-      "Messages" id="Messages"></a>
+        </dl>
+        <a href="images/PrefsMessages.png"><img src=
+        "images/PrefsMessages.png" height="194" width="479" align=
+        "right" alt="JMRI v4.17 Messages Prefs tab"></a> <a name=
+        "Messages" id="Messages"></a>
 
       <h2>Messages</h2>This allows you to change the way that
       information and warning messages are displayed in JMRI.<br>
@@ -274,7 +296,7 @@
 
       <a id="programmer" name="programmer"></a>
       <dl>
-        <dt>Programmer</dt>
+        <dt>Programmer tab</dt>
 
         <dd>
           The DecoderPro programmer allows you to select how much
@@ -352,7 +374,7 @@
           will pick up new values of the options, without having to close and restart the program.
         </dd>
 
-        <dt>Roster</dt>
+        <dt>Roster tab</dt>
 
         <dd>
           Normally, the Roster is stored in a standard location as
@@ -516,7 +538,7 @@
 
       <h3>Speed Name Tables</h3>
       <p>When an automatically running train encounters a Signal
-      aspect that calls for a speed change, the speed map table 
+      aspect that calls for a speed change, the speed map table
       provides the information of what the speed change should
       be. Other parameters control the way the
       speed change is made.</p>
@@ -527,9 +549,9 @@
       that all the speed names used in your signal system be listed
       in the Speed Map Table.  Rows can be added or deleted to conform
       to the Signal System aspects.</p>
-      
+
       <p>The value associated with a speed
-      name can be interpreted in four different ways and there are 
+      name can be interpreted in four different ways and there are
       four radio buttons for you to choose the meaning
       of the value.</p>
       <ul>
@@ -552,13 +574,13 @@
 
       <h2>Head Appearance Name Table</h2>
       <p>The <b>Head Appearance Table</b> is used when Signal Heads
-      are used as signals. It maps signal head appearance names 
+      are used as signals. It maps signal head appearance names
       to aspect speed name which in turn are mapped by the Aspect
       Speed Name table to values that interpret speed limits.</p>
 
       <h3>Layout Scale and Search Depth</h3>
       <p>It is important that the correct <b>Layout Scale</b> is
-      chosen since it is needed to convert throttle settings 
+      chosen since it is needed to convert throttle settings
       and track speeds to and from scale speeds.<br>
       The <b>Max Number of Blocks in Route</b> is the depth to which
       JMRI will search for a route when defining a warrant. This is
@@ -570,11 +592,11 @@
       speed up are done by stepping up and down with two "ramp"
       parameters; the throttle increment per step and the time
         interval of each step.  These two parameters are paired to
-        make a "stair step" pattern for changing speed.  
+        make a "stair step" pattern for changing speed.
         Generally, they are paired in that a small throttle increment
         should be done in a short time interval and a large increment
         in a longer time. When setting them, the time interval should
-        be long enough for the speed increment to complete given the 
+        be long enough for the speed increment to complete given the
         momentum you have programmed into your decoders.
 	  <ul>
         <li><b>Ramp Step throttle Increment</b>  This value is
@@ -585,35 +607,35 @@
 
         <li><b>Ramp Step time</b> Depending how you have
         configured momentum on your
-        locomotives, adjust this value so the speed change is 
+        locomotives, adjust this value so the speed change is
         completed within this period of time. Typically
-        corresponding to the above, 
+        corresponding to the above,
         300 to 1000 milliseconds would be appropriate.</li>
       </ul>
       <p>You should experiment by watching how NX Warrants start and end
        or by issuing "Stop" and "Resume" commands to a recorded
       warrant.</p>
-       
+
       <h3>Throttle Factor</h3>
       <p>The value of <b>Throttle Setting/Speed Factor</b>
       along with <b>Layout Scale</b>
-      adjusts a throttle setting to be a layout track speed. 
+      adjusts a throttle setting to be a layout track speed.
       The Throttle Factor set here is a global default.</p>
-       
+
       <p>For more information on Warrant speed parameters, see
       <a href="../jmri/jmrit/logix/speedChanges.shtml">Modifying
       Warrant Speeds</a> and follow its links.</p>
-      
+
       <h2>Merging Speed Profiles</h2>
       <p>In Release 4.9.2 Warrant compute a track speed when traversing
-      a path with known length and known throttle setting.  These 
+      a path with known length and known throttle setting.  These
       measurements are made for each address that is rub under a
       warrant and are kept for the entire layout session.  When
       JMRI is quit, at shutdown. These Session Speed Profiles can
       be merged into their Roster Speed Profiles.  The following
       choices are available at shutdown.</p>
       <ul>
-        <li><b>Don't Merge</b> - Do not prompt and 
+        <li><b>Don't Merge</b> - Do not prompt and
         discard the Session Profiles and
         leave the Roster Speed Profiles unchanged. </li>
         <li><b>Prompt Merges</b> - At shutdown at dialog is presented

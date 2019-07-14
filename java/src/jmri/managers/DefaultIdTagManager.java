@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.Application;
 import jmri.Disposable;
 import jmri.IdTag;
 import jmri.IdTagManager;
@@ -67,24 +66,22 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             // Create shutdown task to save
             log.debug("Register ShutDown task");
             if (this.shutDownTask == null) {
-                InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((sdm) -> {
-                    this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                        @Override
-                        public boolean execute() {
-                            // Save IdTag details prior to exit, if necessary
-                            log.debug("Start writing IdTag details...");
-                            try {
-                                writeIdTagDetails();
-                            } catch (java.io.IOException ioe) {
-                                log.error("Exception writing IdTags: {}", (Object) ioe);
-                            }
-
-                            // continue shutdown
-                            return true;
+                this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
+                    @Override
+                    public boolean execute() {
+                        // Save IdTag details prior to exit, if necessary
+                        log.debug("Start writing IdTag details...");
+                        try {
+                            writeIdTagDetails();
+                        } catch (java.io.IOException ioe) {
+                            log.error("Exception writing IdTags: {}", (Object) ioe);
                         }
-                    };
-                    sdm.register(this.shutDownTask);
-                });
+
+                        // continue shutdown
+                        return true;
+                    }
+                };
+                InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
             }
             initialised = true;
         }
@@ -108,6 +105,11 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
+    public IdTag provide(String name) throws IllegalArgumentException {
+        return provideIdTag(name);
+    }
+
+    @Override
     public IdTag provideIdTag(String name) throws IllegalArgumentException {
         if (!initialised && !loading) {
             init();
@@ -118,8 +120,10 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             return newIdTag(name, null);
-        } else {
+        } else if (!name.isEmpty()) {
             return newIdTag(makeSystemName(name), null);
+        } else {
+            throw new IllegalArgumentException("\"" + name + "\" is invalid");
         }
     }
 
@@ -207,7 +211,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         // save in the maps
         register(s);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
@@ -311,15 +315,13 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     @Override
     public void dispose() {
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((sdm) -> {
-            sdm.deregister(this.shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
         super.dispose();
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);

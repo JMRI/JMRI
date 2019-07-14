@@ -23,6 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BundleTest.class,
     jmri.server.json.block.PackageTest.class,
     jmri.server.json.consist.PackageTest.class,
+    jmri.server.json.idTag.PackageTest.class,
     jmri.server.json.layoutblock.PackageTest.class,
     jmri.server.json.light.PackageTest.class,
     jmri.server.json.memory.PackageTest.class,

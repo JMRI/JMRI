@@ -9,7 +9,7 @@ import jmri.util.ThreadingUtil;
 
 /**
  * Common utility methods for working with (@link java.util.Timer)
- * <P>
+ * <p>
  * Each {@link java.util.Timer} uses a thread, which means that they're
  * not throw-away timers:  You either track when you can destroy them 
  * (and that destruction is not obvious), or they stick around consuming

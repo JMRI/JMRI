@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2017
  */
-public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class ZTC611Adapter extends XNetSerialPortController {
 
     public ZTC611Adapter() {
         super();
@@ -47,14 +47,14 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set timeout
             activeSerialPort.enableReceiveTimeout(10);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -132,7 +132,7 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: ", e.getMessage());
         }
         return null;
     }
@@ -169,9 +169,20 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};

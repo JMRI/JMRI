@@ -10,24 +10,19 @@ import jmri.jmrit.beantable.LRouteTableAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-
 /**
  * Basic Implementation of a LogixManager.
- * <P>
+ * <p>
  * Note that Logix system names must begin with IX, and be followed by a string,
- * usually, but not always, a number. All alphabetic characters in a Logix
- * system name must be upper case. This is enforced when a Logix is created.
- * <P>
+ * usually, but not always, a number. This is enforced when a Logix is created.
+ * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
 public class DefaultLogixManager extends AbstractManager<Logix>
-        implements LogixManager, java.beans.PropertyChangeListener {
+        implements LogixManager {
 
     public DefaultLogixManager() {
         super();
@@ -77,9 +72,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             }
         }
         x = getBySystemName(systemName);
-        if (x == null) {
-            x = getBySystemName(systemName.toUpperCase());   // for compatibility?
-        }
         if (x != null) {
             return null;
         }
@@ -191,20 +183,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
      * Support for loading Logixs in a disabled state to debug loops
      */
     boolean loadDisabled = false;
@@ -224,8 +202,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLogix");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
