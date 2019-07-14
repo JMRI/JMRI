@@ -91,21 +91,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         return true;
     }
 
-    /**
-     * @return current instance of connection
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        log.warn("deprecated instance() call for TMCC SerialTurnoutManager");
-        return null;
-    }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static SerialTurnoutManager _instance = null;
-
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName;
