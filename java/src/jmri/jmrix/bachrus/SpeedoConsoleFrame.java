@@ -272,8 +272,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Address Selector Member Variables">
     private final boolean disableRosterBoxActions = false;
-    private int locomotiveAddress = 0;
-    private boolean locomotiveAddressIsLong = false;
+    private DccLocoAddress locomotiveAddress = new DccLocoAddress(0, false);
 
     //protected int profileAddress = 0;
     protected int readAddress = 0;
@@ -370,7 +369,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         today = new Date();
         result = formatter.format(today);
         String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
-                + locomotiveAddress + " " + Bundle.getMessage("CreatedOn")
+                + locomotiveAddress.getNumber() + " " + Bundle.getMessage("CreatedOn")
                 + " " + result;
         printTitleText.setText(annotate);
     }
@@ -788,11 +787,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         exportProfileButton.addActionListener(e -> {
             if (dirFwdButton.isSelected() && dirRevButton.isSelected()) {
                 DccSpeedProfile[] sp = {spFwd, spRev};
-                DccSpeedProfile.export(sp, locomotiveAddress, profileGraphPane.getUnits());
+                DccSpeedProfile.export(sp, locomotiveAddress.getNumber(), profileGraphPane.getUnits());
             } else if (dirFwdButton.isSelected()) {
-                DccSpeedProfile.export(spFwd, locomotiveAddress, "fwd", profileGraphPane.getUnits());
+                DccSpeedProfile.export(spFwd, locomotiveAddress.getNumber(), "fwd", profileGraphPane.getUnits());
             } else if (dirRevButton.isSelected()) {
-                DccSpeedProfile.export(spRev, locomotiveAddress, "rev", profileGraphPane.getUnits());
+                DccSpeedProfile.export(spRev, locomotiveAddress.getNumber(), "rev", profileGraphPane.getUnits());
             }
         });
 
@@ -1102,12 +1101,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     private synchronized void changeOfAddress() {
         if (addrSelector.getAddress() != null) {
-            locomotiveAddress = addrSelector.getAddress().getNumber();
-            locomotiveAddressIsLong = addrSelector.getAddress().isLongAddress();
+            locomotiveAddress = addrSelector.getAddress();
             setTitle();
         } else {
-            locomotiveAddress = 0;
-            locomotiveAddressIsLong = true;
+            locomotiveAddress = new DccLocoAddress(0, true);
         }
     }
 
@@ -1248,7 +1245,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             log.error("Attempt to speed match to invalid speed step 28 target speed");
             return;
         }
-        if (locomotiveAddress <= 0) {
+        if (locomotiveAddress.getNumber() <= 0) {
             statusLabel.setText(Bundle.getMessage("StatInvalidDCCAddress"));
             log.error("Attempt to speed match loco address 0");
             return;
@@ -1282,7 +1279,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             statusLabel.setText(Bundle.getMessage("StatReqThrottle"));
             speedMatchTimer.start();
             log.info("Requesting Throttle");
-            boolean requestOK = InstanceManager.throttleManagerInstance().requestThrottle(locomotiveAddress, locomotiveAddressIsLong, this);
+            boolean requestOK = InstanceManager.throttleManagerInstance().requestThrottle(locomotiveAddress, this, true);
             if (!requestOK) {
                 log.error("Loco Address in use, throttle request failed.");
                 statusLabel.setText(Bundle.getMessage("StatAddressInUse"));
@@ -1565,7 +1562,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Start the speed profiling process
      */
     protected synchronized void startProfile() {
-        if (locomotiveAddress > 0) {
+        if (locomotiveAddress.getNumber() > 0) {
             if (dirFwdButton.isSelected() || dirRevButton.isSelected()) {
                 if ((speedMatchState == SpeedMatchState.IDLE) && (profileState == ProfileState.IDLE)) {
                     profileTimer = new javax.swing.Timer(4000, e -> profileTimeout());
@@ -1585,7 +1582,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     profileGraphPane.repaint();
                     profileTimer.start();
                     log.info("Requesting throttle");
-                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(locomotiveAddress, locomotiveAddressIsLong, this);
+                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(locomotiveAddress, this, true);
                     if (!requestOK) {
                         log.error("Loco Address in use, throttle request failed.");
                     }
@@ -1886,7 +1883,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Timeout requesting a throttle.
      */
     protected synchronized void throttleTimeout() {
-        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(locomotiveAddress, locomotiveAddressIsLong, this);
+        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(locomotiveAddress, this);
         profileState = ProfileState.IDLE;
         speedMatchState = SpeedMatchState.IDLE;
         log.error("Timeout waiting for throttle");
