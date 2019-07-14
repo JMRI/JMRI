@@ -639,6 +639,7 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
+                <compilerarg line="-encoding utf-8"/>
                 <compilerarg value="-Xlint:unchecked"/>
                 <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
                 <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
@@ -711,6 +712,7 @@
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
+            <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
@@ -734,6 +736,7 @@
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="test.class.path"/>
+            <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
