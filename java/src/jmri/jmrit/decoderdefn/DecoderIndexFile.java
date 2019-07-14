@@ -228,18 +228,6 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public synchronized static DecoderIndexFile instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(DecoderIndexFile.class);
-    }
-
-    /**
      * Check whether the user's version of the decoder index file needs to be
      * updated; if it does, then forces the update.
      *

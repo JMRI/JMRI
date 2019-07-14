@@ -185,17 +185,6 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return null;
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultCatalogTreeManager instance() {
-        return InstanceManager.getDefault(DefaultCatalogTreeManager.class);
-    }
-
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");

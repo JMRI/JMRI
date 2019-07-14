@@ -191,15 +191,6 @@ public class PositionablePoint extends LayoutTrack {
 
     private PositionablePoint linkedPoint;
 
-    /**
-     * @return the name of the linked editor
-     * @deprecated since 4.9.4 use @link{getLinkedEditorName()} instead.
-     */
-    @Deprecated
-    public String getLinkEditorName() {
-        return getLinkedEditorName();
-    }
-
     public String getLinkedEditorName() {
         if (getLinkedEditor() != null) {
             return getLinkedEditor().getLayoutName();

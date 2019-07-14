@@ -560,71 +560,6 @@ public final class InstanceManager {
     }
 
     /* ****************************************************************************
-     *                   Primary Accessors - Deprecated for removal
-     *
-     *                      Please don't create any more of these
-     * ****************************************************************************/
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default block manager. May not be the only instance. 
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public BlockManager blockManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "blockManagerInstance");        
-        return getDefault(BlockManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default power manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public PowerManager powerManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "powerManagerInstance");        
-        return getDefault(PowerManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default reporter manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public ReporterManager reporterManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "reporterManagerInstance");        
-        return getDefault(ReporterManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default route manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public RouteManager routeManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "routeManagerInstance");        
-        return getDefault(RouteManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default section manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public SectionManager sectionManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "sectionManagerInstance");        
-        return getDefault(SectionManager.class);
-    }
-
-    /* ****************************************************************************
      *                   Old Style Setters - To be migrated
      *
      *                   Migrate away the JMRI uses of these.
@@ -647,16 +582,6 @@ public final class InstanceManager {
 
     static public void setThrottleManager(ThrottleManager p) {
         store(p, ThrottleManager.class);
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setCommandStation(CommandStation p) {
-        store(p, CommandStation.class);
     }
 
     /**
@@ -683,17 +608,6 @@ public final class InstanceManager {
         } else {
             log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
         }
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setAddressedProgrammerManager");        
-        store(p, AddressedProgrammerManager.class);
     }
 
     // Needs to have proxy manager converted to work
