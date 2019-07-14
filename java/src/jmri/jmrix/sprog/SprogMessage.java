@@ -149,14 +149,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[_nDataChars - 1] = checksum;
     }
 
-    private int hexDigit(int b) {
-        if (b > 9) {
-            return (b - 9 + 0x40);
-        } else {
-            return (b + 0x30);
-        }
-    }
-
     private SprogMessage frame() {
         int j = 2;
         // Create new message to hold the framed one
