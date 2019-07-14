@@ -359,17 +359,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         notifySlotListeners(s);
     }
 
-    /**
-     * Method to find the existing SlotManager object, if need be creating one.
-     *
-     * @return the SlotManager object
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    public final SprogCommandStation instance() {
-        return null;
-    }
-
     // data members to hold contact with the slot listeners
     final private Vector<SprogSlotListener> slotListeners = new Vector<>();
 
