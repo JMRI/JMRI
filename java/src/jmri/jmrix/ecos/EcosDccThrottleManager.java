@@ -90,7 +90,8 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
-        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC,
+        return new LocoAddress.Protocol[]{
+            LocoAddress.Protocol.DCC,
             LocoAddress.Protocol.MFX,
             LocoAddress.Protocol.MOTOROLA,
             LocoAddress.Protocol.SELECTRIX,
