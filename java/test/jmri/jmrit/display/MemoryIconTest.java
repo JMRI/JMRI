@@ -259,13 +259,18 @@ public class MemoryIconTest extends PositionableTestBase {
 
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
 
-        to.addKeyAndIcon(icon,"1");
-
 	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("1");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-
         jf.pack();
         jf.setVisible(true);
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        Assert.assertNotNull("Label with correct text value before key",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),"1"));
+
+        to.addKeyAndIcon(icon,"1");
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNull("Label Text set to null with Icon.", to.getText());
