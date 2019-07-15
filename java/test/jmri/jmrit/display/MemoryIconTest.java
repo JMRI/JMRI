@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -238,6 +239,36 @@ public class MemoryIconTest extends PositionableTestBase {
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),rpt.toReportString()));
 
+
+        jf.setVisible(false);
+        JUnitUtil.dispose(jf);
+    }
+
+    @Test
+    public void testAddKeyAndIcon(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JmriJFrame();
+        jf.setTitle("Image From Key Value");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
+
+        jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
+
+        jf.getContentPane().add(new javax.swing.JLabel("| Expect Image: "));
+
+        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+
+        to.addKeyAndIcon(icon,"1");
+
+	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("1");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        jf.pack();
+        jf.setVisible(true);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        Assert.assertNull("Label Text set to null with Icon.", to.getText());
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
