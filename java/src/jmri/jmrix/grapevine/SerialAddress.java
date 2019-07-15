@@ -293,10 +293,10 @@ public class SerialAddress {
 
     /**
      * Validate a system name.
-     * 
-     * @param name the name to validate
+     *
+     * @param name    the name to validate
      * @param manager the manager requesting validation
-     * @param locale the locale for user messages
+     * @param locale  the locale for user messages
      * @return the name, unchanged
      * @throws IllegalArgumentException if name is not valid
      * @see Manager#validateSystemNameFormat(java.lang.String, java.util.Locale)
@@ -328,8 +328,8 @@ public class SerialAddress {
         Matcher matcher = pattern.matcher(name);
         if (!matcher.matches()) {
             throw new NamedBean.BadSystemNameException(
-                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
-                        Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
+                    Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
         }
         int node;
         int bit;
@@ -345,9 +345,9 @@ public class SerialAddress {
         }
         // check values
         if ((node < 1) || (node > 127)) {
-                    throw new NamedBean.BadSystemNameException(
-                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidNode", name, bit, 1, 127),
-                            Bundle.getMessage(locale, "SystemNameInvalidNode", name, bit, 1, 127));
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidNode", name, bit, 1, 127),
+                    Bundle.getMessage(locale, "SystemNameInvalidNode", name, bit, 1, 127));
         }
 
         // check bit numbers
@@ -356,54 +356,56 @@ public class SerialAddress {
                     || (bit >= 201 && bit <= 224)
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
-            throw new NamedBean.BadSystemNameException(
+                throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
                         Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
             }
-        } else { 
+        } else {
             // sort on subtype
-            String subtype = matcher.group(4).toUpperCase();
+            String subtype = matcher.group(4);
             if (null == subtype) { // no subtype, just look at total
                 if ((bit < 1) || (bit > 224)) {
                     throw new NamedBean.BadSystemNameException(
                             Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 224),
                             Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 224));
                 }
-            } else switch (subtype) {
-                case "A":
-                    // advanced serial occ
-                    if ((bit < 1) || (bit > 24)) {
-                    throw new NamedBean.BadSystemNameException(
-                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
-                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
-                    }
-                    break;
-                case "M":
-                    // advanced serial motion
-                    if ((bit < 1) || (bit > 24)) {
-                    throw new NamedBean.BadSystemNameException(
-                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
-                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
-                    }
-                    break;
-                case "S":
-                    // old serial
-                    if ((bit < 1) || (bit > 24)) {
-                    throw new NamedBean.BadSystemNameException(
-                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
-                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
-                    }
-                    break;
-                case "P":
-                    // parallel
-                    if ((bit < 1) || (bit > 96)) {
-                    throw new NamedBean.BadSystemNameException(
-                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 96),
-                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 96));
-                    }
-                    break;
-                default:
-                    break;
+            } else {
+                switch (subtype.toUpperCase()) {
+                    case "A":
+                        // advanced serial occ
+                        if ((bit < 1) || (bit > 24)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
+                        }
+                        break;
+                    case "M":
+                        // advanced serial motion
+                        if ((bit < 1) || (bit > 24)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
+                        }
+                        break;
+                    case "S":
+                        // old serial
+                        if ((bit < 1) || (bit > 24)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 24),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 24));
+                        }
+                        break;
+                    case "P":
+                        // parallel
+                        if ((bit < 1) || (bit > 96)) {
+                            throw new NamedBean.BadSystemNameException(
+                                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, bit, 1, 96),
+                                    Bundle.getMessage(locale, "SystemNameInvalidBit", name, bit, 1, 96));
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         return name;
