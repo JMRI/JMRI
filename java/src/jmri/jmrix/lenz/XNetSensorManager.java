@@ -134,7 +134,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                         Bundle.getMessage(locale, "SystemNameInvalidAddress", name));
             }
             try {
-                int address = Integer.valueOf(parts[0]);
+                int address = Integer.parseInt(parts[0]);
                 if (address < 1 || address > 127) {
                     throw new NamedBean.BadSystemNameException(
                             Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidModule", name, parts[0]),
@@ -146,7 +146,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                         Bundle.getMessage(locale, "SystemNameInvalidModule", name, parts[0]));
             }
             try {
-                int bit = Integer.valueOf(parts[1]);
+                int bit = Integer.parseInt(parts[1]);
                 if (bit < 1 || bit > 8) {
                     throw new NamedBean.BadSystemNameException(
                             Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, parts[1]),
