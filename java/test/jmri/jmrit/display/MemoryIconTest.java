@@ -273,7 +273,8 @@ public class MemoryIconTest extends PositionableTestBase {
 
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
-        Assert.assertNull("Label Text set to null with Icon.", to.getText());
+        // we should probably verify the icon displays the correct icon here.
+        // The text contents of the field are not displayed.
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
