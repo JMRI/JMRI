@@ -73,7 +73,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
-        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC, LocoAddress.Protocol.DCC_SHORT, LocoAddress.Protocol.DCC_LONG};
+        return new LocoAddress.Protocol[]{
+            LocoAddress.Protocol.DCC,
+            LocoAddress.Protocol.DCC_SHORT,
+            LocoAddress.Protocol.DCC_LONG};
     }
 
     /**

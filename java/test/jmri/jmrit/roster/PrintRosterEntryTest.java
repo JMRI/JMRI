@@ -19,11 +19,22 @@ import org.junit.Test;
 public class PrintRosterEntryTest {
 
     @Test
-    public void testCTor() throws JDOMException, IOException {
+    public void testCTorDTD() throws JDOMException, IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
-        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
-        r.setFileName("java/test/jmri/jmrit/roster/ACL1012.xml");
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-DTD.xml"));
+        r.setFileName("java/test/jmri/jmrit/roster/ACL1012-DTD.xml");
+        PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
+        Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(jf);
+    }
+
+    @Test
+    public void testCTorSchema() throws JDOMException, IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JmriJFrame jf = new JmriJFrame("TestPrintWindow");
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
+        r.setFileName("java/test/jmri/jmrit/roster/ACL1012-Schema.xml");
         PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(jf);
