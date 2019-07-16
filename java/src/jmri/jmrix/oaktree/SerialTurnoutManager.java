@@ -85,16 +85,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    /**
-     * Allow access to SerialTurnoutManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
-
-
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }

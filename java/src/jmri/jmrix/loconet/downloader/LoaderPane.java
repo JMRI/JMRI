@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
-        implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
+        implements jmri.jmrix.loconet.swing.LnPanelInterface {
 
     /**
      * LnPanelInterface implementation makes "memo" object available as convenience

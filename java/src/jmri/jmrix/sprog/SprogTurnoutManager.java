@@ -91,14 +91,6 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used; convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SprogTurnoutManager instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SprogTurnoutManager.class);
 
 }

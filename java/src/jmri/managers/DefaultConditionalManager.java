@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cresman Copyright (C) 2009
  */
 public class DefaultConditionalManager extends AbstractManager<Conditional>
-        implements ConditionalManager, java.beans.PropertyChangeListener {
+        implements ConditionalManager {
 
     public DefaultConditionalManager() {
         super();

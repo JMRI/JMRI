@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  */
-public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+public class Mx1Adapter extends Mx1PortController {
 
     public Mx1Adapter() {
         super(new Mx1SystemConnectionMemo());

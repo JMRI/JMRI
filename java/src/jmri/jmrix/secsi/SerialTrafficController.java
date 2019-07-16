@@ -187,19 +187,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * Return the SerialTrafficController instance to use.
-     *
-     * @return the registered SerialTrafficController instance for general use,
-     *         if need be creating one
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public SerialTrafficController instance() {
-        log.warn("deprecated instance() call for Secsi SerialTrafficController");
-        return null;
-    }
-
-    /**
      * Reference to the system connection memo.
      */
     SecsiSystemConnectionMemo memo = null;

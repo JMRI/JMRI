@@ -32,7 +32,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SprogPortController {
 
     public SerialDriverAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));

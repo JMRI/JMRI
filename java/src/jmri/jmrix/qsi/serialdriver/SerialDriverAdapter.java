@@ -29,7 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends QsiPortController {
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());
@@ -171,18 +171,6 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /*
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
