@@ -3,8 +3,6 @@ package jmri.jmrix.lenz;
 import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement LightManager for XpressNet systems.

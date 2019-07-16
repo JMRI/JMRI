@@ -163,7 +163,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @throws IllegalArgumentException if the name is not valid with error
      *                                      messages in the default locale
      */
-    @OverrideMustInvoke
     @Nonnull
     public default String validateSystemNameFormat(@Nonnull String name) throws BadSystemNameException {
         return Manager.this.validateSystemNameFormat(name, Locale.getDefault());
@@ -191,7 +190,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return the unchanged value of the name parameter
      * @throws IllegalArgumentException if provided name is an invalid format
      */
-    @OverrideMustInvoke
     @Nonnull
     public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         return validateSystemNamePrefix(name, locale);
@@ -239,7 +237,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return the unchanged value of the name parameter
      * @throws IllegalArgumentException if provided name is an invalid format
      */
-    @CheckReturnValue
     @Nonnull
     public default String validateTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         name = validateSystemNamePrefix(name, locale);
@@ -266,7 +263,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return the unchanged value of the name parameter
      * @throws IllegalArgumentException if provided name is an invalid format
      */
-    @CheckReturnValue
     @Nonnull
     public default String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         name = validateTrimmedSystemNameFormat(name, locale);
@@ -294,7 +290,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return the unchanged value of the name parameter
      * @throws IllegalArgumentException if provided name is an invalid format
      */
-    @CheckReturnValue
     @Nonnull
     public default String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, @Nonnull Locale locale) {
         name = validateTrimmedSystemNameFormat(name, locale);
@@ -331,7 +326,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @return the unchanged value of the name parameter
      * @throws IllegalArgumentException if provided name is an invalid format
      */
-    @CheckReturnValue
     @Nonnull
     public default String validateNmraAccessorySystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return this.validateIntegerSystemNameFormat(name, NmraPacket.accIdLowLimit, NmraPacket.accIdHighLimit, locale);
