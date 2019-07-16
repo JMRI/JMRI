@@ -63,15 +63,4 @@ public class RosterIconFactory implements InstanceManagerAutoDefault {
         }
         return icon;
     }
-
-    /**
-     *
-     * @return the default RosterIconFactory instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static RosterIconFactory instance() {
-        return InstanceManager.getDefault(RosterIconFactory.class);
-    }
 }

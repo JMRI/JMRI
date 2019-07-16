@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2018
  */
-public class EngineEditFrame extends RollingStockEditFrame implements java.beans.PropertyChangeListener {
+public class EngineEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");

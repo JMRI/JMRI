@@ -111,15 +111,6 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         return true;
     }
 
-    /**
-     * Allow access to AcelaTurnoutManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaTurnoutManager instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManager.class);
 
 }

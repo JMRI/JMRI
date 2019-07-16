@@ -23,20 +23,6 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         super(memo);
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static private MarklinThrottleManager mInstance = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public MarklinThrottleManager instance() {
-        return mInstance;
-    }
-
     @Override
     public void reply(MarklinReply m) {
         //We are not sending commands from here yet!

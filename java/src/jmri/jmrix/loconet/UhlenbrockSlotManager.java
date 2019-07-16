@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lisby Copyright (C) 2014
  */
-public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
+public class UhlenbrockSlotManager extends SlotManager {
 
     public UhlenbrockSlotManager(LnTrafficController tc) {
         super(tc);

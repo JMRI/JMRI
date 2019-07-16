@@ -813,40 +813,10 @@ public final class MathUtil {
      *
      * @param r the Rectangle
      * @return the Rectangle2D
-     * @deprecated since 4.9.4; use
-     * {@link #rectangleToRectangle2D(java.awt.Rectangle)} instead
-     */
-    @Deprecated // 4.9.4
-    @CheckReturnValue
-    public static Rectangle2D rectangle2DForRectangle(@Nonnull Rectangle r) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "rectangle2DForRectangle");
-        return rectangleToRectangle2D(r);
-    }
-
-    /**
-     * Convert Rectangle to Rectangle2D
-     *
-     * @param r the Rectangle
-     * @return the Rectangle2D
      */
     @CheckReturnValue
     public static Rectangle2D rectangleToRectangle2D(@Nonnull Rectangle r) {
         return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
-    }
-
-    /**
-     * Convert Rectangle2D to Rectangle
-     *
-     * @param r the Rectangle
-     * @return the Rectangle2D
-     * @deprecated since 4.9.4; use
-     * {@link #rectangle2DToRectangle(java.awt.geom.Rectangle2D)} instead
-     */
-    @Deprecated // 4.9.4
-    @CheckReturnValue
-    public static Rectangle rectangleForRectangle2D(@Nonnull Rectangle2D r) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "rectangleForRectangle2D");
-        return rectangle2DToRectangle(r);
     }
 
     /**
@@ -1261,5 +1231,5 @@ public final class MathUtil {
     public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
     }
-    private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
+    // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

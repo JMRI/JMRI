@@ -25,6 +25,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      */
     @Deprecated
     public LnTrafficRouter() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnTrafficRouter"); 
     }
 
     /**

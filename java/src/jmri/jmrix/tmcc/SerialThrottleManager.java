@@ -65,16 +65,6 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    /**
-     * @return current connection instance
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static public SerialThrottleManager instance() {
-        log.warn("deprecated instance() call for TMCC SerialThrottleManager");
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);
 
 }

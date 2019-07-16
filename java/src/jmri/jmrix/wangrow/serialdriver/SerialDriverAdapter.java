@@ -32,7 +32,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends NcePortController {
 
     SerialPort activeSerialPort = null;
 

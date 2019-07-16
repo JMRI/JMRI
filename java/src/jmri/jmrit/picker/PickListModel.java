@@ -1,6 +1,5 @@
 package jmri.jmrit.picker;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * @param <E> the supported type of NamedBean
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> implements PropertyChangeListener {
+public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> {
 
     protected ArrayList<E> _pickList;
     protected String _name;

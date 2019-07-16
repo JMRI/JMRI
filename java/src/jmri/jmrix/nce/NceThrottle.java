@@ -21,7 +21,7 @@ public class NceThrottle extends AbstractThrottle {
      * to the NCE command station.  Now it always sends the A2 loco
      * commands if the command station eprom was built after 2004. 
      */
-    public boolean sendA2command = true;
+    private boolean sendA2command = true;
 
     private NceTrafficController tc = null;
 

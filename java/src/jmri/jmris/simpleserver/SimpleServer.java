@@ -26,17 +26,6 @@ public class SimpleServer extends JmriServer {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
-    /*
-     * @deprecated since 4.7.1 use @link{InstanceManager.getDefault()} instead.
-     */
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public static JmriServer instance() {
-        if (InstanceManager.getNullableDefault(SimpleServer.class) == null) {
-            InstanceManager.store(new SimpleServer(),SimpleServer.class);
-        }
-        return InstanceManager.getDefault(SimpleServer.class);
-    }
-
     // Create a new server using the default port
     public SimpleServer() {
         this(Integer.parseInt(rb.getString("SimpleServerPort")));
