@@ -7229,7 +7229,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         }
                     } else {
                         // Appears to be a system name, request a user name
-                        String blkUserName = (String) JOptionPane.showInputDialog(getTargetFrame(),
+                        String blkUserName = JOptionPane.showInputDialog(getTargetFrame(),
                                 Bundle.getMessage("BlkUserNameMsg"),
                                 Bundle.getMessage("BlkUserNameTitle"),
                                 JOptionPane.PLAIN_MESSAGE);
