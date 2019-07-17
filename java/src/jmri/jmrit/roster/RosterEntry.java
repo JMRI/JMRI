@@ -635,8 +635,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Construct this Entry from XML.
      * <p>
-     * This member has to remain synchronized with the detailed DTD in
-     * roster-config.xml
+     * This member has to remain synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @param e Locomotive XML element
      */
@@ -1136,8 +1136,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Create an XML element to represent this Entry.
      * <p>
-     * This member has to remain synchronized with the detailed DTD in
-     * roster-config.xml.
+     * This member has to remain synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @return Contents in a JDOM Element
      */

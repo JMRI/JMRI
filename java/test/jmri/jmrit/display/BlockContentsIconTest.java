@@ -42,7 +42,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
         jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
