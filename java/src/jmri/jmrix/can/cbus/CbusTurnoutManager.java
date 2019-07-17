@@ -1,6 +1,6 @@
 package jmri.jmrix.can.cbus;
 
-import javax.annotation.CheckReturnValue;
+import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -39,19 +39,14 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     }
 
     /** 
-     * {@inheritDoc} 
-     * Override to normalize System Name
+     * {@inheritDoc}
      */
     @Override
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) {
         Turnout result = getTurnout(name);
         if (result == null) {
-            if (name.startsWith(prefix + typeLetter())) {
-                result = newTurnout(name, null);
-            } else {
-                result = newTurnout(makeSystemName(name), null);
-            }
+            result = newTurnout(makeSystemName(name), null);
         }
         return result;
     }
@@ -135,7 +130,17 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
             return testAddr;
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        validateSystemNamePrefix(name, locale);
+        validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        return name;
+    }
+
     /** 
      * {@inheritDoc} 
      */

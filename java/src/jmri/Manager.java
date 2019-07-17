@@ -138,7 +138,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public default String makeSystemName(@Nonnull String name, boolean logErrors, Locale locale) {
         String prefix = getSystemNamePrefix();
         // the one special case that is not caught by validation here
-        if (name.trim().isEmpty()) {
+        if (name.trim().isEmpty()) { // In Java 9+ use name.isBlank() instead
             throw new NamedBean.BadSystemNameException(Locale.getDefault(), "InvalidSystemNameInvalidPrefix", prefix);
         }
         return validateSystemNameFormat(name.startsWith(prefix) ? name : prefix + name, locale);
