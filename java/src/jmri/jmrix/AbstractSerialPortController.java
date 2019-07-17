@@ -236,25 +236,29 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mBaudRate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCurrentBaudNumber() {
+        int[] numbers = validBaudNumbers();
+        String[] rates = validBaudRates();
+        if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
+            return "";
+        }
+        // start with some value, not the default per se
+        // changed once the user explicitly opens the prefs connection config option details
+        String baudNumString = Integer.toString(numbers[0]);
+        // find the configured baud rate value
         if (mBaudRate != null) {
-            int[] numbers = validBaudNumbers();
-            String[] rates = validBaudRates();
-            if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
-                return "";
-            }
-            String baudNumString = "";
-            // find the configured baud rate value
             for (int i = 0; i < numbers.length; i++) {
                 if (rates[i].equals(mBaudRate)) {
                     baudNumString = Integer.toString(numbers[i]);
                     break;
                 }
             }
-            return baudNumString;
         }
-        return ""; // (none)
+        return baudNumString;
     }
 
     @Override
