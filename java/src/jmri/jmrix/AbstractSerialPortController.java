@@ -248,7 +248,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
         // start with some value, not the default per se
         // changed once the user explicitly opens the prefs connection config option details
-        String baudNumString = Integer.toString(numbers[0]);
+        String baudNumString = "";
+        if (numbers.length > 0) {
+            baudNumString = Integer.toString(numbers[0]);
+        }
         // find the configured baud rate value
         if (mBaudRate != null) {
             for (int i = 0; i < numbers.length; i++) {
