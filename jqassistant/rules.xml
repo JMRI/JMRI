@@ -1,6 +1,6 @@
 <jqa:jqassistant-rules xmlns:jqa="http://www.buschmais.com/jqassistant/core/analysis/rules/schema/v1.0">
 
-    <constraint id="rules:TestClassName">
+    <constraint id="testrules:TestClassName">
         <requiresConcept refId="junit4:TestClass" />
         <description>All JUnit test classes must have a name that includes "Test", "Base", or "Demo".</description>
         <cypher><![CDATA[
@@ -13,7 +13,18 @@
         ]]></cypher>
     </constraint>
 
-    <concept id="rules:TestWithExpectedException">
+    <constraint id="testrules:IgnoredTest">
+        <requiresConcept refId="junit4:IgnoreTestClassOrMethod" />
+        <description>List all ignored JUnit 4 tests.</description>
+        <cypher><![CDATA[
+            MATCH
+                (method:Method:Ignore)
+            RETURN
+                method
+        ]]></cypher>
+    </constraint>
+
+    <concept id="testrules:TestWithExpectedException">
         <requiresConcept refId="junit4:TestMethod" />
         <description>Finds tests with an Expected Exception.</description>
         <cypher><![CDATA[
@@ -30,10 +41,10 @@
         ]]></cypher>
     </concept>
 
-    <constraint id="rules:TestMethodWithoutAssertion">
+    <constraint id="testrules:TestMethodWithoutAssertion">
         <requiresConcept refId="junit4:TestMethod" />
         <requiresConcept refId="junit4:AssertMethod" />
-        <requiresConcept refId="rules:TestWithExpectedException" />
+        <requiresConcept refId="testrules:TestWithExpectedException" />
         <description>Finds tests without an assert.</description>
         <cypher><![CDATA[
            MATCH
@@ -50,8 +61,9 @@
     </constraint>
 
     <group id="default">
-        <includeConstraint refId="rules:TestClassName" />
-        <includeConstraint refId="rules:TestMethodWithoutAssertion" severity="minor" />
+        <includeConstraint refId="testrules:IgnoredTest" severity="info"/>
+        <includeConstraint refId="testrules:TestClassName" />
+        <includeConstraint refId="testrules:TestMethodWithoutAssertion" severity="minor" />
         <includeConstraint refId="junit:IgnoreWithoutMessage" />
     </group>
 
