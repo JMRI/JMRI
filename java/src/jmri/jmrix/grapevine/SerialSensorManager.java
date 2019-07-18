@@ -187,18 +187,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return the registered SerialSensorManager instance for general use, if
-     *         need be creating one.
-     * @deprecated  Since JMRI 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

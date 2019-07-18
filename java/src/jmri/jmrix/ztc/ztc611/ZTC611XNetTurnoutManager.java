@@ -11,7 +11,7 @@ import jmri.jmrix.lenz.XNetAddress;
  *
  * @author Paul Bender Copyright (C) 2008, 2017
  */
-public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
+public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager {
 
     public ZTC611XNetTurnoutManager(jmri.jmrix.lenz.XNetTrafficController controller, String prefix) {
         super(controller, prefix);

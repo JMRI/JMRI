@@ -60,16 +60,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         super(name);
     }
 
-    /**
-     * @return the managed ImageIndexEditor instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static ImageIndexEditor instance() {
-        return InstanceManager.getDefault(ImageIndexEditor.class);
-    }
-
     private void init() {
         JMenuBar menuBar = new JMenuBar();
         JMenu findIcon = new JMenu(Bundle.getMessage("MenuFile"));

@@ -258,15 +258,6 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * @return true if track segment should be drawn dashed
-     * @deprecated since 4.9.4; use {@link #isDashed()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isDashed()"
-    public boolean getDashed() {
-        return dashed;
-    }
-
-    /**
-     * @return true if track segment should be drawn dashed
      */
     public boolean isDashed() {
         return dashed;
@@ -278,15 +269,6 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
-
-    /**
-     * @return true if track segment is a main line
-     * @deprecated since 4.9.4; use {@link #isMainline()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isMainline()"
-    public boolean getMainline() {
-        return mainline;
     }
 
     /**
@@ -303,15 +285,6 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
-
-    /**
-     * @return true if track segment is an arc
-     * @deprecated since 4.9.4; use {@link #isArc()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isArc()"
-    public boolean getArc() {
-        return arc;
     }
 
     /**
@@ -334,15 +307,6 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * @return true if track segment is circle
-     * @deprecated since 4.9.4; use {@link #isCircle()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isCircle()"
-    public boolean getCircle() {
-        return circle;
-    }
-
-    /**
-     * @return true if track segment is circle
      */
     public boolean isCircle() {
         return circle;
@@ -361,15 +325,6 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * @return true if track segment circle or arc should be drawn flipped
-     * @deprecated since 4.9.4; use {@link #isFlip()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isFlip()"
-    public boolean getFlip() {
-        return flip;
-    }
-
-    /**
-     * @return true if track segment circle or arc should be drawn flipped
      */
     public boolean isFlip() {
         return flip;
@@ -383,15 +338,6 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
-
-    /**
-     * @return true if track segment is a bezier curve
-     * @deprecated since 4.9.4; use {@link #isBezier()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isBezier()"
-    public boolean getBezier() {
-        return bezier;
     }
 
     /**

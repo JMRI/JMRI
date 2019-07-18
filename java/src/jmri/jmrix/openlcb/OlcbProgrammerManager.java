@@ -39,7 +39,7 @@ import jmri.ProgrammingMode;
  * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */
-public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManager implements jmri.AddressedProgrammerManager {
+public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManager {
 
     public OlcbProgrammerManager(Programmer pProgrammer) {
         super(pProgrammer);

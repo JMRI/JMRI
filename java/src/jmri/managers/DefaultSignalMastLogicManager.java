@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultSignalMastLogicManager
         extends AbstractManager<SignalMastLogic>
-        implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
+        implements jmri.SignalMastLogicManager {
 
     public DefaultSignalMastLogicManager() {
         registerSelf();

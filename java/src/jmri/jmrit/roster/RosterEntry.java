@@ -580,10 +580,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Set the date last updated.
      *
      * @param s the string to parse into a date
-     * @deprecated since 4.7.1; not for removal, but to make access protected
      */
-    @Deprecated // 4.7.1
-    public void setDateUpdated(String s) {
+    protected void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
         try {
@@ -637,8 +635,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Construct this Entry from XML.
      * <p>
-     * This member has to remain synchronized with the detailed DTD in
-     * roster-config.xml
+     * This member has to remain synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @param e Locomotive XML element
      */
@@ -1138,8 +1136,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     /**
      * Create an XML element to represent this Entry.
      * <p>
-     * This member has to remain synchronized with the detailed DTD in
-     * roster-config.xml.
+     * This member has to remain synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @return Contents in a JDOM Element
      */

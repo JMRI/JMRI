@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/locomotive.xsl" type="text/xsl"?>
 <!DOCTYPE locomotive-config SYSTEM "/xml/DTD/locomotive-config.dtd">
+<!-- This is a test file that uses the DTD to make sure it still working -->
 <locomotive-config>
   <!--Written by JMRI version 4.7.1ish-201701241407-STEVET-Rca65308 on Tue Jan 24 13:26:20 EST 2017 $Id$-->
   <locomotive id="ACL1012" fileName="ACL1012.xml" roadNumber="1012" roadName="Atlantic Coast Line" mfg="EMD SD35" owner="JMRI" model="Atlas" dccAddress="1012" comment="model needs road number decals added" maxSpeed="100" imageFilePath="preference:roster/ACL-1012.JPG" iconFilePath="preference:roster/ACL-1012.JPG" URL="" IsShuntingOn="">
