@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import jmri.swing.ManagerComboBox;
+import jmri.swing.SystemNameValidator;
 
 /**
  *
@@ -31,7 +32,8 @@ public class AddNewHardwareDevicePanelTest {
         };
         JButton okbutton = new JButton("ButtonOK");
         okbutton.addActionListener(createlistener);
-        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(new JTextField(), new JTextField(), new ManagerComboBox<>(),
+        JTextField systemName = new JTextField();
+        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(systemName, new SystemNameValidator(systemName, null), new JTextField(), new ManagerComboBox<>(),
                 new JSpinner(), new JCheckBox(), okbutton, cancellistener, otherlistener, new JLabel());
         assertNotNull("exists", t);
     }
@@ -59,7 +61,8 @@ public class AddNewHardwareDevicePanelTest {
         ActionListener otherlistener = (ActionEvent e) -> {
         };
         JLabel statusBar = new JLabel();
-        AddNewHardwareDevicePanel instance = new AddNewHardwareDevicePanel(new JTextField(), new JTextField(), new ManagerComboBox<>(),
+        JTextField systemName = new JTextField();
+        AddNewHardwareDevicePanel instance = new AddNewHardwareDevicePanel(systemName, new SystemNameValidator(systemName, null), new JTextField(), new ManagerComboBox<>(),
                 new JSpinner(), new JCheckBox(), new JButton(), cancellistener, otherlistener, statusBar);
         instance.setStatusBarText(null);
         assertEquals("null yields empty string", "", statusBar.getText());

@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import apps.gui.GuiLafPreferencesManager;
-import com.alexandriasoftware.swing.Validation;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
@@ -1032,6 +1031,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     JButton addButton;
     JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager pref;
+    SystemNameValidator hardwareAddressValidator;
 
     /**
      * {@inheritDoc}
@@ -1085,7 +1085,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
@@ -1873,6 +1874,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         ConnectionNameFromSystemName.getConnectionName(systemPrefix),
                         Bundle.getMessage("Turnouts"),
                         addEntryToolTip));
+        hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
         addButton.setEnabled(true); // ambiguous, so start enabled
     }
 

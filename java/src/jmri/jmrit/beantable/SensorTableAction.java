@@ -3,11 +3,6 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
 import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
@@ -35,6 +30,7 @@ import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.managers.ProxySensorManager;
 import jmri.swing.ManagerComboBox;
+import jmri.swing.SystemNameValidator;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -124,6 +120,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
     Manager<Sensor> connectionChoice = null;
+    SystemNameValidator hardwareAddressValidator;
 
     /**
      * {@inheritDoc}
@@ -157,8 +154,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
+            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameField, prefixBox,
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameField, prefixBox,
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
@@ -316,6 +314,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                         ConnectionNameFromSystemName.getConnectionName(systemPrefix),
                         Bundle.getMessage("Sensors"),
                         addEntryToolTip));
+        hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
         addButton.setEnabled(true); // ambiguous, so start enabled
     }
 

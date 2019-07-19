@@ -23,6 +23,7 @@ import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.managers.ProxyReporterManager;
 import jmri.swing.ManagerComboBox;
+import jmri.swing.SystemNameValidator;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -297,6 +298,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     Manager<Reporter> connectionChoice = null;
     jmri.UserPreferencesManager pref;
+    SystemNameValidator hardwareAddressValidator;
 
     /**
      * {@inheritDoc}
@@ -329,8 +331,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
+            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
@@ -479,6 +482,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                         ConnectionNameFromSystemName.getConnectionName(systemPrefix),
                         Bundle.getMessage("Reporters"),
                         addEntryToolTip));
+        hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
         addButton.setEnabled(true); // ambiguous, so start enabled
     }
 

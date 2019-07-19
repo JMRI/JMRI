@@ -29,6 +29,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
      * Create the panel.
      * 
      * @param sysAddress text field for the system name or address
+     * @param sysAddressValidator validation control for sysAddress
      * @param userName text field for the optional user name
      * @param prefixBox selector for the connection for the NamedBean
      * @param endRange selector for range to create multiple NamedBeans
@@ -39,6 +40,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
      * @param statusBar area where status messages can be presented
      */
     public AddNewHardwareDevicePanel(@Nonnull JTextField sysAddress,
+            @Nonnull SystemNameValidator sysAddressValidator,
             @Nonnull JTextField userName,
             @Nonnull ManagerComboBox prefixBox,
             JSpinner endRange,
@@ -119,18 +121,17 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
             rangeState();
         });
         prefixBox.addActionListener(rangeListener);
-        SystemNameValidator systemNameValidator = new SystemNameValidator(sysAddress, prefixBox.getSelectedItem(), true);
-        sysAddress.setInputVerifier(systemNameValidator);
+        sysAddress.setInputVerifier(sysAddressValidator);
         prefixBox.addActionListener((evt) -> {
-            systemNameValidator.setManager(prefixBox.getSelectedItem());
+            sysAddressValidator.setManager(prefixBox.getSelectedItem());
         });
-        systemNameValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
-            Validation validation = systemNameValidator.getValidation();
+        sysAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
+            Validation validation = sysAddressValidator.getValidation();
             Validation.Type type = validation.getType();
             addButton.setEnabled(type != Validation.Type.WARNING && type != Validation.Type.DANGER);
             setStatusBarText(validation.getMessage());
         });
-        systemNameValidator.verify(sysAddress);
+        sysAddressValidator.verify(sysAddress);
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {
