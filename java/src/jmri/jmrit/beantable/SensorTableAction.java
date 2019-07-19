@@ -3,11 +3,9 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -140,15 +138,13 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
             if (sensorManager instanceof ProxySensorManager) {
                 ProxySensorManager proxy = (ProxySensorManager) sensorManager;
-                prefixBox.setModel(new DefaultComboBoxModel<>(new Vector<>(proxy.getDisplayOrderManagerList())));
-                prefixBox.setSelectedIndex(0);
+                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
                 if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
                     prefixBox.setSelectedItem(memo.get(Sensor.class));
                 }
             } else {
-                prefixBox.addItem(sensorManager);
-                prefixBox.setSelectedItem(sensorManager);
+                prefixBox.setManagers(sensorManager);
             }
             userNameField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N

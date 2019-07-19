@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -60,7 +59,6 @@ import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
 
-import javax.swing.DefaultComboBoxModel;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.managers.ProxyTurnoutManager;
@@ -1066,9 +1064,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
              duplicate usernames in multiple classes */
             if (turnManager instanceof ProxyTurnoutManager) {
                 ProxyTurnoutManager proxy = (ProxyTurnoutManager) turnManager;
-                List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
-                prefixBox.setModel(new DefaultComboBoxModel<>(new Vector<>(managerList)));
-                prefixBox.setSelectedItem(0);
+                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
                 if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) { // pick up user pref
                     SystemConnectionMemo memo = InstanceManager
                             .getDefault(SystemConnectionMemoManager.class)
@@ -1076,8 +1072,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     prefixBox.setSelectedItem(memo.get(Turnout.class));
                 }
             } else {
-                prefixBox.addItem(turnManager);
-                prefixBox.setSelectedItem(turnManager);
+                prefixBox.setManagers(turnManager);
             }
             userNameTextField.setName("userNameTextField"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N

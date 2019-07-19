@@ -17,7 +17,7 @@ import jmri.util.ConnectionNameFromSystemName;
 
 /**
  * A JComboBox for a set of Managers for the same type of NamedBean.
- * 
+ *
  * @author Randall Wood
  * @param <B> the type of NamedBean
  */
@@ -33,9 +33,28 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
 
     public ManagerComboBox(@Nonnull List<Manager<B>> list, Manager<B> selection) {
         super();
-        ManagerRenderer managerRenderer = new ManagerRenderer(getRenderer());
-        setRenderer(managerRenderer);
-        setModel(new DefaultComboBoxModel<Manager<B>>(new Vector<Manager<B>>(list)));
+        setRenderer(new ManagerRenderer(getRenderer()));
+        ManagerComboBox.this.setManagers(list, selection); // prevent overriding method from being used
+    }
+
+    /**
+     * Set the list of managers, selecting the first manager in the list.
+     *
+     * @param list the list of managers
+     */
+    public void setManagers(@Nonnull List<Manager<B>> list) {
+        setManagers(list, null);
+    }
+
+    /**
+     * Set the list of managers, selecting the passed in manager.
+     *
+     * @param list      the list of managers
+     * @param selection the manager to select; if null, the first manager in the
+     *                  list is selected
+     */
+    public void setManagers(@Nonnull List<Manager<B>> list, Manager<B> selection) {
+        setModel(new DefaultComboBoxModel<>(new Vector<>(list)));
         if (!list.isEmpty()) {
             if (selection == null) {
                 setSelectedIndex(0);
@@ -44,7 +63,18 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
             }
         }
     }
-    
+
+    /**
+     * Set the list of managers to the single passed in manager, and select it.
+     *
+     * @param manager the manager
+     */
+    public void setManagers(@Nonnull Manager<B> manager) {
+        List<Manager<B>> list = new ArrayList<>();
+        list.add(manager);
+        setManagers(list, manager);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -70,6 +100,5 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
             return label;
         }
     }
-
 
 }

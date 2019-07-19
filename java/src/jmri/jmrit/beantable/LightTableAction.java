@@ -43,8 +43,6 @@ import org.slf4j.LoggerFactory;
 
 import apps.gui.GuiLafPreferencesManager;
 import com.alexandriasoftware.swing.Validation;
-import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -835,16 +833,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (lightManager instanceof ProxyLightManager) {
             ProxyLightManager proxy = (ProxyLightManager) lightManager;
-            List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
-            prefixBox.setModel(new DefaultComboBoxModel<>(new Vector<>(managerList)));
-            prefixBox.setSelectedIndex(0);
+            prefixBox.setManagers(proxy.getDisplayOrderManagerList());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
                 prefixBox.setSelectedItem(memo.get(Light.class));
             }
         } else {
-            prefixBox.addItem(lightManager);
-            prefixBox.setSelectedItem(lightManager);
+            prefixBox.setManagers(lightManager);
         }
     }
 

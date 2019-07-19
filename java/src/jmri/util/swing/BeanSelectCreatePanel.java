@@ -9,7 +9,6 @@ import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -79,17 +78,12 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
         if (manager instanceof ProxyManager) {
             ProxyManager<E> proxy = (ProxyManager<E>) manager;
-            List<Manager<E>> managerList = proxy.getManagerList();
-            prefixBox.setModel(new DefaultComboBoxModel<Manager<E>>(new Vector<Manager<E>>(managerList)));
-            prefixBox.setSelectedItem(proxy.getDefaultManager());
+            prefixBox.setManagers(proxy.getManagerList(), proxy.getDefaultManager());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
         } else { // not a proxy, just one
-            Vector<Manager<E>> v = new Vector<>();
-            v.add(manager);
-            prefixBox.setModel(new DefaultComboBoxModel<Manager<E>>(v));
-            prefixBox.setSelectedItem(manager);
+            prefixBox.setManagers(manager);
         }
         
         bean.add(existingCombo);

@@ -3,10 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Vector;
 import javax.annotation.Nonnull;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -314,9 +311,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             ActionListener rangeListener = this::canAddRange;
             if (reporterManager instanceof ProxyReporterManager) {
                 ProxyReporterManager proxy = (ProxyReporterManager) reporterManager;
-                List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
-                prefixBox.setModel(new DefaultComboBoxModel<>(new Vector<>(managerList)));
-                prefixBox.setSelectedIndex(0);
+                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
                 if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     SystemConnectionMemo memo = InstanceManager
                             .getDefault(SystemConnectionMemoManager.class)
@@ -324,8 +319,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     prefixBox.setSelectedItem(memo.get(Reporter.class));
                 }
             } else {
-                prefixBox.addItem(reporterManager);
-                prefixBox.setSelectedItem(reporterManager);
+                prefixBox.setManagers(reporterManager);
             }
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
