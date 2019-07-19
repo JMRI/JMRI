@@ -63,10 +63,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * Returns a list of all managers, including the internal manager. This is
-     * not a live list, but it is in alpha order (don't assume default is at front)
-     *
-     * @return the list of managers
+     * {@inheritDoc}
      */
     @Override
     public List<Manager<E>> getManagerList() {
@@ -76,11 +73,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * Returns a list of all managers, with the default
-     * at the start and internal default at the end.
-     *
-     * @return the list of managers
+     * {@inheritDoc}
      */
+    @Override
     public List<Manager<E>> getDisplayOrderManagerList() {
         // make sure internal present
         initInternal();
@@ -111,6 +106,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         return defaultManager != null ? defaultManager : getInternalManager();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addManager(Manager<E> m) {
         Objects.requireNonNull(m, "Can only add non-null manager");
@@ -213,7 +211,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * Defer creation of the proper type to the subclass
+     * Defer creation of the proper type to the subclass.
      *
      * @param index      the manager to invoke
      * @param systemName the system name
@@ -251,7 +249,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * {@inheritDoc}
      * <p>
      * This implementation locates a specific Manager based on the system name
-     * and validates against that. If no matching Manager exists, the default Manager attempts to validate the system name.
+     * and validates against that. If no matching Manager exists, the default
+     * Manager attempts to validate the system name.
      */
     @Override
     public String validateSystemNameFormat(String systemName, Locale locale) {

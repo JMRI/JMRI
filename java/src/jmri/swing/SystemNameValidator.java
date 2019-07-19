@@ -110,7 +110,7 @@ public class SystemNameValidator extends JInputValidator {
      */
     public void setManager(@Nonnull Manager<?> manager) {
         Manager<?> old = this.manager;
-        if (!old.equals(manager)) {
+        if (old == null || !old.equals(manager)) {
             this.manager = manager;
             getPropertyChangeSupport().firePropertyChange("manager", old, this.manager);
             verify(getComponent());

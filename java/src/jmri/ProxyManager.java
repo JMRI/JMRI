@@ -37,4 +37,12 @@ public interface ProxyManager<B extends NamedBean> extends Manager<B> {
      * @return the list of managers
      */
     public List<Manager<B>> getManagerList();
+
+    /**
+     * Get a list of all managers, with the default as the first item and internal
+     * default as the last item.
+     *
+     * @return the list of managers
+     */
+    public List<Manager<B>> getDisplayOrderManagerList();
 }

@@ -341,11 +341,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public NameValidity validSystemNameFormat(String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
-            log.error("invalid system prefix in CMRI system name: {}", systemName);
+            log.debug("invalid system prefix in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
         if (systemName.charAt(offset) != type) {
-            log.error("invalid type character in CMRI system name: {}", systemName);
+            log.debug("invalid type character in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
         String s = "";
