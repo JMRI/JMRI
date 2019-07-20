@@ -25,6 +25,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();
@@ -32,6 +33,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     }
 
     @After
+    @Override
     public void tearDown() {
         tcis = null;
         r = null;

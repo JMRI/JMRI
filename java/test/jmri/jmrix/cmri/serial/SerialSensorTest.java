@@ -100,6 +100,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -111,6 +112,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         if (tcis != null) tcis.terminateThreads();

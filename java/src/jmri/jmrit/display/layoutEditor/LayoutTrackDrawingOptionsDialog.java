@@ -184,6 +184,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailCountSpinner.setName(""); // NOI18N
         mainRailCountSpinner.setValue(ltdOptions.getMainRailCount());
         mainRailCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainRailCountSpinnerStateChanged(evt);
             }
@@ -200,6 +201,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailCountSpinner.setName(""); // NOI18N
         sideRailCountSpinner.setValue(ltdOptions.getSideRailCount());
         sideRailCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailCountSpinnerStateChanged(evt);
             }
@@ -227,6 +229,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailWidthSpinner.setName(""); // NOI18N
         mainRailWidthSpinner.setValue(ltdOptions.getMainRailWidth());
         mainRailWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainRailWidthSpinnerStateChanged(evt);
             }
@@ -244,6 +247,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailWidthSpinner.setName(""); // NOI18N
         sideRailWidthSpinner.setValue(ltdOptions.getSideRailWidth());
         sideRailWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailWidthSpinnerStateChanged(evt);
             }
@@ -271,6 +275,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailGapSpinner.setName(""); // NOI18N
         sideRailGapSpinner.setValue(ltdOptions.getSideRailGap());
         sideRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailGapSpinnerStateChanged(evt);
             }
@@ -288,6 +293,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailGapSpinner.setName(""); // NOI18N
         mainRailGapSpinner.setValue(ltdOptions.getMainRailGap());
         mainRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainRailGapSpinnerStateChanged(evt);
             }
@@ -315,6 +321,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailColorButton.setEnabled(ltdOptions.getMainRailCount() > 0);
         mainRailColorButton.setOpaque(true);
         mainRailColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainRailColorButtonActionPerformed(evt);
             }
@@ -344,6 +351,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailColorButton.setEnabled(ltdOptions.getSideRailCount() > 0);
         sideRailColorButton.setOpaque(true);
         sideRailColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideRailColorButtonActionPerformed(evt);
             }
@@ -382,6 +390,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBlockLineWidthSpinner.setName(""); // NOI18N
         mainBlockLineWidthSpinner.setValue(ltdOptions.getMainBlockLineWidth());
         mainBlockLineWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainBlockLineWidthSpinnerStateChanged(evt);
             }
@@ -398,6 +407,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBlockLineWidthSpinner.setName(""); // NOI18N
         sideBlockLineWidthSpinner.setValue(ltdOptions.getSideBlockLineWidth());
         sideBlockLineWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideBlockLineWidthSpinnerStateChanged(evt);
             }
@@ -425,6 +435,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBlockLineDashPercentageX10Spinner.setName(""); // NOI18N
         mainBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getMainBlockLineDashPercentageX10());
         mainBlockLineDashPercentageX10Spinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainBlockLineDashPercentageX10SpinnerStateChanged(evt);
             }
@@ -442,6 +453,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBlockLineDashPercentageX10Spinner.setName(""); // NOI18N
         sideBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getSideBlockLineDashPercentageX10());
         sideBlockLineDashPercentageX10Spinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideBlockLineDashPercentageX10SpinnerStateChanged(evt);
             }
@@ -469,6 +481,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         blockDefaultColorButton.setEnabled(true);
         blockDefaultColorButton.setOpaque(true);
         blockDefaultColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blockDefaultColorButtonActionPerformed(evt);
             }
@@ -508,6 +521,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         blockOccupiedColorButton.setEnabled(true);
         blockOccupiedColorButton.setOpaque(true);
         blockOccupiedColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blockOccupiedColorButtonActionPerformed(evt);
             }
@@ -547,6 +561,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         blockAlternativeColorButton.setEnabled(true);
         blockAlternativeColorButton.setOpaque(true);
         blockAlternativeColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 blockAlternativeColorButtonActionPerformed(evt);
             }
@@ -584,6 +599,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBallastWidthSpinner.setToolTipText(Bundle.getMessage("MainBallastWidthToolTip"));
         mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
         mainBallastWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainBallastWidthSpinnerStateChanged(evt);
             }
@@ -599,6 +615,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBallastWidthSpinner.setToolTipText(Bundle.getMessage("SideBallastWidthToolTip"));
         sideBallastWidthSpinner.setValue(ltdOptions.getSideBallastWidth());
         sideBallastWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideBallastWidthSpinnerStateChanged(evt);
             }
@@ -626,6 +643,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBallastColorButton.setEnabled(ltdOptions.getMainBallastWidth() > 0);
         mainBallastColorButton.setOpaque(true);
         mainBallastColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainBallastColorButtonActionPerformed(evt);
             }
@@ -655,6 +673,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBallastColorButton.setEnabled(ltdOptions.getSideBallastWidth() > 0);
         sideBallastColorButton.setOpaque(true);
         sideBallastColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideBallastColorButtonActionPerformed(evt);
             }
@@ -692,6 +711,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieLengthSpinner.setToolTipText(Bundle.getMessage("MainTieLengthToolTip"));
         mainTieLengthSpinner.setValue(ltdOptions.getMainTieLength());
         mainTieLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTieLengthSpinnerStateChanged(evt);
             }
@@ -707,6 +727,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieLengthSpinner.setToolTipText(Bundle.getMessage("SideTieLengthToolTip"));
         sideTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
         sideTieLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideTieLengthSpinnerStateChanged(evt);
             }
@@ -733,6 +754,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieWidthSpinner.setEnabled(ltdOptions.getMainTieLength() > 0);
         mainTieWidthSpinner.setValue(ltdOptions.getMainTieWidth());
         mainTieWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTieWidthSpinnerStateChanged(evt);
             }
@@ -749,6 +771,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieWidthSpinner.setEnabled(ltdOptions.getSideTieLength() > 0);
         sideTieWidthSpinner.setValue(ltdOptions.getSideTieWidth());
         sideTieWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideTieWidthSpinnerStateChanged(evt);
             }
@@ -775,6 +798,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieGapSpinner.setEnabled(ltdOptions.getMainTieLength() > 0);
         mainTieGapSpinner.setValue(ltdOptions.getMainTieGap());
         mainTieGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTieGapSpinnerStateChanged(evt);
             }
@@ -791,6 +815,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieGapSpinner.setEnabled(ltdOptions.getSideTieLength() > 0);
         sideTieGapSpinner.setValue(ltdOptions.getSideTieGap());
         sideTieGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideTieGapSpinnerStateChanged(evt);
             }
@@ -818,6 +843,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieColorButton.setEnabled(ltdOptions.getMainTieLength() > 0);
         mainTieColorButton.setOpaque(true);
         mainTieColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainTieColorButtonActionPerformed(evt);
             }
@@ -847,6 +873,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieColorButton.setEnabled(ltdOptions.getSideTieLength() > 0);
         sideTieColorButton.setOpaque(true);
         sideTieColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideTieColorButtonActionPerformed(evt);
             }
@@ -874,6 +901,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         presetsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Classic JMRI", "Drafting", "Realistic", "Realistic Oh!", "Garrish", "--", "Custom" }));
         presetsComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 presetsComboBoxActionPerformed(evt);
             }
@@ -881,6 +909,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         applyButton.setText(Bundle.getMessage("ButtonApply"));
         applyButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 applyButtonActionPerformed(evt);
             }
@@ -889,6 +918,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setActionCommand("cancelActionCommand");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
@@ -896,6 +926,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         okButton.setText(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
             }

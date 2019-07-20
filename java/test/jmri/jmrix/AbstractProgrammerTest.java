@@ -63,6 +63,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -97,6 +98,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         programmer = null;
         JUnitUtil.tearDown();

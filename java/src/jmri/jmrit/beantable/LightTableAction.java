@@ -1,18 +1,14 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.gui.GuiLafPreferencesManager;
+import com.alexandriasoftware.swing.Validation;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -54,7 +51,12 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.LightControl;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
+import jmri.managers.ProxyLightManager;
+import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
+import jmri.swing.SystemNameValidator;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ComboBoxToolTipRenderer;
@@ -95,7 +97,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setManager(@Nonnull Manager<Light> man) {
         if (man instanceof LightManager) {
@@ -119,13 +123,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
             protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
             protected String intensityString = Bundle.getMessage("ColumnHeadIntensity");
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public int getColumnCount() {
                 return NUMCOLUMN + 3;
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
@@ -141,7 +149,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Class<?> getColumnClass(int col) {
                 if (col == EDITCOL) {
@@ -159,7 +169,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public int getPreferredWidth(int col) {
                 // override default value for UserName column
@@ -179,7 +191,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == EDITCOL) {
@@ -195,7 +209,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public String getValue(String name) {
                 Light l = lightManager.getBySystemName(name);
@@ -223,7 +239,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Object getValueAt(int row, int col) {
                 switch (col) {
@@ -238,7 +256,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void setValueAt(Object value, int row, int col) {
                 switch (col) {
@@ -317,31 +337,41 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 return true;
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public LightManager getManager() {
                 return lightManager;
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Light getBySystemName(String name) {
                 return lightManager.getBySystemName(name);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Light getByUserName(String name) {
                 return InstanceManager.getDefault(LightManager.class).getByUserName(name);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void clickOn(Light t) {
                 int oldState = t.getState();
@@ -361,13 +391,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 t.setState(newState);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public JButton configureButton() {
                 return new JButton(" " + Bundle.getMessage("StateOff") + " ");
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameLight");
@@ -441,7 +475,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     return updateLabel((String) value, row);
                 }
 
-            public JLabel updateLabel(String value, int row) {
+                public JLabel updateLabel(String value, int row) {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         log.debug("TODO adjust table row height for Lights?");
                         //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); 
@@ -514,13 +548,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }; // end of custom data model
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLightTable"));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LightTable";
@@ -535,9 +573,10 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
     // items for Add/Edit Light frame
     JLabel systemLabel = new JLabel(Bundle.getMessage("SystemConnectionLabel"));
-    JComboBox<String> prefixBox = new JComboBox<>();
+    ManagerComboBox<Light> prefixBox = new ManagerComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    CheckedTextField hardwareAddressTextField = new CheckedTextField(10);
+    JTextField hardwareAddressTextField = new JTextField(10);
+    SystemNameValidator hardwareAddressValidator;
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
@@ -566,7 +605,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
     JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
-    String connectionChoice = "";
+    Manager<Light> connectionChoice = null;
 
     // parts for supporting variable intensity, transition
     JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity"));
@@ -578,7 +617,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
     JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime"));
     JSpinner transitionTime = new JSpinner(); // 2 digit decimal format field, initialized later as instance
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPressed(ActionEvent e) {
         if (inEditMode) {
@@ -619,22 +660,29 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setText(""); // reset from possible previous use
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-            hardwareAddressTextField.setBackground(Color.yellow); // reset after possible error notification
-            // Define PropertyChangeListener
-            colorChangeListener = new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                    String property = propertyChangeEvent.getPropertyName();
-                    if ("background".equals(property)) {
-                        if ((Color) propertyChangeEvent.getNewValue() == Color.white) { // valid entry
-                            create.setEnabled(true);
-                        } else { // invalid
-                            create.setEnabled(false);
+            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            hardwareAddressTextField.setInputVerifier(hardwareAddressValidator);
+            prefixBox.addActionListener((evt) -> {
+                hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
+            });
+            hardwareAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
+                Validation validation = hardwareAddressValidator.getValidation();
+                Validation.Type type = validation.getType();
+                create.setEnabled(type != Validation.Type.WARNING && type != Validation.Type.DANGER);
+                String message = validation.getMessage();
+                if (message == null) {
+                    status1.setText("");
+                } else {
+                    message = message.trim();
+                    if (message.startsWith("<html>") && message.contains("<br>")) {
+                        message = message.substring(0, message.indexOf("<br>"));
+                        if (!message.endsWith("</html>")) {
+                            message = message + "</html>";
                         }
                     }
+                    status1.setText(message);
                 }
-            };
-            hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
+            });
             // tooltip and entry mask for sysNameTextField will be assigned later by prefixChanged()
             panel1a.add(labelNumToAdd);
             panel1a.add(numberToAdd);
@@ -763,6 +811,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             create.setVisible(true);
             update.setVisible(false);
             contentPane.add(panel5);
+            hardwareAddressValidator.verify(hardwareAddressTextField);
         }
         prefixChanged();
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -771,7 +820,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 cancelPressed(null);
             }
         });
-        hardwareAddressTextField.setBackground(Color.yellow);
         create.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
@@ -782,82 +830,60 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     private void initializePrefixCombo() {
-        prefixBox.removeAllItems();
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
-            jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
-            List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
-            for (Manager<Light> manager : managerList) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
-                prefixBox.addItem(manuName);
-            }
+        if (lightManager instanceof ProxyLightManager) {
+            ProxyLightManager proxy = (ProxyLightManager) lightManager;
+            prefixBox.setManagers(proxy.getDisplayOrderManagerList());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
+                SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
+                prefixBox.setSelectedItem(memo.get(Light.class));
             }
         } else {
-            prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.getDefault(LightManager.class).getSystemPrefix()));
+            prefixBox.setManagers(lightManager);
         }
     }
 
     private String addEntryToolTip;
 
     protected void prefixChanged() {
-        if (supportsVariableLights()) {
-            setupVariableDisplay(true, true);
-        } else {
-            varPanel.setVisible(false);
-        }
-        if (canAddRange()) { // behaves like the AddNewHardwareDevice pane (dim if not available, do not hide)
-            addRangeBox.setEnabled(true);
-        } else {
-            addRangeBox.setEnabled(false);
-        }
-        addRangeBox.setSelected(false);
-        numberToAdd.setValue(1);
-        numberToAdd.setEnabled(false);
-        labelNumToAdd.setEnabled(false);
-        // show tooltip for selected system connection
-        connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
-        if (connectionChoice == null) {
-            // Tab All or first time opening, keep default tooltip
-            connectionChoice = "TBD";
-        }
-        // Update tooltip in the Add Light pane to match system connection selected from combobox.
-        log.debug("Connection choice = [{}]", connectionChoice);
-        // get tooltip from ProxyLightManager
-        String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
-        if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
-            jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
-            List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
-            for (Manager<Light> mgr : managerList) {
-                if (mgr.getSystemPrefix().equals(systemPrefix)) {
-                    // get tooltip from ProxyLightManager
-                    addEntryToolTip = mgr.getEntryToolTip();
-                    addRangeBox.setEnabled(((LightManager) mgr).allowMultipleAdditions(systemPrefix));
-                    log.debug("L Add box set");
-                    break;
-                }
+        if (prefixBox.getSelectedItem() != null) {
+            if (supportsVariableLights()) {
+                setupVariableDisplay(true, true);
+            } else {
+                varPanel.setVisible(false);
             }
-        } else if (lightManager.allowMultipleAdditions(systemPrefix)) {
-            addRangeBox.setEnabled(true);
-            log.debug("L add box enabled2");
-            // get tooltip from light manager
-            addEntryToolTip = lightManager.getEntryToolTip();
+            if (canAddRange()) { // behaves like the AddNewHardwareDevice pane (dim if not available, do not hide)
+                addRangeBox.setEnabled(true);
+            } else {
+                addRangeBox.setEnabled(false);
+            }
+            addRangeBox.setSelected(false);
+            numberToAdd.setValue(1);
+            numberToAdd.setEnabled(false);
+            labelNumToAdd.setEnabled(false);
+            // show tooltip for selected system connection
+            connectionChoice = prefixBox.getSelectedItem(); // store in Field for CheckedTextField
+            // Update tooltip in the Add Light pane to match system connection selected from combobox.
+            log.debug("Connection choice = [{}]", connectionChoice);
+            // get tooltip from ProxyLightManager
+            String systemPrefix = connectionChoice.getSystemPrefix();
+            addEntryToolTip = connectionChoice.getEntryToolTip();
+            addRangeBox.setEnabled(((LightManager) connectionChoice).allowMultipleAdditions(systemPrefix));
+            log.debug("DefaultLightManager tip: {}", addEntryToolTip);
+            // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
+            if (addEntryToolTip != null) {
+                hardwareAddressTextField.setToolTipText(
+                        Bundle.getMessage("AddEntryToolTipLine1",
+                                ConnectionNameFromSystemName.getConnectionName(systemPrefix),
+                                Bundle.getMessage("Lights"),
+                                addEntryToolTip));
+                hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
+                hardwareAddressValidator.verify(hardwareAddressTextField);
+            }
+            create.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
+            addFrame.pack();
+            addFrame.setVisible(true);
         }
-        else {
-            log.warn("Unable to set light tooltip or range box");
-        }
-        log.debug("DefaultLightManager tip: {}", addEntryToolTip);
-        // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
-        if (addEntryToolTip != null) {
-            hardwareAddressTextField.setToolTipText("<html>"
-                    + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Lights"))
-                    + "<br>" + addEntryToolTip + "</html>");
-        }
-        hardwareAddressTextField.setBackground(Color.yellow); // reset
-        create.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
-        addFrame.pack();
-        addFrame.setVisible(true);
     }
 
     protected void addRangeChanged() {
@@ -874,8 +900,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
      * Activate Add a range option if manager accepts adding more than 1 Light.
      */
     private boolean canAddRange() {
-        String testSysName = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L11";
-        return InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(testSysName);
+        String testSysName = prefixBox.getSelectedItem().getSystemPrefix() + "L11";
+        return lightManager.allowMultipleAdditions(testSysName);
     }
 
     /**
@@ -906,8 +932,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
      * @return true if system can support variable lights
      */
     boolean supportsVariableLights() {
-        String testSysName = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L11";
-        return InstanceManager.getDefault(LightManager.class).supportsVariableLights(testSysName);
+        String testSysName = prefixBox.getSelectedItem().getSystemPrefix() + "L11";
+        return lightManager.supportsVariableLights(testSysName);
     }
 
     /**
@@ -920,8 +946,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
         status1.setForeground(Color.gray); // reset
         status1.setText("");
-        String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "L";
-        String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()) + "T";
+        String lightPrefix = prefixBox.getSelectedItem().getSystemPrefix() + "L";
+        String turnoutPrefix = prefixBox.getSelectedItem().getSystemPrefix() + "T";
         String curAddress = hardwareAddressTextField.getText();
         // first validation is provided by HardwareAddress ValidatedTextField on yield focus
         if (curAddress.length() < 1) {
@@ -929,7 +955,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             status1.setText(Bundle.getMessage("LightError17"));
             status1.setForeground(Color.red);
             status2.setVisible(false);
-            hardwareAddressTextField.setBackground(Color.orange);
+            hardwareAddressTextField.setBackground(Color.red);
             addFrame.pack();
             addFrame.setVisible(true);
             return;
@@ -949,7 +975,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             status1.setForeground(Color.red);
             status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
-            hardwareAddressTextField.setBackground(Color.orange);
+            hardwareAddressTextField.setBackground(Color.red);
             addFrame.pack();
             addFrame.setVisible(true);
             return;
@@ -1129,7 +1155,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     uxName = nextName(uxName);
                 }
                 try {
-                    g = InstanceManager.getDefault(LightManager.class).newLight(sxName, uxName);
+                    g = lightManager.newLight(sxName, uxName);
                     // TODO: set up this light the same as the first light?
                 } catch (IllegalArgumentException ex) {
                     // user input no good
@@ -1200,13 +1226,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // get information for this Light
         userName.setText(g.getUserName());
         clearLightControlsTable(); // remove all controls from local list
-        
+
         // Get a copy of the LightControl list
         controlList = new ArrayList<>();
         curLight.getLightControlList().forEach((lightControlList1) -> {
             controlList.add(new LightControl(lightControlList1));
         });
-        
+
         // variable intensity
         if (g.isIntensityVariable()) {
             minIntensity.setValue(g.getMinIntensity()); // displayed as percentage
@@ -1391,7 +1417,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private JButton createControl;
     private JButton updateControl;
     private JButton cancelControl;
-    
+
     private JPanel panel34;
 
     /**
@@ -1434,29 +1460,29 @@ public class LightTableAction extends AbstractTableAction<Light> {
             JPanel panel31 = new JPanel();
             panel31.setLayout(new FlowLayout());
             panel31.add(typeBoxLabel);
-            panel31.add(typeBox = new JComboBox<>( new String[]{
+            panel31.add(typeBox = new JComboBox<>(new String[]{
                 noControl,
-                sensorControl, 
-                fastClockControl, 
-                turnoutStatusControl, 
-                timedOnControl, 
+                sensorControl,
+                fastClockControl,
+                turnoutStatusControl,
+                timedOnControl,
                 twoSensorControl
             }));
-            
+
             ComboBoxToolTipRenderer typeBoxToolTipRenderer = new ComboBoxToolTipRenderer();
             typeBox.setRenderer(typeBoxToolTipRenderer);
-            
+
             List<String> typeTooltips = new ArrayList<String>();
             typeTooltips.add(null); // no Control Type selected
             typeTooltips.add(Bundle.getMessage("LightSensorControlTip"));
             typeTooltips.add(Bundle.getMessage("LightFastClockControlTip"));
             typeTooltips.add(Bundle.getMessage("LightTurnoutStatusControlTip",
-                InstanceManager.turnoutManagerInstance().getClosedText(),
-                InstanceManager.turnoutManagerInstance().getThrownText() ));
+                    InstanceManager.turnoutManagerInstance().getClosedText(),
+                    InstanceManager.turnoutManagerInstance().getThrownText()));
             typeTooltips.add(Bundle.getMessage("LightTimedOnControlTip"));
             typeTooltips.add(Bundle.getMessage("LightTwoSensorControlTip"));
             typeBoxToolTipRenderer.setTooltips(typeTooltips);
-            
+
             typeBox.addActionListener((ActionEvent e) -> {
                 controlTypeChanged();
             });
@@ -1465,7 +1491,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             panel32.setLayout(new FlowLayout());
             panel32.add(f1Label);
             panel32.add(sensor1Box);
-            
+
             // set up number formatting
             JSpinner.NumberEditor ne1b = new JSpinner.NumberEditor(fastHourSpinner1, "00"); // 2 digits "01" format
             fastHourSpinner1.setEditor(ne1b);
@@ -1494,7 +1520,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
             turnoutBox.setAllowNull(true);
             turnoutBox.setVisible(false);
-            
+
             panel34 = new JPanel();
             panel34.setLayout(new FlowLayout());
             panel34.add(f1aLabel);
@@ -1502,14 +1528,14 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
-            
+
             panel33.add(f2Label);
             panel33.add(stateBox = new JComboBox<>(new String[]{
                 Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive"),}));
             stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
             stateBoxToolTipRenderer = new ComboBoxToolTipRenderer();
             stateBox.setRenderer(stateBoxToolTipRenderer);
-            
+
             JSpinner.NumberEditor ne2a = new JSpinner.NumberEditor(fastHourSpinner2, "00"); // 2 digits "01" format
             fastHourSpinner2.setEditor(ne2a);
             panel33.add(fastHourSpinner2);  // hours OFF
@@ -1566,8 +1592,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
      * Reacts to a control type change.
      */
     private void controlTypeChanged() {
-        setUpControlType( typeBox.getSelectedIndex());
-        
+        setUpControlType(typeBox.getSelectedIndex());
+
     }
 
     /**
@@ -1594,8 +1620,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
         typeBox.setSelectedIndex(ctype);
         createControl.setEnabled(true);
         updateControl.setEnabled(true);
-        
-        if (ctype==Light.SENSOR_CONTROL) {
+
+        if (ctype == Light.SENSOR_CONTROL) {
             // set up panel for sensor control
             f1Label.setText(Bundle.getMessage("LightSensor", Bundle.getMessage("MakeLabel", ""))); // insert nothing before colon
             sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
@@ -1612,7 +1638,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensor1Box.setVisible(true);
             stateBox.setVisible(true);
             defaultControlIndex = Light.SENSOR_CONTROL;
-        } else if (ctype==Light.FAST_CLOCK_CONTROL) {
+        } else if (ctype == Light.FAST_CLOCK_CONTROL) {
             // set up panel for fast clock control
             f1Label.setText(Bundle.getMessage("LightScheduleOn"));
             fastHourSpinner1.setToolTipText(Bundle.getMessage("LightScheduleHint"));
@@ -1628,7 +1654,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             fastMinuteSpinner2.setVisible(true);
             f2Label.setVisible(true);
             defaultControlIndex = Light.FAST_CLOCK_CONTROL;
-        } else if (ctype==Light.TURNOUT_STATUS_CONTROL) {
+        } else if (ctype == Light.TURNOUT_STATUS_CONTROL) {
             // set up panel for turnout status control
             f1Label.setText(Bundle.getMessage("LightTurnout"));
             turnoutBox.setToolTipText(Bundle.getMessage("LightTurnoutHint"));
@@ -1639,17 +1665,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
             stateBox.setToolTipText(Bundle.getMessage("LightTurnoutSenseHint"));
             List<String> stateTooltips = new ArrayList<String>();
             stateTooltips.add(Bundle.getMessage("LightConToClosedOrThrownTip",
-                InstanceManager.turnoutManagerInstance().getClosedText(),
-                InstanceManager.turnoutManagerInstance().getThrownText()));
+                    InstanceManager.turnoutManagerInstance().getClosedText(),
+                    InstanceManager.turnoutManagerInstance().getThrownText()));
             stateTooltips.add(Bundle.getMessage("LightConToClosedOrThrownTip",
-                InstanceManager.turnoutManagerInstance().getThrownText(),
-                InstanceManager.turnoutManagerInstance().getClosedText()));
+                    InstanceManager.turnoutManagerInstance().getThrownText(),
+                    InstanceManager.turnoutManagerInstance().getClosedText()));
             stateBoxToolTipRenderer.setTooltips(stateTooltips);
             f2Label.setVisible(true);
             turnoutBox.setVisible(true);
             stateBox.setVisible(true);
             defaultControlIndex = Light.TURNOUT_STATUS_CONTROL;
-        } else if (ctype==Light.TIMED_ON_CONTROL) {
+        } else if (ctype == Light.TIMED_ON_CONTROL) {
             // set up panel for sensor control
             f1Label.setText(Bundle.getMessage("LightTimedSensor"));
             sensorOnBox.setToolTipText(Bundle.getMessage("LightTimedSensorHint"));
@@ -1659,7 +1685,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             sensorOnBox.setVisible(true);
             timedOnSpinner.setVisible(true);
             defaultControlIndex = Light.TIMED_ON_CONTROL;
-        } else if (ctype==Light.TWO_SENSOR_CONTROL) {
+        } else if (ctype == Light.TWO_SENSOR_CONTROL) {
             // set up panel for two sensor control
             panel34.setVisible(true);
             f1Label.setText(Bundle.getMessage("LightSensor", " " + Bundle.getMessage("MakeLabel", "1"))); // for 2-sensor use, insert number "1" before colon
@@ -1670,19 +1696,19 @@ public class LightTableAction extends AbstractTableAction<Light> {
             stateBox.addItem(Bundle.getMessage("SensorStateActive"));
             stateBox.addItem(Bundle.getMessage("SensorStateInactive"));
             stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
-            
+
             List<String> stateTooltips = new ArrayList<String>();
             stateTooltips.add(Bundle.getMessage("Light2SensorSenseActivTip"));
             stateTooltips.add(Bundle.getMessage("Light2SensorSenseInactivTip"));
             stateBoxToolTipRenderer.setTooltips(stateTooltips);
-            
+
             f2Label.setVisible(true);
             sensor1Box.setVisible(true);
             sensor2Box.setVisible(true);
             sensor1Box.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
             stateBox.setVisible(true);
             defaultControlIndex = Light.TWO_SENSOR_CONTROL;
-        } else if (ctype==Light.NO_CONTROL) {
+        } else if (ctype == Light.NO_CONTROL) {
             // set up panel for no control
             f1Label.setText(Bundle.getMessage("LightNoneSelected"));
             defaultControlIndex = Light.NO_CONTROL;
@@ -1701,16 +1727,15 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return;
         }
         try {
-            
+
             fastHourSpinner1.commitEdit();
             fastHourSpinner2.commitEdit();
             fastMinuteSpinner1.commitEdit();
             fastMinuteSpinner2.commitEdit();
             timedOnSpinner.commitEdit();
-        }
-        catch (java.text.ParseException pe) {
+        } catch (java.text.ParseException pe) {
             // unlikely to be thrown as values set to original if incorrect on commitEdit()
-            log.error("Incorrect value found in a Time: {}",pe);
+            log.error("Incorrect value found in a Time: {}", pe);
             return;
         }
         lc = new LightControl();
@@ -1736,10 +1761,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             fastMinuteSpinner1.commitEdit();
             fastMinuteSpinner2.commitEdit();
             timedOnSpinner.commitEdit();
-        }
-        catch (java.text.ParseException pe) {
+        } catch (java.text.ParseException pe) {
             // unlikely to be thrown as values set to original if incorrect on commitEdit()
-            log.error("Incorrect value found in a FastClock Time: {}",pe);
+            log.error("Incorrect value found in a FastClock Time: {}", pe);
             return;
         }
         if (setControlInformation(lc)) {
@@ -1833,7 +1857,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             int offMin = (Integer) fastMinuteSpinner2.getValue(); // minutes
 
             // check for 2 x 00:00 entry
-            if ((onHour*60+onMin)==(offHour*60+offMin)){
+            if ((onHour * 60 + onMin) == (offHour * 60 + offMin)) {
                 status1.setText(Bundle.getMessage("LightWarn11"));
                 status1.setForeground(Color.red);
                 return false;
@@ -2150,7 +2174,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
      * Table model for Light Controls in the Add/Edit Light window.
      */
     public class LightControlTableModel extends javax.swing.table.AbstractTableModel implements
-        java.beans.PropertyChangeListener {
+            java.beans.PropertyChangeListener {
 
         public static final int TYPE_COLUMN = 0;
         public static final int DESCRIPTION_COLUMN = 1;
@@ -2161,7 +2185,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             super();
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
@@ -2170,7 +2196,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Class<?> getColumnClass(int c) {
             if (c == TYPE_COLUMN) {
@@ -2188,19 +2216,25 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return String.class;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int getColumnCount() {
             return REMOVE_COLUMN + 1;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int getRowCount() {
             return (controlList.size());
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean isCellEditable(int r, int c) {
             if (c == TYPE_COLUMN) {
@@ -2218,7 +2252,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return (false);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public String getColumnName(int col) {
             if (col == TYPE_COLUMN) {
@@ -2230,7 +2266,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-            justification="better to keep cases in column order rather than to combine")
+                justification = "better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case TYPE_COLUMN:
@@ -2248,7 +2284,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return new JTextField(8).getPreferredSize().width;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Object getValueAt(int r, int c) {
             if (r > controlList.size()) {
@@ -2269,7 +2307,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
@@ -2327,137 +2367,16 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     /**
-     * Extends JTextField to provide a data validation function.
-     *
-     * @author Egbert Broerse 2017, based on
-     * jmri.jmrit.util.swing.ValidatedTextField by B. Milhaupt
+     * {@inheritDoc}
      */
-    public class CheckedTextField extends JTextField {
-
-        CheckedTextField fld;
-        boolean allow0Length = false; // for Add new bean item, a value that is zero-length is considered invalid.
-        private final MyVerifier verifier; // internal mechanism used for verifying field data before focus is lost
-
-        /**
-         * Text entry field with an active key event checker.
-         *
-         * @param len field length
-         */
-        public CheckedTextField(int len) {
-            super("", len);
-            fld = this;
-
-            // configure InputVerifier
-            verifier = new MyVerifier();
-            fld = this;
-            fld.setInputVerifier(verifier);
-
-            fld.addFocusListener(new FocusListener() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    setEditable(true);
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    setEditable(true);
-                }
-            });
-        }
-
-        /**
-         * Validate the field information. Does not make any GUI changes.
-         * <p>
-         * During validation, logging is capped at the Error level to keep the Console clean from repeated validation.
-         * This is reset to default level afterwards.
-         *
-         * @return 'true' if current field entry is valid according to the
-         *         system manager; otherwise 'false'
-         */
-        @Override
-        public boolean isValid() {
-            String value;
-            String prefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice); // connectionChoice is set by canAddRange()
-
-            if (fld == null) {
-                return false;
-            }
-            value = getText().trim();
-            if ((value.length() < 1) && (allow0Length == false)) {
-                return false;
-            } else if ((allow0Length == true) && (value.length() == 0)) {
-                return true;
-            } else {
-                boolean validFormat = false;
-                    // try {
-                    validFormat = (InstanceManager.getDefault(LightManager.class).validSystemNameFormat(prefix + "L" + value) == Manager.NameValidity.VALID);
-                    // } catch (jmri.JmriException e) {
-                    // use it for the status bar?
-                    // }
-                if (validFormat) {
-                    create.setEnabled(true); // directly update Create button
-                    return true;
-                } else {
-                    create.setEnabled(false); // directly update Create button
-                    return false;
-                }
-            }
-        }
-
-        /**
-         * Private class used in conjunction with CheckedTextField to provide
-         * the mechanisms required to validate the text field data upon loss of
-         * focus, and colorize the text field in case of validation failure.
-         */
-        private class MyVerifier extends javax.swing.InputVerifier implements java.awt.event.ActionListener {
-
-            // set default background color for invalid field data
-            Color mark = Color.orange;
-
-            /** {@inheritDoc} */
-            @Override
-            public boolean shouldYieldFocus(javax.swing.JComponent input) {
-                if (input instanceof CheckedTextField ) {
-                    if (verify(input)) {
-                        input.setBackground(Color.white);
-                        return true;
-                    } else {
-                        input.setBackground(mark);
-                        ((javax.swing.text.JTextComponent) input).selectAll();
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            }
-
-            /** {@inheritDoc} */
-            @Override
-            public boolean verify(javax.swing.JComponent input) {
-                if (input.getClass() == CheckedTextField.class) {
-                    return input.isValid();
-                } else {
-                    return false;
-                }
-            }
-
-            /** {@inheritDoc} */
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                JTextField source = (JTextField) e.getSource();
-                shouldYieldFocus(source); //ignore return value
-                source.selectAll();
-            }
-        }
-    }
-
-    /** {@inheritDoc} */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLightTable");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getClassName() {
         return LightTableAction.class.getName();

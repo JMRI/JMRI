@@ -397,6 +397,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
 
     // Cab Signal List Listener interface
 
+    @Override
     public void notifyCabSignalListChanged(){
         slotModel.fireTableDataChanged();
     }

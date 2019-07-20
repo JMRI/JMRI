@@ -25,6 +25,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -35,6 +36,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     }
     
     @After
+    @Override
     public void tearDown() {
         
         mm = null;

@@ -25,6 +25,7 @@ import org.junit.Test;
 @Ignore("Replaced with Cucumber test")
 public class DecoderProTest extends apps.LaunchJmriAppBase {
 
+    @Override
     protected void launch(String[] args) {
         DecoderPro.main(args);
     }

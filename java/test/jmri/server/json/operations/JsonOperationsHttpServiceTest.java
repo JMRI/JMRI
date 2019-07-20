@@ -749,6 +749,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         JUnitUtil.initIdTagManager();

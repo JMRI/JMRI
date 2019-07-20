@@ -115,6 +115,7 @@ public class RailDriverMenuItem extends JMenuItem
                 InstanceManager.getDefault(ShutDownManager.class)
                         .register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
                             // if we're going to start, we have to also stop
+                            @Override
                             public boolean execute() {
                                 hidServices.stop();
                                 return true;

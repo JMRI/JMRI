@@ -184,6 +184,7 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             spinner.addChangeListener(this);
         }
 
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
             int row, int column) {
             spinner.setValue( value);
@@ -200,10 +201,12 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             return true;
         }
 
+        @Override
         public Object getCellEditorValue() {
             return spinner.getValue();
         }
         
+        @Override
         public void stateChanged(ChangeEvent eve) {
             stopCellEditing();
         }
@@ -216,6 +219,7 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             setBorder(null);
         }
    
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
             

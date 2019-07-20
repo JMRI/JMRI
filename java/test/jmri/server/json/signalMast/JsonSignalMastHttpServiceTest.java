@@ -32,6 +32,7 @@ import org.junit.Test;
 public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<SignalMast, JsonSignalMastHttpService>{
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, JsonException {
 
         // create a signalmast for testing
@@ -140,6 +141,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonSignalMastHttpService(mapper);
@@ -149,6 +151,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

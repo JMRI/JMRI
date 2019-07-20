@@ -26,6 +26,7 @@ import org.junit.Test;
 public class JsonMemoryHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Memory, JsonMemoryHttpService> {
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, JsonException {
         MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
         Memory memory1 = manager.provideMemory("IM1"); // no value
@@ -97,12 +98,14 @@ public class JsonMemoryHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonMemoryHttpService(mapper);
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
