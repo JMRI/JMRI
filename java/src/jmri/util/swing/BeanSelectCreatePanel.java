@@ -3,8 +3,6 @@ package jmri.util.swing;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.util.List;
-import java.util.Vector;
 
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -48,7 +46,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
      * @param manager       the bean manager
      * @param defaultSelect the bean that is selected by default
      */
-    public BeanSelectCreatePanel(Manager<E> manager, E defaultSelect) {
+    public BeanSelectCreatePanel(@Nonnull Manager<E> manager, E defaultSelect) {
         _defaultSelect = defaultSelect;
         UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         existingItem = new JRadioButton(Bundle.getMessage("UseExisting"), true);
