@@ -970,19 +970,16 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       lets you check the logic code separately, but invoking those
       methods and checking the state them update.</p>
 
-      <p>For more complicated GUI testing, the Jemmy tool is generally used.
+      <p>For more complicated GUI testing, the Jemmy tool is preferred.
 
       <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
-
-      Recently, e.g. since 2016, some tests have been developed
-      using the
-      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the 
-      <a href="http://wiki.netbeans.org/Jemmy_Samples">samples on the NetBeans pages</a>.
       
       <p>
       For more information on Jemmy, please see the 
       <a href="http://wiki.netbeans.org/Jemmy_Tutorial">tutorial Wiki page</a> and the 
       <a href="http://atetric.com/atetric/javadoc/org.netbeans/jemmy/2.2.7.5/overview-summary.html">Jemmy Javadoc</a>.
+      There are
+      <a href="http://wiki.netbeans.org/Jemmy_Samples">samples on the NetBeans pages</a>.
 
       <a id="jemmylocate" name="jemmylocate"></a>
       <h4>Locating GUI Items using Jemmy</h4>
@@ -1013,6 +1010,14 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             the default Jemmy string comparison is a case insensitive <code>caption.contains(match)</code>.  
             If <code>ce</code> is true, then the <code>equals(..)</code> method is used.  
             The <code>ccs</code> option controls case sensitivity.  
+      <li>Jemmy's <code>ComboBoxOperator selectItem(String)</code> can only reliably set the 
+            value of <code>JComboBox&lt;String&gt;</code>, (i.e. its unreliable 
+            with <code>JComboBox&lt;NamedBean&gt;)</code>, so that method needs 
+            to be replaced with <code>setSelectedItem(Object)</code>
+      <li>Jemmy's <code>clearText()</code> and <code>typeText(String)</code> methods can't 
+            handle <code>JTextComponents</code> with complex borders 
+            (such as used by <code>SystemNameValidator</code> and <code>NamedBeanComboBox</code>); 
+            those methods need to be replaced with s<code>etText(String)</code>
       </ul>
 
       <h4>Example of Closing a Dialog Box</h4>
