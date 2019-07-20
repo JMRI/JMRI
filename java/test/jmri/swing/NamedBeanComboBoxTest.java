@@ -1,6 +1,7 @@
 package jmri.swing;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -153,6 +154,34 @@ public class NamedBeanComboBoxTest {
         t.setValidatingInput(true);
         assertTrue(t.isValidatingInput());
 
+    }
+
+    @Test
+    public void testSensorAllowEdit() {
+        assumeFalse(GraphicsEnvironment.isHeadless());
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        assertTrue(m.getNamedBeanSet().isEmpty());
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
+        assertFalse(t.isAllowNull());
+        assertEquals(0, t.getModel().getSize());
+        t.setDisplayOrder(DisplayOptions.SYSTEMNAME);
+        t.setAllowNull(true);
+        assertTrue(t.isAllowNull());
+        assertEquals(0, t.getModel().getSize());
+        Sensor s1 = m.provideSensor("IS1");
+        assertTrue(t.isAllowNull());
+        assertEquals(2, t.getModel().getSize());
+        assertNull(t.getItemAt(0));
+        assertEquals(s1, t.getItemAt(1));
+        t.setAllowNull(false);
+        assertFalse(t.isAllowNull());
+        assertEquals(1, t.getModel().getSize());
+        assertEquals(s1, t.getItemAt(0));
+        t.setAllowNull(true);
+        assertTrue(t.isAllowNull());
+        assertEquals(2, t.getModel().getSize());
+        assertNull(t.getItemAt(0));
+        assertEquals(s1, t.getItemAt(1));
     }
 
     @Test

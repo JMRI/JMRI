@@ -218,10 +218,10 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public void setAllowNull(boolean allowNull) {
         this.allowNull = allowNull;
-        if (allowNull && this.getItemAt(0) != null) {
+        if (allowNull && (getModel().getSize() > 0 && getItemAt(0) != null)) {
             this.insertItemAt(null, 0);
-        } else if (!allowNull && this.getItemAt(0) == null) {
-            this.remove(0);
+        } else if (!allowNull && (getModel().getSize() > 0 && this.getItemAt(0) == null)) {
+            this.removeItemAt(0);
         }
     }
 
