@@ -576,6 +576,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
     ManagerComboBox<Light> prefixBox = new ManagerComboBox<>();
     JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JTextField hardwareAddressTextField = new JTextField(10);
+    SystemNameValidator hardwareAddressValidator;
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 50, 1); // maximum 50 items
     JSpinner numberToAdd = new JSpinner(rangeSpinner);
     JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
@@ -659,13 +660,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setText(""); // reset from possible previous use
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-            SystemNameValidator systemNameValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
-            hardwareAddressTextField.setInputVerifier(systemNameValidator);
+            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+            hardwareAddressTextField.setInputVerifier(hardwareAddressValidator);
             prefixBox.addActionListener((evt) -> {
-                systemNameValidator.setManager(prefixBox.getSelectedItem());
+                hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
             });
-            systemNameValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
-                Validation validation = systemNameValidator.getValidation();
+            hardwareAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
+                Validation validation = hardwareAddressValidator.getValidation();
                 Validation.Type type = validation.getType();
                 create.setEnabled(type != Validation.Type.WARNING && type != Validation.Type.DANGER);
                 String message = validation.getMessage();
@@ -810,7 +811,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             create.setVisible(true);
             update.setVisible(false);
             contentPane.add(panel5);
-            systemNameValidator.verify(hardwareAddressTextField);
+            hardwareAddressValidator.verify(hardwareAddressTextField);
         }
         prefixChanged();
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -829,7 +830,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
     }
 
     private void initializePrefixCombo() {
-        prefixBox.removeAllItems();
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (lightManager instanceof ProxyLightManager) {
             ProxyLightManager proxy = (ProxyLightManager) lightManager;
@@ -877,6 +877,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
                                 ConnectionNameFromSystemName.getConnectionName(systemPrefix),
                                 Bundle.getMessage("Lights"),
                                 addEntryToolTip));
+                hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
+                hardwareAddressValidator.verify(hardwareAddressTextField);
             }
             create.setEnabled(true); // too severe to start as disabled (false) until we fully support validation
             addFrame.pack();

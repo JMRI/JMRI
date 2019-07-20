@@ -311,6 +311,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                         Bundle.getMessage("Sensors"),
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
+        hardwareAddressValidator.verify(hardwareAddressTextField);
         addButton.setEnabled(true); // ambiguous, so start enabled
     }
 

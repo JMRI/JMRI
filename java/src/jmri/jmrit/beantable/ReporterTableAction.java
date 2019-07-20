@@ -477,6 +477,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                         Bundle.getMessage("Reporters"),
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
+        hardwareAddressValidator.verify(hardwareAddressTextField);
         addButton.setEnabled(true); // ambiguous, so start enabled
     }
 

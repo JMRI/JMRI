@@ -1870,6 +1870,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         Bundle.getMessage("Turnouts"),
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
+        hardwareAddressValidator.verify(hardwareAddressTextField);
         addButton.setEnabled(true); // ambiguous, so start enabled
     }
 
