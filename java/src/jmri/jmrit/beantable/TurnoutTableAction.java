@@ -475,15 +475,19 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 String name = sysNameList.get(row);
-                TurnoutManager manager = turnManager;
-                Turnout t = manager.getBySystemName(name);
+                Turnout t = turnManager.getBySystemName(name);
+                if (t == null) {
+                    NullPointerException ex = new NullPointerException("Unexpected null turnout in turnout table");
+                    log.error(ex.getMessage(), ex); // log with stack trace
+                    throw ex;
+                }
                 if (col == INVERTCOL) {
                     if (t.canInvert()) {
-                        boolean b = ((Boolean) value).booleanValue();
+                        boolean b = ((Boolean) value);
                         t.setInverted(b);
                     }
                 } else if (col == LOCKCOL) {
-                    boolean b = ((Boolean) value).booleanValue();
+                    boolean b = ((Boolean) value);
                     t.setLocked(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT, b);
                 } else if (col == MODECOL) {
                     @SuppressWarnings("unchecked")
@@ -491,14 +495,16 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     t.setFeedbackMode(modeName);
                 } else if (col == SENSOR1COL) {
                     try {
-                        t.provideFirstFeedbackSensor((String) value);
+                        Sensor sensor = (Sensor) value;
+                        t.provideFirstFeedbackSensor(sensor != null ? sensor.getDisplayName() : null);
                     } catch (jmri.JmriException e) {
                         JOptionPane.showMessageDialog(null, e.toString());
                     }
                     fireTableRowsUpdated(row, row);
                 } else if (col == SENSOR2COL) {
                     try {
-                        t.provideSecondFeedbackSensor((String) value);
+                        Sensor sensor = (Sensor) value;
+                        t.provideSecondFeedbackSensor(sensor != null ? sensor.getDisplayName() : null);
                     } catch (jmri.JmriException e) {
                         JOptionPane.showMessageDialog(null, e.toString());
                     }
