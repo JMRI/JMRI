@@ -218,7 +218,6 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public void setAllowNull(boolean allowNull) {
         this.allowNull = allowNull;
-        sort();
     }
 
     /**
