@@ -61,7 +61,7 @@
     </constraint>
 
     <group id="default">
-        <includeConstraint refId="testrules:IgnoredTest" severity="info"/>
+        <includeConstraint refId="testrules:IgnoredTest" severity="minor"/>
         <includeConstraint refId="testrules:TestClassName" />
         <includeConstraint refId="testrules:TestMethodWithoutAssertion" severity="minor" />
         <includeConstraint refId="junit:IgnoreWithoutMessage" />
