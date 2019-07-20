@@ -178,7 +178,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         // create a new LightControl by Sensor S2
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightSensorControl"));
 
-        new JComboBoxOperator(jfoc, 1).selectItem(("ISS2")); // select Sensor S2
+        new JComboBoxOperator(jfoc, 1).setSelectedItem(sTwo); // select Sensor S2
         new JComboBoxOperator(jfoc, 2).selectItem(Bundle.getMessage("SensorStateActive"));
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
         // light control frame closes
@@ -274,20 +274,16 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JFrameOperator jfoc = new JFrameOperator(fControl);
 
         // create a new Light Controlled by Sensor S2
-        new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightFastClockControl"));
+        new JComboBoxOperator(jfoc, 0).setSelectedItem(Bundle.getMessage("LightFastClockControl"));
 
         Assert.assertEquals("default Hour ON Time ", "00", new JTextFieldOperator(jfoc, 0).getText());
         Assert.assertEquals("default Minute ON Time ", "00", new JTextFieldOperator(jfoc, 1).getText());
         Assert.assertEquals("default Hour OFF Time ", "00", new JTextFieldOperator(jfoc, 2).getText());
         Assert.assertEquals("default Minute OFF Time ", "00", new JTextFieldOperator(jfoc, 3).getText());
 
-        new JTextFieldOperator(jfoc, 0).clearText();
         new JTextFieldOperator(jfoc, 0).setText("01");
-        new JTextFieldOperator(jfoc, 1).clearText();
         new JTextFieldOperator(jfoc, 1).setText("02");
-        new JTextFieldOperator(jfoc, 2).clearText();
         new JTextFieldOperator(jfoc, 2).setText("03");
-        new JTextFieldOperator(jfoc, 3).clearText();
         new JTextFieldOperator(jfoc, 3).setText("04");
 
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
@@ -328,13 +324,9 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Correct Hour OFF Time ", "03", new JTextFieldOperator(jfof3, 2).getText());
         Assert.assertEquals("Correct Minute OFF Time ", "04", new JTextFieldOperator(jfof3, 3).getText());
 
-        new JTextFieldOperator(jfof3, 0).clearText();
         new JTextFieldOperator(jfof3, 0).setText("21");
-        new JTextFieldOperator(jfof3, 1).clearText();
         new JTextFieldOperator(jfof3, 1).setText("22");
-        new JTextFieldOperator(jfof3, 2).clearText();
         new JTextFieldOperator(jfof3, 2).setText("23");
-        new JTextFieldOperator(jfof3, 3).clearText();
         new JTextFieldOperator(jfof3, 3).setText("24");
 
         JemmyUtil.pressButton(jfof3, Bundle.getMessage("ButtonUpdate"));
@@ -366,13 +358,9 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Correct Hour OFF Time ", "23", new JTextFieldOperator(jfof5, 2).getText());
         Assert.assertEquals("Correct Minute OFF Time ", "24", new JTextFieldOperator(jfof5, 3).getText());
 
-        new JTextFieldOperator(jfof5, 0).clearText();
         new JTextFieldOperator(jfof5, 0).setText("07");
-        new JTextFieldOperator(jfof5, 1).clearText();
         new JTextFieldOperator(jfof5, 1).setText("07");
-        new JTextFieldOperator(jfof5, 2).clearText();
         new JTextFieldOperator(jfof5, 2).setText("07");
-        new JTextFieldOperator(jfof5, 3).clearText();
         new JTextFieldOperator(jfof5, 3).setText("07");
 
         JemmyUtil.pressButton(jfof5, Bundle.getMessage("ButtonUpdate"));
@@ -418,7 +406,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTurnoutStatusControl"));
 
-        new JComboBoxOperator(jfoc, 1).selectItem(("ITT2")); // select Turnout T2
+        new JComboBoxOperator(jfoc, 1).setSelectedItem(tTwo); // select Turnout T2
         new JComboBoxOperator(jfoc, 2).selectItem(
                 InstanceManager.getDefault(jmri.TurnoutManager.class).getThrownText());
 
@@ -460,7 +448,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Turnout thrown ", InstanceManager.getDefault(jmri.TurnoutManager.class).getThrownText(),
                 new JComboBoxOperator(jfof3, 2).getSelectedItem());
 
-        new JComboBoxOperator(jfof3, 1).selectItem(("ITT1")); // select Turnout T1
+        new JComboBoxOperator(jfof3, 1).setSelectedItem(tOne); // select Turnout T1
         new JComboBoxOperator(jfof3, 2).selectItem(
                 InstanceManager.getDefault(jmri.TurnoutManager.class).getClosedText());
 
@@ -509,8 +497,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         // create a new Light Control
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTimedOnControl"));
-        new JComboBoxOperator(jfoc, 1).selectItem(("ISS2")); // select Sensor S2
-        new JTextFieldOperator(jfoc, 0).clearText();
+        new JComboBoxOperator(jfoc, 1).setSelectedItem(sTwo); // select Sensor S2
         new JTextFieldOperator(jfoc, 0).setText("20");
 
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
@@ -601,8 +588,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
 
         // create a new LightControl
         new JComboBoxOperator(jfoc, 0).selectItem(Bundle.getMessage("LightTwoSensorControl"));
-        new JComboBoxOperator(jfoc, 1).selectItem(("ISS3")); // select Sensor S3
-        new JComboBoxOperator(jfoc, 2).selectItem(("ISS1")); // select Sensor S1
+        new JComboBoxOperator(jfoc, 1).setSelectedItem(sThree); // select Sensor S3
+        new JComboBoxOperator(jfoc, 2).setSelectedItem(sOne); // select Sensor S1
         new JComboBoxOperator(jfoc, 3).selectItem(Bundle.getMessage("SensorStateActive"));
 
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
