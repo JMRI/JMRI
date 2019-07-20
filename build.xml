@@ -1478,6 +1478,9 @@
               <classfiles>
                  <fileset refid="jacocofileset"/>
               </classfiles>
+              <sourcefiles encoding="UTF-8">
+                 <fileset dir="${source}" />
+              </sourcefiles>
           </structure>
 
           <html destdir="${coveragetarget}" />
@@ -1498,6 +1501,9 @@
               <classfiles>
                  <fileset refid="jacocofileset"/>
               </classfiles>
+              <sourcefiles encoding="UTF-8">
+                 <fileset dir="${source}" />
+              </sourcefiles>
           </structure>
 
           <check>
@@ -1720,6 +1726,9 @@
               <classfiles>
                  <fileset refid="jacocofileset"/>
               </classfiles>
+              <sourcefiles encoding="UTF-8">
+                 <fileset dir="${source}" />
+              </sourcefiles>
           </structure>
 
           <html destdir="${coveragetarget}" />
@@ -1740,6 +1749,9 @@
               <classfiles>
                  <fileset refid="jacocofileset"/>
               </classfiles>
+              <sourcefiles encoding="UTF-8">
+                 <fileset dir="${source}" />
+              </sourcefiles>
           </structure>
 
           <check>
