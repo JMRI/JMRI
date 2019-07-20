@@ -16,6 +16,8 @@ import jmri.util.junit.annotations.*;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -222,21 +224,31 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         // Open Speed pane to test Speed menu, which displays a JOptionPane
         JFrameOperator main = new JFrameOperator(getTableFrameName()); 
         // Use GUI menu to open Speeds pane:
-	
-	//This is a modal JOptionPane, so create a thread to dismiss it.
-	Thread t = new Thread(() -> {
-            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("SpeedsMenuItemDefaults"),"","OK");
+	    //This is a modal JOptionPane, so create a thread to dismiss it.
+	    Thread t = new Thread(() -> {
+            try {
+               jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("BlockSpeedLabel"), "", "OK");
+            } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
+               // we're waiting for this thread to finish in the main method,
+               // so any exception here means we failed.
+               log.error("caught timeout exception while waiting for modal dialog",tee);
+            }
         });
         t.setName("Default Speeds Dialog Close Thread");
         t.start();
         // pushMenuNoBlock is used, because dialog is modal
         JMenuBarOperator mainbar = new JMenuBarOperator(main);
-        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
-        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        mainbar.pushMenu(Bundle.getMessage("SpeedsMenu")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("SpeedsMenu"));
         JPopupMenu jpm = jmo.getPopupMenu();
-        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
-        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        JMenuItemOperator jmio = new JMenuItemOperator(new JPopupMenuOperator(jpm),Bundle.getMessage("SpeedsMenuItemDefaults"));
         jmio.pushNoBlock();
+
+        // wait for the dismiss thread to finish
+        JUnitUtil.waitFor(()-> { return !t.isAlive(); 
+                  }, "Dismiss Default Speeds Thread finished");
+
+
         // clean up
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
@@ -302,5 +314,5 @@ public class BlockTableActionTest extends AbstractTableActionBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
+    private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class);
 }
