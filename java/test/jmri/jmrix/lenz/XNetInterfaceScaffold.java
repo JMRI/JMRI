@@ -15,6 +15,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 
     public XNetInterfaceScaffold(LenzCommandStation pCommandStation) {
         super(pCommandStation);
+        setSystemConnectionMemo(new XNetSystemConnectionMemo(this));
     }
 
     // override some XNetTrafficController methods for test purposes
