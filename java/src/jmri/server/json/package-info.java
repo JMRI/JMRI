@@ -147,6 +147,13 @@
  * Starting with 5.0.0, the JSON protocol version follows semantic version
  * rules, prior to that the version is just a major.minor version.
  * <dl>
+ * <dt>5.1.0 (JMRI 4.17.2)</dt>
+ * <dd>
+ * <ul>
+ * <li>Updates the throttle "speedSteps" field to a string so that it can 
+ * represent the Motorola 28 speed step mode.</li>
+ * </ul>
+ * </dd>
  * <dt>5.0.0 (JMRI 4.15.4 with further changes in 4.15.6)</dt>
  * <dd>
  * <ul>
