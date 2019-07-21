@@ -288,8 +288,6 @@ public class SerialThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedStepMode(jmri.SpeedStepMode Mode) {
-        // TODO(austin): figure out what this is supposed to do and fix it.
-        //speedStepMode = 32;
     }
 
     @Override
