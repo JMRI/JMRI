@@ -205,13 +205,13 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
 
-        // save in the maps
-        register(s);
-
         // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
+
+        // save in the maps
+        register(s);
 
         return s;
     }
