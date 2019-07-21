@@ -452,7 +452,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                         break;
 
                     case 's':       //v>=2.0
-                        handleSpeedStepMode(SpeedStepMode.getByName(inPackage.substring(1)));
+                        handleSpeedStepMode(decodeSpeedStepMode(inPackage.substring(1)));
                         break;
 
                     case 'm':       //v>=2.0
@@ -810,6 +810,25 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 break;
         }
 
+    }
+
+
+    private static SpeedStepMode decodeSpeedStepMode(String mode) {
+        // NOTE: old speed step modes use the original numeric values
+        // from when speed step modes were in DccThrottle. If the input does not match
+        // any of the old modes, decode based on the new speed step names.
+        if(mode.equals("1"))  {
+            return SpeedStepMode.SpeedStepMode128;
+        } else if(mode.equals("2")) {
+            return SpeedStepMode.SpeedStepMode28;
+        } else if(mode.equals("4")) {
+            return SpeedStepMode.SpeedStepMode27;
+        } else if(mode.equals("8")) {
+            return SpeedStepMode.SpeedStepMode14;
+        } else if(mode.equals("16")) {
+            return SpeedStepMode.SpeedStepMode28Mot;
+        }
+        return SpeedStepMode.getByName(mode);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);
