@@ -37,6 +37,7 @@ public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         EcosTrafficController tc = new EcosInterfaceScaffold();
@@ -44,6 +45,7 @@ public class EcosProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         programmer = null;
         JUnitUtil.tearDown();

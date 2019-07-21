@@ -60,6 +60,7 @@ public class NceSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     }
 
     @After
+    @Override
     public void tearDown() {        
         jmri.util.JUnitUtil.tearDown();
     }

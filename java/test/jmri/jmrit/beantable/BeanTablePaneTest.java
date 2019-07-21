@@ -14,6 +14,7 @@ public class BeanTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -24,6 +25,7 @@ public class BeanTablePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         panel = null;
         title = null;

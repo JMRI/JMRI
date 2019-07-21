@@ -2,7 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.*;
+import java.util.Locale;
 import jmri.BooleanPropertyDescriptor;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
@@ -114,7 +114,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     LocoNetMessage lastSWREQ = null;
 
     /**
-     * Listen for turnouts, creating them as needed,
+     * Listen for turnouts, creating them as needed.
      */
     @Override
     public void message(LocoNetMessage l) {
@@ -194,13 +194,19 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     }
 
     /**
-     * Validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
     /**
@@ -209,30 +215,12 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * @return the turnout number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if (!systemName.startsWith(prefix + "T")) {
-            // here if an illegal LocoNet Turnout system name
-            log.error("invalid character in header field of loconet turnout system name: {}", systemName);
-            return (0);
-        }
-        // name must be in the LiTnnnnn format (Li is user configurable)
-        int num = 0;
         try {
-            num = Integer.parseInt(systemName.substring(
-                    prefix.length() + 1, systemName.length())
-                  );
-        } catch (Exception e) {
-            log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
         }
-        if (num <= 0) {
-            log.debug("invalid loconet turnout system name: {}", systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.debug("bit number out of range in loconet turnout system name: {}", systemName);
-            return (0);
-        }
-        return (num);
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**

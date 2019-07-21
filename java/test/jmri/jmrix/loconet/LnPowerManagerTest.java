@@ -151,6 +151,7 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     @Test
+    @Override
     public void testSetPowerIdle() throws JmriException {
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS200, false, false, false, false);
         Assert.assertTrue("LocoNet implements IDLE", p.implementsIdle());

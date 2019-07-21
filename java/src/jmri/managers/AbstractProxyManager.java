@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import jmri.ProxyManager;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
@@ -35,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @param <E> the supported type of NamedBean
  * @author Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
-abstract public class AbstractProxyManager<E extends NamedBean> implements ProvidingManager<E>, Manager.ManagerDataListener<E> {
+abstract public class AbstractProxyManager<E extends NamedBean> implements ProxyManager<E>, ProvidingManager<E>, Manager.ManagerDataListener<E> {
 
     /**
      * Number of managers available through getManager(i) and getManagerList(),
@@ -62,11 +63,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Returns a list of all managers, including the internal manager. This is
-     * not a live list, but it is in alpha order (don't assume default is at front)
-     *
-     * @return the list of managers
+     * {@inheritDoc}
      */
+    @Override
     public List<Manager<E>> getManagerList() {
         // make sure internal present
         initInternal();
@@ -74,11 +73,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Returns a list of all managers, with the default
-     * at the start and internal default at the end.
-     *
-     * @return the list of managers
+     * {@inheritDoc}
      */
+    @Override
     public List<Manager<E>> getDisplayOrderManagerList() {
         // make sure internal present
         initInternal();
@@ -102,17 +99,17 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Returns the set default or, if not present, the internal manager as
-     * defacto default
-     * 
-     * @return the default manager or the internal manager if no default set
+     * {@inheritDoc}
      */
+    @Override
     public Manager<E> getDefaultManager() {
-        if (defaultManager != null) return defaultManager;
-
-        return getInternalManager();
+        return defaultManager != null ? defaultManager : getInternalManager();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void addManager(Manager<E> m) {
         Objects.requireNonNull(m, "Can only add non-null manager");
         // check for already present
@@ -214,7 +211,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /**
-     * Defer creation of the proper type to the subclass
+     * Defer creation of the proper type to the subclass.
      *
      * @param index      the manager to invoke
      * @param systemName the system name
@@ -246,6 +243,39 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
             }
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation locates a specific Manager based on the system name
+     * and validates against that. If no matching Manager exists, the default
+     * Manager attempts to validate the system name.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        int i = matchTentative(systemName);
+        Manager manager = getDefaultManager();
+        if (i >= 0) {
+            manager = getMgr(i);
+        }
+        return manager.validateSystemNameFormat(systemName, locale);
+    }
+
+    /**
+     * Validate system name format. Locate a system specific Manager based on a
+     * system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     *         system name format. Return INVALID if no manager exists.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return getMgr(i).validSystemNameFormat(systemName);
+        }
+        return NameValidity.INVALID;
     }
 
     /**
@@ -565,6 +595,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @CheckReturnValue
+    @Override
     public int getObjectCount() {
         int count = 0;
         for (Manager<E> m : mgrs) { count += m.getObjectCount(); }
@@ -655,11 +686,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
@@ -733,6 +766,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     private boolean muted = false;
     /** {@inheritDoc} */
+    @Override
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics

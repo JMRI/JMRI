@@ -80,7 +80,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         if (log.isDebugEnabled()) {
             log.debug("received sensor value {}", o);
         }
-        Assert.assertTrue(null != (XNetSensor) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {

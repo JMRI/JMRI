@@ -125,6 +125,7 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
         }
 
         //@Override
+        @Override
         public int[] validBaudNumbers() {
             return new int[] {};
         }

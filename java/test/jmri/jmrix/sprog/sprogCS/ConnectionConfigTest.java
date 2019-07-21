@@ -16,6 +16,7 @@ import org.junit.Test;
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -24,6 +25,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    }
 
    @After
+   @Override
    public void tearDown(){
         if (cc != null) {
             if (cc.getAdapter() != null) {

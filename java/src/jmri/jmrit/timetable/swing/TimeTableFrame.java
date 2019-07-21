@@ -552,6 +552,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Enable edit mode.  Used for JCheckBoxs, JSpinners and JColorChoosers.
      */
     transient ChangeListener detailChangeEvent = new ChangeListener() {
+        @Override
         public void stateChanged(ChangeEvent e) {
             if (!_editActive) {
                 setEditMode(true);
@@ -564,6 +565,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * The number of staging tracks varies depending on the selected station.
      */
     transient ItemListener stopStationItemEvent = new ItemListener() {
+        @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 TimeTableDataManager.SegmentStation segmentStation = (TimeTableDataManager.SegmentStation) e.getItem();
@@ -580,6 +582,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * If the custom scale item is selected provide a dialog to set the scale ratio
      */
     transient ItemListener layoutScaleItemEvent = new ItemListener() {
+        @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 if (_editScale.hasFocus()) {

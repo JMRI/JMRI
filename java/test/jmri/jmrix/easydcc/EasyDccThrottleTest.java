@@ -198,6 +198,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -208,6 +209,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         tc.terminateThreads();
         memo = null;

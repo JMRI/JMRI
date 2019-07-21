@@ -961,6 +961,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     void initSoundPositionTimer(VSDecoder d) {
         if (geofile_ok) {
             Timer t = new Timer(check_time, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     calcNewPosition(d);
                 }

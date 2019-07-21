@@ -25,6 +25,7 @@ public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -39,6 +40,7 @@ public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {        
         tc = null;
         m = null;

@@ -14,6 +14,7 @@ import org.junit.Test;
 public class PositionableEllipseTest extends PositionableRectangleTest {
 
     @Test
+    @Override
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", p);
