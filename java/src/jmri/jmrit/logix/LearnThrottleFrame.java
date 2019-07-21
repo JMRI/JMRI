@@ -275,7 +275,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     /* from ControlPanel */
 
     protected void setSpeedStepMode(SpeedStepMode speedStep) {
-        // TODO(austin): update consumers of this.
         _warrantFrame.setThrottleCommand("SpeedStep", speedStep.name);
     }
     /* from FunctionPanel */
