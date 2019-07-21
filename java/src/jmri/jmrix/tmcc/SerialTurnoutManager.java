@@ -44,7 +44,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         // create the turnout
         log.debug("new SerialTurnout with addr = {}", systemName.substring(getSystemPrefix().length() + 1));
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new SerialTurnout(prefix, addr, _memo);
+        t = new SerialTurnout(getSystemPrefix(), addr, getMemo());
         t.setUserName(userName);
         return t;
     }

@@ -347,7 +347,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String validateSystemNameFormat(String systemName, Locale locale) {
-        return _memo.validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
+        return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     
     /**

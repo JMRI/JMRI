@@ -72,7 +72,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public String validateSystemNameFormat(String name, Locale locale) {
-        return memo.validateSystemNameFormat(name, this, locale);
+        return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
     /**
@@ -80,7 +80,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return memo.validSystemNameFormat(systemName, typeLetter());
+        return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
