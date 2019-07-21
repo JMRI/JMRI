@@ -598,14 +598,17 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /**
      * {@inheritDoc}
      *
-     * @return {@link jmri.Manager.NameValidity#INVALID} if system name suffix
-     *         is empty or all white space; otherwise returns
-     *         {@link jmri.Manager.NameValidity#VALID} to let undocumented
-     *         connection system managers pass entry validation.
+     * @return {@link NameValidity#INVALID} if system name does not start with
+     *         {@link #getSystemNamePrefix()}; {@link NameValidity#VALID_AS_PREFIX_ONLY}
+     *         if system name equals {@link #getSystemNamePrefix()}; otherwise
+     *         {@link NameValidity#VALID} to allow Managers that do perform more
+     *         specific validation to be considered valid.
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return !getSystemNamePrefix().equals(systemName.trim())
+        return getSystemNamePrefix().equals(systemName)
+                ? NameValidity.VALID_AS_PREFIX_ONLY
+                : systemName.startsWith(getSystemNamePrefix())
                 ? NameValidity.VALID
                 : NameValidity.INVALID;
     }
