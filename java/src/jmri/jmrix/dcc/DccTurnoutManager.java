@@ -1,6 +1,8 @@
 package jmri.jmrix.dcc;
 
+import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Implement turnout manager for DCC-only systems.
@@ -13,11 +15,7 @@ import jmri.Turnout;
 public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public DccTurnoutManager() {
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "B";
+        super(new InternalSystemConnectionMemo("B", "DCC"));
     }
 
     @Override

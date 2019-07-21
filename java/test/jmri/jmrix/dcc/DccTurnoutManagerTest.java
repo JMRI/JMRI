@@ -27,7 +27,7 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         Turnout o = l.newTurnout("BT21", "my name");
 
         log.debug("received turnout value {}", o);
-        Assert.assertTrue(null != (DccTurnout) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
