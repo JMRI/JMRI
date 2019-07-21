@@ -3,6 +3,7 @@ package jmri.jmrix.tmcc;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -52,6 +53,8 @@ public class SerialThrottle extends AbstractThrottle {
         this.f21 = false;
         this.address = address;
         this.isForward = true;
+        this.speedStepMode = SpeedStepMode.SpeedStepModeTMCC32;
+        this.speedIncrement = SPEED_STEP_32_INCREMENT;
 
     }
 

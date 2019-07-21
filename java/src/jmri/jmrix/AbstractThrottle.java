@@ -29,6 +29,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     public final static float SPEED_STEP_14_INCREMENT = 1.0f / 14.0f;
     public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
     public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
+    public final static float SPEED_STEP_32_INCREMENT = 1.0f / 32.0f;
     public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
                                                                         // non-stop values in 128 speed 
 
@@ -1769,6 +1770,9 @@ abstract public class AbstractThrottle implements DccThrottle {
             case SpeedStepMode28:
             case SpeedStepMode28Mot:
                 speedIncrement = SPEED_STEP_28_INCREMENT;
+                break;
+            case SpeedStepModeTMCC32:
+                speedIncrement = SPEED_STEP_32_INCREMENT;
                 break;
             case SpeedStepMode128:
                 speedIncrement = SPEED_STEP_128_INCREMENT;

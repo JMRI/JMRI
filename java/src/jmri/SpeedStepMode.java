@@ -21,11 +21,14 @@ import java.util.EnumSet;
 @javax.annotation.concurrent.Immutable
 public enum SpeedStepMode {
     Unknown("unknown"),
+    // NMRA DCC standard speed step modes.
     SpeedStepMode128("128"),
     SpeedStepMode28("28"),
     SpeedStepMode27("27"),
     SpeedStepMode14("14"),
-    SpeedStepMode28Mot("motorola_28");
+    // Non-DCC speed step modes.
+    SpeedStepMode28Mot("motorola_28"), // Motorola 28 speed step mode.
+    SpeedStepModeTMCC32("tmcc_32"); // Lionel TMCC 32 speed step mode.
 
     SpeedStepMode(String name) {
         this.name = name;
@@ -63,6 +66,8 @@ public enum SpeedStepMode {
         EnumSet<SpeedStepMode> result = getCompatibleModes(command_station_modes, decoder_modes);
         if(result.contains(SpeedStepMode128)) {
             return SpeedStepMode128;
+        } else if(result.contains(SpeedStepModeTMCC32)) {
+            return SpeedStepModeTMCC32;
         } else if(result.contains(SpeedStepMode28)) {
             return SpeedStepMode28;
         } else if(result.contains(SpeedStepMode28Mot)) {
