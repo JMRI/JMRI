@@ -30,7 +30,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Question: should we set a default speed step mode so it's never zero?
      */
-    protected SpeedStepMode speedStepMode;
+    protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
     protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,
