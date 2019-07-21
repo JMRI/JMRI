@@ -1046,6 +1046,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
         //check if Memory changed
         newName = memoryComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!memoryName.equals(newName)) {
             //memory has changed
             setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
@@ -1131,7 +1132,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             BeanItemPanel layout = new BeanItemPanel();
             layout.setName(Bundle.getMessage("LayoutEditor"));
 
-            LayoutEditor.setupComboBox(memoryComboBox, true, true);
+            LayoutEditor.setupComboBox(memoryComboBox, false, true);
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), Bundle.getMessage("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryComboBox, Bundle.getMessage("BeanNameMemory"),
@@ -1202,6 +1203,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                     //check if Memory changed
                     String newName = memoryComboBox.getSelectedItemDisplayName();
+                    if (newName == null) newName = "";
                     if (!memoryName.equals(newName)) {
                         //memory has changed
                         setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
