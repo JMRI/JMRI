@@ -1,5 +1,6 @@
 package jmri.jmrix.secsi;
 
+import java.util.Locale;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,13 +101,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 
     /**

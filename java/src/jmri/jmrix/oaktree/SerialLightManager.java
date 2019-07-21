@@ -1,5 +1,6 @@
 package jmri.jmrix.oaktree;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -54,23 +55,27 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Validate system name format.
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
     }
 
     /**
-     * Validate system name for configuration.
-     *
-     * @return 'true' if system name has a valid meaning in current
-     * configuration, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L', getMemo()));
+        return (SerialAddress.validSystemNameConfig(systemName, typeLetter(), getMemo()));
     }
 
     /**

@@ -37,6 +37,7 @@ import org.junit.Test;
 public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Sensor, JsonSensorHttpService> {
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, JsonException {
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
         Sensor sensor1 = manager.provideSensor("IS1"); // no value
@@ -213,6 +214,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonSensorHttpService(mapper);
@@ -221,6 +223,7 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

@@ -337,8 +337,11 @@ public class ManagerTest {
     
     static class BogusBean extends jmri.implementation.AbstractNamedBean {
         public BogusBean(String n) { super(n); }
+        @Override
         public int getState() { return -1; }
+        @Override
         public String getBeanType() { return "";}
+        @Override
         public void setState(int i) {}
     }
     

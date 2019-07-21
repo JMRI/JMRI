@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -345,8 +346,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return _memo.validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return getMemo().validSystemNameFormat(systemName, 'T');
+        return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**

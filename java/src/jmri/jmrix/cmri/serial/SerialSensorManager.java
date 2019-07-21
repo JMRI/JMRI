@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
@@ -252,8 +253,16 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return _memo.validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return getMemo().validSystemNameFormat(systemName, 'S');
+        return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**

@@ -1,5 +1,6 @@
 package jmri.jmrix.secsi;
 
+import java.util.Locale;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -61,8 +62,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 
     /**

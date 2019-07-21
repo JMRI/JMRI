@@ -48,17 +48,9 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light provideLight(@Nonnull String name) {
-        Light t = getLight(name);
-        if (t == null) {
-            if (name.startsWith(getSystemPrefix() + typeLetter())) {
-                return newLight(name, null);
-            } else if (name.length() > 0) {
-                return newLight(makeSystemName(name), null);
-            } else {
-                throw new IllegalArgumentException("\"" + name + "\" is invalid");
-            }
-        }
-        return t;
+        Light light = getLight(name);
+        // makeSystemName checks for validity
+        return light == null ? newLight(makeSystemName(name, true), null) : light;
     }
 
     /**
@@ -88,8 +80,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @CheckForNull
-    public Light getByUserName(@Nonnull String key
-    ) {
+    public Light getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
@@ -102,12 +93,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         log.debug("newLight: {};{}",
                 ((systemName == null) ? "null" : systemName),
                 ((userName == null) ? "null" : userName));
-        // is system name in correct format?
-        if (validSystemNameFormat(systemName) != NameValidity.VALID) {
-            log.error("Invalid system name for newLight: {} needed {}{} followed by a suffix",
-                    systemName, getSystemPrefix(), typeLetter());
-            throw new IllegalArgumentException("\"" + systemName + "\" is invalid");
-        }
+        systemName = validateSystemNameFormat(systemName);
 
         // return existing if there is one
         Light s;

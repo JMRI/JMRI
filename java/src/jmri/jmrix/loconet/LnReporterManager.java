@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.util.Locale;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,46 +62,33 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     /**
-     * Get the bit address from the system name.
-     *
-     * @param systemName the system name
-     * @return the bit address
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "R"))) {
-            // here if an illegal LocoNet Reporter system name
-            log.error("invalid character in header field of loconet reporter system name: {}", systemName);
-            return (0);
-        }
-        // name must be in the LRnnnnn format (L is user configurable)
-        int num;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length()));
-        } catch (NumberFormatException e) {
-            log.warn("invalid character in number field of system name: {}", systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.warn("invalid loconet reporter system name: {}", systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.warn("bit number out of range in loconet reporter system name: {}", systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @param systemName the name to validate
-     * @return VALID if system name has a valid format; otherwise return INVALID
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Reporter System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**

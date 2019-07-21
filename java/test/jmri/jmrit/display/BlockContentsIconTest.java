@@ -108,6 +108,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initConfigureManager();
@@ -123,6 +124,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         to = null;
         super.tearDown();

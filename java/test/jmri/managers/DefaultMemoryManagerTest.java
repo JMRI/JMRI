@@ -20,7 +20,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test
@@ -31,7 +31,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Memory: \"\" needed non-empty suffix to follow IM");
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test

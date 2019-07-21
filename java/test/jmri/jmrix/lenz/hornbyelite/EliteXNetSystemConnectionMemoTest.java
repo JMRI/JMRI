@@ -18,6 +18,7 @@ import org.junit.Test;
 public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
+    @Override
     public void testCtor() {
         EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo) scm;
         Assert.assertNotNull(t);

@@ -26,6 +26,7 @@ public class StandaloneSensorManagerTest extends jmri.managers.AbstractSensorMgr
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo());

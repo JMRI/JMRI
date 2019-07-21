@@ -1,5 +1,6 @@
 package jmri.jmrix.anyma;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.Manager;
 import jmri.managers.AbstractLightManager;
@@ -79,6 +80,14 @@ public class UsbLightManager extends AbstractLightManager {
     public Manager.NameValidity validSystemNameFormat(String systemName) {
         log.debug("*    UsbLightManager.validSystemNameFormat() called");
         return getMemo().validSystemNameFormat(systemName, 'L');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 512, locale);
     }
 
     /**

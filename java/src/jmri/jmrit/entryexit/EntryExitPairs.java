@@ -272,16 +272,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return always 'VALID'
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
@@ -1422,11 +1412,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }

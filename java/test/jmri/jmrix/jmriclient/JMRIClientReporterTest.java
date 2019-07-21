@@ -30,6 +30,7 @@ public class JMRIClientReporterTest extends jmri.implementation.AbstractReporter
     }
 
     @After
+    @Override
     public void tearDown() {
 	r = null;
         JUnitUtil.tearDown();

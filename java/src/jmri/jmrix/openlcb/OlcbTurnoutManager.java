@@ -124,7 +124,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -135,14 +135,14 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // always return this (the current) name without change
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
         return curAddress;
     }
 
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {

@@ -23,7 +23,8 @@ import jmri.util.swing.DedupingPropertyChangeListenerTest;
     JTitledSeparatorTest.class,
     DefaultListCellEditorTest.class,
     DedupingPropertyChangeListenerTest.class,
-    NamedBeanComboBoxTest.class
+    NamedBeanComboBoxTest.class,
+    SystemNameValidatorTest.class
 })
 public class PackageTest {
 }

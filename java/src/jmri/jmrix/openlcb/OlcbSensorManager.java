@@ -86,7 +86,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {
             log.error(e.toString());
             throw e;
@@ -142,7 +142,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -156,7 +156,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return curAddress;
     }
 
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {

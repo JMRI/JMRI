@@ -286,6 +286,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         // find label within that
         JLabel jl = JLabelOperator.findJLabel(frame,new ComponentChooser(){
+               @Override
                public boolean checkComponent(Component comp){
                    if(comp == null){
                       return false;
@@ -293,6 +294,7 @@ public class MemoryIconTest extends PositionableTestBase {
                      return (comp instanceof JLabel);
                    }
                }
+               @Override
                public String getDescription(){
                   return "find the first JLabel";
                }

@@ -69,6 +69,7 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {

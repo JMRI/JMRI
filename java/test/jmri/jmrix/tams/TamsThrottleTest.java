@@ -357,6 +357,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -364,6 +365,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 

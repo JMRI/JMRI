@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -65,17 +66,21 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         }
         return sys;
     }
-
+    
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'.
-     *
-     * @param systemName the address to check
-     * @throws IllegalArgumentException when delimiter is not found
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return memo.validateSystemNameFormat(name, this, locale);
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (RpsAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        return memo.validSystemNameFormat(systemName, typeLetter());
     }
 
     /**

@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,10 +145,18 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     /**
-     * Validate Turnout system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return validateIntegerSystemNameFormat(name,
+                XNetAddress.MINSENSORADDRESS,
+                XNetAddress.MAXSENSORADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {

@@ -35,6 +35,7 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
 
     @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,

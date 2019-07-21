@@ -1,5 +1,8 @@
 package jmri.jmrix.grapevine;
 
+import java.util.Locale;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -114,14 +117,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Validate system name format.
-     *
-     * @return 'true' if system name has a valid format,
-     * else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(name, this, locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 
     /**

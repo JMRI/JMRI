@@ -1,5 +1,6 @@
 package jmri.jmrix.oaktree;
 
+import java.util.Locale;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -58,13 +59,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     @Override

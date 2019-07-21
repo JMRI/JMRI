@@ -30,6 +30,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -107,6 +108,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }

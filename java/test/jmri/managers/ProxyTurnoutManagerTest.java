@@ -59,17 +59,15 @@ public class ProxyTurnoutManagerTest {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideTurnout("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
-        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
     }
 
     @Test

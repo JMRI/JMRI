@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,8 +66,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
         // check bit number
         int bit = AcelaAddress.getBitFromSystemName(sName, getSystemPrefix());
-        if ((bit < 0) || (bit >= 1023)) {
-            log.error("Sensor bit number {} is outside the supported range 1-1024", Integer.toString(bit));
+        if ((bit < AcelaAddress.MINSENSORADDRESS) || (bit > AcelaAddress.MAXSENSORADDRESS)) {
+            log.error("Sensor bit number {} is outside the supported range {}-{}", bit, AcelaAddress.MINSENSORADDRESS, AcelaAddress.MAXSENSORADDRESS);
             return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
@@ -94,9 +95,22 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return VALID if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINSENSORADDRESS} to
+     * {@value AcelaAddress#MAXSENSORADDRESS}.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINSENSORADDRESS,
+                AcelaAddress.MAXSENSORADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {

@@ -1,6 +1,8 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import java.util.Locale;
 import jmri.Light;
+import jmri.NamedBean;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,10 +66,22 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName Xbee id format with pins to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        super.validateSystemNameFormat(name, locale);
+        int pin = pinFromSystemName(name);
+        if (pin < 0 || pin > 7) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -182,7 +196,7 @@ public class XBeeLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        return Bundle.getMessage("AddOutputEntryToolTip");
+        return Bundle.getMessage("AddEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class);

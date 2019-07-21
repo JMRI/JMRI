@@ -177,19 +177,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return null;
     }
 
-//    /**
-//     * static function returning the SerialTrafficController instance to use.
-//     * @return The registered SerialTrafficController instance for general use,
-//     *         if need be creating one.
-//     */
-//    @Deprecated
-//    public SerialTrafficController instance() {
-//        if (self == null) {
-//            if (log.isDebugEnabled()) log.debug("Creating default SerialTrafficController instance");
-//            self = new SerialTrafficController();
-//        }
-//        return self;
-//    }
     public void setAdapterMemo(SerialSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
     }

@@ -47,6 +47,7 @@ public class ReporterIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initReporterManager();
