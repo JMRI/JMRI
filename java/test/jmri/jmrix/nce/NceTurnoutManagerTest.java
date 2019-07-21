@@ -31,7 +31,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         // prepare an interface, register
         nis = new NceInterfaceScaffold();
         // create and register the manager object
-        l = new NceTurnoutManager(nis, "N");
+        l = new NceTurnoutManager(nis.getAdapterMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

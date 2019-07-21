@@ -145,7 +145,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeSensorManager(tc, "A");
+        l = new XBeeSensorManager(m);
         m.setSensorManager(l);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};

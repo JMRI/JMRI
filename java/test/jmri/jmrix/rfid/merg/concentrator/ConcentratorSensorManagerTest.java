@@ -38,7 +38,7 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
            public void sendInitString(){
            }
         };
-        l = new ConcentratorSensorManager(tc,"R"){
+        l = new ConcentratorSensorManager(tc.getAdapterMemo()){
             @Override
             public void message(jmri.jmrix.rfid.RfidMessage m){}
 

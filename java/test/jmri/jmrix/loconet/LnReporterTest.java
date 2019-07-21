@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
+import jmri.InstanceManager;
 import jmri.Reportable;
 import jmri.LocoAddress;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -117,7 +119,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void setUp() {
         JUnitUtil.setUp();
         tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        new TranspondingTagManager(); // this class registers itself.
+        new TranspondingTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)); // this class registers itself.
         r = new LnReporter(3, tc, "L");
     }
 

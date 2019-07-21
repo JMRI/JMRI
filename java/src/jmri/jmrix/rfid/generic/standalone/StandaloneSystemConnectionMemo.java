@@ -38,9 +38,9 @@ public class StandaloneSystemConnectionMemo extends RfidSystemConnectionMemo {
      */
     @Override
     public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
-        this.sensorManager = new StandaloneSensorManager(getTrafficController(), getSystemPrefix());
+        this.sensorManager = new StandaloneSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
-        this.reporterManager = new StandaloneReporterManager(getTrafficController(), getSystemPrefix());
+        this.reporterManager = new StandaloneReporterManager(this);
         InstanceManager.setReporterManager(reporterManager);
     }
 

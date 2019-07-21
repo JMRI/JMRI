@@ -27,7 +27,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Test
     public void testctor(){
         // create and register the manager object
-        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        XNetLightManager xlm = new XNetLightManager(xnis.getSystemConnectionMemo());
         Assert.assertNotNull(xlm);
     }
 
@@ -56,21 +56,21 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Test
     public void testGetSystemPrefix(){
         // create and register the manager object
-        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        XNetLightManager xlm = new XNetLightManager(xnis.getSystemConnectionMemo());
         Assert.assertEquals("prefix","X",xlm.getSystemPrefix());
     }
 
     @Test
     public void testAllowMultipleAdditions(){
         // create and register the manager object
-        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        XNetLightManager xlm = new XNetLightManager(xnis.getSystemConnectionMemo());
         Assert.assertTrue(xlm.allowMultipleAdditions("foo"));
     }
 
     @Test
     public void testValidSystemNameConfig(){
         // create and register the manager object
-        XNetLightManager xlm = new XNetLightManager(xnis, "X");
+        XNetLightManager xlm = new XNetLightManager(xnis.getSystemConnectionMemo());
         Assert.assertTrue(xlm.validSystemNameConfig("foo"));
     }
 
@@ -85,7 +85,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // prepare an interface, register
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetLightManager(xnis, "X"); // l is defined in AbstractLightMgrTestBase.
+        l = new XNetLightManager(xnis.getSystemConnectionMemo()); // l is defined in AbstractLightMgrTestBase.
         jmri.InstanceManager.setLightManager(l);
         
     }

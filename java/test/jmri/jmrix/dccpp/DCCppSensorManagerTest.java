@@ -104,7 +104,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
         // prepare an interface
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         Assert.assertNotNull("exists", xnis);
-        l = new DCCppSensorManager(xnis, "DCCPP");
+        l = new DCCppSensorManager(xnis.getSystemConnectionMemo());
         jmri.InstanceManager.setSensorManager(l);
     }
 

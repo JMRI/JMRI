@@ -124,7 +124,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetTurnoutManager(lnis, "X");
+        l = new XNetTurnoutManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

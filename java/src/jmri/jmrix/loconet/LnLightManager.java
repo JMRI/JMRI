@@ -17,20 +17,16 @@ import org.slf4j.LoggerFactory;
  */
 public class LnLightManager extends AbstractLightManager {
 
-    public LnLightManager(LnTrafficController tc, String prefix) {
-        _trafficController = tc;
-        this.prefix = prefix;
+    public LnLightManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    LnTrafficController _trafficController;
-    String prefix;
-
     /**
-     * Get the system letter for LocoNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public LocoNetSystemConnectionMemo getMemo() {
+        return (LocoNetSystemConnectionMemo) memo;
     }
 
     /**
@@ -52,7 +48,7 @@ public class LnLightManager extends AbstractLightManager {
         // Normalize the systemName
         String sName = getSystemPrefix() + "L" + bitNum;   // removes any leading zeros
         // make the new Light object
-        lgt = new LnLight(sName, userName, _trafficController, this);
+        lgt = new LnLight(sName, userName, getMemo().getLnTrafficController(), this);
         return lgt;
     }
 
@@ -69,12 +65,12 @@ public class LnLightManager extends AbstractLightManager {
             return (0);
         }
         // name must be in the LLnnnnn format (first L (system prefix) is user configurable)
-        int num = 0;
+        int num;
         try {
             num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
                   );
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: " + systemName);
             return (0);
         }

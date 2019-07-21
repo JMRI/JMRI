@@ -17,18 +17,16 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaTurnoutManager extends AbstractTurnoutManager {
  
-    AcelaSystemConnectionMemo _memo = null;
-
     public AcelaTurnoutManager(AcelaSystemConnectionMemo memo) {
-       _memo = memo;
+       super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public AcelaSystemConnectionMemo getMemo() {
+        return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
@@ -44,7 +42,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         Turnout trn = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, _memo);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
             return (null);
         }
@@ -55,8 +53,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()) == NameValidity.VALID) {
-            trn = new AcelaTurnout(systemName, userName, _memo);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'T', _memo)) {
+            trn = new AcelaTurnout(systemName, userName, getMemo());
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'T', getMemo())) {
                 log.warn("Turnout System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
@@ -93,7 +91,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * configuration, else return 'false'
      */
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'T', _memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'T', getMemo()));
     }
 
     /**

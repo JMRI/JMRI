@@ -123,7 +123,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiSensorManager("PI");
+       l = new RaspberryPiSensorManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @After

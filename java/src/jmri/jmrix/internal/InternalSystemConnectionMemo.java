@@ -22,11 +22,19 @@ import jmri.InstanceManager;
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
-    public InternalSystemConnectionMemo(boolean defaultInstanceType) {
-        super("I", "Internal");
+    public InternalSystemConnectionMemo(String prefix, String name, boolean defaultInstanceType) {
+        super(prefix, name);
         InstanceManager.store(this, InternalSystemConnectionMemo.class); // also register as specific type
         register();
-        this. defaultInstanceType = defaultInstanceType;
+        this.defaultInstanceType = defaultInstanceType;
+    }
+
+    public InternalSystemConnectionMemo(String prefix, String name) {
+        this(prefix, name, true);
+    }
+
+    public InternalSystemConnectionMemo(boolean defaultInstanceType) {
+        this("I", "Internal", defaultInstanceType);
     }
     
     // invoked by i.e. InstanceManager via the InstanceManagerAutoDefault
@@ -67,7 +75,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public InternalSensorManager getSensorManager() {
         if (sensorManager == null) {
             log.debug("Create InternalSensorManager \"{}\" by request", getSystemPrefix());
-            sensorManager = new InternalSensorManager(getSystemPrefix());
+            sensorManager = new InternalSensorManager(this);
             // special due to ProxyManager support
             InstanceManager.setSensorManager(sensorManager);
         }
@@ -77,7 +85,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public InternalLightManager getLightManager() {
         if (lightManager == null) {
             log.debug("Create InternalLightManager by request");
-            lightManager = new InternalLightManager();
+            lightManager = new InternalLightManager(this);
             // special due to ProxyManager support
             InstanceManager.setLightManager(lightManager);
         }
@@ -87,7 +95,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public InternalReporterManager getReporterManager() {
         if (reporterManager == null) {
             log.debug("Create InternalReporterManager by request");
-            reporterManager = new InternalReporterManager();
+            reporterManager = new InternalReporterManager(this);
             // special due to ProxyManager support
             InstanceManager.setReporterManager(reporterManager);
         }
@@ -97,7 +105,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public InternalTurnoutManager getTurnoutManager() {
         if (turnoutManager == null) {
             log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
-            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            turnoutManager = new InternalTurnoutManager(this);
             // special due to ProxyManager support
             InstanceManager.setTurnoutManager(turnoutManager);
         }

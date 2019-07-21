@@ -29,7 +29,7 @@ public class StandaloneSensorManagerTest extends jmri.managers.AbstractSensorMgr
     public void setUp() {
         JUnitUtil.setUp();
         tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo());
-        l = new StandaloneSensorManager(tc,"R");
+        l = new StandaloneSensorManager(tc.getAdapterMemo());
     }
 
     @After

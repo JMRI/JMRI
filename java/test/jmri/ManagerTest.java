@@ -1,6 +1,8 @@
 package jmri;
 
 import java.util.*;
+import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
@@ -194,17 +196,12 @@ public class ManagerTest {
         // create reporter manager
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
-        ReporterManager m = new jmri.jmrix.internal.InternalReporterManager(){
-            @Override
-            public String getSystemPrefix() {
-                return "M";
-            }
-        };
+        ReporterManager m = new InternalReporterManager(new InternalSystemConnectionMemo("M", "Mike"));
         InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.REPORTERS);
         InstanceManager.setDefault(ReporterManager.class,m);
 
-        Assert.assertTrue(null != InstanceManager.getDefault(ReporterManager.class).provideReporter("MR2"));
-        Assert.assertTrue(null != InstanceManager.getDefault(ReporterManager.class).getReporter("MR2"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("MR2"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).getReporter("MR2"));
 
         // load up
         Manager.getSystemPrefixLength("DCCPPT2");

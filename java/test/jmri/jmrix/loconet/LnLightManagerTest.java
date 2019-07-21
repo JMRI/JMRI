@@ -15,7 +15,7 @@ public class LnLightManagerTest {
     @Test
     public void testCTor() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        LnLightManager t = new LnLightManager(lnis,"L");
+        LnLightManager t = new LnLightManager(lnis.getSystemConnectionMemo());
         Assert.assertNotNull("exists",t);
     }
 

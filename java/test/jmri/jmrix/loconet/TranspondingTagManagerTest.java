@@ -2,6 +2,8 @@ package jmri.jmrix.loconet;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.managers.ProxyIdTagManager;
 import org.junit.*;
@@ -141,7 +143,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
     // Override init method so as not to load file
     // nor register shutdown task during tests.
     protected TranspondingTagManager getManager() {
-        return new TranspondingTagManager() {
+        return new TranspondingTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public void init() {
             }

@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
@@ -42,7 +44,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultMemoryManager();
+        l = new DefaultMemoryManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

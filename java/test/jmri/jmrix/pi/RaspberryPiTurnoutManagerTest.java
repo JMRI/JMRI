@@ -115,7 +115,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        jmri.util.JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiTurnoutManager("Pi");
+       l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @After

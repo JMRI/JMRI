@@ -48,7 +48,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
            public void sendInitString(){
            }
         };
-        l = new ConcentratorReporterManager(tc,"R"){
+        l = new ConcentratorReporterManager(tc.getAdapterMemo()){
             @Override
             public void message(jmri.jmrix.rfid.RfidMessage m){}
 

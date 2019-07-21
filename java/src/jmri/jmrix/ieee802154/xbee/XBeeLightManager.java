@@ -1,6 +1,5 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import javax.annotation.*;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -14,18 +13,19 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeLightManager extends AbstractLightManager {
 
-    protected String prefix = null;
-
     protected XBeeTrafficController tc = null;
 
-    public XBeeLightManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeLightManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
 
     // Multiple additions currently works partially, but not for all possible cases;

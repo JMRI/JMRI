@@ -1,18 +1,14 @@
 package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
-import jmri.Reporter;
 import jmri.implementation.DefaultRailCom;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +23,8 @@ import org.slf4j.LoggerFactory;
 public class DefaultRailComManager extends DefaultIdTagManager
         implements RailComManager {
 
-    public DefaultRailComManager() {
+    public DefaultRailComManager(SystemConnectionMemo memo) {
+        super(memo);
         InstanceManager.store(this, RailComManager.class);
         InstanceManager.setIdTagManager(this);
     }

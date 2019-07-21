@@ -58,7 +58,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
         // prepare an interface, register
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         // create and register the manager object
-        l = new DCCppLightManager(xnis, "DCCPP");
+        l = new DCCppLightManager(xnis.getSystemConnectionMemo());
         jmri.InstanceManager.setLightManager(l);
 
     }

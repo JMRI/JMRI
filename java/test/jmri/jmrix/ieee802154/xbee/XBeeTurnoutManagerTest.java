@@ -115,7 +115,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeTurnoutManager(tc, "A");
+        l = new XBeeTurnoutManager(m);
         m.setTurnoutManager(l);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};

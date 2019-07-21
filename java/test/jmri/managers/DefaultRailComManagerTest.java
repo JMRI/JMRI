@@ -2,6 +2,8 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -142,7 +144,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     // Override init method so as not to load file
     // nor register shutdown task during tests.
     protected DefaultIdTagManager getManager() {
-        return new DefaultRailComManager() {
+        return new DefaultRailComManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public void init() {
             }

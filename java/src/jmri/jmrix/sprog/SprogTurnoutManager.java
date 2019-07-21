@@ -14,15 +14,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    SprogSystemConnectionMemo _memo = null;
-
     public SprogTurnoutManager(SprogSystemConnectionMemo memo) {
-        _memo = memo;
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public SprogSystemConnectionMemo getMemo() {
+        return (SprogSystemConnectionMemo) memo;
     }
 
     // Sprog-specific methods
@@ -31,10 +32,10 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
         Turnout t;
-        if (_memo.getSprogMode() == SprogConstants.SprogMode.OPS ) {
-            t = new SprogCSTurnout(addr, _memo);
+        if (getMemo().getSprogMode() == SprogConstants.SprogMode.OPS ) {
+            t = new SprogCSTurnout(addr, getMemo());
         } else {
-            t = new SprogTurnout(addr, _memo);
+            t = new SprogTurnout(addr, getMemo());
         }
         t.setUserName(userName);
         return t;
@@ -48,22 +49,22 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         if (!systemName.startsWith(getSystemPrefix() + "T")) {
             // here if an illegal sprog turnout system name
             log.error("illegal character in header field of sprog turnout system name: {}", systemName);
-            return (0);
+            return 0;
         }
         // name must be in the STnnnnn format (S is user configurable)
-        int num = 0;
+        int num;
         try {
             num = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
+            return 0;
         }
         if (num <= 0) {
             log.debug("invalid sprog turnout system name: {}", systemName);
-            return (0);
+            return 0;
         } else if (num > SprogConstants.MAX_ACC_DECODER_JMRI_ADDR) { // undocumented for SPROG, higher causes error in NMRA Acc Packet
             log.debug("bit number out of range in sprog turnout system name: {}", systemName);
-            return (0);
+            return 0;
         }
         return (num);
     }

@@ -106,7 +106,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Assert.assertNotNull("exists", lnis);
 
         // create and register the manager object
-        l = new LnSensorManager(lnis, "L");
+        l = new LnSensorManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setSensorManager(l);
     }
 

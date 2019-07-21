@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,17 +37,12 @@ public class PortalManager extends AbstractManager<Portal>
     private int _nextSName = 1;
 
     public PortalManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override

@@ -1,7 +1,9 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.implementation.DefaultMemory;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,9 +14,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultMemoryManager extends AbstractMemoryManager {
 
-    @Override
-    public String getSystemPrefix() {
-        return "I";
+    public DefaultMemoryManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override

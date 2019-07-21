@@ -41,7 +41,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
         JUnitUtil.setUp();
         // prepare an interface
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppLightManager xlm = new DCCppLightManager(xnis, "DCCpp");
+        DCCppLightManager xlm = new DCCppLightManager(xnis.getSystemConnectionMemo());
 
         t = new DCCppLight(xnis, xlm, "DCCppL21");
     }

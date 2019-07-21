@@ -115,7 +115,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeLightManager(tc, "A");
+        l = new XBeeLightManager(m);
         m.setLightManager(l);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};

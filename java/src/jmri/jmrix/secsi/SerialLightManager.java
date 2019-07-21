@@ -18,18 +18,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    private SecsiSystemConnectionMemo memo = null;
-
-    public SerialLightManager(SecsiSystemConnectionMemo _memo) {
-        memo = _memo;
+    public SerialLightManager(SecsiSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * Returns the system letter for SECSI
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public SecsiSystemConnectionMemo getMemo() {
+        return (SecsiSystemConnectionMemo) memo;
     }
 
     /**
@@ -37,7 +35,7 @@ public class SerialLightManager extends AbstractLightManager {
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
      *
-     * @return null if memo.getSystemPrefix() system name is not in a valid format or if the
+     * @return null if system name is not in a valid format or if the
      * system name does not correspond to a configured C/MRI digital output bit
      */
     @Override
@@ -45,8 +43,8 @@ public class SerialLightManager extends AbstractLightManager {
         Light lgt = null;
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName,memo);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
+            lgt = new SerialLight(systemName, userName,getMemo());
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L', getMemo().getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
@@ -73,7 +71,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L',memo.getTrafficController()));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L',getMemo().getTrafficController()));
     }
 
     /**

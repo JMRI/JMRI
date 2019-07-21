@@ -24,7 +24,7 @@ public class LnReporterManagerTest extends jmri.managers.AbstractReporterMgrTest
     public void setUp() {
         JUnitUtil.setUp();
         tc = new LocoNetInterfaceScaffold();
-        l = new LnReporterManager(tc,"L");
+        l = new LnReporterManager(tc.getSystemConnectionMemo());
     }
 
     @After

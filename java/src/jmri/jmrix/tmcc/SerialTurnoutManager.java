@@ -16,34 +16,25 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 
-    TmccSystemConnectionMemo _memo = null;
-    private String prefix = "T"; // default
-    private SerialTrafficController trafficController = null;
-
-    public SerialTurnoutManager() {
-        log.debug("TMCC TurnoutManager null");
-    }
-
     public SerialTurnoutManager(TmccSystemConnectionMemo memo) {
-        _memo = memo;
-        prefix = memo.getSystemPrefix();
-        // connect to the TrafficManager
-        trafficController = memo.getTrafficController();
-        // listen for turnout creation
-        trafficController.addSerialListener(this);
-        log.debug("TMCC TurnoutManager prefix={}", prefix);
+        super(memo);
+        memo.getTrafficController().addSerialListener(this);
+        log.debug("TMCC TurnoutManager prefix={}", getSystemPrefix());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public TmccSystemConnectionMemo getMemo() {
+        return (TmccSystemConnectionMemo) memo;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
-        log.debug("Start createNewTurnout, prefix = {} memo ={}", prefix, _memo.getUserName());
-        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
+        log.debug("Start createNewTurnout, prefix = {} memo ={}", getSystemPrefix(), getMemo().getUserName());
+        String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
             log.debug("System Name not valid");
@@ -57,13 +48,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         }
         // check under alternate name - not supported on TMCC
         // create the turnout
-        log.debug("new SerialTurnout with addr = {}", systemName.substring(prefix.length() + 1));
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1)); // this won't work for B-names
-        t = new SerialTurnout(prefix, addr, _memo);
+        log.debug("new SerialTurnout with addr = {}", systemName.substring(getSystemPrefix().length() + 1));
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // this won't work for B-names
+        t = new SerialTurnout(getSystemPrefix(), addr, getMemo());
         t.setUserName(userName);
 
         // does system name correspond to configured hardware?
-        if (!SerialAddress.validSystemNameConfig(sName, 'T', prefix)) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', getSystemPrefix())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
@@ -123,7 +114,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
         try {
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
@@ -171,13 +162,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', prefix));
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
     /**

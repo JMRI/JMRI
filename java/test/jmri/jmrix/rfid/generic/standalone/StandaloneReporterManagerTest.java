@@ -26,7 +26,7 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
         JUnitUtil.setUp();
         tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo(){
         });
-        l = new StandaloneReporterManager(tc,"R"){
+        l = new StandaloneReporterManager(tc.getAdapterMemo()){
             @Override
             public void message(jmri.jmrix.rfid.RfidMessage m){}
 

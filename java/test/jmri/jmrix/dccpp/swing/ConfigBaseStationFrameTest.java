@@ -9,10 +9,9 @@ import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
-
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -23,9 +22,9 @@ public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new ConfigBaseStationFrame(new DCCppSensorManager(tc,memo.getSystemPrefix()),new DCCppTurnoutManager(tc,memo.getSystemPrefix()),tc);
-       }
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new ConfigBaseStationFrame(new DCCppSensorManager(memo), new DCCppTurnoutManager(memo), tc);
+        }
 
     }
 
@@ -35,5 +34,4 @@ public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ConfigBaseStationFrameTest.class);
-
 }

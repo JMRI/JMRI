@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -31,7 +33,7 @@ public class OBlockManager extends AbstractManager<OBlock>
         implements jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override

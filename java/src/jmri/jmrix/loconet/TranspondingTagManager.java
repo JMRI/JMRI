@@ -1,15 +1,10 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Reporter;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +18,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
-    public TranspondingTagManager() {
+    public TranspondingTagManager(SystemConnectionMemo memo) {
+        super(memo);
         InstanceManager.store(this, TranspondingTagManager.class);
     }
 

@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +21,11 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
 
     /**
      * Create a new LightManager instance.
+     * 
+     * @param memo the system connection
      */
-    public AbstractLightManager() {
-        super();
+    public AbstractLightManager(SystemConnectionMemo memo) {
+        super(memo);
     }
 
     /** {@inheritDoc} */

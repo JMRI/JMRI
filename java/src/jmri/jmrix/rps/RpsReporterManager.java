@@ -13,18 +13,16 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
 
-    //private RpsSystemConnectionMemo memo = null;
-    protected String prefix = "R";
-
     public RpsReporterManager(RpsSystemConnectionMemo memo) {
-        super();
-        //this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public RpsSystemConnectionMemo getMemo() {
+        return (RpsSystemConnectionMemo) memo;
     }
 
     /**
@@ -34,7 +32,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
     @Override
     protected Reporter createNewReporter(String systemName, String userName) {
         log.debug(userName);
-        RpsReporter r = new RpsReporter(systemName, userName, prefix);
+        RpsReporter r = new RpsReporter(systemName, userName, getSystemPrefix());
         Distributor.instance().addMeasurementListener(r);
         return r;
     }
@@ -63,7 +61,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (RpsAddress.validSystemNameFormat(systemName, 'R', prefix));
+        return (RpsAddress.validSystemNameFormat(systemName, 'R', getSystemPrefix()));
     }
 
     /**

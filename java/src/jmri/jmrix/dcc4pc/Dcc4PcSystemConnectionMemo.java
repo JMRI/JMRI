@@ -120,7 +120,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
             return null;
         }
         if (railCommManager == null) {
-            railCommManager = new jmri.managers.DefaultRailComManager();
+            railCommManager = new jmri.managers.DefaultRailComManager(this);
         }
         return railCommManager;
     }
