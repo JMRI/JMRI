@@ -29,7 +29,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
 
     @Test
     public void checkPrefix(){
-        Assert.assertEquals("Prefix", "PI", l.getSystemPrefix());
+        Assert.assertEquals("Prefix", "P", l.getSystemPrefix());
     }
 
     @Override
