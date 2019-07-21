@@ -24,7 +24,7 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnReporterManager lnrm = new LnReporterManager(memo);
+        LnReporterManager lnrm = new LnReporterManager(lnis.getSystemConnectionMemo());
 
         jmri.InstanceManager.setReporterManager(lnrm);
 
