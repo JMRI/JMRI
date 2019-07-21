@@ -145,17 +145,14 @@ public class SprogThrottle extends AbstractThrottle {
         }
         if (Mode == SpeedStepMode.NMRA_DCC_14) {
             mode += 0x200;
-            speedIncrement = SPEED_STEP_14_INCREMENT;
         } else if (Mode == SpeedStepMode.NMRA_DCC_27) {
             log.error("Requested Speed Step Mode 27 not supported Current mode is: "
                     + this.speedStepMode);
             return;
         } else if (Mode == SpeedStepMode.NMRA_DCC_28) {
             mode += 0x400;
-            speedIncrement = SPEED_STEP_28_INCREMENT;
         } else { // default to 128 speed step mode
             mode += 0x800;
-            speedIncrement = SPEED_STEP_128_INCREMENT;
         }
         m = new SprogMessage("M h" + Integer.toHexString(mode));
         ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);

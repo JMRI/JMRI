@@ -54,8 +54,6 @@ public class SerialThrottle extends AbstractThrottle {
         this.address = address;
         this.isForward = true;
         this.speedStepMode = SpeedStepMode.TMCC_32;
-        this.speedIncrement = SPEED_STEP_32_INCREMENT;
-
     }
 
     private DccLocoAddress address;

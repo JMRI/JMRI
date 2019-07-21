@@ -32,7 +32,6 @@ public class Pr2Throttle extends AbstractThrottle {
         this.address = address;
         addr = address.getNumber();
         setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
-        this.speedIncrement = 1;  // 128 step mode only
     }
 
     /**

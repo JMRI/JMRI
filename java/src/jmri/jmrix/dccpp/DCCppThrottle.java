@@ -55,7 +55,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         else {
             log.error("LocoAddress {} is not a DccLocoAddress",address);
         }
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
         this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
@@ -240,14 +239,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     protected int getDccAddressLow() {
         return DCCppCommandStation.getDCCAddressLow(this.address);
-    }
-
-
-    // to handle quantized speed. Note this can change! Valued returned is
-    // always positive.
-    @Override
-    public float getSpeedIncrement() {
-        return speedIncrement;
     }
 
     // Handle incoming messages for This throttle.

@@ -756,19 +756,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     this.speedStepMode = Mode);
         }
         if (Mode == SpeedStepMode.NMRA_DCC_14) {
-            speedIncrement = SPEED_STEP_14_INCREMENT;
             log.debug("14 speed step change"); // NOI18N
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX)
                     | LnConstants.DEC_MODE_14;
         } else if (Mode == SpeedStepMode.MOTOROLA_28) {
-            speedIncrement = SPEED_STEP_28_INCREMENT;
             log.debug("28-Tristate speed step change");
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX)
                     | LnConstants.DEC_MODE_28TRI;
         } else if (Mode == SpeedStepMode.NMRA_DCC_28) {
-            speedIncrement = SPEED_STEP_28_INCREMENT;
             log.debug("28 speed step change");
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX);
@@ -776,7 +773,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             // it unfortunately shows a INT_VACUOUS_BIT_OPERATION in SpotBugs
             // and I don't want to annote that around this entire long method
         } else { // default to 128 speed step mode
-            speedIncrement = SPEED_STEP_128_INCREMENT;
             log.debug("128 speed step change");
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX)

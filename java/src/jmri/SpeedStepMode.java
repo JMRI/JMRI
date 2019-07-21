@@ -20,21 +20,25 @@ import java.util.EnumSet;
  */
 @javax.annotation.concurrent.Immutable
 public enum SpeedStepMode {
-    UNKNOWN("unknown"),
+    UNKNOWN("unknown", 1),
     // NMRA DCC standard speed step modes.
-    NMRA_DCC_128("128"),
-    NMRA_DCC_28("28"),
-    NMRA_DCC_27("27"),
-    NMRA_DCC_14("14"),
+    NMRA_DCC_128("128", 126), // Remember there are only 126 non-stop values in 128 speed.
+    NMRA_DCC_28("28", 28),
+    NMRA_DCC_27("27", 27),
+    NMRA_DCC_14("14", 14),
     // Non-DCC speed step modes.
-    MOTOROLA_28("motorola_28"), // Motorola 28 speed step mode.
-    TMCC_32("tmcc_32"); // Lionel TMCC 32 speed step mode.
+    MOTOROLA_28("motorola_28", 28), // Motorola 28 speed step mode.
+    TMCC_32("tmcc_32", 32); // Lionel TMCC 32 speed step mode.
 
-    SpeedStepMode(String name) {
+    SpeedStepMode(String name, int numSteps) {
         this.name = name;
+        this.numSteps = numSteps;
+        this.increment = 1.0f / numSteps;
     }
 
     public String name;
+    public int numSteps;
+    public float increment;
 
     /**
      * Convert a human-readable string to a DCC speed step mode.

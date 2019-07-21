@@ -56,7 +56,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         super(memo);
         this.tc = controller;
         this.setDccAddress(address.getNumber());
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
         this.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
         //       this.isForward=true;
         setIsAvailable(false);
@@ -363,15 +362,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         return;
     }
 
-    /**
-     * Handle quantized speed. Note this can change!
-     * Value returned is always positive.
-     */
-    @Override
-    public float getSpeedIncrement() {
-        return speedIncrement;
-    }
-
     // Handle incoming messages for This throttle.
     @Override
     public void message(XNetReply l) {
@@ -626,7 +616,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         if ((b1 & 0x01) == 0x01) {
             log.trace("Speed Step setting 27");
-            this.speedIncrement = SPEED_STEP_27_INCREMENT;
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_27) {
                 notifyPropertyChangeListener("SpeedSteps",
                         this.speedStepMode,
@@ -634,7 +623,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         } else if ((b1 & 0x02) == 0x02) {
             log.trace("Speed Step setting 28");
-            this.speedIncrement = SPEED_STEP_28_INCREMENT;
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_28) {
                 notifyPropertyChangeListener("SpeedSteps",
                         this.speedStepMode,
@@ -642,7 +630,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         } else if ((b1 & 0x04) == 0x04) {
             log.trace("Speed Step setting 128");
-            this.speedIncrement = SPEED_STEP_128_INCREMENT;
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_128) {
                 notifyPropertyChangeListener("SpeedSteps",
                         this.speedStepMode,
@@ -650,7 +637,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         } else {
             log.trace("Speed Step setting 14");
-            this.speedIncrement = SPEED_STEP_14_INCREMENT;
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_14) {
                 notifyPropertyChangeListener("SpeedSteps",
                         this.speedStepMode,

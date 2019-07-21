@@ -26,15 +26,7 @@ import jmri.ThrottleListener;
  */
 abstract public class AbstractThrottle implements DccThrottle {
 
-    public final static float SPEED_STEP_14_INCREMENT = 1.0f / 14.0f;
-    public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
-    public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
-    public final static float SPEED_STEP_32_INCREMENT = 1.0f / 32.0f;
-    public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
-                                                                        // non-stop values in 128 speed 
-
     protected float speedSetting;
-    protected float speedIncrement;
     /**
      * Question: should we set a default speed step mode so it's never zero?
      */
@@ -834,7 +826,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public float getSpeedIncrement() {
-        return speedIncrement;
+        return speedStepMode.increment;
     }
 
     /**
@@ -1746,10 +1738,9 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     /**
-     * Set the speed step value and the related speedIncrement value. Default
-     * should be 128 speed step mode in most cases
+     * Set the speed step value. Default should be 128 speed step mode in most cases.
      *
-     * specific implementations should override this function
+     * Specific implementations should override this function.
      *
      * @param Mode the current speed step mode
      */
@@ -1759,24 +1750,6 @@ abstract public class AbstractThrottle implements DccThrottle {
         if (speedStepMode != Mode) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
-        }
-        switch(Mode) {
-            case NMRA_DCC_14:
-                speedIncrement = SPEED_STEP_14_INCREMENT;
-                break;
-            case NMRA_DCC_27:
-                speedIncrement = SPEED_STEP_27_INCREMENT;
-                break;
-            case NMRA_DCC_28:
-            case MOTOROLA_28:
-                speedIncrement = SPEED_STEP_28_INCREMENT;
-                break;
-            case TMCC_32:
-                speedIncrement = SPEED_STEP_32_INCREMENT;
-                break;
-            case NMRA_DCC_128:
-                speedIncrement = SPEED_STEP_128_INCREMENT;
-                break;
         }
     }
 

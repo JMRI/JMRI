@@ -142,7 +142,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         }
         if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_28) {
             int step = (int) Math.ceil(lSpeed / 4.65);
-            return step * SPEED_STEP_28_INCREMENT;
+            return step * getSpeedIncrement();
         }
         return ((lSpeed) / 126.f);
     }
