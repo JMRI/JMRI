@@ -96,6 +96,7 @@ public class CbusThrottle extends AbstractThrottle {
 //        }
         // Only 128 speed step supported at the moment
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
+        this.speedStepMode = SpeedStepMode.SpeedStepMode128;
 
         // start periodically sending keep alives, to keep this
         // attached
