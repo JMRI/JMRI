@@ -573,8 +573,8 @@ public final class InstanceManager {
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
         TurnoutManager apm = getDefault(TurnoutManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Turnout>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Turnout>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: TurnoutManager default isn't an AbstractProxyManager<Turnout>");
         }
@@ -603,8 +603,8 @@ public final class InstanceManager {
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
         LightManager apm = getDefault(LightManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Light>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Light>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
         }
@@ -618,8 +618,8 @@ public final class InstanceManager {
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
         ReporterManager apm = getDefault(ReporterManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Reporter>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Reporter>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: ReporterManager default isn't an AbstractProxyManager<Reporter>");
         }
@@ -633,8 +633,8 @@ public final class InstanceManager {
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
         SensorManager apm = getDefault(SensorManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Sensor>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Sensor>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
         }
@@ -648,8 +648,8 @@ public final class InstanceManager {
     static public void setIdTagManager(IdTagManager p) {
         log.debug(" setIdTagManager");
         IdTagManager apm = getDefault(IdTagManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<IdTag>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<IdTag>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
         }

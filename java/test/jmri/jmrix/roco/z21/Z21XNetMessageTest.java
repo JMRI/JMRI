@@ -29,6 +29,7 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
     }
 
     @Test
+    @Override
     public void testStringCtorEmptyString() {
         msg= new Z21XNetMessage("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
@@ -36,6 +37,7 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
     }
 
     @Test
+    @Override
     public void testCtorXNetReply(){
         Z21XNetReply x = new Z21XNetReply("12 34 AB 03 19 06 0B B1");
         msg = new Z21XNetMessage(x);
@@ -52,12 +54,14 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21XNetMessage(3);
     }
 
     @After
+    @Override
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

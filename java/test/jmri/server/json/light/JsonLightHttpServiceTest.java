@@ -30,6 +30,7 @@ import jmri.implementation.AbstractLight;
 public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Light, JsonLightHttpService> {
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, IOException, JsonException {
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         Light light1 = new AbstractLight("IL1") {

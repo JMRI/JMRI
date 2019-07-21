@@ -207,6 +207,7 @@ class EngineSound extends VSDSound {
         if (auto_start_engine || is_auto_start) {
             SwingUtilities.invokeLater(() -> {
                 t = newTimer(40, false, new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if (engine_pane != null && getFirstSpeed()) {
                             engine_pane.startButtonClick();

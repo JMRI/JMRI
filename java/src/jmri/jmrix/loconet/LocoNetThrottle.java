@@ -561,6 +561,30 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             return;
         }
 
+        switch (slot.decoderType()) {
+            case LnConstants.DEC_MODE_128:
+            case LnConstants.DEC_MODE_128A:
+                if(DccThrottle.SpeedStepMode128 != getSpeedStepMode()) {
+                   setSpeedStepMode(DccThrottle.SpeedStepMode128);
+                }
+                break;
+            case LnConstants.DEC_MODE_28:
+            case LnConstants.DEC_MODE_28A:
+            case LnConstants.DEC_MODE_28TRI:
+                if(DccThrottle.SpeedStepMode28 != getSpeedStepMode()) {
+                   setSpeedStepMode(DccThrottle.SpeedStepMode28);
+                }
+                break;
+            case LnConstants.DEC_MODE_14:
+                if(DccThrottle.SpeedStepMode14 != getSpeedStepMode()) {
+                   setSpeedStepMode(DccThrottle.SpeedStepMode14);
+                }
+                break;
+            default:
+                log.warn("Unhandled decoder type: {}", slot.decoderType());
+                break;
+        }
+
         // Functions
         if (this.f0 != slot.isF0()) {
             temp = this.f0;

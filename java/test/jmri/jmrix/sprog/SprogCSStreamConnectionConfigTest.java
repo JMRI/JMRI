@@ -9,12 +9,14 @@ public class SprogCSStreamConnectionConfigTest extends jmri.jmrix.AbstractConnec
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         cc = new SprogCSStreamConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

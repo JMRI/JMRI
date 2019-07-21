@@ -41,11 +41,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
     /**
      * Turnout operation support. Internal turnouts don't need retries.
      */

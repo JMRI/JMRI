@@ -54,6 +54,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     }
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, IOException, JsonException {
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
         IdTag idTag1 = manager.provide("ID1");
@@ -146,7 +147,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Reporter: \"\" needed non-empty suffix to follow ID");
+        JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"ID\".");
     }
 
     @Test

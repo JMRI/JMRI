@@ -1287,10 +1287,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         cmdStationReply = new LocoNetMessage(new int[] {
-                0xe7, 0x0e, 0x04, 0x30, 0x52, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x00});
+                0xe7, 0x0e, 0x04, 0x33, 0x52, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x63});
         lnis.sendTestMessage(cmdStationReply);
         Assert.assertEquals("write Throttle ID",
-                "EF 0E 04 30 52 00 00 07 00 09 00 71 02 00",
+                "EF 0E 04 33 52 00 00 07 00 09 00 71 02 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
 
         cmdStationReply = new LocoNetMessage(new int[] {
@@ -1320,7 +1320,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         JUnitUtil.waitFor(()->{return 4 < lnis.outbound.size();},"didn't get the 6th LocoNet message");
 
         Assert.assertEquals("slot is set to 'common' status",
-                "B5 04 10 00",
+                "B5 04 13 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         
         throttle4 = null;

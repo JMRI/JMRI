@@ -29,6 +29,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -56,6 +57,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         Sensor t2 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,2)");
