@@ -20,7 +20,6 @@ import org.junit.runners.Suite;
         jmri.jmrix.can.PackageTest.class,
         jmri.jmrix.configurexml.PackageTest.class,
         jmri.jmrix.cmri.PackageTest.class,
-        jmri.jmrix.dcc.PackageTest.class,
         jmri.jmrix.dcc4pc.PackageTest.class,
         jmri.jmrix.direct.PackageTest.class,
         jmri.jmrix.dccpp.PackageTest.class,
