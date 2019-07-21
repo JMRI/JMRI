@@ -69,7 +69,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.17.2 4.17.3 4.17.3
+  ./scripts/update-HOWTO.sh 4.17.2 4.17.3 4.17.4
 ```
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after__ you edit it here are *.4 *.5 *.6
 
@@ -153,7 +153,7 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
-- Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires that the code has been built):
+- Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires code has been built; should only mention jmri/util/TimerUtil.class):
 ```
         grep -rl 'java.util.Timer\x01' target/
 ```
@@ -222,7 +222,7 @@ git push github
 
     cp help/en/releasenotes/jmri4.17-master.shtml help/en/releasenotes/current-draft-note.shtml
     cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-    git commit -m"start for 4.17.3 release note" help/en/releasenotes/current-draft-note.shtml
+    git commit -m"start for 4.17.3 release note" help/en/releasenotes/current-draft-*.shtml
 
 - Commit release note, push and pull back
 
@@ -234,7 +234,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-04-14+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-06-26+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
