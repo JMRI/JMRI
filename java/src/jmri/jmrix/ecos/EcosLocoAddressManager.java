@@ -38,9 +38,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
 
     public EcosLocoAddressManager(EcosSystemConnectionMemo memo) {
         super(memo);
-        locoToRoster = new EcosLocoToRoster(adaptermemo);
-        tc = adaptermemo.getTrafficController();
-        p = adaptermemo.getPreferenceManager();
+        locoToRoster = new EcosLocoToRoster(getMemo());
+        tc = getMemo().getTrafficController();
+        p = getMemo().getPreferenceManager();
         rosterAttribute = p.getRosterAttribute();
         loadEcosData();
         try {
@@ -115,7 +115,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     ShutDownTask ecosLocoShutDownTask;
 
     EcosTrafficController tc;
-    EcosSystemConnectionMemo adaptermemo;
 
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {
         EcosLocoAddress l = getByEcosObject(EcosObject);
@@ -439,7 +438,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                     container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                    JLabel question = new JLabel(Bundle.getMessage("AddLocoXQuestion", _re.getId(), adaptermemo.getUserName()));
+                    JLabel question = new JLabel(Bundle.getMessage("AddLocoXQuestion", _re.getId(), getMemo().getUserName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                     final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
@@ -473,7 +472,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                             if (remember.isSelected()) {
                                 p.setAddLocoToEcos(0x02);
                             }
-                            RosterToEcos rosterToEcos = new RosterToEcos(adaptermemo);
+                            RosterToEcos rosterToEcos = new RosterToEcos(getMemo());
                             rosterToEcos.createEcosLoco(_re);
                             _re = null;
                             dialog.dispose();
@@ -488,7 +487,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                     dialog.setVisible(true);
                 }
                 if (p.getAddLocoToEcos() == 0x02) {
-                    RosterToEcos rosterToEcos = new RosterToEcos(adaptermemo);
+                    RosterToEcos rosterToEcos = new RosterToEcos(getMemo());
                     rosterToEcos.createEcosLoco(_re);
                     _re = null;
                 }
@@ -510,7 +509,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                     container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-                    JLabel question = new JLabel(Bundle.getMessage("RemoveLocoXQuestion", adaptermemo.getUserName()));
+                    JLabel question = new JLabel(Bundle.getMessage("RemoveLocoXQuestion", getMemo().getUserName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                     final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
