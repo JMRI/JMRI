@@ -24,10 +24,8 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
-import jmri.SpeedStepMode;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -73,7 +71,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String CLIENTS = "clients"; // NOI18N
     private Throttle throttle;
-    private SpeedStepMode speedSteps = SpeedStepMode.NMRA_DCC_128;
+    private int speedSteps = 1; // Number of speed steps.
     private DccLocoAddress address = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
@@ -356,7 +354,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         log.debug("Found throttle {}", throttle.getLocoAddress());
         this.throttle = throttle;
         throttle.addPropertyChangeListener(this);
-        this.speedSteps = throttle.getSpeedStepMode();
+        this.speedSteps = throttle.getSpeedStepMode().numSteps;
         this.sendStatus();
     }
 
@@ -450,7 +448,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(Throttle.F26, this.throttle.getF26());
         data.put(Throttle.F27, this.throttle.getF27());
         data.put(Throttle.F28, this.throttle.getF28());
-        data.put(SPEED_STEPS, this.speedSteps.name);
+        data.put(SPEED_STEPS, this.speedSteps);
         data.put(CLIENTS, InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size());
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
