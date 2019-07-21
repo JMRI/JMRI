@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class SprogSlot {
 
     private boolean speedPacket = false;
-    private SpeedStepMode speedMode = SpeedStepMode.SpeedStepMode128;
+    private SpeedStepMode speedMode = SpeedStepMode.NMRA_DCC_128;
 
     public SprogSlot(int num) {
         payload = new byte[SprogConstants.MAX_PACKET_LENGTH];
@@ -117,7 +117,7 @@ public class SprogSlot {
         this.speedMode = mode;
         this.f0to4Packet = false;
         this.forward = forward;
-        if (mode == SpeedStepMode.SpeedStepMode28) {
+        if (mode == SpeedStepMode.NMRA_DCC_28) {
             this.payload = jmri.NmraPacket.speedStep28Packet(true, addr,
                     isLong, spd, forward);
         } else {

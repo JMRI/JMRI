@@ -108,15 +108,15 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         switch (slot.decoderType()) {
             case LnConstants.DEC_MODE_128:
             case LnConstants.DEC_MODE_128A:
-                setSpeedStepMode(SpeedStepMode.SpeedStepMode128);
+                setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
                 break;
             case LnConstants.DEC_MODE_28:
             case LnConstants.DEC_MODE_28A:
             case LnConstants.DEC_MODE_28TRI:
-                setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
+                setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
                 break;
             case LnConstants.DEC_MODE_14:
-                setSpeedStepMode(SpeedStepMode.SpeedStepMode14);
+                setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
                 break;
             default:
                 log.warn("Unhandled decoder type: {}", slot.decoderType());
@@ -152,13 +152,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         } else if (lSpeed == 1) {
             return -1.f;   // estop
         }
-        if (getSpeedStepMode() == SpeedStepMode.SpeedStepMode28) {
+        if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_28) {
             if (lSpeed <= 15) //Value less than 15 is in the stop/estop range bracket
             {
                 return 0.f;
             }
             return (((lSpeed - 12) / 4f) / 28.f);
-        } else if (getSpeedStepMode() == SpeedStepMode.SpeedStepMode14) {
+        } else if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_14) {
             if (lSpeed <= 15) //Value less than 15 is in the stop/estop range bracket
             {
                 return 0.f;
@@ -190,12 +190,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             return speed; // return idle and emergency stop
         }
         switch (this.getSpeedStepMode()) {
-            case SpeedStepMode28:
-            case SpeedStepMode28Mot:
+            case NMRA_DCC_28:
+            case MOTOROLA_28:
                 return (int) ((fSpeed * 28) * 4) + 12;
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 return (int) ((fSpeed * 14) * 8) + 8;
-            case SpeedStepMode128:
+            case NMRA_DCC_128:
                 return speed;
             default:
                 log.warn("Unhandled speed step: {}", this.getSpeedStepMode());
@@ -566,20 +566,20 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         switch (slot.decoderType()) {
             case LnConstants.DEC_MODE_128:
             case LnConstants.DEC_MODE_128A:
-                if(SpeedStepMode.SpeedStepMode128 != getSpeedStepMode()) {
-                   setSpeedStepMode(SpeedStepMode.SpeedStepMode128);
+                if(SpeedStepMode.NMRA_DCC_128 != getSpeedStepMode()) {
+                   setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
                 }
                 break;
             case LnConstants.DEC_MODE_28:
             case LnConstants.DEC_MODE_28A:
             case LnConstants.DEC_MODE_28TRI:
-                if(SpeedStepMode.SpeedStepMode28 != getSpeedStepMode()) {
-                   setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
+                if(SpeedStepMode.NMRA_DCC_28 != getSpeedStepMode()) {
+                   setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
                 }
                 break;
             case LnConstants.DEC_MODE_14:
-                if(SpeedStepMode.SpeedStepMode14 != getSpeedStepMode()) {
-                   setSpeedStepMode(SpeedStepMode.SpeedStepMode14);
+                if(SpeedStepMode.NMRA_DCC_14 != getSpeedStepMode()) {
+                   setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
                 }
                 break;
             default:
@@ -755,19 +755,19 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode, // NOI18N
                     this.speedStepMode = Mode);
         }
-        if (Mode == SpeedStepMode.SpeedStepMode14) {
+        if (Mode == SpeedStepMode.NMRA_DCC_14) {
             speedIncrement = SPEED_STEP_14_INCREMENT;
             log.debug("14 speed step change"); // NOI18N
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX)
                     | LnConstants.DEC_MODE_14;
-        } else if (Mode == SpeedStepMode.SpeedStepMode28Mot) {
+        } else if (Mode == SpeedStepMode.MOTOROLA_28) {
             speedIncrement = SPEED_STEP_28_INCREMENT;
             log.debug("28-Tristate speed step change");
             status = status & ((~LnConstants.DEC_MODE_MASK)
                     | LnConstants.STAT1_SL_SPDEX)
                     | LnConstants.DEC_MODE_28TRI;
-        } else if (Mode == SpeedStepMode.SpeedStepMode28) {
+        } else if (Mode == SpeedStepMode.NMRA_DCC_28) {
             speedIncrement = SPEED_STEP_28_INCREMENT;
             log.debug("28 speed step change");
             status = status & ((~LnConstants.DEC_MODE_MASK)

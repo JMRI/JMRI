@@ -25,7 +25,7 @@ public class SRCPThrottle extends AbstractThrottle {
      */
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address) {
         // default to 128 speed steps with 28 functions and NMRA protocl.
-        this(memo, address, "N", SpeedStepMode.SpeedStepMode128, 28);
+        this(memo, address, "N", SpeedStepMode.NMRA_DCC_128, 28);
     }
 
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
@@ -213,16 +213,16 @@ public class SRCPThrottle extends AbstractThrottle {
     public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
         switch (Mode) {
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 maxsteps = 14;
                 break;
-            case SpeedStepMode27:
+            case NMRA_DCC_27:
                 maxsteps = 27;
                 break;
-            case SpeedStepMode28:
+            case NMRA_DCC_28:
                 maxsteps = 28;
                 break;
-            case SpeedStepMode128:
+            case NMRA_DCC_128:
             default:
                 maxsteps = 126;
         }

@@ -25,7 +25,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.SpeedStepMode28;
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
@@ -48,7 +48,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testGetSpeed_float() {
         // set speed step mode to 28 (PR2Throttle does not support 128?)
-        instance.setSpeedStepMode(jmri.SpeedStepMode.SpeedStepMode28);
+        instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
         Assert.assertEquals("Full Speed", 124, ((Pr2Throttle)instance).intSpeed(1.0F)); // 124 from class source
         float incre = 1.F/(112F-1F); // not clear where the -1 comes from
         float speed = incre;

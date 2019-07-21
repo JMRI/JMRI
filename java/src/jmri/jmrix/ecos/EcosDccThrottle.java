@@ -36,7 +36,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
     public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control) {
         super(memo);
-        super.speedStepMode = SpeedStepMode.SpeedStepMode128;
+        super.speedStepMode = SpeedStepMode.NMRA_DCC_128;
         p = memo.getPreferenceManager();
         tc = memo.getTrafficController();
         objEcosLocoManager = memo.getLocoAddressManager();
@@ -140,7 +140,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         if (lSpeed == 0) {
             return 0.0f;
         }
-        if (getSpeedStepMode() == SpeedStepMode.SpeedStepMode28) {
+        if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_28) {
             int step = (int) Math.ceil(lSpeed / 4.65);
             return step * SPEED_STEP_28_INCREMENT;
         }
@@ -701,11 +701,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     } else if (line.contains("protocol")) {
                         String pro = EcosReply.getContentDetails(line, "protocol");
                         if (pro.equals("DCC128")) {
-                            setSpeedStepMode(SpeedStepMode.SpeedStepMode128);
+                            setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
                         } else if (pro.equals("DCC28")) {
-                            setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
+                            setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
                         } else if (pro.equals("DCC14")) {
-                            setSpeedStepMode(SpeedStepMode.SpeedStepMode14);
+                            setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
                         }
                     } else if (line.contains("func[")) {
                         String funcStr = EcosReply.getContentDetails(line, "func");

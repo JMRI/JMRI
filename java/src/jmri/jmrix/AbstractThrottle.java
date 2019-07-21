@@ -1761,20 +1761,20 @@ abstract public class AbstractThrottle implements DccThrottle {
                     this.speedStepMode = Mode);
         }
         switch(Mode) {
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 speedIncrement = SPEED_STEP_14_INCREMENT;
                 break;
-            case SpeedStepMode27:
+            case NMRA_DCC_27:
                 speedIncrement = SPEED_STEP_27_INCREMENT;
                 break;
-            case SpeedStepMode28:
-            case SpeedStepMode28Mot:
+            case NMRA_DCC_28:
+            case MOTOROLA_28:
                 speedIncrement = SPEED_STEP_28_INCREMENT;
                 break;
-            case SpeedStepModeTMCC32:
+            case TMCC_32:
                 speedIncrement = SPEED_STEP_32_INCREMENT;
                 break;
-            case SpeedStepMode128:
+            case NMRA_DCC_128:
                 speedIncrement = SPEED_STEP_128_INCREMENT;
                 break;
         }

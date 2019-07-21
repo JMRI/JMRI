@@ -765,7 +765,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         int element4value = 0;   /* this is for holding the speed and
          direction setting */
 
-        if (speedStepMode == SpeedStepMode.SpeedStepMode128) {
+        if (speedStepMode == SpeedStepMode.NMRA_DCC_128) {
             // We're in 128 speed step mode
             msg.setElement(1, XNetConstants.LOCO_SPEED_128);
             // Now, we need to figure out what to send in element 4
@@ -777,7 +777,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             if (speedVal >= 1) {
                 element4value = speedVal + 1;
             }
-        } else if (speedStepMode == SpeedStepMode.SpeedStepMode28) {
+        } else if (speedStepMode == SpeedStepMode.NMRA_DCC_28) {
             // We're in 28 speed step mode
             msg.setElement(1, XNetConstants.LOCO_SPEED_28);
             // Now, we need to figure out what to send in element 4
@@ -791,7 +791,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             // but other bits are in order from 0-3
             element4value = ((speedVal & 0x1e) >> 1)
                     + ((speedVal & 0x01) << 4);
-        } else if (speedStepMode == SpeedStepMode.SpeedStepMode27) {
+        } else if (speedStepMode == SpeedStepMode.NMRA_DCC_27) {
             // We're in 27 speed step mode
             msg.setElement(1, XNetConstants.LOCO_SPEED_27);
             // Now, we need to figure out what to send in element 4

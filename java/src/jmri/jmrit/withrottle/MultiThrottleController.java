@@ -314,15 +314,15 @@ public class MultiThrottleController extends ThrottleController {
             // NOTE: old speed step modes use the original numeric values
             // from when speed step modes were in DccThrottle. New speed step
             // modes use the mode name.
-            case SpeedStepMode128:
+            case NMRA_DCC_128:
                 return "1";
-            case SpeedStepMode28:
+            case NMRA_DCC_28:
                  return "2";
-            case SpeedStepMode27:
+            case NMRA_DCC_27:
                 return "4";
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 return "8";
-            case SpeedStepMode28Mot:
+            case MOTOROLA_28:
                 return "16";
             default:
                 return mode.name;

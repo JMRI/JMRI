@@ -1728,8 +1728,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         throttle = t;
         log.info("Throttle acquired");
-        throttle.setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
-        if (throttle.getSpeedStepMode() != SpeedStepMode.SpeedStepMode28) {
+        throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        if (throttle.getSpeedStepMode() != SpeedStepMode.NMRA_DCC_28) {
             log.error("Failed to set 28 step mode");
             statusLabel.setText(Bundle.getMessage("ThrottleError28"));
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);

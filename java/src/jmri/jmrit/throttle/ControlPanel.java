@@ -239,10 +239,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * the speed step setting and the max speed for the particular loco
      *
      * @param speedStepMode Desired speed step mode. One of:
-     *                      SpeedStepMode.SpeedStepMode128,
-     *                      SpeedStepMode.SpeedStepMode28,
-     *                      SpeedStepMode.SpeedStepMode27,
-     *                      SpeedStepMode.SpeedStepMode14 step mode
+     *                      SpeedStepMode.NMRA_DCC_128,
+     *                      SpeedStepMode.NMRA_DCC_28,
+     *                      SpeedStepMode.NMRA_DCC_27,
+     *                      SpeedStepMode.NMRA_DCC_14 step mode
      */
     private void setSpeedStepsMode(SpeedStepMode speedStepMode) {
         internalAdjust = true;
@@ -254,19 +254,19 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         // Save the old speed as a float
         float oldSpeed = (speedSlider.getValue() / (maxSpeed * 1.0f));
 
-        if (speedStepMode == SpeedStepMode.SpeedStepMode14) {
+        if (speedStepMode == SpeedStepMode.NMRA_DCC_14) {
             speedStep14Button.setSelected(true);
             speedStep27Button.setSelected(false);
             speedStep28Button.setSelected(false);
             speedStep128Button.setSelected(false);
             intSpeedSteps = 14;
-        } else if (speedStepMode == SpeedStepMode.SpeedStepMode27) {
+        } else if (speedStepMode == SpeedStepMode.NMRA_DCC_27) {
             speedStep14Button.setSelected(false);
             speedStep27Button.setSelected(true);
             speedStep28Button.setSelected(false);
             speedStep128Button.setSelected(false);
             intSpeedSteps = 27;
-        } else if (speedStepMode == SpeedStepMode.SpeedStepMode28) {
+        } else if (speedStepMode == SpeedStepMode.NMRA_DCC_28) {
             speedStep14Button.setSelected(false);
             speedStep27Button.setSelected(false);
             speedStep28Button.setSelected(true);
@@ -776,8 +776,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        setSpeedStepsMode(SpeedStepMode.SpeedStepMode14);
-                        throttle.setSpeedStepMode(SpeedStepMode.SpeedStepMode14);
+                        setSpeedStepsMode(SpeedStepMode.NMRA_DCC_14);
+                        throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
                     }
                 });
 
@@ -785,8 +785,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        setSpeedStepsMode(SpeedStepMode.SpeedStepMode27);
-                        throttle.setSpeedStepMode(SpeedStepMode.SpeedStepMode27);
+                        setSpeedStepsMode(SpeedStepMode.NMRA_DCC_27);
+                        throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_27);
                     }
                 });
 
@@ -794,8 +794,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        setSpeedStepsMode(SpeedStepMode.SpeedStepMode28);
-                        throttle.setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
+                        setSpeedStepsMode(SpeedStepMode.NMRA_DCC_28);
+                        throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
                     }
                 });
 
@@ -803,8 +803,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        setSpeedStepsMode(SpeedStepMode.SpeedStepMode128);
-                        throttle.setSpeedStepMode(SpeedStepMode.SpeedStepMode128);
+                        setSpeedStepsMode(SpeedStepMode.NMRA_DCC_128);
+                        throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
                     }
                 });
 
@@ -1236,22 +1236,22 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private void configureAvailableSpeedStepModes() {
         EnumSet<SpeedStepMode> modes = jmri.InstanceManager.throttleManagerInstance()
                 .supportedSpeedModes();
-        if (modes.contains(SpeedStepMode.SpeedStepMode128)) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_128)) {
             speedStep128Button.setEnabled(true);
         } else {
             speedStep128Button.setEnabled(false);
         }
-        if (modes.contains(SpeedStepMode.SpeedStepMode28)) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_28)) {
             speedStep28Button.setEnabled(true);
         } else {
             speedStep28Button.setEnabled(false);
         }
-        if (modes.contains(SpeedStepMode.SpeedStepMode27)) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_27)) {
             speedStep27Button.setEnabled(true);
         } else {
             speedStep27Button.setEnabled(false);
         }
-        if (modes.contains(SpeedStepMode.SpeedStepMode14)) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_14)) {
             speedStep14Button.setEnabled(true);
         } else {
             speedStep14Button.setEnabled(false);

@@ -73,7 +73,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String CLIENTS = "clients"; // NOI18N
     private Throttle throttle;
-    private SpeedStepMode speedSteps = SpeedStepMode.SpeedStepMode128;
+    private SpeedStepMode speedSteps = SpeedStepMode.NMRA_DCC_128;
     private DccLocoAddress address = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 

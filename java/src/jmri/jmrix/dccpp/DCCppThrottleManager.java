@@ -122,7 +122,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.SpeedStepMode128); }
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128); }
 
     // Handle incoming messages for throttles.
     @Override

@@ -818,15 +818,15 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         // from when speed step modes were in DccThrottle. If the input does not match
         // any of the old modes, decode based on the new speed step names.
         if(mode.equals("1"))  {
-            return SpeedStepMode.SpeedStepMode128;
+            return SpeedStepMode.NMRA_DCC_128;
         } else if(mode.equals("2")) {
-            return SpeedStepMode.SpeedStepMode28;
+            return SpeedStepMode.NMRA_DCC_28;
         } else if(mode.equals("4")) {
-            return SpeedStepMode.SpeedStepMode27;
+            return SpeedStepMode.NMRA_DCC_27;
         } else if(mode.equals("8")) {
-            return SpeedStepMode.SpeedStepMode14;
+            return SpeedStepMode.NMRA_DCC_14;
         } else if(mode.equals("16")) {
-            return SpeedStepMode.SpeedStepMode28Mot;
+            return SpeedStepMode.MOTOROLA_28;
         }
         return SpeedStepMode.getByName(mode);
     }

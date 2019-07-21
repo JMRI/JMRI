@@ -53,7 +53,7 @@ public class SerialThrottle extends AbstractThrottle {
         this.f21 = false;
         this.address = address;
         this.isForward = true;
-        this.speedStepMode = SpeedStepMode.SpeedStepModeTMCC32;
+        this.speedStepMode = SpeedStepMode.TMCC_32;
         this.speedIncrement = SPEED_STEP_32_INCREMENT;
 
     }

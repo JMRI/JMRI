@@ -46,7 +46,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.SpeedStepMode28;
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }

@@ -106,7 +106,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.SpeedStepMode28;
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
@@ -129,7 +129,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testGetSpeed_float() {
         // set speed step mode to 128.
-        instance.setSpeedStepMode(jmri.SpeedStepMode.SpeedStepMode128);
+        instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
         Assert.assertEquals("Full Speed", 127, ((LocoNetThrottle)instance).intSpeed(1.0F));
         float incre = 0.007874016f;
         float speed = incre;

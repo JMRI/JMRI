@@ -728,9 +728,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.SpeedStepMode128
-                , SpeedStepMode.SpeedStepMode28
-                , SpeedStepMode.SpeedStepMode14);
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
+                , SpeedStepMode.NMRA_DCC_28
+                , SpeedStepMode.NMRA_DCC_14);
     }
 
     /**

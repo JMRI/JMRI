@@ -20,15 +20,15 @@ import java.util.EnumSet;
  */
 @javax.annotation.concurrent.Immutable
 public enum SpeedStepMode {
-    Unknown("unknown"),
+    UNKNOWN("unknown"),
     // NMRA DCC standard speed step modes.
-    SpeedStepMode128("128"),
-    SpeedStepMode28("28"),
-    SpeedStepMode27("27"),
-    SpeedStepMode14("14"),
+    NMRA_DCC_128("128"),
+    NMRA_DCC_28("28"),
+    NMRA_DCC_27("27"),
+    NMRA_DCC_14("14"),
     // Non-DCC speed step modes.
-    SpeedStepMode28Mot("motorola_28"), // Motorola 28 speed step mode.
-    SpeedStepModeTMCC32("tmcc_32"); // Lionel TMCC 32 speed step mode.
+    MOTOROLA_28("motorola_28"), // Motorola 28 speed step mode.
+    TMCC_32("tmcc_32"); // Lionel TMCC 32 speed step mode.
 
     SpeedStepMode(String name) {
         this.name = name;
@@ -64,19 +64,19 @@ public enum SpeedStepMode {
             EnumSet<SpeedStepMode> command_station_modes,
             EnumSet<SpeedStepMode> decoder_modes) {
         EnumSet<SpeedStepMode> result = getCompatibleModes(command_station_modes, decoder_modes);
-        if(result.contains(SpeedStepMode128)) {
-            return SpeedStepMode128;
-        } else if(result.contains(SpeedStepModeTMCC32)) {
-            return SpeedStepModeTMCC32;
-        } else if(result.contains(SpeedStepMode28)) {
-            return SpeedStepMode28;
-        } else if(result.contains(SpeedStepMode28Mot)) {
-            return SpeedStepMode28Mot;
-        } else if(result.contains(SpeedStepMode27)) {
-            return SpeedStepMode27;
-        } else if(result.contains(SpeedStepMode14)) {
-            return SpeedStepMode14;
+        if(result.contains(NMRA_DCC_128)) {
+            return NMRA_DCC_128;
+        } else if(result.contains(TMCC_32)) {
+            return TMCC_32;
+        } else if(result.contains(NMRA_DCC_28)) {
+            return NMRA_DCC_28;
+        } else if(result.contains(MOTOROLA_28)) {
+            return MOTOROLA_28;
+        } else if(result.contains(NMRA_DCC_27)) {
+            return NMRA_DCC_27;
+        } else if(result.contains(NMRA_DCC_14)) {
+            return NMRA_DCC_14;
         }
-        return Unknown;
+        return UNKNOWN;
     }
 }

@@ -56,7 +56,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             log.error("LocoAddress {} is not a DccLocoAddress",address);
         }
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
-        this.speedStepMode = SpeedStepMode.SpeedStepMode128;
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
         log.debug("DCCppThrottle constructor called for address {}", address);

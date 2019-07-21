@@ -31,7 +31,7 @@ public class Pr2Throttle extends AbstractThrottle {
         super(memo);
         this.address = address;
         addr = address.getNumber();
-        setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
+        setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
         this.speedIncrement = 1;  // 128 step mode only
     }
 
@@ -47,13 +47,13 @@ public class Pr2Throttle extends AbstractThrottle {
         } else if (lSpeed == 1) {
             return -1.f;   // estop
         }
-        if (getSpeedStepMode() == SpeedStepMode.SpeedStepMode28) {
+        if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_28) {
             if (lSpeed <= 15) //Value less than 15 is in the stop/estop range bracket
             {
                 return 0.f;
             }
             return (((lSpeed - 12) / 4f) / 28.f);
-        } else if (getSpeedStepMode() == SpeedStepMode.SpeedStepMode14) {
+        } else if (getSpeedStepMode() == SpeedStepMode.NMRA_DCC_14) {
             if (lSpeed <= 15) //Value less than 15 is in the stop/estop range bracket
             {
                 return 0.f;
@@ -78,10 +78,10 @@ public class Pr2Throttle extends AbstractThrottle {
     protected int intSpeed(float fSpeed) {
         if (fSpeed< 0.) return 1;  // what the parent class does
         switch (this.getSpeedStepMode()) {
-            case SpeedStepMode28:
-            case SpeedStepMode28Mot:
+            case NMRA_DCC_28:
+            case MOTOROLA_28:
                 return (int) ((fSpeed * 28) * 4) + 12;
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 return (int) ((fSpeed * 14) * 8) + 8;
                 
             default:

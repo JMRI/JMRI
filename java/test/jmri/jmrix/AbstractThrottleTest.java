@@ -1413,7 +1413,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testSetSpeedStepMode() {
-        instance.setSpeedStepMode(SpeedStepMode.SpeedStepMode128);
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
     }
 
     /**

@@ -96,7 +96,7 @@ public class CbusThrottle extends AbstractThrottle {
 //        }
         // Only 128 speed step supported at the moment
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
-        this.speedStepMode = SpeedStepMode.SpeedStepMode128;
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         // start periodically sending keep alives, to keep this
         // attached
@@ -133,10 +133,10 @@ public class CbusThrottle extends AbstractThrottle {
         speedStepMode = Mode;
         super.setSpeedStepMode(speedStepMode);
         switch (speedStepMode) {
-            case SpeedStepMode28:
+            case NMRA_DCC_28:
                 mode = CbusConstants.CBUS_SS_28;
                 break;
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 mode = CbusConstants.CBUS_SS_14;
                 break;
             default:

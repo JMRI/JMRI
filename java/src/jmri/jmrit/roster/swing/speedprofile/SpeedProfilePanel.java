@@ -514,13 +514,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         SpeedStepMode speedStepMode = t.getSpeedStepMode();
         profileIncrement = t.getSpeedIncrement();
         switch(speedStepMode) {
-            case SpeedStepMode14:
+            case NMRA_DCC_14:
                 profileSpeedStepMode = 14;
                 break;
-            case SpeedStepMode27:
+            case NMRA_DCC_27:
                 profileSpeedStepMode = 27;
                 break;
-            case SpeedStepMode28:
+            case NMRA_DCC_28:
                 profileSpeedStepMode = 28;
                 break;
                 // TODO: handle motorola 28 speed step mode

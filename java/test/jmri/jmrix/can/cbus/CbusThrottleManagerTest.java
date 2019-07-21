@@ -185,7 +185,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         
         Assert.assertEquals("speed setting",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("speed increment",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedIncrement"));
-        Assert.assertEquals("speed step mode",SpeedStepMode.SpeedStepMode128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
+        Assert.assertEquals("speed step mode",SpeedStepMode.NMRA_DCC_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
 
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );
         cbtmb.reply(r);

@@ -71,7 +71,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
 
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.SpeedStepMode128, SpeedStepMode.SpeedStepMode28);
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override
