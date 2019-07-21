@@ -152,8 +152,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 _emergencyStop = (speed < 0.0F);
             }
         } else if (e.getPropertyName().equals("SpeedSteps")) {
-            // TODO(austin): figure out where this value comes from and fix it.
-            SpeedStepMode steps = SpeedStepMode.getByName((String)e.getNewValue()); // = ((Integer) e.getNewValue()).intValue();
+            SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedSteps(steps);
             _throttleFrame.setSpeedStepMode(steps);
         } else if (e.getPropertyName().equals("IsForward")) {

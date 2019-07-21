@@ -73,7 +73,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String CLIENTS = "clients"; // NOI18N
     private Throttle throttle;
-    private int speedSteps = 1;
+    private SpeedStepMode speedSteps = SpeedStepMode.SpeedStepMode128;
     private DccLocoAddress address = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
@@ -356,22 +356,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         log.debug("Found throttle {}", throttle.getLocoAddress());
         this.throttle = throttle;
         throttle.addPropertyChangeListener(this);
-        switch (throttle.getSpeedStepMode()) {
-            case SpeedStepMode14:
-                this.speedSteps = 14;
-                break;
-            case SpeedStepMode27:
-                this.speedSteps = 27;
-                break;
-            case SpeedStepMode28:
-            case SpeedStepMode28Mot:
-                this.speedSteps = 28;
-                break;
-            case SpeedStepMode128:
-            default:
-                this.speedSteps = 126;
-                break;
-        }
+        this.speedSteps = throttle.getSpeedStepMode();
         this.sendStatus();
     }
 
@@ -465,7 +450,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(Throttle.F26, this.throttle.getF26());
         data.put(Throttle.F27, this.throttle.getF27());
         data.put(Throttle.F28, this.throttle.getF28());
-        data.put(SPEED_STEPS, this.speedSteps);
+        data.put(SPEED_STEPS, this.speedSteps.name);
         data.put(CLIENTS, InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size());
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());

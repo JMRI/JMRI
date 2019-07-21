@@ -1196,9 +1196,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
             internalAdjust = false;
         } else if (e.getPropertyName().equals("SpeedSteps")) {
-            // TODO(austin): figure out where this comes from and update to enum.
-            //int steps = ((Integer) e.getNewValue()).intValue();
-            SpeedStepMode steps = SpeedStepMode.SpeedStepMode128;
+            SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedStepsMode(steps);
         } else if (e.getPropertyName().equals("IsForward")) {
             boolean Forward = ((Boolean) e.getNewValue()).booleanValue();

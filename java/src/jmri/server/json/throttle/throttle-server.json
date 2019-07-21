@@ -137,7 +137,7 @@
 			"description": "true if function on; false otherwise"
 		},
 		"speedSteps": {
-			"type": "integer",
+			"type": "string",
 			"description": "Number of steps between idle and full throttle"
 		},
 		"clients": {

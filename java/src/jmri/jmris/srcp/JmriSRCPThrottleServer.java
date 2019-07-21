@@ -74,7 +74,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             DccLocoAddress addr = new DccLocoAddress(address, !(t.canBeShortAddress(address)));
             Boolean isForward = (Boolean) t.getThrottleInfo(addr, "IsForward");
             Float speedSetting = (Float) t.getThrottleInfo(addr, "SpeedSetting");
-            SpeedStepMode speedStepMode = (SpeedStepMode) t.getThrottleInfo(addr, "SpeedStepMode"); // TODO(austin): fix this to return a speed step mode.
+            SpeedStepMode speedStepMode = (SpeedStepMode) t.getThrottleInfo(addr, "SpeedStepMode");
             Boolean f0 = (Boolean) t.getThrottleInfo(addr, "F0");
             Boolean f1 = (Boolean) t.getThrottleInfo(addr, "F1");
             Boolean f2 = (Boolean) t.getThrottleInfo(addr, "F2");
