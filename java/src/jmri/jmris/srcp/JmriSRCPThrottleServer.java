@@ -107,22 +107,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             // and now build the output string to send
             String StatusString = "100 INFO " + bus + " GL " + address + " ";
             StatusString += isForward ? "1 " : "0 ";
-            switch (speedStepMode) {
-                case NMRA_DCC_14:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 14) + " " + 14;
-                    break;
-                case NMRA_DCC_27:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 27) + " " + 27;
-                    break;
-                case NMRA_DCC_28:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 28) + " " + 28;
-                    break;
-                case NMRA_DCC_128:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 126) + " " + 126;
-                    break;
-                default:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 100) + " " + 100;
-            }
+            StatusString += (int) java.lang.Math.ceil(speedSetting * speedStepMode.numSteps) + " " + speedStepMode.numSteps;
             StatusString += f0 ? " 1" : " 0";
             StatusString += f1 ? " 1" : " 0";
             StatusString += f2 ? " 1" : " 0";
