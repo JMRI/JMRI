@@ -147,7 +147,7 @@
  * Starting with 5.0.0, the JSON protocol version follows semantic version
  * rules, prior to that the version is just a major.minor version.
  * <dl>
- * <dt>5.1.0 (JMRI 4.17.2)</dt>
+ * <dt>6.0.0 (JMRI 4.17.3)</dt>
  * <dd>
  * <ul>
  * <li>Updates the throttle "speedSteps" field to a string so that it can 
