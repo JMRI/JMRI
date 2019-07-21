@@ -1017,7 +1017,11 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       <li>Jemmy's <code>clearText()</code> and <code>typeText(String)</code> methods can't 
             handle <code>JTextComponents</code> with complex borders 
             (such as used by <code>SystemNameValidator</code> and <code>NamedBeanComboBox</code>); 
-            those methods need to be replaced with s<code>etText(String)</code>
+            those methods need to be replaced with <code>setText(String)</code>.
+            Please note that <code>setText</code> just sets the text value in the text entry box
+            while <code>typeText</code> types in every single character.
+            If you are testing a text entry field with a keyListener attached, 
+            the keyListener <u>never</u> executes with <code>setText</code>.
       </ul>
 
       <h4>Example of Closing a Dialog Box</h4>
