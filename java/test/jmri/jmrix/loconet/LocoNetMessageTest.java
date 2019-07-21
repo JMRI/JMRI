@@ -318,7 +318,7 @@ public class LocoNetMessageTest {
 
         m = new LocoNetMessage(new int[] {0xb2, 0x1E, 0x47, 0x00});
 
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo());
         LocoNetInterfaceScaffold lnis2 = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo("L2", "LocoNet2"));
         LnTurnoutManager lntm = new LnTurnoutManager(lnis.getSystemConnectionMemo(), lnis, false);
         LnTurnoutManager lntm2 = new LnTurnoutManager(lnis2.getSystemConnectionMemo(), lnis2, false);

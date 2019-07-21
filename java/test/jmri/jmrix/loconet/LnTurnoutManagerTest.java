@@ -105,7 +105,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Turnout o = l.newTurnout("LT21", "my name");
 
         log.debug("received turnout value {}", o);
-        Assert.assertNotNull((LnTurnout) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -128,8 +128,9 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
-        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
         // create and register the manager object
         l = new LnTurnoutManager(memo, lnis, false);
         jmri.InstanceManager.setTurnoutManager(l);

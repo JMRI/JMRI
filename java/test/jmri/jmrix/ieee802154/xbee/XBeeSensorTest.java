@@ -76,9 +76,10 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
+        tc.setAdapterMemo(memo);
+        memo.setTrafficController(tc);
         memo.setSystemPrefix("ABC");
         memo.setSensorManager(new XBeeSensorManager(memo));
-        tc.setAdapterMemo(memo);
         t = new XBeeSensor("ABCS1234", "XBee Sensor Test", tc) {
             @Override
             public void requestUpdateFromLayout() {
