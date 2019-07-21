@@ -36,9 +36,9 @@ public enum SpeedStepMode {
         this.increment = 1.0f / numSteps;
     }
 
-    public String name;
-    public int numSteps;
-    public float increment;
+    public final String name;
+    public final int numSteps;
+    public final float increment;
 
     /**
      * Convert a human-readable string to a DCC speed step mode.
