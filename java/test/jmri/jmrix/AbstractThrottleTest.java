@@ -767,7 +767,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 0.0F;
+        float expResult = 1.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
@@ -1421,7 +1421,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = null;
+        SpeedStepMode expResult = SpeedStepMode.UNKNOWN;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }

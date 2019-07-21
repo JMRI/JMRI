@@ -36,7 +36,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F;
+        float expResult = SpeedStepMode.NMRA_DCC_28.increment;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }

@@ -39,6 +39,17 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
+    
+    /**
+     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.NMRA_DCC_128.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
+    }
 
     /**
      * Test of setSpeedSetting method, of class AbstractThrottle.
