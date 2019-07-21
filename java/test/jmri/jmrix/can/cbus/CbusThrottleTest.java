@@ -360,6 +360,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -367,6 +368,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
     
@@ -394,6 +396,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new TrafficControllerScaffold();
@@ -405,6 +408,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

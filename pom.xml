@@ -33,6 +33,7 @@
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
+        <jqassistant.version>1.6.0</jqassistant.version>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -606,6 +607,12 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- don't run  jqassistant (yet) on every build.
+            <plugin>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
@@ -626,24 +633,24 @@
                 </configuration>
             </plugin>
             <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-enforcer-plugin</artifactId>
-	            <version>3.0.0-M2</version>
-	            <executions>
-	                <execution>
-	                    <id>enforce-maven</id>
-	                    <goals>
-	                        <goal>enforce</goal>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
                         </goals>
-	                    <configuration>
-	                        <rules>
-	                            <requireMavenVersion>
-	                                <version>[3.3.9,)</version>
-	                            </requireMavenVersion>
-	                        </rules>
-	                    </configuration>
-	                </execution>
-	            </executions>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3.9,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -716,6 +723,23 @@
                         <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     </configuration>
                 </plugin>        
+                <plugin>
+                   <groupId>com.buschmais.jqassistant</groupId>
+                   <artifactId>jqassistant-maven-plugin</artifactId>
+                   <version>${jqassistant.version}</version>
+                   <executions>
+                        <execution>
+                            <goals>
+                                <goal>scan</goal>
+                                <goal>analyze</goal>
+                            </goals>
+                            <configuration>
+                                <warnOnSeverity>MINOR</warnOnSeverity>
+                                <failOnSeverity>MAJOR</failOnSeverity>
+                            </configuration>
+                        </execution>
+                   </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -751,6 +775,17 @@
                     <reportSet>
                         <reports>
                             <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
                             <report>report</report>
                         </reports>
                     </reportSet>
@@ -1113,10 +1148,10 @@
             <version>1.0.10</version>
         </dependency>
         <dependency>
-	        <groupId>org.eclipse.paho</groupId>
-	        <artifactId>mqtt-client</artifactId>
-	        <version>0.4.0</version>
-	    </dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
         <dependency>
             <groupId>com.alexandriasoftware.swing</groupId>
             <artifactId>jsplitbutton</artifactId>
@@ -1125,7 +1160,7 @@
         <dependency>
             <groupId>com.alexandriasoftware.swing</groupId>
             <artifactId>jinputvalidator</artifactId>
-            <version>0.4.0</version>
+            <version>0.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

@@ -42,6 +42,7 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -54,5 +55,6 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

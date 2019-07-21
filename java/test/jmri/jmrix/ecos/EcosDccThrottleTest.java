@@ -44,6 +44,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Ignore("needs response to see change?")
     @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
+    @Override
     public void testSetSpeedSetting() {
         float speed = 1.0F;
         instance.setSpeedSetting(speed);
@@ -392,6 +393,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         EcosSystemConnectionMemo memo = null; 
         if(!GraphicsEnvironment.isHeadless()) { 

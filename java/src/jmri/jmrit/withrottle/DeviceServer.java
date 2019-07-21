@@ -653,6 +653,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @param message 
      * Format: HMmessage
      */
+    @Override
     public void sendAlertMessage(String message) {        
         sendPacketToDevice("HM" + message);
     }
@@ -663,6 +664,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @param message 
      * Format: Hmmessage
      */
+    @Override
     public void sendInfoMessage(String message) {
         sendPacketToDevice("Hm" + message);
     }

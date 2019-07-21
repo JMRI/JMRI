@@ -26,6 +26,7 @@ public class IEEE802154MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new IEEE802154SystemConnectionMemo();
@@ -37,6 +38,7 @@ public class IEEE802154MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
             panel = pane = null;
             helpTarget = null;

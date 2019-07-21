@@ -218,6 +218,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonRouteHttpService(mapper);
@@ -227,6 +228,7 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

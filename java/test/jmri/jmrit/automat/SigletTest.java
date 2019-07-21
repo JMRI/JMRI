@@ -16,10 +16,12 @@ public class SigletTest {
     @Test
     public void testBasics() throws JmriException {
         Siglet t = new Siglet() {
+            @Override
             public void defineIO() {
                 defined = true;
                 setInputs(new NamedBean[]{is1, is2});
             }
+            @Override
             public void setOutput() {
                 output = true;
             }
@@ -46,9 +48,11 @@ public class SigletTest {
     @Test
     public void testNoInpuUnNamed() throws JmriException {
         Siglet t = new Siglet() {
+            @Override
             public void defineIO() {
                 defined = true;
             }
+            @Override
             public void setOutput() {
                 output = true;
             }
@@ -65,9 +69,11 @@ public class SigletTest {
     @Test
     public void testNoInputNamed() throws JmriException {
         Siglet t = new Siglet() {
+            @Override
             public void defineIO() {
                 defined = true;
             }
+            @Override
             public void setOutput() {
                 output = true;
             }
