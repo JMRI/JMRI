@@ -4955,11 +4955,11 @@ class ADlocomotive :
                   + self.name + " (" + str(self.address) + ")")
                 self.leadThrottle = self.throttle
             speedStepMode = self.throttle.getSpeedStepMode()
-            if speedStepMode == DccThrottle.SpeedStepMode128 :
+            if speedStepMode == SpeedStepMode.SpeedStepMode128 :
                 self.stepsNumber = 126.
-            elif speedStepMode == DccThrottle.SpeedStepMode28 :
+            elif speedStepMode == SpeedStepMode.SpeedStepMode28 :
                 self.stepsNumber = 28.
-            elif speedStepMode == DccThrottle.SpeedStepMode27 :
+            elif speedStepMode == SpeedStepMode.SpeedStepMode27 :
                 self.stepsNumber = 27.
             else :
                 self.stepsNumber = 14.

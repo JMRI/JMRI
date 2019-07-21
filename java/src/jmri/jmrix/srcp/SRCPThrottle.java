@@ -3,6 +3,7 @@ package jmri.jmrix.srcp;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -24,11 +25,11 @@ public class SRCPThrottle extends AbstractThrottle {
      */
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address) {
         // default to 128 speed steps with 28 functions and NMRA protocl.
-        this(memo, address, "N", SpeedStepMode128, 28);
+        this(memo, address, "N", SpeedStepMode.SpeedStepMode128, 28);
     }
 
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
-            String protocol, int mode, int functions) {
+            String protocol, SpeedStepMode mode, int functions) {
         super(memo);
         if (!protocol.equals("N")) {
             throw new IllegalArgumentException("Protocol " + protocol + " not supported");
@@ -209,7 +210,7 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
         switch (Mode) {
             case SpeedStepMode14:

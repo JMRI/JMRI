@@ -8,6 +8,7 @@ import java.util.Vector;
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -36,7 +37,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Question: should we set a default speed step mode so it's never zero?
      */
-    protected int speedStepMode;
+    protected SpeedStepMode speedStepMode;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
     protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,
@@ -1752,26 +1753,31 @@ abstract public class AbstractThrottle implements DccThrottle {
      * @param Mode the current speed step mode
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         log.debug("Speed Step Mode Change from:{} to Mode:{}",this.speedStepMode,Mode);
         if (speedStepMode != Mode) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
         }
-        if (Mode == DccThrottle.SpeedStepMode14) {
-            speedIncrement = SPEED_STEP_14_INCREMENT;
-        } else if (Mode == DccThrottle.SpeedStepMode27) {
-            speedIncrement = SPEED_STEP_27_INCREMENT;
-        } else if (Mode == DccThrottle.SpeedStepMode28) {
-            speedIncrement = SPEED_STEP_28_INCREMENT;
-        } else // default to 128 speed step mode
-        {
-            speedIncrement = SPEED_STEP_128_INCREMENT;
+        switch(Mode) {
+            case SpeedStepMode14:
+                speedIncrement = SPEED_STEP_14_INCREMENT;
+                break;
+            case SpeedStepMode27:
+                speedIncrement = SPEED_STEP_27_INCREMENT;
+                break;
+            case SpeedStepMode28:
+            case SpeedStepMode28Mot:
+                speedIncrement = SPEED_STEP_28_INCREMENT;
+                break;
+            case SpeedStepMode128:
+                speedIncrement = SPEED_STEP_128_INCREMENT;
+                break;
         }
     }
 
     @Override
-    public int getSpeedStepMode() {
+    public SpeedStepMode getSpeedStepMode() {
         return speedStepMode;
     }
 

@@ -24,6 +24,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -356,17 +357,17 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         this.throttle = throttle;
         throttle.addPropertyChangeListener(this);
         switch (throttle.getSpeedStepMode()) {
-            case DccThrottle.SpeedStepMode14:
+            case SpeedStepMode14:
                 this.speedSteps = 14;
                 break;
-            case DccThrottle.SpeedStepMode27:
+            case SpeedStepMode27:
                 this.speedSteps = 27;
                 break;
-            case DccThrottle.SpeedStepMode28:
-            case DccThrottle.SpeedStepMode28Mot:
+            case SpeedStepMode28:
+            case SpeedStepMode28Mot:
                 this.speedSteps = 28;
                 break;
-            case DccThrottle.SpeedStepMode128:
+            case SpeedStepMode128:
             default:
                 this.speedSteps = 126;
                 break;

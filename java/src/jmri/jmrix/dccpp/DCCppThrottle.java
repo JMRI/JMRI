@@ -2,8 +2,8 @@ package jmri.jmrix.dccpp;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +56,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             log.error("LocoAddress {} is not a DccLocoAddress",address);
         }
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
-        this.speedStepMode = DccThrottle.SpeedStepMode128;
+        this.speedStepMode = SpeedStepMode.SpeedStepMode128;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
         log.debug("DCCppThrottle constructor called for address {}", address);
@@ -207,7 +207,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * setting, even though we store it.
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
     }
 

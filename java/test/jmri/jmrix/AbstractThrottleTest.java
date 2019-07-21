@@ -7,6 +7,7 @@ import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1412,8 +1413,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testSetSpeedStepMode() {
-        int Mode = 0;
-        instance.setSpeedStepMode(Mode);
+        instance.setSpeedStepMode(SpeedStepMode.SpeedStepMode128);
     }
 
     /**
@@ -1421,8 +1421,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeedStepMode() {
-        int expResult = 0;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = null;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 

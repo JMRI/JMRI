@@ -41,6 +41,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -451,7 +452,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                         break;
 
                     case 's':       //v>=2.0
-                        handleSpeedStepMode(Integer.parseInt(inPackage.substring(1)));
+                        handleSpeedStepMode(SpeedStepMode.getByName(inPackage.substring(1)));
                         break;
 
                     case 'm':       //v>=2.0
@@ -755,7 +756,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    protected void handleSpeedStepMode(int newMode) {
+    protected void handleSpeedStepMode(SpeedStepMode newMode) {
         throttle.setSpeedStepMode(newMode);
     }
 

@@ -1,6 +1,8 @@
 package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -33,8 +35,8 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.SpeedStepMode128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 

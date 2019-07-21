@@ -42,6 +42,7 @@ import jmri.PowerManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.RosterEntry;
@@ -1727,8 +1728,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         throttle = t;
         log.info("Throttle acquired");
-        throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
-        if (throttle.getSpeedStepMode() != DccThrottle.SpeedStepMode28) {
+        throttle.setSpeedStepMode(SpeedStepMode.SpeedStepMode28);
+        if (throttle.getSpeedStepMode() != SpeedStepMode.SpeedStepMode28) {
             log.error("Failed to set 28 step mode");
             statusLabel.setText(Bundle.getMessage("ThrottleError28"));
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
