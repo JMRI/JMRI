@@ -183,7 +183,7 @@ public class LayoutTrackEditors {
 
         // Cancel
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
-        target.add(cancelButton); 
+        target.add(cancelButton);
         cancelButton.addActionListener(cancelCallback);
         cancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
 
@@ -271,7 +271,7 @@ public class LayoutTrackEditors {
             });
             editTrackSegmentSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
 
-            addDoneCancelButtons(panel5, editTrackSegmentFrame.getRootPane(), 
+            addDoneCancelButtons(panel5, editTrackSegmentFrame.getRootPane(),
                     this::editTracksegmentDonePressed, this::editTrackSegmentCancelPressed);
             contentPane.add(panel5);
         }
@@ -287,7 +287,8 @@ public class LayoutTrackEditors {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
         }
         editTrackSegmentHiddenCheckBox.setSelected(trackSegment.isHidden());
-        editTrackSegmentBlockNameComboBox.setSelectedItem(trackSegment.getBlockName());
+        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
+        editTrackSegmentBlockNameComboBox.setSelectedItem(block);
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
 
         if (trackSegment.isArc() && trackSegment.isCircle()) {
@@ -313,7 +314,8 @@ public class LayoutTrackEditors {
     @InvokeOnGuiThread
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editTrackSegmentBlockNameComboBox.getSelectedItemUserName();
+        String newName = editTrackSegmentBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
@@ -368,7 +370,8 @@ public class LayoutTrackEditors {
             editTrackSegmentNeedsRedraw = true;
         }
         // check if Block changed
-        String newName = editTrackSegmentBlockNameComboBox.getSelectedItemUserName();
+        String newName = editTrackSegmentBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
@@ -466,7 +469,7 @@ public class LayoutTrackEditors {
                     InstanceManager.turnoutManagerInstance(),
                     layoutTurnout.getTurnout(),
                     DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, true, true);
+            LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, false, true);
 
             editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox));
             // editLayoutTurnout1stTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
@@ -482,7 +485,7 @@ public class LayoutTrackEditors {
                     InstanceManager.turnoutManagerInstance(),
                     layoutTurnout.getSecondTurnout(),
                     DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, true, false);
+            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, false);
 
             editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
                     layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout2ndTurnoutComboBox));
@@ -602,25 +605,25 @@ public class LayoutTrackEditors {
             // Edit Block
 
             editLayoutTurnoutBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-            
-            addDoneCancelButtons(panel5, editLayoutTurnoutFrame.getRootPane(), 
+
+            addDoneCancelButtons(panel5, editLayoutTurnoutFrame.getRootPane(),
                     this::editLayoutTurnoutDonePressed, this::editLayoutTurnoutCancelPressed);
             contentPane.add(panel5);
         }
 
-        editLayoutTurnout1stTurnoutComboBox.setSelectedItem(layoutTurnout.getTurnoutName());
+        editLayoutTurnout1stTurnoutComboBox.setSelectedItem(layoutTurnout.getTurnout());
 
         editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
-
         // Set up for Edit
-        editLayoutTurnoutBlockNameComboBox.setSelectedItem(layoutTurnout.getBlockName());
+        BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+        editLayoutTurnoutBlockNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockName()));
         editLayoutTurnoutBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlock()));
         if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                 || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
                 || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
-            editLayoutTurnoutBlockBNameComboBox.setSelectedItem(layoutTurnout.getBlockBName());
-            editLayoutTurnoutBlockCNameComboBox.setSelectedItem(layoutTurnout.getBlockCName());
-            editLayoutTurnoutBlockDNameComboBox.setSelectedItem(layoutTurnout.getBlockDName());
+            editLayoutTurnoutBlockBNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockBName()));
+            editLayoutTurnoutBlockCNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockCName()));
+            editLayoutTurnoutBlockDNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockDName()));
             editLayoutTurnoutBlockBNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockB()));
             editLayoutTurnoutBlockCNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockC()));
             editLayoutTurnoutBlockDNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockD()));
@@ -639,7 +642,7 @@ public class LayoutTrackEditors {
         editLayoutTurnout2ndTurnoutComboBox.setEnabled(enable2nd);
         if (enable2nd) {
             editLayoutTurnout2ndTurnoutInvertCheckBox.setSelected(layoutTurnout.isSecondTurnoutInverted());
-            editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(layoutTurnout.getSecondTurnoutName());
+            editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(layoutTurnout.getSecondTurnout());
         } else {
             editLayoutTurnout2ndTurnoutInvertCheckBox.setSelected(false);
             editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(null);
@@ -671,7 +674,8 @@ public class LayoutTrackEditors {
 
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemUserName();
+        String newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -696,7 +700,8 @@ public class LayoutTrackEditors {
 
     private void editLayoutTurnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemUserName();
+        String newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutTurnout.getBlockBName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -721,7 +726,8 @@ public class LayoutTrackEditors {
 
     private void editLayoutTurnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLayoutTurnoutBlockCNameComboBox.getSelectedItemUserName();
+        String newName = editLayoutTurnoutBlockCNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutTurnout.getBlockCName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -746,7 +752,8 @@ public class LayoutTrackEditors {
 
     private void editLayoutTurnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLayoutTurnoutBlockDNameComboBox.getSelectedItemUserName();
+        String newName = editLayoutTurnoutBlockDNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutTurnout.getBlockDName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -772,6 +779,7 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutDonePressed(ActionEvent a) {
         // check if Turnout changed
         String newName = editLayoutTurnout1stTurnoutComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutTurnout.getTurnoutName().equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(
@@ -786,6 +794,7 @@ public class LayoutTrackEditors {
 
         if (editLayoutTurnout2ndTurnoutCheckBox.isSelected()) {
             newName = editLayoutTurnout2ndTurnoutComboBox.getSelectedItemDisplayName();
+            if (newName == null) newName = "";
             if (!layoutTurnout.getSecondTurnoutName().equals(newName)) {
                 if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                         || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
@@ -819,7 +828,8 @@ public class LayoutTrackEditors {
         }
 
         // check if Block changed
-        newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemUserName();
+        newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -834,7 +844,8 @@ public class LayoutTrackEditors {
                 || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)
                 || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
             // check if Block 2 changed
-            newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemUserName();
+            newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemDisplayName();
+            if (newName == null) newName = "";
             if (!layoutTurnout.getBlockBName().equals(newName)) {
                 // get new block, or null if block has been removed
                 try {
@@ -846,7 +857,8 @@ public class LayoutTrackEditors {
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
             // check if Block 3 changed
-            newName = editLayoutTurnoutBlockCNameComboBox.getSelectedItemUserName();
+            newName = editLayoutTurnoutBlockCNameComboBox.getSelectedItemDisplayName();
+            if (newName == null) newName = "";
             if (!layoutTurnout.getBlockCName().equals(newName)) {
                 // get new block, or null if block has been removed
                 try {
@@ -858,7 +870,8 @@ public class LayoutTrackEditors {
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
             // check if Block 4 changed
-            newName = editLayoutTurnoutBlockDNameComboBox.getSelectedItemUserName();
+            newName = editLayoutTurnoutBlockDNameComboBox.getSelectedItemDisplayName();
+            if (newName == null) newName = "";
             if (!layoutTurnout.getBlockDName().equals(newName)) {
                 // get new block, or null if block has been removed
                 try {
@@ -951,7 +964,7 @@ public class LayoutTrackEditors {
                     InstanceManager.turnoutManagerInstance(),
                     layoutSlip.getTurnout(),
                     DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, true, true);
+            LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, false, true);
 
             editLayoutSlipTurnoutAComboBox.addPopupMenuListener(
                     layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutAComboBox));
@@ -970,7 +983,7 @@ public class LayoutTrackEditors {
                     InstanceManager.turnoutManagerInstance(),
                     layoutSlip.getTurnoutB(),
                     DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, true, true);
+            LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, false, true);
 
             editLayoutSlipTurnoutBComboBox.addPopupMenuListener(
                     layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutBComboBox));
@@ -1066,9 +1079,10 @@ public class LayoutTrackEditors {
         editLayoutSlipHiddenBox.setSelected(layoutSlip.isHidden());
 
         // Set up for Edit
-        editLayoutSlipTurnoutAComboBox.setSelectedItem(layoutSlip.getTurnoutName());
-        editLayoutSlipTurnoutBComboBox.setSelectedItem(layoutSlip.getTurnoutBName());
-        editLayoutSlipBlockNameComboBox.setSelectedItem(layoutSlip.getBlockName());
+        editLayoutSlipTurnoutAComboBox.setSelectedItem(layoutSlip.getTurnout());
+        editLayoutSlipTurnoutBComboBox.setSelectedItem(layoutSlip.getTurnoutB());
+        BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+        editLayoutSlipBlockNameComboBox.setSelectedItem(bm.getBlock(layoutSlip.getBlockName()));
         editLayoutSlipBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlock()));
 
         editLayoutSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1249,7 +1263,8 @@ public class LayoutTrackEditors {
 
     private void editLayoutSlipEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLayoutSlipBlockNameComboBox.getSelectedItemUserName();
+        String newName = editLayoutSlipBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -1274,6 +1289,7 @@ public class LayoutTrackEditors {
 
     private void editLayoutSlipDonePressed(ActionEvent a) {
         String newName = editLayoutSlipTurnoutAComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutSlip.getTurnoutName().equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutSlipFrame)) {
                 layoutSlip.setTurnout(newName);
@@ -1284,6 +1300,7 @@ public class LayoutTrackEditors {
         }
 
         newName = editLayoutSlipTurnoutBComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutSlip.getTurnoutBName().equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutSlipFrame)) {
                 layoutSlip.setTurnoutB(newName);
@@ -1293,7 +1310,8 @@ public class LayoutTrackEditors {
             editLayoutSlipNeedsRedraw = true;
         }
 
-        newName = editLayoutSlipBlockNameComboBox.getSelectedItemUserName();
+        newName = editLayoutSlipBlockNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
@@ -1457,8 +1475,9 @@ public class LayoutTrackEditors {
         editLevelXingHiddenCheckBox.setSelected(levelXing.isHidden());
 
         // Set up for Edit
-        editLevelXingBlock1NameComboBox.setSelectedItem(levelXing.getBlockNameAC());
-        editLevelXingBlock2NameComboBox.setSelectedItem(levelXing.getBlockNameBD());
+        BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+        editLevelXingBlock1NameComboBox.setSelectedItem(bm.getBlock(levelXing.getBlockNameAC()));
+        editLevelXingBlock2NameComboBox.setSelectedItem(bm.getBlock(levelXing.getBlockNameBD()));
         editLevelXingBlock1NameComboBox.setEnabled(!hasNxSensorPairs(levelXing.getLayoutBlockAC()));  // NOI18N
         editLevelXingBlock2NameComboBox.setEnabled(!hasNxSensorPairs(levelXing.getLayoutBlockBD()));  // NOI18N
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1477,7 +1496,8 @@ public class LayoutTrackEditors {
 
     private void editLevelXingBlockACPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLevelXingBlock1NameComboBox.getSelectedItemUserName();
+        String newName = editLevelXingBlock1NameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!levelXing.getBlockNameAC().equals(newName)) {
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
@@ -1508,12 +1528,8 @@ public class LayoutTrackEditors {
 
     private void editLevelXingBlockBDPressed(ActionEvent a) {
         // check if a block name has been entered
-        String newName = editLevelXingBlock2NameComboBox.getSelectedItemUserName();
-        if (-1 != editLevelXingBlock2NameComboBox.getSelectedIndex()) {
-            newName = editLevelXingBlock2NameComboBox.getSelectedItemDisplayName();
-        } else {
-            newName = (newName != null) ? NamedBean.normalizeUserName(newName) : "";
-        }
+        String newName = editLevelXingBlock2NameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
@@ -1544,7 +1560,8 @@ public class LayoutTrackEditors {
 
     private void editLevelXingDonePressed(ActionEvent a) {
         // check if Blocks changed
-        String newName = editLevelXingBlock1NameComboBox.getSelectedItemUserName();
+        String newName = editLevelXingBlock1NameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!levelXing.getBlockNameAC().equals(newName)) {
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
@@ -1562,7 +1579,8 @@ public class LayoutTrackEditors {
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
         }
-        newName = editLevelXingBlock2NameComboBox.getSelectedItemUserName();
+        newName = editLevelXingBlock2NameComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // get new block, or null if block has been removed
             if (!newName.isEmpty()) {
@@ -1911,7 +1929,7 @@ public class LayoutTrackEditors {
                     InstanceManager.turnoutManagerInstance(),
                     rayTrack.getTurnout(),
                     DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(turnoutNameComboBox, true, true);
+            LayoutEditor.setupComboBox(turnoutNameComboBox, false, true);
             turnoutNameComboBox.setSelectedItem(rayTrack.getTurnout());
 
             String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
@@ -1969,7 +1987,9 @@ public class LayoutTrackEditors {
             if (turnoutNameComboBox == null || rayTurnoutStateComboBox == null) {
                 return;
             }
-            rayTrack.setTurnout(turnoutNameComboBox.getSelectedItemDisplayName(), rayTurnoutStateValues[rayTurnoutStateComboBox.getSelectedIndex()]);
+            String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
+            if (turnoutName == null) turnoutName = "";
+            rayTrack.setTurnout(turnoutName, rayTurnoutStateValues[rayTurnoutStateComboBox.getSelectedIndex()]);
             if (!rayAngleTextField.getText().equals(twoDForm.format(rayTrack.getAngle()))) {
                 try {
                     double ang = Float.parseFloat(rayAngleTextField.getText());
