@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.loconet.LnCommandStationType;
@@ -67,9 +68,8 @@ public class ManagerDefaultSelectorTest {
 
     private LocoNetSystemConnectionMemo getLocoNetTestConnection() {
         // create a test loconet connection
-        LnTrafficController lnis = new LocoNetInterfaceScaffold();
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        lnis.setSystemConnectionMemo(memo);
+        LnTrafficController lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
         return memo;
@@ -148,8 +148,8 @@ public class ManagerDefaultSelectorTest {
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
-        // add Internal as a second connection
-        InternalSystemConnectionMemo internal = new InternalSystemConnectionMemo(false); // self registering
+        // get existing Internal connection
+        InternalSystemConnectionMemo internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class); // self registering
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
