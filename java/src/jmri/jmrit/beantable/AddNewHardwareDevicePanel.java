@@ -155,7 +155,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
      *
      * @param message the message to set
      */
-    @Nonnull
     public void setStatusBarText(@CheckForNull String message) {
         if (message == null) {
             statusBar.setText("");
