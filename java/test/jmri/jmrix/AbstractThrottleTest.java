@@ -767,7 +767,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F;
+        float expResult = 0.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
