@@ -15,6 +15,7 @@ import org.junit.Test;
 public class MqttConnectionConfigTest extends jmri.jmrix.AbstractNetworkConnectionConfigTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -22,6 +23,7 @@ public class MqttConnectionConfigTest extends jmri.jmrix.AbstractNetworkConnecti
     }
 
     @After
+    @Override
     public void tearDown() {
         cc=null;
         JUnitUtil.tearDown();

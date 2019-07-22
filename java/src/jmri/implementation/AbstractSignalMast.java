@@ -168,7 +168,9 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     /**
      * {@inheritDoc }
      */
+    @Override
     public String getMastType() { return mastType; }
+    @Override
     public void setMastType(@Nonnull String type) { 
         Objects.requireNonNull(type, "MastType cannot be null");
         mastType = type;

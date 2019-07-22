@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
@@ -491,32 +492,144 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     @CheckReturnValue
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n2);
 
-    public class BadUserNameException extends IllegalArgumentException {
+    /**
+     * Parent class for a set of classes that describe if a user name or system
+     * name is a bad name.
+     */
+    public class BadNameException extends IllegalArgumentException {
 
+        private final String localizedMessage;
+        
+        /**
+         * Create an exception with no message to the user or for logging.
+         */
+        protected BadNameException() {
+            super();
+            localizedMessage = super.getMessage();
+        }
+
+        /**
+         * Create a localized exception, suitable for display to the user.This
+         * takes the non-localized message followed by the localized message.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param logging the English message for logging
+         * @param display the localized message for display
+         */
+        protected BadNameException(String logging, String display) {
+            super(logging);
+            localizedMessage = display;
+        }
+        
+        @Override
+        public String getLocalizedMessage() {
+            return localizedMessage;
+        }
+        
+    }
+
+    public class BadUserNameException extends BadNameException {
+
+        /**
+         * Create an exception with no message to the user or for logging. Use
+         * only when calling methods likely have alternate mechanism for
+         * allowing user to understand why exception was thrown.
+         */
         public BadUserNameException() {
             super();
         }
 
-        public BadUserNameException(String message) {
-            super(message);
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the same arguments as
+         * {@link jmri.Bundle#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)}
+         * as it uses that method to create both the localized and loggable
+         * messages.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         * <p>
+         * <strong>Note</strong> the message must be accessible by
+         * {@link jmri.Bundle}.
+         * 
+         * @param locale  the locale to be used
+         * @param message bundle key to be translated
+         * @param subs    One or more objects to be inserted into the message
+         */
+        public BadUserNameException(Locale locale, String message, Object... subs) {
+            super(Bundle.getMessage(Locale.ENGLISH, message, subs),
+                    Bundle.getMessage(locale, message, subs));
+        }
+
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the non-localized message followed by the localized message.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param logging the English message for logging
+         * @param display the localized message for display
+         */
+        public BadUserNameException(String logging, String display) {
+            super(logging, display);
         }
     }
 
-    public class BadSystemNameException extends IllegalArgumentException {
+    public class BadSystemNameException extends BadNameException {
 
+        /**
+         * Create an exception with no message to the user or for logging. Use
+         * only when calling methods likely have alternate mechanism for
+         * allowing user to understand why exception was thrown.
+         */
         public BadSystemNameException() {
             super();
         }
 
-        public BadSystemNameException(String message) {
-            super(message);
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the same arguments as
+         * {@link jmri.Bundle#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)}
+         * as it uses that method to create both the localized and loggable
+         * messages.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         * <p>
+         * <strong>Note</strong> the message must be accessible by
+         * {@link jmri.Bundle}.
+         *
+         * @param locale  the locale to be used
+         * @param message bundle key to be translated
+         * @param subs    One or more objects to be inserted into the message
+         */
+        public BadSystemNameException(Locale locale, String message, Object... subs) {
+            this(Bundle.getMessage(Locale.ENGLISH, message, subs),
+                    Bundle.getMessage(locale, message, subs));
+        }
+
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the non-localized message followed by the localized message.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param logging the English message for logging
+         * @param display the localized message for display
+         */
+        public BadSystemNameException(String logging, String display) {
+            super(logging, display);
         }
     }
 
     /**
      * Display options for {@link #getDisplayName(DisplayOptions)}. The quoted
-     * forms are intended to be used in sentances and messages, while the
-     * unquoted forms are intended for use in user inteface elements like lists
+     * forms are intended to be used in sentences and messages, while the
+     * unquoted forms are intended for use in user interface elements like lists
      * and combo boxes.
      */
     public enum DisplayOptions {

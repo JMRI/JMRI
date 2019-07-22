@@ -107,6 +107,11 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
     }
 
     @Override
+    protected int getNumToTest1() {
+        return 6; // overriding 9 since outside valid range
+    }
+
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -29,6 +29,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SecsiSystemConnectionMemo();
@@ -38,6 +39,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @After
+    @Override
     public void tearDown() {
 	t.dispose();
         JUnitUtil.tearDown();

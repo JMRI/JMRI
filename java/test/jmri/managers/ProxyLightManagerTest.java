@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrix.internal.InternalLightManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.Test;
 import org.junit.After;
@@ -58,17 +59,15 @@ public class ProxyLightManagerTest {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideLight("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
-
     }
 
     @Test

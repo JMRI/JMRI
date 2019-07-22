@@ -1439,6 +1439,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     *
     * @return representation of the XNetMessage as a string.
     */
+    @Override
    public String toMonitorString(){
         String text;
         /* Start decoding messages sent by the computer */

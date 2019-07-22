@@ -46,6 +46,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
      * @throws java.lang.Exception on unexpected exceptions
      */
     @Test
+    @Override
     public void testDoGet() throws Exception {
         String name = "non-existant";
         String type = "non-existant";
@@ -68,6 +69,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
      * @throws java.lang.Exception on unexpected exceptions
      */
     @Test
+    @Override
     public void testGetNamedBean() throws Exception {
         String name = "non-existant";
         String type = "non-existant";
@@ -130,6 +132,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
      * @throws java.lang.Exception on unexpected exceptions
      */
     @Test
+    @Override
     public void testPostNamedBean() throws Exception {
         String name = "non-existant";
         String type = "non-existant";

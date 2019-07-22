@@ -19,6 +19,7 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tm = new SerialThrottleManager(new TmccSystemConnectionMemo());

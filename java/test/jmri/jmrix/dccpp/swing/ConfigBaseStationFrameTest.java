@@ -18,6 +18,7 @@ public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -30,6 +31,7 @@ public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

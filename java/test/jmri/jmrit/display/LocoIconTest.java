@@ -18,6 +18,7 @@ public class LocoIconTest extends PositionableTestBase {
     }
 
     @Test
+    @Override
     public void testGetAndSetPositionable() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Defalt Positionable", p.isPositionable());
@@ -49,6 +50,7 @@ public class LocoIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {

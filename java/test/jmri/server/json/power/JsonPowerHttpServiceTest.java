@@ -98,6 +98,7 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
     }
 
     @Test
+    @Override
     public void testDoDelete() {
         try {
             service.doDelete(JsonPowerServiceFactory.POWER, "", NullNode.getInstance(), locale, 42);

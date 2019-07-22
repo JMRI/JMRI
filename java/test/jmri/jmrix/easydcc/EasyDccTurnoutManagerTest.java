@@ -22,6 +22,7 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 

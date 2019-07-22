@@ -80,6 +80,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     *
     * @return representation of the DCCppReply as a string.
     */
+    @Override
    public String toMonitorString(){
         // Beautify and display
         String text;

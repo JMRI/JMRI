@@ -317,11 +317,13 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
 
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }
