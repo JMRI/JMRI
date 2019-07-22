@@ -153,7 +153,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == internal.getPropertyChangeListeners().length;
+            return 0 < internal.getPropertyChangeListeners().length;
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
