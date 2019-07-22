@@ -598,11 +598,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /**
      * {@inheritDoc}
      *
-     * @return {@link NameValidity#INVALID} if system name does not start with
-     *         {@link #getSystemNamePrefix()}; {@link NameValidity#VALID_AS_PREFIX_ONLY}
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name does not
+     *         start with
+     *         {@link #getSystemNamePrefix()}; {@link jmri.Manager.NameValidity#VALID_AS_PREFIX_ONLY}
      *         if system name equals {@link #getSystemNamePrefix()}; otherwise
-     *         {@link NameValidity#VALID} to allow Managers that do perform more
-     *         specific validation to be considered valid.
+     *         {@link jmri.Manager.NameValidity#VALID} to allow Managers that do
+     *         not perform more specific validation to be considered valid.
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
