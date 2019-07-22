@@ -37,7 +37,7 @@ public class ManagerDefaultSelectorTest {
     }
 
     @Test
-    public void testInitialPreferencesValid() {
+    public void testInitialPreferencesValid() throws InitializationException {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         // assert default state
         Assert.assertFalse(mds.isAllInternalDefaultsValid());
@@ -58,21 +58,25 @@ public class ManagerDefaultSelectorTest {
         Assert.assertTrue(mds.isPreferencesValid(profile));
 
         // configured with only default Internal connection, preferences are valid
-        mds.configure(profile);
+        InitializationException ex = mds.configure(profile);
+        if (ex != null) {
+            throw ex; // bomb out with an error
+        }
         Assert.assertTrue(mds.isPreferencesValid(profile));
     }
 
     private LocoNetSystemConnectionMemo getLocoNetTestConnection() {
         // create a test loconet connection
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        LnTrafficController lnis = new LocoNetInterfaceScaffold(memo);
+        lnis.setSystemConnectionMemo(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
         return memo;
     }
 
     @Test
-    public void testSingleSystemPreferencesValid() {
+    public void testSingleSystemPreferencesValid() throws InitializationException {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         // assert default state
         Assert.assertFalse(mds.isAllInternalDefaultsValid());
@@ -94,7 +98,10 @@ public class ManagerDefaultSelectorTest {
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
-        mds.configure(profile);
+        InitializationException ex = mds.configure(profile);
+        if (ex != null) {
+            throw ex; // bomb out with an error
+        }
 
         // check defaults are 1st hardware system
         Assert.assertEquals("getDefault(ThrottleManager) ", "LocoNet", mds.getDefault(jmri.ThrottleManager.class));
@@ -120,7 +127,7 @@ public class ManagerDefaultSelectorTest {
     }
 
     @Test
-    public void testAuxInternalPreferencesValid() {
+    public void testAuxInternalPreferencesValid() throws InitializationException {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
 
@@ -150,7 +157,10 @@ public class ManagerDefaultSelectorTest {
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
-        mds.configure(profile);
+        InitializationException ex = mds.configure(profile);
+        if (ex != null) {
+            throw ex; // bomb out with an error
+        }
 
         // check defaults are 1st hardware system
         Assert.assertEquals("getDefault(ThrottleManager) ", "LocoNet", mds.getDefault(jmri.ThrottleManager.class));
@@ -181,7 +191,7 @@ public class ManagerDefaultSelectorTest {
     }
 
     @Test
-    public void testTwoLoconetPreferencesValid() {
+    public void testTwoLoconetPreferencesValid() throws InitializationException {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         Profile profile = ProfileManager.getDefault().getActiveProfile();
 
@@ -211,7 +221,10 @@ public class ManagerDefaultSelectorTest {
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
-        mds.configure(profile);
+        InitializationException ex = mds.configure(profile);
+        if (ex != null) {
+            throw ex; // bomb out with an error
+        }
 
         // check defaults are 1st hardware system
         Assert.assertEquals("getDefault(ThrottleManager) ", "LocoNet", mds.getDefault(jmri.ThrottleManager.class));
