@@ -83,7 +83,8 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
 
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28,
+            SpeedStepMode.NMRA_DCC_27, SpeedStepMode.NMRA_DCC_14);
     }
 
     @Override
