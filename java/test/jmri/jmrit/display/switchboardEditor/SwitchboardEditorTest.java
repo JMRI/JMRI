@@ -77,6 +77,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -86,6 +87,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
     }
 
     @After
+    @Override
     public void tearDown() {
         if (e != null) {
             // dispose on Swing thread

@@ -19,6 +19,7 @@ public class EcosDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 

@@ -38,6 +38,7 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         memo = new XBeeConnectionMemo();
@@ -60,6 +61,7 @@ public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestB
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

@@ -12,12 +12,14 @@ public class InternalSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         scm = new InternalSystemConnectionMemo();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -16,6 +16,7 @@ import org.junit.Test;
 public class RaspberryPiConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         GpioProvider myprovider = new PiGpioProviderScaffold();
@@ -26,6 +27,7 @@ public class RaspberryPiConnectionConfigTest extends jmri.jmrix.AbstractConnecti
     }
 
     @After
+    @Override
     public void tearDown() {
         cc=null;
         JUnitUtil.tearDown();

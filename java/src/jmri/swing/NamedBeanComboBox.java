@@ -117,7 +117,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager = manager;
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
-        setEditable(false);
+        NamedBeanComboBox.this.setEditable(false); // prevent overriding method call in constructor
         NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer(getRenderer());
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
@@ -218,6 +218,11 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public void setAllowNull(boolean allowNull) {
         this.allowNull = allowNull;
+        if (allowNull && (getModel().getSize() > 0 && getItemAt(0) != null)) {
+            this.insertItemAt(null, 0);
+        } else if (!allowNull && (getModel().getSize() > 0 && this.getItemAt(0) == null)) {
+            this.removeItemAt(0);
+        }
     }
 
     /**

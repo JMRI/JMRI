@@ -49,6 +49,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     }
 
     @Test
+    @Override
     public void testDoDelete() {
         try {
             service.doDelete(JsonMessage.MESSAGE, "", NullNode.getInstance(), locale, 42);
@@ -71,6 +72,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonMessageHttpService(mapper);
@@ -78,6 +80,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

@@ -135,6 +135,11 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Override
+    protected int getNumToTest1() {
+        return 6; // overriding 9 since valid values are 1-7
+    }
+
+    @Override
     @Before 
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

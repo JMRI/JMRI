@@ -82,6 +82,7 @@ public class NamedBeanComparatorTest {
             protected void turnoutPushbuttonLockout(boolean b) {
             }
 
+            @Override
             public int compareSystemNameSuffix(String suffix1, String suffix2, jmri.NamedBean n) {
                 hit = true;
                 return super.compareSystemNameSuffix(suffix1, suffix2, n);

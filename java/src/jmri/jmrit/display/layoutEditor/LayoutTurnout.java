@@ -2558,7 +2558,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (lb != null) {
                 String userName = lb.getUserName();
                 if (userName != null) {
-                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, lb);
                 }
                 if ((namedLayoutBlockD != namedLayoutBlockA)
                         && (namedLayoutBlockD != namedLayoutBlockB)
@@ -4328,7 +4328,7 @@ public class LayoutTurnout extends LayoutTrack {
             Color foregroundColor = g2.getColor();
             // if turnout is thrown...
             if (getState() == Turnout.THROWN) {
-                // ...then switch to background color 
+                // ...then switch to background color
                 g2.setColor(g2.getBackground());
             }
             if (layoutEditor.isTurnoutFillControlCircles()) {

@@ -59,6 +59,7 @@ public class PickFrameTest extends JmriJFrameTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();

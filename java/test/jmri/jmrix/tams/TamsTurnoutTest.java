@@ -30,6 +30,7 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tnis = new TamsInterfaceScaffold();

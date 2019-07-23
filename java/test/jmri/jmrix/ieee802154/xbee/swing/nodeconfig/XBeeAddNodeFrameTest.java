@@ -19,6 +19,7 @@ public class XBeeAddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
     private XBeeNodeConfigFrame parent = null;
  
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XBeeTrafficController() {

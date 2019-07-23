@@ -19,6 +19,7 @@ public class DebugThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tm = new DebugThrottleManager();
