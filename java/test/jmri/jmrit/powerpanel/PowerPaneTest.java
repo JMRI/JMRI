@@ -21,6 +21,7 @@ public class PowerPaneTest extends jmri.util.swing.JmriPanelTest {
         title=Bundle.getMessage("TitlePowerPanel");
     }
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -56,6 +56,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     }
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, IOException, JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");

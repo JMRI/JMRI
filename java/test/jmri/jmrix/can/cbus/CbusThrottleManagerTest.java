@@ -897,6 +897,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback(); // do not use this tc normally

@@ -20,6 +20,7 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -27,6 +28,7 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
     }
 
     @After
+    @Override
     public void tearDown() {
         cc=null;
         JUnitUtil.tearDown();

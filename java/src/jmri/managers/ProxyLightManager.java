@@ -117,22 +117,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     /**
-     * Validate system name format. Locate a system specfic LightManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
-    }
-
-    /**
      * Validate system name against the hardware configuration Locate a system
      * specfic LightManager based on a system name.
      *

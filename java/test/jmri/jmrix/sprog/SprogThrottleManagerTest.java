@@ -22,6 +22,7 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface

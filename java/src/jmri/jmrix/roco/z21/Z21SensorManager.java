@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -132,18 +133,26 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
-     * Validate Sensor system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        name = validateSystemNamePrefix(name, locale);
+        if (name.substring(getSystemNamePrefix().length()).contains(":")) {
+            return Z21CanBusAddress.validateSystemNameFormat(name, this, locale);
+        } else {
+            return Z21RMBusAddress.validateSystemNameFormat(name, this, locale);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if ( Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID ) {
-           return (Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
-        } else {
-           return (Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
-        }
+        return Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID
+                ? NameValidity.VALID
+                : Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix());
     }
 
     @Override

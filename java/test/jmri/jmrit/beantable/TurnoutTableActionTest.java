@@ -109,18 +109,28 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
 	
 	//This is a modal JOptionPane, so create a thread to dismiss it.
 	Thread t = new Thread(() -> {
-            jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), "", "OK");
+            try {
+               jmri.util.swing.JemmyUtil.confirmJOptionPane(main,Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"), "", "OK");
+            } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
+               // we're waiting for this thread to finish in the main method,
+               // so any exception here means we failed.
+               log.error("caught timeout exception while waiting for modal dialog",tee);
+            }
         });
         t.setName("Default Speeds Dialog Close Thread");
         t.start();
         // pushMenuNoBlock is used, because dialog is modal
         JMenuBarOperator mainbar = new JMenuBarOperator(main);
-        mainbar.pushMenuNoBlock("Speeds"); // stops at top level
-        JMenuOperator jmo = new JMenuOperator(mainbar, "Speeds");
+        mainbar.pushMenu(Bundle.getMessage("SpeedsMenu")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("SpeedsMenu"));
         JPopupMenu jpm = jmo.getPopupMenu();
-        JMenuItem firstMenuItem = (JMenuItem)jpm.getComponent(0); // first item is [Defaults...]
-        JMenuItemOperator jmio = new JMenuItemOperator(firstMenuItem);
+        JMenuItemOperator jmio = new JMenuItemOperator(new JPopupMenuOperator(jpm),Bundle.getMessage("SpeedsMenuItemDefaults"));
         jmio.pushNoBlock();
+
+        // wait for the dismiss thread to finish
+        JUnitUtil.waitFor(()-> { return !t.isAlive(); 
+                  }, "Dismiss Default Speeds Thread finished");
+
         // clean up
         JUnitUtil.dispose(af);
         //as.dispose(); // uncomment when test is Speeds menu activated

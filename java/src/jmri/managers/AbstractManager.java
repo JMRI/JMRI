@@ -12,6 +12,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.CheckReturnValue;
@@ -22,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,24 +81,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public String makeSystemName(@Nonnull String s) {
-        String prefix = getSystemNamePrefix();
-        // do some basic format checking that can throw explicit exception with feedback to user
-        if (s.trim().isEmpty() || s.equals(prefix)) {
-            log.error("Invalid system name for {}: \"\" needed non-empty suffix to follow {}", getBeanTypeHandled(), prefix);
-            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": \"\" needed non-empty suffix to follow " + prefix);
+    public String makeSystemName(@Nonnull String s, boolean logErrors, Locale locale) {
+        try {
+            return Manager.super.makeSystemName(s, logErrors, locale);
+        } catch (IllegalArgumentException ex) {
+            if (logErrors || log.isTraceEnabled()) {
+                log.error("Invalid system name for {}: {}", getBeanTypeHandled(), ex.getMessage());
+            }
+            throw ex;
         }
-        //prepend system name if not already present
-        String name = s;
-        if (!name.startsWith(prefix)) {
-            name = prefix + s;      
-        }
-
-        // verify name format is valid
-        if (validSystemNameFormat(name) != NameValidity.VALID) {
-            throw new NamedBean.BadSystemNameException("Invalid system name for " + getBeanTypeHandled() + ": name \"" + name + "\" has incorrect format");
-        }
-        return name;
     }
 
     /** {@inheritDoc} */
@@ -122,23 +115,29 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Now obsolete. Used {@link #getBeanBySystemName} instead.
-     * @param systemName the system name, but don't call this method
-	 * @return the results of a {@link #getBeanBySystemName} call, which you should use instead of this
-     * @deprecated 4.15.6
+     * Get a NamedBean by its system name.
+     *
+     * @param systemName the system name
+     * @return the result of {@link #getBeanBySystemName(java.lang.String)}
+     *         with systemName
+     * @deprecated since 4.15.6; use
+     * {@link #getBeanBySystemName(java.lang.String)} instead
      */
-    @Deprecated // since 4.15.6
+    @Deprecated
     protected E getInstanceBySystemName(String systemName) {
         return getBeanBySystemName(systemName);
     }
 
     /**
-     * Now obsolete. Used {@link #getBeanByUserName} instead.
-     * @param userName the system name, but don't call this method
-	 * @return the results of a {@link #getBeanByUserName} call, which you should use instead of this
-     * @deprecated 4.15.6
+     * Get a NamedBean by its user name.
+     *
+     * @param userName the user name
+     * @return the result of {@link #getBeanByUserName(java.lang.String)} call,
+     *         with userName
+     * @deprecated since 4.15.6; use
+     * {@link #getBeanByUserName(java.lang.String)} instead
      */
-    @Deprecated // since 4.15.6
+    @Deprecated
     protected E getInstanceByUserName(String userName) {
         return getBeanByUserName(userName);
     }
@@ -585,21 +584,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 }
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return {@link jmri.Manager.NameValidity#INVALID} if system name suffix
-     *         is empty or all white space; otherwise returns
-     *         {@link jmri.Manager.NameValidity#VALID} to let undocumented
-     *         connection system managers pass entry validation.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return !getSystemNamePrefix().equals(systemName.trim())
-                ? NameValidity.VALID
-                : NameValidity.INVALID;
     }
 
     /** {@inheritDoc} */

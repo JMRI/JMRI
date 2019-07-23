@@ -36,6 +36,7 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Turnout t = l.provide("" + (getSystemName(getNumToTest1())));

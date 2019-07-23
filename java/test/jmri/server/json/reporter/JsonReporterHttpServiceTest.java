@@ -37,6 +37,7 @@ import org.junit.Test;
 public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Reporter, JsonReporterHttpService> {
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, JsonException {
         ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
         Reporter reporter1 = manager.provideReporter("IR1"); // no value
@@ -203,6 +204,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonReporterHttpService(mapper);
@@ -212,6 +214,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
