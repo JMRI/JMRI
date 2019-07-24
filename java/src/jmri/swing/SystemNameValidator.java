@@ -3,6 +3,7 @@ package jmri.swing;
 import com.alexandriasoftware.swing.JInputValidator;
 import com.alexandriasoftware.swing.JInputValidatorPreferences;
 import com.alexandriasoftware.swing.Validation;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.text.JTextComponent;
@@ -109,6 +110,7 @@ public class SystemNameValidator extends JInputValidator {
      * @param manager the new manager
      */
     public void setManager(@Nonnull Manager<?> manager) {
+        Objects.requireNonNull(manager, "Cannot validate against a null manager");
         Manager<?> old = this.manager;
         if (old == null || !old.equals(manager)) {
             this.manager = manager;
