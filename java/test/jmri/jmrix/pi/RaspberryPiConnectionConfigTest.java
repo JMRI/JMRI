@@ -29,7 +29,7 @@ public class RaspberryPiConnectionConfigTest extends jmri.jmrix.AbstractConnecti
     @After
     @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 

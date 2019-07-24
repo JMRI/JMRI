@@ -12,7 +12,6 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before
@@ -36,7 +35,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
                 }
             }
         }
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
    }
 
