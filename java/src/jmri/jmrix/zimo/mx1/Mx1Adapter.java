@@ -169,12 +169,7 @@ public class Mx1Adapter extends Mx1PortController {
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // find and configure flow control
@@ -206,6 +201,11 @@ public class Mx1Adapter extends Mx1PortController {
             Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
             Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};

@@ -193,8 +193,9 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
     }
 
     /**
-     * Set the baud rate. This currently does nothing, as there's only one
-     * possible value
+     * {@inheritDoc}
+     * This currently does nothing, as there's only one
+     * possible value.
      */
     @Override
     public void configureBaudRate(String rate) {

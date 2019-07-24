@@ -25,12 +25,8 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 57600;  // default, must match fixed adapter setting as speed not stored for LB usb
-        for (int i = 0; i < validBaudNumbers().length; i++) {
-            if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumbers()[i];
-            }
-        }
+        // default, must match fixed adapter setting as speed not stored for LB usb
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -59,6 +55,11 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{57600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapter.class);

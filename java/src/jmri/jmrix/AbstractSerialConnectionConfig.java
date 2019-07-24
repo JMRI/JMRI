@@ -160,7 +160,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudIndex(baudBox.getSelectedIndex()); // manage by index, not item value
+        adapter.configureBaudRateFromIndex(baudBox.getSelectedIndex()); // manage by index, not item value
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
@@ -347,7 +347,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         refreshPortBox();
 
-        baudList = adapter.validBaudRates(); // should not return null, empty String[] {} when not supported
+        baudList = adapter.validBaudRates(); // when not supported should not return null, but an empty String[] {}
         // need to remove ActionListener before addItem() or action event will occur
         if (baudBox.getActionListeners().length > 0) {
             baudBox.removeActionListener(baudBox.getActionListeners()[0]);

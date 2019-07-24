@@ -37,8 +37,6 @@ public class GcSerialDriverAdapter extends GcPortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        String[] baudRates = validBaudRates();
-        int[] baudValues = validBaudValues();
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -52,12 +50,7 @@ public class GcSerialDriverAdapter extends GcPortController {
             // try to set it for comunication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
-                int baud = baudValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < baudRates.length; i++) {
-                    if (baudRates[i].equals(mBaudRate)) {
-                        baud = baudValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
@@ -102,7 +95,6 @@ public class GcSerialDriverAdapter extends GcPortController {
         }
 
         return null; // indicates OK return
-
     }
 
     /**
@@ -125,7 +117,6 @@ public class GcSerialDriverAdapter extends GcPortController {
         // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
-
     }
 
     protected GcTrafficController makeGcTrafficController() {
@@ -318,11 +309,14 @@ public class GcSerialDriverAdapter extends GcPortController {
     /**
      * {@inheritDoc}
      *
-     * @return valid baud rates in US English locale TODO I18N using Bundle
+     * @return array of localized valid baud rates
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800"};
+        return new String[]{Bundle.getMessage("Baud57600"),
+                Bundle.getMessage("Baud115200"), Bundle.getMessage("Baud230400"),
+                Bundle.getMessage("Baud250000"), Bundle.getMessage("Baud333333"),
+                Bundle.getMessage("Baud460800")};
     }
 
     /**
@@ -330,18 +324,23 @@ public class GcSerialDriverAdapter extends GcPortController {
      *
      * @return valid baud rates
      */
-    public int[] validBaudValues() {
+    public int[] validBaudNumbers() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     /**
      * {@inheritDoc}
-     *
      * Migration method
+     * @deprecated since 4.16
      */
-    @Override
-    public int[] validBaudNumbers() {
-        return validBaudValues();
+    @Deprecated
+    public int[] validBaudValues() {
+        return validBaudNumbers();
     }
 
     // private control members

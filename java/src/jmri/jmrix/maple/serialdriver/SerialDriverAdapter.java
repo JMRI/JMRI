@@ -167,12 +167,7 @@ public class SerialDriverAdapter extends SerialPortController {
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(selectedSpeed)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
@@ -197,20 +192,14 @@ public class SerialDriverAdapter extends SerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    /**
-     * Set the baud rate.
-     */
-    @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
-    }
-
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 57600};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 1;
+    }
 
     // private control members
     private boolean opened = false;

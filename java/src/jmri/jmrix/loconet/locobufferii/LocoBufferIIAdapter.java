@@ -31,6 +31,9 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
         return new String[]{Bundle.getMessage("Baud19200LBII"), Bundle.getMessage("Baud57600LBII")};
     }
 
+    /**
+     * Get a String that says what Option 1 represents.
+     */
     public String option1Name() {
         return Bundle.getMessage("XconnectionUsesLabel", "LocoBuffer-II");
     }
