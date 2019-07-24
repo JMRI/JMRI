@@ -19,6 +19,7 @@ public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();

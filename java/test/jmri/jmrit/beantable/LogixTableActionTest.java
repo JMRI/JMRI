@@ -207,12 +207,14 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Test
     @Ignore("Logix create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name")
+    @Override
     public void testAddThroughDialog() {
     }
 
     @Test
     @Ignore("Logix create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name, or add without dialog")
+    @Override
     public void testEditButton() {
     }
 

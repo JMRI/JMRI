@@ -143,22 +143,6 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     /**
-     * Validate system name format. Locate a system specfic IdTagManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((IdTagManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -183,9 +167,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public boolean isStateStored() {
+        stateSaved = true;
         for( Manager<IdTag> mgr: getManagerList()){
             if(!((IdTagManager)mgr).isStateStored()){
-               return false;
+                stateSaved=false;
+                break;
             }
         }
         return stateSaved;
@@ -203,9 +189,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public boolean isFastClockUsed() {
+        useFastClock=true;
         for( Manager<IdTag> mgr: getManagerList()){
             if(!((IdTagManager)mgr).isFastClockUsed()){
-               return false;
+               useFastClock=false;
+               break;
             }
         }
         return useFastClock;

@@ -133,6 +133,7 @@ public class SimpleTimebaseTest {
         seenNewMinutes = -1;
         seenOldMinutes = -1;
         p.addMinuteChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 seenOldMinutes = (Double) e.getOldValue();
                 seenNewMinutes = (Double) e.getNewValue();

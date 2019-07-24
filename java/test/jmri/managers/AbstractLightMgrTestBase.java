@@ -75,16 +75,14 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideLight("");
-            Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
     }
 
     @Test

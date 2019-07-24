@@ -83,70 +83,70 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MTX;+N15E6");
             Assert.fail("X Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: X;+N15E6");
         }
 
         try {
             l.provideTurnout("MTXA;+N15E6");
             Assert.fail("A Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XA;+N15E6");
         }
 
         try {
             l.provideTurnout("MTXABC;+N15E6");
             Assert.fail("AC Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XABC;+N15E6");
         }
 
         try {
             l.provideTurnout("MTXABCDE;+N15E6");
             Assert.fail("ABCDE Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XABCDE;+N15E6");
         }
 
         try {
             l.provideTurnout("MTXABCDEF0;+N15E6");
             Assert.fail("ABCDEF0 Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: XABCDEF0;+N15E6");
         }
 
         try {
             l.provideTurnout("MTXABCDEF");
             Assert.fail("Single hex Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: can't make 2nd event");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: can't make 2nd event from address XABCDEF");
         }
 
         try {
             l.provideTurnout("MT;XABCDEF");
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Address Too Short? : ");
         }
 
         try {
             l.provideTurnout("MTXABCDEF;");
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Should not end with ; XABCDEF;");
         }
 
         try {
             l.provideTurnout("MT;");
             Assert.fail("; no arg Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Should not end with ; ;");
         }
 
         try {
             l.provideTurnout("MT;+N15E6");
             Assert.fail("MS Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Address Too Short? : ");
         }
     }
 
@@ -157,15 +157,16 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout(";+N15E62");
             Assert.fail("; Should have thrown an exception");
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Invalid system name for Turnout: name \"MT;+N15E62\" has incorrect format",
-                    ex.getMessage());
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Address Too Short? : ");
+            Assert.assertEquals("Address Too Short? : ", ex.getMessage());
         }
 
         try {
             l.provideTurnout("T+N156E77;+N123E456");
             Assert.fail("Missing M Should have thrown an exception");
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Invalid system name for Turnout: name \"MTT+N156E77;+N123E456\" has incorrect format",
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: T+N156E77;+N123E456");
+            Assert.assertEquals("Wrong number of events in address: T+N156E77;+N123E456",
                     ex.getMessage());
         }
     }
@@ -176,7 +177,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("M+N156E77;+N15E60");
             Assert.fail("M Should have thrown an exception");
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Invalid system name for Turnout: name \"MTM+N156E77;+N15E60\" has incorrect format",
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: M+N156E77;+N15E60");
+            Assert.assertEquals("Wrong number of events in address: M+N156E77;+N15E60",
                     ex.getMessage());
         }
     }
@@ -233,8 +235,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         try {
             l.provideTurnout(name);
             Assert.fail("Expected exception not thrown");
-        } catch (NamedBean.BadSystemNameException ex) {
-            // passes, so do nothing
+        } catch (IllegalArgumentException ex) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: mt+n1e77;-n1e45");
         }
         Turnout t = l.provideTurnout(name.toUpperCase());
         Assert.assertNotNull(t);

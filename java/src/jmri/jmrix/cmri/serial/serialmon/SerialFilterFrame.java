@@ -372,6 +372,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
     // cpNode options checkbox handler
     // -------------------------------
     private class HandlerClass implements ItemListener{
+        @Override
         public void itemStateChanged(ItemEvent e){
             JCheckBox pktTypeChkBox = (JCheckBox) e.getSource();
             int pktTypeIndex = 0;
@@ -413,8 +414,11 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
            if (c!=NODEADDR_COLUMN) return true;
            else return false;
         }
+        @Override
         public int getColumnCount () {return NUMCOLUMNS;}
+        @Override
         public int getRowCount () {return monitorNode.size();}
+        @Override
         public Object getValueAt (int r,int c)
         {
 

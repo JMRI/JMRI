@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
         SerialMessageTest.class,
         SerialReplyTest.class,
         SerialTrafficControllerTest.class,
-        SerialAddressTest.class,
         jmri.jmrix.tmcc.serialdriver.PackageTest.class,
         jmri.jmrix.tmcc.simulator.PackageTest.class,
         jmri.jmrix.tmcc.configurexml.PackageTest.class,

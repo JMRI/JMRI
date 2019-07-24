@@ -59,16 +59,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * {@inheritDoc}
-     *
-     * @return always 'VALID' because we can take anything
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    /**
-     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

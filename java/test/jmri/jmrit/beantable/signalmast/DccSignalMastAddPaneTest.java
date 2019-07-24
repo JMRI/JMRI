@@ -16,6 +16,7 @@ import org.junit.Test;
 public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new DccSignalMastAddPane(); }    
     
     @Test
@@ -53,6 +54,7 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -85,6 +87,7 @@ public class DccSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase 
     int sentPacketCount;
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

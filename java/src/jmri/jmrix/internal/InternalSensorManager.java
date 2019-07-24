@@ -64,12 +64,6 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
     /** {@inheritDoc} */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
