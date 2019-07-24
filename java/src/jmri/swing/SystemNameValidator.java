@@ -59,7 +59,7 @@ public class SystemNameValidator extends JInputValidator {
      */
     public SystemNameValidator(@Nonnull JComponent component, @Nonnull Manager<?> manager, boolean required) {
         super(component, true, required);
-        this.manager = manager;
+        setManager(manager);
         this.required = required;
     }
 

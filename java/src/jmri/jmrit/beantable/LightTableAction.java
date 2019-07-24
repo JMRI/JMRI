@@ -836,7 +836,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             prefixBox.setManagers(proxy.getDisplayOrderManagerList());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                prefixBox.setSelectedItem(memo.get(Light.class));
+                prefixBox.setSelectedItem(memo.get(LightManager.class));
             }
         } else {
             prefixBox.setManagers(lightManager);

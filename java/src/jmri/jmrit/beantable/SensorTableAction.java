@@ -141,7 +141,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 prefixBox.setManagers(proxy.getDisplayOrderManagerList());
                 if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(Sensor.class));
+                    prefixBox.setSelectedItem(memo.get(SensorManager.class));
                 }
             } else {
                 prefixBox.setManagers(sensorManager);
