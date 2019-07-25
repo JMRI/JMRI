@@ -34,19 +34,19 @@ public class CbusNodeFromBackupTest {
         
         CbusNodeFromBackup t = new CbusNodeFromBackup(existingNode,new Date());
         Assert.assertNotNull("exists",t);
-        Assert.assertTrue("Backup No Params",t.getBackupResult() == BackupType.CompletedWithError);
+        Assert.assertTrue("Backup No Params",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
         existingNode.setParameters(new int[]{8,1,2,3,4,5,6,7,8});
         t = new CbusNodeFromBackup(existingNode,new Date());
-        Assert.assertTrue("Backup No NVs",t.getBackupResult() == BackupType.CompletedWithError);
+        Assert.assertTrue("Backup No NVs",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
         existingNode.setNVs(new int[]{6,1,2,3,4,5,6});
         t = new CbusNodeFromBackup(existingNode,new Date());
-        Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.CompletedWithError);
+        Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.COMPLETEDWITHERROR);
         
         existingNode.resetNodeEvents();
         t = new CbusNodeFromBackup(existingNode,new Date());
-        Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.Complete);
+        Assert.assertTrue("Backup No EVs",t.getBackupResult() == BackupType.COMPLETE);
         Assert.assertNotNull("Backup Time Set by Constructor",t.getBackupTimeStamp());
         
         existingNode.dispose();
@@ -63,7 +63,7 @@ public class CbusNodeFromBackupTest {
         Assert.assertNotNull("Backup Time Set",t.getBackupTimeStamp());
         
         Assert.assertNull("Backup result unset",t.getBackupResult());
-        t.setBackupResult(BackupType.NotOnNetwork);
+        t.setBackupResult(BackupType.NOTONNETWORK);
         Assert.assertNotNull("Backup result set",t.getBackupResult());
         
         Assert.assertTrue("Comment unset",t.getBackupComment().isEmpty());
@@ -94,6 +94,7 @@ public class CbusNodeFromBackupTest {
     }
     
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Makes sures different objects do not pass
     public void testEquals() {
     
         CbusNodeFromBackup t = new CbusNodeFromBackup(null,259);
@@ -144,8 +145,9 @@ public class CbusNodeFromBackupTest {
         tt.addBupEvent(0,3,"0102030405");
         Assert.assertFalse("diff event eq",t.equals(tt));
         Assert.assertFalse("diff event hash",t.hashCode()==tt.hashCode());
-        tt.addBupEvent(0,2,"0102030405");
+        
         t.addBupEvent(0,3,"0102030405");
+        tt.addBupEvent(0,2,"0102030405");
         Assert.assertTrue("Same ev added in different order eq",t.equals(tt));
         Assert.assertTrue("Same ev added in different order hash",tt.hashCode()==t.hashCode());
         
@@ -169,7 +171,11 @@ public class CbusNodeFromBackupTest {
     @Test
     public void testIgnoredFunctions() {
         
-        CbusNode t = new CbusNode(memo,1234);
+        jmri.jmrix.can.CanSystemConnectionMemo memo = new jmri.jmrix.can.CanSystemConnectionMemo();
+        jmri.jmrix.can.TrafficControllerScaffold tcis = new jmri.jmrix.can.TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        CbusNodeFromBackup t = new CbusNodeFromBackup(memo,1234);
         
         Assert.assertEquals("default getNodeInLearnMode ",false,t.getNodeInLearnMode() );
         
@@ -177,21 +183,23 @@ public class CbusNodeFromBackupTest {
         jmri.jmrix.can.CanReply r = new jmri.jmrix.can.CanReply();
         r.setHeader(tcis.getCanid());
         r.setNumDataElements(3);
-        r.setElement(0, CbusConstants.CBUS_NNLRN); 
+        r.setElement(0, jmri.jmrix.can.cbus.CbusConstants.CBUS_NNLRN); 
         r.setElement(1, 0x04);
         r.setElement(2, 0xd2);
         t.reply(r);
         Assert.assertEquals("does not respond to reply",false,t.getNodeInLearnMode() );
         
         // frame to set node into learn
-        CanMessage m = new CanMessage( tcis.getCanid() );
+        jmri.jmrix.can.CanMessage m = new jmri.jmrix.can.CanMessage( tcis.getCanid() );
         m.setNumDataElements(3);
-        m.setElement(0, CbusConstants.CBUS_NNLRN); 
+        m.setElement(0, jmri.jmrix.can.cbus.CbusConstants.CBUS_NNLRN); 
         m.setElement(1, 0x04);
         m.setElement(2, 0xd2);
         t.message(m);
         Assert.assertEquals("does not respond to message",false,t.getNodeInLearnMode() );
     }
+    
+    
 
     // The minimal setup for log4J
     @Before

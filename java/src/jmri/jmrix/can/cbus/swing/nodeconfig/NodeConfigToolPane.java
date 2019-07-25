@@ -92,7 +92,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     public int NODE_SEARCH_TIMEOUT = 5000;
     
     private JMenuItem teachNodeFromFcuFile;
-    
     private JMenuItem searchForNodesMenuItem;
     private JCheckBoxMenuItem nodeNumRequestMenuItem;
     private JRadioButtonMenuItem backgroundDisabled;
@@ -101,7 +100,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     private JCheckBoxMenuItem addCommandStationMenuItem;
     private JCheckBoxMenuItem addNodesMenuItem;
     private JCheckBoxMenuItem startupCommandStationMenuItem;
-    private JCheckBoxMenuItem startupNodesMenuItem;    
+    private JCheckBoxMenuItem startupNodesMenuItem;
+    private JCheckBoxMenuItem startupNodesXmlMenuItem;
+    private JRadioButtonMenuItem zeroBackups;
+    private JRadioButtonMenuItem fiveBackups;
+    private JRadioButtonMenuItem tenBackups;
+    private JRadioButtonMenuItem twentyBackups;
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -302,11 +306,22 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                 }
             }
             
+            if (showingNvsChangedDialogue){
+                return;
+            }
+            
             if (nodevarPane.areNvsDirty() && !showingNvsChangedDialogue) {
+                
+                CbusNode oldNode = nodevarPane.getNode();
+                int oldRow = nodeTable.convertRowIndexToView(nodeModel.getNodeRowFromNodeNum(oldNode.getNodeNumber()));
+                
                 showingNvsChangedDialogue=true;
+                nodeTable.getSelectionModel().setSelectionInterval(oldRow,oldRow);
                 tabbedPane.setSelectedIndex(2);
+                
                 int selectedValue = JOptionPane.showOptionDialog(this.getParent(),
-                        Bundle.getMessage("NvsEditUnsaved"),
+                        "<html>" + Bundle.getMessage("NvsEditUnsaved",oldNode.toString()) + 
+                        "<br>" + Bundle.getMessage("ContinueEditQuestion")+"</html>",
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")},
@@ -315,12 +330,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                     // log.info("no save");
                     nodevarPane.resetNVs();
                     showingNvsChangedDialogue=false;
+                    nodeTable.setRowSelectionInterval(sel,sel);
                     tabbedPane.setSelectedIndex(tabindex);
                 }
                 if (selectedValue == 0) {
-                    // commentsPane.saveComments();
                     showingNvsChangedDialogue=false;
-                    // tabbedPane.setSelectedIndex(tabindex);
                 }
             }
             
@@ -388,6 +402,25 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         startupCommandStationMenuItem.setSelected( preferences.getStartupSearchForCs() );
         startupNodesMenuItem.setSelected( preferences.getStartupSearchForNodes() );
+        startupNodesXmlMenuItem.setSelected( preferences.getSearchForNodesBackupXmlOnStartup() );
+        
+        zeroBackups.setSelected(false);
+        fiveBackups.setSelected(false);
+        tenBackups.setSelected(false);
+        twentyBackups.setSelected(false);
+        
+        if ( preferences.getMinimumNumBackupsToKeep()==0 ) {
+            zeroBackups.setSelected(true);
+        }
+        else if ( preferences.getMinimumNumBackupsToKeep()==5 ) {
+            fiveBackups.setSelected(true);
+        }
+        else if ( preferences.getMinimumNumBackupsToKeep()==10 ) {
+            tenBackups.setSelected(true);
+        }
+        else if ( preferences.getMinimumNumBackupsToKeep()==20 ) {
+            twentyBackups.setSelected(true);
+        }
         
     }
     
@@ -432,6 +465,30 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         startupCommandStationMenuItem = new JCheckBoxMenuItem(("Search Command Stations on Startup"));
         startupNodesMenuItem = new JCheckBoxMenuItem(("Search Nodes on Startup"));
         
+        startupNodesXmlMenuItem = new JCheckBoxMenuItem(("Add previously seen Nodes on Startup"));
+        
+        JMenu numBackupsMenu = new JMenu("Min. Auto Backups to retain");
+        ButtonGroup minNumBackupsGroup = new ButtonGroup();
+        
+        
+        zeroBackups = new JRadioButtonMenuItem(("0"));
+        fiveBackups = new JRadioButtonMenuItem(("5"));
+        tenBackups = new JRadioButtonMenuItem(("10"));
+        twentyBackups = new JRadioButtonMenuItem(("20"));
+        
+        minNumBackupsGroup.add(zeroBackups);
+        minNumBackupsGroup.add(fiveBackups);
+        minNumBackupsGroup.add(tenBackups);
+        minNumBackupsGroup.add(twentyBackups);
+        
+        
+        numBackupsMenu.add(zeroBackups);
+        numBackupsMenu.add(fiveBackups);
+        numBackupsMenu.add(tenBackups);
+        numBackupsMenu.add(twentyBackups);
+        
+        
+        
         backgroundFetchGroup.add(backgroundDisabled);
         backgroundFetchGroup.add(backgroundSlow);
         backgroundFetchGroup.add(backgroundFast);
@@ -453,6 +510,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         optionsMenu.add( new JSeparator() );
         optionsMenu.add( startupCommandStationMenuItem );
         optionsMenu.add( startupNodesMenuItem );
+        optionsMenu.add( startupNodesXmlMenuItem );
+        optionsMenu.add( new JSeparator() );
+        optionsMenu.add( numBackupsMenu );
+        
         
         menuList.add(fileMenu);
         menuList.add(optionsMenu);
@@ -531,6 +592,31 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             preferences.setStartupSearchForNodes( startupNodesMenuItem.isSelected() );
         };
         startupNodesMenuItem.addActionListener(addstartupNodesMenuItem);
+        
+        ActionListener addstartupNodesXmlMenuItem = ae -> {
+            preferences.setSearchForNodesBackupXmlOnStartup( startupNodesXmlMenuItem.isSelected() );
+        };
+        startupNodesXmlMenuItem.addActionListener(addstartupNodesXmlMenuItem);
+        
+         // values need to match setMenuOptions()
+        ActionListener minBackupsListener = ae -> {
+            if ( zeroBackups.isSelected() ) {
+                preferences.setMinimumNumBackupsToKeep(0);
+            }
+            else if ( fiveBackups.isSelected() ) {
+                preferences.setMinimumNumBackupsToKeep(5);
+            }
+            else if ( tenBackups.isSelected() ) {
+                preferences.setMinimumNumBackupsToKeep(10);
+            }
+            else if ( twentyBackups.isSelected() ) {
+                preferences.setMinimumNumBackupsToKeep(10);
+            }
+        };
+        zeroBackups.addActionListener(minBackupsListener);
+        fiveBackups.addActionListener(minBackupsListener);
+        tenBackups.addActionListener(minBackupsListener);
+        twentyBackups.addActionListener(minBackupsListener);
         
         setMenuOptions();
         
@@ -659,6 +745,128 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     protected void clearEditEventFrame() {
         _editEventFrame = null;
     }
+
+        private boolean _clearEvents;
+    private boolean _teachEvents;
+    private CbusNode _fromNode;
+    private CbusNode _toNode;
+    
+    protected void showConfirmThenSave( CbusNode fromNode, CbusNode toNode, 
+        boolean teachNVs, boolean clearEvents, boolean teachEvents, JFrame frame){
+        
+        _clearEvents = clearEvents;
+        _teachEvents = teachEvents;
+        _fromNode = fromNode;
+        _toNode = toNode;
+        
+        if ( frame == null ){
+            frame = topFrame;
+        }
+        
+        StringBuffer buf = new StringBuffer();
+        buf.append("<html> ");
+        buf.append( ("Please Confirm Write ") );
+        // buf.append( fromNode.toString() );
+        buf.append( ("to <br>") );
+        
+        buf.append ( _toNode.toString() );
+        
+        buf.append("<hr>");
+        
+        if ( teachNVs ){
+            
+            // Bundle.getMessage("NVConfirmWrite",nodeName)
+            
+            buf.append("Teaching ");
+            
+            buf.append(_toNode.getNvDifference(_fromNode));
+            
+            buf.append(" of " + _fromNode.getTotalNVs() + " NV's<br>");
+        }       
+        if ( _clearEvents ){
+            buf.append("Clearing " + Math.max( 0,_toNode.getTotalNodeEvents() ) + " Events<br>");
+        } 
+        if ( _teachEvents ){
+            buf.append("Teaching " + Math.max( 0,_fromNode.getTotalNodeEvents() ) + " Events<br>");
+        }         
+        buf.append("</html>");
+        
+        int response = JOptionPane.showConfirmDialog(null,
+                ( buf.toString() ),
+                ( ("Please Confirm Write to Node")),
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if ( response != JOptionPane.OK_OPTION ) {
+            return;
+        } else {
+            busy_dialog = new jmri.util.swing.BusyDialog(frame, "Write NVs "+_fromNode.toString(), false);
+            busy_dialog.start();
+            // update main node name from fcu name
+            _toNode.setNameIfNoName( _fromNode.getUserName() );
+            // request the local nv model pass the nv update request to the CbusNode
+            if ( teachNVs ){
+                _toNode.sendNvsToNode( _fromNode.getNvArray(),this);
+            }
+            else {
+                nVTeachComplete(0);
+            }
+        }
+    }
+    
+    public void nVTeachComplete(int numErrors){
+        if ( numErrors > 0 ) {
+            JOptionPane.showMessageDialog(null, 
+                Bundle.getMessage("NVSetFailTitle",numErrors), Bundle.getMessage("WarningTitle"),
+                JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        if ( _clearEvents ){
+        
+            busy_dialog.setTitle("Clear Events");
+            
+            // node enter learn mode
+            _toNode.send.nodeEnterLearnEvMode( _toNode.getNodeNumber() ); 
+            // no response expected but we add a mini delay for other traffic
+            
+            ThreadingUtil.runOnLayoutDelayed( () -> {
+                _toNode.send.nNCLR(_toNode.getNodeNumber());// no response expected
+            }, 150 );
+            ThreadingUtil.runOnLayoutDelayed( () -> {
+                // node exit learn mode
+                _toNode.send.nodeExitLearnEvMode( _toNode.getNodeNumber() ); // no response expected
+            }, CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );
+            ThreadingUtil.runOnGUIDelayed( () -> {
+                
+                clearEventsComplete();
+            
+            }, ( CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
+        }
+        else {
+            clearEventsComplete();
+        }
+    }
+    
+    public void clearEventsComplete() {
+        if ( _teachEvents ){
+            busy_dialog.setTitle("Teach Events");
+            _toNode.sendNewEvSToNode( _fromNode.getEventArray(), null, this);
+        }
+        else {
+            teachEventsComplete(0);
+        }
+    }
+    
+    public void teachEventsComplete( int numErrors ) {
+        busy_dialog.finish();
+        busy_dialog = null;
+        if (numErrors != 0 ) {
+            JOptionPane.showMessageDialog(null, 
+            Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
+            JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 
     /**
      * Nested class to create one of these using old-style defaults.

@@ -21,7 +21,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
-import jmri.util.JmriJFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +37,15 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
     private CbusNodeNVTableDataModel nodeNVModel;
     private JButton saveNvButton;
     private JButton resetNvButton;
-    private jmri.util.swing.BusyDialog busy_dialog;
     private CbusNode nodeOfInterest = null;
+    private NodeConfigToolPane _mainPane;
 
     /**
      * Create a new instance of CbusEventHighlightPanel.
      */
     protected CbusNodeEditNVarPane( NodeConfigToolPane main ) {
         super();
+        _mainPane = main;
     }
 
     public void initComponents(CanSystemConnectionMemo memo) {
@@ -63,6 +63,12 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         }
         infoPane = new JPanel();
         setLayout(new BorderLayout() );
+        
+        saveNvButton = new JButton(("Save"));
+        saveNvButton.setToolTipText(("Update Node"));
+        
+        resetNvButton = new JButton(Bundle.getMessage("Reset"));
+        resetNvButton.setToolTipText(("Reset table New NV values"));
         
         // this.add(infoPane);
         
@@ -92,11 +98,6 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         JPanel nvMenuPane = new JPanel();
        // nvMenuPane.setLayout(new BoxLayout(nvMenuPane, BoxLayout.Y_AXIS));
         JPanel buttonPane = new JPanel();
-      
-        saveNvButton = new JButton(("Save"));
-        saveNvButton.setToolTipText(("Update Node"));
-        resetNvButton = new JButton(Bundle.getMessage("Reset"));
-        resetNvButton.setToolTipText(("Reset table New NV values"));
         setSaveCancelButtonsActive ( false );
         
         buttonPane.add(saveNvButton );
@@ -142,10 +143,10 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         resetNvButton.addActionListener(reset);
         
         ActionListener save = ae -> {
-            showConfirmThenSave();
+            _mainPane.showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
+                true,false,false, null );
         };
         saveNvButton.addActionListener(save);
-        
     }
     
     public boolean areNvsDirty(){
@@ -157,56 +158,8 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         nodeNVModel.resetNewNvs();
     }
     
-    private void showConfirmThenSave(){
-        
-        String nodeName = nodeOfInterest.getNodeNumberName();
-        
-        busy_dialog = new jmri.util.swing.BusyDialog(null, "Write NV "+nodeName, false);
-        
-        int changedtot = nodeNVModel.getCountDirty();
-        StringBuffer buf = new StringBuffer();
-        buf.append("<html> ");
-        buf.append( changedtot );
-        buf.append(" NV");
-        if (  changedtot >1 ) {
-            buf.append("'s");
-        }
-        buf.append(" changed.<br>");
-        buf.append( Bundle.getMessage("NVConfirmWrite",nodeName) );
-        buf.append("</html>");
-        
-        int response = JOptionPane.showConfirmDialog(null,
-                ( buf.toString() ),
-                ( Bundle.getMessage("NVConfirmWrite",nodeName)),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if ( response != JOptionPane.YES_OPTION ) {
-            busy_dialog = null;
-            return;
-        } else {
-            
-            busy_dialog.start();
-            
-            // request the local nv model pass the nv update request to the CbusNode
-            
-            jmri.util.ThreadingUtil.runOnLayout( ()->{
-                nodeNVModel.passChangedNvsToNode(this);
-            });
-        }
-    }
-    
-    public void nVTeachComplete(int numErrors){
-        
-       // this.dispose();
-        busy_dialog.finish();
-        
-        if ( numErrors > 0 ) {
-            
-            JOptionPane.showMessageDialog(null, 
-                Bundle.getMessage("NVSetFailTitle",numErrors), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
-        }
-        
+    public CbusNode getNode() {
+        return nodeOfInterest;
     }
     
     public void setSaveCancelButtonsActive ( Boolean newstate ) {

@@ -51,8 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
-    
-    public SimpleDateFormat readableDateStyle = new SimpleDateFormat ("dd/MM/yyyy HH:mm"); // NOI18N
+    public SimpleDateFormat readableDateStyle = new SimpleDateFormat ("HH:mm EEE d MMM"); // NOI18N
     private JScrollPane eventScroll;
     private JPanel infoPane;
     private JPanel backupInfoPane;
@@ -70,6 +69,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
     private CbusNodeEventTablePane nodeEventPane;
     private CbusNodeInfoPane nodeInfoPane;
     private CbusNodeBackupTableModel cbusNodeBackupTableModel = null;
+    private NodeConfigToolPane _mainPane;
     
     // table stuff
     public static final Color VERY_LIGHT_RED = new Color(255,176,173);
@@ -81,6 +81,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
      */
     protected CbusNodeBackupsPane( NodeConfigToolPane main ) {
         super();
+        _mainPane = main;
     }
 
     public void initComponents() {
@@ -107,7 +108,6 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         backupTable = new JTable(cbusNodeBackupTableModel);
         
         //  TableColumnModel backupTableColumnModel = backupTable.getColumnModel();
-        
         
         cbusNodeBackupTableModel.addTableModelListener(this);
         
@@ -142,6 +142,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, null, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
         nodeEventPane = new CbusNodeEventTablePane(nodeEvModel);
+        nodeEventPane.setHideEditButton();
         
         backupInfoPane = new JPanel();
         backupInfoPane.setLayout(new BorderLayout() );
@@ -185,7 +186,8 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
             }
         });
         
-        // userBackupViewChanged();
+        
+        
         
     }
     
@@ -194,13 +196,19 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         if (node == nodeOfInterest){
             return;
         }
-        
-        if (node==null){
+        if (nodeOfInterest!=null) {
+            nodeOfInterest.removeBackupTableModel(cbusNodeBackupTableModel);
+        }
+        nodeOfInterest = node;
+        if (nodeOfInterest==null){
             return;
         }
-        
-        nodeOfInterest = node;
+        if (nodeOfInterest.getNodeBackupFile() == null){
+            return;
+        }
+        nodeOfInterest.addBackupTableModel(cbusNodeBackupTableModel);
         cbusNodeBackupTableModel.fireTableDataChanged();
+        userBackupViewChanged(); // set no backup selected message on startup
     }
     
     private void userBackupViewChanged(){
@@ -212,6 +220,11 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
             tabbedPane.setEnabledAt(1,true);
             tabbedPane.setEnabledAt(2,true);
             tabbedPane.setEnabledAt(3,true);
+            
+            nodevarPane.setNode( backupNode );
+            nodeEventPane.setNode( backupNode );
+            nodeInfoPane.initComponents(backupNode);
+            
         } else {
             backupNode = null;
             tabbedPane.setEnabledAt(1,false);
@@ -219,9 +232,6 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
             tabbedPane.setEnabledAt(3,false);
         }
         
-        nodevarPane.setNode( backupNode );
-        nodeEventPane.setNode( backupNode );
-        nodeInfoPane.initComponents(backupNode);
         
         // Pane to hold Node
         // evPane.setLayout(new BoxLayout(evPane, BoxLayout.Y_AXIS));
@@ -237,39 +247,72 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
             
             // log.info("building pane for backupnode {}",backupNode);
             
-            JLabel nvstring = new JLabel("<html><h1>"
-            + readableDateStyle.format(backupNode.getBackupTimeStamp())
-            +"</h1>"
-            +" <h3>NV's : " + ( backupNode.getNvArray().length-1 ) + "</h3>"
-            + "<h3>Events : " +  ( Math.max(0,backupNode.getTotalNodeEvents()) ) + "</h3>"
-            + "<h3>Params : " +  ( Math.max(0,backupNode.getParameters().length-1 )) + "</h3>"
+            StringBuilder text = new StringBuilder();
             
-            +" <br>delete backup button "
-            +"</html>");
+            text.append( "<html><h3>" );
+            
+            text.append(readableDateStyle.format(backupNode.getBackupTimeStamp()));
+            text.append("</h3>");
+            text.append(" <h4>NV's : " );
+            text.append( ( Math.max(0,backupNode.getParameter(6) )) );
+            text.append( "</h4>");
+            text.append( "<h4>Events : " );
+            text.append(  ( Math.max(0,backupNode.getTotalNodeEvents()) ) );
+            text.append( "</h4>");
+            text.append( "<h4>Params : " );
+            text.append(  ( Math.max(0,backupNode.getParameter(0) )) );
+            text.append( "</h4>");
+            
+            text.append("</html>");
+            
+            JLabel nvstring = new JLabel(text.toString());
+            
+            
+            
             
             JPanel evPane = new JPanel();
-            evPane.setLayout(new BoxLayout(evPane, BoxLayout.Y_AXIS));
+            evPane.setLayout(new BoxLayout(evPane, BoxLayout.X_AXIS));
+            evPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            
+           // nvstring.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             
           //  evPane.setLayout(new BorderLayout() );
-           // evPane.add(nvstring);
+            evPane.add(nvstring);
             
-            
+            JButton restoreBackupButton = new JButton("Restore Backup");
             JButton deleteBackupButton = new JButton("Delete Backup");
             
+            restoreBackupButton.setEnabled(false);
+            
+            if (backupNode.getBackupResult() == CbusNodeConstants.BackupType.COMPLETE ) {
+                if ( backupNode.getTotalNVs() == nodeOfInterest.getTotalNVs() ) {
+                    if ( backupNode.getParameter(5) == nodeOfInterest.getParameter(5) ) {
+                        restoreBackupButton.setToolTipText(null);
+                        restoreBackupButton.setEnabled(true);
+                    } else {
+                        restoreBackupButton.setToolTipText("Event Variable total does not match");
+                    }
+                } else {
+                    restoreBackupButton.setToolTipText("NV total does not match");
+                }
+            } else {
+                restoreBackupButton.setToolTipText("Backup Incomplete");
+            }
             
             deleteBackupListener = ae -> {
-                deleteBackup(backupNode);
+                deleteBackup(sel);
             };
             deleteBackupButton.addActionListener(deleteBackupListener);
             
+            ActionListener restore = ae -> {
+                // pre-validation checks, ie same nv's and same ev vars should be by button enabled
+                _mainPane.showConfirmThenSave(backupNode,nodeOfInterest,
+                    true, true, true, null ); 
+            };
+            restoreBackupButton.addActionListener(restore);
             
-            
-            evPane.add(newBackupButton);
-            
-            evPane.add(nvstring);
-          //  evPane.add(nodeInfoPane);
-            
-          //  infoPane = new JScrollPane(evPane);
+            evPane.add(restoreBackupButton);
+            evPane.add(deleteBackupButton);
             
             JScrollPane scroll = new JScrollPane(evPane);
             
@@ -298,8 +341,18 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
     }
     
     private void updateHeaderText(){
-        if (nodeOfInterest!=null) {
-            headerText.setText("<html><h4>" + nodeOfInterest.getNodeBackupFile().getBackups().size() + " Backups</h4></html>");
+        if (nodeOfInterest != null ) {
+            StringBuilder text = new StringBuilder();
+            text.append("<html><h4>");
+            if (nodeOfInterest.getNodeBackupFile().getBackups().size() == 1 ){
+                text.append(nodeOfInterest.getNodeBackupFile().getBackups().size());
+                text.append(" Backup");
+            } else {
+                text.append(nodeOfInterest.getNodeBackupFile().getBackups().size());
+                text.append(" Backups");
+            }
+            text.append("</h4></html>");
+            headerText.setText(text.toString());
             evMenuPane.revalidate();
             evMenuPane.repaint();
         }
@@ -312,9 +365,15 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         cbusNodeBackupTableModel.fireTableDataChanged();
     }
     
-    private void deleteBackup(CbusNodeFromBackup bup){
+    private void deleteBackup(int bup){
         
-        log.info("delete button clicked bup {}",bup);
+        log.info("Manually deleting {}",nodeOfInterest.getNodeBackupFile().getBackups().get(bup));
+        
+        nodeOfInterest.getNodeBackupFile().getBackups().remove(bup);
+        if (!nodeOfInterest.getNodeBackupFile().doStore(false)){
+            log.error("Issue saving Backup File");
+        }
+        cbusNodeBackupTableModel.fireTableDataChanged();
         
     }
     
@@ -352,7 +411,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
                     if ( arg1 instanceof BackupType ) {
                         f.setText(CbusNodeConstants.displayPhrase( (BackupType) arg1));
                         f.setBackground( VERY_LIGHT_RED );
-                        if ( Objects.equals(arg1 , BackupType.Complete )) {
+                        if ( Objects.equals(arg1 , BackupType.COMPLETE )) {
                             f.setBackground( VERY_LIGHT_GREEN );
                         }
                     }
@@ -449,7 +508,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
                 return("Bytes");
             }
             if (col == COMMENT_COLUMN) {
-                return ("Comment");
+                return ("User Comment");
             }
             return "";
         }
@@ -494,10 +553,22 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
                     if ( r == nodeOfInterest.getNodeBackupFile().getBackups().size()-1 ){
                         return ("First Backup on File");
                     }
-                    return lc.compareWithString(nodeOfInterest.getNodeBackupFile().getBackups().get(r+1));
+                    if (lc.getBackupResult() == BackupType.NOTONNETWORK) {
+                        return BackupType.NOTONNETWORK;
+                    }
+                    return lc.compareWithString(getPreviousBackup(r+1));
                 default:
                     return "123";
             }
+        }
+        
+        private CbusNodeFromBackup getPreviousBackup(int tablerow){
+            for (int i = tablerow; i < nodeOfInterest.getNodeBackupFile().getBackups().size()-1; i++) {
+                if (nodeOfInterest.getNodeBackupFile().getBackups().get(i).getBackupResult() != BackupType.NOTONNETWORK) {
+                    return nodeOfInterest.getNodeBackupFile().getBackups().get(i);
+                }
+            }
+            return null;
         }
 
         /** {@inheritDoc} */

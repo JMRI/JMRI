@@ -13,6 +13,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import jmri.jmrit.XmlFile;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
@@ -22,6 +23,7 @@ import org.jdom2.JDOMException;
 
 
 /**
+ * Loosely based on
  * Load and store the timetable data file: TimeTableData.xml
  * @author Dave Sand Copyright (C) 2018
  */
@@ -31,16 +33,50 @@ public class CbusNodeXml {
     private int _nodeNum = 0;
     private CbusNode _node;
     private ArrayList<CbusNodeFromBackup> _backupInfos;
+    private CbusPreferences preferences;
     
     public CbusNodeXml(CbusNode node) {
         _nodeNum = node.getNodeNumber();
         _node = node;
         _backupInfos = new ArrayList<CbusNodeFromBackup>();
+        preferences = jmri.InstanceManager.getNullableDefault(CbusPreferences.class);
         doBasicLoad();
+        
     }
     
     public ArrayList<CbusNodeFromBackup> getBackups() {
         return _backupInfos;
+    }
+    
+    // number of backups in arraylist that do no have a comment
+    // 
+    private int numAutoBackups(){
+        int i=0;
+        for (int j = _backupInfos.size()-1; j >0 ; j--) {
+            if (_backupInfos.get(i).getBackupComment().isEmpty()
+                && _backupInfos.get(i).getBackupResult() == BackupType.COMPLETE ){
+                i++;
+            }
+        }
+        return i;
+    }
+    
+    private void trimBackups(){
+        
+        if (preferences==null) {
+            return;
+        }
+        
+        // note size-2 means we never delete the oldest one
+        for (int i = _backupInfos.size()-2; i >0 ; i--) {
+            if ( numAutoBackups()<preferences.getMinimumNumBackupsToKeep()){
+                return;
+            }
+            if ( _backupInfos.get(i).getBackupComment().isEmpty()){
+                _backupInfos.remove(i);
+            }
+        }
+        return;
     }
     
     private void doBasicLoad(){
@@ -49,6 +85,12 @@ public class CbusNodeXml {
         
         // Find root
         Element root;
+        
+        if (file == null) {
+            log.error("84: Unable to load backup file");  // NOI18N
+            return;
+        }
+        
         try {
             root = x.rootFromFile(file);
             if (root == null) {
@@ -101,7 +143,7 @@ public class CbusNodeXml {
                         newinfo.setBackupResult(CbusNodeConstants.lookupByName(info.getAttributeValue("result")) );
                     } else {
                         log.warn("NO result in a backup log entry");
-                        newinfo.setBackupResult(BackupType.Incomplete);
+                        newinfo.setBackupResult(BackupType.INCOMPLETE);
                     }
                     Element params = info.getChild("Parameters");  // NOI18N
                     if ( params !=null ) {
@@ -124,9 +166,9 @@ public class CbusNodeXml {
                                 
                                 // check event variable length matches expected length in parameters
                                 if (newinfo.getParameter(5)!=(xmlEvent.getAttributeValue("EvVars").length()/2) &&
-                                    ( newinfo.getBackupResult()!=BackupType.CompletedWithError &&
-                                        newinfo.getBackupResult()!=BackupType.Incomplete  )) {
-                                        newinfo.setBackupResult(BackupType.CompletedWithError);
+                                    ( newinfo.getBackupResult()!=BackupType.COMPLETEDWITHERROR &&
+                                        newinfo.getBackupResult()!=BackupType.INCOMPLETE  )) {
+                                        newinfo.setBackupResult(BackupType.COMPLETEDWITHERROR);
                                     }
                                 
                                 newinfo.addBupEvent(
@@ -150,13 +192,22 @@ public class CbusNodeXml {
         }
         // make sure ArrayList ismost recent at start, oldest at end
         java.util.Collections.sort(_backupInfos, java.util.Collections.reverseOrder());
+        _node.notifyNodeBackupTable();
+        
     }
     
     public boolean doStore( boolean createNew) {
+        
+        _node.setBackupStarted();
       
         Date thisBackupDate = new Date();
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         File file = x.getFile(true);
+        
+        if (file == null) {
+            log.error("202: Unable to load backup file");  // NOI18N
+            return false;
+        }
         
         try {
             Element roots = x.rootFromFile(file);
@@ -165,15 +216,18 @@ public class CbusNodeXml {
         } catch (IOException ex) {
             // the file might not exist
             log.debug("Backup Rotate failed {}",file);  // NOI18N
-        }
-        catch (JDOMException ex) {
+        } catch (JDOMException ex) {
             // file might not exist
             log.debug("File invalid: " + ex);  // NOI18N
         }
         
         if ( createNew ) {
+
             _backupInfos.add(0,new CbusNodeFromBackup(_node,thisBackupDate));
         }
+        
+        // now we trim the number of backups in the list
+        trimBackups();
         
         // Create root element
         Element root = new Element("CbusNode");  // NOI18N
@@ -236,6 +290,43 @@ public class CbusNodeXml {
         }
 
         log.debug("...done");  // NOI18N
+        _node.notifyNodeBackupTable();
+        return true;
+    }
+    
+    protected void nodeNotOnNetwork(){
+        
+        CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
+        newBup.setBackupResult(BackupType.NOTONNETWORK);
+        _backupInfos.add(0,newBup);
+        doStore(false);
+        
+    }
+
+    // takes a backup then
+    // removes main node xml file
+    protected boolean removeNode( boolean rotate){
+        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        File file = x.getFile(false);
+        
+        if (rotate) {
+            try {
+                Element roots = x.rootFromFile(file);
+                log.debug("File exists {}",roots);
+                FileUtil.rotate(file, 5, "bup");  // NOI18N
+            } catch (IOException ex) {
+                // the file might not exist
+                log.debug("Backup Rotate failed {}",file);  // NOI18N
+            } catch (JDOMException ex) {
+                // file might not exist
+                log.debug("File invalid: " + ex);  // NOI18N
+            }
+        }
+        
+        if ( !x.deleteFile()){
+            log.error("Unable to delete node xml file");
+            return false;
+        }
         return true;
     }
 
@@ -282,6 +373,10 @@ public class CbusNodeXml {
                fileLocation = FileUtil.getUserFilesPath() + "cbus/nodes/";  // NOI18N
             }
             return fileLocation;
+        }
+        
+        public boolean deleteFile() {
+            return getFile(false).delete();
         }
     }
 

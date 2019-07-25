@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javax.swing.BorderFactory;
-import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,6 +29,9 @@ public class CbusNodeInfoPane extends JPanel {
     private JButton nodesupportlinkbutton;
     private URI supportlink;
     private CbusNode nodeOfInterest;
+    private JLabel header;
+    private JPanel menuPane;
+    private JTextArea textArea;
 
     /**
      * Create a new instance of CbusNodeInfoPane.
@@ -61,28 +62,77 @@ public class CbusNodeInfoPane extends JPanel {
             return;
         }
         
-        JPanel menuPane = new JPanel();
-        
-        JTextArea textArea = new JTextArea();
-        textArea.setEditable(false);
-        textArea.setMargin( new java.awt.Insets(10,10,10,10) );
-        StringBuilder textAreaString = new StringBuilder();
-
-        nodesupportlinkbutton.setVisible(false);
+        if ( nodeOfInterest != null ) {
+            nodeOfInterest.removeInfoPane(this);
+        }
         
         nodeOfInterest = node;
+        
+        nodeOfInterest.addInfoPane(this);
+        
+        menuPane = new JPanel();
+        
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+        textArea.setMargin( new java.awt.Insets(10,10,10,10) );
+        
+        
+        JScrollPane textAreaPanel = new JScrollPane(textArea);
+        
+        header = new JLabel("");
+        
+        menuPane.add(header);
+        menuPane.add(nodesupportlinkbutton);
+        
+        this.setLayout(new BorderLayout() );
+        
+        paramsHaveUpdated();
+        
+        if (infoPane != null ){ 
+            infoPane.setVisible(false);
+        }
+        infoPane = null;
+        infoPane = new JPanel();
+        infoPane.setLayout(new BorderLayout() );
+        
+        infoPane.add(menuPane, BorderLayout.PAGE_START);
+        infoPane.add(textAreaPanel, BorderLayout.CENTER);
+        this.add(infoPane);
+        validate();
+        repaint();
+        
+    }
+    
+    /**
+     * Recalculates pane following notification from CbusNode that parameters have changed
+     */
+    public void paramsHaveUpdated() {
+        
+        nodesupportlinkbutton.setVisible(false);
+                
+        header.setText("<html><h3>" 
+            + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
+            + " " 
+            + nodeOfInterest.getNodeTypeName()
+            + "</h3></html>");
+        
+        StringBuilder textAreaString = new StringBuilder();
         
         textAreaString.append(Bundle.getMessage("NodeNumberTitle"));
         textAreaString.append(": " );
         textAreaString.append(nodeOfInterest.getNodeNumber());
         textAreaString.append(System.getProperty("line.separator"));
         
-        textAreaString.append(Bundle.getMessage("ManufacturerType",
-            nodeOfInterest.getParameter(1),
-            CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)),
-            nodeOfInterest.getParameter(3)));
-            
-        textAreaString.append(System.getProperty("line.separator"));
+        if (nodeOfInterest.getParameter(1) > -1 && nodeOfInterest.getParameter(3) > -1 ) {
+        
+            textAreaString.append(Bundle.getMessage("ManufacturerType",
+                nodeOfInterest.getParameter(1),
+                CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)),
+                nodeOfInterest.getParameter(3)));
+                
+            textAreaString.append(System.getProperty("line.separator"));
+        
+        }
         
         if (!nodeOfInterest.getNodeTypeName().isEmpty()){
             textAreaString.append(Bundle.getMessage("IdentifiesAs",
@@ -119,10 +169,6 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        textAreaString.append ("Current Node Data Bytes : ");
-        textAreaString.append ( Math.max(0,nodeOfInterest.totalNodeBytes()) );
-        textAreaString.append(System.getProperty("line.separator"));
-        
         if ( nodeOfInterest.getTotalNodeEvents()> -1 ) {
             textAreaString.append ("Current Events : ");
             textAreaString.append ( nodeOfInterest.getTotalNodeEvents() );
@@ -149,6 +195,37 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append(System.getProperty("line.separator"));
         }
         
+        textAreaString.append ("Current Node Data Bytes : ");
+        textAreaString.append ( Math.max(0,nodeOfInterest.totalNodeBytes()) );
+        textAreaString.append(System.getProperty("line.separator"));
+        
+        if ( nodeOfInterest.getNodeBackupFile() != null ) {
+            textAreaString.append(System.getProperty("line.separator"));
+            
+            textAreaString.append ("Entries in Node xml file : ");
+            textAreaString.append (nodeOfInterest.getNodeBackupFile().getBackups().size());
+            textAreaString.append(System.getProperty("line.separator"));
+            
+            textAreaString.append ("Num Backups in Node xml file : ");
+            textAreaString.append (nodeOfInterest.getNumBackups());
+            textAreaString.append(System.getProperty("line.separator"));
+            
+            
+            
+            textAreaString.append ("First entry : ");
+            textAreaString.append (nodeOfInterest.getFirstBackupTime());
+            textAreaString.append(System.getProperty("line.separator"));
+            
+            textAreaString.append ("Last entry : ");
+            textAreaString.append (nodeOfInterest.getLastBackupTime());
+            
+            textAreaString.append(System.getProperty("line.separator"));
+        
+        }
+        
+        
+        
+        
         
         if ( !nodeOfInterest.getsendsWRACKonNVSET() ) {
             textAreaString.append ("Sends WRACK Following NV Set : ");             
@@ -156,10 +233,12 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        textAreaString.append ("Parameter Hex String : ");
-        textAreaString.append (nodeOfInterest.getParameterHexString());
-        textAreaString.append(System.getProperty("line.separator"));
-        
+        if (!nodeOfInterest.getParameterHexString().isEmpty()) {
+            textAreaString.append(System.getProperty("line.separator"));
+            textAreaString.append ("Parameter Hex String : ");
+            textAreaString.append (nodeOfInterest.getParameterHexString());
+            textAreaString.append(System.getProperty("line.separator"));
+        }
         
         textAreaString.append(System.getProperty("line.separator"));
         for (int i = 1; i <= nodeOfInterest.getParameter(0); i++) {
@@ -201,31 +280,6 @@ public class CbusNodeInfoPane extends JPanel {
         
         textArea.setText(textAreaString.toString());
         textArea.setCaretPosition(0);
-        JScrollPane textAreaPanel = new JScrollPane(textArea);
-        
-        JLabel header = new JLabel("<html><h3>" 
-            + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
-            + " " 
-            + nodeOfInterest.getNodeTypeName()
-            + "</h3></html>");
-        
-        menuPane.add(header);
-        menuPane.add(nodesupportlinkbutton);
-        
-        this.setLayout(new BorderLayout() );
-        
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
-        }
-        infoPane = null;
-        infoPane = new JPanel();
-        infoPane.setLayout(new BorderLayout() );
-        
-        infoPane.add(menuPane, BorderLayout.PAGE_START);
-        infoPane.add(textAreaPanel, BorderLayout.CENTER);
-        this.add(infoPane);
-        validate();
-        repaint();
         
     }
     

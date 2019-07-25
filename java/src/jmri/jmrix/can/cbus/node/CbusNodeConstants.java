@@ -688,16 +688,17 @@ public class CbusNodeConstants {
     private static final Map<BackupType, String> displayPhraseIndex =
             new HashMap<BackupType, String>(BackupType.values().length);
     static {
-        displayPhraseIndex.put(BackupType.Incomplete, Bundle.getMessage("BackupIncomplete"));
-        displayPhraseIndex.put(BackupType.Complete, Bundle.getMessage("BackupComplete"));
-        displayPhraseIndex.put(BackupType.CompletedWithError, Bundle.getMessage("BackupCompleteError"));
-        displayPhraseIndex.put(BackupType.NotOnNetwork, Bundle.getMessage("BackupNotOnNetwork"));
+        displayPhraseIndex.put(BackupType.INCOMPLETE, Bundle.getMessage("BackupIncomplete"));
+        displayPhraseIndex.put(BackupType.COMPLETE, Bundle.getMessage("BackupComplete"));
+        displayPhraseIndex.put(BackupType.COMPLETEDWITHERROR, Bundle.getMessage("BackupCompleteError"));
+        displayPhraseIndex.put(BackupType.NOTONNETWORK, Bundle.getMessage("BackupNotOnNetwork"));
+        displayPhraseIndex.put(BackupType.OUTSTANDING, Bundle.getMessage("BackupOutstanding"));
     }
     
     /*
      * Get the display phrase for an enum value
      * <p>
-     * eg. displayPhrase(BackupType.Incomplete) will return "Backup InComplete"
+     * eg. displayPhrase(BackupType.INCOMPLETE) will return "Backup InComplete"
      *
      * @param type The enum to translate
      * @return The phrase
@@ -710,7 +711,7 @@ public class CbusNodeConstants {
     /*
      * Get the enum type for a String value
      * <p>
-     * eg. lookupByName("Complete") will return BackupType.Complete
+     * eg. lookupByName("Complete") will return BackupType.COMPLETE
      *
      * @param name The String to lookup
      * @return The BackupType enum, else null
@@ -725,10 +726,11 @@ public class CbusNodeConstants {
      *
      */
     public enum BackupType{
-        Incomplete(0),
-        Complete(1),
-        CompletedWithError(2),
-        NotOnNetwork(3);
+        INCOMPLETE(0),
+        COMPLETE(1),
+        COMPLETEDWITHERROR(2),
+        NOTONNETWORK(3),
+        OUTSTANDING(4);
         
         private final int v;
 

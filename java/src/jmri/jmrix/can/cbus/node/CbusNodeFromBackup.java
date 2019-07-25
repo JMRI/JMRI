@@ -18,7 +18,7 @@ import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
  *
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeFromBackup extends CbusNode implements CanListener, Comparable<CbusNodeFromBackup> {
+public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeFromBackup> {
     
     private Date _timeStamp;
     private String _backupComment="";
@@ -44,17 +44,17 @@ public class CbusNodeFromBackup extends CbusNode implements CanListener, Compara
      */  
     public CbusNodeFromBackup ( CbusNode node, Date timeStamp) {
         super( null, node.getNodeNumber() ); 
-        setBackupResult(BackupType.Incomplete);
+        setBackupResult(BackupType.INCOMPLETE);
         _timeStamp = timeStamp;
         if (node.getParameters()!=null) {
             setParameters(node.getParameters());
         } else {
-            setBackupResult(BackupType.CompletedWithError);
+            setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
         if (node.getNvArray()!=null) {
             setNVs(node.getNvArray());
         } else {
-            setBackupResult(BackupType.CompletedWithError);
+            setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
         // copy events
         if (node.getEventArray()!=null) {
@@ -62,10 +62,10 @@ public class CbusNodeFromBackup extends CbusNode implements CanListener, Compara
                 addNewEvent(new CbusNodeEvent( ndEv ));
             });
         } else {
-            setBackupResult(BackupType.CompletedWithError);
+            setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
-        if (getBackupResult() == BackupType.Incomplete) {
-            setBackupResult(BackupType.Complete);
+        if (getBackupResult() == BackupType.INCOMPLETE) {
+            setBackupResult(BackupType.COMPLETE);
         }
     }
     
@@ -139,6 +139,10 @@ public class CbusNodeFromBackup extends CbusNode implements CanListener, Compara
     
     public String compareWithString( CbusNodeFromBackup toTest) {
         
+        if (toTest==null){
+            return ("");
+        }
+        
         if (equals(toTest)) {
             return Bundle.getMessage("NoChanges");
         }
@@ -153,7 +157,9 @@ public class CbusNodeFromBackup extends CbusNode implements CanListener, Compara
             text.append("NV's Changed"+" ");
         }
         
-        if (getEventArrayHash()!=toTest.getEventArrayHash()){
+        if ( getTotalNodeEvents() != toTest.getTotalNodeEvents() ) {
+            text.append("Number Events Changed"+" ");
+        } else if (getEventArrayHash()!=toTest.getEventArrayHash()){
             text.append("Events Changed"+" ");
         }
         
@@ -199,16 +205,22 @@ public class CbusNodeFromBackup extends CbusNode implements CanListener, Compara
         if (!(this.getNvHexString().equals(t.getNvHexString()))){
             return false;
         }
-        
-        // java.util.Collections.sort(this.getEventArray());
-        
+        if ( this.getTotalNodeEvents() != t.getTotalNodeEvents() ) {
+            return false;
+        }
+        if ( this.getEventArray() !=null && t.getEventArray() !=null) {
+            java.util.Collections.sort(this.getEventArray());
+            java.util.Collections.sort(t.getEventArray());
+        }
         if (this.getEventArrayHash()!=t.getEventArrayHash()){
             return false;
         }
         return true;
     }
     
-    /** {@inheritDoc} */
+    /** 
+     * {@inheritDoc}
+     */
     @Override public int hashCode() {
         return Objects.hash(getNodeNumber(),getParameterHexString(),getNvHexString(),getEventArrayHash());
     }
@@ -224,6 +236,18 @@ public class CbusNodeFromBackup extends CbusNode implements CanListener, Compara
         } else {
             return getEventArray().hashCode();
         }
+    }
+    
+    /**
+     * toString reports the Node Number Name and backup timestamp
+     * <p>
+     * @return string eg "1234 UserName Backup Sun Jul 07 22:41:22".
+     *
+     * {@inheritDoc} 
+     */
+    @Override
+    public String toString(){
+        return getNodeNumberName()+ " Backup " + getBackupTimeStamp();
     }
     
     /** 

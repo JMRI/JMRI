@@ -23,8 +23,6 @@ public class CbusNodeTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testCTor() {
@@ -58,16 +56,20 @@ public class CbusNodeTest {
         Assert.assertTrue("default getNodeTypeName ",t.getNodeTypeName().isEmpty() );
         Assert.assertEquals("default getNodeInFLiMMode",true,t.getNodeInFLiMMode() );
         Assert.assertEquals("default getNodeInSetupMode",false,t.getNodeInSetupMode() );
-        Assert.assertEquals("default getNodeNumberName","256 ",t.getNodeNumberName() );
+        Assert.assertEquals("default getNodeNumberName","256",t.getNodeNumberName() );
         Assert.assertEquals("default getsendsWRACKonNVSET",true,t.getsendsWRACKonNVSET() );
         Assert.assertTrue("default totalNodeBytes ",-1 == t.totalNodeBytes() );
         Assert.assertTrue("default totalRemainingNodeBytes",-1 == t.totalRemainingNodeBytes() );
-        Assert.assertEquals("default toString ","256 ",t.toString() );
+        Assert.assertEquals("default toString ","256",t.toString() );
         Assert.assertTrue("default getNodeFlags ",t.getNodeFlags() == -1 );
         Assert.assertTrue("default getOutstandingEvVars",t.getOutstandingEvVars() == -1);
         Assert.assertFalse("default hasActiveTimers",t.hasActiveTimers());
         Assert.assertFalse("default isEventIndexValid",t.isEventIndexValid());
-        
+        Assert.assertNull("No First Backup Timestamp",t.getFirstBackupTime());
+        Assert.assertNull("No Last Backup Timestamp",t.getLastBackupTime());
+        Assert.assertEquals("Backups Uninitialised",-1,t.getNumBackups());
+        Assert.assertEquals("Backup Outstanding",
+            t.getSessionBackupStatus(),CbusNodeConstants.BackupType.OUTSTANDING);
         
         t.dispose();
         t = null;
@@ -594,6 +596,10 @@ public class CbusNodeTest {
         t.reply(r);
         Assert.assertEquals(0.875 ,t.floatPercentageRemaining(), 0.0001f );
         
+        
+        Assert.assertEquals("0 Backups in middle of fetch",0,t.getNumBackups());
+        
+        
         tModel.sendNextBackgroundFetch();
         Assert.assertEquals("Node has sent a message via model", 6 ,tcis.outbound.size() );
         r.setElement(4, 0x02); // ev var index
@@ -614,6 +620,18 @@ public class CbusNodeTest {
         
         Assert.assertEquals("Node has NOT sent a message via model", 7 ,tcis.outbound.size() );
         Assert.assertFalse("No active timer after event fetch complete",t.hasActiveTimers() );
+        
+        // check if node has loaded an xml file
+        Assert.assertNotNull("First Backup Timestamp exists",t.getFirstBackupTime());
+        Assert.assertNotNull("Last Backup Timestamp exists",t.getLastBackupTime());
+        
+     //   int waitfor= t.getNumBackups();
+      //  JUnitUtil.waitFor(()->{ return(waitfor>0); }, " backup didn't backup");
+        
+        Assert.assertEquals("Backup Complete",
+            t.getSessionBackupStatus(),CbusNodeConstants.BackupType.COMPLETE);
+        Assert.assertTrue(t.getNodeBackupFile().removeNode(false));
+        
         
         r = null;
         tModel.dispose();
@@ -676,7 +694,7 @@ public class CbusNodeTest {
         
         r.setElement(3, 0x04); // error code 4
         t.reply(r);
-        JUnitAppender.assertErrorMessageStartsWith("Node 12345 Reporting Too Many Events");
+        JUnitAppender.assertErrorMessageStartsWith("Node 12345 reporting ERROR : Too Many Events");
         
         r = null;
         t.dispose();
@@ -711,17 +729,12 @@ public class CbusNodeTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
-            Assert.fail("failed to setup profile for test");
-        }
         
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
         
     }
 

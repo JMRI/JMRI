@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.simulator;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusSend;
@@ -190,16 +189,12 @@ public class CbusDummyNode extends CbusNode {
             return;
         }
         
-        
-        if (varIndex>40) {
-            
-            sendCMDERR(5);
-            return;
-            
-        }
-        
-        
-        
+        // for future sim. of CMDERR5 support
+        // if (varIndex>40) {
+        //    
+        //    sendCMDERR(5);
+        //    return;
+        // }
         
         try {
             CanReply r = new CanReply(6);
@@ -318,7 +313,7 @@ public class CbusDummyNode extends CbusNode {
     // sim of FiLM Button
     public void flimButton() {
         // send request for node number
-        if ( getNodeType() >0 ) {
+        if ( getParameter(3) >0 ) { // module type set
             setNodeInSetupMode(true);
             CanReply r = new CanReply(3);
             r.setElement(0, CbusConstants.CBUS_RQNN);
@@ -359,7 +354,7 @@ public class CbusDummyNode extends CbusNode {
 
     private void passMessage(CanMessage m) {
         // log.debug("dummy node canMessage {}",m);
-        if ( getNodeType() == 0 ) {
+        if ( getParameter(3) == 0 ) { // module type unset
             return;
         }
         int opc = m.getElement(0);

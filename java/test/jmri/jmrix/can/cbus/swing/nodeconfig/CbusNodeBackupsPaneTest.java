@@ -13,23 +13,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of CbusNodeSetupPane
+ * Test simple functioning of CbusNodeEventTablePane
  *
- * @author Paul Bender Copyright (C) 2016
- * @author Steve Young Copyright (C) 2019
+ * @author	Paul Bender Copyright (C) 2016
+ * @author	Steve Young Copyright (C) 2019
  */
-public class CbusNodeSetupPaneTest {
+public class CbusNodeBackupsPaneTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusNodeSetupPane t = new CbusNodeSetupPane(null);
-        Assert.assertNotNull("exists",t);
-    }
-    
-    @Test
-    public void testInit() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
@@ -39,14 +33,16 @@ public class CbusNodeSetupPaneTest {
         
         Assert.assertNotNull("exists",nodeWithEventToEdit);
         
-        CbusNodeSetupPane t = new CbusNodeSetupPane(null);
-        t.initComponents(256); // node num 256
+        CbusNodeBackupsPane t = new CbusNodeBackupsPane(null);
+        
+
         
         Assert.assertNotNull("exists",t);
+
+        t.initComponents();
         
-        nodeModel.dispose();
-        nodeModel = null;
-        t = null;
+        t.setNode(nodeWithEventToEdit);
+        
     }
     
     private CanSystemConnectionMemo memo;
@@ -63,13 +59,12 @@ public class CbusNodeSetupPaneTest {
 
     @After
     public void tearDown() {
-        
         memo = null;
         tcis = null;
         
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeSetupPaneTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTablePaneTest.class);
 
 }

@@ -63,7 +63,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     private NodeConfigToolPane mainpane;
     private CbusNodeNVTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
-    private jmri.util.swing.BusyDialog busy_dialog;
     public JSplitPane split;
     private CbusNodeInfoPane nodeinfoPane;
     private JTable nodeTable;
@@ -258,7 +257,13 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         ActionListener save = ae -> {
             // pre-validation checks, ie same nv's and same ev vars should be by button enabled
-            showConfirmThenSave();
+            mainpane.showConfirmThenSave(nodeFromSelectedRow(),nodeFromSelectedList(),
+                teachNvsCheckBox.isSelected(),resetEventsBeforeTeach.isSelected(),
+                teachEventsCheckBox.isSelected(), this );
+            if (teachEventsCheckBox.isSelected()){
+                teachJmriEventNamesFromNode( nodeFromSelectedRow() );
+            }
+                
         };
         nodeToBeTaughtButton.addActionListener(save);
         
@@ -515,10 +520,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             } catch (NullPointerException e) {
                 importEventNamesButton.setToolTipText("CBUS Event Table not running.");
             }
-            
-            
-            
-            
         }
         catch (RuntimeException e) {
             log.warn("Error importing xml file ", e);
@@ -549,109 +550,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             }
         }
         eventModel.fireTableDataChanged();
-    }
-    
-    private void showConfirmThenSave(){
-        
-        StringBuffer buf = new StringBuffer();
-        buf.append("<html> ");
-
-        buf.append( ("Please Confirm Write from<br>File: ") );
-        buf.append( nodeFromSelectedRow().getNodeNumberName() );
-        buf.append( ("<br>to actual node<br>") );
-        
-        buf.append ( nodeFromSelectedList().toString() );
-        
-        buf.append("<hr>");
-        
-        if ( teachNvsCheckBox.isSelected() ){
-            buf.append("Teaching " + nodeFromSelectedRow().getTotalNVs() + " NV's<br>");
-        }       
-        if ( resetEventsBeforeTeach.isSelected() ){
-            buf.append("Clearing " + Math.max( 0,nodeFromSelectedList().getTotalNodeEvents() ) + " Events<br>");
-        } 
-        if ( teachEventsCheckBox.isSelected() ){
-            buf.append("Teaching " + Math.max( 0,nodeFromSelectedRow().getTotalNodeEvents() ) + " Events<br>");
-        }         
-        buf.append("</html>");
-        
-        int response = JOptionPane.showConfirmDialog(null,
-                ( buf.toString() ),
-                ( ("Please Confirm Write to Node")),
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if ( response != JOptionPane.OK_OPTION ) {
-            
-            return;
-        } else {
-            busy_dialog = new jmri.util.swing.BusyDialog(this, "Write NVs "+nodeFromSelectedRow().toString(), false);
-            busy_dialog.start();
-            // update main node name from fcu name
-            nodeFromSelectedList().setNameIfNoName( nodeFromSelectedRow().getUserName() );
-            // request the local nv model pass the nv update request to the CbusNode
-            if ( teachNvsCheckBox.isSelected() ){
-                nodeFromSelectedList().sendNvsToNode( nodeFromSelectedRow().getNvArray() ,null,this);
-            }
-            else {
-                nVTeachComplete(0);
-            }
-        }
-    }
-    
-    public void nVTeachComplete(int numErrors){
-        if ( numErrors > 0 ) {
-            JOptionPane.showMessageDialog(null, 
-                Bundle.getMessage("NVSetFailTitle",numErrors), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
-        }
-        
-        if ( resetEventsBeforeTeach.isSelected() ){
-        
-            busy_dialog.setTitle("Clear Events");
-            
-            // node enter learn mode
-            nodeFromSelectedList().send.nodeEnterLearnEvMode( nodeFromSelectedList().getNodeNumber() ); 
-            // no response expected but we add a mini delay for other traffic
-            
-            ThreadingUtil.runOnLayoutDelayed( () -> {
-                nodeFromSelectedList().send.nNCLR(nodeFromSelectedList().getNodeNumber());// no response expected
-            }, 150 );
-            ThreadingUtil.runOnLayoutDelayed( () -> {
-                // node exit learn mode
-                nodeFromSelectedList().send.nodeExitLearnEvMode( nodeFromSelectedList().getNodeNumber() ); // no response expected
-            }, CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );
-            ThreadingUtil.runOnGUIDelayed( () -> {
-                
-                clearEventsComplete();
-            
-            }, ( CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
-        }
-        else {
-            clearEventsComplete();
-        }
-    }
-    
-    public void clearEventsComplete() {
-        if ( teachEventsCheckBox.isSelected() ){
-            busy_dialog.setTitle("Teach Events");
-            nodeFromSelectedList().sendNewEvSToNode( nodeFromSelectedRow().getEventArray(), null, this);
-            
-            teachJmriEventNamesFromNode( nodeFromSelectedRow() );
-            
-        }
-        else {
-            teachEventsComplete(0);
-        }
-    }
-    
-    public void teachEventsComplete( int numErrors ) {
-        busy_dialog.finish();
-        busy_dialog = null;
-        if (numErrors != 0 ) {
-            JOptionPane.showMessageDialog(null, 
-            Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
-            JOptionPane.ERROR_MESSAGE);
-        }
     }
     
     @Override

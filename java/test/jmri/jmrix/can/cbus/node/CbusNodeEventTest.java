@@ -73,6 +73,7 @@ public class CbusNodeEventTest {
     }
     
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Makes sures different objects do not pass
     public void testNodeEventEquals() {
         
         CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
