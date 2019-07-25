@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import jmri.Manager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 
@@ -122,8 +123,14 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         });
         prefixBox.addActionListener(rangeListener);
         sysAddress.setInputVerifier(sysAddressValidator);
+        if (prefixBox.getSelectedItem() == null) {
+            prefixBox.setSelectedIndex(0);
+        }
         prefixBox.addActionListener((evt) -> {
-            sysAddressValidator.setManager(prefixBox.getSelectedItem());
+            Manager<?> manager = prefixBox.getSelectedItem();
+            if (manager != null) {
+                sysAddressValidator.setManager(manager);
+            }
         });
         sysAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
             Validation validation = sysAddressValidator.getValidation();
@@ -131,6 +138,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
             addButton.setEnabled(type != Validation.Type.WARNING && type != Validation.Type.DANGER);
             setStatusBarText(validation.getMessage());
         });
+        sysAddressValidator.setManager(prefixBox.getSelectedItem());
         sysAddressValidator.verify(sysAddress);
     }
 

@@ -316,7 +316,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     SystemConnectionMemo memo = InstanceManager
                             .getDefault(SystemConnectionMemoManager.class)
                             .getSystemConnectionMemoForUserName(pref.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(Reporter.class));
+                    prefixBox.setSelectedItem(memo.get(ReporterManager.class));
                 }
             } else {
                 prefixBox.setManagers(reporterManager);
