@@ -8,13 +8,19 @@ import org.junit.Before;
 import org.junit.Test;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
+import jmri.SensorManager;
+import jmri.jmrix.internal.InternalSensorManager;
+import jmri.managers.ProxySensorManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -33,21 +39,32 @@ public class AddNewHardwareDevicePanelTest {
         JButton okbutton = new JButton("ButtonOK");
         okbutton.addActionListener(createlistener);
         JTextField systemName = new JTextField();
-        AddNewHardwareDevicePanel t = new AddNewHardwareDevicePanel(systemName, new SystemNameValidator(systemName, null), new JTextField(), new ManagerComboBox<>(),
-                new JSpinner(), new JCheckBox(), okbutton, cancellistener, otherlistener, new JLabel());
-        assertNotNull("exists", t);
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        AddNewHardwareDevicePanel instance = new AddNewHardwareDevicePanel(
+                systemName,
+                new SystemNameValidator(systemName, manager),
+                new JTextField(),
+                new ManagerComboBox<>(Arrays.asList(manager)),
+                new JSpinner(),
+                new JCheckBox(),
+                new JButton(),
+                cancellistener,
+                otherlistener,
+                new JLabel());
+        assertNotNull("exists", instance);
     }
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
@@ -62,8 +79,18 @@ public class AddNewHardwareDevicePanelTest {
         };
         JLabel statusBar = new JLabel();
         JTextField systemName = new JTextField();
-        AddNewHardwareDevicePanel instance = new AddNewHardwareDevicePanel(systemName, new SystemNameValidator(systemName, null), new JTextField(), new ManagerComboBox<>(),
-                new JSpinner(), new JCheckBox(), new JButton(), cancellistener, otherlistener, statusBar);
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        AddNewHardwareDevicePanel instance = new AddNewHardwareDevicePanel(
+                systemName,
+                new SystemNameValidator(systemName, manager),
+                new JTextField(),
+                new ManagerComboBox<>(Arrays.asList(manager)),
+                new JSpinner(),
+                new JCheckBox(),
+                new JButton(),
+                cancellistener,
+                otherlistener,
+                statusBar);
         instance.setStatusBarText(null);
         assertEquals("null yields empty string", "", statusBar.getText());
         instance.setStatusBarText("foo bar");

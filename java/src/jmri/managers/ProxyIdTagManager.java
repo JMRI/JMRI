@@ -173,9 +173,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public boolean isStateStored() {
-        for (Manager<IdTag> mgr : getManagerList()) {
-            if (!((IdTagManager) mgr).isStateStored()) {
-                return false;
+        stateSaved = true;
+        for (Manager<IdTag> mgr: getManagerList()) {
+            if(!((IdTagManager) mgr).isStateStored()) {
+                stateSaved = false;
+                break;
             }
         }
         return stateSaved;
@@ -193,9 +195,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public boolean isFastClockUsed() {
-        for (Manager<IdTag> mgr : getManagerList()) {
+        useFastClock = true;
+        for (Manager<IdTag> mgr: getManagerList()) {
             if (!((IdTagManager) mgr).isFastClockUsed()) {
-                return false;
+               useFastClock = false;
+               break;
             }
         }
         return useFastClock;

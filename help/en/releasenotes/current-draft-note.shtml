@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -268,7 +268,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -335,7 +335,22 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li>Layout Editor combo boxes have been changed to support the migration
+                from JmriBeanComboBox to NamedBeanComboBox.  The affects the Toolbar,
+                the Edit context menu, Set Signal Heads, Set Signal Masts, and Set Sensors.
+                <ul>
+                    <li>Typing a name into the combo box field no longer works.  The
+                    items have to be selected from the combo box drop down.</li>
+                    <li>Typing a letter or two will position the selection.</li>
+                    <li>Positioning is based on both the user name and the system name.
+                    For example, typing <strong>i</strong> will select items with user names starting
+                    with the letter i/I as well as internal items using the system name which starts with i/I.</li>
+                    <li>With this release, it is not possible to create new Block entries
+                    using the Edit context item.</li>
+                    <li>If a block is selected that does not have a user name, a
+                    dialog will prompt for a user name.</li>
+                </ul>
+            </li>
         </ul>
 
     <h3>Logix</h3>
@@ -410,7 +425,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -460,7 +475,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
