@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="5" author="Alain Le Marchand" lastUpdated="2019-07-21"/>
+  <!--  Add PD05A -->
   <version version="4" author="Alain Le Marchand" lastUpdated="2018-02-04"/>
   <!--  New Firmware 3.08 and 3.09 with new CV65 -->
   <version version="3" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
@@ -654,6 +656,28 @@
           <protocol>dcc</protocol>
           <protocol>selectrix</protocol>
           <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="PD05A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="2" numFns="16" productID="PD05A_2017.11" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from November 2017" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="5.0" width="7.9" height="2.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
         </protocols>
       </model>
       <model model="PD12A v3.09.117 (firmware 3.09+)" lowVersionID="117" highVersionID="117" numOuts="4" numFns="16" productID="PD12A_2016.06" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from November 2017" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
