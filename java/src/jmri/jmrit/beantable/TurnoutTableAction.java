@@ -1075,7 +1075,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     SystemConnectionMemo memo = InstanceManager
                             .getDefault(SystemConnectionMemoManager.class)
                             .getSystemConnectionMemoForUserName(pref.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(Turnout.class));
+                    prefixBox.setSelectedItem(memo.get(TurnoutManager.class));
                 }
             } else {
                 prefixBox.setManagers(turnManager);
