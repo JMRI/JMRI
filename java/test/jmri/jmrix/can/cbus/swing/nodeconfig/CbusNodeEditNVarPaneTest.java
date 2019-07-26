@@ -56,27 +56,14 @@ public class CbusNodeEditNVarPaneTest {
         // set node to 3 node vars , param6
         nodeToEdit.setParameters(new int[]{8,1,2,3,4,5,3,7,8});
         
-        
         t.setNode( nodeToEdit );
         
-        
-    //   JFrameOperator jfo = new JFrameOperator( Bundle.getMessage("MenuItemNodeConfig") );
-        
-    //    Assert.assertFalse(getResetButtonEnabled(jfo));
-        
-   //     jfo.requestClose();
-        
-    //    jfo = null;
         nodeToEdit.dispose();
         nodeToEdit = null;
         
         mainpane = null;
         t = null;
     }
-    
-   // private boolean getResetButtonEnabled( JFrameOperator jfo ){
-   //     return ( new JButtonOperator(jfo,Bundle.getMessage("Reset")).isEnabled() );
-   // }
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;

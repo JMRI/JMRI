@@ -241,14 +241,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
     
     /**
-     * To close window after testing
+     * Receive update from CbusNode that table has changed
      */  
-  //  protected void disposeEvFrame(){
-  //      if ( _mainpane.getEditEvFrame() != null ) {
-  //          _mainpane.getEditEvFrame().dispose();
-  //      }
-  //  }
-    
     public void updateFromNode( int arrayid, int col){
         
         ThreadingUtil.runOnGUI( ()->{

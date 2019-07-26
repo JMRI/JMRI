@@ -23,9 +23,11 @@ import org.jdom2.JDOMException;
 
 
 /**
+ * Class to work with CbusNode xml files
  * Loosely based on
  * Load and store the timetable data file: TimeTableData.xml
  * @author Dave Sand Copyright (C) 2018
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeXml {
     
@@ -35,6 +37,11 @@ public class CbusNodeXml {
     private ArrayList<CbusNodeFromBackup> _backupInfos;
     private CbusPreferences preferences;
     
+    /**
+     * Create a new CbusNodeXml
+     * Searches for xml file for the node and reads info
+     * @param node the CbusNode which the xml is associated with
+     */
     public CbusNodeXml(CbusNode node) {
         _nodeNum = node.getNodeNumber();
         _node = node;
@@ -44,12 +51,18 @@ public class CbusNodeXml {
         
     }
     
+    /**
+     * Get a list of all of the backups currently in the xml file
+     * @return may be zero length if no backups
+     */
     public ArrayList<CbusNodeFromBackup> getBackups() {
         return _backupInfos;
     }
     
-    // number of backups in arraylist that do no have a comment
-    // 
+    /**
+     * Get number of backups in arraylist that are complete, do no have a comment
+     * and could potentially be deleted.
+     */
     private int numAutoBackups(){
         int i=0;
         for (int j = _backupInfos.size()-1; j >0 ; j--) {
@@ -61,6 +74,9 @@ public class CbusNodeXml {
         return i;
     }
     
+    /**
+     * Delete older backups depending on user pref. number
+     */
     private void trimBackups(){
         
         if (preferences==null) {
@@ -79,6 +95,9 @@ public class CbusNodeXml {
         return;
     }
     
+    /**
+     * Full xml load
+     */
     private void doBasicLoad(){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         File file = x.getFile(true);
@@ -196,6 +215,12 @@ public class CbusNodeXml {
         
     }
     
+    /**
+     * Save the xml to user profile
+     * trims backup list as per user pref.
+     * @param createNew if true, creates a new backup then saves, false just saves
+     * @return true if all ok, else false if error ocurred
+     */
     public boolean doStore( boolean createNew) {
         
         _node.setBackupStarted();
@@ -222,7 +247,6 @@ public class CbusNodeXml {
         }
         
         if ( createNew ) {
-
             _backupInfos.add(0,new CbusNodeFromBackup(_node,thisBackupDate));
         }
         
@@ -294,6 +318,9 @@ public class CbusNodeXml {
         return true;
     }
     
+    /**
+     * Add an xml entry advising Node Not on Network
+     */
     protected void nodeNotOnNetwork(){
         
         CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
@@ -303,8 +330,10 @@ public class CbusNodeXml {
         
     }
 
-    // takes a backup then
-    // removes main node xml file
+    /**
+     * Add an xml entry advising Node Not on Network
+     * @param rotate if true, creates and rotates .bup files before delete, false just deletes the core node file
+     */
     protected boolean removeNode( boolean rotate){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         File file = x.getFile(false);

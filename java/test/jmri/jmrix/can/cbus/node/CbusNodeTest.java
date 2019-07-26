@@ -10,7 +10,6 @@ import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -22,7 +21,6 @@ public class CbusNodeTest {
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
-    
 
     @Test
     public void testCTor() {
@@ -596,9 +594,7 @@ public class CbusNodeTest {
         t.reply(r);
         Assert.assertEquals(0.875 ,t.floatPercentageRemaining(), 0.0001f );
         
-        
         Assert.assertEquals("0 Backups in middle of fetch",0,t.getNumBackups());
-        
         
         tModel.sendNextBackgroundFetch();
         Assert.assertEquals("Node has sent a message via model", 6 ,tcis.outbound.size() );
@@ -625,13 +621,9 @@ public class CbusNodeTest {
         Assert.assertNotNull("First Backup Timestamp exists",t.getFirstBackupTime());
         Assert.assertNotNull("Last Backup Timestamp exists",t.getLastBackupTime());
         
-     //   int waitfor= t.getNumBackups();
-      //  JUnitUtil.waitFor(()->{ return(waitfor>0); }, " backup didn't backup");
-        
         Assert.assertEquals("Backup Complete",
             t.getSessionBackupStatus(),CbusNodeConstants.BackupType.COMPLETE);
         Assert.assertTrue(t.getNodeBackupFile().removeNode(false));
-        
         
         r = null;
         tModel.dispose();

@@ -93,8 +93,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            
-            
         } catch (NullPointerException e) {
             log.error("Unable to get Node Table from Instance Manager");
         }
@@ -106,7 +104,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         mainpane.setRestoreFcuActive(true);
         infoPane = new JPanel();
         infoPane.setLayout(new BorderLayout() );
-        
         
         JPanel nvMenuPane = new JPanel();
         nvMenuPane.setLayout(new BoxLayout(nvMenuPane, BoxLayout.Y_AXIS));
@@ -292,8 +289,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         };
         importNodeNamesButton.addActionListener(importNodeNames);
         
-        
-        
         nodeTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -340,8 +335,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         String listSelected = obj.toString();
         int _targetnodenum =  jmri.util.StringUtil.getFirstIntFromString(listSelected);
         return nodeModel.getNodeByNodeNum(_targetnodenum);
-        
-        
     }
     
     private void updateTabs() {
@@ -462,7 +455,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                         // log.info("node {} has {} nvs",actualnode,numNvs);
                         actualnode.setNVs( nvArray );
                     }
-                    
                 }
             }
             
@@ -499,7 +491,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                         ev.setName(eventName);
                         ev.setTempFcuNodeName(cbusNodeFcuDataModel.getNodeName( eventNodeNum ) );
                         hostNode.addNewEvent(ev);
-                        
                     }
                 }
             }

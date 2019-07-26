@@ -97,11 +97,6 @@ public class CbusNodeTableDataModelTest {
         Assert.assertTrue("ignores CanMessage",t.getCsByNum(0)== null );
         Assert.assertTrue("ignores CanMessage row",t.getRowCount()== 0 );
         
-        
-        
-        
-        
-        
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
         r.setNumDataElements(8);
@@ -400,10 +395,7 @@ public class CbusNodeTableDataModelTest {
         
         memo = null;
         tcis = null;
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.tearDown();
-        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeTableDataModelTest.class);

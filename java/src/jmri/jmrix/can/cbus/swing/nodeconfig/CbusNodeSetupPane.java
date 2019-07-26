@@ -42,15 +42,12 @@ public class CbusNodeSetupPane extends JPanel {
     private ActionListener removeListener;
     private jmri.util.swing.BusyDialog busy_dialog;
     
-
     /**
      * Create a new instance of CbusNodeSetupPane.
      */
     protected CbusNodeSetupPane( NodeConfigToolPane main ) {
         super();
-
-        
-      //  mainpane = main;
+        //  mainpane = main;
     }
 
     public void initComponents(int node) {
@@ -58,7 +55,6 @@ public class CbusNodeSetupPane extends JPanel {
         if (node == _nodeNum){
             return;
         }
-        
         if (eventScroll != null ){ 
             eventScroll.setVisible(false);
         }
@@ -137,7 +133,6 @@ public class CbusNodeSetupPane extends JPanel {
             
             evPane.add(headerPanel);
             evPane.add(namePanel);
-            
             evPane.add(canIdPanel);
             evPane.add(nodeEventsPanel);
             evPane.add(removePanel);
@@ -147,7 +142,6 @@ public class CbusNodeSetupPane extends JPanel {
             eventScroll = new JScrollPane(evPane);
             
             this.add(eventScroll);
-            
             
             validate();
             repaint();

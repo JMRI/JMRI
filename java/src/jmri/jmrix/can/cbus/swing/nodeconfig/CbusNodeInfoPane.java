@@ -48,7 +48,11 @@ public class CbusNodeInfoPane extends JPanel {
         });
         
     }
-
+    
+    /**
+     * Initialise the pane for a particular CbusNode ( or CbusBackupNode )
+     * @param node the node to display info for
+     */
     public void initComponents(CbusNode node) {
         
         if ( node == null ){
@@ -57,35 +61,29 @@ public class CbusNodeInfoPane extends JPanel {
             }
             return;
         }
-        
         if ( node == nodeOfInterest ){
             return;
         }
-        
         if ( nodeOfInterest != null ) {
             nodeOfInterest.removeInfoPane(this);
         }
-        
         nodeOfInterest = node;
-        
-        nodeOfInterest.addInfoPane(this);
+        nodeOfInterest.addInfoPane(this); // register for updates in case still loading from network
         
         menuPane = new JPanel();
         
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setMargin( new java.awt.Insets(10,10,10,10) );
-        
-        
         JScrollPane textAreaPanel = new JScrollPane(textArea);
         
         header = new JLabel("");
-        
         menuPane.add(header);
         menuPane.add(nodesupportlinkbutton);
         
         this.setLayout(new BorderLayout() );
         
+        // sets the text area text and support link button etc.
         paramsHaveUpdated();
         
         if (infoPane != null ){ 
@@ -210,8 +208,6 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append (nodeOfInterest.getNumBackups());
             textAreaString.append(System.getProperty("line.separator"));
             
-            
-            
             textAreaString.append ("First entry : ");
             textAreaString.append (nodeOfInterest.getFirstBackupTime());
             textAreaString.append(System.getProperty("line.separator"));
@@ -222,10 +218,6 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append(System.getProperty("line.separator"));
         
         }
-        
-        
-        
-        
         
         if ( !nodeOfInterest.getsendsWRACKonNVSET() ) {
             textAreaString.append ("Sends WRACK Following NV Set : ");             
@@ -250,13 +242,9 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append(System.getProperty("line.separator"));
         }
         
-        
         //   nodePartTwobuilder.append ("<p> Is Bootable Y / N</p>");
         //   nodePartTwobuilder.append ("<p> Processor : </p>");
-        
         //   nodePartTwobuilder.append ("<p> Flags </p>");
-        
-        
         
         nodesupportlinkbutton.setToolTipText("<html>" + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) + 
         " " + CbusNodeConstants.getModuleType(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3)) + 

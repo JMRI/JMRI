@@ -41,8 +41,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
     private CbusNodeNVTableDataModel nodeNVModel;
     private int largerFont;
     private JTable nodeNvTable;
-    
-    // NodeConfigToolPane mainpane;
 
     protected CbusNodeNVEditTablePane( CbusNodeNVTableDataModel nVModel ) {
         super();
@@ -124,9 +122,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                 String string="";
                 if(arg1 != null){
                     string = arg1.toString();
-                  //  if (string.equals("0000 0000")) {
-                  //      string = "";
-                  //  }
                     f.setText(string.toUpperCase());
                 } else {
                     f.setText("");
@@ -151,7 +146,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                         }
                     }
                 }
-                
                 return f;
             }
         };

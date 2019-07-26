@@ -154,7 +154,6 @@ public class CbusNodeTablePane extends JPanel {
             
             JTextField f = new JTextField();
             
-
             @Override
             public Component getTableCellRendererComponent(
                 JTable table, Object arg1, boolean isSelected, boolean hasFocus, 
@@ -172,23 +171,15 @@ public class CbusNodeTablePane extends JPanel {
                         }
                     } catch (NumberFormatException ex) {
                     }
-
                     f.setText(string);
-                    // log.debug(" string :{}:",string );
-                    
-                    
                     if (arg1 instanceof java.util.Date) {
                         f.setText(DATE_FORMAT.format((java.util.Date) arg1));
                     }
-                    
-                    
                 } else {
                     f.setText("");
                 }
-
                 if (isSelected) {
                     f.setBackground( table.getSelectionBackground() );
-                    
                 } else {
                     if ( row % 2 == 0 ) {
                         f.setBackground( table.getBackground() );
@@ -197,7 +188,6 @@ public class CbusNodeTablePane extends JPanel {
                         f.setBackground( WHITE_GREEN );
                     }
                 }
-                
                 if ( arg1 instanceof CbusNodeConstants.BackupType ) {
                     if ( Objects.equals(arg1 , CbusNodeConstants.BackupType.INCOMPLETE )) {
                         f.setBackground( VERY_LIGHT_RED );
@@ -220,7 +210,6 @@ public class CbusNodeTablePane extends JPanel {
                         f.setText(Bundle.getMessage("BackupOutstanding"));
                     }
                 }
-                
                 return f;
             }
         };
@@ -256,10 +245,8 @@ public class CbusNodeTablePane extends JPanel {
                 setMaximum(1000);
             }
             setString(progress + "%");
-            
             if (isSelected) {
                 setBackground( table.getSelectionBackground() );
-                
             } else {
                 if ( row % 2 == 0 ) {
                     setBackground( table.getBackground() );
@@ -268,7 +255,6 @@ public class CbusNodeTablePane extends JPanel {
                     setBackground( WHITE_GREEN );
                 }
             }
-            
             return this;
         }
     }

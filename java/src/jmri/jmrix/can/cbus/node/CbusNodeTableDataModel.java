@@ -473,6 +473,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */    
     public CbusNode provideNodeByNodeNum( int nodenum ) {
         if ( nodenum < 1 || nodenum > 65535 ) {
+            log.error("Node number should be between 1 and 65535");
             return null;
         }
         for (int i = 0; i < getRowCount(); i++) {
@@ -553,7 +554,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
 
     /**
      * Returns a string ArrayList of all Node Number and User Names on the table
-     * 
      * @return Node Number + either node model or Username.
      */       
     public ArrayList<String> getListOfNodeNumberNames(){
@@ -566,7 +566,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     /**
      * Notify the GUI for main Node Table contents changing
-     *
      * @param node Node Number, NOT row number
      * @param col Table Column Number
      */
@@ -580,9 +579,8 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     /**
      * Single Node User Name
-     *
      * @param nn Node Number, NOT row number
-     * @return Node Username, if unset returns node type name
+     * @return Node Username, if unset returns node type name, else empty String
      */
     public String getNodeName( int nn ) {
         int rownum = getNodeRowFromNodeNum(nn);
@@ -602,7 +600,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * Returns the next available Node Number
      * @param higherthan Node Number
      * @return calculated next available number, else original value
-     */      
+     */
     public int getNextAvailableNodeNumber( int higherthan ) {
         if ( getRowCount() > 0 ) {
             for (int i = 0; i < getRowCount(); i++) {
@@ -623,19 +621,31 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     int nodeafter = -1;
     boolean urgentActive=false; // feature active, set false for background fetch
     
-    
+    /**
+     * Notify the table that the Node data fetch is more urgent
+     */
     public void startUrgentFetch() {
         urgentActive = true;
         startBackgroundFetch();
     }
     
+    /**
+     * Notify the table that the Node data fetch is more urgent
+     * @param nodeNum the Node to prioritise in the fetch
+     */
     private void setUrgentNode( int nodeNum ){
         urgentNode = nodeNum;
         urgentActive = true;
         startBackgroundFetch();
     }
     
-    // fetch data in order of priority based on what user is currently viewing
+    /**
+     * Fetch data in order of priority based on what user is currently viewing
+     * @param tabindex of the tab being displayed in the main NodeConfigToolPane
+     * @param nodenum number of Node to prioritise in the fetch
+     * @param urgentNodeBefore number of the Node in main table row above
+     * @param urgentNodeAfter number of the Node in main table row below
+     */
     public void setUrgentFetch(int tabindex, int nodenum, int urgentNodeBefore, int urgentNodeAfter){
         urgentTab = tabindex;
         urgentNode = nodenum;
@@ -645,6 +655,9 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         startBackgroundFetch();
     }
     
+    /**
+     * Request the table send the next urgent fetch
+     */
     public void triggerUrgentFetch(){
         if (!urgentActive) {
             return;
@@ -657,7 +670,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     /**
      * Starts background fetching for all table data as per user prefs
      * Call whenever a node has been added to table or node edited
-     * 
      */ 
     public void startBackgroundFetch(){
 
@@ -803,7 +815,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     /**
      * Sends a system-wide reset OPC
-     * 
      */ 
     public void sendSystemReset(){
         send.aRST();
@@ -862,6 +873,10 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }
     }
     
+    /**
+     * Starts Search for Nodes Timer
+     * @param timeout value in msec to wait for responses
+     */
     private void setSearchForNodesTimeout( int timeout) {
         _nodesFound = new ArrayList<Integer>();
         searchForNodesTask = new TimerTask() {

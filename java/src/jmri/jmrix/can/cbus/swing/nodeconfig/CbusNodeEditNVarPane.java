@@ -1,16 +1,10 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -19,7 +13,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 
 import org.slf4j.Logger;
@@ -37,30 +30,30 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
     private CbusNodeNVTableDataModel nodeNVModel;
     private JButton saveNvButton;
     private JButton resetNvButton;
-    private CbusNode nodeOfInterest = null;
+    private CbusNode nodeOfInterest;
     private NodeConfigToolPane _mainPane;
 
     /**
-     * Create a new instance of CbusEventHighlightPanel.
+     * Create a new instance of CbusNodeEditNVarPane.
      */
     protected CbusNodeEditNVarPane( NodeConfigToolPane main ) {
         super();
+        nodeOfInterest = null;
         _mainPane = main;
     }
 
+    /**
+     * Create a new instance of CbusNodeEditNVarPane.
+     * @param memo the System Connection to use
+     */
     public void initComponents(CanSystemConnectionMemo memo) {
         
         _memo = memo;
         
-        try {
-            nodeNVModel = new CbusNodeNVTableDataModel(memo, 5,
-            CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
-            
-            nodeNVModel.addTableModelListener(this);
-            
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
-        }
+        nodeNVModel = new CbusNodeNVTableDataModel(memo, 5,
+        CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
+        nodeNVModel.addTableModelListener(this);
+        
         infoPane = new JPanel();
         setLayout(new BorderLayout() );
         
@@ -70,33 +63,41 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         resetNvButton = new JButton(Bundle.getMessage("Reset"));
         resetNvButton.setToolTipText(("Reset table New NV values"));
         
-        // this.add(infoPane);
+        ActionListener reset = ae -> {
+            resetNVs();
+        };
+        resetNvButton.addActionListener(reset);
+        
+        ActionListener save = ae -> {
+            _mainPane.showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
+                true,false,false, null ); // from, to, nvs, clear events, events, null uses mainpane frame
+        };
+        saveNvButton.addActionListener(save);
         
     }
     
+    /**
+     * Set the Node and update panes
+     * @param node the CbusNode of Interest, can be null
+     */
     public void setNode( CbusNode node ) {
-        
+        log.debug("setnode {}",nodeOfInterest);
         if (node == nodeOfInterest) {
             return;
         }
         
         nodeOfInterest = node;
-        
         nodeNVModel.setNode(nodeOfInterest);
         
-        log.debug("setnode {}",nodeOfInterest);
-
         if (infoPane != null ){ 
             infoPane.setVisible(false);
-            
         }
+        
         infoPane = null;
-
         infoPane = new JPanel();
         infoPane.setLayout(new BorderLayout() );
 
         JPanel nvMenuPane = new JPanel();
-       // nvMenuPane.setLayout(new BoxLayout(nvMenuPane, BoxLayout.Y_AXIS));
         JPanel buttonPane = new JPanel();
         setSaveCancelButtonsActive ( false );
         
@@ -110,9 +111,6 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         
         JPanel generic = new JPanel();
         JPanel template = new JPanel();
-        
-      //  generic.setLayout( new BorderLayout() );
-      //  template.setLayout( new BorderLayout() );
         
         CbusNodeNVEditTablePane genericNVTable = new CbusNodeNVEditTablePane(nodeNVModel);
         genericNVTable.initComponents(_memo);
@@ -128,50 +126,59 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
         infoPane.add(tabbedPane, BorderLayout.CENTER);
         
-       // setPreferredSize(new Dimension(530, 300));
-        
         this.add(infoPane);
         
         validate();
         repaint();
-        
         setVisible(true);
         
-        ActionListener reset = ae -> {
-            resetNVs();
-        };
-        resetNvButton.addActionListener(reset);
-        
-        ActionListener save = ae -> {
-            _mainPane.showConfirmThenSave(nodeNVModel.getChangedNode(),nodeOfInterest,
-                true,false,false, null );
-        };
-        saveNvButton.addActionListener(save);
     }
     
+    /**
+     * Get if any NVs are dirty
+     * @return true if NVs have been edited, else false
+     */
     public boolean areNvsDirty(){
         log.debug("Table Dirty {}",nodeNVModel.isTableDirty());
         return nodeNVModel.isTableDirty();
     }
     
+    /**
+     * Reset edited NVs to original value ( or reset edited NV values if mid-load )
+     */
     public void resetNVs(){
         nodeNVModel.resetNewNvs();
     }
     
+    /**
+     * Get the Node being viewed / edited
+     * @return the node, may be null
+     */
     public CbusNode getNode() {
         return nodeOfInterest;
     }
     
-    public void setSaveCancelButtonsActive ( Boolean newstate ) {
+    /**
+     * Set the Save / Reset NV button status
+     * @param newstate true if buttons should be enabled, else false
+     */
+    public void setSaveCancelButtonsActive ( boolean newstate ) {
         saveNvButton.setEnabled(newstate);
         resetNvButton.setEnabled(newstate);
     }
 
+    /**
+     * Sets save / reset buttons active / inactive depending on table status
+     * {@inheritDoc}
+     */
     @Override
     public void tableChanged(TableModelEvent e) {
         setSaveCancelButtonsActive( nodeNVModel.isTableDirty() );
     }
     
+    /**
+     * Removes the  NV Model listener from the Node
+     */
     public void dispose(){
         if ( nodeNVModel !=null ) {
             nodeNVModel.removeTableModelListener(this);

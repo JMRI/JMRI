@@ -49,10 +49,8 @@ public class CbusPreferences extends PreferencesBean {
             "searchForNodesBackupXmlOnStartup",this.getSearchForNodesBackupXmlOnStartup() );
         this.minimumNumBackupsToKeep = sharedPreferences.getInt(
             "minimumNumBackupsToKeep",this.getMinimumNumBackupsToKeep() );
-
         this._saveRestoreEventTable = sharedPreferences.getBoolean(
             "saveRestoreEventTable",this.getSaveRestoreEventTable() );
-            
     }
 
     public void savePreferences() {
@@ -69,7 +67,6 @@ public class CbusPreferences extends PreferencesBean {
         
         sharedPreferences.putBoolean("searchForNodesBackupXmlOnStartup", this.getSearchForNodesBackupXmlOnStartup() );
         sharedPreferences.putInt("minimumNumBackupsToKeep", this.getMinimumNumBackupsToKeep() );
-        
         sharedPreferences.putBoolean("saveRestoreEventTable", this.getSaveRestoreEventTable() );
         
         try {

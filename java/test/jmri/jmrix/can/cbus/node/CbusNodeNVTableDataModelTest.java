@@ -101,9 +101,7 @@ public class CbusNodeNVTableDataModelTest {
         Assert.assertEquals("NV_SELECT_BIT_COLUMN","",t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
             
-        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );  
-        
-        Assert.assertTrue("isTableLoaded nac", t.isTableLoaded() == false );
+        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
         
         Assert.assertTrue("isTableDirty nac", t.isTableDirty() == false );
         Assert.assertTrue("getCountDirty nac", t.getCountDirty() == 0 );

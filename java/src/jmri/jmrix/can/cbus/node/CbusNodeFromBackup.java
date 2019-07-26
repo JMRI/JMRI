@@ -14,36 +14,36 @@ import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 // import org.slf4j.LoggerFactory;
 
 /**
- * Class to represent a node imported from FCU file.
+ * Class to represent a node imported from FCU file or CbusNodeXml.
  *
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeFromBackup> {
     
     private Date _timeStamp;
-    private String _backupComment="";
+    private String _backupComment;
     private BackupType _backupType;
     
     /**
      * Create a new CbusNodeFrommBackup by connection type and Node Number
-     * <p>
      * 
      * @param connmemo CAN Connection
      * @param nodenumber Node Number between 1 and 65535
      */  
     public CbusNodeFromBackup ( CanSystemConnectionMemo connmemo, int nodenumber ){
         super( connmemo, nodenumber );  
+        _backupComment = "";
     }
     
     /**
      * Create a new CbusNodeFrommBackup from an existing Node
-     * <p>
      * 
      * @param node The Node to make a copy of
      * @param timeStamp to set the Backup TimeStamp
      */  
     public CbusNodeFromBackup ( CbusNode node, Date timeStamp) {
         super( null, node.getNodeNumber() ); 
+        _backupComment = "";
         setBackupResult(BackupType.INCOMPLETE);
         _timeStamp = timeStamp;
         if (node.getParameters()!=null) {
@@ -71,7 +71,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
     /**
      * Set the Backup DateTime
-     *
+     * @param thisDate Timestamp
      */     
     protected void setBackupTimeStamp( Date thisDate){
         _timeStamp = thisDate;
@@ -79,7 +79,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
     /**
      * Get the Backup DateTime
-     * 
      * @return DateTime in format
      */  
     public Date getBackupTimeStamp(){
@@ -88,8 +87,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
 
     /**
      * Set the Backup Result
-     * <p>
-     * 
      * @param type Backup Type Enum
      */  
     protected void setBackupResult(BackupType type) {
@@ -98,7 +95,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
 
     /**
      * Get the Backup Result
-     * 
      * @return enum
      */  
     public BackupType getBackupResult() {
@@ -107,7 +103,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
     /**
      * Set the backup comment
-     * 
      * @param backupComment  text representation of the single backup state
      */  
     public void setBackupComment(String backupComment) {
@@ -116,7 +111,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
     /**
      * Get the Backup Comment
-     * <p>
      * eg. Completed No Issues, 9 NVs, 12 Events with 4 EVs
      * 
      * @return index number, -1 if unset
@@ -137,6 +131,12 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
         addNewEvent(buildEv);
     }
     
+    /**
+     * Get a String comparison with another CbusNodeFromBackup
+     * 
+     * @param toTest The CbusNodeFromBackup to test against
+     * @return eg. "Parameters Changed"
+     */
     public String compareWithString( CbusNodeFromBackup toTest) {
         
         if (toTest==null){
@@ -185,7 +185,8 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      * <p>
      * Used for highlighting changes to Node Backups,
      * so the Date Time Stamp does NOT need to be equal.
-     * checking for Node Number, Parameters, NVs, Events
+     * checking for Node Number, Parameters, NVs, Events.
+     * Events can be in any order, are sorted mid comparison.
      */
     @Override
     public boolean equals(Object obj) {
@@ -227,7 +228,6 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
     /** 
      * Get a Hashcode for the Event Array
-     * 
      * @return 0 if event array null
      */
     public int getEventArrayHash(){
@@ -240,9 +240,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     
     /**
      * toString reports the Node Number Name and backup timestamp
-     * <p>
      * @return string eg "1234 UserName Backup Sun Jul 07 22:41:22".
-     *
      * {@inheritDoc} 
      */
     @Override

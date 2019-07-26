@@ -107,6 +107,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     private JRadioButtonMenuItem tenBackups;
     private JRadioButtonMenuItem twentyBackups;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -128,10 +131,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
     }
 
+    /**
+     * Create a new NodeConfigToolPane
+     */
     public NodeConfigToolPane() {
         super();
     }
 
+    /**
+     * Initialise the NodeConfigToolPane
+     */
     public void init() {
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -177,7 +186,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         nodevarPane.initComponents(memo);
         
         _backupPane = new CbusNodeBackupsPane(this);
-        _backupPane.initComponents();
         
         tabbedPane = new JTabbedPane();
         
@@ -226,8 +234,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         nodeTable.setTransferHandler(new TransferHandler());
         
         revalidate();
-        // major resize, repack
-       // ((JFrame) getTopLevelAncestor()).pack();
        
     }
     
@@ -236,9 +242,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     
     private JFrame topFrame = (JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
     
-    // create a non-modal dialogue box with node search results
+    /**
+     * Create a non-modal dialogue box with node search results
+     * @param csfound number of Command Stations
+     * @param ndfound number of nodes
+     */
     public void notifyNodeSearchComplete(int csfound, int ndfound){
-
         busy_dialog.finish();
         busy_dialog=null;
         
@@ -251,7 +260,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         searchForNodesMenuItem.setEnabled(true);
     }
     
-
+    /**
+     * Notify this pane that the selected node or viewed tab has changed
+     */
     protected void userViewChanged(){
         
         int sel = nodeTable.getSelectedRow();
@@ -269,14 +280,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             if ( rowBefore > -1 ) {
                 nodeBefore = (int) nodeTable.getModel().getValueAt(rowBefore, CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
             }
-            
             if ( rowAfter < nodeTable.getRowCount() ) {
                 nodeAfter = (int) nodeTable.getModel().getValueAt(rowAfter, CbusNodeTableDataModel.NODE_NUMBER_COLUMN);
             }
             
             log.debug("node {} selected tab index {} , node before {} node after {}", _selectedNode , tabindex, nodeBefore,nodeAfter );                
-
-            
             
             tabbedPane.setEnabledAt(1,true);
             tabbedPane.setEnabledAt(2,true);
@@ -344,30 +352,23 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             if ( tabindex == 0 ){ // parameters
                 nodeinfoPane.initComponents( nodeModel.getNodeByNodeNum(_selectedNode) );
             }
-            
             if ( tabindex == 1 ) { // comments pane
                 commentsPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
             }
-            
             if ( tabindex == 2 ){ // NV's
                 nodevarPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
             }
-            
             if ( tabindex == 3 ){ // events
                 nodeEventPane.setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
             }
-
             if ( tabindex == 4 ) { // Network setup
                 setupPane.initComponents(_selectedNode);
             }
-            
-            if ( tabindex == 5 ) {
+            if ( tabindex == 5 ) { // Node Backups
                 _backupPane.setNode(nodeModel.getNodeByNodeNum(_selectedNode));
             }
-            
         }
         else {
-            
             log.debug("selected node -1");
             tabbedPane.setEnabledAt(1,false);
             tabbedPane.setEnabledAt(2,false);
@@ -376,10 +377,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             tabbedPane.setEnabledAt(5,false);
             nodeinfoPane.initComponents(null);
             tabbedPane.setSelectedIndex(0);
-            
         }
     }
     
+    /**
+     * Set Menu Options eg. which checkboxes etc. should be checked
+     */
     private void setMenuOptions(){
         
         nodeNumRequestMenuItem.setSelected( preferences.getAllocateNNListener() );
@@ -426,10 +429,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     
     /**
      * Creates a Menu List.
-     * <p>
-     * File - Print, Print Preview, Save, SaveAs csv
-     * <p>
-     * Display - show / hide Create new event pane, show/hide bottom feedback pane.
+     * {@inheritDoc}
      */
     @Override
     public List<JMenu> getMenus() {
@@ -470,7 +470,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         JMenu numBackupsMenu = new JMenu("Min. Auto Backups to retain");
         ButtonGroup minNumBackupsGroup = new ButtonGroup();
         
-        
         zeroBackups = new JRadioButtonMenuItem(("0"));
         fiveBackups = new JRadioButtonMenuItem(("5"));
         tenBackups = new JRadioButtonMenuItem(("10"));
@@ -481,13 +480,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         minNumBackupsGroup.add(tenBackups);
         minNumBackupsGroup.add(twentyBackups);
         
-        
         numBackupsMenu.add(zeroBackups);
         numBackupsMenu.add(fiveBackups);
         numBackupsMenu.add(tenBackups);
         numBackupsMenu.add(twentyBackups);
-        
-        
         
         backgroundFetchGroup.add(backgroundDisabled);
         backgroundFetchGroup.add(backgroundSlow);
@@ -513,7 +509,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         optionsMenu.add( startupNodesXmlMenuItem );
         optionsMenu.add( new JSeparator() );
         optionsMenu.add( numBackupsMenu );
-        
         
         menuList.add(fileMenu);
         menuList.add(optionsMenu);
@@ -623,6 +618,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         return menuList;
     }
     
+    /**
+     * Set Restore from FCU Menu Item active as only 1 instance per NodeConfigToolPane allowed
+     * @param isActive set true if Frame opened, else false to notify closed
+     */
     protected void setRestoreFcuActive( boolean isActive ){
         teachNodeFromFcuFile.setEnabled(!isActive);
     }
@@ -656,8 +655,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         super.dispose();
     }
 
+    /**
+     * Handles drag actions containing CBUS events to edit / teach to a node
+     */
     private class TransferHandler extends javax.swing.TransferHandler {
-
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
 
@@ -674,7 +678,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             }
             return false;
         }
-
+        
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean importData(JComponent c, Transferable t) {
             if (canImport(c, t.getTransferDataFlavors())) {
@@ -694,8 +701,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         }
     }
     
-    // lower case boolean does not have a null
-    boolean openNewOrEditEventFrame( String eventInJmriFormat ){
+    /**
+     * Opens a new or edit event frame depending on if existing
+     * @param eventInJmriFormat standard CBUS Sensor / Turnout phrase, eg "+44", "-N123E456", "X0A0B"
+     * @return false if issue opening or editing
+     */
+    private boolean openNewOrEditEventFrame( String eventInJmriFormat ){
         
         // do some validation on the input string
         // processed in the same way as a sensor, turnout or light so less chance of breaking in future
@@ -722,35 +733,47 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         ThreadingUtil.runOnGUI( () -> {
             getEditEvFrame().initComponents(_memo,newev);
         });
-        
-        
         return true;
-        
     }
     
-    // this could be requested from
-    // CbusNodeEventDataModel button click to edit event
-    // this class when it receives an event via drag n drop
-    // creating new event from CbusNodeEventVarPane
+    /**
+     * Get the edit event frame
+     * this could be requested from
+     * CbusNodeEventDataModel button click to edit event,
+     * this class when it receives an event via drag n drop,
+     * creating new event from CbusNodeEventVarPane
+     */
     public CbusNodeEditEventFrame getEditEvFrame(){
-        
         if (_editEventFrame == null ){
             _editEventFrame = new CbusNodeEditEventFrame(this);
         }
-        
         return _editEventFrame;
     }
     
-    // notification from the frame that it has disposed
+    /**
+     * Receive notification from the frame that it has disposed
+     */
     protected void clearEditEventFrame() {
         _editEventFrame = null;
     }
 
-        private boolean _clearEvents;
+    private boolean _clearEvents;
     private boolean _teachEvents;
     private CbusNode _fromNode;
     private CbusNode _toNode;
     
+    /**
+     * Show a Confirm before Save Dialogue Box then start teach process for Node
+     * <p>
+     * Used in Node Backup restore, Restore from FCU, edit NV's
+     * Edit Event variables currently use a custom dialogue, not this
+     * @param fromNode Node to get data from
+     * @param toNode Node to send changes to
+     * @param teachNVs true to Teach NV's
+     * @param clearEvents true to clear events before teaching new ones
+     * @param teachEvents true to teach events
+     * @param frame the frame to which dialogue boxes can be attached to
+     */
     protected void showConfirmThenSave( CbusNode fromNode, CbusNode toNode, 
         boolean teachNVs, boolean clearEvents, boolean teachEvents, JFrame frame){
         
@@ -766,21 +789,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         StringBuffer buf = new StringBuffer();
         buf.append("<html> ");
         buf.append( ("Please Confirm Write ") );
-        // buf.append( fromNode.toString() );
         buf.append( ("to <br>") );
-        
         buf.append ( _toNode.toString() );
-        
         buf.append("<hr>");
         
         if ( teachNVs ){
             
             // Bundle.getMessage("NVConfirmWrite",nodeName)
-            
             buf.append("Teaching ");
-            
             buf.append(_toNode.getNvDifference(_fromNode));
-            
             buf.append(" of " + _fromNode.getTotalNVs() + " NV's<br>");
         }       
         if ( _clearEvents ){
@@ -813,6 +830,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         }
     }
     
+    /**
+     * Notification from CbusNode NV Teach is complete
+     * Starts check to see if clear events
+     * @param numErrors number of errors writing NVs
+     */
     public void nVTeachComplete(int numErrors){
         if ( numErrors > 0 ) {
             JOptionPane.showMessageDialog(null, 
@@ -847,6 +869,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         }
     }
     
+    /**
+     * When clear Events completed ( in nvTeachComplete )
+     * starts process for teaching events to Node
+     */
     public void clearEventsComplete() {
         if ( _teachEvents ){
             busy_dialog.setTitle("Teach Events");
@@ -857,6 +883,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         }
     }
     
+    /**
+     * Notification from CbusNode Event Teach is complete
+     * @param numErrors number of errors writing events
+     */
     public void teachEventsComplete( int numErrors ) {
         busy_dialog.finish();
         busy_dialog = null;
@@ -867,7 +897,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         }
     }
     
-
     /**
      * Nested class to create one of these using old-style defaults.
      * Used as a startup action

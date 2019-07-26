@@ -94,12 +94,6 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN).setCellRenderer(getRenderer());
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN).setCellRenderer(getRenderer());
         
-
-      //  tableModel.getColumn(0).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(0)*2 );
-      //  tableModel.getColumn(1).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(1)*2 );
-      //  tableModel.getColumn(2).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(2)*2 );
-      //  tableModel.getColumn(3).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(3)*2 );
-        
         JTextField f = new JTextField();
         largerFont = f.getFont().getSize()+2;
         

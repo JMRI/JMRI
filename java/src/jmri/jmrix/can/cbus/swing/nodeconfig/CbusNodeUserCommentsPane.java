@@ -43,7 +43,6 @@ public class CbusNodeUserCommentsPane extends JPanel implements KeyListener {
         saveTextButton = new JButton(Bundle.getMessage("SaveCommentsButton"));
         saveTextButton.setEnabled(false);
         JPanel evMenuPane = new JPanel();
-        // evMenuPane.setLayout(new BoxLayout(evMenuPane, BoxLayout.X_AXIS));
         evMenuPane.add(saveTextButton);
         
         resetTextButton = new JButton(Bundle.getMessage("ResetCommentButton"));

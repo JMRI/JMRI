@@ -417,22 +417,18 @@ public class CbusNode implements CanListener {
      * 
      */
     protected void sendRequestNextParam(){
-        
         if ( hasActiveTimers() ){
             return;
         }
-        
         if ( _parameters == null ) {
             requestParam(0);
             return;
         }
         if ( getParameter(1) < 0 ) {
-          //  log.info("requesting param 1");
             requestParam(1);
             return;
         }
         if ( getParameter(3) < 0 ) {
-        //      log.info("requesting param 3");
             requestParam(3);
             return;
         }
@@ -562,11 +558,9 @@ public class CbusNode implements CanListener {
      */
     protected void checkNodeFinishedLoad(){
         
-        if (totalRemainingNodeBytes() == 0) {
-            if (!backupStarted) {
-                if (!thisNodeBackupFile.doStore(true) ) {
-                    log.error("Unable to save to Node Backup File");
-                }
+        if ((!backupStarted) && totalRemainingNodeBytes() == 0) {
+            if (!thisNodeBackupFile.doStore(true) ) {
+                log.error("Unable to save to Node Backup File");
             }
         }
         // reset value if node comes online after being offline
@@ -873,7 +867,6 @@ public class CbusNode implements CanListener {
      * so Index 1 is NV1 .. Index 255 is NV255
      * 
      * @return Array of NV's, first in index is Total NV's
-     * 
      */
     public int[] getNvArray() {
         return _nvArray;
@@ -882,7 +875,6 @@ public class CbusNode implements CanListener {
     /**
      * Number of Node Variables on the node.
      * @return 0 if number of NV's unknown, else number of NV's.
-     *
      */
     public int getTotalNVs() {
         if ( _nvArray==null){
@@ -1044,7 +1036,6 @@ public class CbusNode implements CanListener {
     }
     
     private CbusNodeEditEventFrame evEditFrame;
-
     private ArrayList<CbusNodeEvent> eventsToTeachArray;
     private int nextEvInArray;
     private int nextEvVar;
@@ -1062,7 +1053,7 @@ public class CbusNode implements CanListener {
         CbusNodeEditEventFrame frame, 
         NodeConfigToolPane mainPane ){
         
-      //  log.info("send new events to node");
+        //  log.info("send new events to node");
         _mainPane = mainPane;
         evEditFrame = frame;
         eventsToTeachArray = evArray;
@@ -1600,7 +1591,6 @@ public class CbusNode implements CanListener {
      * Start timer for a Parameter request
      * If 10 timeouts are counted, aborts loop, sets 8 parameters to 0
      * and node events array to 0
-     *
      */
     private void setAllParamTimeout( int index) {
         clearAllParamTimeout(); // resets if timer already running
@@ -1621,6 +1611,10 @@ public class CbusNode implements CanListener {
         TimerUtil.schedule(allParamTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
     
+    /**
+     * Set node on network
+     * @param isFound false if not on network
+     */
     protected void nodeOnNetwork( boolean isFound ) {
         
         if (!isFound) {
@@ -2173,9 +2167,7 @@ public class CbusNode implements CanListener {
             if (m.getElement(3)==5){
                 // node reporting that last requested and further event variables for single event
                 // are not required by the node, no need to request them
-                
                 remainingEvVarsNotNeeded();
-                
             }
             else {
                 if ((m.getElement(3) > 0 ) && (m.getElement(3) < 13 )) {
