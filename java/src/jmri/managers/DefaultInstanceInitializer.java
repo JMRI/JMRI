@@ -89,7 +89,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == RailComManager.class) {
-            return new DefaultRailComManager(memo);
+            return new DefaultRailComManager();
         }
 
         if (type == ReporterManager.class) {

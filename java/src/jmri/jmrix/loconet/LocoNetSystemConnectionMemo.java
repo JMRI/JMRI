@@ -466,7 +466,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     static public TranspondingTagManager getIdTagManager() {
         synchronized (LocoNetSystemConnectionMemo.class) { // since tagManager can be null, can't synch on that
             if (tagManager == null) {
-                tagManager = new TranspondingTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+                tagManager = new TranspondingTagManager();
                 InstanceManager.setIdTagManager(tagManager);
             }
             return tagManager;

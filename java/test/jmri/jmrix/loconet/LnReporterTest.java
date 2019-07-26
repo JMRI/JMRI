@@ -119,7 +119,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void setUp() {
         JUnitUtil.setUp();
         tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        new TranspondingTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)); // this class registers itself.
+        new TranspondingTagManager(); // this class registers itself.
         r = new LnReporter(3, tc, "L");
     }
 

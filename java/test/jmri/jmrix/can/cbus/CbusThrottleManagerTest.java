@@ -16,7 +16,6 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 import org.slf4j.Logger;

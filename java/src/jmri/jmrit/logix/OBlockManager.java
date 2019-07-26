@@ -1,8 +1,7 @@
 package jmri.jmrit.logix;
 
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.ConflictingSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -32,19 +31,14 @@ import jmri.managers.AbstractManager;
 public class OBlockManager extends AbstractManager<OBlock>
         implements jmri.InstanceManagerAutoDefault {
 
+    @SuppressWarnings("deprecation")
     public OBlockManager() {
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        super(new ConflictingSystemConnectionMemo("O", "OBlockManager")); // NOI18N
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
-    }
-
-    @Nonnull
-    @Override
-    public String getSystemPrefix() {
-        return "O";
     }
 
     @Override

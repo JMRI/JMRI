@@ -4,7 +4,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.ConflictingSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,18 +18,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
-    public TranspondingTagManager(SystemConnectionMemo memo) {
-        super(memo);
+    @SuppressWarnings("deprecation")
+    public TranspondingTagManager() {
+        super(new ConflictingSystemConnectionMemo("L", "TranspondingTagManager")); // NOI18N
         InstanceManager.store(this, TranspondingTagManager.class);
-    }
-
-    @Override
-    public String getSystemPrefix() {
-       // since this applies to LocoNet, we will use the typical
-       // loconet prefix of L.  Transponding tags are not associated
-       // with any specific loconet connection (i.e. they can move
-       // from one to another).
-       return "L";
     }
 
     @Override

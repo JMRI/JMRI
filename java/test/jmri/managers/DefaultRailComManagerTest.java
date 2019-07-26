@@ -148,7 +148,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     // nor register shutdown task during tests.
     @Override
     protected DefaultIdTagManager getManager() {
-        return new DefaultRailComManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+        return new DefaultRailComManager() {
             @Override
             public void init() {
             }

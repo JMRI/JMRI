@@ -146,7 +146,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
     // nor register shutdown task during tests.
     @Override
     protected TranspondingTagManager getManager() {
-        return new TranspondingTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+        return new TranspondingTagManager() {
             @Override
             public void init() {
             }

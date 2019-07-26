@@ -621,7 +621,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
      * for four managers that have arbitrary prefixes.
      */
     @Override
-    public String getSystemPrefix() {
+    public final String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 

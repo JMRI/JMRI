@@ -34,7 +34,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         } catch (NullPointerException npe) {
             // there is no RailComManager, so create a new one
             InstanceManager.setDefault(RailComManager.class,
-                    new jmri.managers.DefaultRailComManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)));
+                    new jmri.managers.DefaultRailComManager());
         }
         // register for messages
         memo.getTrafficController().addz21Listener(this);

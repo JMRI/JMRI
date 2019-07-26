@@ -815,7 +815,7 @@ public class JUnitUtil {
 
     public static void initRailComManager() {
         InstanceManager.reset(jmri.RailComManager.class);
-        InstanceManager.store(new DefaultRailComManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)), jmri.RailComManager.class);
+        InstanceManager.store(new DefaultRailComManager(), jmri.RailComManager.class);
     }
 
     public static void initLogixManager() {

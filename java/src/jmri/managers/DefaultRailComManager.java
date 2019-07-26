@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.implementation.DefaultRailCom;
+import jmri.jmrix.ConflictingSystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
@@ -23,18 +24,11 @@ import org.slf4j.LoggerFactory;
 public class DefaultRailComManager extends DefaultIdTagManager
         implements RailComManager {
 
-    public DefaultRailComManager(SystemConnectionMemo memo) {
-        super(memo);
+    @SuppressWarnings("deprecation")
+    public DefaultRailComManager() {
+        super(new ConflictingSystemConnectionMemo("R", "DefaultRailComManager")); // NOI18N
         InstanceManager.store(this, RailComManager.class);
         InstanceManager.setIdTagManager(this);
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "R";  /* this is really internal, but we need a prefix
-                        to differentiate between this and the DefaultIdTag 
-                        so the tags don't get merged in the tabbed 
-                        ID table. */
     }
 
     @Override

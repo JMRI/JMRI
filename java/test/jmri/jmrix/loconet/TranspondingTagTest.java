@@ -106,7 +106,7 @@ public class TranspondingTagTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        new TranspondingTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        new TranspondingTagManager();
     }
 
     @After

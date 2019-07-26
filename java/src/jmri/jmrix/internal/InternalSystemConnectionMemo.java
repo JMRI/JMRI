@@ -9,13 +9,15 @@ import jmri.InstanceManager;
  * <p>
  * Things this needed to do:
  * <ul>
- * <li>One of these must be automatically, transparently available - this is done by
- *      inheriting from jmri.InstanceManagerAutoDefault
+ * <li>One of these must be automatically, transparently available - this is
+ * done by inheriting from jmri.InstanceManagerAutoDefault
  * <li>It must be possible to have more than one of these, so you can have
- *      multiple internal systems defined - each one keeps internal references
- *      to its objects
- * <li>It must make sure that its objects are available individually through the instance manager.
- * <li>But it also has to handle the ProxyManager special cases in the InstanceManager
+ * multiple internal systems defined - each one keeps internal references to its
+ * objects
+ * <li>It must make sure that its objects are available individually through the
+ * instance manager.
+ * <li>But it also has to handle the ProxyManager special cases in the
+ * InstanceManager
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2010, 2016
@@ -36,7 +38,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public InternalSystemConnectionMemo(boolean defaultInstanceType) {
         this("I", "Internal", defaultInstanceType);
     }
-    
+
     // invoked by i.e. InstanceManager via the InstanceManagerAutoDefault
     // mechanism, this creates a partial system
     public InternalSystemConnectionMemo() {
@@ -44,21 +46,24 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     }
 
     boolean configured = false;
-    
+
     // if true, this is the default Internal instance, which 
     // only provides a subset of types
     boolean defaultInstanceType = false;
-    
+
     /**
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
-     * <p> Note: The Proxy system can cause some managers to be created early.
-     * We don't call configureManagers in that case, as it causes an infinite loop.
+     * <p>
+     * Note: The Proxy system can cause some managers to be created early. We
+     * don't call configureManagers in that case, as it causes an infinite loop.
      */
     public void configureManagers() {
 
         log.debug("Do configureManagers - doesn't pre-build anything");
-        if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
+        if (configured) {
+            log.warn("configureManagers called for a second time", new Exception("traceback"));
+        }
         configured = true;
     }
 
@@ -123,18 +128,22 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
     @Override
     public InternalConsistManager getConsistManager() {
-        if (defaultInstanceType) { return null; }
+        if (defaultInstanceType) {
+            return null;
+        }
         if (consistManager == null) {
             log.debug("Create InternalConsistManager by request");
             consistManager = new InternalConsistManager();
             // special due to ProxyManager support
-            InstanceManager.store(consistManager,jmri.ConsistManager.class);
+            InstanceManager.store(consistManager, jmri.ConsistManager.class);
         }
         return consistManager;
     }
 
     public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
-        if (defaultInstanceType) { return null; }
+        if (defaultInstanceType) {
+            return null;
+        }
         if (throttleManager == null) {
             log.debug("Create DebugThrottleManager by request");
             // Install a debug throttle manager
@@ -145,7 +154,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     }
 
     public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() {
-        if (defaultInstanceType) { return null; }
+        if (defaultInstanceType) {
+            return null;
+        }
         if (programManager == null) {
             log.debug("Create DebugProgrammerManager by request");
             // Install a debug programmer
@@ -162,7 +173,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             return false;
         }
 
-        if (!configured) configureManagers();
+        if (!configured) {
+            configureManagers();
+        }
 
         if (type.equals(jmri.SensorManager.class)) {
             return true;
@@ -177,12 +190,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             return true;
         }
 
-
         if (!defaultInstanceType) {
             if (type.equals(jmri.PowerManager.class)) {
                 return true;
             }
-            
+
             if (type.equals(jmri.GlobalProgrammerManager.class)) {
                 return getProgrammerManager().isGlobalProgrammerAvailable();
             }
@@ -197,7 +209,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
                 return true;
             }
         }
-                
+
         return super.provides(type);
     }
 
@@ -208,7 +220,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             return null;
         }
 
-        if (!configured) configureManagers();
+        if (!configured) {
+            configureManagers();
+        }
 
         if (T.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
@@ -227,7 +241,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             if (T.equals(jmri.PowerManager.class)) {
                 return (T) getPowerManager();
             }
-            
+
             if (T.equals(jmri.GlobalProgrammerManager.class)) {
                 return (T) getProgrammerManager();
             }
