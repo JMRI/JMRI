@@ -28,7 +28,7 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F / 126.0f;
+        float expResult = 1.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
@@ -39,7 +39,7 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Test
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode expResult = SpeedStepMode.INCREMENTAL;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }

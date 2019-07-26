@@ -27,7 +27,7 @@ public class XpaThrottle extends AbstractThrottle {
     public XpaThrottle(LocoAddress address, XpaTrafficController t) {
         super(null);
         this.address = address.getNumber();
-        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
+        this.speedStepMode = SpeedStepMode.INCREMENTAL;
         this.isForward = true;
         this.speedSetting = 0;
         this.f0 = false;
