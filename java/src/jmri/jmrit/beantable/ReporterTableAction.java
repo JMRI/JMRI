@@ -334,7 +334,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
         hardwareAddressTextField.setName("sysName"); // for GUI test NOI18N
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-        addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         addButton.setName("createButton"); // for GUI test NOI18N
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
@@ -478,7 +477,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
         hardwareAddressValidator.verify(hardwareAddressTextField);
-        addButton.setEnabled(true); // ambiguous, so start enabled
     }
 
     void handleCreateException(String sysName) {
