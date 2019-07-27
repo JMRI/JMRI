@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -14,12 +15,12 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
-    //private RpsSystemConnectionMemo memo = null;
+    private RpsSystemConnectionMemo memo = null;
     protected String prefix = "R";
 
     public RpsSensorManager(RpsSystemConnectionMemo memo) {
         super();
-        //this.memo = memo;
+        this.memo = memo;
         prefix = memo.getSystemPrefix();
     }
 
@@ -70,17 +71,21 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         }
         return sys;
     }
-
+    
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'.
-     *
-     * @param systemName the address to check
-     * @throws IllegalArgumentException when delimiter is not found
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return memo.validateSystemNameFormat(name, this, locale);
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (RpsAddress.validSystemNameFormat(systemName, 'S', prefix));
+        return memo.validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -89,17 +94,6 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
-    }
-
-    /**
-     * Static function returning the RpsSensorManager instance to use.
-     *
-     * @return The registered RpsSensorManager instance for general use
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public RpsSensorManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsSensorManager.class);

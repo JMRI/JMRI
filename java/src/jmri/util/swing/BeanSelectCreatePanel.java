@@ -2,36 +2,31 @@ package jmri.util.swing;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.ItemEvent;
+
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
-import jmri.MemoryManager;
-import jmri.ProvidingManager;
-// import jmri.NamedBean;
-import jmri.SensorManager;
-import jmri.TurnoutManager;
-import jmri.UserPreferencesManager;
+import jmri.NamedBean;
 import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.managers.AbstractProxyManager;
+import jmri.ProvidingManager;
+import jmri.UserPreferencesManager;
+import jmri.ProxyManager;
+import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.ConnectionNameFromSystemName;
+import jmri.swing.SystemNameValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
+public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
-    Manager<E> _manager;
+    //Manager<E> _manager;
     E _defaultSelect;
     String _reference = null;
     JRadioButton existingItem = new JRadioButton();
@@ -40,7 +35,7 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
 
     NamedBeanComboBox<E> existingCombo;
     JTextField hardwareAddress = new JTextField(8);
-    JComboBox<String> prefixBox = new JComboBox<>();
+    ManagerComboBox<E> prefixBox = new ManagerComboBox<>();
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
 
     /**
@@ -51,8 +46,7 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
      * @param manager       the bean manager
      * @param defaultSelect the bean that is selected by default
      */
-    public BeanSelectCreatePanel(Manager<E> manager, E defaultSelect) {
-        _manager = manager;
+    public BeanSelectCreatePanel(@Nonnull Manager<E> manager, E defaultSelect) {
         _defaultSelect = defaultSelect;
         UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         existingItem = new JRadioButton(Bundle.getMessage("UseExisting"), true);
@@ -66,8 +60,7 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
 
         selectcreate.add(existingItem);
         selectcreate.add(newItem);
-        existingCombo = new NamedBeanComboBox<E>(_manager, defaultSelect, DisplayOptions.USERNAME_SYSTEMNAME);
-        LayoutEditor.setupComboBox(existingCombo, false, true);
+        existingCombo = new NamedBeanComboBox<>(manager, defaultSelect, DisplayOptions.USERNAME_SYSTEMNAME);
         // If the combo list is empty we go straight to creation.
         if (existingCombo.getItemCount() == 0) {
             newItem.setSelected(true);
@@ -81,38 +74,25 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
         radio.add(existingItem);
         radio.add(newItem);
 
-        List<String> manuNameList = new ArrayList<>();
-
-        // get list of system manufacturer names if there are multiple managers inside a proxy
-        if (manager instanceof AbstractProxyManager) {
-            List<Manager<E>> managerList = ((AbstractProxyManager<E>) _manager).getManagerList();
-            managerList.forEach((mgr) -> {
-                manuNameList.add(ConnectionNameFromSystemName.getConnectionName(mgr.getSystemPrefix()));
-            });
-
-            manuNameList.forEach((manuName) -> {
-                Boolean addToPrefix = true;
-                //Simple test not to add a system with a duplicate System prefix
-                for (int i = 0; i < prefixBox.getItemCount(); i++) {
-                    if ((prefixBox.getItemAt(i)).equals(manuName)) {
-                        addToPrefix = false;
-                    }
-                }
-                if (addToPrefix) {
-                    prefixBox.addItem(manuName);
-                }
-            });
+        if (manager instanceof ProxyManager) {
+            ProxyManager<E> proxy = (ProxyManager<E>) manager;
+            prefixBox.setManagers(proxy.getManagerList(), proxy.getDefaultManager());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
-        } else { // not a proxy, just one, e.g. Block
-            prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(_manager.getSystemPrefix()));
+        } else { // not a proxy, just one
+            prefixBox.setManagers(manager);
         }
-
+        
         bean.add(existingCombo);
         bean.add(prefixBox);
         bean.add(hardwareAddress);
         hardwareAddress.setToolTipText(Bundle.getMessage("EnterHWaddressAsIntTooltip"));
+        SystemNameValidator validator = new SystemNameValidator(hardwareAddress, prefixBox.getSelectedItem());
+        prefixBox.addItemListener((ItemEvent e) -> {
+            validator.setManager(prefixBox.getSelectedItem());
+        });
+        hardwareAddress.setInputVerifier(validator);
         super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         super.add(radio);
         super.add(bean);
@@ -145,8 +125,14 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
         super.setEnabled(enabled);
     }
 
+    /**
+     * Does nothing.
+     * 
+     * @deprecated since 4.17.2 without direct replacement
+     */
+    @Deprecated
     public void refresh() {
-        // existingCombo.refreshCombo();
+        // do nothing
     }
 
     /**
@@ -187,53 +173,14 @@ public class BeanSelectCreatePanel<E extends jmri.NamedBean> extends JPanel {
     }
 
     private E createBean() throws JmriException {
-        String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+        Manager<E> manager = prefixBox.getSelectedItem();
         E nBean = null;
-        if (prefix != null && _manager instanceof ProvidingManager) {
-            ProvidingManager<E> provider = (ProvidingManager<E>) _manager;
-            if (provider instanceof TurnoutManager) {
-                String sName = "";
-                try {
-                    sName = ((TurnoutManager) provider).createSystemName(hardwareAddress.getText(), prefix);
-                } catch (JmriException e) {
-                    throw e;
-                }
-                try {
-                    nBean = provider.provide(sName);
-                } catch (IllegalArgumentException ex) {
-                    // user input no good
-                    throw new JmriException("ErrorTurnoutAddFailed");
-                }
-            } else if (provider instanceof SensorManager) {
-                String sName = "";
-                try {
-                    sName = ((SensorManager) provider).createSystemName(hardwareAddress.getText(), prefix);
-                } catch (JmriException e) {
-                    throw e;
-                }
-                try {
-                    nBean = provider.provide(sName);
-                } catch (IllegalArgumentException ex) {
-                    // user input no good
-                    throw new JmriException("ErrorSensorAddFailed");
-                }
-            } else {
-                String sName = provider.makeSystemName(hardwareAddress.getText());
-                if (provider instanceof MemoryManager) {
-                    try {
-                        nBean = provider.provide(sName);
-                    } catch (IllegalArgumentException ex) {
-                        // user input no good
-                        throw new JmriException("ErrorMemoryAddFailed");
-                    }
-                } else if (provider instanceof BlockManager) {
-                    try {
-                        nBean = provider.provide(sName);
-                    } catch (IllegalArgumentException ex) {
-                        // user input no good
-                        throw new JmriException("ErrorBlockAddFailed");
-                    }
-                }
+        if (manager instanceof ProvidingManager) {
+            ProvidingManager<E> provider = (ProvidingManager<E>) manager;
+            try {
+                nBean = provider.provide(provider.makeSystemName(hardwareAddress.getText()));
+            } catch (IllegalArgumentException ex) {
+                throw new JmriException(ex);
             }
         }
         if (nBean == null) {

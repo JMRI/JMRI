@@ -2536,17 +2536,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DispatcherFrame instance() {
-        return InstanceManager.getDefault(DispatcherFrame.class);
-    }
-
-    /**
      * Table model for Active Trains Table in Dispatcher window
      */
     public class ActiveTrainsTableModel extends javax.swing.table.AbstractTableModel implements

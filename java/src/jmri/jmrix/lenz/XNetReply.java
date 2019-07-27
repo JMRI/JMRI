@@ -678,6 +678,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @return a string representation of the reply suitable for display in the
      * XpressNet monitor.
      */
+    @Override
     public String toMonitorString(){
         String text;
         // First, Decode anything that is sent by the LI10x, and

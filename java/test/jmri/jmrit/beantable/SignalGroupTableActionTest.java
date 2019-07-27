@@ -101,6 +101,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -124,6 +125,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Test
     @Ignore("needs further setup")
     @ToDo("To Edit, the signal group needs a mast added to it")
+    @Override
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());

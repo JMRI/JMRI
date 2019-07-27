@@ -1,9 +1,11 @@
 package jmri.swing;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 
 import java.awt.GraphicsEnvironment;
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +20,6 @@ import com.alexandriasoftware.swing.JInputValidator;
 import com.alexandriasoftware.swing.Validation;
 
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +39,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorSimpleCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         Manager<Sensor> m = InstanceManager.getDefault(jmri.SensorManager.class);
         NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
         assertNotNull("exists", t);
@@ -46,7 +47,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorFullCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         m.provideSensor("IS1").setUserName("Sensor 1");
         Sensor s = m.provideSensor("IS2");
@@ -64,7 +65,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorSelectEntry() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -86,7 +87,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorExcludeSome() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -116,7 +117,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorChangeDisplayMode() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -156,10 +157,38 @@ public class NamedBeanComboBoxTest {
     }
 
     @Test
+    public void testSensorAllowEdit() {
+        assumeFalse(GraphicsEnvironment.isHeadless());
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        assertTrue(m.getNamedBeanSet().isEmpty());
+        NamedBeanComboBox<Sensor> t = new NamedBeanComboBox<>(m);
+        assertFalse(t.isAllowNull());
+        assertEquals(0, t.getModel().getSize());
+        t.setDisplayOrder(DisplayOptions.SYSTEMNAME);
+        t.setAllowNull(true);
+        assertTrue(t.isAllowNull());
+        assertEquals(0, t.getModel().getSize());
+        Sensor s1 = m.provideSensor("IS1");
+        assertTrue(t.isAllowNull());
+        assertEquals(2, t.getModel().getSize());
+        assertNull(t.getItemAt(0));
+        assertEquals(s1, t.getItemAt(1));
+        t.setAllowNull(false);
+        assertFalse(t.isAllowNull());
+        assertEquals(1, t.getModel().getSize());
+        assertEquals(s1, t.getItemAt(0));
+        t.setAllowNull(true);
+        assertTrue(t.isAllowNull());
+        assertEquals(2, t.getModel().getSize());
+        assertNull(t.getItemAt(0));
+        assertEquals(s1, t.getItemAt(1));
+    }
+
+    @Test
     public void testSensorEditText()
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -396,6 +425,7 @@ public class NamedBeanComboBoxTest {
         assertEquals(s, t.getSelectedItem());
 
         c.setText("K ");
+        JUnitUtil.waitFor(() -> "K ".equals(c.getText()));
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
         assertEquals("K ", c.getText());
         assertEquals(Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
@@ -404,7 +434,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorSetBean() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");
@@ -437,7 +467,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorNameChange() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
 
@@ -454,7 +484,7 @@ public class NamedBeanComboBoxTest {
 
     @Test
     public void testSensorAddTracking() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        assumeFalse(GraphicsEnvironment.isHeadless());
         SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
         Sensor s1 = m.provideSensor("IS1");
         s1.setUserName("Sensor 1");

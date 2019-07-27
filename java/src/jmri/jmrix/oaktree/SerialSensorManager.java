@@ -1,5 +1,6 @@
 package jmri.jmrix.oaktree;
 
+import java.util.Locale;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,12 +105,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format returns 'true' if system
-     * name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'S', prefix));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), prefix));
     }
 
     /**
@@ -167,15 +175,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
-    }
-
-    /**
-     * Static function returning the SerialSensorManager instance to use.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
     }
 
     @Override

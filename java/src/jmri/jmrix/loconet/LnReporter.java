@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
-public class LnReporter extends AbstractIdTagReporter implements LocoNetListener, PhysicalLocationReporter, CollectingReporter {
+public class LnReporter extends AbstractIdTagReporter implements LocoNetListener, CollectingReporter {
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction

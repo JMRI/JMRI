@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author Paul Bender Copyright (C) 2004
  */
-public class XpaThrottleManager extends AbstractThrottleManager implements ThrottleManager {
+public class XpaThrottleManager extends AbstractThrottleManager {
 
     private XpaTrafficController tc = null;
 

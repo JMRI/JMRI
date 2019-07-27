@@ -31,7 +31,7 @@ import jmri.managers.AbstractManager;
  * @author Pete Cressman Copyright (C) 2009
  */
 public class OBlockManager extends AbstractManager<OBlock>
-        implements ProvidingManager<OBlock>, PropertyChangeListener, InstanceManagerAutoDefault {
+        implements ProvidingManager<OBlock>, InstanceManagerAutoDefault {
 
     public OBlockManager() {
         super();

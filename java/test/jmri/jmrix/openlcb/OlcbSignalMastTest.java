@@ -376,6 +376,7 @@ public class OlcbSignalMastTest {
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }

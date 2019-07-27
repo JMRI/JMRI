@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010
  * 
  */
-public class SimulatorAdapter extends TamsPortController implements
-        jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends TamsPortController implements Runnable {
 
     // private control members
     private boolean opened = false;

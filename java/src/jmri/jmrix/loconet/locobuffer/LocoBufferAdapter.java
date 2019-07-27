@@ -27,7 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
-public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class LocoBufferAdapter extends LnPortController {
 
     public LocoBufferAdapter() {
         this(new LocoNetSystemConnectionMemo());
@@ -244,8 +244,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         configureLeadsAndFlowControl(activeSerialPort, flow);
         
         log.info("LocoBuffer (serial) adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
+                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }

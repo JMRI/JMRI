@@ -1,6 +1,5 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import jmri.managers.AbstractManager;
@@ -28,7 +27,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
-public class TransitManager extends AbstractManager<Transit> implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class TransitManager extends AbstractManager<Transit> implements InstanceManagerAutoDefault {
 
     public TransitManager() {
         super();
@@ -195,22 +194,10 @@ public class TransitManager extends AbstractManager<Transit> implements Property
         return list;
     }
 
-    /**
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public TransitManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(TransitManager.class);
-    }
-
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
 }

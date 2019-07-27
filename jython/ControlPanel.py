@@ -24,7 +24,7 @@ f.getContentPane().setLayout(java.awt.FlowLayout())
 def whenMyButtonClicked(event) :
         name  = event.getActionCommand()
         # find any PanelEditor panel(s) to show
-        for panel in jmri.jmrit.display.PanelMenu.instance().getEditorPanelList() :
+        for panel in jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu).getEditorPanelList() :
             if (name == panel.getTitle()) : 
                 panel.setVisible(not panel.isVisible())
                 return            
@@ -39,7 +39,7 @@ def whenMyButtonClicked(event) :
 # proper panel window.
 
 # loop, creating a button for each panel
-for panel in jmri.jmrit.display.PanelMenu.instance().getEditorPanelList() :
+for panel in jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu).getEditorPanelList() :
     # create a button for this panel
     b = javax.swing.JButton(panel.getTitle())
     b.actionPerformed = whenMyButtonClicked

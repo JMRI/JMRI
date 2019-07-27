@@ -30,6 +30,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new GrapevineSystemConnectionMemo();
@@ -40,6 +41,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     // reset objects
     @After
+    @Override
     public void tearDown() {
         t.dispose();
         tcis.terminateThreads();

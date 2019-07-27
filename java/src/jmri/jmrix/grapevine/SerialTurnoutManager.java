@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -60,15 +61,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         log.debug("new turnout {} for prefix {}", systemName, prefix);
         return t;
-    }
-
-    /**
-     *
-     * @deprecated  Since JMRI 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
     }
 
     @Override
@@ -157,14 +149,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format,
-     * else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(name, this, locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+        return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 
     /**

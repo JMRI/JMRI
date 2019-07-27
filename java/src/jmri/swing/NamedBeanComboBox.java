@@ -117,14 +117,13 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager = manager;
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
-        NamedBeanComboBox.this.setEditable(false); // this format avoids overridable method call in constructor warning 
+        NamedBeanComboBox.this.setEditable(false); // prevent overriding method call in constructor
         NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer(getRenderer());
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
         Component ec = getEditor().getEditorComponent();
         if (ec instanceof JComponent) {
-            JComponent jc = (JComponent) ec;
-            jc.setInputVerifier(new JInputValidator(jc, true, false) {
+            ec.setInputVerifier(new JInputValidator(jc, true, false) {
                 @Override
                 protected Validation getValidation(JComponent component, JInputValidatorPreferences preferences) {
                     if (component instanceof JTextComponent) {
@@ -220,6 +219,11 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public void setAllowNull(boolean allowNull) {
         this.allowNull = allowNull;
+        if (allowNull && (getModel().getSize() > 0 && getItemAt(0) != null)) {
+            this.insertItemAt(null, 0);
+        } else if (!allowNull && (getModel().getSize() > 0 && this.getItemAt(0) == null)) {
+            this.removeItemAt(0);
+        }
     }
 
     /**

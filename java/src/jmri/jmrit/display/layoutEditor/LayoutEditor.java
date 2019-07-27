@@ -739,7 +739,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setupComboBox(extraTurnoutNameComboBox, false, true);
         extraTurnoutNameComboBox.setToolTipText(Bundle.getMessage("SecondTurnoutNameToolTip"));
 
-        extraTurnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox));
+        extraTurnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(extraTurnoutNameComboBox));
         // extraTurnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
         // extraTurnoutNameComboBox.setDisabledColor(Color.red);
 
@@ -803,6 +803,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 highlightBlockInComboBox(blockIDComboBox);
             }
             String newName = blockIDComboBox.getSelectedItemDisplayName();
+            if (newName == null) newName = "";
             LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
             if (b != null) {
                 //if there is an occupancy sensor assigned already
@@ -3523,6 +3524,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     protected void assignBlockToSelection() {
         String newName = blockIDComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
         _layoutTrackSelection.forEach((lt) -> {
             lt.setAllLayoutBlocks(b);
@@ -6766,6 +6768,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //check on layout block
         String newName = blockIDComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -6774,6 +6777,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             //check on occupancy sensor
             String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
+            if (sensorName == null) sensorName = "";
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6802,6 +6806,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //check on layout block
         String newName = blockIDComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -6810,6 +6815,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             //check on occupancy sensor
             String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
+            if (sensorName == null) sensorName = "";
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6855,6 +6861,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //check on layout block
         String newName = blockIDComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -6862,6 +6869,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             //check on occupancy sensor
             String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
+            if (sensorName == null) sensorName = "";
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6873,6 +6881,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
+        if (turnoutName == null) turnoutName = "";
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -6887,6 +6896,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             turnoutNameComboBox.setSelectedIndex(-1);
         }
         turnoutName = extraTurnoutNameComboBox.getSelectedItemDisplayName();
+        if (turnoutName == null) turnoutName = "";
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
@@ -6936,6 +6946,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //check on layout block
         String newName = blockIDComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         LayoutBlock b = provideLayoutBlock(newName);
 
         if (b != null) {
@@ -6943,6 +6954,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             //check on occupancy sensor
             String sensorName = blockSensorComboBox.getSelectedItemDisplayName();
+            if (sensorName == null) sensorName = "";
 
             if (!sensorName.isEmpty()) {
                 if (!validateSensor(sensorName, b, this)) {
@@ -6958,13 +6970,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //check on a physical turnout
         String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
+        if (turnoutName == null) turnoutName = "";
 
         if (validatePhysicalTurnout(turnoutName, this)) {
             //turnout is valid and unique.
             o.setTurnout(turnoutName);
 
             if (o.getTurnout().getSystemName().equals(turnoutName)) {
-                turnoutNameComboBox.setSelectedItem(turnoutName);
+                turnoutNameComboBox.setSelectedItem(o.getTurnout());
             }
         } else {
             o.setTurnout("");
@@ -7179,6 +7192,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * needed. Note that the entered name becomes the user name of the
      * LayoutBlock, and a system name is automatically created by
      * LayoutBlockManager if needed.
+     * <p>
+     * If the block name is a system name, then the user will have to supply
+     * a user name for the block.
      *
      * @param inBlockName the entered name
      * @return the provided LayoutBlock
@@ -7190,22 +7206,50 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (inBlockName.isEmpty()) {
             //nothing entered, try autoAssign
             if (autoAssignBlocks) {
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                ).createNewLayoutBlock();
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
                 if (null == newBlk) {
-                    log.error("Failure to auto-assign LayoutBlock '{}'.", inBlockName);
+                    log.error("provideLayoutBlock: Failure to auto-assign LayoutBlock '{}'.", inBlockName);
                 }
             }
         } else {
             //check if this Layout Block already exists
-            result = InstanceManager.getDefault(LayoutBlockManager.class
-            ).getByUserName(inBlockName);
-
+            result = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(inBlockName);
             if (result == null) { //(no)
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
-                ).createNewLayoutBlock(null, inBlockName);
-                if (newBlk == null) {
-                    log.error("Failure to create new LayoutBlock '{}'.", inBlockName);
+                // The combo box name can be either a block system name or a block user name
+                Block checkBlock = InstanceManager.getDefault(BlockManager.class).getBlock(inBlockName);
+                if (checkBlock == null) {
+                    log.error("provideLayoutBlock: The block name does not return a block.");
+                } else {
+                    String checkUserName = checkBlock.getUserName();
+                    if (checkUserName != null && checkUserName.equals(inBlockName)) {
+                        // Go ahead and use the name for the layout block
+                        newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, inBlockName);
+                        if (newBlk == null) {
+                            log.error("provideLayoutBlock: Failure to create new LayoutBlock '{}'.", inBlockName);
+                        }
+                    } else {
+                        // Appears to be a system name, request a user name
+                        String blkUserName = JOptionPane.showInputDialog(getTargetFrame(),
+                                Bundle.getMessage("BlkUserNameMsg"),
+                                Bundle.getMessage("BlkUserNameTitle"),
+                                JOptionPane.PLAIN_MESSAGE);
+                        if (blkUserName != null && !blkUserName.isEmpty()) {
+                            // Verify the user name
+                            Block checkDuplicate = InstanceManager.getDefault(BlockManager.class).getByUserName(blkUserName);
+                            if (checkDuplicate != null) {
+                                JOptionPane.showMessageDialog(getTargetFrame(),
+                                        Bundle.getMessage("BlkUserNameInUse", blkUserName),
+                                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                // OK to use as a block user name
+                                checkBlock.setUserName(blkUserName);
+                                newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, blkUserName);
+                                if (newBlk == null) {
+                                    log.error("provideLayoutBlock: Failure to create new LayoutBlock '{}' with a new user name.", blkUserName);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -8144,6 +8188,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     void addSensor() {
         String newName = sensorComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
 
         if (newName.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error10"),
@@ -8186,11 +8231,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     void addSignalHead() {
         //check for valid signal head entry
         String newName = signalHeadComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         SignalHead mHead = null;
 
         if (!newName.isEmpty()) {
-            mHead = InstanceManager.getDefault(SignalHeadManager.class
-            ).getSignalHead(newName);
+            mHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(newName);
 
             /*if (mHead == null)
  mHead = InstanceManager.getDefault(SignalHeadManager.class).getByUserName(newName);
@@ -8277,11 +8322,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     void addSignalMast() {
         //check for valid signal head entry
         String newName = signalMastComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
         SignalMast mMast = null;
 
         if (!newName.isEmpty()) {
-            mMast = InstanceManager.getDefault(SignalMastManager.class
-            ).getSignalMast(newName);
+            mMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(newName);
             signalMastComboBox.setSelectedItem(mMast);
         }
 
@@ -8392,6 +8437,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     void addMemory() {
         String memoryName = textMemoryComboBox.getSelectedItemDisplayName();
+        if (memoryName == null) memoryName = "";
 
         if (memoryName.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11a"),
@@ -8419,6 +8465,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     void addBlockContents() {
         String newName = blockContentsComboBox.getSelectedItemDisplayName();
+        if (newName == null) newName = "";
 
         if (newName.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("Error11b"),
@@ -9267,8 +9314,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         blockIDComboBox.setSelectedItem(inBlock);
 
-        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class
-        );
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         Set<Block> l = blockIDComboBox.getManager().getNamedBeanSet();
         for (Block b : l) {
             LayoutBlock lb = lbm.getLayoutBlock(b);
@@ -10192,10 +10238,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             @Nonnull Positionable selection,
             @Nonnull MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
-        if (tip.getText() == null || tip.getText().isEmpty()) {
-            tip.setText(selection.getNameString());
+        String txt = tip.getText();
+        if (txt == null || txt.isEmpty()) {
+            return;
         }
+        tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);
     }
 
@@ -10610,86 +10657,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
         super.dispose();
     }
-
-    // The following have been moved to the LayoutTurnout class
-    // These remain to ease migration
-    // defined constants - turnout types
-    @Deprecated // 4.11.3
-    public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;
-    @Deprecated // 4.11.3
-    public static final int LH_TURNOUT = LayoutTurnout.LH_TURNOUT;
-    @Deprecated // 4.11.3
-    public static final int WYE_TURNOUT = LayoutTurnout.WYE_TURNOUT;
-    @Deprecated // 4.11.3
-    public static final int DOUBLE_XOVER = LayoutTurnout.DOUBLE_XOVER;
-    @Deprecated // 4.11.3
-    public static final int RH_XOVER = LayoutTurnout.RH_XOVER;
-    @Deprecated // 4.11.3
-    public static final int LH_XOVER = LayoutTurnout.LH_XOVER;
-    @Deprecated // 4.11.3
-    public static final int SINGLE_SLIP = LayoutTurnout.SINGLE_SLIP;
-    @Deprecated // 4.11.3
-    public static final int DOUBLE_SLIP = LayoutTurnout.DOUBLE_SLIP;
-
-    // hit location (& connection) types (see NOTE above)
-    @Deprecated // 4.11.3
-    public static final int NONE = LayoutTrack.NONE;
-    @Deprecated // 4.11.3
-    public static final int POS_POINT = LayoutTrack.POS_POINT;
-    @Deprecated // 4.11.3
-    public static final int TURNOUT_A = LayoutTrack.TURNOUT_A; //throat for RH, LH, and WYE turnouts
-    @Deprecated // 4.11.3
-    public static final int TURNOUT_B = LayoutTrack.TURNOUT_B; //continuing route for RH or LH turnouts
-    @Deprecated // 4.11.3
-    public static final int TURNOUT_C = LayoutTrack.TURNOUT_C; //diverging route for RH or LH turnouts
-    @Deprecated // 4.11.3
-    public static final int TURNOUT_D = LayoutTrack.TURNOUT_D; //double-crossover or single crossover only
-    @Deprecated // 4.11.3
-    public static final int LEVEL_XING_A = LayoutTrack.LEVEL_XING_A;
-    @Deprecated // 4.11.3
-    public static final int LEVEL_XING_B = LayoutTrack.LEVEL_XING_B;
-    @Deprecated // 4.11.3
-    public static final int LEVEL_XING_C = LayoutTrack.LEVEL_XING_C;
-    @Deprecated // 4.11.3
-    public static final int LEVEL_XING_D = LayoutTrack.LEVEL_XING_D;
-    @Deprecated // 4.11.3
-    public static final int TRACK = LayoutTrack.TRACK;
-    @Deprecated // 4.11.3
-    public static final int TURNOUT_CENTER = LayoutTrack.TURNOUT_CENTER; //non-connection points should be last
-    @Deprecated // 4.11.3
-    public static final int LEVEL_XING_CENTER = LayoutTrack.LEVEL_XING_CENTER;
-    @Deprecated // 4.11.3
-    public static final int TURNTABLE_CENTER = LayoutTrack.TURNTABLE_CENTER;
-    @Deprecated // 4.11.3
-    public static final int LAYOUT_POS_LABEL = LayoutTrack.LAYOUT_POS_LABEL;
-    @Deprecated // 4.11.3
-    public static final int LAYOUT_POS_JCOMP = LayoutTrack.LAYOUT_POS_JCOMP;
-    @Deprecated // 4.11.3
-    public static final int MULTI_SENSOR = LayoutTrack.MULTI_SENSOR;
-    @Deprecated // 4.11.3
-    public static final int MARKER = LayoutTrack.MARKER;
-    @Deprecated // 4.11.3
-    public static final int TRACK_CIRCLE_CENTRE = LayoutTrack.TRACK_CIRCLE_CENTRE;
-    @Deprecated // 4.11.3; also use SLIP_LEFT & SLIP_RIGHT instead
-    public static final int SLIP_CENTER = LayoutTrack.SLIP_CENTER;
-    @Deprecated // 4.11.3
-    public static final int SLIP_A = LayoutTrack.SLIP_A;
-    @Deprecated // 4.11.3
-    public static final int SLIP_B = LayoutTrack.SLIP_B;
-    @Deprecated // 4.11.3
-    public static final int SLIP_C = LayoutTrack.SLIP_C;
-    @Deprecated // 4.11.3
-    public static final int SLIP_D = LayoutTrack.SLIP_D;
-    @Deprecated // 4.11.3
-    public static final int SLIP_LEFT = LayoutTrack.SLIP_LEFT;
-    @Deprecated // 4.11.3
-    public static final int SLIP_RIGHT = LayoutTrack.SLIP_RIGHT;
-    @Deprecated // 4.11.3
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MIN = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
-    @Deprecated // 4.11.3
-    public static final int BEZIER_CONTROL_POINT_OFFSET_MAX = LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX;
-    @Deprecated // 4.11.3
-    public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
 
     // package protected
     class TurnoutComboBoxPopupMenuListener implements PopupMenuListener {

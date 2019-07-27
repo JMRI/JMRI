@@ -31,6 +31,7 @@ import org.junit.Test;
 public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Turnout, JsonTurnoutHttpService> {
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, JsonException {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         Turnout turnout1 = manager.provideTurnout("IT1");

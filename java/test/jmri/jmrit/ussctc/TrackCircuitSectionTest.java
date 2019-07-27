@@ -103,6 +103,7 @@ public class TrackCircuitSectionTest {
         
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
+            @Override
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

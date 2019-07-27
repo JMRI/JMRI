@@ -1390,6 +1390,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new XNetReply();

@@ -235,8 +235,8 @@ public class JUnitUtil {
 
         // make sure the jmri.prefsdir property match the property passed 
         // to the tests.
-        if(initPrefsDir==null){
-           initPrefsDir = System.getProperty("jmri.prefsdir");
+        if (initPrefsDir == null) {
+            initPrefsDir = System.getProperty("jmri.prefsdir", "./temp");
         }
         System.setProperty("jmri.prefsdir",initPrefsDir);
         
@@ -338,9 +338,10 @@ public class JUnitUtil {
         JUnitAppender.end();
         Level severity = Level.ERROR; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
+        String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+JUnitAppender.unexpectedMessageContent(severity), unexpectedMessageSeen);
+        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
         
         // Optionally, check that no threads were left running (controlled by jmri.util.JUnitUtil.checkRemnantThreads environment var)
         if (checkRemnantThreads) {
@@ -787,10 +788,8 @@ public class JUnitUtil {
             }
 
         };
-        // we should use setDefault here, but setCommandStation will
-        // install a consist manager if one is not already installed.
-        //InstanceManager.setDefault(jmri.CommandStation.class,cs);
-        InstanceManager.setCommandStation(cs);
+
+        InstanceManager.store(cs, jmri.CommandStation.class);
     }
 
     public static void initDebugThrottleManager() {
