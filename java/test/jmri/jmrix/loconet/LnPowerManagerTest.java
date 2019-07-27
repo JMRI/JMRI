@@ -149,7 +149,6 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
         Assert.assertEquals("power state", PowerManager.ON, p.getPower());
     }
 
-    @Override
     @Test
     @Override
     public void testSetPowerIdle() throws JmriException {
