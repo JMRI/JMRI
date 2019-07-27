@@ -4,7 +4,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
-import jmri.jmrix.ConflictingSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
     @SuppressWarnings("deprecation")
     public TranspondingTagManager() {
-        super(new ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
+        super(new jmri.jmrix.ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
         InstanceManager.store(this, TranspondingTagManager.class);
     }
 

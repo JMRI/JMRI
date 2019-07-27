@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import javax.annotation.Nonnull;
-import jmri.jmrix.ConflictingSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -33,7 +32,7 @@ public class OBlockManager extends AbstractManager<OBlock>
 
     @SuppressWarnings("deprecation")
     public OBlockManager() {
-        super(new ConflictingSystemConnectionMemo("O", "OBlocks")); // NOI18N
+        super(new jmri.jmrix.ConflictingSystemConnectionMemo("O", "OBlocks")); // NOI18N
     }
 
     @Override

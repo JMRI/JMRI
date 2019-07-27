@@ -8,7 +8,6 @@ import jmri.InstanceManager;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.implementation.DefaultRailCom;
-import jmri.jmrix.ConflictingSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
 
     @SuppressWarnings("deprecation")
     public DefaultRailComManager() {
-        super(new ConflictingSystemConnectionMemo("R", "RailCom")); // NOI18N
+        super(new jmri.jmrix.ConflictingSystemConnectionMemo("R", "RailCom")); // NOI18N
         InstanceManager.store(this, RailComManager.class);
         InstanceManager.setIdTagManager(this);
     }
