@@ -161,13 +161,25 @@ public class ConsistToolFrameTest {
     public void testDeleteNoConsistAddress() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
-	frame.setVisible(true);
-	// get a ConsistToolScaffold
-	ConsistToolScaffold cs = new ConsistToolScaffold();
-	cs.pushDeleteButton();
-	// this should trigger a warning dialog, which we want to dismiss.
-	JemmyUtil.pressDialogButton("Message","OK");
-	cs.requestClose();
+	    frame.setVisible(true);
+	    // get a ConsistToolScaffold
+	    ConsistToolScaffold cs = new ConsistToolScaffold();
+	    cs.pushDeleteButton();
+	    // this should trigger a warning dialog, which we want to dismiss.
+	    JemmyUtil.pressDialogButton("Message","OK");
+	    cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+    }
+
+    @Test
+    public void testScanEmptyRoster() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ConsistToolFrame frame = new ConsistToolFrame();
+	    frame.setVisible(true);
+	    // get a ConsistToolScaffold
+	    ConsistToolScaffold cs = new ConsistToolScaffold();
+	    cs.startRosterScan();
+	    cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
 
