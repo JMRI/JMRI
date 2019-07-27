@@ -123,7 +123,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         setKeySelectionManager(namedBeanRenderer);
         Component ec = getEditor().getEditorComponent();
         if (ec instanceof JComponent) {
-            ec.setInputVerifier(new JInputValidator(jc, true, false) {
+            JComponent jc = (JComponent) ec;
+            jc.setInputVerifier(new JInputValidator(jc, true, false) {
                 @Override
                 protected Validation getValidation(JComponent component, JInputValidatorPreferences preferences) {
                     if (component instanceof JTextComponent) {
@@ -144,7 +145,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                 if (validatingInput) {
                                     if (providing) {
                                         try {
-                                            manager.validateSystemName(text); // ignore output, we only want to catch exceptions
+                                            manager.validateSystemNameFormat(text); // ignore output, we only want to catch exceptions
                                         } catch (IllegalArgumentException ex) {
                                             return new Validation(Validation.Type.DANGER,
                                                     Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text, ex.getLocalizedMessage()), preferences);
