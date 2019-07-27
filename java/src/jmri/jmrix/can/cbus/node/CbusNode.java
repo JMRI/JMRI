@@ -243,7 +243,7 @@ public class CbusNode implements CanListener {
         _nodeUserName = newName;
         if (backupStarted) {
             if (!thisNodeBackupFile.doStore(false) ) {
-                log.error("Unable to save to Node Backup File");
+                log.error("Unable to save Node Name to Node Backup File");
             }
         }
     }
@@ -560,7 +560,7 @@ public class CbusNode implements CanListener {
         
         if ((!backupStarted) && totalRemainingNodeBytes() == 0) {
             if (!thisNodeBackupFile.doStore(true) ) {
-                log.error("Unable to save to Node Backup File");
+                log.error("Unable to save Finished Load to Node Backup File");
             }
         }
         // reset value if node comes online after being offline
@@ -2007,7 +2007,7 @@ public class CbusNode implements CanListener {
         _userComment = comment;
         if (backupStarted) {
             if (!thisNodeBackupFile.doStore(false) ) {
-                log.error("Unable to save to Node Backup File");
+                log.error("Unable to save User Comment to Node Backup File");
             }
         }
     }
@@ -2490,7 +2490,9 @@ public class CbusNode implements CanListener {
      * @return value else null if unknown
      */
     public java.util.Date getFirstBackupTime() {
-        if (getNodeBackupFile() != null && getNodeBackupFile().getBackups().get(0) != null) {
+        if ( getNodeBackupFile() != null 
+            && getNodeBackupFile().getBackups() !=null
+            && getNodeBackupFile().getBackups().get(0) != null ) {
             return getNodeBackupFile().getBackups().get(getNodeBackupFile().getBackups().size()-1).getBackupTimeStamp();
         } else {
             return null;
@@ -2504,7 +2506,9 @@ public class CbusNode implements CanListener {
      * @return value else null if unknown
      */
     public java.util.Date getLastBackupTime() {
-        if (getNodeBackupFile() != null && getNodeBackupFile().getBackups().get(0) != null) {
+        if ( getNodeBackupFile() != null 
+            && getNodeBackupFile().getBackups() !=null
+            && getNodeBackupFile().getBackups().get(0) != null ) {
             return getNodeBackupFile().getBackups().get(0).getBackupTimeStamp();
         } else {
             return null;

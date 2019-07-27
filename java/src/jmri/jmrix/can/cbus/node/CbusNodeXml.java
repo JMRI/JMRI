@@ -106,7 +106,7 @@ public class CbusNodeXml {
         Element root;
         
         if (file == null) {
-            log.error("84: Unable to load backup file");  // NOI18N
+            log.debug("No backup file to load");
             return;
         }
         
@@ -230,7 +230,7 @@ public class CbusNodeXml {
         File file = x.getFile(true);
         
         if (file == null) {
-            log.error("202: Unable to load backup file");  // NOI18N
+            log.error("233: Unable to get backup file prior to save");  // NOI18N
             return false;
         }
         
@@ -360,7 +360,7 @@ public class CbusNodeXml {
     }
 
     public class CbusNodeBackupFile extends XmlFile {
-        private String fileLocation = FileUtil.getUserFilesPath() + "cbus/nodes/";  // NOI18N
+        private String fileLocation = FileUtil.getProfilePath() + "cbus/nodes/";  // NOI18N
         private String baseFileName = ""+_node.getNodeNumber()+".xml";  // NOI18N
 
         public String getDefaultFileName() {
