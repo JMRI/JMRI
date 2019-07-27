@@ -88,7 +88,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <!-- CV 7-8 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
