@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
 	<version author="LDH"
 				version="1" lastUpdated="20170213" />
 
@@ -139,15 +140,7 @@
 <!-- lo copie de lo que dice en decoders\NMRA\short and long address - lo mismo en V26 -->
 <!-- si pongo ango para CV18 anda mal; le quiere sumar 192, etc   -->
 
-			<variable label="Direccion de Consist" CV="19" mask="XVVVVVVV" item="Consist Address">
-			<decVal/></variable>
-		
-		<variable label="Direccion de Consist" CV="19"  mask="VXXXXXXX" item="Consist Address">
-			<enumVal>
-				<enumChoice choice="Normal"></enumChoice>
-				<enumChoice choice="Reversa"></enumChoice>
-			</enumVal>
-		</variable>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
 
 		<variable label="F1 Activa en Consist" CV="21" mask="XXXXXXXV" minFn="1" item="Consist Address Active For F1">
 			<enumVal>
