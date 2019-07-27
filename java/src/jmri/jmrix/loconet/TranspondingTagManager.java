@@ -20,7 +20,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
     @SuppressWarnings("deprecation")
     public TranspondingTagManager() {
-        super(new ConflictingSystemConnectionMemo("L", "TranspondingTagManager")); // NOI18N
+        super(new ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
         InstanceManager.store(this, TranspondingTagManager.class);
     }
 

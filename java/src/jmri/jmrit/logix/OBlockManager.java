@@ -33,7 +33,7 @@ public class OBlockManager extends AbstractManager<OBlock>
 
     @SuppressWarnings("deprecation")
     public OBlockManager() {
-        super(new ConflictingSystemConnectionMemo("O", "OBlockManager")); // NOI18N
+        super(new ConflictingSystemConnectionMemo("O", "OBlocks")); // NOI18N
     }
 
     @Override
