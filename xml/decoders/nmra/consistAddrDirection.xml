@@ -61,7 +61,7 @@
 
   <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
   
-  <variable item="Consist Direction" CV="19" mask="VXXXXXXX" readOnly="yes" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
+  <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label>Locomotive Direction In Consist</label>
     <label xml:lang="it">Direzione Loco nel Consist</label>

@@ -481,11 +481,6 @@
                     <li>xml/decoders/nmra/consistAddr.xml	
                     <li>xml/decoders/nmra/consistAddrDirection.xml
                     </ul>
-                    Note that CV19 should be either included
-                    as a read-only variable (which these fragments do),
-                    or not included at all.  Otherwise, 
-                    consist setups made by consisting tools
-                    might be disrupted by programming.
                  <li>The CV16/CV15 decoder lock feature can be 
                     handled by the xml/decoders/nmra/decoderLockId16.xml
                     fragment file. Note that only CV16 is included;

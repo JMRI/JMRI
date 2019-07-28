@@ -64,7 +64,7 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="19" mask="XVVVVVVV" item="Consist Address" readOnly="yes" default="0" tooltip="Stores consist address. Range 0-127 (direction set in bit 7)">
+  <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" tooltip="Stores consist address. Range 0-127 (direction set in bit 7)">
     <decVal max="127"/>
     <label>Advanced Consist Address</label>
     <label xml:lang="it">Indirizzo Consist Avanzato</label>
