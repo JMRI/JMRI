@@ -320,10 +320,10 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
             text.append("<html><h4>");
             if (nodeOfInterest.getNodeBackupFile().getBackups().size() == 1 ){
                 text.append(nodeOfInterest.getNodeBackupFile().getBackups().size());
-                text.append(" Backup");
+                text.append(" xml entry");
             } else {
                 text.append(nodeOfInterest.getNodeBackupFile().getBackups().size());
-                text.append(" Backups");
+                text.append(" xml entries");
             }
             text.append("</h4></html>");
             headerText.setText(text.toString());
@@ -350,7 +350,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         log.debug("Manually deleting {}",nodeOfInterest.getNodeBackupFile().getBackups().get(bup));
         nodeOfInterest.getNodeBackupFile().getBackups().remove(bup);
         if (!nodeOfInterest.getNodeBackupFile().doStore(false)){
-            log.error("Issue saving Backup File");
+            log.error("Issue saving Backup File following remove single entry");
         }
         cbusNodeBackupTableModel.fireTableDataChanged();
     }
