@@ -149,7 +149,7 @@ public class SerialAddress {
      * on current system.
      *
      * @param systemName the system name
-     * @param prefix     
+     * @param prefix     the system connection prefix
      * @param locale     the Locale for user messages
      * @return systemName unmodified
      * @throws IllegalArgumentException if unable to validate systemName
