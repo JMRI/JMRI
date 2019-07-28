@@ -143,6 +143,8 @@
         <ul>
           <li>The CV19 references in multiple decoder definitions
             have been updated to use common fragment files.</li>
+          <li>The Schema references in numerous fragment files have been updated to 
+            a consistent form.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -207,7 +209,8 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li></li>
+                <li>Fixed some duplicate definitions of "Motor Output 2"</li>
+                <li>Updated from DTD to Schema checks</li>
             </ul>
 
         <h4>Lenz</h4>
