@@ -40,25 +40,27 @@
       networks in two basic forms: downstream connections and
       upstream connections.
 
-      <p>A downstream connection allows JMRI to connect to a layout
-      via a network for operations and control. This uses a network
-      connection to do the same kinds of things that are often done
-      via serial RS232 and USB links. Generally JMRI is a client
-      connecting to a downstream server in this case.</p>
+      <p>A downstream connection allows JMRI to connect to a layout via a
+        network for operations and control. This uses a network connection to
+        do the same kinds of things that are often done via serial RS232 and
+        USB links. In the client-server architecture, JMRI is usually one of
+        potentially many clients connecting to a server in this case.
+      </p>
 
-      <p>An upstream connection allows other devices to command
-      JMRI over a network connection. In this case, the network
-      connection allows other devices and/or programs to do things
-      that are normally done via scripts and the graphical user
-      interface. Generally JMRI is a server with one or more clients
-      connecting to it in this case.</p>
+      <p>An upstream connection allows other devices to command JMRI over a
+        network connection. In this case, the network connection allows other
+        devices and/or programs to do things that are normally done via scripts
+        and the graphical user interface. In the client-server architecture,
+        JMRI is usually a server with one or more clients connecting to it in
+        this case.
+      </p>
 
       <p>Note that the JMRI JSON and Web servers can be used by other
-        devices such that both the JMRI application and the other
-        device can be simultaneously "downstream" and "upstream" of each
-        other for specific aspects of layout control. In this case,
-        although JMRI is functionally the server, it is receiving layout
-        updates from the client connected to it.
+        layout-connected devices such that both the JMRI application and the
+        other device can be simultaneously "downstream" and "upstream" of each
+        other for specific aspects of layout control. In this case, although
+        JMRI is functionally the server (in a client-server architectural
+        sense), it is receiving layout updates from the client device.
       </p>
 
       <p>In the rest of this page, we provide links to the various
@@ -84,10 +86,10 @@
               <a href=
               "../../hardware/loconet/LbServer.shtml">LocoNet over TCP</a>
 
-              <p>This uses TCP networking to provides access to the
-              LocoNet message stream via the <a href=
-              "http://loconetovertcp.sourceforge.net/">LocoNet over TCP 
-              protocol</a>.</p>
+              <p>This uses <a href=
+              "http://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>
+              to provide client-server access to the LocoNet message stream
+              from <a href="">various servers</a>.</p>
             </li>
           </ul>
         </li>
