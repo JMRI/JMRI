@@ -100,7 +100,7 @@ public class CbusNodeXml {
      */
     private void doBasicLoad(){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
-        File file = x.getFile(true);
+        File file = x.getFile(_node.getNodeNumber(),true);
         
         // Find root
         Element root;
@@ -227,7 +227,7 @@ public class CbusNodeXml {
       
         Date thisBackupDate = new Date();
         CbusNodeBackupFile x = new CbusNodeBackupFile();
-        File file = x.getFile(true);
+        File file = x.getFile(_node.getNodeNumber(),true);
         
         if (file == null) {
             log.error("233: Unable to get backup file prior to save");  // NOI18N
@@ -336,7 +336,7 @@ public class CbusNodeXml {
      */
     protected boolean removeNode( boolean rotate){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
-        File file = x.getFile(false);
+        File file = x.getFile(_node.getNodeNumber(),false);
         
         if (rotate) {
             try {
@@ -352,60 +352,56 @@ public class CbusNodeXml {
             }
         }
         
-        if ( !x.deleteFile()){
+        if ( !x.deleteFile(_node.getNodeNumber())){
             log.error("Unable to delete node xml file");
             return false;
         }
         return true;
     }
 
-    public class CbusNodeBackupFile extends XmlFile {
-        private String fileLocation = FileUtil.getProfilePath() + "cbus/nodes/";  // NOI18N
-        private String baseFileName = ""+_node.getNodeNumber()+".xml";  // NOI18N
+    public static class CbusNodeBackupFile extends XmlFile {
+        
+        private String fileLocation = FileUtil.getProfilePath() 
+            + "cbus" + File.separator + "nodes" + File.separator;  // NOI18N
 
-        public String getDefaultFileName() {
-            return getFileLocation() + getFileName();
+        public String getDefaultFileName(int nodeNum) {
+            return getFileLocation() + getFileName(nodeNum);
         }
 
-        public File getFile(boolean store) {
+        public File getFile(int nodeNum, boolean store) {
             // Verify that cbus:node directory exists
             File chkdir = new File(getFileLocation());
             if (!chkdir.exists()) {
                 if (!chkdir.mkdir()) {
-                    log.error("Create directory:cbus/node/ failed");  // NOI18N
+                    log.error("Create directory: cbus/node/ failed for node {} directory {}",
+                        nodeNum,getFileLocation());
                     return null;
                 }
             }
             
-            File file = findFile(getDefaultFileName());
+            File file = findFile(getDefaultFileName(nodeNum));
             if (file == null && store) {
                 log.debug("create new file");  // NOI18N
-                file = new File(getDefaultFileName());
+                file = new File(getDefaultFileName(nodeNum));
             }
             return file;
         }
 
-        public String getFileName() {
-            if(baseFileName == null) {
-               baseFileName = "" + _nodeNum + ".xml";  // NOI18N
-            }
-            return baseFileName;
+        public String getFileName(int nodeNum) {
+            return nodeNum + ".xml";  // NOI18N
         }
 
         /**
-         * Absolute path to location of TimeTable files.
+         * Path to location of files.
          *
          * @return path to location
          */
         public String getFileLocation() {
-            if(fileLocation==null){
-               fileLocation = FileUtil.getUserFilesPath() + "cbus/nodes/";  // NOI18N
-            }
             return fileLocation;
         }
         
-        public boolean deleteFile() {
-            return getFile(false).delete();
+        public boolean deleteFile(int nodeNum) {
+            return getFile(nodeNum,false).delete();
         }
     }
 
