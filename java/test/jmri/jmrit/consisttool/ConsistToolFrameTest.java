@@ -190,6 +190,7 @@ public class ConsistToolFrameTest {
         Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
     }
 
+    // copied from RosterTest
     @Test
     public void testScanRosterNoConsists() throws IOException,FileNotFoundException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
