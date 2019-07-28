@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.Disposable;
@@ -255,27 +256,43 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     @Override
     public void setStateStored(boolean state) {
+        if (!initialised && !loading) {
+            init();
+        }
         if (state != storeState) {
             this.setDirty(true);
         }
+        boolean old = storeState;
         storeState = state;
+        firePropertyChange("StateStored", old, state);
     }
 
     @Override
     public boolean isStateStored() {
+        if (!initialised && !loading) {
+            init();
+        }
         return storeState;
     }
 
     @Override
     public void setFastClockUsed(boolean fastClock) {
+        if (!initialised && !loading) {
+            init();
+        }
         if (fastClock != useFastClock) {
             this.setDirty(true);
         }
-        useFastClock = fastClock;
+        boolean old = useFastClock;
+        useFastClock  = fastClock;
+        firePropertyChange("UseFastClock", old, fastClock);
     }
 
     @Override
     public boolean isFastClockUsed() {
+        if (!initialised && !loading) {
+            init();
+        }
         return useFastClock;
     }
 
