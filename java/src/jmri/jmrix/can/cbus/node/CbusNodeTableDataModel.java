@@ -933,7 +933,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
     
     /**
-     * Search the directory for nodes, ie userPref/cbus/nodes/123.xml
+     * Search the directory for nodes, ie userPref/cbus/123.xml
      * Add any found to the Node Manager Table
      * (Modeled after a method in jmri.jmrit.dispatcher.TrainInfoFile )
      */
@@ -962,13 +962,8 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         });
     }
     
-    // operational variables
-    private String fileLocation = FileUtil.getUserFilesPath()
-            + "cbus" + File.separator + "nodes" + File.separator;
-
-    public void setFileLocation(String testLocation) {
-        fileLocation = testLocation;
-    }
+    private String fileLocation = FileUtil.getProfilePath()
+            + "cbus" + File.separator;
     
     /**
      * Disconnect from the network

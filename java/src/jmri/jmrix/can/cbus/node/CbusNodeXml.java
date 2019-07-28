@@ -362,7 +362,7 @@ public class CbusNodeXml {
     public static class CbusNodeBackupFile extends XmlFile {
         
         private String fileLocation = FileUtil.getProfilePath() 
-            + "cbus" + File.separator + "nodes" + File.separator;  // NOI18N
+            + "cbus" + File.separator;  // NOI18N
 
         public String getDefaultFileName(int nodeNum) {
             return getFileLocation() + getFileName(nodeNum);
@@ -373,7 +373,7 @@ public class CbusNodeXml {
             File chkdir = new File(getFileLocation());
             if (!chkdir.exists()) {
                 if (!chkdir.mkdir()) {
-                    log.error("Create directory: cbus/node/ failed for node {} directory {}",
+                    log.error("Create directory: cbus/ failed for node {} directory {}",
                         nodeNum,getFileLocation());
                     return null;
                 }

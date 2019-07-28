@@ -10,7 +10,9 @@ import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -717,12 +719,15 @@ public class CbusNodeTest {
         
     }
     
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+    
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
