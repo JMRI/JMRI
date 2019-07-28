@@ -141,17 +141,8 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>The decoder definitions have been updated to make 
-            CV19 "Consist Address" and "Consist Direction"
-            read-only quantities.  This lets you read and see
-            the value in the decoder, but prevents a Write ALl
-            operation from inadvertently interfering with 
-            any value set by consisting operations.
-            For consisting, please use the 
-            <a href="http://jmri.org/help/en/html/tools/consisttool/ConsistTool.shtml">consisting tools in JMRI</a>
-            or your DCC setup, or use the 
-            <a href="http://jmri.org/help/en/package/jmri/jmrit/simpleprog/SimpleProgFrame.shtml">Single CV Programmer</a>.
-            </li>
+          <li>The CV19 references in multiple decoder definitions
+            have been updated to use common fragment files.</li>
         </ul>
 
         <h4>Arnold</h4>
