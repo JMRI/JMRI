@@ -184,25 +184,27 @@ public class ConsistToolFrameTest {
 	    frame.setVisible(true);
 	    // get a ConsistToolScaffold
 	    ConsistToolScaffold cs = new ConsistToolScaffold();
+        int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
 	    cs.startRosterScan();
 	    cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
-        Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
+        Assert.assertEquals("No New Consists after scan",numConsists,InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
     // copied from RosterTest
     @Test
     public void testScanRosterNoConsists() throws IOException,FileNotFoundException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Roster r = createTestRoster();
+        createTestRoster();
         ConsistToolFrame frame = new ConsistToolFrame();
 	    frame.setVisible(true);
 	    // get a ConsistToolScaffold
 	    ConsistToolScaffold cs = new ConsistToolScaffold();
+        int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
 	    cs.startRosterScan();
 	    cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
-        Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
+        Assert.assertEquals("No New Consists after scan",numConsists,InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
     public Roster createTestRoster() throws IOException, FileNotFoundException {
