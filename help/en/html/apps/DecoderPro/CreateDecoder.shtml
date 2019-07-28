@@ -445,10 +445,6 @@
 
               <p class="example">    &lt;enumChoice choice="Blue"
               value="32"/&gt;</p>
-                            
-              <ul>
-                <li>CV1, the primary or short address, should always
-                    be represented by a 
               
             </li>
           </ul>
