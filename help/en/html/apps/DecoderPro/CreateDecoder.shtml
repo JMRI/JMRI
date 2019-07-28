@@ -451,7 +451,7 @@
         </dd>
 
         <dt class="left">Including fragment files</dt>
-        
+        <dd>
           <p>Decoder definitions can include "fragment files"
           which provide common definitions of some CVs.
           This has the advantage that they're already created and 
@@ -459,7 +459,7 @@
           and other nice features.  See the existing 
           decoder definitions for 
           <a href="http://jmri.org/xml/decoders/nmra">examples</a>.  
-          Some key ones:
+          Some key ones:</p>
 
               <ul>
                 <li>CV1, the primary or short address, 
@@ -487,7 +487,7 @@
          
          <p>You can also use fragment files to include (hence simplify)
          <a href="http://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
-        
+        </dd>
         <dt class="left">Checking for syntax errors</dt>
 
         <dd>
