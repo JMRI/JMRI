@@ -89,7 +89,9 @@
               <p>This uses <a href=
               "http://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>
               to provide client-server access to the LocoNet message stream
-              from <a href="">various servers</a>.</p>
+              from
+              <a href="http://loconetovertcp.sourceforge.net/Server/index.html">various
+                servers</a>.</p>
             </li>
           </ul>
         </li>
