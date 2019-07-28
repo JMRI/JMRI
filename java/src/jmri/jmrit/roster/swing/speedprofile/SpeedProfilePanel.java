@@ -25,6 +25,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.roster.Roster;
@@ -510,18 +511,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
 
     private void runProfile() {
-        int speedStepMode = t.getSpeedStepMode();
+        SpeedStepMode speedStepMode = t.getSpeedStepMode();
         profileIncrement = t.getSpeedIncrement();
-//        int speedStep;
-        if (speedStepMode == DccThrottle.SpeedStepMode14) {
-            profileSpeedStepMode = 14;
-        } else if (speedStepMode == DccThrottle.SpeedStepMode27) {
-            profileSpeedStepMode = 27;
-        } else if (speedStepMode == DccThrottle.SpeedStepMode28) {
-            profileSpeedStepMode = 28;
-        } else {// default to 128 speed step mode
-            profileSpeedStepMode = 126;
-        }
+        profileSpeedStepMode = speedStepMode.numSteps;
         if (finishSpeedStep <= 0) {
             finishSpeedStep = profileSpeedStepMode;
         }
