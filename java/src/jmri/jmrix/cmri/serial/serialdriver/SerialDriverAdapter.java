@@ -158,6 +158,7 @@ public class SerialDriverAdapter extends SerialPortAdapter {
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
+        selectedSpeed = getCurrentBaudRate();
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
             if (validSpeeds[i].equals(selectedSpeed)) {
