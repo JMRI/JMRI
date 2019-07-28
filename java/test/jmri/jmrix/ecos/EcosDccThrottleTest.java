@@ -1,19 +1,21 @@
 package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.ThrottleManager;
-import jmri.jmrix.AbstractThrottleTest;
-import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
+
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.SpeedStepMode;
+import jmri.ThrottleManager;
+import jmri.jmrix.AbstractThrottleTest;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 /**
  *
@@ -43,9 +45,20 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.NMRA_DCC_128.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
     }
 
     /**

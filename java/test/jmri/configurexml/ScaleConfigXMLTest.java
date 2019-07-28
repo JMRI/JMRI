@@ -15,6 +15,7 @@ public class ScaleConfigXMLTest {
         Assert.assertNotNull(sxml);
     }
 
+    @Test
     public void testLoad() {
         boolean loadResult = ScaleConfigXML.doLoad();
         Assert.assertTrue("load worked", loadResult);

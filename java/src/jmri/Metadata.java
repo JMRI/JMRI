@@ -8,8 +8,7 @@ import jmri.profile.ProfileManager;
  * Meta data concerning the JMRI application.
  * <p>
  * Meta data is static information concerning the JMRI application. This class
- * provides a single container for listing and storing JMRI meta data. This
- * class is used by the DefaultXmlIOServer object.
+ * provides a single container for listing and storing JMRI meta data.
  *
  * <hr>
  * This file is part of JMRI.

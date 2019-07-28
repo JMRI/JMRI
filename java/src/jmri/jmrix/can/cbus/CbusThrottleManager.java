@@ -1,11 +1,13 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.ThrottleListener.DecisionType;
 import jmri.ThrottleManager;
@@ -725,10 +727,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      * possible modes specifed by the DccThrottle interface
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128
-                | DccThrottle.SpeedStepMode28
-                | DccThrottle.SpeedStepMode14);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
+                , SpeedStepMode.NMRA_DCC_28
+                , SpeedStepMode.NMRA_DCC_14);
     }
 
     /**

@@ -1,8 +1,8 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.Throttle;
@@ -95,7 +95,7 @@ public class CbusThrottle extends AbstractThrottle {
 //            case CbusConstants.DEC_MODE_14: this.speedIncrement = 8; break;
 //        }
         // Only 128 speed step supported at the moment
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         // start periodically sending keep alives, to keep this
         // attached
@@ -127,15 +127,15 @@ public class CbusThrottle extends AbstractThrottle {
      *              speed step mode in most cases
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         int mode;
         speedStepMode = Mode;
         super.setSpeedStepMode(speedStepMode);
         switch (speedStepMode) {
-            case DccThrottle.SpeedStepMode28:
+            case NMRA_DCC_28:
                 mode = CbusConstants.CBUS_SS_28;
                 break;
-            case DccThrottle.SpeedStepMode14:
+            case NMRA_DCC_14:
                 mode = CbusConstants.CBUS_SS_14;
                 break;
             default:

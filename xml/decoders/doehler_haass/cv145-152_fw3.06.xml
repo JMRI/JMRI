@@ -1,221 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - Alain Le Marchand - Simplified productID for PD05 and PD12: no more version indicated
+                 Added minOuts conditions -->
 <!-- version 2 - Alain Le Marchand - added enums and split each CV in 4 groups-->
 <!-- version 1 - Ronald Kuhn - for fw 3.06 and 3.07-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <variable item="Condition LV" CV="145" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LV" CV="145" default="0" exclude="PD05A,PD12A">
     <decVal max="161"/>
     <label>Condition LV    </label>
     <label xml:lang="de">Bedingung LV    </label>
     <label xml:lang="ca">Condició LV    </label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition LV enum" CV="145" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LV enum" CV="145" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition LV</label>
     <label xml:lang="de">Bedingung LV</label>
     <label xml:lang="ca">Condició LV</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition LV A" CV="145" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LV A" CV="145" mask="1" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition LV B" CV="145" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LV B" CV="145" mask="3" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition LV C" CV="145" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LV C" CV="145" mask="9" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition LV D" CV="145" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LV D" CV="145" mask="27" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition LR" CV="146" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LR" CV="146" default="0" exclude="PD05A,PD12A">
     <decVal max="161"/>
     <label>Condition LR    </label>
     <label xml:lang="de">Bedingung LR    </label>
     <label xml:lang="ca">Condició LR    </label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition LR enum" CV="146" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LR enum" CV="146" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition LR</label>
     <label xml:lang="de">Bedingung LR</label>
     <label xml:lang="ca">Condició LR</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition LR A" CV="146" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LR A" CV="146" mask="1" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition LR B" CV="146" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LR B" CV="146" mask="3" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition LR C" CV="146" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LR C" CV="146" mask="9" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition LR D" CV="146" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition LR D" CV="146" mask="27" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition AUX1" CV="147" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX1" CV="147" default="0" minOut="3" exclude="PD05A,PD12A">
     <decVal max="161"/>
     <label>Condition AUX1</label>
     <label xml:lang="de">Bedingung AUX1</label>
     <label xml:lang="ca">Condició  AUX1</label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition AUX1 enum" CV="147" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX1 enum" CV="147" default="0" minOut="3" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition AUX1</label>
     <label xml:lang="de">Bedingung AUX1</label>
     <label xml:lang="ca">Condició  AUX1</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition AUX1 A" CV="147" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX1 A" CV="147" mask="1" default="0" minOut="3" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition AUX1 B" CV="147" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX1 B" CV="147" mask="3" default="0" minOut="3" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition AUX1 C" CV="147" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX1 C" CV="147" mask="9" default="0" minOut="3" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition AUX1 D" CV="147" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX1 D" CV="147" mask="27" default="0" minOut="3" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition AUX2" CV="148" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX2" CV="148" default="0" minOut="4" exclude="PD05A,PD12A">
     <decVal max="161"/>
     <label>Condition AUX2</label>
     <label xml:lang="de">Bedingung AUX2</label>
     <label xml:lang="ca">Condició  AUX2</label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition AUX2 enum" CV="148" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX2 enum" CV="148" default="0" minOut="4" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition AUX2</label>
     <label xml:lang="de">Bedingung AUX2</label>
     <label xml:lang="ca">Condició  AUX2</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition AUX2 A" CV="148" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX2 A" CV="148" mask="1" default="0" minOut="4" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition AUX2 B" CV="148" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX2 B" CV="148" mask="3" default="0" minOut="4" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition AUX2 C" CV="148" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX2 C" CV="148" mask="9" default="0" minOut="4" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition AUX2 D" CV="148" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX2 D" CV="148" mask="27" default="0" minOut="4" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition AUX3" CV="149" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
+  <variable item="Condition AUX3" CV="149" default="0" minOut="5" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06">
     <decVal max="161"/>
     <label>Condition AUX3</label>
     <label xml:lang="de">Bedingung AUX3</label>
     <label xml:lang="ca">Condició  AUX3</label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition AUX3 enum" CV="149" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
+  <variable item="Condition AUX3 enum" CV="149" default="0" minOut="5" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition AUX3</label>
     <label xml:lang="de">Bedingung AUX3</label>
     <label xml:lang="ca">Condició  AUX3</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition AUX3 A" CV="149" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX3 A" CV="149" mask="1" default="0" minOut="5" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition AUX3 B" CV="149" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX3 B" CV="149" mask="3" default="0" minOut="5" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition AUX3 C" CV="149" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX3 C" CV="149" mask="9" default="0" minOut="5" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition AUX3 D" CV="149" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX3 D" CV="149" mask="27" default="0" minOut="5" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition AUX4" CV="150" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
+  <variable item="Condition AUX4" CV="150" default="0" minOut="6" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06">
     <decVal max="161"/>
     <label>Condition AUX4</label>
     <label xml:lang="de">Bedingung AUX4</label>
     <label xml:lang="ca">Condició  AUX4</label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition AUX4 enum" CV="150" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
+  <variable item="Condition AUX4 enum" CV="150" default="0" minOut="6" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition AUX4</label>
     <label xml:lang="de">Bedingung AUX4</label>
     <label xml:lang="ca">Condició  AUX4</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition AUX4 A" CV="150" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX4 A" CV="150" mask="1" default="0" minOut="6" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition AUX4 B" CV="150" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX4 B" CV="150" mask="3" default="0" minOut="6" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition AUX4 C" CV="150" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX4 C" CV="150" mask="9" default="0" minOut="6" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition AUX4 D" CV="150" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX4 D" CV="150" mask="27" default="0" minOut="6" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition AUX5" CV="151" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
+  <variable item="Condition AUX5" CV="151" default="0" minOut="7" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06,DH12A_2016_03,DH12A_2016_06,DH16A_2016_03,DH16A_2016_06,DH22A_2016_03,DH22A_2016_06">
     <decVal max="161"/>
     <label>Condition AUX5</label>
     <label xml:lang="de">Bedingung AUX5</label>
     <label xml:lang="ca">Condició  AUX5</label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition AUX5 enum" CV="151" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
+  <variable item="Condition AUX5 enum" CV="151" default="0" minOut="7" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06,DH12A_2016_03,DH12A_2016_06,DH16A_2016_03,DH16A_2016_06,DH22A_2016_03,DH22A_2016_06">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition AUX5</label>
     <label xml:lang="de">Bedingung AUX5</label>
     <label xml:lang="ca">Condició  AUX5</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition AUX5 A" CV="151" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX5 A" CV="151" mask="1" default="0" minOut="7" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition AUX5 B" CV="151" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX5 B" CV="151" mask="3" default="0" minOut="7" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition AUX5 C" CV="151" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX5 C" CV="151" mask="9" default="0" minOut="7" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition AUX5 D" CV="151" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX5 D" CV="151" mask="27" default="0" minOut="7" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 
-  <variable item="Condition AUX6" CV="152" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
+  <variable item="Condition AUX6" CV="152" default="0" minOut="8" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06,DH12A_2016_03,DH12A_2016_06,DH16A_2016_03,DH16A_2016_06,DH22A_2016_03,DH22A_2016_06">
     <decVal max="161"/>
     <label>Condition AUX6</label>
     <label xml:lang="de">Bedingung AUX6</label>
     <label xml:lang="ca">Condició  AUX6</label>
   </variable>
   <!-- Older form deprecated -->
-  <variable item="Condition AUX6 enum" CV="152" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
+  <variable item="Condition AUX6 enum" CV="152" default="0" minOut="8" exclude="PD05A,PD12A,DH05C_2016_03,DH05C_2016_06,DH10C_2016_03,DH10C_2016_06,DH12A_2016_03,DH12A_2016_06,DH16A_2016_03,DH16A_2016_06,DH22A_2016_03,DH22A_2016_06">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Condition AUX6</label>
     <label xml:lang="de">Bedingung AUX6</label>
     <label xml:lang="ca">Condició  AUX6</label>
   </variable>
   <!-- New form: split in 4 different sub-CVs / enums -->
-  <variable item="Condition AUX6 A" CV="152" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX6 A" CV="152" mask="1" default="0" minOut="8" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
   </variable>
-  <variable item="Condition AUX6 B" CV="152" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX6 B" CV="152" mask="3" default="0" minOut="8" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
   </variable>
-  <variable item="Condition AUX6 C" CV="152" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX6 C" CV="152" mask="9" default="0" minOut="8" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
   </variable>
-  <variable item="Condition AUX6 D" CV="152" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Condition AUX6 D" CV="152" mask="27" default="0" minOut="8" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
   </variable>
 </variables>

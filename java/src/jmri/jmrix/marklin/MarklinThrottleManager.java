@@ -1,8 +1,8 @@
 package jmri.jmrix.marklin;
 
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
+import java.util.EnumSet;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,8 +107,8 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override
