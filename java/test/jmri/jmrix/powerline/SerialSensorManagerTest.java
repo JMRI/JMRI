@@ -29,10 +29,12 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
+    @Override
     protected int getNumToTest1() {
         return 8;
     }
 
+    @Override
     protected int getNumToTest2() {
         return 9;
     }
@@ -63,6 +65,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -91,6 +94,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor(getSystemName(getNumToTest1()));
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
@@ -119,9 +123,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
             l.makeSystemName("1");
             Assert.fail("Expected exception not thrown");
         } catch (NamedBean.BadSystemNameException ex) {
-            Assert.assertEquals("Invalid system name for Sensor: name \"PS1\" has incorrect format", ex.getMessage());
+            Assert.assertEquals("\"PS1\" is not a recognized format.", ex.getMessage());
         }
-        JUnitAppender.assertWarnMessage("address did not match any valid forms: PS1");
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"PS1\" is not a recognized format.");
         String s = l.makeSystemName("B1");
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());

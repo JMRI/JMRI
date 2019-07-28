@@ -117,6 +117,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         add(centerPanel);
         signalMastDriver.addItemListener(new ItemListener(){
+            @Override
             public void itemStateChanged(ItemEvent evt) {
                     log.trace("about to call selection() from signalMastDriver itemStateChanged");
                     selection((String)evt.getItem());

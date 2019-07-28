@@ -62,6 +62,7 @@ public class ConsistToolScaffold extends JFrameOperator {
    // push the buttons at the bottom.
    public void pushDeleteButton(){
         JButtonOperator jbo = new JButtonOperator(this, new ComponentChooser() {
+            @Override
             public boolean checkComponent(Component comp) {
                 String tooltip = ((JButton)comp).getToolTipText();
                 if(tooltip!=null) {
@@ -70,6 +71,7 @@ public class ConsistToolScaffold extends JFrameOperator {
                     return false;
                 }
             }
+            @Override
             public String getDescription() {
                 return "tooltip for delete button";
             }

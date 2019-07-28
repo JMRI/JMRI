@@ -80,6 +80,11 @@ public interface SerialPortAdapter extends PortAdapter {
 
     public String getCurrentBaudRate();
 
+    /**
+     * To store as XML attribute, get a string to represent current port speed.
+     *
+     * @return speed as number string
+     */
     public String getCurrentBaudNumber();
 
     public int getCurrentBaudIndex();

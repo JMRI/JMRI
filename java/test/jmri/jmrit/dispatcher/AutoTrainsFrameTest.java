@@ -14,6 +14,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
     DispatcherFrame d = null;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();

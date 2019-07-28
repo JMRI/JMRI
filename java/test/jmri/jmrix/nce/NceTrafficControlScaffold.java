@@ -68,6 +68,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
      *
      * @return the name of the port
      */
+    @Override
     public String getPortName() {
         return jmri.jmrix.JmrixConfigPane.NONE_SELECTED; 
     }

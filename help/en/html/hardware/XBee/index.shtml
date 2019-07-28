@@ -215,17 +215,27 @@
           <td>int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71 (?)</td>
+          <td>pin: 7</td>
         </tr>
         <tr>
           <td>o</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>o (Turnouts)</td>
           <td>4:3:4</td>
           <td>ModuleAddress:Pin1:Pin2</td>
           <td>ZT4:3:4</td>
           <td>int : int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71 (?)</td>
+          <td>pin: 7</td>
         </tr>
         </tbody>
       </table>

@@ -51,6 +51,7 @@ public class SectionTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());

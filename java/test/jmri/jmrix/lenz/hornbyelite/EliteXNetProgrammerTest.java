@@ -86,6 +86,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Test
+    @Override
     public void testWriteRegisterSequence() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -142,6 +143,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Test
+    @Override
     public void testReadCvSequence() throws JmriException {
         // and do the read
         p.readCV("8", l);
@@ -198,6 +200,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Test
+    @Override
     public void testReadRegisterSequence() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);

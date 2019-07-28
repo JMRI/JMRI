@@ -346,6 +346,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -353,11 +354,13 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
@@ -372,6 +375,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitAppender.suppressWarnMessage("Only single transmissions currently available");
         JUnitUtil.tearDown();

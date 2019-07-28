@@ -22,6 +22,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     }
 
     @Before
+    @Override
     public void setUp(){
         JUnitUtil.setUp();
 

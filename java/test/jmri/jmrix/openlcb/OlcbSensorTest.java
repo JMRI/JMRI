@@ -417,6 +417,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         l = new PropertyChangeListenerScaffold();
@@ -428,6 +429,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
 	t.dispose();
         l.resetPropertyChanged();

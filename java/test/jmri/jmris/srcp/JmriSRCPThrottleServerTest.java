@@ -29,6 +29,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
      * confirm the throttle request succeeded and an appropriate response
      * was forwarded to the client.
      */
+    @Override
     public void confirmThrottleRequestSucceeded(){
         Assert.assertTrue("Throttle notification sent", sb.toString().endsWith("101 INFO 1 GL 42 N 1 28\n\r"));
     }
@@ -46,6 +47,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     /**
      * confirm the error status was forwarded to the client.
      */
+    @Override
     public void confirmThrottleErrorStatusSent(){
        Assert.assertTrue("called in error",sb.toString().endsWith("499 ERROR unspecified error\n\r"));
     }
@@ -84,6 +86,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
 
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();

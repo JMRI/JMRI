@@ -63,6 +63,7 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         l = new RpsReporterManager(new RpsSystemConnectionMemo());

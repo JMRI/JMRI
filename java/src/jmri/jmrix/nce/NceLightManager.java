@@ -1,6 +1,8 @@
 package jmri.jmrix.nce;
 
+import java.util.Locale;
 import jmri.Light;
+import jmri.NmraPacket;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,14 +75,14 @@ public class NceLightManager extends AbstractLightManager {
             num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
                   );
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("illegal character in number field of system name: " + systemName);
             return (0);
         }
-        if (num <= 0) {
+        if (num < NmraPacket.accIdLowLimit) {
             log.error("invalid nce light system name: " + systemName);
             return (0);
-        } else if (num > 4096) {
+        } else if (num > NmraPacket.accIdHighLimit) {
             log.warn("bit number out of range in nce light system name: " + systemName);
             return (0);
         }
@@ -98,9 +100,15 @@ public class NceLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return super.validateNmraAccessorySystemNameFormat(name, locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
