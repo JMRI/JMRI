@@ -12,6 +12,7 @@ import org.junit.*;
 public class PortalIconTest extends PositionableIconTest {
 
     @Test
+    @Override
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", p);

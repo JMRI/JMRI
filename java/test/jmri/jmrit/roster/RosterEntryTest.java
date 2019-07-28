@@ -15,7 +15,7 @@ import org.junit.*;
  * Tests for the jmrit.roster.RosterEntry class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2018
-  */
+ */
 public class RosterEntryTest {
 
     @Test
@@ -113,13 +113,31 @@ public class RosterEntryTest {
     }
 
     @Test
-    public void testFromFile() throws JDOMException, IOException {
+    public void testFromSchemaFile() throws JDOMException, IOException {
         
-        //create a RosterEntry from a test xml file
-        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        // Create a RosterEntry from a test xml file
+        // This one references the Schema version
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
         // check for various values
-        Assert.assertEquals("file name ", "ACL1012.xml", r.getFileName());
+        Assert.assertEquals("file name ", "ACL1012-Schema.xml", r.getFileName());
+        Assert.assertEquals("DCC Address ", "1012", r.getDccAddress());
+        Assert.assertEquals("road name ", "Atlantic Coast Line", r.getRoadName());
+        Assert.assertEquals("road number ", "1012", r.getRoadNumber());
+        Assert.assertEquals("model ", "Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin", r.getDecoderModel());
+        Assert.assertEquals("family ", "Brilliance Sound Decoders", r.getDecoderFamily());
+    }
+
+    @Test
+    public void testFromDtdFile() throws JDOMException, IOException {
+        
+        // Create a RosterEntry from a test xml file
+        // This one references the DTD to make sure that still works
+        // post migration
+        RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-DTD.xml"));
+
+        // check for various values
+        Assert.assertEquals("file name ", "ACL1012-DTD.xml", r.getFileName());
         Assert.assertEquals("DCC Address ", "1012", r.getDccAddress());
         Assert.assertEquals("road name ", "Atlantic Coast Line", r.getRoadName());
         Assert.assertEquals("road number ", "1012", r.getRoadNumber());

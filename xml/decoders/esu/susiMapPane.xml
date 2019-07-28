@@ -11,6 +11,7 @@
     <column>
         <label>
             <text>Map Decoder Function Keys (F0 to F15) to SUSI Functions (SF0-SF15)</text>
+            <text xml:lang="de">Zuweisen der Funktionstasten (F0 bis F15) zu SUSI Funktionen (SF0-SF15)</text>
         </label>
         <label>
             <text> </text>

@@ -7,11 +7,11 @@ import jmri.jmrit.progsupport.ProgModeSelector;
 
 /**
  * Provide GUI controls to select a new decoder.
- * <P>
+ * <p>
  * This is an extension of the CombinedLocoSelPane class to use a JTree instead
  * of a JComboBox for the decoder selection. The loco selection (Roster
  * manipulation) parts are unchanged.
- * <P>
+ * <p>
  * The JComboBox implementation always had to have selected entries, so we added
  * dummy "select from .." items at the top {@literal &} used those to indicate
  * that there was no selection in that box. Here, the lack of a selection

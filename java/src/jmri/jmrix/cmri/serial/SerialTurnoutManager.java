@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -357,16 +358,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return _memo.validSystemNameFormat(systemName, 'T');
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return _memo.validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
-
+    
     /**
      * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return _memo.validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -374,8 +375,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

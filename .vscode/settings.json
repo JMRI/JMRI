@@ -1,3 +1,17 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.test.config": [
+        {
+            "name": "JMRI",
+            "workingDirectory": "${workspaceFolder}",
+            "vmargs": [
+                "-Duser.language=en",
+                "-Duser.region=US",
+                "-Djmri.prefsdir=${workspaceFolder}/temp",
+                "-Djmri.shutdownmanager=jmri.util.MockShutDownManager"
+            ]
+        }
+    ],
+    "java.test.defaultConfig": "JMRI"
 }

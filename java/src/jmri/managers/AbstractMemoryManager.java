@@ -150,8 +150,8 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     /** {@inheritDoc} */
     @Override
     @Nonnull 
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameMemory");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
     }
 
     @Override
@@ -161,4 +161,5 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class);
+
 }

@@ -15,15 +15,15 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -64,12 +64,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     /** {@inheritDoc} */
     @Override
     public Audio getBySystemName(@Nonnull String key) {
-        //return _tsys.get(key);
-        Audio rv =  _tsys.get(key);
-        if (rv == null) {
-            rv = _tsys.get(key.toUpperCase());
-        }
-        return (rv);
+        return _tsys.get(key);
     }
 
     /** {@inheritDoc} */
@@ -156,8 +151,8 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     /** {@inheritDoc} */
     @Override
     @Nonnull 
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameAudio");  // NOI18N
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameAudios" : "BeanNameAudio");  // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);

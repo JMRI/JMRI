@@ -1,5 +1,6 @@
 package jmri.jmrix.secsi;
 
+import java.util.Locale;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
-  */
+ */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
@@ -103,13 +104,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 
     /**
@@ -169,19 +176,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Static function returning the SerialSensorManager instance to use.
-     *
-     * @return The registered SerialSensorManager instance for general use.
-     * @deprecated since 4.9.7
-     */
-    @Deprecated
-    static public SerialSensorManager instance() {
-        return null;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);

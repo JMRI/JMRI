@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * via a Zimo MX-1 SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
@@ -17,6 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     *
      * @param p the associated serial port
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
@@ -24,17 +25,19 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -49,12 +52,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "MX-1";
+        return "MX-1"; // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @SuppressWarnings("deprecation") // until MX1 is migrated to multiple systems
     protected void setInstance() {
         adapter = Mx1Adapter.instance();
     }
+
 }

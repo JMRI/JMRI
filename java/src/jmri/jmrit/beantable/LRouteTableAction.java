@@ -68,7 +68,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -230,7 +230,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         /**
          * Delete the bean after all the checking has been done.
-         * <P>
+         * <p>
          * Deactivate the Logix and remove its conditionals.
          */
         @Override
@@ -1693,6 +1693,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
+                            case SET_SIGNAL_DARK:
                             case SignalHead.DARK:
                                 varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
@@ -1719,9 +1720,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                                 break;
                             case CLEAR_SIGNAL_HELD:
                                 add = false;    // don't know how to test for this
-                                break;
-                            case SET_SIGNAL_DARK:
-                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SET_SIGNAL_LIT:
                                 varType = Conditional.Type.SIGNAL_HEAD_LIT;
@@ -2013,7 +2011,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 log.warn("Unhandled object type: {}", type);
                 break;
         }
-        return null;
+        return new String[]{};
     }
 
     private String[] getOutputComboBoxItems(int type) {
@@ -2029,7 +2027,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             default:
                 log.warn("Unhandled type: {}", type);
         }
-        return null;
+        return new String[]{};
     }
 
 ////////////////////////////// Internal Utility Classes ////////////////////////////////

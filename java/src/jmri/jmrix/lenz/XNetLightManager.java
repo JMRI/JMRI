@@ -1,12 +1,11 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for XpressNet systems.
+ * Implement LightManager for XpressNet systems.
  * <p>
  * System names are "XLnnn", where X is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -69,10 +68,17 @@ public class XNetLightManager extends AbstractLightManager {
     }
 
     /**
-     * Validate Light system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return validateIntegerSystemNameFormat(name,
+                XNetAddress.MINSENSORADDRESS,
+                XNetAddress.MAXSENSORADDRESS,
+                locale);
+    }
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -106,16 +112,7 @@ public class XNetLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Allow access to XNetLightManager.
-     */
-    @Deprecated
-    static public XNetLightManager instance() {
-        return null;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     // private final static Logger log = LoggerFactory.getLogger(XNetLightManager.class);

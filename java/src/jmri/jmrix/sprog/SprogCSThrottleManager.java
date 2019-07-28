@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * SPROG Command Station implementation of a ThrottleManager.
  * <p>
- * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
+ * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
  */
@@ -25,11 +25,19 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        // The SPROG protocol doesn't require an interaction with the command
-        // station for this, so immediately trigger the callback
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new SprogThrottle for " + address);
-        notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, address), address);
+        if (a instanceof DccLocoAddress ) {
+            // Although DCCLocoAddress not enforced in SprogCSThrottle constructor,
+            // is required in the construction.
+            
+            // The SPROG protocol doesn't require an interaction with the command
+            // station for this, so immediately trigger the callback
+            log.debug("new SprogThrottle for " + a);
+            notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo) adapterMemo, a), a);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+        }
     }
 
     /**
@@ -70,9 +78,11 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            SprogCSThrottle lnt = (SprogCSThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof SprogCSThrottle) {
+                SprogCSThrottle lnt = (SprogCSThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

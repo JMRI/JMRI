@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2017
  */
-public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class ZTC611Adapter extends XNetSerialPortController {
 
     public ZTC611Adapter() {
         super();
@@ -169,9 +169,20 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};

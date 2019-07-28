@@ -2,15 +2,18 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -56,6 +59,8 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         // confirm window is showing
         JmriJFrame frame = JmriJFrame.getFrame(Bundle.getMessage("TitleShowCarsInTrain")+ " (" + train1.getName() + ")");
         Assert.assertNotNull("exists", frame);
+        
+        JUnitUtil.dispose(frame);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);

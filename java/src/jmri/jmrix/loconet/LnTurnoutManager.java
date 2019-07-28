@@ -1,6 +1,12 @@
 package jmri.jmrix.loconet;
 
-import javax.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import jmri.BooleanPropertyDescriptor;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
+
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -57,7 +63,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     boolean mTurnoutNoRetry;
-    private String prefix;
+    private final String prefix;
 
     @Override
     public String getSystemPrefix() {
@@ -108,7 +114,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     LocoNetMessage lastSWREQ = null;
 
     /**
-     * Listen for turnouts, creating them as needed,
+     * Listen for turnouts, creating them as needed.
      */
     @Override
     public void message(LocoNetMessage l) {
@@ -116,7 +122,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         // parse message type
         int addr;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_SW_REQ: {               /* page 9 of Loconet PE */
+            case LnConstants.OPC_SW_REQ: {               /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -125,14 +131,14 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 // store message in case resend is needed
                 lastSWREQ = l;
 
-                // Loconet spec says 0x10 of SW2 must be 1, but we observe 0
+                // LocoNet spec says 0x10 of SW2 must be 1, but we observe 0
                 if (((sw1 & 0xFC) == 0x78) && ((sw2 & 0xCF) == 0x07)) {
                     return;  // turnout interrogate msg
                 }
                 log.debug("SW_REQ received with address {}", addr);
                 break;
             }
-            case LnConstants.OPC_SW_REP: {                /* page 9 of Loconet PE */
+            case LnConstants.OPC_SW_REP: {                /* page 9 of LocoNet PE */
 
                 // clear resend message, indicating not to resend
 
@@ -188,13 +194,19 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     }
 
     /**
-     * Validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
     /**
@@ -203,30 +215,12 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * @return the turnout number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if (!systemName.startsWith(prefix + "T")) {
-            // here if an illegal LocoNet Turnout system name
-            log.error("invalid character in header field of loconet turnout system name: {}", systemName);
-            return (0);
-        }
-        // name must be in the LiTnnnnn format (Li is user configurable)
-        int num = 0;
         try {
-            num = Integer.parseInt(systemName.substring(
-                    prefix.length() + 1, systemName.length())
-                  );
-        } catch (Exception e) {
-            log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
         }
-        if (num <= 0) {
-            log.debug("invalid loconet turnout system name: {}", systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.debug("bit number out of range in loconet turnout system name: {}", systemName);
-            return (0);
-        }
-        return (num);
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**
@@ -234,8 +228,41 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
+    }
+
+    public static final String BYPASSBUSHBYBITKEY = "Bypass Bushby Bit";
+    public static final String SENDONANDOFFKEY = "Send ON/OFF";
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        l.add(new BooleanPropertyDescriptor(BYPASSBUSHBYBITKEY, false) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("LnByPassBushbyHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return bean.getClass().getName().contains("LnTurnout");
+            }
+        });
+        l.add(new BooleanPropertyDescriptor(SENDONANDOFFKEY, _binaryOutput ? false : true) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("SendOnOffHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return bean.getClass().getName().contains("LnTurnout");
+            }
+        });
+        return l;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);

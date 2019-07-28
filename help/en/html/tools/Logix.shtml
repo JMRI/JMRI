@@ -232,9 +232,7 @@
       example, valid Logix System Names include: IX1, IX34, and
       IX100. The user name is whatever the user wants to use to
       identify the particular Logix, for example, "Signal 5
-      Control". All letters in a System Name must be in upper case.
-      If the user enters lower case letters, JMRI will
-      automatically convert them to upper case. Also, as a
+      Control". As a
       convenience to the user, if the entered System Name does not
       begin with IX, the program will add IX in front of what is
       entered. For example, to enter a System Name of IX32, simply
@@ -362,7 +360,8 @@
       if the fast clock time is between 10:00 and 11:00, etc. State
       variables are linked together in a logical expression by
       logic operators. For a list of currently available state variables, see
-      <a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State Variables</a></p>
+      <a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State
+      Variables</a></p>
 
       <p>Logic operators currently available are NOT, AND, AND
       NOT, OR and OR NOT. The AND operator is set up automatically 
@@ -485,16 +484,19 @@
       (<strong>Delete</strong> buttons) is used to delete a state variable if
       you decide it is no longer needed.</p>
 
+      <a name="variable" id="variable"></a>
       <p>Press the <strong>Add State Variable</strong> to add a state
-      variable (a row in the state variable table). This brings up
+      variable (a row in the State Variable table). This brings up
       a window with a choice box for the user to select a state
       variable type. Available state variables are documented at
-      <a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State Variables</a>. When a type is chosen the Edit
+      <a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#variable">State
+      Variables</a>. When a type is chosen the Edit
       Variable window displays a text field for the name of the
       entity to be used for the state variable. When a name (either
       System Name or user name) is entered, it must correspond to
       an existing entity (sensor, turnout, light, etc.). Depending on
-      your <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod">selection method</a>, a tabbed Pick List,
+      your <a href="../../package/jmri/jmrit/beantable/LogixTable.shtml#selectMethod">selection
+      method</a>, a tabbed Pick List,
       a single Pick List or a dropdown combo box will be displayed to
       aid in name selection.</p>
 
@@ -592,7 +594,7 @@
       the succeeding action.</p><a name="updateconditional" id=
       "updateconditional"></a>
 
-      <h3>Saving the Conditional</h3>
+      <h3>Activating the Conditional</h3>
 
       <p>When the logical expression and actions have been
       specified, click <strong>Update Conditional</strong> at the bottom of
@@ -697,8 +699,19 @@
       <p>You'll have created a Logix to control the setting of a
       turnout according to the states of two sensors. It's as
       simple as that. It took you more time to read this tutorial
-      than to create the Logix.</p><a name="variable" id=
-      "variable"></a>
+      than to create the Logix.</p>
+
+      <h3>Saving Logix to disk</h3>
+
+        <p>Logix are kept in your <i>layout configuration</i>, along
+        with Turnouts, Sensors, Signal Heads, control panel setup etc.
+        To store this information on disk, allowing to
+        <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+            it</a> next time you run JMRI, use <b>Store Configuration...</b>
+        in the <b>File</b> menu at the top of the Logix Table (or other
+        tables from the Tools menu), or select <b>Store Panel...</b>
+        in the <b>Panel</b> menu. Note that the enabled/disabled
+        state of each Logix is saved in the configuration file.</p>
 
       <a name="notes" id="notes"></a>
       <h2>Additional Notes</h2>
@@ -780,13 +793,14 @@
           creating and debugging it, until you're certain that you
           have it set up properly. A Logix may be enabled or
           disabled dynamically by another Logix (see allowed
-          <a href="../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action">Actions</a>.
-).</p>
+          <a href=
+          "../../package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action">Actions</a>.
+          ).</p>
 
           <p>When JMRI stores the layout configuration in a file,
           e.g. a panel file, all Logix information, including the
           enabled/disabled state of the Logix, is stored. When a
-          Logix is loaded from a configuration file, it's enabled
+          Logix is loaded from a configuration file, its enabled
           or disabled status is set according to what was saved in
           the configuration file. This is done so that people can
           disable their Logix while debugging them, yet still save
@@ -925,6 +939,7 @@
           Logixs disabled.</p>
 
           <p>If you load your panel file manually using the Panels
+          &gt; Open Panel...
           menu, before loading your file, go to the <strong>Debug</strong>
           menu and select <strong>Load Logixs Disabled</strong>. After
           responding OK to the message, load your panel file as you

@@ -20,7 +20,7 @@ import org.openlcb.swing.EventIdTextField;
 
 /**
  * A pane for configuring OlcbSignalMast objects
- * <P>
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
@@ -121,8 +121,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull
-            SignalAppearanceMap map, SignalSystem sigSystem) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map, @Nonnull SignalSystem sigSystem) {
         Enumeration<String> aspects = map.getAspects();
         // update immediately
         disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
@@ -136,16 +135,16 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             aspectEventIDs.put(aspect, eventID);
         }
         disabledAspectsPanel.setLayout(new BoxLayout(disabledAspectsPanel, BoxLayout.Y_AXIS));
-        for (String aspect : disabledAspects.keySet()) {
+        for (Map.Entry<String, JCheckBox> entry : disabledAspects.entrySet()) {
             JPanel p1 = new JPanel();
             TitledBorder p1border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-            p1border.setTitle(aspect);
+            p1border.setTitle(entry.getKey());
             p1.setBorder(p1border);
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-            p1.add(aspectEventIDs.get(aspect));
-            p1.add(disabledAspects.get(aspect));
-            disabledAspects.get(aspect).setName(aspect);
-            disabledAspects.get(aspect).setText(Bundle.getMessage("DisableAspect"));
+            p1.add(aspectEventIDs.get(entry.getKey()));
+            p1.add(entry.getValue());
+            entry.getValue().setName(entry.getKey());
+            entry.getValue().setText(Bundle.getMessage("DisableAspect"));
             disabledAspectsPanel.add(p1);
         }
 
@@ -212,32 +211,30 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public boolean createMast(@Nonnull
-            String sigsysname, @Nonnull
-                    String mastname, @Nonnull
-                            String username) {
+    public boolean createMast(@Nonnull String sigsysname,
+                              @Nonnull String mastname,
+                              @Nonnull String username) {
         if (currentMast == null) {
             // create a mast
-            String name = "MF$olm:"
-                    + sigsysname
-                    + ":" + mastname.substring(11, mastname.length() - 4);
+            String type = mastname.substring(11, mastname.length() - 4);
+            String name = "MF$olm:" + sigsysname + ":" + type;
             name += "($" + (paddedNumber.format(OlcbSignalMast.getLastRef() + 1)) + ")";
             currentMast = new OlcbSignalMast(name);
             if (!username.equals("")) {
                 currentMast.setUserName(username);
             }
-            currentMast.setMastType(mastname.substring(11, mastname.length() - 4));
+            currentMast.setMastType(type);
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
         
         // load a new or existing mast
-        for (String aspect : disabledAspects.keySet()) {
-            if (disabledAspects.get(aspect).isSelected()) {
-                currentMast.setAspectDisabled(aspect);
+        for (Map.Entry<String, JCheckBox> entry : disabledAspects.entrySet()) {
+            if (entry.getValue().isSelected()) {
+                currentMast.setAspectDisabled(entry.getKey());
             } else {
-                currentMast.setAspectEnabled(aspect);
+                currentMast.setAspectEnabled(entry.getKey());
             }
-            currentMast.setOutputForAppearance(aspect, aspectEventIDs.get(aspect).getText());
+            currentMast.setOutputForAppearance(entry.getKey(), aspectEventIDs.get(entry.getKey()).getText());
         }
         
         currentMast.setLitEventId(litEventID.getText());

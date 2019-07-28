@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon that displays the position of a loco on a panel.<P>
+ * An icon that displays the position of a loco on a panel.<p>
  * The icon can always be repositioned and its popup menu is always active.
  *
  * @author Bob Jacobsen Copyright (c) 2002

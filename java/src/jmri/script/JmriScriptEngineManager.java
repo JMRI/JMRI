@@ -227,7 +227,7 @@ public final class JmriScriptEngineManager {
     }
 
     /**
-     * Get a ScriptEngine by it's name.
+     * Get a ScriptEngine by its name.
      *
      * @param engineName the complete name for the ScriptEngine
      * @return a ScriptEngine or null
@@ -467,7 +467,7 @@ public final class JmriScriptEngineManager {
     }
 
     /**
-     * Get a ScriptEngineFactory by it's name.
+     * Get a ScriptEngineFactory by its name.
      *
      * @param factoryName the complete name for a factory
      * @return a ScriptEngineFactory or null

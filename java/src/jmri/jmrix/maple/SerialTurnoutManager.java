@@ -1,5 +1,6 @@
 package jmri.jmrix.maple;
 
+import java.util.Locale;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -93,22 +94,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
     /**
-     * Public method to normalize a system name.
-     * @return a normalized system name if system name has a valid format, else
-     * return "".
+     * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     /**
@@ -116,8 +114,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**
@@ -144,7 +141,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //  * the user to specify the type of control to be used.  The routine should 
 //  * return 0 for 'steady state' control, or n for 'pulsed' control, where n
 //  * specifies the duration of the pulse (normally in seconds).  
-//  */
+// */
 //  public int askControlType(String systemName) {
 //  // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
 //  //   'pulsed' output (some turnout controllers).

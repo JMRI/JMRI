@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
@@ -17,17 +19,17 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the QSI system.
- * <P>
+ * <p>
  * This connects an QSI command station via a serial com port. Also used for the
  * USB QSI, which appears to the computer as a serial port. Normally controlled
  * by the SerialDriverFrame class.
- * <P>
+ * <p>
  * The current implementation only handles the 19,200 baud rate, and does not
  * use any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends QsiPortController {
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());
@@ -52,7 +54,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             try {
                 activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -61,8 +63,8 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -81,7 +83,6 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
                         + "  CD: " + activeSerialPort.isCD()
                 );
             }
-
             opened = true;
 
         } catch (NoSuchPortException p) {
@@ -90,9 +91,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
             log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
-
         return null; // indicates OK return
-
     }
 
     public void setHandshake(int mode) {
@@ -101,11 +100,10 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         } catch (UnsupportedCommOperationException ex) {
             log.error("Unexpected exception while setting COM port handshake mode", ex);
         }
-
     }
 
     /**
-     * set up all of the other objects to operate with an QSI command station
+     * Set up all of the other objects to operate with an QSI command station
      * connected to this port
      */
     @Override
@@ -143,7 +141,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }
@@ -154,27 +152,25 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * {@inheritDoc}
+     *
+     * Currently only 19,200 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"19,200 bps"};
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{19200};
+    }
+
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /*
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

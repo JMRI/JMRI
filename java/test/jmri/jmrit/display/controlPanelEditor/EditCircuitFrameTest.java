@@ -20,6 +20,7 @@ public class EditCircuitFrameTest extends jmri.util.JmriJFrameTestBase {
     OBlock ob;
     
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -41,6 +42,7 @@ public class EditCircuitFrameTest extends jmri.util.JmriJFrameTestBase {
 
 
     @After
+    @Override
     public void tearDown() {
         if(cpe!=null){
            cpe.setVisible(false);

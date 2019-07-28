@@ -17,7 +17,7 @@ import org.junit.Assert;
 public class SerialAddressTest {
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - OL2",
                 NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2", 'L', "O"));
         Assert.assertTrue("valid format - OL0B2",

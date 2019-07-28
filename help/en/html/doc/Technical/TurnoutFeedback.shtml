@@ -167,6 +167,14 @@
         have been connected as described in the <a href=
         "http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">
         LS100 manual (external link, PDF)</a>.</dd>
+        
+        <dt>SIGNAL</dt>
+
+        <dd>Recommended setting for Signal Mast controled by driver
+        Matrix output with XpressNet. The program does not wait
+        for turnout feedback and sends matrix commands as soon
+        as possible.</dd>
+
       </dl>
 
       <p>Most people will (and probably should!!!) stick with the

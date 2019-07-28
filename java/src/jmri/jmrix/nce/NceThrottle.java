@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -21,7 +21,7 @@ public class NceThrottle extends AbstractThrottle {
      * to the NCE command station.  Now it always sends the A2 loco
      * commands if the command station eprom was built after 2004. 
      */
-    public boolean sendA2command = true;
+    private boolean sendA2command = true;
 
     private NceTrafficController tc = null;
 
@@ -274,7 +274,7 @@ public class NceThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */

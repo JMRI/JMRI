@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -17,7 +18,7 @@ import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
+ /**
  * OBlock extends jmri.Block to be used in Logix Conditionals and Warrants. It
  * is the smallest piece of track that can have occupancy detection. A better
  * name would be Detection Circuit. However, an OBlock can be defined without an
@@ -28,12 +29,12 @@ import org.slf4j.LoggerFactory;
  * sensor and the OBlock will pass state changes of the sensor on to its
  * warrant.
  *
- * <P>
+ * <p>
  * Entrances (exits when train moves in opposite direction) to OBlocks have
  * Portals. A Portal object is a pair of OBlocks. Each OBlock has a list of its
  * Portals.
  *
- * <P>
+ * <p>
  * When an OBlock (Detection Circuit) has a Portal whose entrance to the OBlock
  * has a signal, then the OBlock and its chains of adjacent OBlocks up to the
  * next OBlock having an entrance Portal with a signal, can be considered a
@@ -41,24 +42,23 @@ import org.slf4j.LoggerFactory;
  * the "Block" should have entrance Portals with a signal.
  *
  *
- * <P>
+ * <p>
  * A Portal has a list of paths (OPath objects) for each OBlock it separates.
  * The paths are determined by the turnout settings of the turnouts contained in
  * the block. Paths are contained within the Block boundaries. Names of OPath
  * objects only need be unique within an OBlock.
  *
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman (C) 2009
  */
@@ -750,6 +750,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return null;
     }
 
+    @Nonnull
     public List<Portal> getPortals() {
         ArrayList<Portal> clone = new ArrayList<Portal>();
         Iterator<Portal> iter = _portals.iterator();
@@ -889,7 +890,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (msg == null && path !=null) {  // _warrant has precedence - OK to throw
             int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
             path.setTurnouts(0, true, lockState, true);
-            firePropertyChange("pathState", Integer.valueOf(0), Integer.valueOf(getState()));
+            firePropertyChange("pathState", 0, getState());
         }
         if (log.isDebugEnabled()) {
             log.debug("setPath: Path \"{}\" in OBlock \"{}\" {} set for warrant {}",

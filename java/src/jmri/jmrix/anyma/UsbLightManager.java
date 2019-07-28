@@ -1,5 +1,6 @@
 package jmri.jmrix.anyma;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.Manager;
 import jmri.managers.AbstractLightManager;
@@ -7,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for anyma dmx usb systems.
+ * Implement LightManager for Anyma dmx usb systems.
  * <p>
  * System names are "DLnnn", where D is the user configurable system prefix,
  * nnn is the channel number without padding.
@@ -85,6 +86,14 @@ public class UsbLightManager extends AbstractLightManager {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 512, locale);
+    }
+
+    /**
      * Public method to validate system name for configuration.
      *
      * @param systemName the system name to validate
@@ -95,19 +104,6 @@ public class UsbLightManager extends AbstractLightManager {
     public boolean validSystemNameConfig(String systemName) {
         log.debug("*    UsbLightManager.validSystemNameConfig() called");
         return _memo.validSystemNameConfig(systemName, 'L');
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @param systemName the system name to normalize
-     * @return a normalized system name if system name has a valid format, else
-     *         returns ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        log.debug("*    UsbLightManager.normalizeSystemName() called");
-        return _memo.normalizeSystemName(systemName);
     }
 
     /**

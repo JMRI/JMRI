@@ -1,9 +1,8 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
-import java.util.*;
-
 import jmri.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -12,10 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test the ProxyTurnoutManager
+ * Tests the ProxyTurnoutManager.
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
-  */
+ */
 public class ProxyTurnoutManagerTest {
 
     public String getSystemName(int i) {
@@ -58,25 +57,15 @@ public class ProxyTurnoutManagerTest {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideTurnout("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideTurnout("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT");
     }
 
     @Test

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * One address format is supported: Atxxxx where: t is the type code, 'T' for
  * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
- * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
+ * input or output bit (0-16383) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
  * (bit134).<p>
  * Note: Not fully supporting long system connection prefix yet
  *
@@ -23,16 +23,14 @@ public class AcelaAddress {
     }
     
     static final int MINSENSORADDRESS = 0;
-    static final int MAXSENSORADDRESS = 1023;   //  Artifical limit but OK until someone has
-    //  more than 64 sensor modules (at 16 sensors each).
+    static final int MAXSENSORADDRESS = AcelaNode.MAXSENSORBITS * AcelaNode.MAXNODE -1;
     static final int MINOUTPUTADDRESS = 0;
-    static final int MAXOUTPUTADDRESS = 1023;   //  Artifical limit but OK until someone has
-    //  more than 64 output modules (at 16 outputs each).
+    static final int MAXOUTPUTADDRESS = AcelaNode.MAXOUTPUTBITS * AcelaNode.MAXNODE -1;
 
     /**
      * Public static method to parse an Acela system name and return the Acela
      * Node Address Note: Returns '-1' if illegal systemName format or if the
-     * node is not found. Nodes are numbered from 0 - 127.
+     * node is not found. Nodes are numbered from 0 - {@value AcelaNode#MAXNODE}.
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters

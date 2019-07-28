@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-kernel-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for operations type \"kernel\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of the kernel being requested"
+        },
+        "rename": {
+            "type": "string",
+            "description": "New name for the kernel being requested"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name"]
+}

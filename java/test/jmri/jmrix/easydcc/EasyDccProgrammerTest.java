@@ -164,6 +164,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
@@ -174,6 +175,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         t.terminateThreads();
         programmer = p = null;

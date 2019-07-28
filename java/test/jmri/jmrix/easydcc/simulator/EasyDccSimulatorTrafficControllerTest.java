@@ -121,7 +121,13 @@ public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMR
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected EasyDccPortControllerScaffold() throws Exception {

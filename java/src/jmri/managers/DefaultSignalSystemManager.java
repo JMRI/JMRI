@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalSystemManager.
- * <P>
+ * <p>
  * This loads automatically the first time used.
  * <p>
  *
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
-        implements SignalSystemManager, java.beans.PropertyChangeListener {
+        implements SignalSystemManager {
 
     public DefaultSignalSystemManager() {
         super();
@@ -270,8 +270,8 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalSystem");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalSystems" : "BeanNameSignalSystem");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);

@@ -1,12 +1,13 @@
 package jmri.jmrix.powerline;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Powerline serial systems.
+ * Implement LightManager for Powerline serial systems.
  * <p>
  * System names are "PLnnn", where P is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -68,13 +69,19 @@ abstract public class SerialLightManager extends AbstractLightManager {
     abstract protected Light createNewSpecificLight(String systemName, String userName);
 
     /**
-     * Public method to validate system name format
-     *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'L'));
+        return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -88,23 +95,11 @@ abstract public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

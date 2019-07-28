@@ -1,12 +1,11 @@
 package jmri.jmrix.loconet;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for LocoNet systems.
+ * Implement LightManager for LocoNet systems.
  * <p>
  * System names are "LLnnnnn", where the first L is the user configurable
  * system prefix, nnnnn is the bit number without padding.
@@ -26,7 +25,7 @@ public class LnLightManager extends AbstractLightManager {
     String prefix;
 
     /**
-     * Get the system letter for Loconet.
+     * Get the system letter for LocoNet.
      */
     @Override
     public String getSystemPrefix() {
@@ -57,47 +56,33 @@ public class LnLightManager extends AbstractLightManager {
     }
 
     /**
-     * Get the bit address from the system name.
-     * @param systemName the systemName to be checked for validity
-     * @return the bit address number from the system name
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "L"))) {
-            // here if an illegal LocoNet Light system name
-            log.error("invalid character in header field of loconet light system name: " + systemName);
-            return (0);
-        }
-        // name must be in the LLnnnnn format (first L (system prefix) is user configurable)
-        int num = 0;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())
-                  );
-        } catch (Exception e) {
-            log.warn("invalid character in number field of system name: " + systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.warn("invalid loconet light system name: " + systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.warn("bit number out of range in loconet light system name: " + systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @param systemName the systemName to be validated
-     * @return NameValidity.VALID if system name has a valid format,
-     * else returns NameValidity.INVALID
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Light System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     /**
@@ -130,10 +115,7 @@ public class LnLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LnLightManager.class);
 
 }

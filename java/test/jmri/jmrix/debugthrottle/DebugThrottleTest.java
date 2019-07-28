@@ -206,6 +206,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.SystemConnectionMemo("T","Test"){
@@ -219,6 +220,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,6 +1,5 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,36 +9,30 @@ import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-
 /**
  * Basic Implementation of a SectionManager.
- * <P>
+ * <p>
  * This doesn't have a "new" interface, since Sections are independently
  * implemented, instead of being system-specific.
- * <P>
+ * <p>
  * Note that Section system names must begin with IY, and be followed by a
- * string, usually, but not always, a number. All alphabetic characters in a
- * Section system name must be upper case. This is enforced when a Section is
+ * string, usually, but not always, a number. This is enforced when a Section is
  * created.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class SectionManager extends AbstractManager<Section> implements InstanceManagerAutoDefault {
 
     public SectionManager() {
         super();
@@ -89,16 +82,12 @@ public class SectionManager extends AbstractManager<Section> implements Property
                 return null;
             }
         }
-        String sName = sysName.toUpperCase().trim();
         y = getBySystemName(sysName);
-        if (y == null) {
-            y = getBySystemName(sName);
-        }
         if (y != null) {
             return null;
         }
         // Section does not exist, create a new Section
-        y = new Section(sName, userName);
+        y = new Section(sysName, userName);
         // save in the maps
         register(y);
         /*The following keeps trace of the last created auto system name.
@@ -156,27 +145,12 @@ public class SectionManager extends AbstractManager<Section> implements Property
         return getBySystemName(name);
     }
 
-    public Section getBySystemName(String name) {
-        String key = name.toUpperCase();
+    public Section getBySystemName(String key) {
         return _tsys.get(key);
     }
 
     public Section getByUserName(String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
     }
 
     /**
@@ -288,8 +262,8 @@ public class SectionManager extends AbstractManager<Section> implements Property
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSection");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSections" : "BeanNameSection");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManager.class);

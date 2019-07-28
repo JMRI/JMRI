@@ -17,6 +17,7 @@ public class MemoryComboIconTest extends PositionableJPanelTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);

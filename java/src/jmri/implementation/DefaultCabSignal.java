@@ -43,6 +43,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * A method for cleaning up the cab signal 
      */
+    @Override
     public void dispose(){
         if (_nextMast != null) {
             _nextMast.removePropertyChangeListener(_cconSignalMastListener);
@@ -60,6 +61,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return the cab signal address
      */
+    @Override
     public LocoAddress getCabSignalAddress(){
         return _address;
     }
@@ -69,6 +71,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param position is a Block the locomotive is in.
      */
+    @Override
     synchronized public void setBlock(Block position){
         log.debug("CabSignal for {} set block {}",getCabSignalAddress(),position);
         Block oldCurrentBlock = _currentBlock;
@@ -95,6 +98,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Set the Block of the locomotive by searching the block list.
      */
+    @Override
     synchronized public void setBlock(){
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         Set<Block> blockSet = bmgr.getNamedBeanSet();
@@ -127,6 +131,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The current Block position
      */
+    @Override
     synchronized public Block getBlock(){
         return _currentBlock;
     }
@@ -138,6 +143,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The next Block position
      */
+    @Override
     public Block getNextBlock(){
         Block oldNextBlock = _nextBlock;
         if(getBlock()==null){
@@ -200,6 +206,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The next SignalMast position
      */
+    @Override
     public SignalMast getNextMast(){
         SignalMast oldNextMast = _nextMast;
         if (_nextMast != null) {
@@ -246,6 +253,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Forward the current cab signal value to the layout.
      */
+    @Override
     public void forwardCabSignalToLayout() {
         if (!isCabSignalActive() ) {
             return;
@@ -277,6 +285,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return true if on, false if off
      */
+    @Override
     public boolean isCabSignalActive(){
         return _cabSignalActive;
     }
@@ -286,6 +295,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param active true if on, false if off
      */
+    @Override
     public void setCabSignalActive(boolean active){
         _cabSignalActive = active;
         if(_cabSignalActive) {
@@ -301,6 +311,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param active true if paused, false if resumed
      */
+    @Override
     public void setMasterCabSigPauseActive (boolean active) {
         _masterPausedButtonActive = active;
         if ( !isCabSignalActive() ){

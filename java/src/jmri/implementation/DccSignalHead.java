@@ -14,19 +14,19 @@ import org.slf4j.LoggerFactory;
  * aspect values in the <B>Extended Accessory Decoder Control Packet Format</B>
  * and outputs that packet to the DCC System via the generic CommandStation
  * interface
- * <P>
+ * <p>
  * The mapping is as follows:
- * <P>
- * 0 = RED         <BR>
- * 1 = YELLOW      <BR>
- * 2 = GREEN       <BR>
- * 3 = LUNAR       <BR>
- * 4 = FLASHRED    <BR>
- * 5 = FLASHYELLOW <BR>
- * 6 = FLASHGREEN  <BR>
- * 7 = FLASHLUNAR  <BR>
- * 8 = DARK        <BR>
- * <P>
+ * <p>
+ * 0 = RED         <br>
+ * 1 = YELLOW      <br>
+ * 2 = GREEN       <br>
+ * 3 = LUNAR       <br>
+ * 4 = FLASHRED    <br>
+ * 5 = FLASHYELLOW <br>
+ * 6 = FLASHGREEN  <br>
+ * 7 = FLASHLUNAR  <br>
+ * 8 = DARK        <br>
+ * <p>
  * The FLASH appearances are expected to be implemented in the decoder.
  *
  * @author Alex Shepherd Copyright (c) 2008
@@ -118,7 +118,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
     /**
      * Set the held parameter.
-     * <P>
+     * <p>
      * Note that this does not directly effect the output on the layout; the
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic
@@ -167,7 +167,7 @@ public class DccSignalHead extends AbstractSignalHead {
                 sigPacket = NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspect);
             }
             if (sigPacket != null) {
-                c.sendPacket(sigPacket, 3);
+                c.sendPacket(sigPacket, packetSendCount);
             }
         }
     }
@@ -227,6 +227,28 @@ public class DccSignalHead extends AbstractSignalHead {
             default:
                 return 8;
         }
+    }
+
+    int packetSendCount = 3;
+    /**
+     * Set Number of times the packet should be sent to the track.
+     * @param count - less than 1 is treated as 1.
+     */
+    public void setDccSignalHeadPacketSendCount(int count) {
+        if (count > 0) {
+            packetSendCount = count;
+        } else {
+            packetSendCount = 1;
+        }
+    }
+
+    /**
+     * get the number of times the packet should be sent to the track.
+     *
+     * @return the count.
+     */
+    public int getDccSignalHeadPacketSendCount() {
+        return packetSendCount;
     }
 
     int dccSignalDecoderAddress;

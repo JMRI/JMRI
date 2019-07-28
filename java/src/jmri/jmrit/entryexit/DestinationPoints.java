@@ -30,7 +30,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DestinationPoints extends jmri.implementation.AbstractNamedBean implements NamedBean {
+public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     @Override
     public String getBeanType() {
@@ -636,7 +636,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
     void cancelClearOptionBox() {
         if (cancelClearFrame == null) {
             JButton jButton_Clear = new JButton(Bundle.getMessage("ClearDown"));  // NOI18N
-            JButton jButton_Cancel = new JButton("Cancel");  // NOI18N
+            JButton jButton_Cancel = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
 
             JButton jButton_Exit = new JButton(Bundle.getMessage("Exit"));  // NOI18N
             JLabel jLabel = new JLabel(Bundle.getMessage("InterlockPrompt"));  // NOI18N

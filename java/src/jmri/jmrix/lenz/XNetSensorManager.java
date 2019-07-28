@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +35,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     public String getSystemPrefix() {
         return prefix;
     }
-
-    @Deprecated
-    static public XNetSensorManager instance() {
-        return mInstance;
-    }
-    static private XNetSensorManager mInstance = null;
 
     // to free resources when no longer used
     @Override
@@ -125,10 +121,53 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Validate Sensor system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        if (name.contains(":")) {
+            validateSystemNamePrefix(name, locale);
+            String[] parts = name.substring(getSystemNamePrefix().length()).split(":");
+            if (parts.length != 2) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidAddress", name),
+                        Bundle.getMessage(locale, "SystemNameInvalidAddress", name));
+            }
+            try {
+                int address = Integer.parseInt(parts[0]);
+                if (address < 1 || address > 127) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidModule", name, parts[0]),
+                            Bundle.getMessage(locale, "SystemNameInvalidModule", name, parts[0]));
+                }
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidModule", name, parts[0]),
+                        Bundle.getMessage(locale, "SystemNameInvalidModule", name, parts[0]));
+            }
+            try {
+                int bit = Integer.parseInt(parts[1]);
+                if (bit < 1 || bit > 8) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, parts[1]),
+                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, parts[1]));
+                }
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, parts[1]),
+                        Bundle.getMessage(locale, "SystemNameInvalidBit", name, parts[1]));
+            }
+            return name;
+        } else {
+            return validateIntegerSystemNameFormat(name,
+                    XNetAddress.MINSENSORADDRESS,
+                    XNetAddress.MAXSENSORADDRESS,
+                    locale);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -209,8 +248,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class);

@@ -19,19 +19,22 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009, 2012
  */
-public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
     public SerialDriverAdapter() {
         super();
-        mBaudRate = "230,400";
+        mBaudRate = Bundle.getMessage("Baud230400");
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"57,600", "115,200", "230,400", "250,000", "288,000", "333,333", "460,800"};
+        return new String[]{Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200"),
+                Bundle.getMessage("Baud230400"), Bundle.getMessage("Baud250000"),
+                Bundle.getMessage("Baud288000"), Bundle.getMessage("Baud333333"),
+                Bundle.getMessage("Baud460800")};
     }
 
     /**
@@ -40,6 +43,16 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
     @Override
     public int[] validBaudValues() {
         return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800};
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Migration method
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return validBaudValues();
     }
 
     @Override

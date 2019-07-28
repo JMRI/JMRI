@@ -6,29 +6,29 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for coding/decoding NMRA {@literal S&RP} DCC packets.
- * <P>
+ * <p>
  * Packets are (now) represented by an array of bytes. Preamble/postamble not
  * included. Note that this is a data representation, _not_ a representation of
  * the waveform! But this is a class, which might eventually also form a
  * representation object.
- * <P>
+ * <p>
  * This is meant to be a general Java NMRA implementation, so does NOT use JMRI
  * utilities. In particular, it returns null instead of throwing JmriException
  * for invalid requests. Callers need to check upstream.
- * <P>
+ * <p>
  * The function is provided by static member functions; objects of this class
  * should not be created.
- * <P>
+ * <p>
  * Note that these functions are structured by packet type, not by what want to
  * do. E.g. there are functions to create specific packet formats instead of a
  * general "loco speed packet" routine which figures out which type of packet to
  * use. Those decisions are to be made somewhere else.
- * <P>
+ * <p>
  * Range and value checking is intended to be aggressive; if we can check, we
  * should. Problems are reported as warnings.
- * <P>
+ * <p>
  * The basic function is to build a packet with proper addressing, etc:
- * <UL>
+ * <ul>
  * <li>oneBytePacket
  * <li>twoBytePacket
  * <li>threeBytePacket
@@ -37,18 +37,19 @@ import org.slf4j.LoggerFactory;
  * On top of those are built various special-purpose packet formats.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "null returned is documented in each method to mean no valid result")
 public class NmraPacket {
 
     static final public int accIdLowLimit = 1;
@@ -240,16 +241,16 @@ public class NmraPacket {
         // largest is 512!  I don't know why this is, but it gets the
         // right hardware addresses
         if (addr < 1 || addr > 511) {
-            log.error("invalid address " + addr);
+            log.error("invalid address {}", addr);
             //return null;
             throw new IllegalArgumentException();
         }
         if (active < 0 || active > 1) {
-            log.error("invalid active (C) bit " + addr);
+            log.error("invalid active (C) bit {}", addr);
             return null;
         }
         if (outputChannel < 0 || outputChannel > 7) {
-            log.error("invalid output channel " + addr);
+            log.error("invalid output channel {}", addr);
             return null;
         }
 
@@ -293,25 +294,25 @@ public class NmraPacket {
     public static byte[] accDecoderPktOpsMode(int addr, int active, int outputChannel, int cvNum, int data) {
 
         if (addr < 1 || addr > 511) {
-            log.error("invalid address " + addr);
+            log.error("invalid address {}", addr);
             throw new IllegalArgumentException();
         }
         if (active < 0 || active > 1) {
-            log.error("invalid active (C) bit " + addr);
+            log.error("invalid active (C) bit {}", addr);
             return null;
         }
         if (outputChannel < 0 || outputChannel > 7) {
-            log.error("invalid output channel " + addr);
+            log.error("invalid output channel {}", addr);
             return null;
         }
 
         if (cvNum < 1 || cvNum > 1024) {
-            log.error("invalid CV number " + cvNum);
+            log.error("invalid CV number {}", cvNum);
             return null;
         }
 
         if (data < 0 || data > 255) {
-            log.error("invalid data " + data);
+            log.error("invalid data {}", data);
             return null;
         }
 
@@ -355,17 +356,17 @@ public class NmraPacket {
     public static byte[] accDecPktOpsModeLegacy(int decAddr, int cvNum, int data) {
 
         if (decAddr < 1 || decAddr > 511) {
-            log.error("invalid address " + decAddr);
+            log.error("invalid address {}", decAddr);
             return null;
         }
 
         if (cvNum < 1 || cvNum > 1024) {
-            log.error("invalid CV number " + cvNum);
+            log.error("invalid CV number {}", cvNum);
             return null;
         }
 
         if (data < 0 || data > 255) {
-            log.error("invalid data " + data);
+            log.error("invalid data {}", data);
             return null;
         }
 
@@ -414,7 +415,7 @@ public class NmraPacket {
     public static byte[] accSignalDecoderPkt(int outputAddr, int aspect) {
 
         if (outputAddr < accIdLowLimit || outputAddr > accIdHighLimit) {
-            log.error("invalid signal decoder address " + outputAddr);
+            log.error("invalid signal decoder address {}", outputAddr);
             return null;
         }
 
@@ -448,17 +449,17 @@ public class NmraPacket {
     public static byte[] accSignalDecoderPktOpsMode(int addr, int cvNum, int data) {
 
         if (addr < 1 || addr > 2044) {
-            log.error("invalid address " + addr);
+            log.error("invalid address {}", addr);
             throw new IllegalArgumentException();
         }
 
         if (cvNum < 1 || cvNum > 1024) {
-            log.error("invalid CV number " + cvNum);
+            log.error("invalid CV number {}", cvNum);
             return null;
         }
 
         if (data < 0 || data > 255) {
-            log.error("invalid data " + data);
+            log.error("invalid data {}", data);
             return null;
         }
 
@@ -651,7 +652,7 @@ public class NmraPacket {
     public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
 
         if (outputAddr < 1 || outputAddr > 2048) {
-            log.error("invalid signal decoder address " + outputAddr);
+            log.error("invalid signal decoder address {}", outputAddr);
             return null;
         }
 
@@ -676,17 +677,17 @@ public class NmraPacket {
     public static byte[] altAccSignalDecoderPktOpsMode(int addr, int cvNum, int data) {
 
         if (addr < 1 || addr > 2044) {
-            log.error("invalid address " + addr);
+            log.error("invalid address {}", addr);
             throw new IllegalArgumentException();
         }
 
         if (cvNum < 1 || cvNum > 1024) {
-            log.error("invalid CV number " + cvNum);
+            log.error("invalid CV number {}", cvNum);
             return null;
         }
 
         if (data < 0 || data > 255) {
-            log.error("invalid data " + data);
+            log.error("invalid data {}", data);
             return null;
         }
 
@@ -713,7 +714,7 @@ public class NmraPacket {
     protected static byte[] accSignalDecoderPktCommon(int lowAddr, int boardAddr, int aspect) {
 
         if (aspect < 0 || aspect > 31) {
-            log.error("invalid signal decoder aspect " + aspect);
+            log.error("invalid signal decoder aspect {}", aspect);
             return null;
         }
 
@@ -874,11 +875,11 @@ public class NmraPacket {
         }
 
         if (data < 0 || data > 255) {
-            log.error("invalid data " + data);
+            log.error("invalid data {}", data);
             return null;
         }
         if (cvNum < 1 || cvNum > 1024) {
-            log.error("invalid CV number " + cvNum);
+            log.error("invalid CV number {}", cvNum);
             return null;
         }
 
@@ -898,7 +899,7 @@ public class NmraPacket {
         }
 
         if (speed < 0 || speed > 127) {
-            log.error("invalid speed " + speed);
+            log.error("invalid speed {}", speed);
             return null;
         }
 
@@ -963,7 +964,7 @@ public class NmraPacket {
         }
 
         if (speed < 0 || speed > 28) {
-            log.error("invalid speed " + speed);
+            log.error("invalid speed {}", speed);
             return null;
         }
         int speedC = (speed & 0x1F) >> 1;
@@ -1009,7 +1010,7 @@ public class NmraPacket {
         }
 
         if (speed < 0 || speed > 31) {
-            log.error("invalid speed " + speed);
+            log.error("invalid speed {}", speed);
             return null;
         }
         int speedC = (speed & 0x1F) >> 1;
@@ -1028,7 +1029,7 @@ public class NmraPacket {
         log.debug("14 step packet {} {} {}", address, speed, F0);
 
         if (speed < 0 || speed > 15) {
-            log.error("invalid speed " + speed);
+            log.error("invalid speed {}", speed);
             return null;
         }
 
@@ -1208,7 +1209,7 @@ public class NmraPacket {
 
     /**
      * Provide an NMRA analog control instruction.
-     * <P>
+     * <p>
      * Note that the NMRA draft of Fall 2004 only defines the value of "1" for
      * the "function parameter", calling that the value for "volume control".
      * However, DCC systems in the wild have been observed to use 0x7F for the
@@ -1310,15 +1311,15 @@ public class NmraPacket {
      */
     static public boolean addressCheck(int address, boolean longAddr) {
         if (address < 0) {  // zero is valid broadcast
-            log.error("invalid address " + address);
+            log.error("invalid address {}", address);
             return false;
         }
         if (longAddr && (address > (255 + (231 - 192) * 256))) {
-            log.error("invalid address " + address);
+            log.error("invalid address {}", address);
             return false;
         }
         if (!longAddr && (address > 127)) {
-            log.error("invalid address " + address);
+            log.error("invalid address {}", address);
             return false;
         }
         return true;  // passes test, hence OK
@@ -1336,7 +1337,7 @@ public class NmraPacket {
 
     /**
      * Extract the address type from an NMRA packet.
-     * <P>
+     * <p>
      * This finds and returns the type of address within a specific packet, e.g.
      * "the stationary decoder space".
      *
@@ -1364,7 +1365,7 @@ public class NmraPacket {
 
     /**
      * Extract the numerical address from an NMRA packet.
-     * <P>
+     * <p>
      * This finds and returns the numerical address within a specific type, e.g.
      * "first address within the stationary decoder space".
      * <p>
@@ -1406,7 +1407,7 @@ public class NmraPacket {
 
     /**
      * Extract the instruction from an NMRA packet.
-     * <P>
+     * <p>
      * This finds and returns the instruction byte within a specific type of
      * packet/instruction.
      *

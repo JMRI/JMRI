@@ -11,8 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simple TransferHandler that imports and exports Strings into JTable cells
- * <P>
+ * Simple TransferHandler that imports and exports Strings into JTable cells.
  *
  * @author Pete Cressman Copyright 2016
  */

@@ -41,10 +41,6 @@ import org.slf4j.LoggerFactory;
  * algorithm or these message formats outside of JMRI, please contact NCE Inc
  * for separate permission.
  *
- * @author Ken Cameron Copyright (C) 2007
- *
- * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
- *
  * Notes:
  *
  * 1. the commands for time don't include seconds so I had to use memory write
@@ -62,13 +58,15 @@ import org.slf4j.LoggerFactory;
  * calc C. adjust internal clock rate factor as needed
  *
  * 5. The clock message only seems to go out to the throttles on the tic of the
- * minute. 6. The nce clock must be left running, or it doesn't tic and
- * therefore doesn't go out the bus.
+ * minute.
  *
+ * 6. The nce clock must be left running, or it doesn't tic and
+ * therefore doesn't go out over the bus.
+ *
+ * @author Ken Cameron Copyright (C) 2007
+ * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  */
-public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, NceListener {
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.clockmon.ClockMonBundle");
+public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceListener {
 
     public static final int CS_CLOCK_MEM_ADDR = 0xDC00;
     public static final int CS_CLOCK_MEM_SIZE = 0x10;
@@ -154,12 +152,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
     JTextField rateNce = new JTextField("   1");
     JTextField amPm = new JTextField(2);
-    JCheckBox twentyFour = new JCheckBox(rb.getString("CheckBox24HourFormat"));
+    JCheckBox twentyFour = new JCheckBox(Bundle.getMessage("CheckBox24HourFormat"));
     JTextField status = new JTextField(10);
 
-    JRadioButton setSyncModeNceMaster = new JRadioButton(rb.getString("ClockModeNCE"));
-    JRadioButton setSyncModeInternalMaster = new JRadioButton(rb.getString("ClockModeInternal"));
-    JRadioButton setSyncModeOff = new JRadioButton(rb.getString("ClockModeIndependent"));
+    JRadioButton setSyncModeNceMaster = new JRadioButton(Bundle.getMessage("ClockModeNCE"));
+    JRadioButton setSyncModeInternalMaster = new JRadioButton(Bundle.getMessage("ClockModeInternal"));
+    JRadioButton setSyncModeOff = new JRadioButton(Bundle.getMessage("ClockModeIndependent"));
 
     JTextField internalDisplayStatus = new JTextField(60);
 
@@ -176,15 +174,15 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
     transient java.beans.PropertyChangeListener minuteChangeListener;
 
-    JButton setSyncButton = new JButton(rb.getString("SetSyncMode"));
-    JButton setClockButton = new JButton(rb.getString("SetHoursMinutes"));
-    JButton setRatioButton = new JButton(rb.getString("SetRatio"));
-    JButton set1224Button = new JButton(rb.getString("Set12/24Mode"));
-    JButton setStopNceButton = new JButton(rb.getString("StopNceClock"));
-    JButton setStartNceButton = new JButton(rb.getString("StartNceClock"));
-    JButton readButton = new JButton(rb.getString("ReadAll"));
-    JButton setPollingSpeedButton = new JButton(rb.getString("SetInterfaceUpdRate"));
-    JButton setPidButton = new JButton(rb.getString("SetPid"));
+    JButton setSyncButton = new JButton(Bundle.getMessage("SetSyncMode"));
+    JButton setClockButton = new JButton(Bundle.getMessage("SetHoursMinutes"));
+    JButton setRatioButton = new JButton(Bundle.getMessage("SetRatio"));
+    JButton set1224Button = new JButton(Bundle.getMessage("Set12/24Mode"));
+    JButton setStopNceButton = new JButton(Bundle.getMessage("StopNceClock"));
+    JButton setStartNceButton = new JButton(Bundle.getMessage("StartNceClock"));
+    JButton readButton = new JButton(Bundle.getMessage("ReadAll"));
+    JButton setPollingSpeedButton = new JButton(Bundle.getMessage("SetInterfaceUpdRate"));
+    JButton setPidButton = new JButton(Bundle.getMessage("SetPid"));
 
     private NceTrafficController tc = null;
 
@@ -226,7 +224,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             x.append("NCE_");
         }
         x.append(": ");
-        x.append(rb.getString("TitleNceClockMonitor"));
+        x.append(Bundle.getMessage("TitleNceClockMonitor"));
         return x.toString();
     }
 
@@ -249,7 +247,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
         javax.swing.border.Border pane2Border = BorderFactory.createEtchedBorder();
         javax.swing.border.Border pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("InternalClockStatusBorderText"));
+                Bundle.getMessage("InternalClockStatusBorderText"));
         pane2.setBorder(pane2Titled);
         pane2.add(internalDisplayStatus);
         internalDisplayStatus.setEditable(false);
@@ -260,7 +258,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("NceClockStatusBorderText"));
+                Bundle.getMessage("NceClockStatusBorderText"));
         pane2.setBorder(pane2Titled);
         pane2.add(nceDisplayStatus);
         nceDisplayStatus.setEditable(false);
@@ -271,13 +269,13 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("SetClockValuesBorderText"));
+                Bundle.getMessage("SetClockValuesBorderText"));
         pane2.setBorder(pane2Titled);
-        pane2.add(new JLabel(rb.getString("LabelTime")));
+        pane2.add(new JLabel(Bundle.getMessage("LabelTime")));
         pane2.add(hours);
-        pane2.add(new JLabel(rb.getString("LabelTimeSep")));
+        pane2.add(new JLabel(Bundle.getMessage("LabelTimeSep")));
         pane2.add(minutes);
-        pane2.add(new JLabel(rb.getString("LabelTimeSep")));
+        pane2.add(new JLabel(Bundle.getMessage("LabelTimeSep")));
         pane2.add(seconds);
         seconds.setEditable(false);
         pane2.add(new JLabel(" "));
@@ -291,11 +289,11 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("SetClockRatioBorderText"));
+                Bundle.getMessage("SetClockRatioBorderText"));
         pane2.setBorder(pane2Titled);
-        pane2.add(new JLabel(rb.getString("LabelRatio")));
+        pane2.add(new JLabel(Bundle.getMessage("LabelRatio")));
         pane2.add(rateNce);
-        pane2.add(new JLabel(rb.getString("LabelToOne")));
+        pane2.add(new JLabel(Bundle.getMessage("LabelToOne")));
         pane2.add(setRatioButton);
         add(pane2);
 
@@ -303,7 +301,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("SetClock12/24ModeBorderText"));
+                Bundle.getMessage("SetClock12/24ModeBorderText"));
         pane2.setBorder(pane2Titled);
         pane2.add(twentyFour);
         pane2.add(new JLabel(" "));
@@ -318,7 +316,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("InterfaceCommandBorderText"));
+                Bundle.getMessage("InterfaceCommandBorderText"));
         pane2.setBorder(pane2Titled);
         pane2.setLayout(gLayout);
         gConstraints.gridx = 0;
@@ -361,14 +359,14 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         pane2 = new JPanel();
         pane2Border = BorderFactory.createEtchedBorder();
         pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-                rb.getString("InterfaceUpdRateBorderText"));
+                Bundle.getMessage("InterfaceUpdRateBorderText"));
         pane2.setBorder(pane2Titled);
-        pane2.add(new JLabel(rb.getString("InterfaceUpdRate")));
+        pane2.add(new JLabel(Bundle.getMessage("InterfaceUpdRate")));
         pane2.add(new JLabel(" "));
         pane2.add(pollingSpeed);
         pollingSpeed.setText("" + pollingInterval);
         pane2.add(new JLabel(" "));
-        pane2.add(new JLabel(rb.getString("InterfaceUpdRateSufix")));
+        pane2.add(new JLabel(Bundle.getMessage("InterfaceUpdRateSufix")));
         pane2.add(new JLabel(" "));
         pane2.add(setPollingSpeedButton);
         add(pane2);
@@ -379,7 +377,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 //        pane2 = new JPanel();
 //        pane2Border = BorderFactory.createEtchedBorder();
 //        pane2Titled = BorderFactory.createTitledBorder(pane2Border,
-//                                                       rb.getString("InterfacePidBorderText"));
+//                                                       Bundle.getMessage("InterfacePidBorderText"));
 //        pane2.setBorder(pane2Titled);
 //        pane2.setLayout(gLayout);
 //        gConstraints.gridx = 0;
@@ -389,17 +387,17 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 //        gConstraints.ipadx = 10;
 //        gConstraints.ipady = 1;
 //        gConstraints.insets = new Insets(3, 3, 3, 3);
-//        pane2.add(new JLabel(rb.getString("InterfacePidNce")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidNce")), gConstraints);
 //        gConstraints.gridx++;
-//        pane2.add(new JLabel(rb.getString("InterfacePidGainP")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidGainP")), gConstraints);
 //        gConstraints.gridx++;
 //        pane2.add(ncePidGainP, gConstraints);
 //        gConstraints.gridx++;
-//        pane2.add(new JLabel(rb.getString("InterfacePidGainI")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidGainI")), gConstraints);
 //        gConstraints.gridx++;
 //        pane2.add(ncePidGainI, gConstraints);
 //        gConstraints.gridx++;
-//        pane2.add(new JLabel(rb.getString("InterfacePidGainD")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidGainD")), gConstraints);
 //        gConstraints.gridx++;
 //        pane2.add(ncePidGainD, gConstraints);
 //        gConstraints.gridx++;
@@ -408,17 +406,17 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 //        gConstraints.gridheight = 0;
 //        gConstraints.gridx = 0;
 //        gConstraints.gridy = 1;
-//        pane2.add(new JLabel(rb.getString("InterfacePidInt")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidInt")), gConstraints);
 //        gConstraints.gridx++;
-//        pane2.add(new JLabel(rb.getString("InterfacePidGainP")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidGainP")), gConstraints);
 //        gConstraints.gridx++;
 //        pane2.add(intPidGainP, gConstraints);
 //        gConstraints.gridx++;
-//        pane2.add(new JLabel(rb.getString("InterfacePidGainI")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidGainI")), gConstraints);
 //        gConstraints.gridx++;
 //        pane2.add(intPidGainI, gConstraints);
 //        gConstraints.gridx++;
-//        pane2.add(new JLabel(rb.getString("InterfacePidGainD")), gConstraints);
+//        pane2.add(new JLabel(Bundle.getMessage("InterfacePidGainD")), gConstraints);
 //        gConstraints.gridx++;
 //        pane2.add(intPidGainD, gConstraints);
 //        ncePidGainP.setText(fiveDigits.format(ncePidGainPv));
@@ -1434,9 +1432,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             } else {
                 twentyFour.setSelected(false);
                 if (nceLastAmPm) {
-                    amPm.setText(rb.getString("TagAm"));
+                    amPm.setText(Bundle.getMessage("TagAm"));
                 } else {
-                    amPm.setText(rb.getString("TagPm"));
+                    amPm.setText(Bundle.getMessage("TagPm"));
                 }
             }
             updateTimeFromRead = false;
@@ -1455,34 +1453,34 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
         if (updateStatusFromRead == true) {
             if (nceLastRunning) {
-                status.setText(rb.getString("TagRunning"));
+                status.setText(Bundle.getMessage("TagRunning"));
             } else {
-                status.setText(rb.getString("TagStopped"));
+                status.setText(Bundle.getMessage("TagStopped"));
             }
         }
     }
 
     private void updateNceClockDisplay() {
-        String txt = nceLastRunning ? rb.getString("TagRunning") : rb.getString("TagStopped");
+        String txt = nceLastRunning ? Bundle.getMessage("TagRunning") : Bundle.getMessage("TagStopped");
         txt = txt + " "
-                + (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) + rb.getString("LabelTimeSep")
-                + (nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) + rb.getString("LabelTimeSep")
+                + (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) + Bundle.getMessage("LabelTimeSep")
+                + (nceLastMinute / 10) + (nceLastMinute - ((nceLastMinute / 10) * 10)) + Bundle.getMessage("LabelTimeSep")
                 + (nceLastSecond / 10) + (nceLastSecond - ((nceLastSecond / 10) * 10));
         if (!nceLast1224) {
             if (nceLastAmPm) {
-                txt = txt + " " + rb.getString("TagAm");
+                txt = txt + " " + Bundle.getMessage("TagAm");
             } else {
-                txt = txt + " " + rb.getString("TagPm");
+                txt = txt + " " + Bundle.getMessage("TagPm");
             }
         }
-        txt = txt + " " + rb.getString("LabelRatio") + " "
-                + nceLastRatio + rb.getString("LabelToOne");
+        txt = txt + " " + Bundle.getMessage("LabelRatio") + " "
+                + nceLastRatio + Bundle.getMessage("LabelToOne");
         if (clockMode == SYNCMODE_NCE_MASTER) {
-            txt = txt + " " + rb.getString("TagIsNceMaster");
+            txt = txt + " " + Bundle.getMessage("TagIsNceMaster");
             double intTime = getIntTime();
             double nceTime = getNceTime();
             double diffTime = nceTime - intTime;
-            txt = txt + " " + rb.getString("ClockError");
+            txt = txt + " " + Bundle.getMessage("ClockError");
             txt = txt + " " + threeDigits.format(diffTime);
             log.trace("intTime: {} nceTime: {} diffTime: {}", intTime, nceTime, diffTime);
         }
@@ -1491,23 +1489,23 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 
     @SuppressWarnings("deprecation")
     private void updateInternalClockDisplay() {
-        String txt = internalClock.getRun() ? rb.getString("TagRunning") : rb.getString("TagStopped");
+        String txt = internalClock.getRun() ? Bundle.getMessage("TagRunning") : Bundle.getMessage("TagStopped");
         Date now = internalClock.getTime();
         txt = txt + " "
                 + (now.getHours() / 10) + (now.getHours() - ((now.getHours() / 10) * 10))
-                + rb.getString("LabelTimeSep")
+                + Bundle.getMessage("LabelTimeSep")
                 + (now.getMinutes() / 10) + (now.getMinutes() - ((now.getMinutes() / 10) * 10))
-                + rb.getString("LabelTimeSep")
+                + Bundle.getMessage("LabelTimeSep")
                 + (now.getSeconds() / 10) + (now.getSeconds() - ((now.getSeconds() / 10) * 10));
         txt = txt + " "
-                + rb.getString("LabelRatio") + " "
-                + threeDigits.format(internalClock.getRate()) + rb.getString("LabelToOne");
+                + Bundle.getMessage("LabelRatio") + " "
+                + threeDigits.format(internalClock.getRate()) + Bundle.getMessage("LabelToOne");
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
-            txt = txt + " " + rb.getString("TagIsInternalMaster");
+            txt = txt + " " + Bundle.getMessage("TagIsInternalMaster");
             double intTime = getIntTime();
             double nceTime = getNceTime();
             double diffTime = nceTime - intTime;
-            txt = txt + " " + rb.getString("ClockError");
+            txt = txt + " " + Bundle.getMessage("ClockError");
             txt = txt + " " + threeDigits.format(diffTime);
         }
         internalDisplayStatus.setText(txt);
@@ -1692,4 +1690,5 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     private final static Logger log = LoggerFactory.getLogger(ClockMonPanel.class);
+
 }

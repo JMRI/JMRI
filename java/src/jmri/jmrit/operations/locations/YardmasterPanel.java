@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,6 +11,10 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -21,8 +26,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Yardmaster Frame. Shows work at one location.
@@ -252,6 +255,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                         textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE)
                                 && Setup.isSwitchListRouteLocationCommentEnabled());
                         textTrainRouteLocationCommentPane.setText(rl.getComment());
+                        textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
                         textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
                         // check for locos

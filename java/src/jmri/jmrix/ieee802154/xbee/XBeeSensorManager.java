@@ -8,8 +8,9 @@ import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
-import javax.annotation.*;
+import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +43,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     protected String prefix = null;
 
     protected XBeeTrafficController tc = null;
-
-    @Deprecated
-    static public XBeeSensorManager instance() {
-        return mInstance;
-    }
-    @Deprecated
-    static private XBeeSensorManager mInstance = null;
 
     // to free resources when no longer used
     @Override
@@ -86,10 +80,22 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName Xbee id format with pins to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        super.validateSystemNameFormat(name, locale);
+        int pin = pinFromSystemName(name);
+        if (pin < 0 || pin > 7) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -281,19 +287,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        return inputName; // toUpperCase and trim don't behave well with 
-                          // the XBee Node Identifier based addresses.
+        return Bundle.getMessage("AddEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class);

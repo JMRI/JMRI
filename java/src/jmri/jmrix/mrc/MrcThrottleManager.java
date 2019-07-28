@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * MRC implementation of a ThrottleManager.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
@@ -30,10 +30,17 @@ public class MrcThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        //We do interact
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new MrcThrottle for " + address); //IN18N
-        notifyThrottleKnown(new MrcThrottle((MrcSystemConnectionMemo) adapterMemo, address), address);
+        //We do minimal interaction
+        if (a instanceof DccLocoAddress ) {
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new MrcThrottle for " + address); //IN18N
+            notifyThrottleKnown(new MrcThrottle((MrcSystemConnectionMemo) adapterMemo, address), address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+            return;
+        }
     }
 
     /**
@@ -70,9 +77,11 @@ public class MrcThrottleManager extends AbstractThrottleManager {
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            MrcThrottle nct = (MrcThrottle) t;
-            nct.throttleDispose();
-            return true;
+            if (t instanceof MrcThrottle) {
+                MrcThrottle nct = (MrcThrottle) t;
+                nct.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

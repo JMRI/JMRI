@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Object for representing, creating and editing sensor groups.
- * <P>
+ * <p>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  * <p>
  * They are not (currently) NamedBean objects.
  *
  * @author Bob Jacobsen Copyright (C) 2007
-  */
+ */
 public class SensorGroup {
 
     /**
@@ -39,8 +39,8 @@ public class SensorGroup {
         this.name = name;
         // find suitable 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String group = name.toUpperCase();
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String group = name;
+        String prefix = (namePrefix + group + nameDivider);
 
         sensorList = new ArrayList<String>();
         for (Route route : rm.getNamedBeanSet()) {
@@ -56,10 +56,10 @@ public class SensorGroup {
     void addPressed() {
         log.debug("start with " + sensorList.size() + " lines");
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        String group = name.toUpperCase();
+        String group = name;
 
         // remove the old routes
-        String prefix = (namePrefix + group + nameDivider).toUpperCase();
+        String prefix = (namePrefix + group + nameDivider);
 
         for (Route r : rm.getNamedBeanSet()) {
             String routeName = r.getSystemName();

@@ -911,15 +911,13 @@ public class CircuitBuilder {
         boolean hasOBlocks = (oblocks.size() > 0);
         for (OBlock block : oblocks) {
             java.util.List<Portal> list = block.getPortals();
-            if (list != null) {
-                Iterator<Portal> iter = list.iterator();
-                while (iter.hasNext()) {
-                    Portal portal = iter.next();
-                    // update circuitMap
-                    PortalIcon pi = _portalIconMap.get(portal.getName());
-                    if (pi != null) {
-                        addIcon(block, pi);
-                    }
+            Iterator<Portal> iter = list.iterator();
+            while (iter.hasNext()) {
+                Portal portal = iter.next();
+                // update circuitMap
+                PortalIcon pi = _portalIconMap.get(portal.getName());
+                if (pi != null) {
+                    addIcon(block, pi);
                 }
             }
             java.util.List<Positionable> icons = _circuitMap.get(block);
@@ -1260,7 +1258,9 @@ public class CircuitBuilder {
         IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
         t.setOccBlockHandle(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(_currentBlock.getSystemName(), _currentBlock));
-        t.setTurnout(((TurnoutIcon) _oldIcon).getNamedTurnout());
+        if (_oldIcon instanceof TurnoutIcon) {
+            t.setTurnout(((TurnoutIcon) _oldIcon).getNamedTurnout());
+        }
         t.setFamily(_trackTOPanel.getFamilyName());
 
         HashMap<String, HashMap<String, NamedIcon>> iconMap = _trackTOPanel.getIconMaps();
@@ -1586,12 +1586,13 @@ public class CircuitBuilder {
         if (_editCircuitFrame != null || _editPathsFrame != null) {
             return true;     // no dragging when editing
         }
-        if (_editPortalFrame != null || _editDirectionFrame != null) {
-            if (selection instanceof PortalIcon) {
+        if (selection instanceof PortalIcon) {
+            if (_editPortalFrame != null) {
                 _editPortalFrame.setSelected((PortalIcon)selection);
                 return false;  // OK to drag portal icon
+            } else if (_editDirectionFrame != null) {
+                return false;  // OK to drag portal arrow
             }
-            return true;
         }
         return false;
     }

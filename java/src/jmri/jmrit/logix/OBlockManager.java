@@ -4,10 +4,10 @@ import javax.annotation.Nonnull;
 import jmri.managers.AbstractManager;
 
 /**
- * Basic Implementation of a OBlockManager.
- * <P>
+ * Basic Implementation of an OBlockManager.
+ * <p>
  * Note that this does not enforce any particular system naming convention.
- * <P>
+ * <p>
  * Note this is a concrete class, there are now 2 types of Blocks (LayoutBlocks
  * use a Block member. LBlocks use inheritance. Perhaps now the proxyManager
  * strategy of interface/implementation pairs like other Managers should be
@@ -15,21 +15,20 @@ import jmri.managers.AbstractManager;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
  */
 public class OBlockManager extends AbstractManager<OBlock>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
         super();
@@ -68,7 +67,7 @@ public class OBlockManager extends AbstractManager<OBlock>
                 return null;
             }
         }
-        String sName = systemName.toUpperCase();
+        String sName = systemName;
         if (!sName.startsWith("OB")) {
             return null;
         }
@@ -102,17 +101,10 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     public OBlock getBySystemName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            return null;
-        }
-        String key = name.toUpperCase();
-        return _tsys.get(key);
+        return _tsys.get(name);
     }
 
     public OBlock getByUserName(String key) {
-        if (key == null || key.trim().length() == 0) {
-            return null;
-        }
         return  _tuser.get(key);
     }
 
@@ -132,7 +124,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameOBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameOBlocks" : "BeanNameOBlock");
     }
 }

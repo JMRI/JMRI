@@ -13,7 +13,7 @@ import purejavacomm.*;
  *
  * @author Paul Bender Copyright (C) 2013
  */
-public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, IConnectionInterface, SerialPortEventListener {
+public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements IConnectionInterface, SerialPortEventListener {
 
     private boolean iConnectionOpened = false;
 
@@ -35,7 +35,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -60,8 +60,8 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -71,7 +71,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
+            log.error("Unexpected exception while opening port {} ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -89,7 +89,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             if (type == SerialPortEvent.DATA_AVAILABLE) {
                 if (this.getInputStream().available() > 0) {
                     if (log.isDebugEnabled()) {
-                        log.debug("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
+                        log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                     }
                     synchronized (this) {
                         this.notifyAll();
@@ -101,37 +101,37 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             } else if (log.isDebugEnabled()) {
                 switch (type) {
                     case SerialPortEvent.DATA_AVAILABLE:
-                        log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
+                        log.info("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                        log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
+                        log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.CTS:
-                        log.info("SerialEvent: CTS is " + e.getNewValue());
+                        log.info("SerialEvent: CTS is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.DSR:
-                        log.info("SerialEvent: DSR is " + e.getNewValue());
+                        log.info("SerialEvent: DSR is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.RI:
-                        log.info("SerialEvent: RI is " + e.getNewValue());
+                        log.info("SerialEvent: RI is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.CD:
-                        log.info("SerialEvent: CD is " + e.getNewValue());
+                        log.info("SerialEvent: CD is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.OE:
-                        log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
+                        log.info("SerialEvent: OE (overrun error) is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.PE:
-                        log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
+                        log.info("SerialEvent: PE (parity error) is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.FE:
-                        log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
+                        log.info("SerialEvent: FE (framing error) is {}", e.getNewValue());
                         return;
                     case SerialPortEvent.BI:
-                        log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
+                        log.info("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
                         return;
                     default:
-                        log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
+                        log.info("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
                         return;
                 }
             }
@@ -180,7 +180,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         try {
             activeSerialPort.addEventListener(this);
         } catch (java.util.TooManyListenersException e) {
-            log.error("Exception adding listener " + e);
+            log.error("Exception adding listener ", e);
         }
     }
 
@@ -201,9 +201,20 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     @Override
@@ -216,9 +227,11 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         }
     }
 
-    private String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud",
-        "4,800 baud", "9,600 baud", "19,200 baud", "38,400 baud",
-        "57,600 baud", "115,200 baud"};
+    private String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
+            Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud4800"),
+            Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
+            Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud57600"),
+            Bundle.getMessage("Baud115200")};
     private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
         38400, 57600, 115200};
 

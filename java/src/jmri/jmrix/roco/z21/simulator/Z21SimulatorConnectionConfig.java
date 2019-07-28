@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 /**
  * Handle configuring an z21 layout connection via a z21Simulator
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link Z21SimulatorAdapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -25,7 +25,8 @@ public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.Connection
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public Z21SimulatorConnectionConfig() {
         super();
@@ -36,13 +37,9 @@ public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.Connection
         return "Z21 Simulator";
     }
 
-    @Override
-    protected void setInstance() {
-        if (adapter == null) {
-            adapter = new Z21SimulatorAdapter();
-        }
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
@@ -62,6 +59,16 @@ public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.Connection
     @Override
     public boolean isAutoConfigPossible() {
         return false;  // always fixed, no reason to search.
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void setInstance() {
+        if (adapter == null) {
+            adapter = new Z21SimulatorAdapter();
+        }
     }
 
 }

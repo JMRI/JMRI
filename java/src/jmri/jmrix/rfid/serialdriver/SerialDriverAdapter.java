@@ -30,8 +30,8 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to RFID devices via a serial comm port. Derived from the
- * Oaktree code.
+ * Provide access to RFID devices via a serial comm port.
+ * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -39,7 +39,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author B. Milhaupt Copyright (C) 2017
  * @since 2.11.4
  */
-public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends RfidPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -131,9 +131,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     }
 
     /**
-     * Can the port accept additional characters? Yes, always
+     * Can the port accept additional characters?
      *
-     * @return True if OK
+     * @return always true
      */
     public boolean okToSend() {
         return true;
@@ -300,9 +300,20 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
@@ -317,7 +328,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{9600};
     protected String selectedSpeed = validSpeeds[0];
 

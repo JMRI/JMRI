@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013
  */
-public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
+public class CompositeVariableValue extends EnumVariableValue {
 
     public CompositeVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -336,7 +335,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     /**
-     * This variable needs to be read if any of it's subsidiary variables needs
+     * This variable needs to be read if any of its subsidiary variables needs
      * to be read.
      */
     @Override
@@ -364,7 +363,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     /**
-     * This variable needs to be written if any of it's subsidiary variables
+     * This variable needs to be written if any of its subsidiary variables
      * needs to be written.
      */
     @Override

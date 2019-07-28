@@ -352,7 +352,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor {
+    public class RosterCellEditor extends DefaultCellEditor {
 
         public RosterCellEditor() {
             super(new JTextField() {

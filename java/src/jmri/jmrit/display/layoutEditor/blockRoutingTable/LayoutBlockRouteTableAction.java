@@ -7,14 +7,14 @@ import jmri.util.JmriJFrame;
 
 /**
  * Swing action to create and register a Block Routing Table.
- * <P>
+ *
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTableAction extends AbstractAction {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      * <p>

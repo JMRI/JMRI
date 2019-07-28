@@ -32,14 +32,6 @@ public class ThrottleManager extends AbstractThrottleManager {
         jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class, this);
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public ThrottleManager instance() {
-        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
-    }
-
     Throttle currentThrottle = null;
 
     /**
@@ -48,12 +40,18 @@ public class ThrottleManager extends AbstractThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         if (currentThrottle != null) {
-            log.error("DCC Direct cannot handle more than one throttle");
-            failedThrottleRequest(address, "DCC direct cannot handle more than one throttle " + address);
+            log.error("DCC Direct cannot handle more than one throttle {}",address);
+            failedThrottleRequest(address, "DCC direct cannot handle more than one throttle "+ address);
             return;
         }
-        currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object
-        notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
+        if (address instanceof DccLocoAddress) {
+            currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object
+            notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress is not a DccLocoAddress " +address);
+        }
     }
 
     @Override

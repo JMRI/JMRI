@@ -24,16 +24,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         super(memo);
     }
 
-    static private EcosDccThrottleManager mInstance = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EcosDccThrottleManager instance() {
-        return mInstance;
-    }
-
     @Override
     public void reply(EcosReply m) {
         //We are not sending commands from here yet!
@@ -49,8 +39,14 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         /*Here we do not set notifythrottle, we simply create a new ecos throttle.
          The ecos throttle in turn will notify the throttle manager of a successful or
          unsuccessful throttle connection. */
-        log.debug("new EcosDccThrottle for " + address);
-        new EcosDccThrottle((DccLocoAddress) address, (EcosSystemConnectionMemo) adapterMemo, control);
+        if ( address instanceof DccLocoAddress ) {
+            log.debug("new EcosDccThrottle for " + address);
+            new EcosDccThrottle((DccLocoAddress) address, (EcosSystemConnectionMemo) adapterMemo, control);
+        }
+        else {
+            log.error("{} is not an DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress " +address+ " is not a DccLocoAddress");
+        }
     }
 
     @Override
@@ -94,7 +90,8 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
 
     @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
-        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC,
+        return new LocoAddress.Protocol[]{
+            LocoAddress.Protocol.DCC,
             LocoAddress.Protocol.MFX,
             LocoAddress.Protocol.MOTOROLA,
             LocoAddress.Protocol.SELECTRIX,
@@ -129,12 +126,16 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            EcosDccThrottle lnt = (EcosDccThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if ( t instanceof EcosDccThrottle ) {
+                EcosDccThrottle lnt = (EcosDccThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
+            else {
+                log.error("{} is not an EcosDccThrottle",t);
+            }
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleManager.class);

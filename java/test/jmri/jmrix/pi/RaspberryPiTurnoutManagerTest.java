@@ -12,18 +12,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for RaspberryPiTurnoutManager
- * </P>
+ * Tests for RaspberryPiTurnoutManager.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
     public String getSystemName(int i){
-        return "PiT"+i;
+        return l.getSystemPrefix() + "T" + i;
     }
-
 
    @Test
    public void ConstructorTest(){
@@ -32,7 +30,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
    @Test
    public void checkPrefix(){
-       Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
+       Assert.assertEquals("Prefix", "Pi", l.getSystemPrefix());
    }
 
     @Override    
@@ -47,6 +45,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Turnout t = l.provide(getSystemName(20));
@@ -109,8 +108,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         return 5;
     }
 
-
-
     // The minimal setup for log4J
     @Override
     @Before
@@ -128,6 +125,5 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
-
 
 }

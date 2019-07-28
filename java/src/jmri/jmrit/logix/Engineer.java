@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Execute a throttle command script for a warrant.
  * <p>
- * This generally operates on it's own thread, but switches back to the Layout
+ * This generally operates on its own thread, but switches back to the Layout
  * thread when asking the Warrant to perform actions.
  *
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /*
  * ************************ Thread running the train ****************
  */
-public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
+public class Engineer extends Thread implements java.beans.PropertyChangeListener {
 
     private int _idxCurrentCommand;     // current throttle command
     private String _currentCommand;
@@ -1017,7 +1017,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug("Exit runWarrant - " + msg);
     }
 
-    static private class CheckForTermination extends Thread implements Runnable {
+    static private class CheckForTermination extends Thread {
 
         Warrant oldWarrant;
         Warrant newWarrant;
@@ -1032,6 +1032,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
          }
 
         @Override
+        @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
         public void run() {
             OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             long time = 0;
@@ -1086,7 +1087,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /*
      * *************************************************************************************
      */
-     class ThrottleRamp extends Thread implements Runnable {
+     class ThrottleRamp extends Thread {
 
          private RampData _rampData;
          private String _endSpeedType;

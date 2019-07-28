@@ -126,34 +126,34 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     static public final int OPTION_FORCE_ASCII = -1;
     /**
      * Create commands compatible with the 1999 EPROM.
-     * <P>
+     * <p>
      * This is binary for everything except service-mode CV programming
      * operations.
      */
     static public final int OPTION_1999 = 0;
     /**
      * Create commands compatible with the 2004 EPROM.
-     * <P>
+     * <p>
      * This is binary for everything except service-mode CV programming
      * operations.
      */
     static public final int OPTION_2004 = 10;
     /**
      * Create commands compatible with the 2006 EPROM.
-     * <P>
+     * <p>
      * This is binary for everything, including service-mode CV programming
      * operations.
      */
     static public final int OPTION_2006 = 20;
     /**
      * Create commands compatible with the 1.28 EPROM.
-     * <P>
+     * <p>
      * For PowerCab/SB3 original pre-Nov 2012
      */
     static public final int OPTION_1_28 = 30;
     /**
      * Create commands compatible with the 1.65 EPROM.
-     * <P>
+     * <p>
      * For PowerCab/SB5/Twin update post-Nov 2012
      */
     static public final int OPTION_1_65 = 40;
@@ -168,18 +168,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Control which command format should be used for various commands: ASCII
      * or binary.
-     * <P>
+     * <p>
      * The valid argument values are the class "OPTION" constants, which are
      * interpreted in the various methods to get a particular message.
-     * <UL>
-     * <LI>{@link #OPTION_FORCE_ASCII}
-     * <LI>{@link #OPTION_1999}
-     * <LI>{@link #OPTION_2004}
-     * <LI>{@link #OPTION_2006}
-     * <LI>{@link #OPTION_1_28}
-     * <LI>{@link #OPTION_1_65}
-     * <LI>{@link #OPTION_FORCE_BINARY}
-     * </UL>
+     * <ul>
+     * <li>{@link #OPTION_FORCE_ASCII}
+     * <li>{@link #OPTION_1999}
+     * <li>{@link #OPTION_2004}
+     * <li>{@link #OPTION_2006}
+     * <li>{@link #OPTION_1_28}
+     * <li>{@link #OPTION_1_65}
+     * <li>{@link #OPTION_FORCE_BINARY}
+     * </ul>
      *
      * @param val command station options
      *
@@ -195,18 +195,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Determine which command format should be used for various commands: ASCII
      * or binary.
-     * <P>
+     * <p>
      * The valid return values are the class "OPTION" constants, which are
      * interpreted in the various methods to get a particular message.
-     * <UL>
-     * <LI>{@link #OPTION_FORCE_ASCII}
-     * <LI>{@link #OPTION_1999}
-     * <LI>{@link #OPTION_2004}
-     * <LI>{@link #OPTION_2006}
-     * <LI>{@link #OPTION_1_28}
-     * <LI>{@link #OPTION_1_65}
-     * <LI>{@link #OPTION_FORCE_BINARY}
-     * </UL>
+     * <ul>
+     * <li>{@link #OPTION_FORCE_ASCII}
+     * <li>{@link #OPTION_1999}
+     * <li>{@link #OPTION_2004}
+     * <li>{@link #OPTION_2006}
+     * <li>{@link #OPTION_1_28}
+     * <li>{@link #OPTION_1_65}
+     * <li>{@link #OPTION_FORCE_BINARY}
+     * </ul>
      *
      * @return command station options value
      *
@@ -217,7 +217,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      * Default when a NCE USB isn't selected in user system preferences.
-     * <br><br>
      * Also the case when Serial or Simulator is selected.
      */
     public static final int USB_SYSTEM_NONE = 0;
@@ -253,14 +252,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      * Set the type of system the NCE USB is connected to
-     * <UL>
-     * <LI>{@link #USB_SYSTEM_NONE}
-     * <LI>{@link #USB_SYSTEM_POWERCAB}
-     * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERPRO}
-     * <LI>{@link #USB_SYSTEM_TWIN}
-     * <LI>{@link #USB_SYSTEM_SB5}
-     * </UL>
+     * <ul>
+     * <li>{@link #USB_SYSTEM_NONE}
+     * <li>{@link #USB_SYSTEM_POWERCAB}
+     * <li>{@link #USB_SYSTEM_SB3}
+     * <li>{@link #USB_SYSTEM_POWERPRO}
+     * <li>{@link #USB_SYSTEM_TWIN}
+     * <li>{@link #USB_SYSTEM_SB5}
+     * </ul>
      *
      * @param val usb command station options
      *
@@ -275,14 +274,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      * Get the type of system the NCE USB is connected to
-     * <UL>
-     * <LI>{@link #USB_SYSTEM_NONE}
-     * <LI>{@link #USB_SYSTEM_POWERCAB}
-     * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERPRO}
-     * <LI>{@link #USB_SYSTEM_TWIN}
-     * <LI>{@link #USB_SYSTEM_SB5}
-     * </UL>
+     * <ul>
+     * <li>{@link #USB_SYSTEM_NONE}
+     * <li>{@link #USB_SYSTEM_POWERCAB}
+     * <li>{@link #USB_SYSTEM_SB3}
+     * <li>{@link #USB_SYSTEM_POWERPRO}
+     * <li>{@link #USB_SYSTEM_TWIN}
+     * <li>{@link #USB_SYSTEM_SB5}
+     * </ul>
      *
      * @return usb command station options
      *
@@ -346,18 +345,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      * Set the types of commands valid connected system
-     * <UL>
-     * <LI>{@link #CMDS_NONE}
-     * <LI>{@link #CMDS_ACCYADDR250}
-     * <LI>{@link #CMDS_PROGTRACK}
-     * <LI>{@link #CMDS_AUI_READ}
-     * <LI>{@link #CMDS_MEM}
-     * <LI>{@link #CMDS_OPS_PGM}
-     * <LI>{@link #CMDS_CLOCK}
-     * <LI>{@link #CMDS_USB}
-     * <LI>{@link #CMDS_NOT_USB}
-     * <LI>{@link #CMDS_ALL_SYS}
-     * </UL>
+     * <ul>
+     * <li>{@link #CMDS_NONE}
+     * <li>{@link #CMDS_ACCYADDR250}
+     * <li>{@link #CMDS_PROGTRACK}
+     * <li>{@link #CMDS_AUI_READ}
+     * <li>{@link #CMDS_MEM}
+     * <li>{@link #CMDS_OPS_PGM}
+     * <li>{@link #CMDS_CLOCK}
+     * <li>{@link #CMDS_USB}
+     * <li>{@link #CMDS_NOT_USB}
+     * <li>{@link #CMDS_ALL_SYS}
+     * </ul>
      *
      * @param val command group supported options
      *
@@ -372,18 +371,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     /**
      * Get the types of commands valid for the NCE USB and connected system
-     * <UL>
-     * <LI>{@link #CMDS_NONE}
-     * <LI>{@link #CMDS_ACCYADDR250}
-     * <LI>{@link #CMDS_PROGTRACK}
-     * <LI>{@link #CMDS_AUI_READ}
-     * <LI>{@link #CMDS_MEM}
-     * <LI>{@link #CMDS_OPS_PGM}
-     * <LI>{@link #CMDS_CLOCK}
-     * <LI>{@link #CMDS_USB}
-     * <LI>{@link #CMDS_NOT_USB}
-     * <LI>{@link #CMDS_ALL_SYS}
-     * </UL>
+     * <ul>
+     * <li>{@link #CMDS_NONE}
+     * <li>{@link #CMDS_ACCYADDR250}
+     * <li>{@link #CMDS_PROGTRACK}
+     * <li>{@link #CMDS_AUI_READ}
+     * <li>{@link #CMDS_MEM}
+     * <li>{@link #CMDS_OPS_PGM}
+     * <li>{@link #CMDS_CLOCK}
+     * <li>{@link #CMDS_USB}
+     * <li>{@link #CMDS_NOT_USB}
+     * <li>{@link #CMDS_ALL_SYS}
+     * </ul>
      *
      * @return command group supported options
      *

@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // parse message type
         LnSensorAddress a;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_INPUT_REP:                /* page 9 of Loconet PE */
+            case LnConstants.OPC_INPUT_REP:                /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -171,45 +172,33 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     int iName;
 
     /**
-     * Get the bit address from the system name.
-     * @param systemName a valid LocoNet-based Sensor System Name
-     * @return the sensor number extracted from the system name
-     */
-    public int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "S"))) {
-            // here if an illegal LocoNet Light system name
-            log.error("illegal character in header field of loconet sensor system name: {}", systemName);
-            return (0);
-        }
-        // name must be in the LSnnnnn format (L is user configurable)
-        int num = 0;
-        try {
-            num = Integer.parseInt(systemName.substring(
-                        getSystemPrefix().length() + 1, systemName.length()
-                    ));
-        } catch (Exception e) {
-            log.debug("invalid character in number field of system name: {}", systemName);
-            return (0);
-        }
-        if (num <= 0) {
-            log.debug("invalid loconet sensor system name: {}", systemName);
-            return (0);
-        } else if (num > 4096) {
-            log.debug("bit number out of range in loconet sensor system name: {}", systemName);
-            return (0);
-        }
-        return (num);
-    }
-
-    /**
-     * Validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
+    }
+
+    /**
+     * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Turnout System Name
+     * @return the turnout number extracted from the system name
+     */
+    public int getBitFromSystemName(String systemName) {
+        try {
+            validateSystemNameFormat(systemName, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            return 0;
+        }
+        return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
     }
 
     @Override
@@ -237,6 +226,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     return Integer.toString(iName);
                 }
             }
+            // feedback when next 10 addresses are also in use
+            log.warn("10 hardware addresses starting at {} already in use. No new LocoNet Sensors added", curAddress);
             return null;
         } else {
             return Integer.toString(iName);
@@ -248,8 +239,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     /**

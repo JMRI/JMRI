@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
@@ -27,10 +28,10 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Number of sensors per UA in the naming scheme.
-     * <P>
+     * <p>
      * The first UA (node address) uses sensors from 1 to SENSORSPERUA-1, the
      * second from SENSORSPERUA+1 to SENSORSPERUA+(SENSORSPERUA-1), etc.
-     * <P>
+     * <p>
      * Must be more than, and is generally one more than,
      * {@link SerialNode#MAXSENSORS}
      *
@@ -255,16 +256,16 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return _memo.validSystemNameFormat(systemName, 'S');
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return _memo.validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
-
+    
     /**
      * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
+    public NameValidity validSystemNameFormat(String systemName) {
+        return _memo.validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -272,8 +273,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddInputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);

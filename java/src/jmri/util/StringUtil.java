@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 
 /**
  * Common utility methods for working with Strings.
- * <P>
+ * <p>
  * We needed a place to refactor common string-processing idioms in JMRI code,
  * so this class was created. It's more of a library of procedures than a real
  * class, as (so far) all of the operations have needed no state information.
- * <P>
+ * <p>
  * In some cases, these routines use a Java 1.3 or later method, falling back to
  * an explicit implementation when running on Java 1.1
  *
@@ -459,45 +459,6 @@ public class StringUtil {
             }
         }
         return result;
-    }
-
-    /**
-     * Replace various special characters with their "escaped" counterpart in
-     * UTF-8 character encoding, to facilitate use with web servers.
-     *
-     * @param s String to escape
-     * @return String with escaped values
-     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
-        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
-     * Replace various escaped character in UTF-8 character encoding with their
-     * "regular" counterpart, to facilitate use with web servers.
-     *
-     * @param s String to unescape
-     * @return String with escaped values replaced with regular values
-     * @throws java.io.UnsupportedEncodingException if unable to unescape from
-     *                                              UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
-        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**

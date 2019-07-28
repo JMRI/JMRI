@@ -15,14 +15,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalMastManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalMastManager extends AbstractManager<SignalMast>
-        implements SignalMastManager, java.beans.PropertyChangeListener {
+        implements SignalMastManager {
 
     public DefaultSignalMastManager() {
         super();
@@ -120,8 +120,8 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalMast");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");
     }
 
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();

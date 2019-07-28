@@ -4,7 +4,7 @@ import jmri.Light;
 import jmri.implementation.AbstractVariableLight;
 
 /**
- * Implement a light manager for "Internal" (virtual) lights.
+ * Implement a LightManager for "Internal" (virtual) lights.
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
@@ -44,11 +44,6 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     }
 
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    @Override
     public boolean supportsVariableLights(String systemName) {
         return true;
     }
@@ -63,8 +58,7 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
 }

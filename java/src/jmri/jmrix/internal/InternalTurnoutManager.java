@@ -57,34 +57,12 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
-    /** 
-     * {@inheritDoc} 
-     * No changes to what was given; we can take it all
-     */
-    @CheckReturnValue
-    @Override
-    @Nonnull
-    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return always 'VALID' because we can take anything
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

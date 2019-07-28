@@ -1,12 +1,13 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Acela systems.
+ * Implement LightManager for Acela systems.
  * <p>
  * System names are "ALnnn", where A is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -38,7 +39,6 @@ public class AcelaLightManager extends AbstractLightManager {
      * <p>
      * Assumes calling method has checked that a Light with this system
      * name does not already exist.
-     * </p>
      *
      * @return null if the system name is not in a valid format
      */
@@ -70,9 +70,22 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINOUTPUTADDRESS} to
+     * {@value AcelaAddress#MAXOUTPUTADDRESS}.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINOUTPUTADDRESS,
+                AcelaAddress.MAXOUTPUTADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -91,17 +104,6 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
      * Public method to convert system name to its alternate format.
      *
      * @return a normalized system name if system name is valid and has a valid
@@ -110,15 +112,6 @@ public class AcelaLightManager extends AbstractLightManager {
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
-    }
-
-    /**
-     * Allow access to AcelaLightManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaLightManager instance() {
-        return null; 
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);

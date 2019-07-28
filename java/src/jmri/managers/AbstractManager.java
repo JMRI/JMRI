@@ -12,6 +12,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.CheckReturnValue;
@@ -22,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,8 +81,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public String makeSystemName(@Nonnull String s) {
-        return getSystemPrefix() + typeLetter() + s;
+    public String makeSystemName(@Nonnull String s, boolean logErrors, Locale locale) {
+        try {
+            return Manager.super.makeSystemName(s, logErrors, locale);
+        } catch (IllegalArgumentException ex) {
+            if (logErrors || log.isTraceEnabled()) {
+                log.error("Invalid system name for {}: {}", getBeanTypeHandled(), ex.getMessage());
+            }
+            throw ex;
+        }
     }
 
     /** {@inheritDoc} */
@@ -95,7 +104,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
-    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator());
+    protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
     // Storage for getSystemNameOriginalList
@@ -106,23 +115,29 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private ArrayList<E> cachedNamedBeanList = null;
     
     /**
-     * Now obsolete. Used {@link #getBeanBySystemName} instead.
-     * @param systemName the system name, but don't call this method
-	 * @return the results of a {@link #getBeanBySystemName} call, which you should use instead of this
-     * @deprecated 4.15.6
+     * Get a NamedBean by its system name.
+     *
+     * @param systemName the system name
+     * @return the result of {@link #getBeanBySystemName(java.lang.String)}
+     *         with systemName
+     * @deprecated since 4.15.6; use
+     * {@link #getBeanBySystemName(java.lang.String)} instead
      */
-    @Deprecated // since 4.15.6
+    @Deprecated
     protected E getInstanceBySystemName(String systemName) {
         return getBeanBySystemName(systemName);
     }
 
     /**
-     * Now obsolete. Used {@link #getBeanByUserName} instead.
-     * @param userName the system name, but don't call this method
-	 * @return the results of a {@link #getBeanByUserName} call, which you should use instead of this
-     * @deprecated 4.15.6
+     * Get a NamedBean by its user name.
+     *
+     * @param userName the user name
+     * @return the result of {@link #getBeanByUserName(java.lang.String)} call,
+     *         with userName
+     * @deprecated since 4.15.6; use
+     * {@link #getBeanByUserName(java.lang.String)} instead
      */
-    @Deprecated // since 4.15.6
+    @Deprecated
     protected E getInstanceByUserName(String userName) {
         return getBeanByUserName(userName);
     }
@@ -198,9 +213,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        fireIndexedPropertyChange("beans", position, null, s);
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
-        s.addPropertyChangeListener(this, "", "Manager");
+        s.addPropertyChangeListener(this);
     }
 
     // not efficient, but does job for now
@@ -276,11 +292,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         
         // notifications
         fireDataListenersRemoved(position, position, s);
+        fireIndexedPropertyChange("beans", position, s, null);
         firePropertyChange("length", null, _beans.size());
     }
 
     /**
      * By default there are no custom properties.
+     *
      * @return empty list
      */
     @Override
@@ -344,7 +362,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return cachedSystemNameArray;
     }
 
-    
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -359,7 +376,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return Collections.unmodifiableList(cachedSystemNameList);
     }
 
-
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -367,7 +383,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -388,7 +403,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    abstract public String getBeanTypeHandled();
+    abstract public String getBeanTypeHandled(boolean plural);
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -437,6 +452,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
+        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
     VetoableChangeSupport vcs = new VetoableChangeSupport(this);
@@ -564,25 +584,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 }
             }
         }
-    }
-
-    /** {@inheritDoc} */
-    @CheckReturnValue
-    @Override
-    @Nonnull
-    public String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return always 'VALID' to let undocumented connection system
-     *         managers pass entry validation.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
     }
 
     /** {@inheritDoc} */

@@ -1,12 +1,13 @@
 package jmri.jmrix.maple;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Maple serial systems.
+ * Implement LightManager for Maple serial systems.
  * <p>
  * System names are "KLnnn", where K is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -90,8 +91,16 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(name, this, locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     /**
@@ -106,26 +115,8 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Allow access to SerialLightManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialLightManager instance() {
-         return null;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);

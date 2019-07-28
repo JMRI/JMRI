@@ -2,6 +2,8 @@ package jmri.util;
 
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
@@ -65,7 +67,7 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p> {@code
-     * ThreadingUtil.runOnLayoutEventually(() -> {
+     * ThreadingUtil.runOnLayoutDelayed(() -> {
      *     sensor.setState(value);
      * }, 1000); 
      * }
@@ -127,16 +129,18 @@ public class ThreadingUtil {
      * Run some GUI-specific code before returning a value
      * <p>
      * Typical uses:
-     * <p> {@code
+     * <p>
+     * {@code
      * ThreadingUtil.runOnGUI(() -> {
      *     mine.setVisible();
      * });
      * }
      * <p>
-     * If an InterruptedException is encountered, it'll be deferred to the 
-     * next blocking call via Thread.currentThread().interrupt()
+     * If an InterruptedException is encountered, it'll be deferred to the next
+     * blocking call via Thread.currentThread().interrupt()
      * 
      * @param ta What to run, usually as a lambda expression
+     * @return the value returned by ta
      */
     static public <E> E runOnGUIwithReturn(@Nonnull ReturningThreadAction<E> ta) {
         if (isGUIThread()) {
@@ -145,7 +149,7 @@ public class ThreadingUtil {
         } else {
             warnLocks();
             // dispatch to Swing
-            final java.util.concurrent.atomic.AtomicReference<E> result = new java.util.concurrent.atomic.AtomicReference<>();
+            final AtomicReference<E> result = new AtomicReference<>();
             try {
                 SwingUtilities.invokeAndWait(() -> {
                     result.set(ta.run());
@@ -294,6 +298,8 @@ public class ThreadingUtil {
 
     /**
      * Interface for use in ThreadingUtil's lambda interfaces
+     * 
+     * @param <E> the type returned
      */
     @FunctionalInterface
     static public interface ReturningThreadAction<E> {

@@ -17,6 +17,7 @@ public class LightIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -26,6 +27,7 @@ public class LightIconTest extends PositionableTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

@@ -1,6 +1,7 @@
 package jmri.jmrix.easydcc.networkdriver;
 
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Vector;
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
-  */
+ */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
@@ -28,13 +29,13 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
      */
     @Override
     public void configure() {
-        // connect to the traffic controller
+        // connect to the traffic controller, which is provided via the memo
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
-        control.connectPort(this);
-        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+
+        getSystemConnectionMemo().getTrafficController().connectPort(this);
+
         // do the common manager config
-        this.getSystemConnectionMemo().configureManagers();
+        getSystemConnectionMemo().configureManagers();
     }
 
     @Override
@@ -44,15 +45,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     // private control members
     private boolean opened = false;
-
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public NetworkDriverAdapter instance() {
-        log.error("Unexpected call to instance()");
-        return null;
-    }
 
     Socket socket;
 

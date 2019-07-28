@@ -75,6 +75,11 @@ public class HexFileServer {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {
+                if (!(a instanceof DccLocoAddress)) {
+                    log.error("{} is not a DccLocoAddress",a);
+                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
+                    return;
+                }
                 connectedAddresses++;
                 DccLocoAddress address = (DccLocoAddress) a;
                 //create some testing situations

@@ -54,9 +54,9 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * Requests/returns the train's length. The train's name is required. Proper
      * message format: "OPERATIONS TRAIN=train_name , TRAINLENGTH" Returns train
      * length if train exists, otherwise an error message.
-     * <P>
+     * <p>
      * Request: "Operations , TRAIN=train"
-     * <P>
+     * <p>
      * Reply: "OPERATIONS , TRAIN=train , TRAINLENGTH=train_length"
      */
     public static final String TRAINLENGTH = "TRAINLENGTH";
@@ -98,12 +98,12 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
     /**
      * Sets/requests/returns the train's location or gets the train's current
      * location.
-     * <P>
+     * <p>
      * Sets the train's location: "Operations , TRAIN=train_name ,
      * TRAINLOCATION=location"
-     * <P>
+     * <p>
      * Requests the train's location: "OPERATIONS , TRAIN=train_name"
-     * <P>
+     * <p>
      * Returns the train's location: "OPERATIONS , TRAIN=train_name ,
      * TRAINLOCATION=location"
      */

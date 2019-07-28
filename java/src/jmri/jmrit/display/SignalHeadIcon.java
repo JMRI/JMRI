@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a SignalHead.
- * <P>
+ * <p>
  * SignalHeads are located via the SignalHeadManager, which in turn is located
  * via the InstanceManager.
  *
@@ -47,17 +47,15 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     protected Positionable finishClone(SignalHeadIcon pos) {
         pos.setSignalHead(getNamedSignalHead().getName());
-        Iterator<String> e = _iconMap.keySet().iterator();
-        while (e.hasNext()) {
-            String key = e.next();
-            pos.setIcon(key, _iconMap.get(key));
+        for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
+            pos.setIcon(entry.getKey(), entry.getValue());
         }
         pos.setClickMode(getClickMode());
         pos.setLitMode(getLitMode());
         return super.finishClone(pos);
     }
 
-//    private SignalHead mHead;
+    // private SignalHead mHead;
     private NamedBeanHandle<SignalHead> namedHead;
 
     HashMap<String, NamedIcon> _saveMap;
@@ -82,7 +80,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     /**
      * Taken from the layout editor Attached a numbered element to this display
-     * item
+     * item.
      *
      * @param pName Used as a system/user name to lookup the SignalHead object
      */
@@ -147,9 +145,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * @param icon  the icon to place
      */
     public void setIcon(String state, NamedIcon icon) {
-        if (log.isDebugEnabled()) {
-            log.debug("setIcon for " + state);
-        }
+        log.debug("setIcon for {}", state);
         if (isValidState(state)) {
             _iconMap.put(state, icon);
             displayState(headState());
@@ -333,13 +329,13 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     /**
      * Drive the current state of the display from the state of the underlying
      * SignalHead object.
-     * <UL>
-     * <LI>If the signal is held, display that.
-     * <LI>If set to monitor the status of the lit parameter and lit is false,
+     * <ul>
+     * <li>If the signal is held, display that.
+     * <li>If set to monitor the status of the lit parameter and lit is false,
      * show the dark icon ("dark", when set as an explicit appearance, is
      * displayed anyway)
-     * <LI>Show the icon corresponding to one of the seven appearances.
-     * </UL>
+     * <li>Show the icon corresponding to one of the seven appearances.
+     * </ul>
      */
     @Override
     public void displayState(int state) {
@@ -465,11 +461,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     protected void edit() {
         makeIconEditorFrame(this, "SignalHead", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
-        Iterator<String> e = _iconMap.keySet().iterator();
         int i = 0;
-        while (e.hasNext()) {
-            String key = e.next();
-            _iconEditor.setIcon(i++, key, new NamedIcon(_iconMap.get(key)));
+        for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
+            _iconEditor.setIcon(i++, entry.getKey(), new NamedIcon(entry.getValue()));
         }
         _iconEditor.makeIconPanel(false);
 
@@ -484,7 +478,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * replace the icons in _iconMap with those from map, but preserve the scale
+     * Replace the icons in _iconMap with those from map, but preserve the scale
      * and rotation.
      */
     private void setIcons(Hashtable<String, NamedIcon> map) {
@@ -535,10 +529,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     /**
      * How to handle lit vs not lit?
-     * <P>
+     * <p>
      * False means ignore (always show R/Y/G/etc appearance on screen); True
      * means show "dark" if lit is set false.
-     * <P>
+     * <p>
      * Note that setting the appearance "DARK" explicitly will show the dark
      * icon regardless of how this is set.
      */
@@ -593,8 +587,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                         break;
                     case jmri.SignalHead.GREEN:
                     case jmri.SignalHead.FLASHGREEN:
-                        getSignalHead().setAppearance(jmri.SignalHead.RED);
-                        break;
                     default:
                         getSignalHead().setAppearance(jmri.SignalHead.RED);
                         break;
@@ -622,12 +614,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
                     }
                 }
                 sh.setAppearance(state);
-                if (log.isDebugEnabled()) {
-                    log.debug("Set state= " + state);
-                }
+                log.debug("Set state= {}", state);
                 return;
             default:
-                log.error("Click in mode " + clickMode);
+                log.error("Click in mode {}", clickMode);
         }
     }
 

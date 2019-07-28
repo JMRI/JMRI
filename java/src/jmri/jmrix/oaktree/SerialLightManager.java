@@ -1,12 +1,13 @@
 package jmri.jmrix.oaktree;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Oak Tree serial systems.
+ * Implement LightManager for Oak Tree serial systems.
  * <p>
  * System names are "OLnnn", where O is the user configurable system prefix,
  * nnn is the bit number without padding.
@@ -59,34 +60,27 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Validate system name format.
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L', prefix));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), prefix));
     }
 
     /**
-     * Validate system name for configuration.
-     *
-     * @return 'true' if system name has a valid meaning in current
-     * configuration, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L', _memo));
-    }
-
-    /**
-     * Normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, prefix));
+        return (SerialAddress.validSystemNameConfig(systemName, typeLetter(), _memo));
     }
 
     /**
@@ -105,17 +99,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Allow access to SerialLightManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialLightManager instance() {
-        return null;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);

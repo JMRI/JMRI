@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
-public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class DCCppAdapter extends DCCppSerialPortController {
 
     public DCCppAdapter() {
         super();
@@ -188,12 +188,23 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         // checkBuffer = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"115,200 baud"};
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{115200};
 
     // meanings are assigned to these above, so make sure the order is consistent

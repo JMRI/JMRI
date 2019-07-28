@@ -49,9 +49,9 @@
 
       <p>Si vous voulez voir des tutoriels qui montrent comment
       chacune de ces choses sont r&eacute;ellement faites sur
-      l'&eacute;cran d'ordinateur, s'il vous pla&icirc;t voir
-      <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick
-      Page Bronson cliniques</a> .</p>
+      l'&eacute;cran d'ordinateur, s'il vous pla&icirc;t voir le <a href=
+      "http://jmri.org/community/clinics/">Page JMRI Clinics</a>.
+      </p>
 
       <h2>Contenu de l'&Eacute;diteur de Panneaux</h2>
 
@@ -250,12 +250,17 @@
       donnerait des leviers "m&eacute;caniques" que vous pouvez
       retourner en arri&egrave;re avec un clic.
 
-      <p>Il est &eacute;galement possible de cr&eacute;er un
-      panneau o&ugrave; les lignes des "voies" changent de couleur
-      pour indiquer si la piste est occup&eacute;e. La
-      proc&eacute;dure pour faire cela est d&eacute;crit sur une
-      <a href="http://jmri.org/apps/PanelPro/ColorTrack.html">Page
-      s&eacute;par&eacute;e</a> .</p>
+      <p>Avec <a href="ControlPanelEditor.shtml">l'&#201;diteur
+      de Panneau de Commande</a> ou <a href=
+      "LayoutEditor.shtml">l'&Eacute;diteur de R&eacute;seau</a> c'est possible
+      de cr&eacute;er un panneau o&ugrave; les lignes des "voies" changent
+      de couleur pour indiquer si la piste est occup&eacute;e.</p>
+
+      <p>In JMRI it's also possible to create a panel where the "track"
+      lines change color to indicate whether the block is occupied by
+      switching to either <a href="ControlPanelEditor.shtml">Control
+        Panel Editor</a> (using Indicator Track icons) or
+      <a href="LayoutEditor.shtml">Layout Editor</a>.</p>
 
       <h2>Manipulation des ic&ocirc;nes</h2>Pour d&eacute;placer
       une ic&ocirc;ne dans le panneau, vous avez
@@ -449,7 +454,7 @@
       <a href="../../../../html/doc/Technical/Names.shtml">noms de
       syst&egrave;me</a>. Par exemple, si la seconde connexion est
       pour un syst&egrave;me LocoNet, r&eacute;f&eacute;rerez vous
-      au aiguillage Loconet LTnn; ou un capteur Loconet LSnn, etc
+      au aiguillage LocoNet LTnn; ou un capteur LocoNet LSnn, etc
       (ou nn est le num&eacute;ro de l'&eacute;l&eacute;ment)</p>
       <!--#include virtual="/Footer" -->
     </div>

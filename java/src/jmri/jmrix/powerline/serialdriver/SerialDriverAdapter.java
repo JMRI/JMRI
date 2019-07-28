@@ -17,14 +17,14 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Powerline devices via a serial comm port. Derived from the
- * oaktree code.
+ * Provide access to Powerline devices via a serial comm port.
+ * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -49,16 +49,16 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set framing (end) character
             try {
-                log.debug("Serial framing was observed as: " + activeSerialPort.isReceiveFramingEnabled()
-                        + " " + activeSerialPort.getReceiveFramingByte());
+                log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
+                        activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: ", ef);
             }
 
             // set timeout; framing should work before this anyway
@@ -67,7 +67,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
                         + " " + activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: ", et);
             }
 
             // get and save stream
@@ -90,8 +90,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -102,7 +102,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
+            log.error("Unexpected exception while opening port {} ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -139,7 +139,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             tc = new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController(this.getSystemConnectionMemo());
         } else {
             // no connection at all - warn
-            log.warn("protocol option " + opt1 + " defaults to CM11");
+            log.warn("protocol option {} defaults to CM11", opt1);
             // create a CM11 port controller
             this.setSystemConnectionMemo(new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo());
             tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(this.getSystemConnectionMemo());
@@ -172,7 +172,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -182,7 +182,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return opened;
     }
 
-    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"};
+    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"}; // NOI18N
 
     /**
      * Local method to do specific port configuration
@@ -213,9 +213,20 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
@@ -223,12 +234,12 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     @Override
     public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
+        log.debug("configureBaudRate: {}", rate);
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{4800};
     protected String selectedSpeed = validSpeeds[0];
 

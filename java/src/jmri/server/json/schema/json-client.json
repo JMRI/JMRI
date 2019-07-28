@@ -20,6 +20,10 @@
         "list": {
             "type": "string",
             "description": "Request for a list of the given type; only valid with \"type\" value of \"list\""
+        },
+        "id": {
+            "type": "integer",
+            "description": "A message id assigned by the client that will be attached to any messsages sent in direct response to this message; ignored if not a positive integer"
         }
     },
     "oneOf": [

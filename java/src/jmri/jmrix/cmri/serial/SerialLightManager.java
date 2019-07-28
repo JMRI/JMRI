@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
@@ -7,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for CMRI serial systems.
+ * Implement LightManager for CMRI serial systems.
  * <p>
  * System names are "CLnnn", where C is the user-configurable system prefix,
  * nnn is the bit number without padding.
@@ -88,8 +89,16 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return _memo.validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return _memo.validSystemNameFormat(systemName, 'L');
+        return _memo.validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -101,16 +110,6 @@ public class SerialLightManager extends AbstractLightManager {
     @Override
     public boolean validSystemNameConfig(String systemName) {
         return _memo.validSystemNameConfig(systemName, 'L',_memo.getTrafficController());
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else returns ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
     }
 
     /**
@@ -129,8 +128,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);

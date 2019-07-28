@@ -92,15 +92,14 @@ public final class OperationsManager implements InstanceManagerAutoDefault, Inst
      * @param shutDownTask The new ShutDownTask or null
      */
     public void setShutDownTask(ShutDownTask shutDownTask) {
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((manager) -> {
-            if (this.shutDownTask != null) {
-                manager.deregister(this.shutDownTask);
-            }
-            this.shutDownTask = shutDownTask;
-            if (this.shutDownTask != null) {
-                manager.register(this.shutDownTask);
-            }
-        });
+        ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
+        if (this.shutDownTask != null) {
+            manager.deregister(this.shutDownTask);
+        }
+        this.shutDownTask = shutDownTask;
+        if (this.shutDownTask != null) {
+            manager.register(this.shutDownTask);
+        }
     }
 
     /**

@@ -1,41 +1,33 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import jmri.managers.AbstractManager;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
 
 /**
  * Implementation of a Transit Manager
- * <P>
+ * <p>
  * This doesn't need an interface, since Transits are globaly implemented,
  * instead of being system-specific.
- * <P>
+ * <p>
  * Note that Transit system names must begin with IZ, and be followed by a
- * string, usually, but not always, a number. All alphabetic characters in a
- * Transit system name must be upper case. This is enforced when a Transit is
+ * string, usually, but not always, a number. This is enforced when a Transit is
  * created.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
-public class TransitManager extends AbstractManager<Transit> implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class TransitManager extends AbstractManager<Transit> implements InstanceManagerAutoDefault {
 
     public TransitManager() {
         super();
@@ -84,16 +76,12 @@ public class TransitManager extends AbstractManager<Transit> implements Property
                 return null;
             }
         }
-        String sName = sysName.toUpperCase().trim();
         z = getBySystemName(sysName);
-        if (z == null) {
-            z = getBySystemName(sName);
-        }
         if (z != null) {
             return null;
         }
         // Transit does not exist, create a new Transit
-        z = new Transit(sName, userName);
+        z = new Transit(sysName, userName);
         // save in the maps
         register(z);
         return z;
@@ -147,27 +135,12 @@ public class TransitManager extends AbstractManager<Transit> implements Property
         return getBySystemName(name);
     }
 
-    public Transit getBySystemName(String name) {
-        String key = name.toUpperCase();
+    public Transit getBySystemName(String key) {
         return  _tsys.get(key);
     }
 
     public Transit getByUserName(String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
     }
 
     /**
@@ -221,22 +194,10 @@ public class TransitManager extends AbstractManager<Transit> implements Property
         return list;
     }
 
-    /**
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public TransitManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(TransitManager.class);
-    }
-
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
 }

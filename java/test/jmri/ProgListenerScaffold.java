@@ -14,7 +14,7 @@ package jmri;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
+ *
  * @see jmri.Programmer
  * @author	Paul Bender Copyright (C) 2013
  */
@@ -55,7 +55,5 @@ public class ProgListenerScaffold implements ProgListener {
     public boolean wasRightThread() {
         return wasOnRightThread;
     }
+
 }
-
-
-

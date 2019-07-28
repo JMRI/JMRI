@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for
  * configuring the CatalogTreeManager.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element catalogTree)
  * class, relying on implementation here to load the individual CatalogTree objects.
  *
@@ -297,16 +297,17 @@ public class WarrantManagerXml //extends XmlFile
             if (elem.getAttribute("systemName") == null) {
                 break;
             }
-            String sysName = null;
-            if (elem.getAttribute("systemName") != null)
-                sysName = elem.getAttribute("systemName").getValue();
-            Warrant warrant = manager.getBySystemName(sysName);
-            List<Element> throttleCmds = elem.getChildren("throttleCommand");
-            if (throttleCmds != null) {
-                for (int k=0; k<throttleCmds.size(); k++) {
-                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
-                    warrant.addThrottleCommand(ts);
-                }                
+            if (elem.getAttribute("systemName") != null) {
+                String sysName = elem.getAttribute("systemName").getValue();
+                if (sysName != null) {
+                    Warrant warrant = manager.getBySystemName(sysName);
+                    List<Element> throttleCmds = elem.getChildren("throttleCommand");
+                    if (throttleCmds != null) {
+                        throttleCmds.forEach((e) -> {
+                            warrant.addThrottleCommand(loadThrottleCommand(e));
+                        });
+                    }
+                }
             }
         }
         return true;

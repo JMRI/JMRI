@@ -69,7 +69,7 @@ abstract public class AbstractController {
 
     /**
      * If no listeners, clear sysNameList pointer and allow list to be re-built
-     * *Manager can implement specifics in deregister().
+     *Manager can implement specifics in deregister().
      */
     public void checkCanBuildList() {
         if (listeners.isEmpty()) {

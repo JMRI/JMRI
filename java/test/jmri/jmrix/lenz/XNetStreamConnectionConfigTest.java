@@ -10,12 +10,14 @@ public class XNetStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectio
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         cc = new XNetStreamConnectionConfig(new XNetStreamPortController());
     }
 
     @After
+    @Override
     public void tearDown() {
 	cc = null;
         jmri.util.JUnitUtil.tearDown();

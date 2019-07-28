@@ -11,6 +11,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -32,6 +33,20 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  */
 abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConfig {
+
+    /**
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
+     */
+    public AbstractUsbConnectionConfig(UsbPortAdapter p) {
+        adapter = p;
+        //addToActionList();
+        log.debug("*	AbstractUSBConnectionConfig({})", p);
+    }
+
     /**
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
@@ -39,12 +54,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     public AbstractUsbConnectionConfig() {
         this(null);
         log.debug("*	AbstractUSBConnectionConfig()");
-    }
-
-    public AbstractUsbConnectionConfig(UsbPortAdapter p) {
-        adapter = p;
-        //addToActionList();
-        log.debug("*	AbstractUSBConnectionConfig({})", p);
     }
 
     protected UsbPortAdapter adapter = null;
@@ -57,11 +66,12 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (!init) {
             if (adapter.getSystemConnectionMemo() != null) {
                 systemPrefixField.addActionListener(new ActionListener() {
@@ -121,14 +131,15 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
             });
 
-            for (String i : options.keySet()) {
-                final String item = i;
-                if (options.get(i).getComponent() instanceof JComboBox) {
-                    ((JComboBox<?>) options.get(i).getComponent()).addActionListener((ActionEvent e) -> {
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                final String item = entry.getKey();
+                if (entry.getValue().getComponent() instanceof JComboBox) {
+                    ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
                         adapter.setOptionState(item, options.get(item).getItem());
                     });
                 }
             }
+
             init = true;
         }
     }
@@ -317,6 +328,8 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+        justification = "Type is checked before casting")
     protected void showAdvancedItems() {
         log.debug("*	showAdvancedItems()");
         _details.removeAll();
@@ -331,8 +344,8 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         boolean incAdvancedOptions = isPortAdvanced();
 
         if (!incAdvancedOptions) {
-            for (String item : options.keySet()) {
-                if (options.get(item).isAdvanced()) {
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                if (entry.getValue().isAdvanced()) {
                     incAdvancedOptions = true;
                     break;
                 }
@@ -358,14 +371,14 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                 i++;
             }
 
-            for (String item : options.keySet()) {
-                if (options.get(item).isAdvanced()) {
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                if (entry.getValue().isAdvanced()) {
                     cR.gridy = i;
                     cL.gridy = i;
-                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                    _details.add(options.get(item).getLabel());
-                    _details.add(options.get(item).getComponent());
+                    gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                    gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                    _details.add(entry.getValue().getLabel());
+                    _details.add(entry.getValue().getComponent());
                     i++;
                 }
             }
@@ -379,8 +392,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         }
         cL.gridwidth = 1;
 
-        if ((_details.getParent() != null)
-                && (_details.getParent() instanceof JViewport)) {
+        if ((_details.getParent() != null) && (_details.getParent() instanceof JViewport)) {
             JViewport vp = (JViewport) _details.getParent();
             vp.revalidate();
             vp.repaint();

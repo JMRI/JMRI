@@ -8,12 +8,13 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Ken Cameron Copyright (C) 2011
-  */
+ */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     *
      * @param p port adapter
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
@@ -21,12 +22,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         // have to embed the usual one in a new JPanel
@@ -40,13 +45,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "CM11";
+        return "CM11"; // NOI18N
     }
 
     public boolean isOptList1Advanced() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {

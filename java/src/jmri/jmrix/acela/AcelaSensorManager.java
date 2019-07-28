@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,8 +47,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
-        // validate the system name, and normalize it
-        String sName = normalizeSystemName(systemName);
+        // TODO: validate the system name
+        String sName = systemName;
         if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Acela Sensor system name: {}", systemName);
@@ -68,8 +69,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
         // check bit number
         int bit = AcelaAddress.getBitFromSystemName(sName, getSystemPrefix());
-        if ((bit < 0) || (bit >= 1023)) {
-            log.error("Sensor bit number {} is outside the supported range 1-1024", Integer.toString(bit));
+        if ((bit < AcelaAddress.MINSENSORADDRESS) || (bit > AcelaAddress.MAXSENSORADDRESS)) {
+            log.error("Sensor bit number {} is outside the supported range {}-{}", bit, AcelaAddress.MINSENSORADDRESS, AcelaAddress.MAXSENSORADDRESS);
             return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
@@ -97,24 +98,26 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return VALID if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINSENSORADDRESS} to
+     * {@value AcelaAddress#MAXSENSORADDRESS}.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINSENSORADDRESS,
+                AcelaAddress.MAXSENSORADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -242,18 +245,6 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
-    }
-
-    /**
-     * Static function returning the AcelaSensorManager instance to use.
-     *
-     * @return The registered AcelaSensorManager instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaSensorManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class);

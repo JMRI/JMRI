@@ -14,14 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MRC simulator
+ * MRC simulator.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class SimulatorAdapter extends MrcPortController implements
-        jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends MrcPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -49,7 +48,7 @@ public class SimulatorAdapter extends MrcPortController implements
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());//IN18N
+            log.error("init (pipe): Exception: ", e); // NOI18N
         }
         opened = true;
         return null; // indicates OK return
@@ -72,7 +71,7 @@ public class SimulatorAdapter extends MrcPortController implements
 
         // start the simulator
         sourceThread = new Thread(this);
-        sourceThread.setName("Mrc Simulator");//IN18N
+        sourceThread.setName("Mrc Simulator"); // NOI18N
         sourceThread.setPriority(Thread.MIN_PRIORITY);
         sourceThread.start();
         tc.startThreads();
@@ -82,7 +81,7 @@ public class SimulatorAdapter extends MrcPortController implements
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
-            log.error("getInputStream called before load(), stream not available");//IN18N
+            log.error("getInputStream called before load(), stream not available"); // NOI18N
         }
         return pin;
     }
@@ -90,7 +89,7 @@ public class SimulatorAdapter extends MrcPortController implements
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
-            log.error("getOutputStream called before load(), stream not available");//IN18N
+            log.error("getOutputStream called before load(), stream not available"); // NOI18N
         }
         return pout;
     }
@@ -101,12 +100,20 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
-        log.debug("validBaudRates should not have been invoked");//IN18N
-        return null;
+        log.debug("validBaudRates should not have been invoked"); // NOI18N
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override
@@ -125,9 +132,7 @@ public class SimulatorAdapter extends MrcPortController implements
         // and writes an appropriate response to the output pipe. This is the heart
         // of the MRC command station simulation.
         // report status?
-        if (log.isInfoEnabled()) {
-            log.info("MRC Simulator Started");     //IN18N
-        }
+        log.info("MRC Simulator Started"); // NOI18N
         int cab = 1;
         while (true) {
             try {
@@ -141,13 +146,13 @@ public class SimulatorAdapter extends MrcPortController implements
             MrcMessage m = readMessage();
             if (log.isDebugEnabled()) {
                 StringBuffer buf = new StringBuffer();
-                buf.append("Mrc Simulator Thread received message: "); //NOI18N
+                buf.append("Mrc Simulator Thread received message: "); // NOI18N
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
                     }
                 } else {
-                    buf.append("null message buffer");//IN18N
+                    buf.append("null message buffer"); // NOI18N
                 }
                 log.debug(buf.toString());
             }

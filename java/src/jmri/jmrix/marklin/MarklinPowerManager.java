@@ -116,8 +116,6 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
                     power = ON;
                     break;
                 case MarklinConstants.CMDSTOPSYS:
-                    power = OFF;
-                    break;
                 case MarklinConstants.CMDHALTSYS:
                     power = OFF;
                     break;
@@ -132,5 +130,7 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     public void message(MarklinMessage m) {
         // messages are ignored
     }
+
     private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class);
+
 }

@@ -8,7 +8,7 @@ import org.junit.*;
  * Tests for TurnoutSection class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class TurnoutSectionTest {
 
     @Test
@@ -215,6 +215,7 @@ public class TurnoutSectionTest {
         
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
+            @Override
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

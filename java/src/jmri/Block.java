@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
- * <P>
+ * <p>
  * A Block (at least in this implementation) corresponds exactly to the track
  * covered by at most one sensor. That could be generalized in the future.
  * <p>
@@ -48,19 +48,19 @@ import org.slf4j.LoggerFactory;
  * system names like "IB201".
  * <p>
  * Issues:
- * <UL>
- * <LI>The tracking doesn't handle a train pulling in behind another well:
- * <UL>
- * <LI>When the 2nd train arrives, the Sensor is already active, so the value is
+ * <ul>
+ * <li>The tracking doesn't handle a train pulling in behind another well:
+ * <ul>
+ * <li>When the 2nd train arrives, the Sensor is already active, so the value is
  * unchanged (but the value can only be a single object anyway)
- * <LI>When the 1st train leaves, the Sensor stays active, so the value remains
+ * <li>When the 1st train leaves, the Sensor stays active, so the value remains
  * that of the 1st train
- * </UL>
- * <LI> The assumption is that a train will only go through a set turnout. For
+ * </ul>
+ * <li> The assumption is that a train will only go through a set turnout. For
  * example, a train could come into the turnout block from the main even if the
  * turnout is set to the siding. (Ignoring those layouts where this would cause
  * a short; it doesn't do so on all layouts)
- * <LI> Does not handle closely-following trains where there is only one
+ * <li> Does not handle closely-following trains where there is only one
  * electrical block per signal. To do this, it probably needs some type of
  * "assume a train doesn't back up" logic. A better solution is to have multiple
  * sensors and Block objects between each signal head.
@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * b2 to b1), the block that's re-entered will get an updated direction, but the
  * direction of this block (b2 in the example) is not updated. In other words,
  * we're not noticing that the train must have reversed to go back out.
- * </UL>
+ * </ul>
  * <p>
  * Do not assume that a Block object uniquely represents a piece of track. To
  * allow independent development, it must be possible for multiple Block objects
@@ -110,11 +110,11 @@ import org.slf4j.LoggerFactory;
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public Block(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     static final public int OCCUPIED = Sensor.ACTIVE;
@@ -130,7 +130,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     // this should only be used for debugging...
     public String toDebugString() {
-        String result = getFullyFormattedDisplayName() + " ";
+        String result = getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME) + " ";
         switch (getState()) {
             case UNDETECTED: {
                 result += "UNDETECTED";
@@ -612,7 +612,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     /**
      * Handle change in sensor state.
-     * <P>
+     * <p>
      * Defers real work to goingActive, goingInactive methods.
      *
      * @param e the event

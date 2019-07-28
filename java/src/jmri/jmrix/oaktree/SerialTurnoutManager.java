@@ -1,5 +1,6 @@
 package jmri.jmrix.oaktree;
 
+import java.util.Locale;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -63,13 +64,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', prefix));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), prefix));
     }
 
     @Override
@@ -82,19 +89,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
-
-    /**
-     * Allow access to SerialTurnoutManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
-
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 

@@ -4,21 +4,19 @@ import jmri.Memory;
 
 /**
  * Base for the Memory interface.
- * <P>
- * Implements the parameter binding support.
  * <p>
- * Memory system names are always upper case.
+ * Implements the parameter binding support.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory {
 
     public AbstractMemory(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractMemory(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override

@@ -119,6 +119,21 @@
 
       <p>More information about Reporters can be found in the
       <a href="Reporters.shtml">Reporters help page</a>.</p>
+
+      <h3>Saving ID Tags to disk</h3>
+
+      <p>ID Tags are part of your
+      <i>layout configuration</i>, along with
+        your Turnouts, Sensors, Signal Heads, Lights, control panel
+        setup etc. To store this information on disk, allowing to
+        <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+        it</a> next time you run JMRI, use <b>Store Configuration...</b>
+        in the <b>File</b> menu at the top of the ID Tag Table (or
+        other tables from the Tools menu), or select <b>Store
+        Panel...</b> in the <b>Panel</b> menu. To open them, open the panel containing the ID Tags. The data is
+      stored in a folder named "idtags". Note that the
+        contents of an ID Tag is not saved in the
+        configuration file.</p>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
