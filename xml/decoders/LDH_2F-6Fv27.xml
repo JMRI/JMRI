@@ -568,7 +568,7 @@
 		<decVal min="0" max="255"/>
 	</variable>
 	
-	<variable label="Potencia del motor en lectura de CVs" item="Motor Option 2" 
+	<variable label="Potencia del motor en lectura de CVs" item="Motor Option 3" 
 	          tooltip="aumentar valor si el consumo del motor es muy bajo"
 	         CV="128"  default="160">	<decVal min="0" max="255" />
 	</variable>
