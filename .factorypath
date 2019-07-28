@@ -68,7 +68,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/net/java/jinput/jinput-platform/2.0.6/jinput-platform-2.0.6-natives-osx.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/apple/AppleJavaExtensions/1.5/AppleJavaExtensions-1.5.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/sourceforge/javacsv/javacsv/2.0/javacsv-2.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/openlcb/openlcb/0.7.25/openlcb-0.7.25.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openlcb/openlcb/0.7.26/openlcb-0.7.26.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/java/linoleum/jlfgr/1_0/jlfgr-1_0.jar" enabled="true" runInBatchMode="false"/>
