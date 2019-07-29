@@ -141,7 +141,10 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>The CV19 references in multiple decoder definitions
+            have been updated to use common fragment files.</li>
+          <li>The Schema references in numerous fragment files have been updated to 
+            a consistent form.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -181,7 +184,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>Alain Le Marchand updated some definitions</li>
             </ul>
 
         <h4>ESU</h4>
@@ -206,7 +209,8 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li></li>
+                <li>Fixed some duplicate definitions of "Motor Output 2"</li>
+                <li>Updated from DTD to Schema checks</li>
             </ul>
 
         <h4>Lenz</h4>
@@ -335,22 +339,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Layout Editor combo boxes have been changed to support the migration
-                from JmriBeanComboBox to NamedBeanComboBox.  The affects the Toolbar,
-                the Edit context menu, Set Signal Heads, Set Signal Masts, and Set Sensors.
-                <ul>
-                    <li>Typing a name into the combo box field no longer works.  The
-                    items have to be selected from the combo box drop down.</li>
-                    <li>Typing a letter or two will position the selection.</li>
-                    <li>Positioning is based on both the user name and the system name.
-                    For example, typing <strong>i</strong> will select items with user names starting
-                    with the letter i/I as well as internal items using the system name which starts with i/I.</li>
-                    <li>With this release, it is not possible to create new Block entries
-                    using the Edit context item.</li>
-                    <li>If a block is selected that does not have a user name, a
-                    dialog will prompt for a user name.</li>
-                </ul>
-            </li>
+            <li></li>
         </ul>
 
     <h3>Logix</h3>

@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
@@ -75,7 +76,7 @@ public class MultiThrottleController extends ThrottleController {
         if (eventName.matches("SpeedSteps")) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("s");
-            message.append(event.getNewValue().toString());
+            message.append(encodeSpeedStepMode((SpeedStepMode)event.getNewValue()));
             for (ControllerInterface listener : controllerListeners) {
                 listener.sendPacketToDevice(message.toString());
             }
@@ -193,7 +194,7 @@ public class MultiThrottleController extends ThrottleController {
     protected void sendSpeedStepMode(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("s");
-        message.append(throttle.getSpeedStepMode());
+        message.append(encodeSpeedStepMode(throttle.getSpeedStepMode()));
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
@@ -305,6 +306,27 @@ public class MultiThrottleController extends ThrottleController {
         }
         
         
+    }
+
+    // Encode a SpeedStepMode to a string.
+    private static String encodeSpeedStepMode(SpeedStepMode mode) {
+        switch(mode) {
+            // NOTE: old speed step modes use the original numeric values
+            // from when speed step modes were in DccThrottle. New speed step
+            // modes use the mode name.
+            case NMRA_DCC_128:
+                return "1";
+            case NMRA_DCC_28:
+                 return "2";
+            case NMRA_DCC_27:
+                return "4";
+            case NMRA_DCC_14:
+                return "8";
+            case MOTOROLA_28:
+                return "16";
+            default:
+                return mode.name;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);

@@ -115,7 +115,7 @@ public class StationTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         button = new CodeButton("IS21", "IS22");
     }
 

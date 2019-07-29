@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
+import jmri.SpeedStepMode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,8 +49,8 @@ public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
