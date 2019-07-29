@@ -128,14 +128,14 @@ public class RosterTestUtil {
         } catch (JDOMException | IOException e) {
            log.error("Exception while loading decoder XML file: {}",df.getFileName(),e);
         }
-        // load variables from decoder tree
         df.getProductID();
         if(decoderRoot!=null) {
+           // load variables from decoder tree
            df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
-        }
 
-        // load function names
-        re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+           // load function names
+           re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(RosterTestUtil.class);
