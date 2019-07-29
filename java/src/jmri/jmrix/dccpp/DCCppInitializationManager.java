@@ -58,11 +58,11 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         }
         systemMemo.setCommandStation(systemMemo.getDCCppTrafficController().getCommandStation());
         jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
-        systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-        systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-        systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
         systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);

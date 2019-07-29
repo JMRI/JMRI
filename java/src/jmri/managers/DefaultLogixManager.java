@@ -7,6 +7,7 @@ import jmri.LogixManager;
 import jmri.Manager;
 import jmri.implementation.DefaultLogix;
 import jmri.jmrit.beantable.LRouteTableAction;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,8 @@ import org.slf4j.LoggerFactory;
 public class DefaultLogixManager extends AbstractManager<Logix>
         implements LogixManager {
 
-    public DefaultLogixManager() {
-        super();
+    public DefaultLogixManager(InternalSystemConnectionMemo memo) {
+        super(memo);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
@@ -42,11 +43,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     @Override
     public int getXMLOrder() {
         return Manager.LOGIXS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -192,13 +188,14 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         loadDisabled = s;
     }
 
-    static DefaultLogixManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of the DefaultLogixManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultLogixManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultLogixManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultLogixManager.class);
     }
 
     @Override

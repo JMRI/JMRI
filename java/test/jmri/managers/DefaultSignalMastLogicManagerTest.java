@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -24,7 +26,7 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultSignalMastLogicManager();
+        l = new DefaultSignalMastLogicManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

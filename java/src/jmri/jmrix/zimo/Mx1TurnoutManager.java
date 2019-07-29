@@ -12,24 +12,22 @@ import jmri.Turnout;
  */
 public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    public Mx1TurnoutManager(Mx1TrafficController tc, String prefix) {
-        super();
-        this.prefix = prefix;
-        this.tc = tc;
+    public Mx1TurnoutManager(Mx1SystemConnectionMemo memo) {
+        super(memo);
     }
 
-    String prefix = "";
-    Mx1TrafficController tc = null;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public Mx1SystemConnectionMemo getMemo() {
+        return (Mx1SystemConnectionMemo) memo;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        Turnout t = new Mx1Turnout(addr, tc, getSystemPrefix());
+        Turnout t = new Mx1Turnout(addr, getMemo().getMx1TrafficController(), getSystemPrefix());
         t.setUserName(userName);
         return t;
     }

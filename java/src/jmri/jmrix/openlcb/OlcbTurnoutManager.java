@@ -22,21 +22,20 @@ import org.openlcb.OlcbInterface;
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
     public OlcbTurnoutManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
-    CanSystemConnectionMemo memo;
-
-    String prefix = "M";
     // Whether we accumulate partially loaded turnouts in pendingTurnouts.
     private boolean isLoading = false;
     // Turnouts that are being loaded from XML.
     private final ArrayList<OlcbTurnout> pendingTurnouts = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     @Override
@@ -108,9 +107,9 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      */
     public void finishLoad() {
         synchronized (pendingTurnouts) {
-            for (OlcbTurnout t : pendingTurnouts) {
+            pendingTurnouts.forEach((t) -> {
                 t.finishLoad();
-            }
+            });
             pendingTurnouts.clear();
             isLoading = false;
         }

@@ -19,21 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class NceLightManager extends AbstractLightManager {
 
-    public NceLightManager(NceTrafficController tc, String prefix) {
-        super();
-        _trafficController = tc;
-        this.prefix = prefix;
+    public NceLightManager(NceSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    NceTrafficController _trafficController = null;
-    String prefix = "N";
-
     /**
-     * Returns the system prefix for this NCE
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public NceSystemConnectionMemo getMemo() {
+        return (NceSystemConnectionMemo) memo;
     }
 
     /**
@@ -52,7 +47,7 @@ public class NceLightManager extends AbstractLightManager {
         // Normalize the systemName
         String sName = getSystemPrefix() + "L" + bitNum;   // removes any leading zeros
         // make the new Light object
-        lgt = new NceLight(sName, userName, _trafficController, this);
+        lgt = new NceLight(sName, userName, getMemo().getNceTrafficController(), this);
         return lgt;
     }
 

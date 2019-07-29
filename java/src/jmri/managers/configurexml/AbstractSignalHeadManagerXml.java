@@ -3,9 +3,13 @@ package jmri.managers.configurexml;
 import java.util.List;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
+import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -64,7 +68,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                 }
                 log.debug("system name is " + sname);
                 SignalHead sub = sm.getBySystemName(sname);
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                Element e = ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {
                     signalheads.addContent(e);
                 }
@@ -117,7 +121,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      *                with the shared Element.
      */
     public void loadSignalHeads(Element shared, Element perNode) {
-        InstanceManager.getDefault(jmri.SignalHeadManager.class);
+        InstanceManager.getDefault(SignalHeadManager.class);
 
         // load the contents
         List<Element> items = shared.getChildren();
@@ -135,7 +139,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                 adapter.load(item, null);
             } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
                         | IllegalAccessException | java.lang.reflect.InvocationTargetException
-                        | jmri.configurexml.JmriConfigureXmlException e) {
+                        | JmriConfigureXmlException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e, e);
             }
         }
@@ -147,29 +151,27 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * absolute type.
      */
     protected void replaceSignalHeadManager() {
-        if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getClass().getName()
+        if (InstanceManager.getDefault(SignalHeadManager.class).getClass().getName()
                 .equals(AbstractSignalHeadManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getNullableDefault(jmri.SignalHeadManager.class) != null) {
-            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
-                    InstanceManager.getDefault(jmri.SignalHeadManager.class));
-        }
+        InstanceManager.getOptionalDefault(SignalHeadManager.class).ifPresent((shm) -> {
+            InstanceManager.getDefault(ConfigureManager.class).deregister(shm);
+        });
 
         // register new one with InstanceManager
-        AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
+        AbstractSignalHeadManager pManager = new AbstractSignalHeadManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.setDefault(SignalHeadManager.class, pManager);
         // register new one for configuration
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
-            cm.registerConfig(pManager, jmri.Manager.SIGNALHEADS);
-        }
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
+            cm.registerConfig(pManager, Manager.SIGNALHEADS);
+        });
     }
 
     @Override
     public int loadOrder() {
-        return InstanceManager.getDefault(jmri.SignalHeadManager.class).getXMLOrder();
+        return InstanceManager.getDefault(SignalHeadManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class);

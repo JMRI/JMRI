@@ -23,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     //      This is present so that ConfigureXML can still store in the original order
     // * Caches for the String[] getSystemNameArray(), List<String> getSystemNameList() and List<E> getNamedBeanList() calls
             
-    public AbstractManager() {
+    public AbstractManager(SystemConnectionMemo memo) {
+        this.memo = memo;
         registerSelf();
     }
 
@@ -72,6 +74,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
         });
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SystemConnectionMemo getMemo() {
+        return memo;
     }
 
     /** {@inheritDoc} */
@@ -104,6 +112,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
+    protected final SystemConnectionMemo memo;
     protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
@@ -584,6 +593,36 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name does not
+     *         start with
+     *         {@link #getSystemNamePrefix()}; {@link jmri.Manager.NameValidity#VALID_AS_PREFIX_ONLY}
+     *         if system name equals {@link #getSystemNamePrefix()}; otherwise
+     *         {@link jmri.Manager.NameValidity#VALID} to allow Managers that do
+     *         not perform more specific validation to be considered valid.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return getSystemNamePrefix().equals(systemName)
+                ? NameValidity.VALID_AS_PREFIX_ONLY
+                : systemName.startsWith(getSystemNamePrefix())
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The implementation in {@link AbstractManager} should be final, but is not
+     * for four managers that have arbitrary prefixes.
+     */
+    @Override
+    public final String getSystemPrefix() {
+        return memo.getSystemPrefix();
     }
 
     /** {@inheritDoc} */

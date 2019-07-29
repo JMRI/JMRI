@@ -12,24 +12,26 @@ import jmri.Sensor;
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    SRCPBusConnectionMemo _memo = null;
     int _bus;
 
     public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
-        _memo = memo;
+        super(memo);
         _bus = bus;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public SRCPBusConnectionMemo getMemo() {
+        return (SRCPBusConnectionMemo) memo;
     }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new SRCPSensor(addr, _memo);
+        t = new SRCPSensor(addr, getMemo());
         t.setUserName(userName);
 
         return t;

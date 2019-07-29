@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the Z21Specific Sensor implementation.
  * <p>
- * for RM Bus sensors, System names are "ZSnnn", where Z is the 
+ * for RM Bus sensors, System names are "ZSnnn", where Z is the
  * user-configurable system prefix and nnn is the sensor number without padding.
  * <p>
- * for CAN Bus sensors, System names are "ZSmm:pp" where Z is the 
- * user-configurable system prefix, mm is the CAN bus module id and pp is 
- * the contact number.
+ * for CAN Bus sensors, System names are "ZSmm:pp" where Z is the
+ * user-configurable system prefix, mm is the CAN bus module id and pp is the
+ * contact number.
  *
  * @author Paul Bender Copyright (C) 2003-2018
  * @navassoc 1 - * jmri.jmrix.lenz.Z21RMBusSensor
@@ -24,68 +24,64 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
 
     // ctor has to register for Z21 events
     public Z21SensorManager(Z21SystemConnectionMemo memo) {
-        _memo = memo;
+        super(memo);
         // register for messages
-        _memo.getTrafficController().addz21Listener(this);
+        memo.getTrafficController().addz21Listener(this);
         // make sure we are going to get can detector and RMBus data from 
         // the command station
         // set the broadcast flags so we get messages we may want to hear
-        _memo.getRocoZ21CommandStation().setCanDetectorFlag(true);
-        _memo.getRocoZ21CommandStation().setRMBusMessagesFlag(true);
+        memo.getRocoZ21CommandStation().setCanDetectorFlag(true);
+        memo.getRocoZ21CommandStation().setRMBusMessagesFlag(true);
         // and forward the flags to the command station.
-        _memo.getTrafficController().sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
-              _memo.getRocoZ21CommandStation().getZ21BroadcastFlags()),null);
+        memo.getTrafficController().sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
+                memo.getRocoZ21CommandStation().getZ21BroadcastFlags()), null);
     }
 
-    protected Z21SystemConnectionMemo _memo = null;
-
     /**
-     * Return the system letter for Z21.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public Z21SystemConnectionMemo getMemo() {
+        return (Z21SystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used
     @Override
     public void dispose() {
-        _memo.getTrafficController().removez21Listener(this);
+        getMemo().getTrafficController().removez21Listener(this);
         super.dispose();
     }
 
     // Z21 specific methods
-
     /**
-     * Create a new Sensor based on the system name.
-     * Assumes calling method has checked that a Sensor with this
-     * system name does not already exist.
+     * Create a new Sensor based on the system name. Assumes calling method has
+     * checked that a Sensor with this system name does not already exist.
      *
      * @return null if the system name is not in a valid format
      */
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        if(systemName.contains(":")) {
-           // check for CAN format.
-           int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
-           if(bitNum!=-1) {
-               return new Z21CanSensor(systemName,userName,_memo);
-           } else {
-               log.warn("Invalid Sensor name: {} " + systemName);
-               throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
-           }
+        if (systemName.contains(":")) {
+            // check for CAN format.
+            int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
+            if (bitNum != -1) {
+                return new Z21CanSensor(systemName, userName, getMemo());
+            } else {
+                log.warn("Invalid Sensor name: {} " + systemName);
+                throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
+            }
         } else {
-           // check if the output bit is available
-           int bitNum = Z21RMBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
-           if(bitNum!=-1) {
-              // create the new RMBus Sensor object
-              return new Z21RMBusSensor(systemName, userName, 
-                   _memo.getTrafficController(), getSystemPrefix());
-           } else {
-               log.warn("Invalid Sensor name: {} " + systemName);
-               throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
-           }
-       }
+            // check if the output bit is available
+            int bitNum = Z21RMBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
+            if (bitNum != -1) {
+                // create the new RMBus Sensor object
+                return new Z21RMBusSensor(systemName, userName,
+                        getMemo().getTrafficController(), getSystemPrefix());
+            } else {
+                log.warn("Invalid Sensor name: {} " + systemName);
+                throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
+            }
+        }
     }
 
     /**
@@ -93,36 +89,36 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     public void reply(Z21Reply msg) {
-       log.debug("received message: {}", msg);
-       // LAN_CAN_DETECTOR message are related to CAN reporters/sensors.
-       if(msg.isCanDetectorMessage()){
-         int type = ( msg.getElement(9) & 0xFF);
-         log.debug("Sensor message type {}",type);
-         if (type == 0x01 ) {
-            log.debug("Received LAN_CAN_DETECTOR message");
-            int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
-            int msgPort = ( msg.getElement(8) & 0xFF);
-            int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
-            String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
-            Z21CanSensor r = (Z21CanSensor) getBySystemName(sysName);
-            if ( null == r ) {
-               // try with the module's CAN network ID
-               sysName = getSystemPrefix()+typeLetter()+String.format("%4x",netID)+":"+msgPort;
-               r = (Z21CanSensor) getBySystemName(sysName);
-               if (null == r) {
-                  log.debug("Creating reporter {}",sysName);
-                  // need to create a new one, and send the message on 
-                  // to the newly created object.
-                  ((Z21CanSensor)provideSensor(sysName)).reply(msg);
-               }
+        log.debug("received message: {}", msg);
+        // LAN_CAN_DETECTOR message are related to CAN reporters/sensors.
+        if (msg.isCanDetectorMessage()) {
+            int type = (msg.getElement(9) & 0xFF);
+            log.debug("Sensor message type {}", type);
+            if (type == 0x01) {
+                log.debug("Received LAN_CAN_DETECTOR message");
+                int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
+                int msgPort = (msg.getElement(8) & 0xFF);
+                int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
+                String sysName = getSystemPrefix() + typeLetter() + address + ":" + msgPort;
+                Z21CanSensor r = (Z21CanSensor) getBySystemName(sysName);
+                if (null == r) {
+                    // try with the module's CAN network ID
+                    sysName = getSystemPrefix() + typeLetter() + String.format("%4x", netID) + ":" + msgPort;
+                    r = (Z21CanSensor) getBySystemName(sysName);
+                    if (null == r) {
+                        log.debug("Creating reporter {}", sysName);
+                        // need to create a new one, and send the message on 
+                        // to the newly created object.
+                        ((Z21CanSensor) provideSensor(sysName)).reply(msg);
+                    }
+                }
             }
-         }
-      } else if( msg.isRMBusDataChangedReply()) {
-          log.debug("Received RM Bus Data Changed message");
-          // we could create sensors here automatically, but the 
-          // feed response contains data for 80 sensors, with no way
-          // to tell which of the 80 are actually connected.
-      }
+        } else if (msg.isRMBusDataChangedReply()) {
+            log.debug("Received RM Bus Data Changed message");
+            // we could create sensors here automatically, but the 
+            // feed response contains data for 80 sensors, with no way
+            // to tell which of the 80 are actually connected.
+        }
     }
 
     /**
@@ -172,15 +168,15 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                 input = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-               // system name may include hex values for CAN sensors.
-               try {
-                   encoderAddress = Integer.parseInt(curAddress.substring(0, seperator),16);
-                   input = Integer.parseInt(curAddress.substring(seperator + 1));
-                   return getSystemPrefix()+typeLetter()+String.format("%4x",encoderAddress)+":"+input;
-               } catch (NumberFormatException ex1) {
-                   log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
-                   throw new JmriException("Hardware Address passed should be a number");
-               }
+                // system name may include hex values for CAN sensors.
+                try {
+                    encoderAddress = Integer.parseInt(curAddress.substring(0, seperator), 16);
+                    input = Integer.parseInt(curAddress.substring(seperator + 1));
+                    return getSystemPrefix() + typeLetter() + String.format("%4x", encoderAddress) + ":" + input;
+                } catch (NumberFormatException ex1) {
+                    log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
+                    throw new JmriException("Hardware Address passed should be a number");
+                }
             }
             iName = ((encoderAddress - 1) * 8) + input;
         } else {
@@ -192,7 +188,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
-        return getSystemPrefix()+typeLetter()+iName;
+        return getSystemPrefix() + typeLetter() + iName;
     }
 
     int iName; // must synchronize to avoid race conditions.

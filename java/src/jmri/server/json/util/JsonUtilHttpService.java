@@ -35,12 +35,12 @@ import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
@@ -351,11 +351,11 @@ public class JsonUtilHttpService extends JsonHttpService {
         // Following is required because despite there being a SystemConnectionMemo
         // for the default internal connection, it is not used for the default internal
         // connection. This allows a client to map the server's internal objects.
-        String prefix = "I";
-        if (!prefixes.contains(prefix)) {
+        SystemConnectionMemo internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        if (!prefixes.contains(internal.getSystemPrefix())) {
             ObjectNode data = mapper.createObjectNode();
-            data.put(JSON.NAME, ConnectionNameFromSystemName.getConnectionName(prefix));
-            data.put(JSON.PREFIX, prefix);
+            data.put(JSON.NAME, internal.getUserName());
+            data.put(JSON.PREFIX, internal.getSystemPrefix());
             data.putNull(JSON.MFG);
             data.putNull(JSON.DESCRIPTION);
             root.add(message(JSON.SYSTEM_CONNECTION, data, id));

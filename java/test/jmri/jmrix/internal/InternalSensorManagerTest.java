@@ -289,7 +289,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         // create and register the manager object
         jmri.util.JUnitUtil.resetInstanceManager();
         
-        l = new InternalSensorManager();
+        l = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 
         propertyListenerCount = 0;
         propertyListenerLast = null;
