@@ -255,7 +255,7 @@ public class RosterTest {
     @Test
     public void testReadWrite() throws Exception {
         // create a test roster & store in file
-        Roster r = jmri.util.RosterTestUtil.createTestRoster(folder.newFolder(),"rosterTest.xml");
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
         // write it
         r.writeFile(r.getRosterIndexPath());
@@ -272,7 +272,7 @@ public class RosterTest {
     @Test
     public void testAttributeAccess() throws Exception {
         // create a test roster & store in file
-        Roster r = jmri.util.RosterTestUtil.createTestRoster(folder.newFolder(),"rosterTest.xml");
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
 
         List<RosterEntry> l;
@@ -287,7 +287,7 @@ public class RosterTest {
     @Test
     public void testAttributeValueAccess() throws Exception {
         // create a test roster & store in file
-        Roster r = jmri.util.RosterTestUtil.createTestRoster(folder.newFolder(),"rosterTest.xml");
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
 
         List<RosterEntry> l;
@@ -304,7 +304,7 @@ public class RosterTest {
     @Test
     public void testAttributeList() throws Exception {
         // create a test roster & store in file
-        Roster r = jmri.util.RosterTestUtil.createTestRoster(folder.newFolder(),"rosterTest.xml");
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         Assert.assertNotNull("exists", r);
 
         Set<String> s;
@@ -401,7 +401,13 @@ public class RosterTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        try {
+            JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch (IOException ioe){
+            // failed to reset the profile relative to the temporary folder.
+            // use the default reset.
+            JUnitUtil.resetProfileManager();
+        }
     }
 
     @After

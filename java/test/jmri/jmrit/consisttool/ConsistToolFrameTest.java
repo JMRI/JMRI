@@ -194,8 +194,9 @@ public class ConsistToolFrameTest {
     @Test
     public void testScanRosterNoConsists() throws IOException,FileNotFoundException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Roster r = jmri.util.RosterTestUtil.createTestRoster(folder.newFolder(),"rosterTest.xml");
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
         InstanceManager.setDefault(Roster.class,r);
+        
         ConsistToolFrame frame = new ConsistToolFrame();
 	    frame.setVisible(true);
 	    // get a ConsistToolScaffold
