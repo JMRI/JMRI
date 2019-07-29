@@ -57,7 +57,6 @@ import jmri.managers.ProxyLightManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 import jmri.util.table.ButtonEditor;
@@ -836,7 +835,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             prefixBox.setManagers(proxy.getDisplayOrderManagerList());
             if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                prefixBox.setSelectedItem(memo.get(Light.class));
+                prefixBox.setSelectedItem(memo.get(LightManager.class));
             }
         } else {
             prefixBox.setManagers(lightManager);
@@ -874,7 +873,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             if (addEntryToolTip != null) {
                 hardwareAddressTextField.setToolTipText(
                         Bundle.getMessage("AddEntryToolTipLine1",
-                                ConnectionNameFromSystemName.getConnectionName(systemPrefix),
+                                connectionChoice.getMemo().getUserName(),
                                 Bundle.getMessage("Lights"),
                                 addEntryToolTip));
                 hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());

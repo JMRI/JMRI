@@ -1,19 +1,32 @@
 package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.SpeedStepMode;
+import jmri.ThrottleManager;
+import jmri.jmrix.AbstractThrottleTest;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
-import org.junit.*;
+import jmri.util.junit.annotations.ToDo;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+public class EcosDccThrottleTest extends AbstractThrottleTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",instance);
+        Assert.assertNotNull("exists", instance);
     }
 
     /**
@@ -33,9 +46,20 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.NMRA_DCC_128.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -48,7 +72,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSetSpeedSetting() {
         float speed = 1.0F;
         instance.setSpeedSetting(speed);
-        Assert.assertEquals(speed, instance.getSpeedSetting(),0.0);
+        Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
     }
 
     /**
@@ -380,85 +404,94 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testSendFunctionGroup5() {
     }
-        
+
     private static EcosTrafficController tc = null;
 
     @BeforeClass
-    public static void earlySetup(){
+    public static void earlySetup() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo();
         tc = new EcosInterfaceScaffold();
+        memo.setEcosTrafficController(tc);
+        tc.setAdapterMemo(memo);
     }
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        EcosSystemConnectionMemo memo = null; 
-        if(!GraphicsEnvironment.isHeadless()) { 
-           memo = new EcosSystemConnectionMemo(tc){
-              @Override
-              public EcosLocoAddressManager getLocoAddressManager(){
-                 return new EcosLocoAddressManager(this);
-              }
+        EcosSystemConnectionMemo memo = null;
+        if (!GraphicsEnvironment.isHeadless()) {
+            memo = new EcosSystemConnectionMemo(tc) {
+                @Override
+                public EcosLocoAddressManager getLocoAddressManager() {
+                    return new EcosLocoAddressManager(this);
+                }
 
-              @Override
-              public EcosPreferences getPreferenceManager(){ 
-                 return new EcosPreferences(this){
-                     @Override
-                     public boolean getPreferencesLoaded(){
-                        return true;
-                     }
-                 };
-              }
-           };
-       } else {
-           // GraphicsEnvironment.isHeadless()
-           memo = new EcosSystemConnectionMemo(tc){
-              @Override
-              public EcosLocoAddressManager getLocoAddressManager(){
-                 return new EcosLocoAddressManager(this);
-              }
+                @Override
+                public EcosPreferences getPreferenceManager() {
+                    return new EcosPreferences(this) {
+                        @Override
+                        public boolean getPreferencesLoaded() {
+                            return true;
+                        }
+                    };
+                }
+            };
+        } else {
+            // GraphicsEnvironment.isHeadless()
+            memo = new EcosSystemConnectionMemo(tc) {
+                @Override
+                public EcosLocoAddressManager getLocoAddressManager() {
+                    return new EcosLocoAddressManager(this);
+                }
 
-              @Override
-              public EcosPreferences getPreferenceManager(){ 
-                 return new EcosPreferences(this){
-                     @Override
-                     public boolean getPreferencesLoaded(){
-                        return true;
-                     }
-                     // don't ask any questions related to locos.
-                     @Override
-                     public int getAddLocoToEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getAddLocoToJMRI(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getAdhocLocoFromEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getForceControlFromEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getRemoveLocoFromEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getRemoveLocoFromJMRI(){
-                        return EcosPreferences.NO;
-                     }
-                 };
-              }
-           };
-       }
-       jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new EcosDccThrottleManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc)));
-       instance = new EcosDccThrottle(new jmri.DccLocoAddress(100,true),memo,true);
+                @Override
+                public EcosPreferences getPreferenceManager() {
+                    return new EcosPreferences(this) {
+                        @Override
+                        public boolean getPreferencesLoaded() {
+                            return true;
+                        }
+                        // don't ask any questions related to locos.
+
+                        @Override
+                        public int getAddLocoToEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getAddLocoToJMRI() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getAdhocLocoFromEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getForceControlFromEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getRemoveLocoFromEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getRemoveLocoFromJMRI() {
+                            return EcosPreferences.NO;
+                        }
+                    };
+                }
+            };
+        }
+        InstanceManager.setDefault(ThrottleManager.class, new EcosDccThrottleManager(new EcosSystemConnectionMemo(tc)));
+        instance = new EcosDccThrottle(new DccLocoAddress(100, true), memo, true);
     }
 
     @After
@@ -472,5 +505,4 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleTest.class);
-
 }

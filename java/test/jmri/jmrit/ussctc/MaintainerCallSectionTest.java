@@ -74,7 +74,7 @@ public class MaintainerCallSectionTest {
 
         panelSensor = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"); panelSensor.setUserName("Sec1 MC input");
 
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {

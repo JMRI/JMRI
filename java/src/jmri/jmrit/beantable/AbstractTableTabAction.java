@@ -19,7 +19,6 @@ import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
-import jmri.util.ConnectionNameFromSystemName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,13 +46,13 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
 
             List<jmri.Manager<E>> managerList = proxy.getDisplayOrderManagerList();
             for (Manager<E> manager : managerList) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
+                String manuName = manager.getMemo().getUserName();
                 TabbedTableItem<E> itemModel = new TabbedTableItem<>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
             
         } else {
-            String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
+            String manuName = getManager().getMemo().getUserName();
             tabbedTableArray.add(new TabbedTableItem<>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {

@@ -145,7 +145,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         powerManager = new jmri.jmrix.mrc.MrcPowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
 
-        turnoutManager = new jmri.jmrix.mrc.MrcTurnoutManager(getMrcTrafficController(), getSystemPrefix());
+        turnoutManager = new jmri.jmrix.mrc.MrcTurnoutManager(this);
         InstanceManager.setTurnoutManager(turnoutManager);
 
         throttleManager = new jmri.jmrix.mrc.MrcThrottleManager(this);

@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -141,7 +141,10 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>The CV19 references in multiple decoder definitions
+            have been updated to use common fragment files.</li>
+          <li>The Schema references in numerous fragment files have been updated to 
+            a consistent form.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -181,7 +184,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>Alain Le Marchand updated some definitions</li>
             </ul>
 
         <h4>ESU</h4>
@@ -206,7 +209,8 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li></li>
+                <li>Fixed some duplicate definitions of "Motor Output 2"</li>
+                <li>Updated from DTD to Schema checks</li>
             </ul>
 
         <h4>Lenz</h4>
@@ -268,7 +272,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -335,7 +339,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -410,7 +414,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -460,7 +464,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>

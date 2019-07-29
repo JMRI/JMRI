@@ -12,6 +12,7 @@ import jmri.SignalSystem;
 import jmri.SignalSystemManager;
 import jmri.implementation.DefaultSignalSystem;
 import jmri.jmrit.XmlFile;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -30,8 +31,8 @@ import org.slf4j.LoggerFactory;
 public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         implements SignalSystemManager {
 
-    public DefaultSignalSystemManager() {
-        super();
+    public DefaultSignalSystemManager(InternalSystemConnectionMemo memo) {
+        super(memo);
 
         // load when created, which will generally
         // be the first time referenced
@@ -48,11 +49,6 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
      */
     @Override
     protected void registerSelf() {
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -89,7 +85,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     }
 
     List<String> getListOfNames() {
-        List<String> retval = new ArrayList<String>();
+        List<String> retval = new ArrayList<>();
         // first locate the signal system directory
         // and get names of systems
         File signalDir = null;
@@ -256,11 +252,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     }
 
     void loadProperties(NamedBean t, Element elem) {
-        Element p = elem.getChild("properties");
-        if (p == null) {
-            return;
-        }
-
+        // do nothing
     }
 
     /**

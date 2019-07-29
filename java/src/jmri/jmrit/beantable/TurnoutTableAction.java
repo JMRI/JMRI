@@ -54,7 +54,6 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
@@ -1075,7 +1074,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     SystemConnectionMemo memo = InstanceManager
                             .getDefault(SystemConnectionMemoManager.class)
                             .getSystemConnectionMemoForUserName(pref.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(Turnout.class));
+                    prefixBox.setSelectedItem(memo.get(TurnoutManager.class));
                 }
             } else {
                 prefixBox.setManagers(turnManager);
@@ -1092,7 +1091,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
-        addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
         addButton.setName("createButton"); // for GUI test NOI18N
         // reset statusBarLabel text
@@ -1497,12 +1495,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      */
     @Override
     public void addToPanel(AbstractTableTabAction<Turnout> f) {
-        String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
+        String connectionName = turnManager.getMemo().getUserName();
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
-            systemPrefix = "All"; // NOI18N
+            connectionName = "All"; // NOI18N
         }
 
-        f.addToBottomBox(doAutomationBox, systemPrefix);
+        f.addToBottomBox(doAutomationBox, connectionName);
         doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
@@ -1511,7 +1509,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
-        f.addToBottomBox(showFeedbackBox, systemPrefix);
+        f.addToBottomBox(showFeedbackBox, connectionName);
         showFeedbackBox.setToolTipText(Bundle.getMessage("TurnoutFeedbackToolTip"));
         showFeedbackBox.addActionListener(new ActionListener() {
             @Override
@@ -1519,7 +1517,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 showFeedbackChanged();
             }
         });
-        f.addToBottomBox(showLockBox, systemPrefix);
+        f.addToBottomBox(showLockBox, connectionName);
         showLockBox.setToolTipText(Bundle.getMessage("TurnoutLockToolTip"));
         showLockBox.addActionListener(new ActionListener() {
             @Override
@@ -1527,7 +1525,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 showLockChanged();
             }
         });
-        f.addToBottomBox(showTurnoutSpeedBox, systemPrefix);
+        f.addToBottomBox(showTurnoutSpeedBox, connectionName);
         showTurnoutSpeedBox.setToolTipText(Bundle.getMessage("TurnoutSpeedToolTip"));
         showTurnoutSpeedBox.addActionListener(new ActionListener() {
             @Override
@@ -1535,7 +1533,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 showTurnoutSpeedChanged();
             }
         });
-        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        f.addToBottomBox(showStateForgetAndQueryBox, connectionName);
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
         showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override
@@ -1697,9 +1695,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         // Add some entry pattern checking, before assembling sName and handing it to the TurnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = null;
-        
+
         String lastSuccessfulAddress;
-        
+
         int iType = 0;
         int iNum = 1;
         boolean useLastBit = false;
@@ -1798,7 +1796,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         t.setUserName(uName);
                     } else if (!pref.getPreferenceState(getClassName(), "duplicateUserName")) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showErrorMessage(Bundle.getMessage("ErrorTitle"), 
+                                showErrorMessage(Bundle.getMessage("ErrorTitle"),
                                         Bundle.getMessage("ErrorDuplicateUserName", uName),
                                         getClassName(), "duplicateUserName", false, true);
                     }
@@ -1845,7 +1843,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
         }
 
-        pref.setComboBoxLastSelection(systemSelectionCombo, ConnectionNameFromSystemName.getConnectionName(prefixBox.getSelectedItem().getSystemPrefix())); // store user pref
+        pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -1872,12 +1870,11 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText(
                 Bundle.getMessage("AddEntryToolTipLine1",
-                        ConnectionNameFromSystemName.getConnectionName(systemPrefix),
+                        manager.getMemo().getUserName(),
                         Bundle.getMessage("Turnouts"),
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
         hardwareAddressValidator.verify(hardwareAddressTextField);
-        addButton.setEnabled(true); // ambiguous, so start enabled
     }
 
     void handleCreateException(Exception ex, String sysName) {

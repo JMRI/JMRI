@@ -47,10 +47,10 @@ import org.slf4j.LoggerFactory;
 public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
-        this.fastcontroller = fastcontroller;
+    public LnTurnoutManager(LocoNetSystemConnectionMemo memo, LocoNetInterface throttledcontroller, boolean mTurnoutNoRetry) {
+        super(memo);
+        this.fastcontroller = memo.getLnTrafficController();
         this.throttledcontroller = throttledcontroller;
-        this.prefix = prefix;
         this.mTurnoutNoRetry = mTurnoutNoRetry;
 
         if (fastcontroller != null) {
@@ -63,11 +63,13 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     boolean mTurnoutNoRetry;
-    private final String prefix;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public LocoNetSystemConnectionMemo getMemo() {
+        return (LocoNetSystemConnectionMemo) memo;
     }
 
     @Override
@@ -92,6 +94,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      */
     @Override
     public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
+        String prefix = getSystemPrefix();
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
@@ -119,6 +122,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     @Override
     public void message(LocoNetMessage l) {
         log.debug("LnTurnoutManager message {}", l);
+        String prefix = getSystemPrefix();
         // parse message type
         int addr;
         switch (l.getOpCode()) {

@@ -30,19 +30,14 @@ import jmri.managers.AbstractManager;
 public class OBlockManager extends AbstractManager<OBlock>
         implements jmri.InstanceManagerAutoDefault {
 
+    @SuppressWarnings("deprecation")
     public OBlockManager() {
-        super();
+        super(new jmri.jmrix.ConflictingSystemConnectionMemo("O", "OBlocks")); // NOI18N
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
-    }
-
-    @Nonnull
-    @Override
-    public String getSystemPrefix() {
-        return "O";
     }
 
     @Override

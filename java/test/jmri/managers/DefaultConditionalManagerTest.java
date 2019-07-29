@@ -11,6 +11,7 @@ import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
@@ -64,7 +65,7 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         Logix x2 = new jmri.implementation.DefaultLogix("IX02");
         assertNotNull("Logix x2 is null!", x2);
         InstanceManager.getDefault(jmri.LogixManager.class).register(x2);
-        l = new DefaultConditionalManager();
+        l = new DefaultConditionalManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

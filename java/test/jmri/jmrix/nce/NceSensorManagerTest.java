@@ -85,7 +85,7 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         Assert.assertNotNull("exists", lnis);
 
         // create and register the manager object
-        l = new NceSensorManager(lnis, "N");
+        l = new NceSensorManager(lnis.getAdapterMemo());
         jmri.InstanceManager.setSensorManager(l);
     }
 

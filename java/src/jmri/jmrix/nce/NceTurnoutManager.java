@@ -15,24 +15,22 @@ import org.slf4j.LoggerFactory;
  */
 public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager implements NceListener {
 
-    public NceTurnoutManager(NceTrafficController tc, String prefix) {
-        super();
-        this.prefix = prefix;
-        this.tc = tc;
+    public NceTurnoutManager(NceSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    String prefix = "";
-    NceTrafficController tc = null;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public NceSystemConnectionMemo getMemo() {
+        return (NceSystemConnectionMemo) memo;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        Turnout t = new NceTurnout(tc, getSystemPrefix(), addr);
+        Turnout t = new NceTurnout(getMemo().getNceTrafficController(), getSystemPrefix(), addr);
         t.setUserName(userName);
 
         return t;
@@ -57,7 +55,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
             num = Integer.parseInt(systemName.substring(
                         getSystemPrefix().length() + 1, systemName.length())
                     );
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("illegal character in number field of system name: " + systemName);
             return (0);
         }

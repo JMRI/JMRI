@@ -1,8 +1,8 @@
 package jmri.jmrix.sprog;
 
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 import org.slf4j.Logger;
@@ -120,8 +120,8 @@ public class SprogCSThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedSetting(float speed) {
-        int mode = getSpeedStepMode();
-        if ((mode & DccThrottle.SpeedStepMode28) != 0) {
+        SpeedStepMode mode = getSpeedStepMode();
+        if (mode == SpeedStepMode.NMRA_DCC_28) {
             // 28 step mode speed commands are 
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
@@ -136,7 +136,7 @@ public class SprogCSThrottle extends AbstractThrottle {
             if (value < 0) {
                 value = 1;        // emergency stop
             }
-            commandStation.setSpeed(DccThrottle.SpeedStepMode28, address, value, isForward);
+            commandStation.setSpeed(SpeedStepMode.NMRA_DCC_28, address, value, isForward);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }
@@ -155,7 +155,7 @@ public class SprogCSThrottle extends AbstractThrottle {
             if (value < 0) {
                 value = 1;        // emergency stop
             }
-            commandStation.setSpeed(DccThrottle.SpeedStepMode128, address, value, isForward);
+            commandStation.setSpeed(SpeedStepMode.NMRA_DCC_128, address, value, isForward);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             }

@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
-import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,7 +8,7 @@ import org.junit.Test;
 
 /**
  * ConcentratorSensorManagerTest.java
- *
+ * <p>
  * Description:	tests for the ConcentratorSensorManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
@@ -23,7 +22,6 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
         return "RS" + i;
     }
 
-
     @Test
     public void testCtor() {
         Assert.assertNotNull(l);
@@ -34,17 +32,22 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
-           @Override
-           public void sendInitString(){
-           }
-        };
-        l = new ConcentratorSensorManager(tc,"R"){
+        ConcentratorSystemConnectionMemo memo = new ConcentratorSystemConnectionMemo();
+        tc = new ConcentratorTrafficController(memo, "A-H") {
             @Override
-            public void message(jmri.jmrix.rfid.RfidMessage m){}
+            public void sendInitString() {
+            }
+        };
+        memo.setRfidTrafficController(tc);
+        memo.setSystemPrefix("R");
+        l = new ConcentratorSensorManager(tc.getAdapterMemo()) {
+            @Override
+            public void message(jmri.jmrix.rfid.RfidMessage m) {
+            }
 
             @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m){}
+            public void reply(jmri.jmrix.rfid.RfidReply m) {
+            }
 
         };
     }

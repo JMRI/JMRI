@@ -56,7 +56,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
     @Test
     public void setAndGetSensorManager() {
         RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        RaspberryPiSensorManager sm = new RaspberryPiSensorManager(m.getSystemPrefix());
+        RaspberryPiSensorManager sm = new RaspberryPiSensorManager(m);
         m.setSensorManager(sm);
         Assert.assertSame("Sensor Manager", sm, m.getSensorManager());
     }
@@ -64,7 +64,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
     @Test
     public void setAndGetTurnoutManager() {
         RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        RaspberryPiTurnoutManager sm = new RaspberryPiTurnoutManager(m.getSystemPrefix());
+        RaspberryPiTurnoutManager sm = new RaspberryPiTurnoutManager(m);
         m.setTurnoutManager(sm);
         Assert.assertSame("Turnout Manager", sm, m.getTurnoutManager());
     }

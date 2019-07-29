@@ -1,8 +1,10 @@
 package jmri.jmrix.direct;
 
+import java.util.EnumSet;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import org.slf4j.Logger;

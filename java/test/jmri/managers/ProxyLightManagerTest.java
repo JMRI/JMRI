@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.Test;
@@ -157,13 +158,7 @@ public class ProxyLightManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
 
-        InternalLightManager m = new InternalLightManager() {
-
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalLightManager m = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setLightManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("JL1"));
@@ -188,12 +183,7 @@ public class ProxyLightManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalLightManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         jmri.InstanceManager.setLightManager(l);
     }
 

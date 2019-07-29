@@ -22,19 +22,15 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      * Ctor using a given system connection memo
      */
     public CbusSensorManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
-
-    private CanSystemConnectionMemo memo;
-    private String prefix = "M";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     /**
@@ -51,7 +47,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        String addr = systemName.substring(prefix.length() + 1);
+        String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
             validateAddressFormat(addr);
@@ -62,7 +58,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Sensor s = new CbusSensor(prefix, newAddress, memo.getTrafficController());
+        Sensor s = new CbusSensor(getSystemPrefix(), newAddress, getMemo().getTrafficController());
         s.setUserName(userName);
         return s;
     }
@@ -78,7 +74,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        // prefix unsigned int with "+" as service to user
+        // getSystemPrefix() unsigned int with "+" as service to user
         String newAddress = CbusAddress.validateSysName(curAddress);
         return prefix + typeLetter() + newAddress;
     }
@@ -109,7 +105,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             // build local addresses
             for (int x = 1; x < 10; x++) {
                 testAddr = CbusAddress.getIncrement(testAddr); // getIncrement will perform a max check on the numbers
-                s = getBySystemName(prefix + typeLetter() + testAddr);
+                s = getBySystemName(getSystemPrefix() + typeLetter() + testAddr);
                 if (s == null) {
                     // If the hardware address + x does not already exist,
                     // then this can be considered the next valid address.
@@ -117,7 +113,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
                 }
             }
             // feedback when next address is also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new {} Sensors added", curAddress, memo.getUserName());
+            log.warn("10 hardware addresses starting at {} already in use. No new {} Sensors added", curAddress, getMemo().getUserName());
             return null;
         } else {
             // If the initially requested hardware address does not already exist,
@@ -143,7 +139,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(prefix.length() + 1); // get only the address part
+            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e) {
             return NameValidity.INVALID;
         }

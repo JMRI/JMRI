@@ -2,8 +2,10 @@ package jmri.jmrix.loconet;
 
 import java.util.Calendar;
 import java.util.Date;
+import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -326,7 +326,7 @@ public class SignalHeadSectionTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
 
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         
         ih1 = new jmri.implementation.VirtualSignalHead("IH1");
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(ih1);
