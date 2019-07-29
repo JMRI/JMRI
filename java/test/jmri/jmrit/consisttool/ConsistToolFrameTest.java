@@ -191,11 +191,11 @@ public class ConsistToolFrameTest {
         Assert.assertEquals("No New Consists after scan",numConsists,InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
-    // copied from RosterTest
     @Test
     public void testScanRosterNoConsists() throws IOException,FileNotFoundException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        createTestRoster();
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(folder.newFolder(),"rosterTest.xml");
+        InstanceManager.setDefault(Roster.class,r);
         ConsistToolFrame frame = new ConsistToolFrame();
 	    frame.setVisible(true);
 	    // get a ConsistToolScaffold
@@ -206,55 +206,6 @@ public class ConsistToolFrameTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
         Assert.assertEquals("No New Consists after scan",numConsists,InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
-
-    public Roster createTestRoster() throws IOException, FileNotFoundException {
-        // this uses explicit filenames intentionally, to ensure that
-        // the resulting files go into the test tree area.
-
-        // store files in random temp directory
-        File rosterDir = folder.newFolder();
-        FileUtil.createDirectory(rosterDir);
-
-        File f = new File(rosterDir, "rosterTest.xml");
-        // File should never be there is TemporaryFolder working
-        if (f.exists()) Assert.fail("rosterTest.xml in "+rosterDir+" already present: "+f);
-
-        // create a roster with known contents
-        Roster r = new Roster();
-        r.setRosterLocation(rosterDir.getAbsolutePath());
-        r.setRosterIndexFileName("rosterTest.xml");
-        RosterEntry e1 = new RosterEntry("file name Bob");
-        e1.setId("Bob");
-        e1.setDccAddress("123");
-        e1.setRoadNumber("123");
-        e1.setRoadName("SP");
-        e1.ensureFilenameExists();
-        e1.putAttribute("key a", "value a");
-        e1.putAttribute("key b", "value b");
-        r.addEntry(e1);
-        RosterEntry e2 = new RosterEntry("file name Bill");
-        e2.setId("Bill");
-        e2.setDccAddress("456");
-        e2.setRoadNumber("123");
-        e2.setRoadName("ATSF");
-        e2.setDecoderModel("81");
-        e2.setDecoderFamily("33");
-        e2.ensureFilenameExists();
-        e2.putAttribute("key a", "value a");
-        r.addEntry(e2);
-        RosterEntry e3 = new RosterEntry("file name Ben");
-        e3.setId("Ben");
-        e3.setRoadNumber("123");
-        e3.setRoadName("UP");
-        e3.ensureFilenameExists();
-        e3.putAttribute("key b", "value b");
-        r.addEntry(e3);
-
-        // write it
-        //r.writeFile(r.getRosterIndexPath());
-        return r;
-    }
-
 
     @Before
     public void setUp() throws java.io.IOException {
