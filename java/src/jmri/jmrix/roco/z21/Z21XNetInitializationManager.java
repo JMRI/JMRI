@@ -43,11 +43,11 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
         }
-        systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo));
         InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-        systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setLightManager(new XNetLightManager(systemMemo));
         InstanceManager.setLightManager(systemMemo.getLightManager());
-        systemMemo.setSensorManager(new XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setSensorManager(new XNetSensorManager(systemMemo));
         InstanceManager.setSensorManager(systemMemo.getSensorManager());
 
         if (log.isDebugEnabled()) {

@@ -15,13 +15,15 @@ import org.slf4j.LoggerFactory;
  */
 public class LnSensorManager extends jmri.managers.AbstractSensorManager implements LocoNetListener {
 
-    public LnSensorManager(LnTrafficController tc, String prefix) {
-        this.prefix = prefix;
+    protected final LnTrafficController tc;
+
+    public LnSensorManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getLnTrafficController();
         if (tc == null) {
             log.error("SensorManager Created, yet there is no Traffic Controller");
             return;
         }
-        this.tc = tc;
         // ctor has to register for LocoNet events
         tc.addLocoNetListener(~0, this);
 
@@ -31,14 +33,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         updateAll();
     }
 
-    protected LnTrafficController tc;
-    protected String prefix = "L";
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public LocoNetSystemConnectionMemo getMemo() {
+        return (LocoNetSystemConnectionMemo) memo;
     }
-
+    
     // to free resources when no longer used
     @Override
     public void dispose() {
@@ -60,7 +62,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     // LocoNet-specific methods
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        return new LnSensor(systemName, userName, tc, prefix);
+        return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 
     // listen for sensors, creating them as needed
@@ -73,7 +75,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
-                a = new LnSensorAddress(sw1, sw2, prefix);
+                a = new LnSensorAddress(sw1, sw2, getSystemPrefix());
                 log.debug("INPUT_REP received with address {}", a);
                 break;
             default:  // here we didn't find an interesting command

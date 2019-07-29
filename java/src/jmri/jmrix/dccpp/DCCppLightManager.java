@@ -19,26 +19,24 @@ import jmri.managers.AbstractLightManager;
 public class DCCppLightManager extends AbstractLightManager {
 
     private DCCppTrafficController tc = null;
-    private String prefix = null;
 
     /**
      * Create an new DCC++ LightManager.
      * Has to register for DCC++ events.
      *
-     * @param tc the TrafficController to connect the TurnoutManager to
-     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     * @param memo the supporting system connection memo
      */
-    public DCCppLightManager(DCCppTrafficController tc, String prefix) {
-        this.prefix = prefix;
-        this.tc = tc;
+    public DCCppLightManager(DCCppSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getDCCppTrafficController();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public DCCppSystemConnectionMemo getMemo() {
+        return (DCCppSystemConnectionMemo) memo;
     }
 
     /**
@@ -56,7 +54,7 @@ public class DCCppLightManager extends AbstractLightManager {
             return null;
         }
         // Normalize the systemName
-        String sName = prefix + typeLetter() + bitNum;   // removes any leading zeros
+        String sName = getSystemNamePrefix() + bitNum;   // removes any leading zeros
         // make the new Light object
         Light lgt = new DCCppLight(tc, this, sName, userName);
         return lgt;

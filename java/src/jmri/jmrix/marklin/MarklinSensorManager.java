@@ -21,20 +21,22 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         implements MarklinListener {
 
     public MarklinSensorManager(MarklinSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
         tc = memo.getTrafficController();
         // connect to the TrafficManager
         tc.addMarklinListener(this);
     }
 
-    MarklinSystemConnectionMemo memo;
     MarklinTrafficController tc;
     //The hash table simply holds the object number against the MarklinSensor ref.
     private Hashtable<Integer, Hashtable<Integer, MarklinSensor>> _tmarklin = new Hashtable<Integer, Hashtable<Integer, MarklinSensor>>();   // stores known Marklin Obj
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public MarklinSystemConnectionMemo getMemo() {
+        return (MarklinSystemConnectionMemo) memo;
     }
 
     @Override
@@ -120,7 +122,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);

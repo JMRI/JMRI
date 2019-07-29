@@ -19,18 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    GrapevineSystemConnectionMemo memo = null;
-
-    public SerialLightManager(GrapevineSystemConnectionMemo _memo) {
-        memo = _memo;
+    public SerialLightManager(GrapevineSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * Return the Grapevine system prefix.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public GrapevineSystemConnectionMemo getMemo() {
+        return (GrapevineSystemConnectionMemo) memo;
     }
 
     /**
@@ -45,12 +43,12 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public Light createNewLight(String systemName, String userName) {
-        String prefix = memo.getSystemPrefix();
+        String prefix = getSystemPrefix();
         Light lgt = null;
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L', prefix) == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName, memo);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController())) {
+            lgt = new SerialLight(systemName, userName, getMemo());
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L', getMemo().getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
@@ -84,7 +82,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L', memo.getTrafficController()));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L', getMemo().getTrafficController()));
     }
 
     /**

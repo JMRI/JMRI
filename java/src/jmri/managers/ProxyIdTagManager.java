@@ -8,6 +8,8 @@ import jmri.Manager;
 import jmri.Reporter;
 import java.util.List;
 import java.util.ArrayList;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Implementation of a IdTagManager that can serve as a proxy for multiple
@@ -31,22 +33,22 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public void init() {
-        if(!isInitialised()){
-           getDefaultManager();
+        if (!isInitialised()) {
+            getDefaultManager();
         }
     }
 
     @Override
     public boolean isInitialised() {
-        return (jmri.InstanceManager.getDefault(IdTagManager.class) != null);
+        return InstanceManager.getNullableDefault(IdTagManager.class) != null;
     }
 
     @Override
     protected AbstractManager<IdTag> makeInternalManager() {
         // since this really is an internal tracking mechanisim,
         // build the new manager and add it here.
-        DefaultIdTagManager tagMan = new DefaultIdTagManager();
-        jmri.InstanceManager.setIdTagManager(tagMan);
+        DefaultIdTagManager tagMan = new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        InstanceManager.setIdTagManager(tagMan);
         return tagMan;
     }
 
@@ -66,8 +68,12 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    /** {@inheritDoc} */
-    public IdTag provide(@Nonnull String name) throws IllegalArgumentException { return provideIdTag(name); }
+    /**
+     * {@inheritDoc}
+     */
+    public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
+        return provideIdTag(name);
+    }
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -160,17 +166,17 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     @Override
     public void setStateStored(boolean state) {
         stateSaved = state;
-        for( Manager<IdTag> mgr: getManagerList()){
-            ((IdTagManager)mgr).setStateStored(state);
+        for (Manager<IdTag> mgr : getManagerList()) {
+            ((IdTagManager) mgr).setStateStored(state);
         }
     }
 
     @Override
     public boolean isStateStored() {
         stateSaved = true;
-        for( Manager<IdTag> mgr: getManagerList()){
-            if(!((IdTagManager)mgr).isStateStored()){
-                stateSaved=false;
+        for (Manager<IdTag> mgr: getManagerList()) {
+            if(!((IdTagManager) mgr).isStateStored()) {
+                stateSaved = false;
                 break;
             }
         }
@@ -182,17 +188,17 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     @Override
     public void setFastClockUsed(boolean fastClock) {
         useFastClock = fastClock;
-        for( Manager<IdTag> mgr: getManagerList()){
-            ((IdTagManager)mgr).setFastClockUsed(fastClock);
+        for (Manager<IdTag> mgr : getManagerList()) {
+            ((IdTagManager) mgr).setFastClockUsed(fastClock);
         }
     }
 
     @Override
     public boolean isFastClockUsed() {
-        useFastClock=true;
-        for( Manager<IdTag> mgr: getManagerList()){
-            if(!((IdTagManager)mgr).isFastClockUsed()){
-               useFastClock=false;
+        useFastClock = true;
+        for (Manager<IdTag> mgr: getManagerList()) {
+            if (!((IdTagManager) mgr).isFastClockUsed()) {
+               useFastClock = false;
                break;
             }
         }

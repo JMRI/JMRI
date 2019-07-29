@@ -7,6 +7,7 @@ import java.util.Objects;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,10 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractAudioManager extends AbstractManager<Audio>
         implements AudioManager {
+
+    public AbstractAudioManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override

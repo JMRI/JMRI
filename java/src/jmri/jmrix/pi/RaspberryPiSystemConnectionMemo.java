@@ -77,8 +77,8 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
     private LightManager lightManager = null;
 
     public void configureManagers(){
-       setTurnoutManager(new RaspberryPiTurnoutManager(getSystemPrefix()));
-       setSensorManager(new RaspberryPiSensorManager(getSystemPrefix()));
+       setTurnoutManager(new RaspberryPiTurnoutManager(this));
+       setSensorManager(new RaspberryPiSensorManager(this));
     }
     
     @Override

@@ -20,7 +20,7 @@ public class RfidSensorManagerTest {
 
     @Test
     public void testCtor() {
-        RfidSensorManager c = new RfidSensorManager("R"){
+        RfidSensorManager c = new RfidSensorManager(new RfidSystemConnectionMemo()){
             @Override
             protected Sensor createNewSensor(String systemName, String userName){
                return null;

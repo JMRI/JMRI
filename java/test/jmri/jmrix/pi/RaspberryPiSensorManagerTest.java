@@ -29,7 +29,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
 
     @Test
     public void checkPrefix(){
-        Assert.assertEquals("Prefix", "PI", l.getSystemPrefix());
+        Assert.assertEquals("Prefix", "P", l.getSystemPrefix());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiSensorManager("PI");
+       l = new RaspberryPiSensorManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @After

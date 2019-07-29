@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
+import jmri.implementation.SignalHeadSignalMast;
 import jmri.implementation.SignalMastRepeater;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,20 +29,15 @@ import org.slf4j.LoggerFactory;
 public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         implements SignalMastManager {
 
-    public DefaultSignalMastManager() {
-        super();
-        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+    public DefaultSignalMastManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
+        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALMASTS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -69,7 +69,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         name.append(":");
         for (String s : heads) {
             name.append("(");
-            name.append(jmri.util.StringUtil.parenQuote(s));
+            name.append(StringUtil.parenQuote(s));
             name.append(")");
         }
         return provideSignalMast(new String(name));
@@ -79,7 +79,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     public SignalMast provideSignalMast(String name) {
         SignalMast m = getSignalMast(name);
         if (m == null) {
-            m = new jmri.implementation.SignalHeadSignalMast(name);
+            m = new SignalHeadSignalMast(name);
             register(m);
         }
         return m;
@@ -142,7 +142,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
             } else if (currentRepeater.getMasterMast() == slave
                     && currentRepeater.getSlaveMast() == master) {
                 log.error("Signal repeater {}:{} already exists the wrong way", master, slave);
-                throw new jmri.JmriException("Signal mast repeater already exists the wrong way");
+                throw new JmriException("Signal mast repeater already exists the wrong way");
             }
         }
         if (rp == null) {
@@ -153,16 +153,16 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return rp;
     }
 
-    public void addRepeater(SignalMastRepeater rp) throws jmri.JmriException {
+    public void addRepeater(SignalMastRepeater rp) throws JmriException {
         for (SignalMastRepeater rpeat : repeaterList) {
             if (rpeat.getMasterMast() == rp.getMasterMast()
                     && rpeat.getSlaveMast() == rp.getSlaveMast()) {
                 log.error("Signal repeater already Exists");
-                throw new jmri.JmriException("Signal mast Repeater already exists");
+                throw new JmriException("Signal mast Repeater already exists");
             } else if (rpeat.getMasterMast() == rp.getSlaveMast()
                     && rpeat.getSlaveMast() == rp.getMasterMast()) {
                 log.error("Signal repeater already Exists");
-                throw new jmri.JmriException("Signal mast Repeater already exists");
+                throw new JmriException("Signal mast Repeater already exists");
             }
         }
         repeaterList.add(rp);

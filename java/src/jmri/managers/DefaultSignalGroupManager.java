@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,8 @@ import org.slf4j.LoggerFactory;
 public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         implements SignalGroupManager {
 
-    public DefaultSignalGroupManager() {
-        super();
+    public DefaultSignalGroupManager(InternalSystemConnectionMemo memo) {
+        super(memo);
 
         // load when created, which will generally
         // be the first time referenced
@@ -37,11 +39,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALGROUPS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -168,13 +165,14 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return retval;
     }
 
-    static DefaultSignalGroupManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of DefaultSignalGroupManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultSignalGroupManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultSignalGroupManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultSignalGroupManager.class);
     }
 
     @Override

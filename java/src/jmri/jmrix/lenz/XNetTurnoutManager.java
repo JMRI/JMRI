@@ -18,22 +18,20 @@ import org.slf4j.LoggerFactory;
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
     // ctor has to register for XNet events
-    public XNetTurnoutManager(XNetTrafficController controller, String prefix) {
-        super();
-        tc = controller;
-        this.prefix = prefix;
+    public XNetTurnoutManager(XNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getXNetTrafficController();
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
     protected XNetTrafficController tc = null;
-    protected String prefix = null;
 
     /**
-     * Return the system prefix for XpressNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XNetSystemConnectionMemo getMemo() {
+        return (XNetSystemConnectionMemo) memo;
     }
 
     // XNet-specific methods
@@ -48,12 +46,12 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
         // create the new Turnout object
-        Turnout t = new XNetTurnout(prefix, bitNum, tc);
+        Turnout t = new XNetTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -81,7 +79,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         }
                         // reach here for switch command; make sure we know 
                         // about this one
-                        String s = prefix + typeLetter() + addr;
+                        String s = getSystemNamePrefix() + addr;
                         forwardMessageToTurnout(s,l);
                     }
                     if (addr % 2 != 0) {
@@ -91,7 +89,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         if ((a2 & 0x0c) != 0) {
                             // reach here for switch command; make sure we know 
                             // about this one
-                            String s = prefix + typeLetter() + (addr + 1);
+                            String s = getSystemNamePrefix() + (addr + 1);
                             forwardMessageToTurnout(s,l);
                         }
                     }

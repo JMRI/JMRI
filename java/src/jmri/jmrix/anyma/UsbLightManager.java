@@ -18,25 +18,22 @@ import org.slf4j.LoggerFactory;
  */
 public class UsbLightManager extends AbstractLightManager {
 
-    private AnymaDMX_SystemConnectionMemo _memo = null;
-
     /**
      * constructor
      *
      * @param memo the system connection memo
      */
     public UsbLightManager(AnymaDMX_SystemConnectionMemo memo) {
+        super(memo);
         log.debug("*    UsbLightManager constructor called");
-        _memo = memo;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        log.debug("*    UsbLightManager.getSystemPrefix() called");
-        return _memo.getSystemPrefix();
+    public AnymaDMX_SystemConnectionMemo getMemo() {
+        return (AnymaDMX_SystemConnectionMemo) memo;
     }
 
     /**
@@ -55,14 +52,14 @@ public class UsbLightManager extends AbstractLightManager {
         log.debug("*    UsbLightManager.createNewLight() called");
         Light result = null;    // assume failure (pessimist!)
 
-        int nAddress = _memo.getNodeAddressFromSystemName(systemName);
+        int nAddress = getMemo().getNodeAddressFromSystemName(systemName);
         if (nAddress != -1) {
-            int channelNum = _memo.getChannelFromSystemName(systemName);
+            int channelNum = getMemo().getChannelFromSystemName(systemName);
             if (channelNum != 0) {
                 // Validate the systemName
-                if (_memo.validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
-                    if (_memo.validSystemNameConfig(systemName, 'L')) {
-                        result = new AnymaDMX_UsbLight(systemName, userName, _memo);
+                if (getMemo().validSystemNameFormat(systemName, 'L') == Manager.NameValidity.VALID) {
+                    if (getMemo().validSystemNameConfig(systemName, 'L')) {
+                        result = new AnymaDMX_UsbLight(systemName, userName, getMemo());
                     } else {
                         log.warn("Light System Name does not refer to configured hardware: " + systemName);
                     }
@@ -82,7 +79,7 @@ public class UsbLightManager extends AbstractLightManager {
     @Override
     public Manager.NameValidity validSystemNameFormat(String systemName) {
         log.debug("*    UsbLightManager.validSystemNameFormat() called");
-        return _memo.validSystemNameFormat(systemName, 'L');
+        return getMemo().validSystemNameFormat(systemName, 'L');
     }
 
     /**
@@ -103,7 +100,7 @@ public class UsbLightManager extends AbstractLightManager {
     @Override
     public boolean validSystemNameConfig(String systemName) {
         log.debug("*    UsbLightManager.validSystemNameConfig() called");
-        return _memo.validSystemNameConfig(systemName, 'L');
+        return getMemo().validSystemNameConfig(systemName, 'L');
     }
 
     /**
@@ -116,7 +113,7 @@ public class UsbLightManager extends AbstractLightManager {
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         log.debug("*    UsbLightManager.convertSystemNameToAlternate() called");
-        return _memo.convertSystemNameToAlternate(systemName);
+        return getMemo().convertSystemNameToAlternate(systemName);
     }
 
     /**

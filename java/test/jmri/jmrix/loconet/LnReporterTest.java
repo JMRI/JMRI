@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
+import jmri.InstanceManager;
 import jmri.Reportable;
 import jmri.LocoAddress;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
