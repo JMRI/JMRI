@@ -38,10 +38,13 @@ public class RosterTestUtil {
     public static Roster createTestRoster(File rosterDir,String rosterFileName) throws IOException, FileNotFoundException {
         FileUtil.createDirectory(rosterDir);
 
-        File f = new File(rosterDir, rosterFileName);
+        // make sure the file exists.
+        new File(rosterDir, rosterFileName);
 
         // create a roster with known contents
         Roster r = new Roster(rosterDir.getAbsolutePath() + File.separator + rosterFileName );
+        r.setRosterLocation(rosterDir.getAbsolutePath());
+        r.setRosterIndexFileName(rosterFileName);
         RosterEntry e1 = new RosterEntry("SP123");
         e1.setId("SP123");
         e1.setDccAddress("123");
