@@ -13,6 +13,11 @@ import jmri.LocoAddress;
 import jmri.jmrit.throttle.ThrottleOperator;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.JUnitUtil;
 import jmri.util.FileUtil;
 import jmri.util.swing.JemmyUtil;
@@ -206,6 +211,39 @@ public class ConsistToolFrameTest {
 	    cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
         Assert.assertEquals("No New Consists after scan",numConsists,InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
+    }
+
+    @Test
+    public void testScanRosterWithConsists() throws IOException,FileNotFoundException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Roster r = jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
+        InstanceManager.setDefault(Roster.class,r);
+        
+        // set the consist address of one of the entries.
+        RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+
+        CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
+        VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
+        entry.readFile();  // read, but don’t yet process
+
+        // load from decoder file
+        jmri.util.RosterTestUtil.loadDecoderFromLoco(entry,varTable);
+
+        entry.loadCvModel(varTable, cvTable);
+        CvValue cv19Value = cvTable.getCvByNumber("19");
+        cv19Value.setValue(0x02);
+
+        entry.writeFile(cvTable,varTable);
+
+        ConsistToolFrame frame = new ConsistToolFrame();
+	    frame.setVisible(true);
+	    // get a ConsistToolScaffold
+	    ConsistToolScaffold cs = new ConsistToolScaffold();
+        int numConsists = InstanceManager.getDefault(ConsistManager.class).getConsistList().size();
+	    cs.startRosterScan();
+	    cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+        Assert.assertEquals("1 New Consists after scan",numConsists+1,InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
     @Before
