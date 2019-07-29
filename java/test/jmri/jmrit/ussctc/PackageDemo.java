@@ -42,7 +42,7 @@ public class PackageDemo {
         // create and wire USS CTC objects
         Bell bell = new PhysicalBell("CTC Bell");
         
-        CodeLine line = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        CodeLine line = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
 
         CodeButton button = new CodeButton("Sec1 Code", "Sec1 Code");
         Station station = new Station("1", line, button);
