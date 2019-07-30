@@ -553,7 +553,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     private void sendDirection(DccLocoAddress address, boolean isForward) {
         XNetMessage msg = XNetMessage.getSpeedAndDirectionMsg(address.getNumber(),
-                jmri.DccThrottle.SpeedStepMode28,
+                jmri.SpeedStepMode.NMRA_DCC_28,
                 (float) 0.0,
                 isForward);
         // now, we send the message to the command station

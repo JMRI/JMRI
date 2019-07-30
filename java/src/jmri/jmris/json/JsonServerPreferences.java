@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;

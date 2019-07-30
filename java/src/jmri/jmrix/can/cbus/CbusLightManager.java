@@ -27,16 +27,15 @@ public class CbusLightManager extends AbstractLightManager {
      * Ctor using a given system connection memo
      */
     public CbusLightManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
-    private CanSystemConnectionMemo memo;
-    private String prefix = "M";
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     /**
@@ -61,7 +60,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     protected Light createNewLight(String systemName, String userName) {
-        String addr = systemName.substring(prefix.length() + 1);
+        String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
             validateAddressFormat(addr);
@@ -72,7 +71,7 @@ public class CbusLightManager extends AbstractLightManager {
         // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Light l = new CbusLight(prefix, newAddress, memo.getTrafficController());
+        Light l = new CbusLight(getSystemPrefix(), newAddress, getMemo().getTrafficController());
         l.setUserName(userName);
         return l;
     }
@@ -102,7 +101,7 @@ public class CbusLightManager extends AbstractLightManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(prefix.length() + 1); // get only the address part
+            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e) {
             return NameValidity.INVALID;
         }
@@ -131,7 +130,7 @@ public class CbusLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        String addr = systemName.substring(prefix.length() + 1);
+        String addr = systemName.substring(getSystemPrefix().length() + 1);
         try {
             validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {

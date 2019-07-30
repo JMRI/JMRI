@@ -9,17 +9,25 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
@@ -28,8 +36,6 @@ import jmri.util.FileUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of cars used by operations
@@ -730,13 +736,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     csf.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        csf = new CarSetFrame();
-                        csf.initComponents();
-                        csf.loadCar(car);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    csf = new CarSetFrame();
+                    csf.initComponents();
+                    csf.loadCar(car);
                 });
                 break;
             case EDIT_COLUMN:
@@ -745,13 +748,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     cef.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        cef = new CarEditFrame();
-                        cef.initComponents();
-                        cef.load(car);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    cef = new CarEditFrame();
+                    cef.initComponents();
+                    cef.load(car);
                 });
                 break;
             case MOVES_COLUMN:

@@ -12,6 +12,9 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
 /*
@@ -98,6 +101,14 @@ public class ConsistToolScaffold extends JFrameOperator {
    
    public void pushRestoreButton(){
         new JButtonOperator(this,Bundle.getMessage("RestoreButtonText")).push();
+   }
+
+   public void startRosterScan(){
+        JMenuBarOperator jmbo = new JMenuBarOperator(this); // there's only one menubar
+        JMenuOperator jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuFile"));  // NOI18N
+        jmo.push();
+        JMenuItemOperator jmio = new JMenuItemOperator(this,Bundle.getMessage("ScanConsists"));
+        jmio.push();
    }
 
 }

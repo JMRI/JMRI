@@ -4,6 +4,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -16,7 +17,6 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 import org.slf4j.Logger;
@@ -184,8 +184,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         
         Assert.assertEquals("speed setting",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("speed increment",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedIncrement"));
-        Assert.assertEquals("speed step mode",CbusConstants.CBUS_SS_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
-        
+        Assert.assertEquals("speed step mode",SpeedStepMode.NMRA_DCC_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
+
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );
         cbtmb.reply(r);
         Assert.assertEquals("speed setting 0",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));

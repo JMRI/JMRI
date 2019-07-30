@@ -35,21 +35,16 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     static final int SENSORSPERUA = 1000;
 
-    MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "K";
-
     public SerialSensorManager(MapleSystemConnectionMemo memo) {
-        super();
-        _memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public MapleSystemConnectionMemo getMemo() {
+        return (MapleSystemConnectionMemo) memo;
     }
 
     /**
@@ -85,14 +80,14 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             s = new SerialSensor(sName, userName); // prefix not passed
         }
         // check configured
-        if (!SerialAddress.validSystemNameConfig(sName, 'S', _memo)) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'S', getMemo())) {
             log.warn("Sensor system Name '" + sName + "' does not address configured hardware.");
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Sensor just added, "
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
         }
         // register this sensor 
-        _memo.getTrafficController().inputBits().registerSensor(s, bit - 1);
+        getMemo().getTrafficController().inputBits().registerSensor(s, bit - 1);
         return s;
     }
 
@@ -133,7 +128,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public void reply(SerialReply r) {
-        _memo.getTrafficController().inputBits().markChanges(r);
+        getMemo().getTrafficController().inputBits().markChanges(r);
     }
 
     /**
@@ -153,7 +148,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is {}", sName);
                 if ((sName.charAt(0) == 'K') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
                     // This is a valid Sensor - make sure it is registered
-                    _memo.getTrafficController().inputBits().registerSensor(getBySystemName(sName),
+                    getMemo().getTrafficController().inputBits().registerSensor(getBySystemName(sName),
                             (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
                 }
             }

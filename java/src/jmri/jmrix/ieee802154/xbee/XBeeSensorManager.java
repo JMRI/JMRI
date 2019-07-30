@@ -30,17 +30,19 @@ import org.slf4j.LoggerFactory;
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
     // ctor has to register for XBee events
-    public XBeeSensorManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeSensorManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
         tc.getXBee().addIOSampleListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
-    protected String prefix = null;
 
     protected XBeeTrafficController tc = null;
 
@@ -155,7 +157,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
                         // Sensor name is prefix followed by NI/address
                         // followed by the bit number.
-                        String sName = prefix + typeLetter()
+                        String sName = getSystemNamePrefix()
                                 + node.getPreferedName() + ":" + i;
                         XBeeSensor s = (XBeeSensor) getSensor(sName);
                         if (s == null) {

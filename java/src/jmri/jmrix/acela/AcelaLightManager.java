@@ -20,18 +20,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaLightManager extends AbstractLightManager {
 
-    private AcelaSystemConnectionMemo _memo = null;
-
     public AcelaLightManager(AcelaSystemConnectionMemo memo) {
-        _memo = memo;
+        super(memo);
     }
 
-    /**
-     * Get the configured system prefix for this connection.
-     */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public AcelaSystemConnectionMemo getMemo() {
+        return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
@@ -47,7 +42,7 @@ public class AcelaLightManager extends AbstractLightManager {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, _memo);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
             return (null);
         }
@@ -58,8 +53,8 @@ public class AcelaLightManager extends AbstractLightManager {
 
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
-            lgt = new AcelaLight(systemName, userName, _memo);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'L', _memo)) {
+            lgt = new AcelaLight(systemName, userName, getMemo());
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'L', getMemo())) {
                 log.warn("Light System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
@@ -100,7 +95,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'L', _memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'L', getMemo()));
     }
 
     /**

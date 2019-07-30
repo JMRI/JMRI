@@ -19,21 +19,20 @@ import org.slf4j.LoggerFactory;
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
     // ctor has to register for XNet events
-    public XNetSensorManager(XNetTrafficController controller, String prefix) {
-        tc = controller;
+    public XNetSensorManager(XNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getXNetTrafficController();
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
-        this.prefix = prefix;
     }
 
     protected XNetTrafficController tc = null;
-    protected String prefix = null;
 
     /**
-     * Return the system letter for XpressNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XNetSystemConnectionMemo getMemo() {
+        return (XNetSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used
@@ -55,14 +54,14 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
         // normalize system name
-        String sName = prefix + typeLetter() + bitNum;
+        String sName = getSystemNamePrefix() + bitNum;
         // create the new Sensor object
-        return new XNetSensor(sName, userName, tc, prefix);
+        return new XNetSensor(sName, userName, tc, getSystemPrefix());
     }
 
     // listen for sensors, creating them as needed
@@ -82,7 +81,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                     // Each Feedback encoder includes 8 addresses, so register 
                     // a sensor for each address.
                     for (int j = 0; j < 8; j++) {
-                        String s = prefix + typeLetter() + (firstaddress + j);
+                        String s = getSystemNamePrefix() + (firstaddress + j);
                         if (null == getBySystemName(s)) {
                             // The sensor doesn't exist.  We need to create a 
                             // new sensor, and forward this message to it.

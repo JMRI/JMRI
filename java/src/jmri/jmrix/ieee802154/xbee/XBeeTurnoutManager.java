@@ -15,18 +15,19 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
-    protected String prefix = null;
-
     protected XBeeTrafficController tc = null;
 
-    public XBeeTurnoutManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeTurnoutManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
 
     // for now, set this to false. Multiple additions currently works

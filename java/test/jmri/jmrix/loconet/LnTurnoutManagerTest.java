@@ -51,8 +51,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         lnis.sendTestMessage(m2);
 
         // try to get turnouts to see if they exist
-        Assert.assertTrue(null != l.getBySystemName("LT21"));
-        Assert.assertTrue(null != l.getBySystemName("LT22"));
+        Assert.assertNotNull(l.getBySystemName("LT21"));
+        Assert.assertNotNull(l.getBySystemName("LT22"));
 
         // check the list
         List<String> testList = new ArrayList<>(2);
@@ -66,7 +66,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         // Turnout LT61 () Switch input is Closed (input off).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3C, 0x70, 0x02});
         lnis.sendTestMessage(m);
-        Assert.assertTrue(null != l.getBySystemName("LT61"));
+        Assert.assertNotNull(l.getBySystemName("LT61"));
         Assert.assertEquals(Turnout.CLOSED, l.getBySystemName("LT61").getKnownState());
     }
     
@@ -75,7 +75,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         // Turnout LT62 () Switch input is Thrown (input on).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3D, 0x60, 0x13});
         lnis.sendTestMessage(m);
-        Assert.assertTrue(null != l.getBySystemName("LT62"));
+        Assert.assertNotNull(l.getBySystemName("LT62"));
         Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT62").getKnownState());
     }
     
@@ -84,7 +84,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         // Turnout LT63 () Aux input is Thrown (input ).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3E, 0x40, 0x30});
         lnis.sendTestMessage(m);
-        Assert.assertTrue(null != l.getBySystemName("LT63"));
+        Assert.assertNotNull(l.getBySystemName("LT63"));
         Assert.assertEquals("EXACT", l.getBySystemName("LT63").getFeedbackModeName());
         Assert.assertEquals(Turnout.INCONSISTENT, l.getBySystemName("LT63").getKnownState());
     }
@@ -94,7 +94,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         // Turnout LT64 () Aux input is Closed (input off).
         LocoNetMessage m = new LocoNetMessage(new int[]{0xb1, 0x3F, 0x50, 0x21});
         lnis.sendTestMessage(m);
-        Assert.assertTrue(null != l.getBySystemName("LT64"));
+        Assert.assertNotNull(l.getBySystemName("LT64"));
         Assert.assertEquals("EXACT", l.getBySystemName("LT64").getFeedbackModeName());
         Assert.assertEquals(Turnout.THROWN, l.getBySystemName("LT64").getKnownState());
     }
@@ -105,7 +105,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Turnout o = l.newTurnout("LT21", "my name");
 
         log.debug("received turnout value {}", o);
-        Assert.assertTrue(null != (LnTurnout) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -115,8 +115,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
             log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != l.getBySystemName("LT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull(l.getBySystemName("LT21"));
+        Assert.assertNotNull(l.getByUserName("my name"));
     }
 
     private LocoNetInterfaceScaffold lnis;
@@ -128,10 +128,11 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
-        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
         // create and register the manager object
-        l = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        l = new LnTurnoutManager(memo, lnis, false);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

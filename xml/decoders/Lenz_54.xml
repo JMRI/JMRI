@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="7" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Michael Mosher mjmx@comcast.net" version="5" lastUpdated="20030815"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20090116"/>
   <!-- version 2 - add consist direction - jake -->
@@ -123,35 +124,9 @@
         <label xml:lang="de">Motor PWM Frequency</label>
         <tooltip xml:lang="de">Adjust EMF pulse rate frequency for finer motor control</tooltip>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <label xml:lang="it">Indirizzo Consist (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-        <comment xml:lang="it">Memoria Indirizzo Consist. Valori 0-127 (bit di direzione in bit 7)</comment>
-        <label xml:lang="de">Consist Address</label>
-        <comment xml:lang="de">Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" comment="A consist address over 127 will also set this bit">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-            <choice xml:lang="it">Normale</choice>
-            <choice xml:lang="de">Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="it">Invertita</choice>
-            <choice xml:lang="de">Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Direction In Consist</label>
-        <label xml:lang="it">Direzione Loco nel Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-        <comment xml:lang="it">Questo bit è settato anche per gli indirizzi Consist oltre il 127</comment>
-        <label xml:lang="de">Consist Direction</label>
-        <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>

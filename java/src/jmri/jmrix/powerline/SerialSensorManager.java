@@ -21,17 +21,17 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     SerialTrafficController tc = null;
 
     public SerialSensorManager(SerialTrafficController tc) {
-        super();
+        super(tc.getAdapterMemo());
         this.tc = tc;
         tc.addSerialListener(this);
     }
 
     /**
-     * Return the system letter
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return tc.getAdapterMemo().getSystemPrefix();
+    public SerialSystemConnectionMemo getMemo() {
+        return (SerialSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used

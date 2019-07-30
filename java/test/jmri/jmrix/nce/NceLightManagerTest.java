@@ -16,7 +16,7 @@ public class NceLightManagerTest {
 
     @Test
     public void testCTor() {
-        NceLightManager t = new NceLightManager(tcis,"N");
+        NceLightManager t = new NceLightManager(tcis.getAdapterMemo());
         Assert.assertNotNull("exists",t);
     }
 

@@ -16,24 +16,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "K";
-
-    public SerialTurnoutManager() {
-
-    }
-
     public SerialTurnoutManager(MapleSystemConnectionMemo memo) {
-        _memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public MapleSystemConnectionMemo getMemo() {
+        return (MapleSystemConnectionMemo) memo;
     }
 
     @Override
@@ -65,10 +57,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
 
         // create the turnout
-        t = new SerialTurnout(sName, userName, _memo);
+        t = new SerialTurnout(sName, userName, getMemo());
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T', _memo)) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '" + sName + "' refers to an unconfigured output bit.");
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "

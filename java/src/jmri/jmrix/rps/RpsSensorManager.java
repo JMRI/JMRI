@@ -15,21 +15,16 @@ import org.slf4j.LoggerFactory;
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
-    private RpsSystemConnectionMemo memo = null;
-    protected String prefix = "R";
-
     public RpsSensorManager(RpsSystemConnectionMemo memo) {
-        super();
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public RpsSystemConnectionMemo getMemo() {
+        return (RpsSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used
@@ -45,7 +40,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         try {
-           RpsSensor r = new RpsSensor(systemName, userName, prefix);
+           RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);
            return r;
        } catch(java.lang.StringIndexOutOfBoundsException sioe){
@@ -77,7 +72,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public String validateSystemNameFormat(String name, Locale locale) {
-        return memo.validateSystemNameFormat(name, this, locale);
+        return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
     /**
@@ -85,7 +80,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return memo.validSystemNameFormat(systemName, typeLetter());
+        return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**

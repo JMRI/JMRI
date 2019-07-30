@@ -22,16 +22,16 @@ abstract public class SerialLightManager extends AbstractLightManager {
     SerialTrafficController tc = null;
 
     public SerialLightManager(SerialTrafficController tc) {
-        super();
+        super(tc.getAdapterMemo());
         this.tc = tc;
     }
 
     /**
-     * Returns the system letter
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return tc.getAdapterMemo().getSystemPrefix();
+    public SerialSystemConnectionMemo getMemo() {
+        return (SerialSystemConnectionMemo) memo;
     }
 
     @Override

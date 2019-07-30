@@ -21,7 +21,6 @@ import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.managers.ProxyReporterManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -446,7 +445,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
-        pref.setComboBoxLastSelection(systemSelectionCombo, ConnectionNameFromSystemName.getConnectionName(prefixBox.getSelectedItem().getSystemPrefix()));
+        pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -472,7 +471,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // show hwAddressTextField field tooltip in the Add Reporter pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText(
                 Bundle.getMessage("AddEntryToolTipLine1",
-                        ConnectionNameFromSystemName.getConnectionName(systemPrefix),
+                        connectionChoice.getMemo().getUserName(),
                         Bundle.getMessage("Reporters"),
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
