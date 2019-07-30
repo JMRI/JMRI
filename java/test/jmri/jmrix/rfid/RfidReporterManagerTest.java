@@ -92,7 +92,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
            public void sendInitString(){
            }
         };
-        l = new RfidReporterManager("R"){
+        l = new RfidReporterManager(new RfidSystemConnectionMemo()){
             @Override
             protected Reporter createNewReporter(String systemName, String userName){
                return null;

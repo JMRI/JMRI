@@ -5,6 +5,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,15 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
+
+    /**
+     * Create a new SensorManager instance.
+     * 
+     * @param memo the system connection
+     */
+    public AbstractSensorManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override

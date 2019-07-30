@@ -19,21 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    OakTreeSystemConnectionMemo _memo = null;
-    protected String prefix = "O";
-
     public SerialLightManager(OakTreeSystemConnectionMemo memo) {
-        _memo = memo;
-        prefix = getSystemPrefix();
+        super(memo);
     }
 
     /**
-     * Return the Oak Tree system prefix
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
-
+    public OakTreeSystemConnectionMemo getMemo() {
+        return (OakTreeSystemConnectionMemo) memo;
     }
 
     /**
@@ -48,9 +43,9 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
-        if (SerialAddress.validSystemNameFormat(systemName, 'L', prefix) == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName, _memo);
-            if (!SerialAddress.validSystemNameConfig(systemName, 'L', _memo)) {
+        if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
+            lgt = new SerialLight(systemName, userName, getMemo());
+            if (!SerialAddress.validSystemNameConfig(systemName, 'L', getMemo())) {
                 log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
@@ -72,7 +67,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), prefix));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     /**
@@ -80,7 +75,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, typeLetter(), _memo));
+        return (SerialAddress.validSystemNameConfig(systemName, typeLetter(), getMemo()));
     }
 
     /**
@@ -91,7 +86,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return (SerialAddress.convertSystemNameToAlternate(systemName, prefix));
+        return (SerialAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 
     /**

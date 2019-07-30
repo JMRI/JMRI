@@ -273,7 +273,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JsonNode connection = result.get(0);
         assertEquals(JSON.SYSTEM_CONNECTION, connection.path(JSON.TYPE).asText());
         assertEquals("I", connection.path(JSON.DATA).path(JSON.PREFIX).asText());
-        assertTrue(connection.path(JSON.DATA).path(JSON.NAME).isNull());
+        assertEquals("Internal", connection.path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(connection.path(JSON.DATA).path(JSON.MFG).isNull());
     }
 

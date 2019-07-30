@@ -26,16 +26,15 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * Ctor using a given system connection memo
      */
     public CbusTurnoutManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
-    private CanSystemConnectionMemo memo;
-    private String prefix = "M";
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     /** 
@@ -56,7 +55,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     protected Turnout createNewTurnout(String systemName, String userName) {
-        String addr = systemName.substring(prefix.length() + 1);
+        String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
             validateAddressFormat(addr);
@@ -67,7 +66,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Turnout t = new CbusTurnout(prefix, newAddress, memo.getTrafficController());
+        Turnout t = new CbusTurnout(getSystemPrefix(), newAddress, getMemo().getTrafficController());
         t.setUserName(userName);
         return t;
     }
@@ -122,7 +121,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
                 }
             }
             // feedback when next address is also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new {} Turnouts added", curAddress, memo.getUserName());
+            log.warn("10 hardware addresses starting at {} already in use. No new {} Turnouts added", curAddress, getMemo().getUserName());
             return null;
         } else {
             // If the initially requested hardware address does not already exist,
@@ -148,7 +147,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
-            addr = systemName.substring(prefix.length() + 1); // get only the address part
+            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
         } catch (StringIndexOutOfBoundsException e){
             return NameValidity.INVALID;
         }

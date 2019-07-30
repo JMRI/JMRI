@@ -20,6 +20,7 @@ import jmri.ReporterManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
@@ -127,7 +128,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         assertNull(manager.getReporter("JR1"));
         // create a default reporter manager that overrides provide() to require valid system name
         // this allows testing that invalid names are reported to clients correctly
-        InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager() {
+        InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public Reporter provide(String name) {
                 return this.newReporter(name, null);

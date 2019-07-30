@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Alain Le Marchand" version="1" lastUpdated="20171209"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20180101"/>
   <!--  This file contains the Tsunami definitions for Walthers cars factory-equipped with OEM Tsunami SoundCar.
@@ -375,20 +376,9 @@
         <label xml:lang="it">CV blocco registri (0-7)</label>
       </variable>
       <!-- Consisting Information follows -->
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <label xml:lang="it">Indirizzo consist (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-        <comment xml:lang="it">Memoria per indirizzo Consist. Valori da 0 a 127 (bit direzione in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-        <label>Loco Direction In Consist</label>
-        <label xml:lang="it">Direzione consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-        <comment xml:lang="it">n consist con valore &gt; 127 mette ad 1 questo bit</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
       <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>

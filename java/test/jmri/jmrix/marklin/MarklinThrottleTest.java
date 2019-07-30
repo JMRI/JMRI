@@ -1,6 +1,7 @@
 package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
+import jmri.SpeedStepMode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,8 +46,8 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 2; 
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 

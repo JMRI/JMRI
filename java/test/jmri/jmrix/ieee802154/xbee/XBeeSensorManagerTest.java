@@ -20,7 +20,7 @@ import jmri.Sensor;
 
 /**
  * XBeeSensorManagerTest.java
- *
+ * <p>
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
@@ -46,7 +46,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provide(getSystemName(getNumToTest1()));
         // check
         Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("system name correct ", t ,l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provide("ASNode 1:2");
         // check
         Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ASNode 1:2"));
+        Assert.assertEquals("correct object returned ", t, l.getBySystemName("ASNode 1:2"));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provide("AS00 02:2");
         // check
         Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName("AS00 02:2"));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName("AS00 02:2"));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.provide("AS00 13 A2 00 40 A0 4D 2D:2");
         // check
         Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("system name correct ", t ,l.getBySystemName("AS00 13 A2 00 40 A0 4D 2D:2"));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName("AS00 13 A2 00 40 A0 4D 2D:2"));
     }
 
     @Override
@@ -91,10 +91,10 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void testUpperLower() {
         Sensor t = l.provideSensor(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
-        
-        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
-        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
-        
+
+        int prefixLength = l.getSystemPrefix().length() + 1;     // 1 for type letter
+        String lowerName = name.substring(0, prefixLength) + name.substring(prefixLength, name.length()).toLowerCase();
+
         Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
@@ -105,7 +105,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t2 = l.provideSensor(getSystemName(getNumToTest2()));
         t1.setUserName("UserName");
         Assert.assertTrue(t1 == l.getByUserName("UserName"));
-        
+
         t2.setUserName("UserName");
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
@@ -114,8 +114,8 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     @Test
-    public void testPullResistanceConfigurable(){
-       Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+    public void testPullResistanceConfigurable() {
+        Assert.assertTrue("Pull Resistance Configurable", l.isPullResistanceConfigurable());
     }
 
     @Override
@@ -140,7 +140,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Override
-    @Before 
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -150,19 +150,20 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeSensorManager(tc, "A");
+        m.setTrafficController(tc);
+        l = new XBeeSensorManager(m);
         m.setSensorManager(l);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
-        XBeeNode node = new XBeeNode(pan,uad,gad);
+        XBeeNode node = new XBeeNode(pan, uad, gad);
         RemoteXBeeDevice rd = new RemoteXBeeDevice(tc.getXBee(),
-             new XBee64BitAddress("0013A20040A04D2D"),
-             new XBee16BitAddress("0002"),
-             "Node 1"){
+                new XBee64BitAddress("0013A20040A04D2D"),
+                new XBee16BitAddress("0002"),
+                "Node 1") {
             @Override
-            public IOValue getDIOValue(IOLine l) throws InterfaceNotOpenException,TimeoutException,XBeeException {
-               return IOValue.LOW;
+            public IOValue getDIOValue(IOLine l) throws InterfaceNotOpenException, TimeoutException, XBeeException {
+                return IOValue.LOW;
             }
         };
         node.setXBee(rd);
@@ -176,7 +177,4 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     // private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerTest.class);
-
 }
-
-

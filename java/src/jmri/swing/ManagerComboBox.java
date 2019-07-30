@@ -13,7 +13,6 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.util.ConnectionNameFromSystemName;
 
 /**
  * A JComboBox for a set of Managers for the same type of NamedBean.
@@ -95,7 +94,7 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
         public Component getListCellRendererComponent(JList<? extends Manager<B>> list, Manager<B> value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value != null) {
-                label.setText(ConnectionNameFromSystemName.getConnectionName(value.getSystemPrefix()));
+                label.setText(value.getMemo().getUserName());
             }
             return label;
         }

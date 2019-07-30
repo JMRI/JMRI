@@ -1,6 +1,7 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
+import jmri.SpeedStepMode;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,9 +35,20 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.NMRA_DCC_128.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
     }
 
     /**

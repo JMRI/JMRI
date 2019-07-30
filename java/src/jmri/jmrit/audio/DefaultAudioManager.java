@@ -9,6 +9,7 @@ import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractAudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,10 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static int countSources = 0;
     private static int countBuffers = 0;
 
+    public DefaultAudioManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+    }
+
     /**
      * Reference to the currently active AudioFactory. 
      * Because of underlying (external to Java) implementation details,
@@ -49,11 +54,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     public int getXMLOrder() {
         return jmri.Manager.AUDIO;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -219,15 +219,12 @@ public class DefaultAudioManager extends AbstractAudioManager {
      * If not existing, create a new instance.
      *
      * @return reference to currently active AudioManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static DefaultAudioManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultAudioManager();
-        }
-        return _instance;
+        return InstanceManager.getDefault(DefaultAudioManager.class);
     }
-
-    private volatile static DefaultAudioManager _instance;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 

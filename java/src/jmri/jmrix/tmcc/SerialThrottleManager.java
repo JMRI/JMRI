@@ -1,7 +1,9 @@
 package jmri.jmrix.tmcc;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +65,15 @@ public class SerialThrottleManager extends AbstractThrottleManager {
     @Override
     public boolean addressTypeUnique() {
         return false;
+    }
+
+        /**
+     * What speed modes are supported by this system? value should be xor of
+     * possible modes specifed by the DccThrottle interface
+     */
+    @Override
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.TMCC_32);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);
