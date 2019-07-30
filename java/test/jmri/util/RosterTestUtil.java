@@ -87,8 +87,14 @@ public class RosterTestUtil {
         return r;
     }
 
-    // copied from PaneProgFrame
-    private static void loadDecoderFromLoco(RosterEntry r,VariableTableModel varTable) {
+    /**
+     * Load the variable model for a particular roster entry into memory.
+     * This was originally copied from PaneProgFrame
+     *
+     * @param r the roster entry to load.
+     * @param varTable the variable table to load.
+     */
+    public static void loadDecoderFromLoco(RosterEntry r,VariableTableModel varTable) {
         // get a DecoderFile from the locomotive xml
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
@@ -97,7 +103,7 @@ public class RosterTestUtil {
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         log.debug("found {} matches",l.size());
         if (l.size() == 0) {
-            //log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+            log.debug("Loco uses {} {} decoder, but no such decoder defined",decoderFamily, decoderModel );
             // fall back to use just the decoder name, not family
             l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
             log.debug("found {} matches without family key",l.size());
@@ -114,6 +120,7 @@ public class RosterTestUtil {
         }
     }
 
+    // This was originally copied from PaneProgFrame
     private static void loadDecoderFile(DecoderFile df, RosterEntry re,VariableTableModel variableModel) {
         if (df == null) {
             log.warn("loadDecoder file invoked with null object");
