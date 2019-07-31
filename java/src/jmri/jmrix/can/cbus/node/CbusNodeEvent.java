@@ -150,7 +150,7 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
      */ 
     public String getHexEvVarString() {
         if (getEvVarArray()!=null){
-            return StringUtil.hexStringFromInts(getEvVarArray());
+            return StringUtil.hexStringFromInts(getEvVarArray()).replaceAll("\\s","");
         }
         return "";
     }

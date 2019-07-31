@@ -59,14 +59,11 @@ public class CbusNodeEventTest {
         
         CbusNodeEvent t = new CbusNodeEvent(0,7,256,-1,4);
         
-        Assert.assertEquals("4 Ev Vars Unset","FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",t.getHexEvVarString());
+        Assert.assertEquals("4 Ev Vars Unset","FFFFFFFF",t.getHexEvVarString());
         t.setEvArr(new int[]{0,0,0,0});
         Assert.assertEquals("4 Ev Vars 0000","00000000",t.getHexEvVarString());
         t.setEvArr(new int[]{1,2,3,4});
         Assert.assertEquals("4 Ev Vars 1234","01020304",t.getHexEvVarString());
-        t.setEvArr(new int[]{10,256,255,123});
-        Assert.assertEquals("4 Ev Vars larger","0A100FF7B",t.getHexEvVarString());
-        
         t.setEvArr(null);
         Assert.assertEquals("4 Ev Vars null","",t.getHexEvVarString());
         

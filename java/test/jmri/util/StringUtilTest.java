@@ -468,11 +468,11 @@ public class StringUtilTest {
     @Test
     public void testHexStringFromInts(){
         Assert.assertEquals("Zero Length Array", "", StringUtil.hexStringFromInts(new int[] {}) );
-        Assert.assertEquals("-1", "FFFFFFFF", StringUtil.hexStringFromInts(new int[] {-1}) );
-        Assert.assertEquals("0", "00", StringUtil.hexStringFromInts(new int[] {0}) );
-        Assert.assertEquals("0,1", "0001", StringUtil.hexStringFromInts(new int[] {0,1}) );
-        Assert.assertEquals("45,123,129,217", "2D7B81D9", StringUtil.hexStringFromInts(new int[] {45,123,129,217}) );
-        Assert.assertEquals("255,256,257", "FF100101", StringUtil.hexStringFromInts(new int[] {255,256,257}) );
+        Assert.assertEquals("-1", "FF ", StringUtil.hexStringFromInts(new int[] {-1}) );
+        Assert.assertEquals("0", "00 ", StringUtil.hexStringFromInts(new int[] {0}) );
+        Assert.assertEquals("0,1", "00 01 ", StringUtil.hexStringFromInts(new int[] {0,1}) );
+        Assert.assertEquals("45,123,129,217", "2D 7B 81 D9 ", StringUtil.hexStringFromInts(new int[] {45,123,129,217}) );
+        Assert.assertEquals("255,256,257", "FF 00 01 ", StringUtil.hexStringFromInts(new int[] {255,256,257}) );
     }
     
     // The minimal setup for log4J

@@ -173,13 +173,13 @@ public class StringUtil {
     }
     
     /**
-     * Convert an array of integers into a single hex. string. 
-     * Each element is displayed consecutively, no spaces.
+     * Convert an array of integers into a single spaced hex. string.
+     * Each int value will receive 2 hex characters.
      * <p>
-     * eg. int[]{1,2,3,10} will return String "0102030A"
-     * eg. int[]{-1} will return "FFFFFFFF"
-     * eg. int[]{256} will return "100"
-     * eg. int[]{257} will return "101"
+     * eg. int[]{1,2,3,10} will return "01 02 03 0A "
+     * eg. int[]{-1} will return "FF "
+     * eg. int[]{256} will return "00 "
+     * eg. int[]{257} will return "01 "
      *
      * @param v the array of integers. Can be zero length, but must not be null.
      * @return the formatted String or an empty String
@@ -189,7 +189,8 @@ public class StringUtil {
     static public String hexStringFromInts(@Nonnull int[] v) {
         StringBuilder retval = new StringBuilder();
         for (int e : v) {
-            retval.append(String.format("%02X", e));
+            retval.append(twoHexFromInt(e));
+            retval.append(" ");
         }
         return retval.toString();
     }

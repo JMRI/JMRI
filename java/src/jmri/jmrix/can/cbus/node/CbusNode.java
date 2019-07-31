@@ -744,7 +744,7 @@ public class CbusNode implements CanListener {
         if (getParameters()==null) {
             return "";
         } else {
-            return jmri.util.StringUtil.hexStringFromInts(getParameters()).substring(2);
+            return jmri.util.StringUtil.hexStringFromInts(getParameters()).replaceAll("\\s","").substring(2);
         }
     }
 
@@ -759,7 +759,7 @@ public class CbusNode implements CanListener {
         if ( getNvArray() == null ) {
             return "";
         } else {
-            return jmri.util.StringUtil.hexStringFromInts(getNvArray()).substring(2);
+            return jmri.util.StringUtil.hexStringFromInts(getNvArray()).replaceAll("\\s","").substring(2);
         }
     }
 
