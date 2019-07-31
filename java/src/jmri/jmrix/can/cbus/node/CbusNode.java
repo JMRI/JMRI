@@ -744,22 +744,22 @@ public class CbusNode implements CanListener {
         if (getParameters()==null) {
             return "";
         } else {
-            return jmri.util.StringUtil.arrayToHexString(getParameters()).substring(2);
+            return jmri.util.StringUtil.hexStringFromInts(getParameters()).substring(2);
         }
     }
 
     /**
-     * Get the Parameter String in Hex Byte Format
+     * Get the NV String in Hex Byte Format
      * <p>
-     * eg. for param. array [3,1,2,3] returns "010203"
+     * eg. for NV array [3,1,2,255] returns "0102FF"
      * 
-     * @return Full Parameter String WITHOUT leading number of parameters
+     * @return Full NV String WITHOUT leading number of NVs
      */  
     public String getNvHexString() {
         if ( getNvArray() == null ) {
             return "";
         } else {
-            return jmri.util.StringUtil.arrayToHexString(getNvArray()).substring(2);
+            return jmri.util.StringUtil.hexStringFromInts(getNvArray()).substring(2);
         }
     }
 

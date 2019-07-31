@@ -141,7 +141,7 @@ public class StringUtilTest {
         Assert.assertEquals("80", StringUtil.appendTwoHexFromInt((byte) 0x80, ""));
         Assert.assertEquals("FF", StringUtil.appendTwoHexFromInt((byte) 0xFF, ""));
     }
-
+    
     @Test
     public void testParseStringNull() {
         byte[] b = StringUtil.bytesFromHexString("");
@@ -455,15 +455,26 @@ public class StringUtilTest {
     }
     
     @Test
-    public void testarrayToHexString(){
-        Assert.assertEquals("Zero Length Array", "", StringUtil.arrayToHexString(new int[] {}) );
-        Assert.assertEquals("-1", "FFFFFFFF", StringUtil.arrayToHexString(new int[] {-1}) );
-        Assert.assertEquals("0", "00", StringUtil.arrayToHexString(new int[] {0}) );
-        Assert.assertEquals("0,1", "0001", StringUtil.arrayToHexString(new int[] {0,1}) );
-        Assert.assertEquals("45,123,129,217", "2D7B81D9", StringUtil.arrayToHexString(new int[] {45,123,129,217}) );
-        Assert.assertEquals("255,256,257", "FF100101", StringUtil.arrayToHexString(new int[] {255,256,257}) );
+    public void testHexStringFromBytes(){
+        Assert.assertEquals("Zero Length Array", "", StringUtil.hexStringFromBytes(new byte[] {}) );
+        Assert.assertEquals("00010203", "00 01 02 03 ", StringUtil.hexStringFromBytes(new byte[]{0,1,2,3}) );
+        Assert.assertEquals("0", "00 ", StringUtil.hexStringFromBytes(new byte[]{0}) );
+        Assert.assertEquals("-1", "FF ", StringUtil.hexStringFromBytes(new byte[]{-1}) );
+        Assert.assertEquals("-1", "AB CD ", StringUtil.hexStringFromBytes(new byte[]{(byte) 0xab,(byte) 0xcd}) );
+        Assert.assertEquals("45,123,129,217", "2D 7B 81 D9 ", StringUtil.hexStringFromBytes(new byte[] {45,123,(byte)129,(byte)217}) );
+        Assert.assertEquals("255,256,257", "FF 00 01 ", StringUtil.hexStringFromBytes(new byte[] {(byte)255,(byte)256,(byte)257}) );
     }
-
+    
+    @Test
+    public void testHexStringFromInts(){
+        Assert.assertEquals("Zero Length Array", "", StringUtil.hexStringFromInts(new int[] {}) );
+        Assert.assertEquals("-1", "FFFFFFFF", StringUtil.hexStringFromInts(new int[] {-1}) );
+        Assert.assertEquals("0", "00", StringUtil.hexStringFromInts(new int[] {0}) );
+        Assert.assertEquals("0,1", "0001", StringUtil.hexStringFromInts(new int[] {0,1}) );
+        Assert.assertEquals("45,123,129,217", "2D7B81D9", StringUtil.hexStringFromInts(new int[] {45,123,129,217}) );
+        Assert.assertEquals("255,256,257", "FF100101", StringUtil.hexStringFromInts(new int[] {255,256,257}) );
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {

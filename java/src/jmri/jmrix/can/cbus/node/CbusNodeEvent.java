@@ -146,14 +146,13 @@ public class CbusNodeEvent extends CbusEvent implements Comparable<CbusNodeEvent
      * <p>
      * eg. returns 0104D6A0
      *
-     * @return the hex string for of the array, unknown values are blanked
+     * @return the hex string for of the array
      */ 
     public String getHexEvVarString() {
         if (getEvVarArray()!=null){
-            return StringUtil.arrayToHexString(getEvVarArray());
+            return StringUtil.hexStringFromInts(getEvVarArray());
         }
         return "";
-        
     }
 
     /**

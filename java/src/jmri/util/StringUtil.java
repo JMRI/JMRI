@@ -152,6 +152,11 @@ public class StringUtil {
     /**
      * Create a String containing hexadecimal values from a byte[].
      *
+     * eg. byte[]{1,2,3,10} will return String "01 02 03 0A "
+     * eg. byte[]{-1} will return "FF "
+     * eg. byte[]{(byte)256} will return "00 "
+     * eg. byte[]{(byte)257} will return "01 "
+     *
      * @param bytes byte array. Can be zero length, but must not be null.
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
@@ -165,6 +170,28 @@ public class StringUtil {
             sb.append(' ');
         }
         return sb.toString();
+    }
+    
+    /**
+     * Convert an array of integers into a single hex. string. 
+     * Each element is displayed consecutively, no spaces.
+     * <p>
+     * eg. int[]{1,2,3,10} will return String "0102030A"
+     * eg. int[]{-1} will return "FFFFFFFF"
+     * eg. int[]{256} will return "100"
+     * eg. int[]{257} will return "101"
+     *
+     * @param v the array of integers. Can be zero length, but must not be null.
+     * @return the formatted String or an empty String
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public String hexStringFromInts(@Nonnull int[] v) {
+        StringBuilder retval = new StringBuilder();
+        for (int e : v) {
+            retval.append(String.format("%02X", e));
+        }
+        return retval.toString();
     }
 
     /**
@@ -530,28 +557,6 @@ public class StringUtil {
             retval.append('[');
             retval.append(e);
             retval.append(']');
-        }
-        return new String(retval);
-    }
-    
-    /**
-     * Convert an array of integers into a single hex. string. 
-     * Each element is displayed consecutively, no spaces.
-     * <p>
-     * eg. int[]{1,2,3,10} will return String "0102030A"
-     * eg. int[]{-1} will return "FFFFFFFF"
-     * eg. int[]{256} will return "100"
-     * eg. int[]{257} will return "101"
-     *
-     * @param v the array of integers
-     * @return the formatted String or an empty String
-     */
-    @CheckReturnValue
-    @Nonnull
-    static public String arrayToHexString(@Nonnull int[] v) {
-        StringBuilder retval = new StringBuilder();
-        for (int e : v) {
-            retval.append(String.format("%02X", e));
         }
         return new String(retval);
     }
