@@ -345,6 +345,32 @@ public class CbusAddressTest {
         Assert.assertEquals("a hashcode is present",530,a.hashCode());
     }
     
+    @Test
+    public void testMatchRequest() {
+        
+        Assert.assertTrue("short request 12 match",new CbusAddress("+12").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ASRQ, 0x00, 0x00, 0x00, 12})));
+        
+        Assert.assertFalse("short request 13 no match",new CbusAddress("+13").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ASRQ, 0x00, 0x00, 0x00, 12})));
+            
+        Assert.assertFalse("Data element no match",new CbusAddress("+12").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ACON3, 0x00, 0x00, 0x00, 12, 0x12, 0x13})));
+        
+        Assert.assertFalse("ASON 12 no match",new CbusAddress("+12").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ASON, 0x00, 0x00, 0x00, 12})));
+            
+        Assert.assertTrue("long request N12E34 match",new CbusAddress("+N12E34").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_AREQ, 0x00, 12, 0x00, 34})));
+            
+        Assert.assertFalse("long request N11E34 no match",new CbusAddress("+N11E34").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_AREQ, 0x00, 12, 0x00, 34})));
+            
+        Assert.assertFalse("long request N123E35 no match",new CbusAddress("+N12E35").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_AREQ, 0x00, 12, 0x00, 34})));
+            
+    }
+    
 
     // The minimal setup for log4J
     @Before
