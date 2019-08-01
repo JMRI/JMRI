@@ -82,6 +82,12 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
     public void checkRemoveWithGetRosterIDAdvanced(){
     }
 
+    @Test
+    @Ignore("Remove requires response from command station")
+    @ToDo("re-write parent class test here and include simulated command station response") 
+    public void checkAddRemoveWithRosterUpdateAdvanced(){
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
