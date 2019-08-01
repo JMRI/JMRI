@@ -19,6 +19,9 @@ public class RosterFrameTest {
     @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
+    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
+    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(20);
+
     private RosterFrame frame = null;
 
     @Test
