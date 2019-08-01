@@ -389,7 +389,7 @@ public class DccConsist implements Consist, ProgListener {
     * Update the value in the roster entry for CV19 for the specified
     * address
     *
-    * @param addresss is the Locomotive address we are updating.
+    * @param address is the Locomotive address we are updating.
     */
    protected void setRosterEntryCVValue(DccLocoAddress address){
       updateRosterCV(address,getLocoDirection(address),this.consistAddress.getNumber());
@@ -398,7 +398,7 @@ public class DccConsist implements Consist, ProgListener {
    /**
     * Set the value in the roster entry's value for for CV19 to 0
     *
-    * @param addresss is the Locomotive address we are updating.
+    * @param address is the Locomotive address we are updating.
     */
    protected void resetRosterEntryCVValue(DccLocoAddress address){
       updateRosterCV(address,getLocoDirection(address),0);
@@ -408,8 +408,8 @@ public class DccConsist implements Consist, ProgListener {
     * If allowed by the preferences, Update the CV19 value in the 
     * specified address's roster entry, if the roster entry is known.
     *
-    * @param addresss is the Locomotive address we are updating.
-    * @param direction, the direction to set.
+    * @param address is the Locomotive address we are updating.
+    * @param direction the direction to set.
     * @param value the numeric value of the consist address. 
     */
    protected void updateRosterCV(DccLocoAddress address,Boolean direction,int value){
@@ -495,16 +495,16 @@ public class DccConsist implements Consist, ProgListener {
         }
         // load variables from decoder tree
         df.getProductID();
-        df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+        if(decoderRoot!=null) {
+           df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
-        // load reset from decoder tree
-        //df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
+           // load reset from decoder tree
+           //df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
-        // load function names
-        re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+           // load function names
+           re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+        }
     }
-
-
 
     /*
      * Add a Listener for consist events
