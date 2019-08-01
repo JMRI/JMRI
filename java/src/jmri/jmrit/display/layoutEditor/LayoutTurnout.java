@@ -2341,6 +2341,9 @@ public class LayoutTurnout extends LayoutTrack {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(
                     mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
+                        if ( e.getNewValue() == null) {
+                            return;
+                        }
                         if (secondNamedTurnout != null) {
                             int new2ndState = secondNamedTurnout.getBean().getCommandedState();
                             if (e.getSource().equals(secondNamedTurnout.getBean())
