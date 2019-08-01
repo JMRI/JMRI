@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>The event status of JMRI Turnouts can be queried via CBUS commands AREQ / ASRQ.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -339,7 +339,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved functioning of Supporting Turnouts using feedback.</li>
         </ul>
 
     <h3>Logix</h3>
