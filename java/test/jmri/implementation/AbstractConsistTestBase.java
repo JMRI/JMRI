@@ -109,6 +109,20 @@ abstract public class AbstractConsistTestBase {
         Assert.assertNull("Roster ID B",c.getRosterId(B));
     }
 
+    @Test public void checkRemoveWithGetRosterIDAdvanced(){
+        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // revese direction.
+        c.setRosterId(A,"foo");
+        Assert.assertEquals("Roster ID A","foo",c.getRosterId(A));
+        Assert.assertNull("Roster ID B",c.getRosterId(B));
+        c.remove(A);
+        Assert.assertFalse("Roster A is no longer in consist",c.contains(A));
+    }
+
     // The minimal setup for log4J
 
 }
