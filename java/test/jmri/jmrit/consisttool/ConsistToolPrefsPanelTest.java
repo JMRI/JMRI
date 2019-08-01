@@ -1,10 +1,9 @@
 package jmri.jmrit.consisttool;
 
+import jmri.InstanceManager;
+import jmri.ConsistManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of ConsistToolPrefsPanel 
@@ -22,12 +21,14 @@ public class ConsistToolPrefsPanelTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initStartupActionsManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     
     @After

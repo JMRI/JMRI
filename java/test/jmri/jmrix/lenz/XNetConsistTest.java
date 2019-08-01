@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz;
 
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,6 +98,8 @@ public class XNetConsistTest extends jmri.implementation.AbstractConsistTestBase
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
         c = new XNetConsist(5, tc, memo);

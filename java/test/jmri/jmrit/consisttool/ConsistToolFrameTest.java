@@ -249,8 +249,10 @@ public class ConsistToolFrameTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE));
+        JUnitUtil.resetProfileManager(profile );
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         JUnitUtil.initDebugThrottleManager();
     }
 

@@ -2,6 +2,8 @@ package jmri.jmrix.nce;
 
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,6 +83,8 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         // prepare an interface
         nnis = new NceInterfaceScaffold();
         memo = new NceSystemConnectionMemo();
