@@ -133,7 +133,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 addr = address(sw1, sw2);
 
                 // store message in case resend is needed
-                lastSWREQ = l;
+                lastSWREQ = new LocoNetMessage(l);
 
                 // LocoNet spec says 0x10 of SW2 must be 1, but we observe 0
                 if (((sw1 & 0xFC) == 0x78) && ((sw2 & 0xCF) == 0x07)) {
