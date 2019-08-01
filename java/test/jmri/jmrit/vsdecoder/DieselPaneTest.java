@@ -22,6 +22,7 @@ public class DieselPaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
