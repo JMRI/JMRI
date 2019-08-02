@@ -20,7 +20,7 @@ public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase
         JUnitUtil.resetProfileManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         jmri.util.JUnitUtil.initDebugCommandStation();
-        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(1234, true);
+        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(123, false);
         c = new WiFiConsist(addr);
     }
 
