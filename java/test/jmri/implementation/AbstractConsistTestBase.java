@@ -150,7 +150,7 @@ abstract public class AbstractConsistTestBase {
         c.restore(B,false); // revese direction.
         c.setRosterId(A,"ATSF123");
 
-        // verify that roster ATSF123 has CV19 set to the consist address (12)
+        // verify that roster ATSF123 has CV19 set to the consist address
         CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
         VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
         entry.readFile();  // read, but don’t yet process
@@ -160,7 +160,7 @@ abstract public class AbstractConsistTestBase {
 
         entry.loadCvModel(varTable, cvTable);
         CvValue cv19Value = cvTable.getCvByNumber("19");
-        Assert.assertEquals("CV19 value after add",12,cv19Value.getValue());
+        Assert.assertEquals("CV19 value after add",c.getConsistAddress().getNumber(),cv19Value.getValue());
 
         Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
         Assert.assertNull("Roster ID B",c.getRosterId(B));
