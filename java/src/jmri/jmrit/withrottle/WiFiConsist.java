@@ -26,6 +26,7 @@ public class WiFiConsist extends NmraConsist {
         consistDir.remove(loco);
         consistList.remove(loco);
         consistPosition.remove(loco);
+        consistRoster.remove(loco);
         sendConsistCommand(loco, true, null);
     }
 
