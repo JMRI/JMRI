@@ -53,6 +53,7 @@ import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.HelpUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,6 @@ public class CircuitBuilder {
 
     private JMenu _circuitMenu;
     private JMenu _todoMenu;   // error checking items
-
-    // map track icon to OBlock to which it belongs
-//    private final HashMap<Positionable, OBlock> _iconMap = new HashMap<>();
 
     // map OBlock to List of icons (track, portal, signal that represent it
     private HashMap<OBlock, ArrayList<Positionable>> _circuitMap;
@@ -102,11 +100,12 @@ public class CircuitBuilder {
     // list of SignalMastIcon and SignalHeadicon not protecting a block
     private final ArrayList<PositionableIcon> _unattachedMastIcon = new ArrayList<>();
 
-    // map SignalMasts and SignalHeads to the Portal
+    // map SignalMasts and SignalHeads to the Portal where it is configured
     private HashMap<NamedBean, Portal> _signalMap = new HashMap<>();
 
     private boolean _hasIndicatorTrackIcons;
     private boolean _hasPortalIcons;
+    private boolean _hasMastIcons;
 
     // OBlock list to open edit frames
     private PickListModel<OBlock> _oblockModel;
@@ -224,10 +223,13 @@ public class CircuitBuilder {
             if (_cbFrame !=null) {
                 _cbFrame.dispose();
             }
-            editSignalFrame("SignalTitle", true);
+            editSignalFrame("editSignalItem", true);
         });
         _todoMenu = new JMenu(Bundle.getMessage("circuitErrorsItem"));
         _circuitMenu.add(_todoMenu);
+        JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
+        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+        _circuitMenu.add(helpItem);
         makeToDoMenu();
     }
 
@@ -374,6 +376,27 @@ public class CircuitBuilder {
         }
         _todoMenu.add(iconNeeds);   // #6
 
+        iconNeeds = new JMenuItem(Bundle.getMessage("UnattachedMasts"));
+        if (_unattachedMastIcon.size() > 0) {
+            iconNeeds.addActionListener((ActionEvent event) -> {
+                if (editingOK()) {
+                    ArrayList<Positionable> group = new ArrayList<>();
+                    for (int i = 0; i < _unattachedMastIcon.size(); i++) {
+                        PositionableIcon pi = _unattachedMastIcon.get(i);
+                        group.add(pi);
+                    }
+                    _editor.setSelectionGroup(group);
+                }
+            });
+        } else {
+            if (_hasMastIcons) {
+                iconNeeds = new JMenuItem(Bundle.getMessage("mastsInPlace"));
+            } else {
+                iconNeeds = new JMenuItem(Bundle.getMessage("NoMastIcons"));
+            }
+        }
+        _todoMenu.add(iconNeeds);   // #7
+
         blockNeeds = new JMenu(Bundle.getMessage("portalNeedsIcon"));
         ActionListener editPortalAction = (ActionEvent event) -> {
             String portalName = event.getActionCommand();
@@ -390,7 +413,7 @@ public class CircuitBuilder {
         } else {
             blockNeeds.add(new JMenuItem(Bundle.getMessage("portalsHaveIcons")));
         }
-        _todoMenu.add(blockNeeds);
+        _todoMenu.add(blockNeeds);  // #8
 
         JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
         _todoMenu.add(pError);
@@ -537,7 +560,7 @@ public class CircuitBuilder {
             }
             if (_currentBlock != null) {
                 // check icons to be indicator type
-                _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, false));
+                _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);
@@ -862,6 +885,7 @@ public class CircuitBuilder {
         _unconvertedTrack.clear();
         _hasIndicatorTrackIcons = false;
         _hasPortalIcons = false;
+        _hasMastIcons = false;
         ArrayList<Positionable> removeList = new ArrayList<>();
         PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
 
@@ -889,6 +913,7 @@ public class CircuitBuilder {
                     piArray.add(pIcon);
                 }
             } else if (pos instanceof SignalMastIcon) {
+                _hasMastIcons = true;
                 SignalMastIcon sIcon = (SignalMastIcon)pos;
                 NamedBean mast = sIcon.getSignalMast();
                 if (mast == null) {
@@ -900,6 +925,7 @@ public class CircuitBuilder {
                     _unattachedMastIcon.add(sIcon);
                 }
             } else if (pos instanceof SignalHeadIcon) {
+                _hasMastIcons =true;
                 SignalHeadIcon sIcon = (SignalHeadIcon)pos;
                 NamedBean mast = sIcon.getSignalHead();
                 if (mast == null) {
@@ -1553,7 +1579,6 @@ public class CircuitBuilder {
         } else if (_editFrame instanceof EditCircuitPaths) {
             EditCircuitPaths editPathsFrame = (EditCircuitPaths)_editFrame;
             editPathsFrame.updateSelections(!event.isShiftDown(), selection);
-            editPathsFrame.toFront();
         } else if (_editFrame instanceof EditPortalFrame) {
             EditPortalFrame editPortalFrame = (EditPortalFrame)_editFrame;
             if (selection instanceof PortalIcon) {
