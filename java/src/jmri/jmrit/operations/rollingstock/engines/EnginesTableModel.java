@@ -3,10 +3,15 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
@@ -14,8 +19,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of engines used by operations
@@ -45,8 +48,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int VALUE_COLUMN = 15;
     private static final int RFID_COLUMN = 16;
     private static final int LAST_COLUMN = 17;
-    private static final int SET_COLUMN = 18;
-    private static final int EDIT_COLUMN = 19;
+    private static final int DCC_ADDRESS_COLUMN = 18;
+    private static final int SET_COLUMN = 19;
+    private static final int EDIT_COLUMN = 20;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -70,6 +74,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public final int SORTBY_RFID = 12;
     public final int SORTBY_LAST = 13;
     public final int SORTBY_HP = 14;
+    public final int SORTBY_DCC_ADDRESS = 15;
 
     private int _sort = SORTBY_NUMBER;
 
@@ -86,7 +91,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 sort == SORTBY_OWNER ||
                 sort == SORTBY_VALUE ||
                 sort == SORTBY_RFID ||
-                sort == SORTBY_LAST) {
+                sort == SORTBY_LAST ||
+                sort == SORTBY_DCC_ADDRESS) {
             XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
             tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), sort == SORTBY_BUILT);
@@ -96,6 +102,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHEN_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), sort == SORTBY_DCC_ADDRESS);
         }
         fireTableDataChanged();
     }
@@ -105,6 +112,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Search for engine by road number
+     * 
      * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
@@ -209,7 +217,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
     private final int[] _enginesTableColumnWidths =
-            {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 65, 70};
+            {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 50, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -240,7 +248,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHEN_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
-        
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), false);
+
         // turn on default
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
@@ -294,6 +303,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return Setup.getRfidLabel();
             case LAST_COLUMN:
                 return Bundle.getMessage("LastMoved");
+            case DCC_ADDRESS_COLUMN:
+                return Bundle.getMessage("DccAddress");
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
@@ -403,6 +414,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return eng.getRfid();
             case LAST_COLUMN:
                 return eng.getLastDate();
+            case DCC_ADDRESS_COLUMN:
+                return eng.getDccAddress();
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
@@ -444,13 +457,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     engineSetFrame.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        engineSetFrame = new EngineSetFrame();
-                        engineSetFrame.initComponents();
-                        engineSetFrame.loadEngine(engine);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    engineSetFrame = new EngineSetFrame();
+                    engineSetFrame.initComponents();
+                    engineSetFrame.loadEngine(engine);
                 });
                 break;
             case EDIT_COLUMN:
@@ -459,13 +469,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     engineEditFrame.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        engineEditFrame = new EngineEditFrame();
-                        engineEditFrame.initComponents();
-                        engineEditFrame.load(engine);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    engineEditFrame = new EngineEditFrame();
+                    engineEditFrame.initComponents();
+                    engineEditFrame.load(engine);
                 });
                 break;
             default:
@@ -503,13 +510,13 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
             fireTableDataChanged();
-        } 
+        }
         // Engine length, type, and HP are based on model, so multiple changes
         else if (e.getPropertyName().equals(Engine.LENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Engine.TYPE_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Engine.HP_CHANGED_PROPERTY)) {
             fireTableDataChanged();
-        } 
+        }
         // must be a engine change
         else if (e.getSource().getClass().equals(Engine.class)) {
             Engine engine = (Engine) e.getSource();

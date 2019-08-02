@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,8 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -28,8 +34,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of a automation used by operations
@@ -523,7 +527,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     // this table listens for changes to a automation and its car types
-    // TODO removed synchronized from propertyChange, it may cause a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY)
@@ -535,11 +538,13 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             fireTableDataChanged();
         }
         if (e.getPropertyName().equals(Automation.CURRENT_ITEM_CHANGED_PROPERTY)) {
-            int row = _list.indexOf(_automation.getCurrentAutomationItem());
-            int viewRow = _table.convertRowIndexToView(row);
-            // the following line can be responsible for a thread lock
-            _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-            fireTableDataChanged();
+            SwingUtilities.invokeLater(() -> {
+                int row = _list.indexOf(_automation.getCurrentAutomationItem());
+                int viewRow = _table.convertRowIndexToView(row);
+                // the following line can be responsible for a thread lock
+                _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
+                fireTableDataChanged();
+            });
         }
         // update automation item?
         if (e.getSource().getClass().equals(AutomationItem.class)) {

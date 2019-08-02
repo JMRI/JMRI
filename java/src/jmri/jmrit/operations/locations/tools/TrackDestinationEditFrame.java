@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -16,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -31,8 +36,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of track roads
@@ -280,14 +283,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         //      statusFrame.setSize(Control.panelWidth700, 100);
         //      statusFrame.setVisible(true);
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (checkLocationsLoop())
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
-                checkDestinationsButton.setEnabled(true);
-                //                statusFrame.dispose();
-            }
+        SwingUtilities.invokeLater(() -> {
+            if (checkLocationsLoop())
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
+            checkDestinationsButton.setEnabled(true);
         });
     }
 
