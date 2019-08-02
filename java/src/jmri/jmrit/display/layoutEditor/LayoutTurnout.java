@@ -2340,28 +2340,35 @@ public class LayoutTurnout extends LayoutTrack {
     private void activateTurnout() {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(
-                    mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
-                        if ( e.getNewValue() == null) {
-                            return;
-                        }
-                        if (secondNamedTurnout != null) {
-                            int new2ndState = secondNamedTurnout.getBean().getCommandedState();
-                            if (e.getSource().equals(secondNamedTurnout.getBean())
-                            && e.getNewValue().equals(new2ndState)) {
-                                int old1stState = namedTurnout.getBean().getCommandedState();
-                                int new1stState = new2ndState;
-                                if (secondTurnoutInverted) {
-                                    new1stState = Turnout.invertTurnoutState(new1stState);
-                                }
-                                if (old1stState != new1stState) {
-                                    namedTurnout.getBean().setCommandedState(new1stState);
-                                }
+                mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
+                    if ( e.getNewValue() == null) {
+                        return;
+                    }
+                    if (secondNamedTurnout != null) {
+                        int t1state = namedTurnout.getBean().getCommandedState();
+                        int t2state = secondNamedTurnout.getBean().getCommandedState();
+                        if (e.getSource().equals(namedTurnout.getBean())
+                        && e.getNewValue().equals(t1state)) {
+                            if (secondTurnoutInverted) {
+                                t1state = Turnout.invertTurnoutState(t1state);
+                            }
+                            if (secondNamedTurnout.getBean().getCommandedState() != t1state) {
+                                secondNamedTurnout.getBean().setCommandedState(t1state);
+                            }
+                        } else if (e.getSource().equals(secondNamedTurnout.getBean())
+                        && e.getNewValue().equals(t2state)) {
+                            if (secondTurnoutInverted) {
+                                t2state = Turnout.invertTurnoutState(t2state);
+                            }
+                            if (namedTurnout.getBean().getCommandedState() != t2state) {
+                                namedTurnout.getBean().setCommandedState(t2state);
                             }
                         }
-                        layoutEditor.redrawPanel();
-                    },
-                    namedTurnout.getName(),
-                    "Layout Editor Turnout"
+                    }
+                    layoutEditor.redrawPanel();
+                },
+                namedTurnout.getName(),
+                "Layout Editor Turnout"
             );
         }
         if (secondNamedTurnout != null) {
@@ -2387,7 +2394,7 @@ public class LayoutTurnout extends LayoutTrack {
     public void toggleTurnout() {
         if (getTurnout() != null) {
             // toggle turnout
-            if (getTurnout().getKnownState() == Turnout.CLOSED) {
+            if (getTurnout().getCommandedState() == Turnout.CLOSED) {
                 setState(Turnout.THROWN);
             } else {
                 setState(Turnout.CLOSED);
