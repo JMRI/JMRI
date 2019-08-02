@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -166,7 +167,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
 	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
@@ -243,12 +244,49 @@ public class MemoryIconTest extends PositionableTestBase {
         JUnitUtil.dispose(jf);
     }
 
+    @Test
+    public void testAddKeyAndIcon(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JmriJFrame();
+        jf.setTitle("Image From Key Value");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
+
+        jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
+
+        jf.getContentPane().add(new javax.swing.JLabel("| Expect Image: "));
+
+        NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+
+	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("1");
+        jf.pack();
+        jf.setVisible(true);
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        Assert.assertNotNull("Label with correct text value before key",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),"1"));
+
+        to.addKeyAndIcon(icon,"1");
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        // we should probably verify the icon displays the correct icon here.
+        // The text contents of the field are not displayed.
+
+        jf.setVisible(false);
+        JUnitUtil.dispose(jf);
+    }
+
     int[] getColor(String frameName, String label, int x, int y, int n) {
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(frameName);
 
         // find label within that
         JLabel jl = JLabelOperator.findJLabel(frame,new ComponentChooser(){
+               @Override
                public boolean checkComponent(Component comp){
                    if(comp == null){
                       return false;
@@ -256,6 +294,7 @@ public class MemoryIconTest extends PositionableTestBase {
                      return (comp instanceof JLabel);
                    }
                }
+               @Override
                public String getDescription(){
                   return "find the first JLabel";
                }

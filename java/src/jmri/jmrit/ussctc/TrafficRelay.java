@@ -46,6 +46,7 @@ public class TrafficRelay implements Lock {
      * Test for new condition
      * @return True if lock is clear and operation permitted
      */
+    @Override
     public boolean isLockClear() {
         if (beans != null) {
             // if route doesn't match, permitted

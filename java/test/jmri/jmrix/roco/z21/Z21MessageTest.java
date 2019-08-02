@@ -231,6 +231,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21Message("0D 00 04 00 12 34 AB 3 19 6 B B1");

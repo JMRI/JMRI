@@ -97,6 +97,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){

@@ -2,8 +2,10 @@ package jmri.util.managers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrix.internal.InternalSensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
@@ -15,7 +17,7 @@ import jmri.jmrix.internal.InternalSensorManager;
 public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
 
     public SensorManagerThrowExceptionScaffold() {
-        super("I");
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */

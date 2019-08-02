@@ -17,6 +17,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements jmri.InstanceManagerAutoDefault {
 
     public LayoutBlockManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
@@ -44,12 +45,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.LAYOUTBLOCKS;
-    }
-
-    @Override
-    @Nonnull
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -189,18 +184,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @Nullable
     public LayoutBlock getByUserName(@Nonnull String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * Get LayoutBlockManager instance.
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public LayoutBlockManager instance() {
-        return InstanceManager.getDefault(LayoutBlockManager.class);
     }
 
     /**

@@ -255,7 +255,7 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def displaySegmentData(self, b) :
-        PanelMenu = jmri.jmrit.display.PanelMenu.instance()
+        PanelMenu = jmri.InstanceManager.getDefault(jmri.jmrit.display.PanelMenu)
         layout = PanelMenu.getLayoutEditorPanelList()
         for s in layout[0].getTrackSegments():
             #self.msgText("Segment: " + s.getID() + " block: " + s.getBlockName() + "\n")

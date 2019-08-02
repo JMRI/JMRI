@@ -21,6 +21,7 @@ import org.openlcb.*;
 public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }    
     
     @Test
@@ -82,6 +83,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() {
                     return java.util.Collections.enumeration(
                         java.util.Arrays.asList(
@@ -161,6 +163,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         
         vp.setAspectNames(
             new jmri.implementation.DefaultSignalAppearanceMap("IM123") {
+                @Override
                 public Enumeration<String> getAspects() { return mast.getAllKnownAspects().elements(); }
             }
                 , InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem("basic"));
@@ -227,6 +230,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     // This only initialized JUnit and Log4J once per class so that it
     // can only initialize the OpenLCB structure once per class
     @Before
+    @Override
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
@@ -249,6 +253,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
@@ -258,6 +263,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @After
+    @Override
     public void tearDown() {
         messages = null;
     }

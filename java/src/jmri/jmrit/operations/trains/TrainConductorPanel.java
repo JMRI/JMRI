@@ -163,52 +163,48 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
         queued = true;
         // use invokeLater to prevent deadlock
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("run update, setMode: " + isSetMode);
-                queued = false;
-                initialize();
-                if (_train != null && _train.getRoute() != null) {
-                    textTrainName.setText(_train.getIconName());
-                    RouteLocation rl = _train.getCurrentLocation();
-                    if (rl != null) {
-                        textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
-                        textTrainRouteLocationCommentPane.setText(rl.getComment());
-                        textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
-                        textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
-                                ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
-                        pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() &&
-                                !rl.getDepartureTime().equals(RouteLocation.NONE));
-                        textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
-                        textLocationCommentPane.setVisible(!rl.getLocation().getComment().equals(Location.NONE) &&
-                                Setup.isPrintLocationCommentsEnabled());
-                        textLocationCommentPane.setText(rl.getLocation().getComment());
-                        textNextLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
-                                ? _train.getNextLocationName() : TrainCommon.splitString(_train.getNextLocationName()));
+        SwingUtilities.invokeLater(() -> {
+            log.debug("run update, setMode: " + isSetMode);
+            queued = false;
+            initialize();
+            if (_train != null && _train.getRoute() != null) {
+                textTrainName.setText(_train.getIconName());
+                RouteLocation rl = _train.getCurrentLocation();
+                if (rl != null) {
+                    textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
+                    textTrainRouteLocationCommentPane.setText(rl.getComment());
+                    textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
+                    textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
+                            ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
+                    pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() &&
+                            !rl.getDepartureTime().equals(RouteLocation.NONE));
+                    textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
+                    textLocationCommentPane.setVisible(!rl.getLocation().getComment().equals(Location.NONE) &&
+                            Setup.isPrintLocationCommentsEnabled());
+                    textLocationCommentPane.setText(rl.getLocation().getComment());
+                    textNextLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
+                            ? _train.getNextLocationName() : TrainCommon.splitString(_train.getNextLocationName()));
 
-                        // check for locos
-                        updateLocoPanes(rl);
+                    // check for locos
+                    updateLocoPanes(rl);
 
-                        // now update the car pick ups and set outs
-                        blockCars(rl, IS_MANIFEST);
+                    // now update the car pick ups and set outs
+                    blockCars(rl, IS_MANIFEST);
 
-                    } else {
-                        moveButton.setEnabled(false);
-                        modifyButton.setEnabled(false);
-                    }
-
-                    textStatus.setText(getStatus(rl, IS_MANIFEST));
-
-                    // adjust move button text
-                    if (rl == _train.getTrainTerminatesRouteLocation()) {
-                        moveButton.setText(Bundle.getMessage("Terminate"));
-                    } else {
-                        moveButton.setText(Bundle.getMessage("Move"));
-                    }
-                    updateComplete();
-
+                } else {
+                    moveButton.setEnabled(false);
+                    modifyButton.setEnabled(false);
                 }
+
+                textStatus.setText(getStatus(rl, IS_MANIFEST));
+
+                // adjust move button text
+                if (rl == _train.getTrainTerminatesRouteLocation()) {
+                    moveButton.setText(Bundle.getMessage("Terminate"));
+                } else {
+                    moveButton.setText(Bundle.getMessage("Move"));
+                }
+                updateComplete();
             }
         });
     }

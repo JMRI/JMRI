@@ -26,6 +26,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +56,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
+    private final SystemConnectionMemo memo;
 
     private int settingTimer = 2000;
 
@@ -118,6 +121,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
@@ -246,8 +250,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    public SystemConnectionMemo getMemo() {
+        return memo;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        return memo.getSystemPrefix();
     }
 
     /** {@inheritDoc} */
@@ -260,16 +270,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return always 'VALID'
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
     }
 
     /** {@inheritDoc} */
@@ -1412,11 +1412,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }

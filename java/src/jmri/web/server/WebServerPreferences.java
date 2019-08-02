@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import jmri.InstanceManager;
 import jmri.beans.PreferencesBean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
@@ -95,19 +94,6 @@ public class WebServerPreferences extends PreferencesBean {
         super(ProfileManager.getDefault().getActiveProfile());
         Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
         this.readPreferences(sharedPreferences);
-    }
-
-    /**
-     * Get the current default WebServerPreferences object.
-     *
-     * @return the default WebServerPrefeences instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with an argument
-     * of {@code WebServerPreferences.class} instead
-     */
-    @Deprecated
-    public static WebServerPreferences getDefault() {
-        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     private void readPreferences(Preferences sharedPreferences) {

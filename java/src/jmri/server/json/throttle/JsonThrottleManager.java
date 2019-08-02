@@ -36,6 +36,7 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
      */
     @Deprecated
     public static JsonThrottleManager getDefault() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getDefault");        
         return InstanceManager.getDefault(JsonThrottleManager.class);
     }
 
@@ -96,4 +97,5 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     public void attachListener(DccLocoAddress address, JsonThrottle throttle) {
         InstanceManager.getDefault(ThrottleManager.class).attachListener(address, throttle);
     }
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonThrottleManager.class);
 }

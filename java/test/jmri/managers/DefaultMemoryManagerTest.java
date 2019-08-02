@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
@@ -18,7 +20,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for memory: \"IM\" but needed IM followed by a suffix");
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test
@@ -29,7 +31,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         } catch (IllegalArgumentException e) {
             // nothing to do
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Memory: \"\" needed non-empty suffix to follow IM");
+        JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -42,7 +44,7 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultMemoryManager();
+        l = new DefaultMemoryManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

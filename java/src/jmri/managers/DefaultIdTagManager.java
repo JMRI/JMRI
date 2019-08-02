@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.Disposable;
@@ -17,6 +18,8 @@ import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -38,8 +41,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean useFastClock = false;
     private ShutDownTask shutDownTask = null;
 
-    public DefaultIdTagManager() {
-        super();
+    public DefaultIdTagManager(SystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override
@@ -97,11 +100,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Override
     public char typeLetter() {
         return 'D';
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -208,13 +206,13 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
 
-        // save in the maps
-        register(s);
-
         // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
+
+        // save in the maps
+        register(s);
 
         return s;
     }
@@ -255,27 +253,43 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     @Override
     public void setStateStored(boolean state) {
+        if (!initialised && !loading) {
+            init();
+        }
         if (state != storeState) {
             this.setDirty(true);
         }
+        boolean old = storeState;
         storeState = state;
+        firePropertyChange("StateStored", old, state);
     }
 
     @Override
     public boolean isStateStored() {
+        if (!initialised && !loading) {
+            init();
+        }
         return storeState;
     }
 
     @Override
     public void setFastClockUsed(boolean fastClock) {
+        if (!initialised && !loading) {
+            init();
+        }
         if (fastClock != useFastClock) {
             this.setDirty(true);
         }
-        useFastClock = fastClock;
+        boolean old = useFastClock;
+        useFastClock  = fastClock;
+        firePropertyChange("UseFastClock", old, fastClock);
     }
 
     @Override
     public boolean isFastClockUsed() {
+        if (!initialised && !loading) {
+            init();
+        }
         return useFastClock;
     }
 
@@ -332,7 +346,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(IdTagManager.class)) {
-                return new DefaultIdTagManager();
+                return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
             }
             return super.getDefault(type);
         }

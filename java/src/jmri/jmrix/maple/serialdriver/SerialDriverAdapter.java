@@ -216,15 +216,6 @@ public class SerialDriverAdapter extends SerialPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    /**
-     * @deprecated JMRI Since 4.11.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated 
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
-    static SerialDriverAdapter mInstance = null;
-
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

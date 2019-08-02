@@ -19,6 +19,7 @@ public class ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTe
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 

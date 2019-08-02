@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Fixed issue with Throttle Direction Changes ( while moving ) not being sent to Command Station</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -141,7 +141,10 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>The CV19 references in multiple decoder definitions
+            have been updated to use common fragment files.</li>
+          <li>The Schema references in numerous fragment files have been updated to 
+            a consistent form.</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -181,7 +184,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li></li>
+                <li>Alain Le Marchand updated some definitions</li>
             </ul>
 
         <h4>ESU</h4>
@@ -206,7 +209,8 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li></li>
+                <li>Fixed some duplicate definitions of "Motor Output 2"</li>
+                <li>Updated from DTD to Schema checks</li>
             </ul>
 
         <h4>Lenz</h4>
@@ -268,7 +272,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -335,7 +339,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+            <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -382,12 +386,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>JMRI no longer modifies "system names" as provided by the user.
-                There may be cases where a script or panel file is creating an
-                object with a system name that is slightly different than a system
-                name used elsewhere, and JMRI used to change these to be the same.
-                Users may have to modify scripts and panel files to ensure system
-                names match in all places.</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -415,7 +414,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -465,7 +464,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -475,13 +474,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>We "deprecate" certain methods and members in the Java code when they're
-                no longer recommended for use.  After some time, we then remove them.
-                This version of JMRI removes all deprecated methods and members up
-                through JMRI 4.10, which was released in December 2017.
-                If you still have code or scripts that reference these, please
-                look at
-                <a href="https://github.com/JMRI/JMRI/tree/v4.16">the code in JMRI 4.16</a>
-                for suggestions on what to substitute.</li>
+            <li></li>
         </ul>
 

@@ -27,8 +27,7 @@
 
     <div id="mainContent">
       <h1>JMRI: XML I/O Servlet - no longer
-      supported</h1><strong>The XML I/O protocol is deprecated and
-      support was removed from JMRI in the 3.11 development
+      supported</h1><strong>The XML I/O protocol was removed from JMRI in the 3.11 development
       cycle.</strong><br>
       Affected applications should be ported to using the <a href=
       "JsonServlet.shtml">JSON protocol</a>.<br>

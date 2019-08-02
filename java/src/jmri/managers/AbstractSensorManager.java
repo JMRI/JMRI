@@ -1,12 +1,11 @@
 package jmri.managers;
 
 import java.util.Enumeration;
-import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +15,15 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 public abstract class AbstractSensorManager extends AbstractManager<Sensor> implements SensorManager {
+
+    /**
+     * Create a new SensorManager instance.
+     * 
+     * @param memo the system connection
+     */
+    public AbstractSensorManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -33,17 +41,10 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Override
     public Sensor provideSensor(String name) {
         Sensor t = getSensor(name);
-        if (t != null) {
-            return t;
+        if (t == null) {
+            t = newSensor(makeSystemName(name), null);
         }
-        log.debug("check \"{}\" get {}", name, isNumber(name));
-        if (isNumber(name)) {
-            return newSensor(makeSystemName(name), null);
-        } else if (name.length() > 0) {
-            return newSensor(name, null);
-        } else {
-            throw new IllegalArgumentException("Name must have non-full length");
-        }
+        return t;
     }
 
     /** {@inheritDoc} */
@@ -92,14 +93,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
         java.util.Objects.requireNonNull(sysName, "Generated systemName may not be null, started with "+sysName);
 
-        // is system name in correct format?
-        if (!sysName.startsWith(getSystemPrefix() + typeLetter()) 
-                || !(sysName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.debug("Invalid system name for sensor: {} needed {}{} followed by a suffix",
-                    sysName, getSystemPrefix(), typeLetter());
-            throw new NamedBean.BadSystemNameException("systemName \""+sysName+"\" bad format in newSensor");
-        }
-
+        sysName = validateSystemNameFormat(sysName);
         // return existing if there is one
         Sensor s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
@@ -140,9 +134,11 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Sensor has been invoked.
      *
-     * @return new null
+     * @param systemName the system name to use for the new Sensor
+     * @param userName   the user name to use for the new Sensor
+     * @return a new Sensor
      */
     abstract protected Sensor createNewSensor(String systemName, String userName);
 
@@ -179,7 +175,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -194,7 +190,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
 
         // This bit deals with handling the curAddress, and how to get the next address.
-        int iName = 0;
+        int iName;
         try {
             iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {

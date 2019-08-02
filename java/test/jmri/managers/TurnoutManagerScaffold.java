@@ -4,9 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Dummy implementation of TurnoutManager for testing purposes.
@@ -259,9 +260,16 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public String getEntryToolTip() { return "No Help"; }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<Turnout> e) {}
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<Turnout> e) {}
+
+    @Override
+    public SystemConnectionMemo getMemo() {
+        return new InternalSystemConnectionMemo("J", "Juliet");
+    }
 
 }

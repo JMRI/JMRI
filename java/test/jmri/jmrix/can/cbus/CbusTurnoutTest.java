@@ -523,6 +523,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // load dummy TrafficController

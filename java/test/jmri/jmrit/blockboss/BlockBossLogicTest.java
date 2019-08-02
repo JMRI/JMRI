@@ -195,6 +195,7 @@ public class BlockBossLogicTest {
         
         forceInterrupt = false;
         p = new BlockBossLogic("IH1") {
+            @Override
             public void setOutput() {
                 testThread = this.thread;
                 if (forceInterrupt) {

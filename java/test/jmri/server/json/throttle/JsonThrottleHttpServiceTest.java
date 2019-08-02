@@ -62,12 +62,14 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
     }
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonThrottleHttpService(mapper);
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

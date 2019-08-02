@@ -117,7 +117,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         this.manager = manager;
         setToolTipText(Bundle.getMessage("NamedBeanComboBoxDefaultToolTipText", this.manager.getBeanTypeHandled(true)));
         setDisplayOrder(displayOrder);
-        setEditable(false);
+        NamedBeanComboBox.this.setEditable(false); // prevent overriding method call in constructor
         NamedBeanRenderer namedBeanRenderer = new NamedBeanRenderer(getRenderer());
         setRenderer(namedBeanRenderer);
         setKeySelectionManager(namedBeanRenderer);
@@ -144,9 +144,11 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                             } else {
                                 if (validatingInput) {
                                     if (providing) {
-                                        if (!manager.isValidSystemNameFormat(text) && !text.equals(NamedBean.normalizeUserName(text))) {
+                                        try {
+                                            manager.validateSystemNameFormat(text); // ignore output, we only want to catch exceptions
+                                        } catch (IllegalArgumentException ex) {
                                             return new Validation(Validation.Type.DANGER,
-                                                    Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text), preferences);
+                                                    Bundle.getMessage(invalidNameFormat, manager.getBeanTypeHandled(), text, ex.getLocalizedMessage()), preferences);
                                         }
                                         return new Validation(Validation.Type.INFORMATION,
                                                 Bundle.getMessage(willCreateBean, manager.getBeanTypeHandled(), text), preferences);
@@ -218,6 +220,11 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
      */
     public void setAllowNull(boolean allowNull) {
         this.allowNull = allowNull;
+        if (allowNull && (getModel().getSize() > 0 && getItemAt(0) != null)) {
+            this.insertItemAt(null, 0);
+        } else if (!allowNull && (getModel().getSize() > 0 && this.getItemAt(0) == null)) {
+            this.removeItemAt(0);
+        }
     }
 
     /**
@@ -342,8 +349,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     private void sort() {
         B selectedItem = getSelectedItem();
         Comparator<B> comparator = new NamedBeanComparator<>();
-        if (displayOptions != DisplayOptions.SYSTEMNAME &&
-                displayOptions != DisplayOptions.QUOTED_SYSTEMNAME) {
+        if (displayOptions != DisplayOptions.SYSTEMNAME
+                && displayOptions != DisplayOptions.QUOTED_SYSTEMNAME) {
             comparator = new NamedBeanUserNameComparator<>();
         }
         TreeSet<B> set = new TreeSet<>(comparator);

@@ -16,6 +16,7 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();
@@ -24,6 +25,7 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
     }
 
     @After
+    @Override
     public void tearDown() {
         programmer = null;
         tcis = null;

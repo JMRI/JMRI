@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.DccLocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -29,6 +30,17 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of getSpeedStepMode method, of class AbstractThrottle.
+     */
+    @Override
+    @Test
+    public void testGetSpeedStepMode() {
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -360,6 +372,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -367,6 +380,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
     
@@ -394,6 +408,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new TrafficControllerScaffold();
@@ -405,6 +420,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

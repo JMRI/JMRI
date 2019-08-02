@@ -12,6 +12,7 @@ import org.junit.*;
 public class SignalHeadIconTest extends PositionableIconTest {
 
     @Test
+    @Override
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("SignalHeadIcon Constructor", p);

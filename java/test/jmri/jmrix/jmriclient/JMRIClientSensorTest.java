@@ -44,6 +44,7 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
     }
 
     @After
+    @Override
     public void tearDown() {
 	t.dispose();
         JUnitUtil.tearDown();

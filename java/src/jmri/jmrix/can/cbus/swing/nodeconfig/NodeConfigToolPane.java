@@ -210,6 +210,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
         
         // also add listener to tab action
         nodeTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if ( !e.getValueIsAdjusting() ) {
                     userViewChanged();

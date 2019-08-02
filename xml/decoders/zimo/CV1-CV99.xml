@@ -180,19 +180,9 @@
     <label xml:lang="cs">Regilace v DC</label>
     <label xml:lang="de">Motorregelung aktiv</label>
   </variable>
-  <variable item="Consist Address" CV="19" default="0">
-    <decVal/>
-    <label>Consist Address</label>
-    <label xml:lang="it">Indirizzo Consist</label>
-    <label xml:lang="cs">Adresa soupravy</label>
-    <label xml:lang="de">Verbundadresse</label>
-    <tooltip>Stores consist address. Range 0-127 (direction set in bit 7)</tooltip>
-    <tooltip xml:lang="it">Indirizzo Consist. Valori 0-127 (direzione nel bit 7)</tooltip>
-    <tooltip xml:lang="de">nur lesend: Speichert die Verbundadresse. Werte 0-127 (Richtung gesetzt in bit 7)</tooltip>
-    <comment>Allows permanent storage of consist address. Range 0-127</comment>
-    <comment xml:lang="it">Memoria permanente indirizzo Consist. Valori 0-127</comment>
-    <comment xml:lang="cs">Umožňuje trvalé uložení adresy soupravy. Meze 0-127</comment>
-  </variable>
+
+  <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
   <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For F1</label>

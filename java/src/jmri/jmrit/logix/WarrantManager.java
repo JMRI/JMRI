@@ -4,6 +4,7 @@ import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +23,12 @@ public class WarrantManager extends AbstractManager<Warrant>
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
     public WarrantManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.WARRANTS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
