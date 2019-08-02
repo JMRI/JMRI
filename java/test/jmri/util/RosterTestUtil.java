@@ -61,6 +61,7 @@ public class RosterTestUtil {
         RosterEntry e2 = new RosterEntry("ATSF123");
         e2.setId("ATSF123");
         e2.setDccAddress("456");
+        e2.setLongAddress(true);
         e2.setRoadNumber("123");
         e2.setRoadName("ATSF");
         e2.setDecoderModel("Silver");
