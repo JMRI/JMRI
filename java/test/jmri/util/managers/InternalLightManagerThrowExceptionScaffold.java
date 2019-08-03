@@ -2,8 +2,10 @@ package jmri.util.managers;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.Light;
 import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
@@ -15,7 +17,7 @@ import jmri.jmrix.internal.InternalLightManager;
 public class InternalLightManagerThrowExceptionScaffold extends InternalLightManager {
 
     public InternalLightManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */

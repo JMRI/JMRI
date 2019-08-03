@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     private ShutDownTask _shutDownTask;
 
     public DefaultCatalogTreeManager() {
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     /**
@@ -41,15 +43,6 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public int getXMLOrder() {
         return 65400;
-    }
-
-    /**
-     * This is a bogus systemPrefix. Naming is enforced in method
-     * createNewCatalogTree below.
-     */
-    @Override
-    public String getSystemPrefix() {
-        return "0";
     }
 
     /**

@@ -3,6 +3,7 @@ package jmri.jmrix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -11,6 +12,7 @@ import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -702,8 +704,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * possible modes specifed by the DccThrottle interface
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128);
     }
     
     /**

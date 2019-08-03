@@ -2,6 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import jmri.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -155,12 +157,7 @@ public class ProxyTurnoutManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS1"));
 
-        InternalTurnoutManager m = new InternalTurnoutManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalTurnoutManager m = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JS1"));
@@ -183,12 +180,7 @@ public class ProxyTurnoutManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalTurnoutManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(l);
     }
 

@@ -19,27 +19,27 @@ import org.slf4j.LoggerFactory;
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
     protected DCCppTrafficController tc = null;
-    protected String prefix = null;
 
     /**
      * Create an new DCC++ TurnoutManager.
      * Has to register for DCC++ events.
      *
-     * @param controller the TrafficController to connect the TurnoutManager to
-     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     * @param memo the supporting system connection memo
      */
-    public DCCppTurnoutManager(DCCppTrafficController controller, String prefix) {
-        super();
-        tc = controller;
-        this.prefix = prefix;
+    public DCCppTurnoutManager(DCCppSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getDCCppTrafficController();
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public DCCppSystemConnectionMemo getMemo() {
+        return (DCCppSystemConnectionMemo) memo;
     }
-
+    
     // DCCpp-specific methods
 
     /** {@inheritDoc} */
@@ -52,7 +52,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
             return null;
         }
         // make the new Turnout object
-        t = new DCCppTurnout(prefix, bitNum, tc);
+        t = new DCCppTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }
@@ -74,7 +74,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 log.debug("message has address: {}", addr);
                 // reach here for switch command; make sure we know 
                 // about this one
-                String s = prefix + typeLetter() + addr;
+                String s = getSystemNamePrefix() + addr;
                 if (null == getBySystemName(s)) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.
@@ -95,7 +95,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 log.debug("message has address: {}", addr);
                 // reach here for switch command; make sure we know 
                 // about this one
-                String s = prefix + typeLetter() + addr;
+                String s = getSystemNamePrefix() + addr;
                 if (null == getBySystemName(s)) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.

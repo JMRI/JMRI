@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Michael@Povel-Walsrode.de" version="0.2" lastUpdated="20100109"/>
   <!-- 0.2 2010/01/09 MCP Added item entries for all variables -->
   <!-- 0.1 2010/01/08 MCP Copied from LD-G-21 -->
@@ -97,10 +98,9 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <variable CV="27" mask="XXVVXXXX" default="1" item="EMF Option 1" tooltip="Brake on DC detect">
         <enumVal>
           <enumChoice choice="Off">

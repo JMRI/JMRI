@@ -16,20 +16,16 @@ import jmri.managers.AbstractLightManager;
  */
 public class LnLightManager extends AbstractLightManager {
 
-    public LnLightManager(LnTrafficController tc, String prefix) {
-        _trafficController = tc;
-        this.prefix = prefix;
+    public LnLightManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    LnTrafficController _trafficController;
-    String prefix;
-
     /**
-     * Get the system letter for LocoNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public LocoNetSystemConnectionMemo getMemo() {
+        return (LocoNetSystemConnectionMemo) memo;
     }
 
     /**
@@ -51,7 +47,7 @@ public class LnLightManager extends AbstractLightManager {
         // Normalize the systemName
         String sName = getSystemPrefix() + "L" + bitNum;   // removes any leading zeros
         // make the new Light object
-        lgt = new LnLight(sName, userName, _trafficController, this);
+        lgt = new LnLight(sName, userName, getMemo().getLnTrafficController(), this);
         return lgt;
     }
 

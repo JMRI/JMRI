@@ -1,10 +1,12 @@
 package jmri.jmrix.loconet;
 
+import java.util.EnumSet;
 import java.util.Hashtable;
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
@@ -187,11 +189,11 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
      * @return an integer containing the combined speed step modes supported
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128
-                | DccThrottle.SpeedStepMode28
-                | DccThrottle.SpeedStepMode28Mot
-                | DccThrottle.SpeedStepMode14);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
+                , SpeedStepMode.NMRA_DCC_28
+                , SpeedStepMode.MOTOROLA_28
+                , SpeedStepMode.NMRA_DCC_14);
     }
 
     /**

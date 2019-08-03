@@ -21,13 +21,16 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     SerialTrafficController tc = null;
 
     public SerialTurnoutManager(SerialTrafficController tc) {
-        super();
+        super(tc.getAdapterMemo());
         this.tc = tc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return tc.getAdapterMemo().getSystemPrefix();
+    public SerialSystemConnectionMemo getMemo() {
+        return (SerialSystemConnectionMemo) memo;
     }
 
     @Override

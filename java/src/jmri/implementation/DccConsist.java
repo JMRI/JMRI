@@ -1,15 +1,26 @@
 package jmri.implementation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.Consist;
 import jmri.ConsistListener;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -196,6 +207,8 @@ public class DccConsist implements Consist, ProgListener {
             }
             consistDir.put(LocoAddress, Direction);
             addToAdvancedConsist(LocoAddress, directionNormal);
+            //set the value in the roster entry for CV19
+            setRosterEntryCVValue(LocoAddress);
         } else {
             log.error("Consist Type Not Supported");
             notifyConsistListeners(LocoAddress, ConsistListener.NotImplemented);
@@ -232,6 +245,8 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public void remove(DccLocoAddress LocoAddress) {
         if (consistType == ADVANCED_CONSIST) {
+            //reset the value in the roster entry for CV19
+            resetRosterEntryCVValue(LocoAddress);
             //String Address= Integer.toString(LocoAddress);
             consistDir.remove(LocoAddress);
             consistList.remove(LocoAddress);
@@ -347,6 +362,10 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public void setRosterId(DccLocoAddress address, String rosterId) {
         consistRoster.put(address, rosterId);
+        if (consistType == ADVANCED_CONSIST) {
+            //set the value in the roster entry for CV19
+            setRosterEntryCVValue(address);
+        } 
     }
 
     /**
@@ -363,6 +382,127 @@ public class DccConsist implements Consist, ProgListener {
             return (consistRoster.get(address));
         } else {
             return null;
+        }
+    }
+            
+   /**
+    * Update the value in the roster entry for CV19 for the specified
+    * address
+    *
+    * @param address is the Locomotive address we are updating.
+    */
+   protected void setRosterEntryCVValue(DccLocoAddress address){
+      updateRosterCV(address,getLocoDirection(address),this.consistAddress.getNumber());
+   }
+
+   /**
+    * Set the value in the roster entry's value for for CV19 to 0
+    *
+    * @param address is the Locomotive address we are updating.
+    */
+   protected void resetRosterEntryCVValue(DccLocoAddress address){
+      updateRosterCV(address,getLocoDirection(address),0);
+   }
+
+   /**
+    * If allowed by the preferences, Update the CV19 value in the 
+    * specified address's roster entry, if the roster entry is known.
+    *
+    * @param address is the Locomotive address we are updating.
+    * @param direction the direction to set.
+    * @param value the numeric value of the consist address. 
+    */
+   protected void updateRosterCV(DccLocoAddress address,Boolean direction,int value){
+        if(!InstanceManager.getDefault(ConsistPreferencesManager.class).isUpdateCV19()){
+           log.trace("Consist Manager updates of CV19 are disabled in preferences");
+           return;
+        }
+        if(getRosterId(address)==null){
+           // roster entry unknown.
+           log.trace("No RosterID for address {} in consist {}.  Skipping CV19 update.",address,consistAddress);
+           return;
+        }
+        RosterEntry entry = Roster.getDefault().getEntryForId(getRosterId(address));
+
+        if(entry==null || entry.getFileName()==null || entry.getFileName().equals("")){
+           // roster entry unknown.
+           log.trace("No file name available for RosterID {},address {}, in consist {}.  Skipping CV19 update.",getRosterId(address),address,consistAddress);
+           return;
+        }
+        CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
+        VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
+        entry.readFile();  // read, but don’t yet process
+
+        // load from decoder file
+        loadDecoderFromLoco(entry,varTable);
+
+        entry.loadCvModel(varTable, cvTable);
+        CvValue cv19Value = cvTable.getCvByNumber("19");
+        cv19Value.setValue((value & 0xff) | (direction?0x00:0x80 ));
+
+        entry.writeFile(cvTable,varTable);
+   }
+
+    // copied from PaneProgFrame
+    protected void loadDecoderFromLoco(RosterEntry r,VariableTableModel varTable) {
+        // get a DecoderFile from the locomotive xml
+        String decoderModel = r.getDecoderModel();
+        String decoderFamily = r.getDecoderFamily();
+        if (log.isDebugEnabled()) {
+            log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
+        }
+        // locate a decoder like that.
+        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        if (log.isDebugEnabled()) {
+            log.debug("found " + l.size() + " matches");
+        }
+        if (l.size() == 0) {
+            log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+            // fall back to use just the decoder name, not family
+            l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
+            if (log.isDebugEnabled()) {
+                log.debug("found " + l.size() + " matches without family key");
+            }
+        }
+        if (l.size() > 0) {
+            DecoderFile d = l.get(0);
+            loadDecoderFile(d, r, varTable);
+        } else {
+            if (decoderModel.equals("")) {
+                log.debug("blank decoderModel requested, so nothing loaded");
+            } else {
+                log.warn("no matching \"" + decoderModel + "\" decoder found for loco, no decoder info loaded");
+            }
+        }
+    }
+
+    protected void loadDecoderFile(DecoderFile df, RosterEntry re,VariableTableModel variableModel) {
+        if (df == null) {
+            log.warn("loadDecoder file invoked with null object");
+            return;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("loadDecoderFile from " + DecoderFile.fileLocation
+                    + " " + df.getFileName());
+        }
+
+        Element decoderRoot = null;
+
+        try {
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
+        } catch (JDOMException | IOException e) {
+            log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
+        }
+        // load variables from decoder tree
+        df.getProductID();
+        if(decoderRoot!=null) {
+           df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+
+           // load reset from decoder tree
+           //df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
+
+           // load function names
+           re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
         }
     }
 

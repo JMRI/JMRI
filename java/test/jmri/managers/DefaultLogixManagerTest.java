@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,6 +8,7 @@ import org.junit.Test;
 
 import jmri.Logix;
 import jmri.LogixManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
@@ -75,7 +77,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initIdTagManager();
-        l = new DefaultLogixManager();
+        l = new DefaultLogixManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

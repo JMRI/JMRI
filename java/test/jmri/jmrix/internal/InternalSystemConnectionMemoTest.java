@@ -6,11 +6,10 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class InternalSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -25,5 +24,4 @@ public class InternalSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
     }
 
     // private final static Logger log = LoggerFactory.getLogger(InternalSystemConnectionMemoTest.class);
-
 }

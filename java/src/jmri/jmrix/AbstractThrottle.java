@@ -8,6 +8,7 @@ import java.util.Vector;
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -25,18 +26,11 @@ import jmri.ThrottleListener;
  */
 abstract public class AbstractThrottle implements DccThrottle {
 
-    public final static float SPEED_STEP_14_INCREMENT = 1.0f / 14.0f;
-    public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
-    public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
-    public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
-                                                                        // non-stop values in 128 speed 
-
     protected float speedSetting;
-    protected float speedIncrement;
     /**
      * Question: should we set a default speed step mode so it's never zero?
      */
-    protected int speedStepMode;
+    protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
     protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,
@@ -832,7 +826,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @Override
     public float getSpeedIncrement() {
-        return speedIncrement;
+        return speedStepMode.increment;
     }
 
     /**
@@ -1744,34 +1738,23 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     /**
-     * Set the speed step value and the related speedIncrement value. Default
-     * should be 128 speed step mode in most cases
+     * Set the speed step value. Default should be 128 speed step mode in most cases.
      *
-     * specific implementations should override this function
+     * Specific implementations should override this function.
      *
      * @param Mode the current speed step mode
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         log.debug("Speed Step Mode Change from:{} to Mode:{}",this.speedStepMode,Mode);
         if (speedStepMode != Mode) {
             notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
                     this.speedStepMode = Mode);
         }
-        if (Mode == DccThrottle.SpeedStepMode14) {
-            speedIncrement = SPEED_STEP_14_INCREMENT;
-        } else if (Mode == DccThrottle.SpeedStepMode27) {
-            speedIncrement = SPEED_STEP_27_INCREMENT;
-        } else if (Mode == DccThrottle.SpeedStepMode28) {
-            speedIncrement = SPEED_STEP_28_INCREMENT;
-        } else // default to 128 speed step mode
-        {
-            speedIncrement = SPEED_STEP_128_INCREMENT;
-        }
     }
 
     @Override
-    public int getSpeedStepMode() {
+    public SpeedStepMode getSpeedStepMode() {
         return speedStepMode;
     }
 

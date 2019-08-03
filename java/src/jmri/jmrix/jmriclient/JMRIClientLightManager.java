@@ -13,24 +13,23 @@ import jmri.Light;
  */
 public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
 
-    private JMRIClientSystemConnectionMemo memo = null;
-    private String prefix = null;
-
     public JMRIClientLightManager(JMRIClientSystemConnectionMemo memo) {
-        this.memo = memo;
-        this.prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public JMRIClientSystemConnectionMemo getMemo() {
+        return (JMRIClientSystemConnectionMemo) memo;
     }
 
     @Override
     public Light createNewLight(String systemName, String userName) {
         Light t;
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new JMRIClientLight(addr, memo);
+        int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        t = new JMRIClientLight(addr, getMemo());
         t.setUserName(userName);
         return t;
     }
@@ -40,8 +39,8 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (systemName.startsWith(prefix + "L")
-                && Integer.parseInt(systemName.substring(prefix.length() + 1)) > 0) ? NameValidity.VALID : NameValidity.INVALID;
+        return (systemName.startsWith(getSystemNamePrefix())
+                && Integer.parseInt(systemName.substring(getSystemNamePrefix().length())) > 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**

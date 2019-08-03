@@ -17,27 +17,18 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 
-    TmccSystemConnectionMemo _memo = null;
-    private String prefix = "T"; // default
-    private SerialTrafficController trafficController = null;
-
-    public SerialTurnoutManager() {
-        log.debug("TMCC TurnoutManager null");
-    }
-
     public SerialTurnoutManager(TmccSystemConnectionMemo memo) {
-        _memo = memo;
-        prefix = memo.getSystemPrefix();
-        // connect to the TrafficManager
-        trafficController = memo.getTrafficController();
-        // listen for turnout creation
-        trafficController.addSerialListener(this);
-        log.debug("TMCC TurnoutManager prefix={}", prefix);
+        super(memo);
+        memo.getTrafficController().addSerialListener(this);
+        log.debug("TMCC TurnoutManager prefix={}", getSystemPrefix());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public TmccSystemConnectionMemo getMemo() {
+        return (TmccSystemConnectionMemo) memo;
     }
 
     @Override
@@ -51,9 +42,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
             return null;
         }
         // create the turnout
-        log.debug("new SerialTurnout with addr = {}", systemName.substring(prefix.length() + 1));
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new SerialTurnout(prefix, addr, _memo);
+        log.debug("new SerialTurnout with addr = {}", systemName.substring(getSystemPrefix().length() + 1));
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        t = new SerialTurnout(getSystemPrefix(), addr, getMemo());
         t.setUserName(userName);
         return t;
     }

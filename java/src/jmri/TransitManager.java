@@ -2,6 +2,7 @@ package jmri;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -30,18 +31,13 @@ import jmri.managers.AbstractManager;
 public class TransitManager extends AbstractManager<Transit> implements InstanceManagerAutoDefault {
 
     public TransitManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(jmri.SectionManager.class).addVetoableChangeListener(this);
     }
 
     @Override
     public int getXMLOrder() {
         return Manager.TRANSITS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override

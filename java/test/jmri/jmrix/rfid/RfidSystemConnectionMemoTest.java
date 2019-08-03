@@ -39,7 +39,7 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
            }
         };
         memo.setRfidTrafficController(tc);
-        RfidSensorManager s = new RfidSensorManager("R"){
+        RfidSensorManager s = new RfidSensorManager(memo){
             @Override
             protected jmri.Sensor createNewSensor(String systemName, String userName){
                return null;
@@ -51,7 +51,7 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
             public void reply(RfidReply m){}
 
         };
-        RfidReporterManager r = new RfidReporterManager("R"){
+        RfidReporterManager r = new RfidReporterManager(memo){
             @Override
             protected jmri.Reporter createNewReporter(String systemName, String userName){
                return null;

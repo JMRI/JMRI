@@ -195,13 +195,13 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
 
-        turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(getNceTrafficController(), getSystemPrefix());
+        turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(this);
         InstanceManager.setTurnoutManager(turnoutManager);
 
-        lightManager = new jmri.jmrix.nce.NceLightManager(getNceTrafficController(), getSystemPrefix());
+        lightManager = new jmri.jmrix.nce.NceLightManager(this);
         InstanceManager.setLightManager(lightManager);
 
-        sensorManager = new jmri.jmrix.nce.NceSensorManager(getNceTrafficController(), getSystemPrefix());
+        sensorManager = new jmri.jmrix.nce.NceSensorManager(this);
         InstanceManager.setSensorManager(sensorManager);
 
         throttleManager = new jmri.jmrix.nce.NceThrottleManager(this);

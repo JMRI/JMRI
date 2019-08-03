@@ -42,6 +42,7 @@ import jmri.PowerManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.RosterEntry;
@@ -342,7 +343,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * Constructor for the SpeedoConsoleFrame
      *
-     * @param memo
+     * @param memo the memo for the connection the Speedo is using
      */
     public SpeedoConsoleFrame(SpeedoSystemConnectionMemo memo) {
         super();
@@ -937,7 +938,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * Calculates the average speed using a filter
      *
-     * @param speed
+     * @param speed the speed of the latest interation
      */
     protected void avFn(float speed) {
         // Averaging function used for speed is
@@ -1132,9 +1133,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Power Manager Helper Functions">
     /**
-     * Property change event handler for the Power Manager
-     *
-     * @param evt
+     * {@inheritDoc}
+     * 
+     * Handles property changes from the power manager.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -1727,8 +1728,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         throttle = t;
         log.info("Throttle acquired");
-        throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
-        if (throttle.getSpeedStepMode() != DccThrottle.SpeedStepMode28) {
+        throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        if (throttle.getSpeedStepMode() != SpeedStepMode.NMRA_DCC_28) {
             log.error("Failed to set 28 step mode");
             statusLabel.setText(Bundle.getMessage("ThrottleError28"));
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);

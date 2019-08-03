@@ -31,10 +31,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.SpeedStepMode;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
@@ -1628,22 +1628,12 @@ public class WarrantFrame extends WarrantRoute {
                         }
                         ts.setValue(null);
                     } else if ("SPEEDSTEP".equals(cmd)) {
-                        int stepMode = Integer.parseInt((String) value);
                         try {
-                            switch (stepMode) {
-                                case 14:
-                                case 27:
-                                case 28:
-                                case 128:
-                                case DccThrottle.SpeedStepMode28Mot:
-                                    ts.setValue((String) value);
-                                    break;
-                                default:
-                                    msg = Bundle.getMessage("badStepMode");
-                                    ts.setValue(null);
-                            }
-                        } catch (NumberFormatException nfe) {
-                            msg = Bundle.getMessage("invalidNumber");
+                            // Get speed step mode, just to check that it's valid.
+                            SpeedStepMode.getByName((String)value);
+                            ts.setValue((String)value);
+                        } catch (IllegalArgumentException nfe) {
+                            msg = Bundle.getMessage("badStepMode");
                             ts.setValue(null);
                         }
                     } else if ("FORWARD".equalsIgnoreCase(cmd)) {
