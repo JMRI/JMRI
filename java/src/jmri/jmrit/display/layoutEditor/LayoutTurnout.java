@@ -2338,6 +2338,7 @@ public class LayoutTurnout extends LayoutTrack {
      * Activate/Deactivate turnout to redraw when turnout state changes
      */
     private void activateTurnout() {
+        deactivateTurnout();
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(
                 mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
