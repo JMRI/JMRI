@@ -106,7 +106,7 @@
                         <p>You are free to change the User Files Location as you like (Preferences->File Locations).</p>
                     </dd>
 
-                    <dt>Roster Location (portable name = "roster:")</dt>
+                    <dt>Roster Location</dt>
                     <dd>This location contains:
                         <ul>
                             <li>
