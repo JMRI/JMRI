@@ -110,6 +110,10 @@
                     <dd>This location contains:
                         <ul>
                             <li>
+                                A "roster.xml" file, which is a (recreatable) index of the XML files in the "roster" folder.
+                                You should create/recreate "roster.xml" (Actions->Recreate Roster Index) if it is missing or you are experiencing roster problems.
+                            </li>
+                            <li>
                                 Your "roster" folder. This contains:
                                 <ul>
                                     <li>An XML file for each loco entry in your roster, with stored CV values, etc.</li>
@@ -121,10 +125,6 @@
                                         If you have been using JMRI for a long time, you may have roster images in both locations.)
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                                A "roster.xml" file, which is a (recreatable) index of the XML files in the "roster" folder.
-                                You should create/recreate "roster.xml" (Actions->Recreate Roster Index) if it is missing or you are experiencing roster problems.
                             </li>
                         </ul>
                         <p>By default the Roster Location is the same as (and follows) the User Files location unless you explicitly set a different location.</p>
