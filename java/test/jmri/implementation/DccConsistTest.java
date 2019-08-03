@@ -1,6 +1,8 @@
 package jmri.implementation;
 
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,6 +34,8 @@ public class DccConsistTest extends AbstractConsistTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         jmri.util.JUnitUtil.initDebugProgrammerManager();
         c = new DccConsist(new DccLocoAddress(12, true), jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
     }
