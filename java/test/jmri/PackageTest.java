@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
     NamedBeanTest.class,
     LightTest.class,
     ManagerTest.class,
+    NamedBeanComparatorTest.class,
     NmraPacketTest.class,
     ConditionalTest.class,
     ConditionalVariableTest.class,
