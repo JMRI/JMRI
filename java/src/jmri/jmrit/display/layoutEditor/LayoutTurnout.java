@@ -1150,11 +1150,11 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if (turnout != null) {
             secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(secondTurnoutName, turnout);
-            activateTurnout();
         } else {
             secondTurnoutName = "";
             secondNamedTurnout = null;
         }
+        activateTurnout(); // Even if secondary is null, the primary Turnout may still need to be re-activated
         if ((getTurnoutType() == RH_TURNOUT)
                 || (getTurnoutType() == LH_TURNOUT)
                 || (getTurnoutType() == WYE_TURNOUT)) {
