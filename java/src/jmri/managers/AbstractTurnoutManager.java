@@ -23,7 +23,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     public AbstractTurnoutManager(SystemConnectionMemo memo) {
         super(memo);
-        TURNOUT_INTERVAL = memo.getOutputInterval();
         InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
@@ -380,22 +379,25 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(@Nonnull String systemName) {
-        // systemName argument not used here, needed to override, argument is used in ProxyTurnoutManager
+        // systemName parameter not used here, needed to override, used in ProxyTurnoutManager
+        TURNOUT_INTERVAL = memo.getOutputInterval(); // update value from memo
         return TURNOUT_INTERVAL;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void setOutputInterval(int newInterval) {
+    public void setOutputInterval(@Nonnull String systemName, int newInterval) {
+        // systemName parameter not used here, needed to override, used in ProxyTurnoutManager
         TURNOUT_INTERVAL = newInterval;
+        log.debug("TURNOUT_INTERVAL set to: {}", TURNOUT_INTERVAL);
     }
 
     /**
      * Duration in Milliseconds of interval between separate Turnout commands on the same connection.
      * <p>
-     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
+     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(String, int)}
      */
-    private int TURNOUT_INTERVAL;
+    private int TURNOUT_INTERVAL = memo.getOutputInterval();
     private LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */
@@ -405,7 +407,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         if (waitUntil.isAfter(LocalTime.now())) {
             waitUntil = waitUntil.plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS);
         } else {
-            waitUntil = LocalTime.now().plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS); // default interval = 250 Ms
+            waitUntil = LocalTime.now().plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS); // default interval = 250 Msec
         }
         return waitUntil;
     }

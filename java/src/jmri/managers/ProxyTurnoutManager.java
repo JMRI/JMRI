@@ -307,23 +307,20 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /** {@inheritDoc} */
     @Override
-    public void setOutputInterval(int newInterval) {
-        TURNOUT_INTERVAL = newInterval;
+    public void setOutputInterval(@Nonnull String systemName, int newInterval) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            ((TurnoutManager) getMgr(i)).setOutputInterval(systemName, newInterval);
+        }
     }
 
-    /**
-     * Duration in Milliseconds of interval between separate Turnout commands on the same connection.
-     * <p>
-     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
-     */
-    private int TURNOUT_INTERVAL = 0;
     private LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */
     @Override
     public LocalTime outputIntervalEnds(@Nonnull String systemName) {
         log.debug("outputIntervalEnds called in ProxyTurnoutManager");
-        TURNOUT_INTERVAL = getOutputInterval(systemName); // provide actual Interval from TurnoutManager
+        int TURNOUT_INTERVAL = getOutputInterval(systemName); // provide actual Interval from TurnoutManager
         if (waitUntil.isAfter(LocalTime.now())) {
             waitUntil = waitUntil.plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS);
         } else {
