@@ -137,7 +137,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param uName user name
      */
     public Warrant(String sName, String uName) {
-        super(sName.toUpperCase(), uName);
+        super(sName, uName);
         _idxCurrentOrder = 0;
         _idxLastOrder = 0;
         _orders = new ArrayList<>();
@@ -2236,7 +2236,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return Bundle.getMessage("BeanNameWarrant");
     }
 
-    private class CommandDelay extends Thread implements Runnable {
+    private class CommandDelay extends Thread {
 
         String nextSpeedType;
         long _startTime = 0;

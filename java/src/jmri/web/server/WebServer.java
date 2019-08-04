@@ -357,9 +357,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
         shutDownTask = new ServerShutDownTask(this);
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
-            manager.register(shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
         log.info("Starting Web Server on port {}", preferences.getPort());
     }
 
@@ -397,9 +395,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         if (zeroConfService != null) {
             zeroConfService.stop();
         }
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
-            manager.deregister(shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
         log.debug("Web Server stopped");
     }
 

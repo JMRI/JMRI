@@ -96,6 +96,7 @@ public class DieselPane extends EnginePane {
         if (dtime > 1) {
             start_button.setEnabled(false);
             timer = newTimer(dtime, false, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     start_button.setEnabled(true);
                 }

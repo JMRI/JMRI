@@ -7,8 +7,9 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.nio.file.Files;
 import java.lang.reflect.Method;
-import jmri.managers.DefaultShutDownManager;
+import jmri.ShutDownManager;
 import jmri.util.JmriJFrame;
+import jmri.util.MockShutDownManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -24,7 +25,7 @@ public class ApplicationTestAcceptanceSteps implements En {
    String[] tags = {"@apptest"};
    File tempFolder;
    
-   public ApplicationTestAcceptanceSteps(jmri.InstanceManager instance) {
+   public ApplicationTestAcceptanceSteps() {
 
    Before(tags,() -> {
       JUnitUtil.setUp();
@@ -71,12 +72,16 @@ public class ApplicationTestAcceptanceSteps implements En {
 
     After(tags,() -> {
         dismissClosingDialogs(); // this method starts a new thread
-        try{
-           // gracefully shutdown, but don't exit
-           ((DefaultShutDownManager)instance.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
-        } finally { 
-           // wait for threads, etc
-           jmri.util.JUnitUtil.releaseThread(this, 5000);
+        try {
+            // gracefully shutdown, but don't exit
+            ShutDownManager sdm = jmri.InstanceManager.getDefault(ShutDownManager.class);
+            if (sdm instanceof MockShutDownManager) {
+                // ShutDownManagers other than MockShutDownManager really shutdown
+                sdm.shutdown();
+            }
+        } finally {
+            // wait for threads, etc
+            jmri.util.JUnitUtil.releaseThread(this, 5000);
         }
         FileUtils.deleteDirectory(tempFolder);
         System.clearProperty("org.jmri.profile");

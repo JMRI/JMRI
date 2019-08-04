@@ -5,6 +5,7 @@ import java.util.Objects;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,15 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         implements ReporterManager {
+
+    /**
+     * Create a new ReporterManager instance.
+     * 
+     * @param memo the system connection
+     */
+    public AbstractReporterManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -67,8 +77,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
 
     /** {@inheritDoc} */

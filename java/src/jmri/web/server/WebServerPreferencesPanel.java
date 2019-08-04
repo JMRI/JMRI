@@ -22,7 +22,6 @@ import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
@@ -56,8 +55,7 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
         port.setToolTipText(Bundle.getMessage("ToolTipPort")); // NOI18N
 
-        Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${port}"), port, BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${port}"), port, BeanProperty.create("value")));
 
         portLabel.setText(Bundle.getMessage("LabelPort")); // NOI18N
         portLabel.setToolTipText(Bundle.getMessage("ToolTipPort")); // NOI18N
@@ -67,8 +65,7 @@ public class WebServerPreferencesPanel extends JPanel implements PreferencesPane
             readonlyPower.setToolTipText(Bundle.getMessage(readonlyPower.isSelected() ? "ToolTipReadonlyPowerTrue" : "ToolTipReadonlyPowerFalse"));
         });
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${readonlyPower}"), readonlyPower, BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${readonlyPower}"), readonlyPower, BeanProperty.create("selected")));
 
         startup.setSelected(this.isStartupAction());
         startup.setText(Bundle.getMessage("LabelStartup")); // NOI18N

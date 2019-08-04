@@ -72,27 +72,20 @@ public class NceConsistRosterMenu extends JMenu {
         add(printAction);
         add(previewAction);
 
-        // activate the right items
+        // activate the correct items (currently all identical)
         switch (pMenuType) {
             case MAINMENU:
 //                deleteAction.setEnabled(true);
 //                importAction.setEnabled(true);
 //                exportAction.setEnabled(true);
 //                copyAction.setEnabled(true);
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case SELECTMENU:
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case ENTRYMENU:
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
                 break;
             default:
-                log.error("RosterMenu constructed without a valid menuType parameter: "
-                        + pMenuType);
+                log.error("RosterMenu constructed without a valid menuType parameter: {}", pMenuType);
         }
     }
 

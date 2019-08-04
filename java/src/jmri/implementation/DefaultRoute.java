@@ -37,7 +37,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      * @param userName   provided user name
      */
     public DefaultRoute(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     /**
@@ -46,7 +46,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      * @param systemName suggested system name
      */
     public DefaultRoute(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         log.debug("default Route {} created", systemName);
     }
 

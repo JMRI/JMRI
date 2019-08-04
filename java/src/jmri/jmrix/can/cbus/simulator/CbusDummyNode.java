@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusSimulator
  * @since 4.15.2
  */
-public class CbusDummyNode extends CbusNode implements CanListener {
+public class CbusDummyNode extends CbusNode {
     
     private TrafficController tc;
     private CanSystemConnectionMemo memo;

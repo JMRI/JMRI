@@ -375,8 +375,8 @@ public class TabbedPreferences extends AppConfigBase {
 
     @Override
     public void savePressed(boolean restartRequired) {
-        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
-        if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+        if (!this.isPreferencesValid() && !sdm.isShuttingDown()) {
             for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
                 if (!panel.isPreferencesValid()) {
                     switch (JOptionPane.showConfirmDialog(this,

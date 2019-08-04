@@ -120,6 +120,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
     
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         controller = new TrafficControllerScaffold();

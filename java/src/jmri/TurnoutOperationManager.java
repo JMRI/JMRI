@@ -132,18 +132,6 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
     }
 
     /**
-     * Get the default instance.
-     *
-     * @return the default instance, created if necessary
-     * @deprecated since 4.11.4; get from the InstanceManager instead
-     */
-    @Deprecated // since 4.11.4
-    public synchronized static @Nonnull
-    TurnoutOperationManager getDefault() {
-        return InstanceManager.getDefault(TurnoutOperationManager.class);
-    }
-
-    /**
      * Load the operation types given by the current TurnoutManager instance, in
      * the order given.
      * <p>

@@ -58,7 +58,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private NamedBeanHandle<Turnout> namedTurnoutEastLower = null;
 
     /**
-     * Attached a named turnout to this display item
+     * Attach a named turnout to this display item.
      *
      * @param pName Used as a system/user name to lookup the turnout object
      * @param turn  is used to determine which turnout position this is for.
@@ -79,7 +79,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Attached a namedBean Handle turnout to this display item
+     * Attach a namedBean Handle turnout to this display item.
      *
      * @param to   Used as the NamedBeanHandle to lookup the turnout object
      * @param turn is used to determine which turnout position this is for.
@@ -138,13 +138,13 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Constant used to referred to the Turnout address configured to operate
+     * Constant used to refer to the Turnout address configured to operate
      * the west (or first for a three way) of the Turnout.
      */
     public static final int WEST = 0x01;
 
     /**
-     * Constant used to referred to the Turnout address configured to operate
+     * Constant used to refer to the Turnout address configured to operate
      * the east (or second for a three way) of the Turnout.
      */
     public static final int EAST = 0x02;
@@ -215,7 +215,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * <p>
      * In a Scissor crossing this returns true if only two turnout address are
      * required to set the crossing or false if four turnout address are
-     * required
+     * required.
      *
      * @return true if route is through the turnout on a slip; false otherwise
      */
@@ -470,7 +470,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         return state;
     }
 
-    // update icon as state of turnout changes
+    /**
+     * Ipdate icon as state of turnout changes.
+     */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
@@ -897,7 +899,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Throw the turnouts for a double slip when the icon is clicked
+     * Throw the turnouts for a double slip when the icon is clicked.
      */
     private void doDoubleSlipMouseClick() {
         switch (turnoutState()) {
@@ -919,7 +921,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Throw the turnouts for a single slip when the icon is clicked
+     * Throw the turnouts for a single slip when the icon is clicked.
      */
     private void doSingleSlipMouseClick() {
         switch (turnoutState()) {
@@ -931,12 +933,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 }
                 break;
             case 7:
-                if (singleSlipRoute) {
-                    setUpperWestToLowerEast();
-                } else {
-                    setLowerWestToUpperEast();
-                }
-                break;
             case 9:
                 if (singleSlipRoute) {
                     setUpperWestToLowerEast();
@@ -957,7 +953,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Throw the turnouts for a 3 way Turnout when the icon is clicked
+     * Throw the turnouts for a 3 way Turnout when the icon is clicked.
      */
     private void do3WayMouseClick() {
         switch (turnoutState()) {
@@ -995,7 +991,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Throw the turnouts for a scissor crossing when the icon is clicked
+     * Throw the turnouts for a scissor crossing when the icon is clicked.
      */
     boolean firstStraight = false;
 
@@ -1108,7 +1104,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Displays a popup menu to select a given state, rather than cycling
+     * Display a popup menu to select a given state, rather than cycling
      * through each state.
      *
      * @param popup the menu to add the state menu to
@@ -1247,14 +1243,14 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     boolean busy = false;
 
     /**
-     * Set Slip busy when commands are being issued to Slip turnouts
+     * Set Slip busy when commands are being issued to Slip turnouts.
      */
     protected void setSlipBusy() {
         busy = true;
     }
 
     /**
-     * Set Slip not busy when all commands have been issued to Slip turnouts
+     * Set Slip not busy when all commands have been issued to Slip turnouts.
      */
     protected void setSlipNotBusy() {
         busy = false;
@@ -1263,7 +1259,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Check if Slip is busy.
      *
-     * @return true if commands are being issued to Slips turnouts
+     * @return true if commands are being issued to Slips turnouts.
      */
     protected boolean isSlipBusy() {
         return (busy);
@@ -1286,7 +1282,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     static class SetSlipThread extends Thread {
 
         /**
-         * Constructs the thread.
+         * Construct the thread.
          *
          * @param aSlip the slip icon to manipulate in the thread
          */
@@ -1318,4 +1314,5 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         private final SlipTurnoutIcon s;
 
     }
+
 }

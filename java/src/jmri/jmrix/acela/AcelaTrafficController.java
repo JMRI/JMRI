@@ -428,19 +428,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         sendMessage(m, reply);
     }
 
-    /**
-     * Static function returning the AcelaTrafficController instance to use.
-     *
-     * @return The registered AcelaTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaTrafficController instance() {
-        log.error("Deprecated method instance called");
-        return null;
-    }
-
     @Override
     protected AbstractMRReply newReply() {
         return new AcelaReply();

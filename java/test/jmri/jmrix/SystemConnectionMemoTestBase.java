@@ -1,8 +1,9 @@
 package jmri.jmrix;
 
+import java.util.ResourceBundle;
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,12 +72,27 @@ abstract public class SystemConnectionMemoTestBase {
     }
 
     @Test
+    public void testMultipleMemosSamePrefix() {
+        SystemConnectionMemo t = new SystemConnectionMemo("t", "test"){
+            @Override
+            protected ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+        };
+        Assert.assertEquals("t", t.getSystemPrefix());
+        t.register();
+        Assert.assertTrue(InstanceManager.getList(SystemConnectionMemo.class).contains(t));
+        Assert.assertFalse(scm.setSystemPrefix("t"));
+        Assert.assertTrue(scm.setSystemPrefix("t2"));
+        Assert.assertEquals("t2", scm.getSystemPrefix());
+    }
+
+    @Test
     public void testGetAndSetOutputInterval() {
         scm.setOutputInterval(50);
         Assert.assertEquals("Output Interval after set", 50, scm.getOutputInterval());
     }
 
-    // The minimal setup for log4J
     @Before
     abstract public void setUp();
 

@@ -192,7 +192,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
-    class Seacher extends Thread implements Runnable {
+    class Seacher extends Thread {
 
         File dir;
         boolean quit = false;

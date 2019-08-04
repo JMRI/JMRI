@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends EasyDccPortController {
 
     public SerialDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial")); // pass customized user name

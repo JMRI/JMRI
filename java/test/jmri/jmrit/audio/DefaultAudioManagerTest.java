@@ -1,5 +1,7 @@
 package jmri.jmrit.audio;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,7 +23,7 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultAudioManager();
+        l = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

@@ -1,6 +1,8 @@
-<!-- Defines XML documenting on a locomotive, esp. information -->
-<!-- on how it is programmed. -->
-<!-- $Id$ -->
+<!-- This file is no longer actively used. It has been superceded by a      -->
+<!-- XML Schema definition in xml/schema/locomotive-config.xsl              -->
+
+<!-- Defines XML documenting on a locomotive, esp. information              -->
+<!-- on how it is programmed.                                               -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->

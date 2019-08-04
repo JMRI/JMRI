@@ -238,21 +238,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         throw new jmri.JmriException("Turnout Manager could not be found for System Prefix " + prefix);
     }
 
-    /**
-     * Validate system name format. Locate a system specfic TurnoutManager based on a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((TurnoutManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
-    }
-
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
@@ -327,7 +312,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /**
-     * Duration in Milliseconds of interval between separate Turnout commands.
+     * Duration in Milliseconds of interval between separate Turnout commands on the same connection.
      * <p>
      * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
@@ -353,8 +338,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTurnout");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
 
     // initialize logging

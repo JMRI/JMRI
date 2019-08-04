@@ -190,6 +190,7 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         updateButtons();
         
         frameResetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 singleEVModel.resetnewEVs();
                 numberSpinnernd.setValue(Integer.valueOf( Math.max(0,_ndEv.getNn() ) ) );

@@ -80,7 +80,7 @@ public class IndicatorTrackIcon extends PositionableIcon
      */
     @Override
     public void setOccSensor(String pName) {
-        if (pName == null || pName.trim().length() == 0) {
+        if (pName == null || pName.trim().isEmpty()) {
             setOccSensorHandle(null);
             return;
         }
@@ -133,7 +133,7 @@ public class IndicatorTrackIcon extends PositionableIcon
      */
     @Override
     public void setOccBlock(String pName) {
-        if (pName == null || pName.trim().length() == 0) {
+        if (pName == null || pName.trim().isEmpty()) {
             setOccBlockHandle(null);
             return;
         }

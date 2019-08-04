@@ -4384,6 +4384,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         

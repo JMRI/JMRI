@@ -14,20 +14,18 @@ import org.slf4j.LoggerFactory;
 public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public MarklinTurnoutManager(MarklinSystemConnectionMemo memo) {
-
-        adaptermemo = memo;
-        prefix = adaptermemo.getSystemPrefix();
-        tc = adaptermemo.getTrafficController();
+        super(memo);
+        tc = memo.getTrafficController();
     }
 
     MarklinTrafficController tc;
-    MarklinSystemConnectionMemo adaptermemo;
 
-    String prefix;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public MarklinSystemConnectionMemo getMemo() {
+        return (MarklinSystemConnectionMemo) memo;
     }
 
     @Override
@@ -50,12 +48,6 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     }
 
     boolean noWarnDelete = false;
-
-    /** {@inheritDoc} */
-    @Override
-    public int getOutputInterval(String systemName) {
-        return adaptermemo.getOutputInterval();
-    }
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class);
 

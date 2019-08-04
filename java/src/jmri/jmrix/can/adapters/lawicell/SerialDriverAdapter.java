@@ -20,7 +20,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Andrew Crosland Copyright (C) 2008
  */
-public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends PortController {
 
     SerialPort activeSerialPort = null;
 
@@ -45,7 +45,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
                 int baud = baudValues[0];  // default, but also defaulted in the initial value of selectedSpeed

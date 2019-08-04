@@ -50,7 +50,6 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.ColorUtil;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
@@ -242,14 +241,14 @@ public class SwitchboardEditor extends Editor {
             for (int x = 0; x < managerList.size(); x++) {
                 String manuPrefix = managerList.get(x).getSystemPrefix();
                 log.debug("Prefix{} = [{}]", x, manuPrefix);
-                String manuName = ConnectionNameFromSystemName.getConnectionName(manuPrefix);
+                String manuName = managerList.get(x).getMemo().getUserName();
                 log.debug("Connection name {} = [{}]", x, manuName);
                 beanManuNames.addItem(manuName);  // add to comboBox
                 beanManuPrefixes.add(manuPrefix); // add to list
             }
         } else {
             String manuPrefix = getManager(beanTypeChar).getSystemPrefix();
-            String manuName = ConnectionNameFromSystemName.getConnectionName(manuPrefix);
+            String manuName = getManager(beanTypeChar).getMemo().getUserName();
             beanManuNames.addItem(manuName);
             beanManuPrefixes.add(manuPrefix); // add to list (as only item)
         }

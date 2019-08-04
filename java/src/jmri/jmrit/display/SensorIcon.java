@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
@@ -18,6 +19,7 @@ import javax.swing.Timer;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
@@ -111,7 +113,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
                 setSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             } catch (IllegalArgumentException ex) {
-                log.error("Sensor '" + pName + "' not available, icon won't see changes");
+                log.error("Sensor '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");
@@ -191,7 +193,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             setOpaque(false);
         }
         displayState(sensorState());
-        if (log.isDebugEnabled()) { // Avoid String building unless needed
+        if (log.isDebugEnabled()) { // avoid String building unless needed
             log.debug("setSensor: namedSensor= {} isIcon= {}, isText= {}, activeText= {}",
                     ((namedSensor == null) ? "null" : getNameString()), isIcon(), isText(), activeText);
         }
@@ -236,9 +238,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
      * @param icon the icon to place
      */
     public void setIcon(String name, NamedIcon icon) {
-        if (log.isDebugEnabled()) {
-            log.debug("setIcon for name \"" + name + "\"");
-        }
+        log.debug("setIcon for name \"{}\"", name);
         if (_iconMap == null) {
             makeIconMap();
         }
@@ -296,12 +296,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     @Override
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedSensor == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getSensor().getFullyFormattedDisplayName();
+            name = getSensor().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -345,6 +346,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     //////// popup AbstractAction.actionPerformed method overrides ////////
+
     @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
         log.debug("setTextEditMenu isIcon={}, isText={}", isIcon(), isText());
@@ -378,7 +380,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         try {
             f.initComponents(this, name);
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }
@@ -391,7 +393,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     @Override
     public void displayState(int state) {
         if (getNamedSensor() == null) {
-            log.debug("Display state " + state + ", disconnected");
+            log.debug("Display state {}, disconnected", state);
         } else if (isIcon()) {
             NamedIcon icon = getIcon(state);
             if (icon != null) {
@@ -509,11 +511,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     protected void edit() {
         makeIconEditorFrame(this, "Sensor", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
-        Iterator<String> e = _iconMap.keySet().iterator();
         int i = 0;
-        while (e.hasNext()) {
-            String key = e.next();
-            _iconEditor.setIcon(i++, /*_state2nameMap.get(key)*/ key, _iconMap.get(key));
+        for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
+            _iconEditor.setIcon(i++, entry.getKey(), entry.getValue());
         }
         _iconEditor.makeIconPanel(false);
 

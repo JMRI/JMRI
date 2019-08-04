@@ -30,7 +30,6 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  * @author B. Milhaupt Copyright (C) 2018
- *
  */
 public class LocoNetMessageTest {
 
@@ -318,13 +317,12 @@ public class LocoNetMessageTest {
 
         m = new LocoNetMessage(new int[] {0xb2, 0x1E, 0x47, 0x00});
 
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        LocoNetSystemConnectionMemo memo1 = new LocoNetSystemConnectionMemo("L", "LocoNet");
-        LocoNetSystemConnectionMemo memo2 = new LocoNetSystemConnectionMemo("L2", "LocoNet2");
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo1, false);
-        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, memo2, false);
-        LnSensorManager lnsm = new LnSensorManager(lnis, "L");
-        LnSensorManager lnsm2 = new LnSensorManager(lnis, "L2");
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo());
+        LocoNetInterfaceScaffold lnis2 = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo("L2", "LocoNet2"));
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis.getSystemConnectionMemo(), lnis, false);
+        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis2.getSystemConnectionMemo(), lnis2, false);
+        LnSensorManager lnsm = new LnSensorManager(lnis.getSystemConnectionMemo());
+        LnSensorManager lnsm2 = new LnSensorManager(lnis2.getSystemConnectionMemo());
 
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setTurnoutManager(lntm2);

@@ -1,8 +1,10 @@
 package jmri.jmrix.direct;
 
+import java.util.EnumSet;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -30,14 +32,6 @@ public class ThrottleManager extends AbstractThrottleManager {
         super(memo);
         tc = memo.getTrafficController();
         jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class, this);
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public ThrottleManager instance() {
-        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
     }
 
     Throttle currentThrottle = null;

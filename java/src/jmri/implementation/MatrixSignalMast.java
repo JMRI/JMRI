@@ -124,7 +124,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         // check it's a valid choice
         if (!map.checkAspect(aspect)) {
             // not a valid aspect

@@ -121,7 +121,7 @@
 		
 	  <div class="para">
 		
-		<p>All of the JMRI input and output objects listed in <a href="help/en/html/tools/index.shtml">
+		<p>All of the JMRI input and output objects listed in <a href="../../../../../help/en/html/tools/index.shtml">
 		Common Tools </a>, such as sensors, memories, lights, signals, reporters, etc., can be created 
 		within a script (all can also be accessed, of course). A simple line of code typed into the Script
 		Entry window is all it takes:</p>
@@ -160,8 +160,58 @@
 		these purposes if there is the possibility that you will be changing your control system in which case 
 		system names will be changing as well.</p>
 		
-		<p>Click for more information on <a href="help/en/html/doc/Technical/Names.shtml"> Names and Naming</a>.</p>
+		<p>Click for more information on <a href="../../../../../help/en/html/doc/Technical/Names.shtml"> Names and Naming</a>.</p>
+
+		<h3>Use non ISO 8859-1 characters in user objects and aspects</h3>
 		
+                <p>User Names of JMRI Object and Signal Aspects may include non ISO&nbsp;8859-1
+		characters. You need to decode them properly to use these names in jython scripts.
+		All strings that contain non ISO&nbsp;8859-1 characters must be decoded
+		by the <b>.decode ("UTF-8")</b> method.</p>
+		
+		<p>Example: Distant signal of the Entry signal of the Czechoslovak State Railways 
+		<a href="../../../../../xml/signals/CSD-1962-zakladni/appearance-entry_distant.xml">JMRI "&#268;SD 1962 z&#225;kladn&#237; n&#225;v&#283;stidla: P&#345;edv&#283;sti" Appearance Table</a>
+		according to the rules is called <b>P&#345;L</b>. 
+		The signal mast will display two aspects:  Clear &ndash; <b>Volno</b> and  
+		Caution &ndash; <b>V&#253;straha</b>.</p>
+		
+		<p>In the table of Signal masts is distant signal mast with LocoNet DCC address 100
+		with system name <b>LF$dsm:CSD-1962-zakladni:entry_distant(100)</b>.</p>
+		
+		<p>In the script, the signal mast and its aspects will work as follows:</p>
+		
+		<p>Window Script Entry:</p>
+		
+		<pre>
+    mastDistantUserName = "P&#345;L".decode("UTF-8")
+    aspectClear = "Volno"
+    aspectCaution = "V&#253;straha".decode("UTF-8")
+    
+    mastDistant = masts.getSignalMast(mastDistantUserName)
+    print "System Name:    ", mastDistant.getSystemName()
+    print "User Name:      ", mastDistant.getUserName()
+    
+    print "aspect default: ", mastDistant.getAspect()
+    
+    mastDistant.setAspect(aspectClear)
+    print "aspect Clear:   ", mastDistant.getAspect()
+    
+    mastDistant.setAspect(aspectCaution)
+    print "aspect Caution: ", mastDistant.getAspect()
+		</pre>
+		
+		
+		<p>Window Script Output:</p>
+		
+		<pre>
+    System Name:     LF$dsm:CSD-1962-zakladni:entry_distant(100)
+    User Name:       P&#345;L
+    aspect default:  None
+    aspect Clear:    Volno
+    aspect Caution:  V&#253;straha
+		</pre>
+		
+                
 		<h3>Alternative syntax in Python</h3>
 		
 		<p>The Python language provides alternative ways of addressing objects and methods. It is not the purpose 

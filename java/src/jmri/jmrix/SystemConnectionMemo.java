@@ -35,7 +35,13 @@ abstract public class SystemConnectionMemo extends Bean {
     private String userName;
     private String userNameAsLoaded;
 
+    @SuppressWarnings("deprecation")
     protected SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
+        if (this instanceof ConflictingSystemConnectionMemo) {
+            this.prefix = prefix;
+            this.userName = userName;
+            return;
+        }
         log.debug("SystemConnectionMemo created for prefix \"{}\" user name \"{}\"", prefix, userName);
         if (!setSystemPrefix(prefix)) {
             int x = 2;
@@ -268,7 +274,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Provide access to the ConsistManager for this particular connection.
-     * 
+     *
      * @return the provided ConsistManager or null if the connection does not
      *         provide a ConsistManager
      */

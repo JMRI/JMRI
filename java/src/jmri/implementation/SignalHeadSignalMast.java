@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
+public class SignalHeadSignalMast extends AbstractSignalMast {
 
     public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
@@ -109,7 +110,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         // check it's a choice
         if (!map.checkAspect(aspect)) {
             // not a valid aspect

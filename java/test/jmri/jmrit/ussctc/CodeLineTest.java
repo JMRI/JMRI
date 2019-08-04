@@ -12,7 +12,7 @@ public class CodeLineTest {
 
     @Test
     public void testConstruction() {
-        new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
     }
         
     // The minimal setup for log4J

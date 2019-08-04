@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+import jmri.BlockManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JmriJFrame;
@@ -38,9 +39,9 @@ public class BlockContentsIconTest {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         jf.pack();
@@ -65,13 +66,14 @@ public class BlockContentsIconTest {
 
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(tag);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         jf.pack();
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -82,9 +84,11 @@ public class BlockContentsIconTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-	if(!GraphicsEnvironment.isHeadless()){
-           to = new BlockContentsIcon("test", new LayoutEditor());
-	}
+	    if(!GraphicsEnvironment.isHeadless()){
+            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+            to = new BlockContentsIcon("test", new LayoutEditor());
+            to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
+	    }
     }
 
     @After

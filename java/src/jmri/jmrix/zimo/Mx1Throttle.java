@@ -28,7 +28,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     public Mx1Throttle(Mx1SystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getMx1TrafficController();
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -204,7 +204,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         int value = 0;
         int cData1 = (isForward ? 0x20 : 0x00);
         cData1 = cData1 + (f0 ? 0x10 : 0x00);
-        if (super.speedStepMode == SpeedStepMode128) {
+        if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             //m = Mx1Message.getSendSpeed128(addressLo, addressHi, value);
             value = (int) ((127 - 1) * speedSetting);     // -1 for rescale to avoid estop
             if (value > 0) {
@@ -218,7 +218,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
             }
             value = (value & 0x7F);
             cData1 = cData1 + 0xc;
-        } else if (super.speedStepMode == SpeedStepMode28) {
+        } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_28) {
             value = (int) ((28) * speedSetting); // -1 for rescale to avoid estop
             if (value > 0) {
                 value = value + 3; // skip estop

@@ -87,6 +87,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -112,6 +113,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());

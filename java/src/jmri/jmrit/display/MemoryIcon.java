@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.Reportable;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -191,7 +192,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (namedMemory == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getMemory().getFullyFormattedDisplayName();
+            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -381,6 +382,13 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     _icon = false;
                     _text = true;
                     setText(val.toString());
+                    setIcon(null);
+                } else if (val instanceof jmri.IdTag){
+                    // most IdTags are Reportable objects, so 
+                    // this needs to be before Reportable
+                    _icon = false;
+                    _text = true;
+                    setText(((jmri.IdTag)val).getDisplayName());
                     setIcon(null);
                 } else if (val instanceof Reportable) {
                     _icon = false;

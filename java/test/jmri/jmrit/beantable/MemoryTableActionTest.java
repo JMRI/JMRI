@@ -47,6 +47,7 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -69,11 +70,13 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Ignore("no Edit button in memory Table")
+    @Override
     public void testEditButton() {
     }
 
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -83,6 +86,7 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         a = null;

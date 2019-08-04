@@ -86,24 +86,6 @@ public class Llnmon {
 
 
     /**
-     * Create a LocoNet Message Formatter.
-     * <p>
-     * When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
-     * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
-     * } may need to be called manually to set the correct device managers.
-     *
-     * @deprecated since 4.5.6 and then even more in 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter.
-     */
-    @Deprecated
-    public Llnmon() {
-        this("L");
-        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
-    }
-    
-    /**
      * Create a LocoNet Message Formatter. Use the system connection memo to get
      * the correct managers to allow the user names of managed devices to be
      * included in messages with the system names.

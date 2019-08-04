@@ -1,31 +1,33 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import javax.annotation.*;
+import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for XBee connections
+ * Implement turnout manager for XBee connections.
  *
  * @author Paul Bender Copyright (C) 2014
  */
 public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
-    protected String prefix = null;
-
     protected XBeeTrafficController tc = null;
 
-    public XBeeTurnoutManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeTurnoutManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
 
     // for now, set this to false. Multiple additions currently works
@@ -74,10 +76,28 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName Xbee id format with pins to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        super.validateSystemNameFormat(name, locale);
+        int pin = pinFromSystemName(name);
+        int pin2 = pin2FromSystemName(name);
+        if (pin < 0 || pin > 7) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        if (pin2 != -1 && (pin2 < 0 || pin2 > 7)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -207,7 +227,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 log.debug("Failed to removing turnout from pin " + pin);
             }
         }
-
     }
 
     /**
@@ -216,27 +235,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public int getOutputInterval(String systemName) {
-        if (tc.getAdapterMemo() != null) {
-            return tc.getAdapterMemo().getOutputInterval();
-        } else {
-            return 250;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        return inputName; // toUpperCase and trim don't behave well with 
-                          // the XBee Node Identifier based addresses.
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);

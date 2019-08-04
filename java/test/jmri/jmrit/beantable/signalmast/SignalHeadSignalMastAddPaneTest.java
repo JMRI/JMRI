@@ -16,6 +16,7 @@ import org.junit.Test;
 public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
+    @Override
     protected SignalMastAddPane getOTT() { return new SignalHeadSignalMastAddPane(); }    
     
     @Test
@@ -47,12 +48,14 @@ public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTe
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -37,7 +37,7 @@ public class SCWarrant extends Warrant {
      * route from an Origin to a Destination
      */
     public SCWarrant(String sName, String uName, long TTP) {
-        super(sName.toUpperCase(), uName);
+        super(sName, uName);
         log.debug("new SCWarrant "+uName+" TTP="+TTP);
         timeToPlatform = TTP;
     }

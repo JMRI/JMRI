@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrix.internal.InternalSensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -42,17 +43,17 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals(0, l.getObjectCount());
         // create
         Sensor t = l.provideSensor("IS:XYZ");
-        Assert.assertEquals(t, l.provideSensor("IS:xyz"));  // upper case and lower case are the same object
+        Assert.assertNotEquals(t, l.provideSensor("IS:xyz"));  // upper case and lower case are different objects
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
         Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
-        Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(2, l.getObjectCount());
+        Assert.assertEquals(2, l.getNamedBeanSet().size());
         // test providing same name as existing sensor does not create new sensor
         l.provideSensor("IS:XYZ");
-        Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(2, l.getObjectCount());
+        Assert.assertEquals(2, l.getNamedBeanSet().size());
     }
 
     @Test
@@ -85,25 +86,15 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
 
-    @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideSensor("1").getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideSensor("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
-        Assert.assertTrue("Exception thrown properly", correct);
     }
 
     @Test
@@ -128,14 +119,14 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
-    public void testUpperLower() {  // this is part of testing of (default) normalization
+    public void testUpperLower() {  // verify that names are case sensitive
         Sensor t = l.provideSensor("JS1ABC");  // internal will always accept that name
         String name = t.getSystemName();
         
         int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
         String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
         
-        Assert.assertEquals(t, l.getSensor(lowerName));
+        Assert.assertNotEquals(t, l.getSensor(lowerName));
     }
 
     @Test
@@ -194,7 +185,8 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         s1.setUserName("Sensor 1");
         
         l.addDataListener(this);
-        l.addPropertyChangeListener(this);
+        l.addPropertyChangeListener("length", this);
+        l.addPropertyChangeListener("DisplayListName", this);
         
         // add an item
         Sensor s2 = l.provideSensor("IS2");
@@ -232,7 +224,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("content at index 2", s3, l.getNamedBeanList().get(lastEvent0));
 
         // can add a manager and still get notifications
-        l.addManager(new InternalSensorManager() { {prefix = "Z";} });
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("Z", "Zulu")));
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
@@ -489,12 +481,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
 
-        InternalSensorManager m = new InternalSensorManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalSensorManager m = new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setSensorManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("JS1"));
@@ -519,7 +506,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     String lastCall;
     
     @Override
-    public void intervalAdded(Manager.ManagerDataEvent e) {
+    public void intervalAdded(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -527,7 +514,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = "Added";
     }
     @Override
-    public void intervalRemoved(Manager.ManagerDataEvent e) {
+    public void intervalRemoved(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -535,7 +522,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = "Removed";
     }
     @Override
-    public void contentsChanged(Manager.ManagerDataEvent e) {
+    public void contentsChanged(Manager.ManagerDataEvent<Sensor> e) {
         events++;
         lastEvent0 = e.getIndex0();
         lastEvent1 = e.getIndex1();
@@ -549,9 +536,9 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create and register the manager object
         l = new ProxySensorManager();
         // initially has three systems: IS, JS, KS
-        l.addManager(new InternalSensorManager() { {prefix = "J";} });
-        l.addManager(new InternalSensorManager() { {prefix = "I";} }); // not in alpha order to make it exciting
-        l.addManager(new InternalSensorManager() { {prefix = "K";} });
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet")));
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("I", "India"))); // not in alpha order to make it exciting
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("K", "Kilo")));
 
         jmri.InstanceManager.setSensorManager(l);
         

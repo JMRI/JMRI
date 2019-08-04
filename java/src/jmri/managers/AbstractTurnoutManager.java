@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +19,13 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
-        implements TurnoutManager, java.beans.VetoableChangeListener {
+        implements TurnoutManager {
 
-    public AbstractTurnoutManager() {
-        //super(Manager.TURNOUTS);
+    public AbstractTurnoutManager(SystemConnectionMemo memo) {
+        super(memo);
+        TURNOUT_INTERVAL = memo.getOutputInterval();
         InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     /** {@inheritDoc} */
@@ -142,8 +144,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTurnout");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
 
     /** {@inheritDoc} */
@@ -389,11 +391,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * Duration in Milliseconds of interval between separate Turnout commands.
+     * Duration in Milliseconds of interval between separate Turnout commands on the same connection.
      * <p>
      * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
-    private int TURNOUT_INTERVAL = 250;
+    private int TURNOUT_INTERVAL;
     private LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */

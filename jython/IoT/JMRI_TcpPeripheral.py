@@ -282,7 +282,7 @@ class TcpPeripheral_Sensor_Listener(java.beans.PropertyChangeListener):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def propertyChange(self, event):
         sensor = event.getSource()
-        sensorName = sensor.getFullyFormattedDisplayName()
+        sensorName = sensor.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)
         TcpPeripheral_log.debug("'TcpPeripheral' - Sensor=" + sensorName + " property=" + event.propertyName + "]: oldValue=" + str(event.oldValue) + " newValue=" + str(event.newValue))
         if event.propertyName == "KnownState": # only this property matters
             gpio, id = TcpPeripheral_getGpioId(sensor.getSystemName())
@@ -304,7 +304,7 @@ class TcpPeripheral_Turnout_Listener(java.beans.PropertyChangeListener):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def propertyChange(self, event):
         turnout = event.getSource()
-        turnoutName = turnout.getFullyFormattedDisplayName()
+        turnoutName = turnout.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)
         TcpPeripheral_log.debug("'TcpPeripheral' - Turnout=" + turnoutName + " property=" + event.propertyName + "]: oldValue=" + str(event.oldValue) + " newValue=" + str(event.newValue) + " turnoutCtrl=" + str(self.turnoutCtrl))
         if event.propertyName == "CommandedState": # only this property matters
             if event.newValue != self.turnoutCtrl: # this is a state change request

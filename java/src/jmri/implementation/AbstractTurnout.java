@@ -36,8 +36,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical turnout on the layout.
- * <p>
- * Turnout system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -112,7 +110,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedState(int s) {
-        log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
+        log.debug("set commanded state for turnout {} to {}", getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
                 (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
@@ -168,7 +166,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedStateAtInterval(int s) {
-        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName);
+        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName); // time is calculated using original TURNOUT_INTERVAL in TurnoutManager
         if (TURNOUT_INTERVAL > 0 && nextWait != null && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
             log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(), nextWait);
             // insert wait before sending next output command to the layout
@@ -180,7 +178,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                         Thread.sleep(Math.max(0L, LocalTime.now().until(nextWait, ChronoUnit.MILLIS))); // nextWait might have passed in the meantime
                         log.debug("back from sleep, forward on {}", LocalTime.now());
                         setCommandedState(s);
-                        return;
                     } catch (InterruptedException ex) {
                         log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalTime.now());
                         Thread.currentThread().interrupt(); // retain if needed later
@@ -490,7 +487,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Determine if turnout is locked. Returns. There
+     * Determine if turnout is locked. There
      * are two types of locks: cab lockout, and pushbutton lockout.
      *
      * @param turnoutLockout turnout to check

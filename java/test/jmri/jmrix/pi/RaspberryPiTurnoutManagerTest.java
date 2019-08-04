@@ -28,9 +28,9 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        Assert.assertNotNull(l);
    }
 
-    @Test
-    public void checkPrefix(){
-       Assert.assertEquals("Prefix", "P2", l.getSystemPrefix());
+   @Test
+   public void checkPrefix(){
+       Assert.assertEquals("Prefix", "P", l.getSystemPrefix());
    }
 
     @Override    
@@ -45,6 +45,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Turnout t = l.provide(getSystemName(20));
@@ -124,7 +125,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        jmri.util.JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo("P2", "RaspberryPi"));
+       l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @After

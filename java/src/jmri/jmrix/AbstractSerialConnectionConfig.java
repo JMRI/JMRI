@@ -194,10 +194,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JLabel baudBoxLabel;
     protected String[] baudList;
 
-    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    private SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    // the following items are protected so they can be hidden when not applicable from a specific ConnectionConfig (ie. Simulator) implementation
     protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
     protected JLabel outputIntervalLabel;
-    private JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
+    protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
 
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
