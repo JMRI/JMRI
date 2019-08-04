@@ -13,8 +13,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import jmri.util.NamedBeanComparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -205,6 +208,25 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             } else {
                 log.error("systemName is already registered: {}", systemName);
                 throw new IllegalArgumentException("systemName is already registered: " + systemName);
+            }
+        } else {
+            // Check if the manager already has a bean with a system name that is
+            // not equal to the system name of the new bean, but there the two
+            // system names are treated as the same. For example LT1 and LT01.
+            if (_beans.contains(s)) {
+                final AtomicReference<String> oldSysName = new AtomicReference<>();
+                NamedBeanComparator<NamedBean> c = new NamedBeanComparator<>();
+                _beans.forEach((NamedBean t) -> {
+                    if (c.compare(s, t) == 0) {
+                        oldSysName.set(t.getSystemName());
+                    }
+                });
+                if (!systemName.equals(oldSysName.get())) {
+                    String msg = String.format("systemName is already registered. Current system name: %s. New system name: %s",
+                            oldSysName, systemName);
+                    log.error(msg);
+                    throw new IllegalArgumentException(msg);
+                }
             }
         }
 
