@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the SerialSystemConnectionMemo class
- * <p>
+ * JUnit tests for the SerialSystemConnectionMemo class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -17,7 +16,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Override
     @Test
     public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
@@ -27,7 +26,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
        SerialSystemConnectionMemo memo = new SerialSystemConnectionMemo();
        memo.setTrafficController(new SerialTrafficController(){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
           @Override
           public void transmitLoop(){
@@ -50,6 +49,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
           }
        });
        scm = memo;
+       memo.getTrafficController().setAdapterMemo(memo); // indirect way to link the two and prevent an NPE
     }
 
     @Override

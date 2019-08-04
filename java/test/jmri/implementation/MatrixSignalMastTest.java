@@ -129,7 +129,7 @@ public class MatrixSignalMastTest {
         // log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
         Assert.assertEquals("check bitarray for Stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
-        InstanceManager.turnoutManagerInstance().setOutputInterval(0); // default outputInterval = 250, set to 0 to speed up test
+        InstanceManager.turnoutManagerInstance().setOutputInterval("IT11", 0); // default outputInterval = 250, set to 0 to speed up test
         m.setAspect("Clear");
         Assert.assertEquals("check Clear", "Clear", m.getAspect());
         JUnitUtil.waitFor( ()->{ return it11.getCommandedState() == Turnout.CLOSED; }, "it11 for Clear" );

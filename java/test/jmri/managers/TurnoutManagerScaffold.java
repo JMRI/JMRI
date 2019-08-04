@@ -280,7 +280,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public void setOutputInterval(int newInterval) {}
+    public void setOutputInterval(String systemName, int newInterval) {}
 
     /** {@inheritDoc} */
     @Override
