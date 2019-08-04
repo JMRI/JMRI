@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -35,6 +34,7 @@ public class CbusNodeEventVarPane extends JPanel {
     private CbusNodeEventTableDataModel nodeEvModel;
     protected JButton newEvButton;
     private NodeConfigToolPane mainpane;
+    private CbusNode nodeOfInterest;
 
     /**
      * Create a new instance of CbusEventHighlightPanel.
@@ -47,9 +47,14 @@ public class CbusNodeEventVarPane extends JPanel {
     public void initComponents(CanSystemConnectionMemo memo) {
         _memo = memo;
         this.add(infoPane);
+        nodeOfInterest = null;
     }
     
     public void setNode( CbusNode node ) {
+        
+        if ( node == nodeOfInterest){
+            return;
+        }
         
         if ( nodeEvModel != null ){
             nodeEvModel.dispose();
@@ -62,7 +67,7 @@ public class CbusNodeEventVarPane extends JPanel {
         nodeEvModel = new CbusNodeEventTableDataModel(  mainpane, _memo, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // mainpane, controller, row, column
         
-        CbusNode nodeOfInterest= node;
+        nodeOfInterest= node;
 
         if (infoPane != null ){ 
             infoPane.setVisible(false);
@@ -73,8 +78,6 @@ public class CbusNodeEventVarPane extends JPanel {
         infoPane.setLayout(new BorderLayout() );
         // Pane to hold Event
         JPanel evMenuPane = new JPanel();
-        
-        evMenuPane.setLayout(new BoxLayout(evMenuPane, BoxLayout.X_AXIS));
       
         newEvButton = new JButton(("Add Node Event"));
         newEvButton.setToolTipText(("Add Event and configure the event variables"));
@@ -100,7 +103,9 @@ public class CbusNodeEventVarPane extends JPanel {
         repaint();
         
         ActionListener newEvButtonClicked = ae -> {
-
+            if (nodeOfInterest == null){
+                return;
+            }
             CbusNodeEvent newevent = new CbusNodeEvent(
                 -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getParameter(5));
             java.util.Arrays.fill(newevent._evVarArr,0);

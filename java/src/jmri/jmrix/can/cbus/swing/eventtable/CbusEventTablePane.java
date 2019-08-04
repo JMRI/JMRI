@@ -216,7 +216,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                     super.setValue(value);
                 }
             }
-        });        
+        });
         
         // configure items for GUI
         eventModel.configureTable(eventTable);
