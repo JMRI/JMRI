@@ -11,12 +11,13 @@ import org.junit.runners.Suite;
     CbusNodeConstantsTest.class,
     CbusNodeEventTest.class,
     CbusNodeEventTableDataModelTest.class,
-    CbusNodeFromFcuTest.class,
+    CbusNodeFromBackupTest.class,
     CbusNodeFromFcuTableDataModelTest.class,
     CbusNodeNVTableDataModelTest.class,
     CbusNodeSingleEventTableDataModelTest.class,
     CbusNodeTableDataModelTest.class,
-    CbusNodeTrickleFetchTest.class
+    CbusNodeTrickleFetchTest.class,
+    CbusNodeXmlTest.class
 })
 
 /**

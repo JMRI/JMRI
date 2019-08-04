@@ -83,7 +83,7 @@ public class CbusNodeFromFcuTableDataModelTest {
         CbusNodeFromFcuTableDataModel t = new CbusNodeFromFcuTableDataModel(
             memo, 3,CbusNodeFromFcuTableDataModel.MAX_COLUMN);
         
-        CbusNodeFromFcu myNode = new CbusNodeFromFcu(memo,256);    
+        CbusNodeFromBackup myNode = new CbusNodeFromBackup(memo,256);    
         
         // set node to 4 ev vars per event, para 5, 3 NV's, param 6
         myNode.setParameters(new int[]{7,1,2,3,4,4,3,7});
@@ -108,11 +108,6 @@ public class CbusNodeFromFcuTableDataModelTest {
       
         t.setValueAt(7,0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN);
         Assert.assertTrue("setValueAt does nothing",(Integer)t.getValueAt(0,CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN)== 3 );
-        
-        
-        
-        
-        
         
         t.dispose();
         t = null;

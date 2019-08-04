@@ -2342,10 +2342,10 @@ public class LayoutTurnout extends LayoutTrack {
             namedTurnout.getBean().addPropertyChangeListener(
                     mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
                         if (secondNamedTurnout != null) {
-                            int new2ndState = secondNamedTurnout.getBean().getState();
+                            int new2ndState = secondNamedTurnout.getBean().getCommandedState();
                             if (e.getSource().equals(secondNamedTurnout.getBean())
                             && e.getNewValue().equals(new2ndState)) {
-                                int old1stState = namedTurnout.getBean().getState();
+                                int old1stState = namedTurnout.getBean().getCommandedState();
                                 int new1stState = new2ndState;
                                 if (secondTurnoutInverted) {
                                     new1stState = Turnout.invertTurnoutState(new1stState);
@@ -2419,6 +2419,15 @@ public class LayoutTurnout extends LayoutTrack {
         int result = UNKNOWN;
         if (getTurnout() != null) {
             result = getTurnout().getKnownState();
+        }
+        if (getSecondTurnout() != null) {
+            int t2state = getSecondTurnout().getKnownState();
+            if (secondTurnoutInverted) {
+                t2state = Turnout.invertTurnoutState(getSecondTurnout().getKnownState());
+            }
+            if (result!=t2state) {
+                return INCONSISTENT;
+            }
         }
         return result;
     }
