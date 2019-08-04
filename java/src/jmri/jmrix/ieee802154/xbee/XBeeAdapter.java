@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.*;
 
 /**
- * Provide access to IEEE802.15.4 devices via a serial comm port.
+ * Provide access to IEEE802.15.4 devices via a serial com port.
  *
  * @author Paul Bender Copyright (C) 2013
  */

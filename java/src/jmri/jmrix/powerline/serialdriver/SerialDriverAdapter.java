@@ -17,7 +17,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Powerline devices via a serial comm port.
+ * Provide access to Powerline devices via a serial com port.
  * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008

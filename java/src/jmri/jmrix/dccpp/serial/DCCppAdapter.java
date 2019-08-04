@@ -21,7 +21,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Comm Port. Normally controlled by
+ * Provide access to DCC++ via a FTDI Virtual Com Port. Normally controlled by
  * the lenz.liusb.LIUSBFrame class.
  *
  * @author Mark Underwood Copyright (C) 2015

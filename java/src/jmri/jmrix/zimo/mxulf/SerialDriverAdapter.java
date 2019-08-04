@@ -18,7 +18,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Zimo's MX-1 on an attached serial comm port. Normally
+ * Provide access to Zimo's MX-1 on an attached serial com port. Normally
  * controlled by the zimo.mxulf.mxulfFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002

@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to SECSI via a serial comm port. Normally controlled by the
+ * Provide access to SECSI via a serial com port. Normally controlled by the
  * secsi.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007

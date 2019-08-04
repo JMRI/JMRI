@@ -20,7 +20,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XpressNet via a LI100F on an attached serial comm port.
+ * Provide access to XpressNet via a LI100F on an attached serial com port.
  * Normally controlled by the lenz.li100.LI100Frame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002

@@ -324,6 +324,7 @@ public class GcSerialDriverAdapter extends GcPortController {
      *
      * @return valid baud rates
      */
+    @Override
     public int[] validBaudNumbers() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800};
     }
@@ -334,7 +335,6 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     /**
-     * {@inheritDoc}
      * Migration method
      * @deprecated since 4.16
      */

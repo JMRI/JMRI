@@ -19,7 +19,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XpressNet via a LIUSB on an FTDI Virtual Comm Port.
+ * Provide access to XpressNet via a LIUSB on an FTDI Virtual Com Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author Paul Bender Copyright (C) 2005-2010

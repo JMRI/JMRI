@@ -17,7 +17,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to ProTrak Grapevine via a serial comm port. Normally
+ * Provide access to ProTrak Grapevine via a serial com port. Normally
  * controlled by the serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007

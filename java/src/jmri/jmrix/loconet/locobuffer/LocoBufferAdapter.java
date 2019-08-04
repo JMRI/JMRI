@@ -21,7 +21,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
+ * Provide access to LocoNet via a LocoBuffer attached to a serial com port.
  * <p>
  * Normally controlled by the LocoBufferFrame class.
  *

@@ -17,7 +17,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to C/MRI via a serial comm port. Normally controlled by the
+ * Provide access to C/MRI via a serial com port. Normally controlled by the
  * cmri.serial.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002

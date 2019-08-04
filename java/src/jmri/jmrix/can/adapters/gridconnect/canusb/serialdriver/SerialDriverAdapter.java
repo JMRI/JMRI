@@ -43,6 +43,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter {
      * @deprecated since 4.16
      */
     @Deprecated
+    @Override
     public int[] validBaudValues() {
         return validBaudNumbers();
     }

@@ -162,7 +162,6 @@ public class SerialDriverAdapter extends PortController {
     }
 
     /**
-     * {@inheritDoc}
      * Migration method
      * @deprecated since 4.16
      */

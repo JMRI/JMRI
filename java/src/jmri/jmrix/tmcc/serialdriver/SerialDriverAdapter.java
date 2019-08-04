@@ -19,7 +19,7 @@ import purejavacomm.SerialPortEvent;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to TMCC via a serial comm port. Normally controlled by the
+ * Provide access to TMCC via a serial com port. Normally controlled by the
  * tmcc.serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006

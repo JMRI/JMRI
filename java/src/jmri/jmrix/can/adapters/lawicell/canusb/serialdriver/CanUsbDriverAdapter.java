@@ -34,6 +34,7 @@ public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.Serial
      * @deprecated since 4.16
      */
     @Deprecated
+    @Override
     public int[] validBaudValues() {
         return validBaudNumbers();
     }
