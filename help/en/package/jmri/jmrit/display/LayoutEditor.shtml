@@ -1333,7 +1333,7 @@
       See <a href="../../../../html/tools/EntryExit.shtml">
       Entry/Exit (NX) Routing Documentation</a> for details.
 
-      <a name="turnouts" id="turnouts"><h2>Turnouts</h2></a>
+      <h2><a name="turnouts" id="turnouts">Turnouts</a></h2>
 
       <p>Layout Editor supports eight different types of turnouts
         (track switches):</p>
