@@ -295,7 +295,7 @@ public class IdentifyDecoderTest {
 
     /**
      * Test Hornby decoder with CV159 not available, hence productID is -1.
-     * Test with 2 retries on CV8 to trigger PAGEMODE
+     * Test with 5 fails on CV8 to trigger PAGEMODE and not abort.
      */
     @Test
     public void testIdentifyHornby4() { // CV159 not available hence productID is -1
@@ -325,7 +325,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 1 ", true, i.isRunning());
         Assert.assertEquals("Test isOptionalCv() after 1", i.isOptionalCv(), false);
 
-        // simulate 6 retries on CV8 to strigger swap to PAGEMODE, start 7
+        // simulate 5 failures on CV8 to trigger swap to PAGEMODE, start 7
         i.programmingOpReply(21, 2);
         i.programmingOpReply(31, 2);
         i.programmingOpReply(41, 2);
@@ -341,7 +341,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found model ID ", -1, i.modelID);
         Assert.assertEquals("found product ID ", -1, i.productID);
 
-        // simulate 2 retries on CV7, start 159
+        // simulate 2 failures on CV7, start 159
         i.programmingOpReply(22, 2);
         i.programmingOpReply(32, 2);
         i.programmingOpReply(88, 0);
@@ -372,7 +372,7 @@ public class IdentifyDecoderTest {
     }
 
     /**
-     * Test Hornby decoder with only 2 retries on CV8 but 3 on CV7.
+     * Test Hornby decoder with only 2 failures on CV8 but 3 on CV7.
      * Should fail as shouldn't switch to PAGEMODE.
      */
     @Test
@@ -403,7 +403,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 1 ", true, i.isRunning());
         Assert.assertEquals("Test isOptionalCv() after 1", i.isOptionalCv(), false);
 
-        // simulate 2 retries on CV8, start 7
+        // simulate 2 failures on CV8, start 7
         i.programmingOpReply(21, 2);
         i.programmingOpReply(31, 2);
         i.programmingOpReply(48, 0);
@@ -416,7 +416,7 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found model ID ", -1, i.modelID);
         Assert.assertEquals("found product ID ", -1, i.productID);
 
-        // simulate 3 retries on CV7, to create fail since not switched to PAGEMODE
+        // simulate 3 failures on CV7, to create fail since not switched to PAGEMODE
         i.programmingOpReply(22, 2);
         i.programmingOpReply(32, 2);
         i.programmingOpReply(42, 2);
