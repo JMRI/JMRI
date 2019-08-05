@@ -97,7 +97,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                 // delete it from roster
                 roster.removeEntry(re);
             } else {
-                String group = Roster.getDefault().getRosterGroupProperty(rosterGroup);
+                String group = Roster.getRosterGroupProperty(rosterGroup);
                 log.debug("removing {} group from entry", group);
                 re.deleteAttribute(group);
                 re.updateFile();
