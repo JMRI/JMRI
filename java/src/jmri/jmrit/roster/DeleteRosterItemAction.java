@@ -85,7 +85,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         // find the file for the selected entry
         for (RosterEntry re : entries) {
             String filename = roster.fileFromTitle(re.titleString());
-            String fullFilename = Roster.getRosterFilesLocation() + filename;
+            String fullFilename = Roster.getDefault().getRosterFilesLocation() + filename;
             log.debug("resolves to [{}], [{}]", filename, fullFilename);
 
             // prompt for one last chance
@@ -97,7 +97,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                 // delete it from roster
                 roster.removeEntry(re);
             } else {
-                String group = Roster.getRosterGroupProperty(rosterGroup);
+                String group = Roster.getDefault().getRosterGroupProperty(rosterGroup);
                 log.debug("removing {} group from entry", group);
                 re.deleteAttribute(group);
                 re.updateFile();
@@ -108,11 +108,11 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
             if (rosterGroup == null) {
                 try {
                     // ensure preferences will be found
-                    FileUtil.createDirectory(Roster.getRosterFilesLocation());
+                    FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
                     // move original file to backup
                     LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                    df.makeBackupFile(Roster.getRosterFilesLocation() + filename);
+                    df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + filename);
 
                 } catch (Exception ex) {
                     log.error("error during locomotive file output: " + ex);

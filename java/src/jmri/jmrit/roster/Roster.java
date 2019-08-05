@@ -983,7 +983,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /*
      * get the path to the file containing roster entry files.
      */
-    public static String getRosterFilesLocation() {
+    public String getRosterFilesLocation() {
         return getDefault().getRosterLocation() + "roster" + File.separator;
     }
 
@@ -1280,16 +1280,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     static String[] getAllFileNames() {
         // ensure preferences will be found for read
-        FileUtil.createDirectory(getRosterFilesLocation());
+        FileUtil.createDirectory(getDefault().getRosterFilesLocation());
 
         // create an array of file names from roster dir in preferences, count entries
         int i;
         int np = 0;
         String[] sp = null;
         if (log.isDebugEnabled()) {
-            log.debug("search directory " + getRosterFilesLocation());
+            log.debug("search directory " + getDefault().getRosterFilesLocation());
         }
-        File fp = new File(getRosterFilesLocation());
+        File fp = new File(getDefault().getRosterFilesLocation());
         if (fp.exists()) {
             sp = fp.list();
             if (sp != null) {
@@ -1299,7 +1299,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     }
                 }
             } else {
-                log.warn("expected directory, but {} was a file", getRosterFilesLocation());
+                log.warn("expected directory, but {} was a file", getDefault().getRosterFilesLocation());
             }
         } else {
             log.warn(FileUtil.getUserFilesPath() + "roster directory was missing, though tried to create it");

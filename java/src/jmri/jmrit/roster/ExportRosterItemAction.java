@@ -51,7 +51,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction {
 
         // read the file for the "from" entry and write it out
         // ensure preferences will be found for read
-        FileUtil.createDirectory(Roster.getRosterFilesLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // locate the file
         //File f = new File(mFullFromFilename);

@@ -57,7 +57,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction {
 
         // read the file for the "from" entry, create a new entry, write it out
         // ensure preferences will be found for read
-        FileUtil.createDirectory(Roster.getRosterFilesLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary
@@ -85,7 +85,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction {
 
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(Roster.getRosterFilesLocation() + mToEntry.getFileName());
+        File fout = new File(Roster.getDefault().getRosterFilesLocation() + mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;
