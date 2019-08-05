@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS Node Manager - CMDERR5 support for CANMIO U and general improvements.</li>
             </ul>
 
         <h4>MQTT</h4>

@@ -68,7 +68,7 @@ public class CbusOpCodesTest {
     @Test
     public void testDecodeCMDERR() {
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_CMDERR,12,34,01 },0x12  );
-        Assert.assertEquals("CBUS_CMDERR 1","Node Config Error NN:3106 Command Not Supported.",CbusOpCodes.decode(m));
+        Assert.assertEquals("CBUS_CMDERR 1","Node Config Error NN:3106 ERROR : Command Not Supported.",CbusOpCodes.decode(m));
         m.setElement(3, 0xaa);
         Assert.assertEquals("CBUS_CMDERR aa","Node Config Error NN:3106 ",CbusOpCodes.decode(m));
     }    
@@ -76,7 +76,7 @@ public class CbusOpCodesTest {
     @Test
     public void testDecodeextend() {
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_CMDERR,12,34,01 },0x12  );
-        Assert.assertEquals("CBUS_CMDERR false1","Node Config Error NN:3106 Command Not Supported.",CbusOpCodes.decode(m,false,0x12));
+        Assert.assertEquals("CBUS_CMDERR false1","Node Config Error NN:3106 ERROR : Command Not Supported.",CbusOpCodes.decode(m,false,0x12));
         Assert.assertEquals("CBUS_CMDERR true","Bootloader Message Type: 18",CbusOpCodes.decode(m,true,0x12));
     }
 
