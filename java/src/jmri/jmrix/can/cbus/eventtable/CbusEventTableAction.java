@@ -541,7 +541,7 @@ public class CbusEventTableAction {
     }
     
     public static class CbusEventTableXmlFile extends XmlFile {
-        private static String fileLocation = FileUtil.getUserFilesPath() + "cbus/";  // NOI18N
+        private static String fileLocation = FileUtil.getProfilePath() + "cbus/";  // NOI18N
         private static String baseFileName = "EventTableData.xml";  // NOI18N
 
         public static String getDefaultFileName() {
@@ -580,7 +580,7 @@ public class CbusEventTableAction {
          */
         public static String getFileLocation() {
             if(fileLocation==null){
-               fileLocation = FileUtil.getUserFilesPath() + "cbus/";  // NOI18N
+               fileLocation = FileUtil.getProfilePath() + "cbus/";  // NOI18N
             }
             return fileLocation;
         }

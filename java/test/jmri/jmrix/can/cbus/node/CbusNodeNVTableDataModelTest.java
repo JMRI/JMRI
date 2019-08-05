@@ -42,11 +42,9 @@ public class CbusNodeNVTableDataModelTest {
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeNVTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeNVTableDataModel.getPreferredWidth(999) > 0 );
         
         myNode.dispose();
         myNode = null;
@@ -103,9 +101,7 @@ public class CbusNodeNVTableDataModelTest {
         Assert.assertEquals("NV_SELECT_BIT_COLUMN","",t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
             
-        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );  
-        
-        Assert.assertTrue("isTableLoaded nac", t.isTableLoaded() == false );
+        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
         
         Assert.assertTrue("isTableDirty nac", t.isTableDirty() == false );
         Assert.assertTrue("getCountDirty nac", t.getCountDirty() == 0 );
@@ -175,10 +171,6 @@ public class CbusNodeNVTableDataModelTest {
         // t.setValueAt(122,1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         // t.setValueAt(255,2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         
-        t.passChangedNvsToNode(null);
-        
-        Assert.assertEquals("Message sent is teaching NV1 ", "[5f8] 96 30 39 01 FF",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         myNode.dispose();
         myNode = null;
