@@ -2345,6 +2345,9 @@ public class LayoutTurnout extends LayoutTrack {
                     if ( e.getNewValue() == null) {
                         return;
                     }
+                    if (disableWhenOccupied && isOccupied()) {
+                        return;
+                    }
                     if (secondNamedTurnout != null) {
                         int t1state = namedTurnout.getBean().getCommandedState();
                         int t2state = secondNamedTurnout.getBean().getCommandedState();
@@ -2405,6 +2408,13 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * Set the LayoutTurnout state
+     * Used for sending the toggle command
+     * Checks not diabled, disable when occupied
+     * Also sets secondary Turnout commanded state
+     * @param state New state to set, eg Turnout.CLOSED
+     */
     public void setState(int state) {
         if ((getTurnout() != null) && !disabled) {
             if (disableWhenOccupied && isOccupied()) {
@@ -2426,6 +2436,12 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * Get the LayoutTurnout state
+     * 
+     * Ensures the secondary Turnout state matches the primary
+     * @return the state, eg Turnout.CLOSED or Turnout.INCONSISTENT
+     */
     public int getState() {
         int result = UNKNOWN;
         if (getTurnout() != null) {
