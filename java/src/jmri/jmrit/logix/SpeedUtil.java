@@ -319,7 +319,7 @@ public class SpeedUtil {
         _ma = 10;  // acceleration momentum time 
         _md = 10;  // deceleration momentum time
         if (_rosterEntry!=null) {
-            String fileName = jmri.jmrit.roster.LocoFile.getFileLocation() + _rosterEntry.getFileName();
+            String fileName = jmri.jmrit.roster.Roster.getRosterFilesLocation() + _rosterEntry.getFileName();
             File file;
             Element root;
             XmlFile xmlFile = new XmlFile() {};

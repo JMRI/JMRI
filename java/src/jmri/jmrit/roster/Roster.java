@@ -928,7 +928,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         for (String fileName : Roster.getAllFileNames()) {
             // Read file
             try {
-                Element loco = (new LocoFile()).rootFromName(LocoFile.getFileLocation() + fileName).getChild("locomotive");
+                Element loco = (new LocoFile()).rootFromName(getRosterFilesLocation() + fileName).getChild("locomotive");
                 if (loco != null) {
                     RosterEntry re = new RosterEntry(loco);
                     re.setFileName(fileName);
@@ -978,6 +978,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public String getRosterIndexPath() {
         return this.getRosterLocation() + this.getRosterIndexFileName();
+    }
+
+    /*
+     * get the path to the file containing roster entry files.
+     */
+    public static String getRosterFilesLocation() {
+        return getDefault().getRosterLocation() + "roster" + File.separator;
     }
 
     /**
@@ -1273,16 +1280,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     static String[] getAllFileNames() {
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(getRosterFilesLocation());
 
         // create an array of file names from roster dir in preferences, count entries
         int i;
         int np = 0;
         String[] sp = null;
         if (log.isDebugEnabled()) {
-            log.debug("search directory " + LocoFile.getFileLocation());
+            log.debug("search directory " + getRosterFilesLocation());
         }
-        File fp = new File(LocoFile.getFileLocation());
+        File fp = new File(getRosterFilesLocation());
         if (fp.exists()) {
             sp = fp.list();
             if (sp != null) {
@@ -1292,7 +1299,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     }
                 }
             } else {
-                log.warn("expected directory, but {} was a file", LocoFile.getFileLocation());
+                log.warn("expected directory, but {} was a file", getRosterFilesLocation());
             }
         } else {
             log.warn(FileUtil.getUserFilesPath() + "roster directory was missing, though tried to create it");

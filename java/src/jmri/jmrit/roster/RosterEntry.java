@@ -280,7 +280,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     public String getPathName() {
-        return LocoFile.getFileLocation() + "/" + _fileName;
+        return Roster.getRosterFilesLocation() + _fileName;
     }
 
     /**
@@ -300,7 +300,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
             // we don't want to overwrite a file that exists, whether or not
             // it's in the roster
-            File testFile = new File(LocoFile.getFileLocation() + newFilename);
+            File testFile = new File(Roster.getRosterFilesLocation() + newFilename);
             int count = 0;
             String oldFilename = newFilename;
             while (testFile.exists()) {
@@ -308,7 +308,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 newFilename = oldFilename.substring(0, oldFilename.length() - 4) + count + ".xml";
                 count++;
                 log.debug("try to use " + newFilename + " as filename instead of " + oldFilename);
-                testFile = new File(LocoFile.getFileLocation() + newFilename);
+                testFile = new File(Roster.getRosterFilesLocation() + newFilename);
             }
             setFileName(newFilename);
             log.debug("new filename: " + getFileName());
@@ -1277,7 +1277,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void updateFile() {
         LocoFile df = new LocoFile();
 
-        String fullFilename = LocoFile.getFileLocation() + getFileName();
+        String fullFilename = Roster.getRosterFilesLocation() + getFileName();
 
         // read in the content
         try {
@@ -1290,7 +1290,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         try {
             File f = new File(fullFilename);
             // do backup
-            df.makeBackupFile(LocoFile.getFileLocation() + getFileName());
+            df.makeBackupFile(Roster.getRosterFilesLocation() + getFileName());
 
             // and finally write the file
             df.writeFile(f, mRootElement, this.store());
@@ -1325,13 +1325,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         LocoFile df = new LocoFile();
 
         // do I/O
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getRosterFilesLocation());
 
         try {
-            String fullFilename = LocoFile.getFileLocation() + getFileName();
+            String fullFilename = Roster.getRosterFilesLocation() + getFileName();
             File f = new File(fullFilename);
             // do backup
-            df.makeBackupFile(LocoFile.getFileLocation() + getFileName());
+            df.makeBackupFile(Roster.getRosterFilesLocation() + getFileName());
 
             // changed
             changeDateUpdated();
@@ -1780,7 +1780,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
 
         LocoFile lf = new LocoFile(); // used as a temporary
-        String file = LocoFile.getFileLocation() + getFileName();
+        String file = Roster.getRosterFilesLocation() + getFileName();
         if (!(new File(file).exists())) {
             // try without prefix
             file = getFileName();

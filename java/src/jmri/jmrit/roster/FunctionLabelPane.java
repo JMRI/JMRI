@@ -119,7 +119,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
             // add the function buttons
             _imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
-            _imageFilePath[i].setDropFolder(LocoFile.getFileLocation());
+            _imageFilePath[i].setDropFolder(Roster.getRosterFilesLocation());
             _imageFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
             _imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
@@ -127,7 +127,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
 
             _imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-            _imagePressedFilePath[i].setDropFolder(LocoFile.getFileLocation());
+            _imagePressedFilePath[i].setDropFolder(Roster.getRosterFilesLocation());
             _imagePressedFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
             _imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));

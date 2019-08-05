@@ -317,7 +317,7 @@ public class ConsistFile extends XmlFile {
 
     static public String getFileLocation() {
         if( fileLocation == null) {
-           fileLocation = Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist" + File.separator;
+           fileLocation = Roster.getDefault().getRosterFilesLocation() + "consist" + File.separator;
         }
         return fileLocation;
     }
