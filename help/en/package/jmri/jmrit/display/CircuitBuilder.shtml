@@ -53,6 +53,22 @@
     during their runtime to respond to track conditions.
     </p>
     
+    <h3>Getting Started</h3>
+	Make a track diagram of your layout using track icons - of any kind, but
+	eventually they will need to be some kind of Indicator Track. The 
+	<b>Item Palette</b> can help you select the kind you want. Then open
+	CircuitBuilder from the <b>Warrant</b> menu. The CircuitBuilder menu
+	will appear. Now use
+	CircuitBuilder menu to make two track circuits (OBlocks).<br>
+	<a href="#OBlocks">Add/Edit OBlocks</a><br>
+	After making two OBlocks you can make and configure the following items:<br>
+	<a href="#Portals">Add/Edit Portals</a><br>
+	<a href="#OPaths">Add/Edit Paths</a><br>
+	<a href="#DirectionArrows">Edit Portal direction Arrows</a><br>
+	<a href="#Signals">Add/Edit Signals</a><br>
+	When you are done editing, select the items under the <a href="#Errors">Error Checks</a> 
+	submenu for errors and omissions.<br>
+	    
     <h2>Basic Operational Model of Circuit Builder</h2>
     Circuit Builder works by using icons on a block by block basis. 
     OBlocks, Portals and OPaths are created and linked by "point and click" on the
@@ -128,6 +144,7 @@
      	    a Portal whose OBlocks are the approach block and block protected by the the signal.
      	    <b>signal icon editing</b> mode. In this window you blahh
      		configure portal icons so they show the direction of travel when a warrant is allocated.</li>
+	 <a name="Errors" id="Errors"></a>
      <li><b>Error Checks</b> - Provides information about objects that may require editing. These 
      		menu sub-items
      		either highlight the icons representing the object or display a list of track circuits or 
@@ -146,6 +163,9 @@
         <li><b>Highlight Indicator Track icons without circuits</b> - Highlights all track icons that are not
         	associated with a track circuit.  If every track icon is associated with a circuit
         	this menu item is labeled <b>All track icons belong to Circuits</b> </li>
+        <li><b>Circuits without a Portal or Path</b> - <span class="since">(since 4.17.3)</span> Has 
+        	a submenu for each track circuit OBlock that does not have a Portal or Path.  
+        	Select an item to add the required portal or Path.</li>
         <li><b>Circuits with misplaced Portal Icons</b> - <span class="since">(since 4.16)</span> Has a 
         	submenu for each track circuit OBlock that has a Portal icon positioned incorrectly. 
         <li><b>Highlight misplaced Portal Icons</b> - Highlights all portal icons that are not
@@ -173,6 +193,7 @@
         Creation and editing of these objects is done is with the
         editing modes of Circuit Builder.
 
+	<a name="OBlocks" id="OBlocks"></a>
     <h3>Creating OBlocks</h3>
      From the <b>Circuit Builder</b> menu select the <b>Add OBlock Circuit</b> menu item.
      This opens a dialog for you to create a circuit OBlock by supplying its system and user name. Creating
@@ -229,6 +250,7 @@
      continue to close it.
     
 
+	<a name="Portals" id="Portals"></a>
     <h3>Portals - Add/Edit Circuit Portals</h3>
      From the <b>Circuit Builder</b> menu select the <b>Add/Edit Circuit Portals</b> menu item.
      This opens a picklist for you to select a circuit OBlock to edit. Selecting a row and pressing
@@ -264,8 +286,10 @@
      as a line of blocks across the panel from left to right. Here a leftmost block icon 
      cannot be spanned by one from the rightmost block. This can be handled in one of two ways.
 	 A non-contiguous track icon could be placed from one edge onto the opposite edge of the diagram
-	 and a have the portal icon overlap both blocks there.  Or two portal icons can be used.
-	 Each placed on the blocks at the opposite sides of the diagram. 
+	 and a have the portal icon overlap both blocks there.<br>
+	 <span class="since">(since 4.17.3)</span>
+	 Or <b>two</b> portal icons can be used for the same portal.
+	 Each icon placed on the respective blocks at the opposite sides of the diagram. 
     <ul>
         <li>The Edit Portal window has a list of the portals already defined for the
         track circuit (OBlock) and a text field to name new portals to be created. The window
@@ -291,6 +315,7 @@
     continue to close it.
     
 
+	<a name="OPaths" id="OPaths"></a>
     <h3>Paths - Add/Edit Circuit Paths</h3>
      From the <b>Circuit Builder</b> menu select the <b>Add/Edit Circuit Paths</b> menu item.
      This opens a picklist for you to select a circuit OBlock to edit. Selecting a row and pressing
@@ -312,12 +337,14 @@
     circle to a green square.
     </p><p>
     Be sure you select all the turnout icons for turnouts that need to be set to define the path.  Also
-    be sure that the portal icons needed for entrance and exit are selected.
+    be sure that the portal icons needed for entrance and exit are selected. A path must have at
+    least one portal and at most two.
     </p><p>
     If the value of the <b>Length</b> text field is "0.0" the length of the path will be inherited
     from the value of what was entered for the length of the OBlock circuit.  If the length of the
     path is significantly different from the OBlock length (i.e. by more than 10%), enter a length
-    for the path.
+    for the path. <b>Note:</b> Path lengths are needed for a warrant to calculate where to begin
+    a speed change required by a signal aspect or block occupation ahead of the train.
     <ul>
         <li>The Edit Paths window has a list of the paths already defined for the track circuit
         	and a text field to name paths to be created.</li>
@@ -343,7 +370,7 @@
     any are detected you will be prompted and given the option to return to the window or 
     continue to close it.
     
-
+	<a name="DirectionArrows" id="DirectionArrows"></a>
     <h3>Portals - Edit Portal Direction Icons</h3>
      <span class="since">Since 3.8</span><br>
      From the <b>Circuit Builder</b> menu select the <b>Edit Portal Direction Icons</b> menu item.
@@ -371,6 +398,7 @@
 	After all the portal icon arrows are pointing into the block, verify that each adjacent OBock 
 	also has its portal direction arrow set <b>into</b> that block.</p> 
 
+	<a name="Signals" id="Signals"></a>
     <h3>Signals - Edit Signal Masts</h3>
      <span class="since">Since 4.17.3</span><br>
      From the <b>Circuit Builder</b> menu select the <b>Add/Edit Signal Masts</b> menu item.
@@ -421,9 +449,11 @@
     	<li>Buttons to set block protection or remove it.</li>
     	<li>Buttons to display pick lists for dragging signal names into the
     		Signal Name text field</li>
-    	<li>A text field to adjust the target point where a warrant	will complete a
-    		speed change should	the signal aspect require it. The number is an offset
-    		from portals entrance point to the block. It may be positive or negative.</li>
+    	<li>A text field to adjust the target point a warrant calculates for the
+    		place where a speed change should start, if a
+    		signal aspect requires it. (Speed changes required in a protected block
+    		must be completed before entering the block.)  The number is an offset
+    		from the portal entrance point to the block. It may be positive or negative.</li>
     </ul>
 	Selecting a signal icon will select the portal if it protects the block there.
 	Otherwise a dialog windows opens to configure or replace protection.   

@@ -450,7 +450,11 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>CircuitBuilder now allows a portal to have a second icon to connect blocks
+            that are not adjacent on the layout diagram.</li>
+            <li>Configuring signals for use with warrants has been added to CircuitBuilder.</li>
+            <li>Several checks for errors and omissions have been added to CircuitBuilder.
+            See the updated help page for details on this and the new features.</li>
         </ul>
 
    <h3>Web Access</h3>

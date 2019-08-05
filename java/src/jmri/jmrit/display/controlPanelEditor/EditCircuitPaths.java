@@ -749,7 +749,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
     protected void closingEvent(boolean close) {
         checkForSavePath();
-        String msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
+        String msg = _parent.checkForTrackIcons(_homeBlock, "BlockPaths");
         if(msg != null) {
             close = true;
         } else {

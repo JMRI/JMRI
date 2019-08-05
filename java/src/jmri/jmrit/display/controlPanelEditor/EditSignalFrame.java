@@ -58,7 +58,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
     public EditSignalFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         pack();
-        String msg = _parent.checkForTrackIcons(block, "PortalOrPath");
+        String msg = _parent.checkForTrackIcons(block, "BlockSignal");
         if (msg != null) {
             _canEdit = false;
         } else {
@@ -190,10 +190,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         } else {
             return;
         }
-        if (_portalIcon != null) {
-//            _portalIcon.setStatus(PortalIcon.HIDDEN);
-            _portalIcon = null;
-        }
+        _portalIcon = null;
         if (mast != null) {
             portal =_parent.getSignalPortal(mast);
             if (portal != null) {
@@ -201,11 +198,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
                 if (_homeBlock.equals(protectedBlock)) {
                     setPortalSelected(portal);
                     return;
-                } else {
-                    // let fall through. mast protects a block other than _homeBlock
                 }
-            } else {
-                // mast is unattached
             }
         } else if (portal != null) {
             mast = portal.getSignalProtectingBlock(_homeBlock);
@@ -222,7 +215,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
             List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
             if (!piArray.isEmpty()) {
                 _portalIcon = piArray.get(0);
-//                _portalIcon.setStatus(PortalIcon.VISIBLE);
             }
         }
         if (mast !=null) {
@@ -344,7 +336,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
            List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
            if (!piArray.isEmpty()) {
                _portalIcon = piArray.get(0);
-//               _portalIcon.setStatus(PortalIcon.VISIBLE);
            }
         }
         if (mast != null) {
@@ -463,7 +454,6 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         List<PortalIcon> portalIcons = _parent.getPortalIconMap(portal);
         if (!portalIcons.isEmpty()) {
             _portalIcon = portalIcons.get(0);
-//            _portalIcon.setStatus(PortalIcon.VISIBLE);
             icon.setDisplayLevel(_portalIcon.getDisplayLevel());
             icon.setLocation(_portalIcon.getLocation());
         }

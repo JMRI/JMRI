@@ -88,6 +88,12 @@ public class CircuitBuilder {
     // list of Portals with no PortalIcon
     private final ArrayList<Portal> _noPortalIcon = new ArrayList<>();
 
+    // list of OBlocks with no Portal
+    private final ArrayList<OBlock> _noPortals = new ArrayList<>();
+
+    // list of OBlocks with no Path
+    private final ArrayList<OBlock> _noPaths = new ArrayList<>();
+
     // list of misplaced PortalIcons
     private final ArrayList<PortalIcon> _misplacedPortalIcon = new ArrayList<>();
 
@@ -174,6 +180,9 @@ public class CircuitBuilder {
             newCircuit();
         });
         _circuitMenu.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
+        JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
+        HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
+        _circuitMenu.add(helpItem);
 
     }
     private void makeCircuitMenu() {
@@ -249,7 +258,12 @@ public class CircuitBuilder {
 
     // Rebuild after any edit change
     private void makeToDoMenu() {
-        _todoMenu.removeAll();
+        if (_todoMenu == null) {
+            _todoMenu = new JMenu(Bundle.getMessage("circuitErrorsItem"));
+            _circuitMenu.add(_todoMenu);
+        } else {
+            _todoMenu.removeAll();
+        }
 
         JMenu blockNeeds = new JMenu(Bundle.getMessage("blockNeedsIconsItem"));
         ActionListener editCircuitAction = (ActionEvent event) -> {
@@ -302,8 +316,8 @@ public class CircuitBuilder {
         }
         _todoMenu.add(iconNeeds);   // #3
 
-        iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedsBlocksItem"));
         if (_darkTrack.size() > 0) {
+            iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedsBlocksItem"));
             iconNeeds.addActionListener((ActionEvent event) -> {
                 if (editingOK()) {
                     hidePortalIcons();
@@ -323,6 +337,39 @@ public class CircuitBuilder {
         }
         _todoMenu.add(iconNeeds);   // #4
 
+        if (!_noPortals.isEmpty()) {
+            blockNeeds = new JMenu(Bundle.getMessage("blockNeedsPortals"));
+            ActionListener editPortalAction = (ActionEvent event) -> {
+                String sysName = event.getActionCommand();
+                _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(sysName);
+                editPortals(null, false);
+            };
+            for (OBlock block : _noPortals) {
+                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
+                        Bundle.getMessage("OpenPortalTitle"), block.getDisplayName()));
+                mi.setActionCommand(block.getSystemName());
+                mi.addActionListener(editPortalAction);
+                blockNeeds.add(mi);
+            }
+        } else if (_noPaths.size() > 0) {
+            blockNeeds = new JMenu(Bundle.getMessage("blockNeedsPaths"));
+            ActionListener editPortalAction = (ActionEvent event) -> {
+                String sysName = event.getActionCommand();
+                _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(sysName);
+                editCircuitPaths(null, false);
+            };
+            for (OBlock block : _noPaths) {
+                JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
+                        Bundle.getMessage("OpenPathTitle"), block.getDisplayName()));
+                mi.setActionCommand(block.getSystemName());
+                mi.addActionListener(editPortalAction);
+                blockNeeds.add(mi);
+            }
+        } else {
+            blockNeeds = new JMenu(Bundle.getMessage("circuitsHavePortalsPaths"));
+        }
+        _todoMenu.add(blockNeeds);  // #5
+
         blockNeeds = new JMenu(Bundle.getMessage("portalsMisplaced"));
         if (_misplacedPortalIcon.size() > 0) {
             for (PortalIcon icon : _misplacedPortalIcon) {
@@ -335,15 +382,13 @@ public class CircuitBuilder {
                         editPortalError(fromBlock, portal, icon);
                     });
                     blockNeeds.add(mi);
-                }
-                if (toBlock != null) {
+                } else if (toBlock != null) {
                     JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPortalTitle", toBlock.getDisplayName()));
                     mi.addActionListener((ActionEvent event) -> {
                         editPortalError(toBlock, portal, icon);
                     });
                     blockNeeds.add(mi);
                 }
-                
             }
         } else {
             if (_hasPortalIcons) {
@@ -352,10 +397,10 @@ public class CircuitBuilder {
                 blockNeeds.add(new JMenuItem(Bundle.getMessage("NoPortalIcons")));
             }
         }
-        _todoMenu.add(blockNeeds);  //#5
+        _todoMenu.add(blockNeeds);  //#6
 
-        iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedPositioning"));
         if (_misplacedPortalIcon.size() > 0) {
+            iconNeeds = new JMenuItem(Bundle.getMessage("iconsNeedPositioning"));
             iconNeeds.addActionListener((ActionEvent event) -> {
                 if (editingOK()) {
                     ArrayList<Positionable> group = new ArrayList<>();
@@ -374,10 +419,10 @@ public class CircuitBuilder {
                 iconNeeds = new JMenuItem(Bundle.getMessage("NoPortalIcons"));
             }
         }
-        _todoMenu.add(iconNeeds);   // #6
+        _todoMenu.add(iconNeeds);   // #7
 
-        iconNeeds = new JMenuItem(Bundle.getMessage("UnattachedMasts"));
         if (_unattachedMastIcon.size() > 0) {
+            iconNeeds = new JMenuItem(Bundle.getMessage("UnattachedMasts"));
             iconNeeds.addActionListener((ActionEvent event) -> {
                 if (editingOK()) {
                     ArrayList<Positionable> group = new ArrayList<>();
@@ -395,7 +440,7 @@ public class CircuitBuilder {
                 iconNeeds = new JMenuItem(Bundle.getMessage("NoMastIcons"));
             }
         }
-        _todoMenu.add(iconNeeds);   // #7
+        _todoMenu.add(iconNeeds);   // #8
 
         blockNeeds = new JMenu(Bundle.getMessage("portalNeedsIcon"));
         ActionListener editPortalAction = (ActionEvent event) -> {
@@ -413,10 +458,10 @@ public class CircuitBuilder {
         } else {
             blockNeeds.add(new JMenuItem(Bundle.getMessage("portalsHaveIcons")));
         }
-        _todoMenu.add(blockNeeds);  // #8
+        _todoMenu.add(blockNeeds);  // #9
 
         JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
-        _todoMenu.add(pError);
+        _todoMenu.add(pError);      // #10
         pError.addActionListener((ActionEvent event) -> {
             errorCheck();
         });
@@ -951,29 +996,39 @@ public class CircuitBuilder {
         _convertBlock.clear();      // blocks with at least one unconverted track icon
         _misplacedPortalIcon.clear();
         _noPortalIcon.clear();
+        _noPortals.clear();
+        _noPaths.clear();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
-        boolean hasOBlocks = (oblocks.size() > 0);
         for (OBlock block : oblocks) {
-            // first add PortalIcons and SignalIcons to circuitMap 
-            for (Portal portal : block.getPortals()) {
-                List<PortalIcon> piArray = getPortalIconMap(portal);
-                for (PortalIcon pi : piArray) {
-                    addIcon(block, pi);
-                }
-                NamedBean mast = portal.getSignalProtectingBlock(block);
-                if (mast != null) {
-                    List<PositionableIcon> siArray = getSignalIconMap(mast);
-                    for (PositionableIcon si : siArray) {
-                        addIcon(block, si);
-                        _unattachedMastIcon.remove(si);
-
+            List<Portal> portals = block.getPortals();
+            if (portals.isEmpty()) {
+                _noPortals.add(block);
+            } else {
+                // first add PortalIcons and SignalIcons to circuitMap 
+                for (Portal portal : portals) {
+                    List<PortalIcon> piArray = getPortalIconMap(portal);
+                    for (PortalIcon pi : piArray) {
+                        addIcon(block, pi);
                     }
-                    _signalMap.put(mast, portal);
+                    NamedBean mast = portal.getSignalProtectingBlock(block);
+                    if (mast != null) {
+                        List<PositionableIcon> siArray = getSignalIconMap(mast);
+                        for (PositionableIcon si : siArray) {
+                            addIcon(block, si);
+                            _unattachedMastIcon.remove(si);
+
+                        }
+                        _signalMap.put(mast, portal);
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("Portal {} in block {} has {} icons", portal.getDisplayName(), block.getDisplayName(), piArray.size());
+                    }
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("Portal {} in block {} has {} icons", portal.getDisplayName(), block.getDisplayName(), piArray.size());
-                }
+            }
+            List<jmri.Path> paths = block.getPaths();
+            if (paths ==null || paths.isEmpty()) {
+                _noPaths.add(block);
             }
 
             List<Positionable> icons = getCircuitIcons(block);
@@ -1040,8 +1095,8 @@ public class CircuitBuilder {
             }
         }
 
-        if (hasOBlocks) {
-            if (_circuitMenu.getItemCount() <= 2) {
+        if (oblocks.size() > 1) {
+            if (_circuitMenu.getItemCount() <= 3) {
                 _circuitMenu.removeAll();
                 makeCircuitMenu();
             } else {
@@ -1210,7 +1265,10 @@ public class CircuitBuilder {
                 }
             }
             if (!ok) {
-                msg = Bundle.getMessage("cantSaveIcon", block.getDisplayName(), Bundle.getMessage(key));
+                StringBuilder sb = new StringBuilder(Bundle.getMessage("cantSaveIcon", block.getDisplayName()));
+                sb.append("\n");
+                sb.append(Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage(key)));
+                msg = sb.toString();
             }
         }
         return msg;

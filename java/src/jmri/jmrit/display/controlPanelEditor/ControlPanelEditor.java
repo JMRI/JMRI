@@ -323,7 +323,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             _warrantMenu.add(aboutItem);
             aboutItem.addActionListener((ActionEvent event) -> {
                 makeCircuitMenu(true);
-                openCircuitWindow();
+//                openCircuitWindow();
             });
         } else {
             makeCircuitMenu(edit);

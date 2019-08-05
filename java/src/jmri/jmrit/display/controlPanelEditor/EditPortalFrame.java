@@ -63,16 +63,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         } else {
             msg = Bundle.getMessage("portalHasNoIcon", name); 
         }
-        JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
-   }
-
-    public EditPortalFrame(String title, CircuitBuilder parent, OBlock block) {
-        super(title, parent, block);
-        pack();
-        String msg = _parent.checkForTrackIcons(block, "PortalOrPath");
-        if (msg != null) {
-            _canEdit = false;
-        }
         if (_canEdit) {
             msg = _parent.checkForPortals(block, "BlockPaths");
             if (msg != null) {
@@ -84,6 +74,18 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         }
         if (_canEdit && msg == null) {
             msg = _parent.checkForPortalIcons(block, "DirectionArrow");
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    public EditPortalFrame(String title, CircuitBuilder parent, OBlock block) {
+        super(title, parent, block);
+        pack();
+        String msg = _parent.checkForTrackIcons(block, "BlockPortals");
+        if (msg != null) {
+            _canEdit = false;
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg,
@@ -369,7 +371,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         } else {
             List<Positionable> list = _parent.getCircuitIcons(block);
             if (list.isEmpty()) {
-                msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("editCircuitItem"));
+                msg = Bundle.getMessage("needIcons", block.getDisplayName(), Bundle.getMessage("BlockPortals"));
             } else {
                 msg = Bundle.getMessage("iconNotOnBlock", block.getDisplayName(), icon.getNameString());
             }
