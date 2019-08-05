@@ -740,8 +740,6 @@ public class LayoutTurnoutTest {
     @Test
     public void testSupportingTurnoutTwoSensor()  throws JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
-        Assert.assertTrue("ltRX.getState() is UNKNOWN", ltRX.getState() == Turnout.UNKNOWN);
         
         Turnout tOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT1");
         Turnout tTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT2");
@@ -842,25 +840,32 @@ public class LayoutTurnoutTest {
         // Here we're testing the commanded state logic that joins the Turnouts when operated,
         // the actual LayoutTurnout status is dependent on the feedback status.
         
+        Assert.assertTrue("t2 inverted CLOSED when t1 THROWN", Turnout.UNKNOWN == stTwo.getCommandedState());
+        
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
+        Assert.assertTrue("ltRX UNKNOWN", Turnout.UNKNOWN == ltRX.getState());
         stOne.setCommandedState(Turnout.THROWN);
         Assert.assertTrue("t2 inverted CLOSED when t1 THROWN", Turnout.CLOSED == stTwo.getCommandedState());
+        Assert.assertTrue("ltRX THROWN", Turnout.THROWN == ltRX.getState());
         
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.CLOSED);
         Assert.assertTrue("t2 inverted THROWN when t1 CLOSED", Turnout.THROWN == stTwo.getCommandedState());
+        Assert.assertTrue("ltRX CLOSED", Turnout.CLOSED == ltRX.getState());
         
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.THROWN);
         Assert.assertTrue("t1 inverted CLOSED when t2 THROWN", Turnout.CLOSED == stOne.getCommandedState());
+        Assert.assertTrue("ltRX CLOSED", Turnout.CLOSED == ltRX.getState());
         
         stTwo.setCommandedState(Turnout.UNKNOWN);
         stOne.setCommandedState(Turnout.UNKNOWN);
         stTwo.setCommandedState(Turnout.CLOSED);
         Assert.assertTrue("t1 inverted THROWN when t2 CLOSED", Turnout.THROWN == stOne.getCommandedState());
+        Assert.assertTrue("ltRX THROWN", Turnout.THROWN == ltRX.getState());
         
         ltRX.setSecondTurnoutInverted(false);
         Assert.assertFalse(ltRX.isSecondTurnoutInverted());
@@ -892,6 +897,151 @@ public class LayoutTurnoutTest {
         stTwo = null;
         
     }
+    
+    @Test
+    public void testThrowWhenOccupiedOneTurnout()  throws JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Assert.assertTrue("ltRH starts unknown state", Turnout.UNKNOWN == ltRH.getState());
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("no change null Turnout", Turnout.UNKNOWN == ltRH.getState());
+        
+        ltRH.setDisabled(true);
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("no change null Turnout and disabled", Turnout.UNKNOWN == ltRH.getState());
+        
+        Turnout otOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS1");
+        ltRH.setTurnout("ITS1");
+        otOne.setCommandedState(Turnout.UNKNOWN);
+        Assert.assertTrue("turnout set ", Turnout.UNKNOWN == otOne.getState());
+        Assert.assertTrue("turnout set ", Turnout.UNKNOWN == ltRH.getState());
+        
+        ltRH.setDisabled(true);
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("turnout still UNKNOWN after set CLOSE disabled", Turnout.UNKNOWN == ltRH.getState());
+        ltRH.setDisabled(false);
+        
+        LayoutBlock layoutBlock = new LayoutBlock("ILB1", "Test Block");
+        Sensor occSensor = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("ISOccupancy1");
+        occSensor.setKnownState(Sensor.ACTIVE);
+        layoutBlock.setOccupancySensorName("ISOccupancy1");
+        Assert.assertTrue("Occupied when sensor active", layoutBlock.getOccupancy() == LayoutBlock.OCCUPIED);
+        
+        ltRH.setLayoutBlock(layoutBlock);
+        
+        // occupied, occ. active disabled
+        ltRH.setDisableWhenOccupied(false);
+        occSensor.setKnownState(Sensor.ACTIVE);
+        otOne.setCommandedState(Turnout.UNKNOWN);
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED == otOne.getCommandedState());
+        ltRH.setState(Turnout.THROWN);
+        Assert.assertTrue("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN == otOne.getCommandedState());
+        
+        // occupied, occ. active enabled
+        ltRH.setDisableWhenOccupied(true);
+        occSensor.setKnownState(Sensor.ACTIVE);
+        otOne.setCommandedState(Turnout.UNKNOWN);
+        ltRH.setState(Turnout.THROWN);
+        Assert.assertTrue("ltRH unchanged when occupied, occ when active enabled", Turnout.UNKNOWN == ltRH.getState());
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("ltRH unchanged when occupied, occ when active enabled", Turnout.UNKNOWN == ltRH.getState());
+        
+        // not occupied, occ. active disabled
+        ltRH.setDisableWhenOccupied(false);
+        occSensor.setKnownState(Sensor.INACTIVE);
+        otOne.setCommandedState(Turnout.UNKNOWN);
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED == otOne.getCommandedState());
+        ltRH.setState(Turnout.THROWN);
+        Assert.assertTrue("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN == otOne.getCommandedState());
+        
+        // not occupied, occ. active enabled
+        ltRH.setDisableWhenOccupied(true);
+        occSensor.setKnownState(Sensor.INACTIVE);
+        otOne.setCommandedState(Turnout.UNKNOWN);
+        ltRH.setState(Turnout.CLOSED);
+        Assert.assertTrue("ltRH CLOSED when occupied, occ when active not disabled", Turnout.CLOSED == otOne.getCommandedState());
+        ltRH.setState(Turnout.THROWN);
+        Assert.assertTrue("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN == otOne.getCommandedState());
+        
+        
+        layoutBlock.dispose();
+        layoutBlock = null;
+        
+        otOne.dispose();
+        otOne = null;
+    
+    }
+    
+    
+    @Test
+    public void testSecondaryTurnoutStateWhenSet() throws JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // not testing occupancy as that was covered in previous test
+        Turnout stOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS1");
+        Turnout stTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS2");
+        
+        // not a test of using a String to set the Turnout
+        ltRX.setTurnout("ITS1");
+        ltRX.setSecondTurnout("ITS2");
+        
+        ltRX.setSecondTurnoutInverted(false);
+        stOne.setCommandedState(Turnout.UNKNOWN);
+        stTwo.setCommandedState(Turnout.UNKNOWN);
+        ltRX.setState(Turnout.THROWN);
+        Assert.assertTrue("StOne THROWN", Turnout.THROWN == stOne.getCommandedState());
+        Assert.assertTrue("StTwo THROWN", Turnout.THROWN == stTwo.getCommandedState());
+        
+        ltRX.setSecondTurnoutInverted(false);
+        stOne.setCommandedState(Turnout.UNKNOWN);
+        stTwo.setCommandedState(Turnout.UNKNOWN);
+        ltRX.setState(Turnout.THROWN);
+        Assert.assertTrue("StOne THROWN", Turnout.THROWN == stOne.getCommandedState());
+        Assert.assertTrue("StTwo THROWN", Turnout.THROWN == stTwo.getCommandedState());
+        
+        ltRX.setState(Turnout.CLOSED);
+        Assert.assertTrue("StOne CLOSED", Turnout.CLOSED == stOne.getCommandedState());
+        Assert.assertTrue("StTwo CLOSED", Turnout.CLOSED == stTwo.getCommandedState());
+        
+        ltRX.setSecondTurnoutInverted(true);
+        stOne.setCommandedState(Turnout.UNKNOWN);
+        stTwo.setCommandedState(Turnout.UNKNOWN);
+        ltRX.setState(Turnout.THROWN);
+        Assert.assertTrue("StOne THROWN", Turnout.THROWN == stOne.getCommandedState());
+        Assert.assertTrue("StTwo CLOSED", Turnout.CLOSED == stTwo.getCommandedState());
+        
+        ltRX.setState(Turnout.CLOSED);
+        Assert.assertTrue("StOne CLOSED", Turnout.CLOSED == stOne.getCommandedState());
+        Assert.assertTrue("StTwo THROWN", Turnout.THROWN == stTwo.getCommandedState());
+        
+    }
+    
+    @Test
+    public void testToggle() throws JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        // null Turnout
+        Assert.assertTrue("starts UNKNOWN", Turnout.UNKNOWN == ltRH.getState());
+        ltRH.toggleTurnout();
+        Assert.assertTrue("still UNKNOWN no Turnout to toggle", Turnout.UNKNOWN == ltRH.getState());
+        
+        Turnout ptOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITP1");
+        ltRH.setTurnout("ITP1");
+        
+        ptOne.setCommandedState(Turnout.UNKNOWN);
+        ltRH.toggleTurnout();
+        Assert.assertTrue("UNKNOWN to CLOSED when toggled", Turnout.CLOSED == ptOne.getCommandedState());
+        
+        ltRH.toggleTurnout();
+        Assert.assertTrue("CLOSED to THROWN when toggled", Turnout.THROWN == ptOne.getCommandedState());
+        
+        ltRH.toggleTurnout();
+        Assert.assertTrue("THROWN to CLOSED when toggled", Turnout.CLOSED == ptOne.getCommandedState());
+        
+    }
+    
 
     // from here down is testing infrastructure
     @BeforeClass
