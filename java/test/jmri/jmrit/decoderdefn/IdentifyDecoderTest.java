@@ -295,9 +295,88 @@ public class IdentifyDecoderTest {
 
     /**
      * Test Hornby decoder with CV159 not available, hence productID is -1.
+     * Test with 2 retries on CV8 to trigger PAGEMODE
      */
     @Test
     public void testIdentifyHornby4() { // CV159 not available hence productID is -1
+        // create our test object
+        IdentifyDecoder i = new IdentifyDecoder(p) {
+            @Override
+            public void done(int mfgID, int modelID, int productID) {
+            }
+
+            @Override
+            public void message(String m) {
+            }
+
+            @Override
+            public void error() {
+            }
+        };
+
+        Assert.assertEquals("found mfg ID ", -1, i.mfgID);
+        Assert.assertEquals("found model ID ", -1, i.modelID);
+        Assert.assertEquals("found product ID ", -1, i.productID);
+        Assert.assertEquals("Test isOptionalCv() before start", i.isOptionalCv(), false);
+        Assert.assertEquals("Programming mode before start", ProgrammingMode.DIRECTMODE, p.getMode());
+
+        i.start();
+        Assert.assertEquals("step 1 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 1 ", true, i.isRunning());
+        Assert.assertEquals("Test isOptionalCv() after 1", i.isOptionalCv(), false);
+
+        // simulate 6 retries on CV8 to strigger swap to PAGEMODE, start 7
+        i.programmingOpReply(21, 2);
+        i.programmingOpReply(31, 2);
+        i.programmingOpReply(41, 2);
+        i.programmingOpReply(51, 2);
+        i.programmingOpReply(61, 2);
+        i.programmingOpReply(48, 0);
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", true, i.isRunning());
+        Assert.assertEquals("Test isOptionalCv() after 2", i.isOptionalCv(), false);
+        Assert.assertEquals("Programming mode after 2", ProgrammingMode.PAGEMODE, p.getMode());
+
+        Assert.assertEquals("found mfg ID ", 48, i.mfgID);
+        Assert.assertEquals("found model ID ", -1, i.modelID);
+        Assert.assertEquals("found product ID ", -1, i.productID);
+
+        // simulate 2 retries on CV7, start 159
+        i.programmingOpReply(22, 2);
+        i.programmingOpReply(32, 2);
+        i.programmingOpReply(88, 0);
+        Assert.assertEquals("step 3 reads CV ", 159, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+        Assert.assertEquals("Test isOptionalCv() after 3", i.isOptionalCv(), true);
+        Assert.assertEquals("Programming mode after 3", ProgrammingMode.PAGEMODE, p.getMode());
+
+        Assert.assertEquals("found mfg ID ", 48, i.mfgID);
+        Assert.assertEquals("found model ID ", 88, i.modelID);
+        Assert.assertEquals("found product ID ", -1, i.productID);
+
+        // simulate CV read read fail on CV159, ends
+        i.programmingOpReply(145, 2);
+        i.programmingOpReply(145, 2);
+        i.programmingOpReply(145, 2);
+        Assert.assertEquals("running after 4 ", false, i.isRunning());
+        Assert.assertEquals("Test isOptionalCv() after 4", i.isOptionalCv(), true);
+        Assert.assertEquals("Programming mode after 4", ProgrammingMode.DIRECTMODE, p.getMode());
+
+        Assert.assertEquals("found mfg ID ", 48, i.mfgID);
+        Assert.assertEquals("found model ID ", 88, i.modelID);
+        Assert.assertEquals("found product ID ", -1, i.productID);
+
+        jmri.util.JUnitAppender.assertWarnMessage("error 2 readng CV 8, trying Paged mode");
+        jmri.util.JUnitAppender.assertWarnMessage("Restoring Direct mode");
+        jmri.util.JUnitAppender.assertWarnMessage("CV 159 is optional. Will assume not present...");
+    }
+
+    /**
+     * Test Hornby decoder with only 2 retries on CV8 but 3 on CV7.
+     * Should fail as shouldn't switch to PAGEMODE.
+     */
+    @Test
+    public void testIdentifyHornby5() { // CV159 not available hence productID is -1
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -337,37 +416,20 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found model ID ", -1, i.modelID);
         Assert.assertEquals("found product ID ", -1, i.productID);
 
-        // simulate 7 retries on CV7, start 159
+        // simulate 3 retries on CV7, to create fail since not switched to PAGEMODE
         i.programmingOpReply(22, 2);
         i.programmingOpReply(32, 2);
         i.programmingOpReply(42, 2);
-        i.programmingOpReply(52, 2);
-        i.programmingOpReply(62, 2);
-        i.programmingOpReply(88, 0);
-        Assert.assertEquals("step 3 reads CV ", 159, cvRead);
-        Assert.assertEquals("running after 3 ", true, i.isRunning());
-        Assert.assertEquals("Test isOptionalCv() after 3", i.isOptionalCv(), true);
-        Assert.assertEquals("Programming mode after 3", ProgrammingMode.PAGEMODE, p.getMode());
+        Assert.assertEquals("step 2 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 2 ", false, i.isRunning());
+        Assert.assertEquals("Programming mode after 3", ProgrammingMode.DIRECTMODE, p.getMode());
 
         Assert.assertEquals("found mfg ID ", 48, i.mfgID);
-        Assert.assertEquals("found model ID ", 88, i.modelID);
+        Assert.assertEquals("found model ID ", -1, i.modelID);
         Assert.assertEquals("found product ID ", -1, i.productID);
 
-        // simulate CV read read fail on CV159, ends
-        i.programmingOpReply(145, 2);
-        i.programmingOpReply(145, 2);
-        i.programmingOpReply(145, 2);
-        Assert.assertEquals("running after 4 ", false, i.isRunning());
-        Assert.assertEquals("Test isOptionalCv() after 4", i.isOptionalCv(), true);
-        Assert.assertEquals("Programming mode after 4", ProgrammingMode.DIRECTMODE, p.getMode());
-
-        Assert.assertEquals("found mfg ID ", 48, i.mfgID);
-        Assert.assertEquals("found model ID ", 88, i.modelID);
-        Assert.assertEquals("found product ID ", -1, i.productID);
-        
-        jmri.util.JUnitAppender.assertWarnMessage("error 2 readng CV 7, trying Paged mode");
-        jmri.util.JUnitAppender.assertWarnMessage("Restoring Direct mode");
-        jmri.util.JUnitAppender.assertWarnMessage("CV 159 is optional. Will assume not present...");
+        jmri.util.JUnitAppender.assertWarnMessage("Stopping due to error: "
+                            + p.decodeErrorCode(2));
     }
 
     /**
