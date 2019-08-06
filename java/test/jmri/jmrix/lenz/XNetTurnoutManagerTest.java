@@ -94,7 +94,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("default outputInterval", 250, l.getOutputInterval("XT21")); // only the prefix is used to find the manager
         lnis.getSystemConnectionMemo().setOutputInterval(30);
         Assert.assertEquals("new outputInterval in memo", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // direct set & get
-        lnis.getSystemConnectionMemo().setOutputInterval(40);
+        l.setOutputInterval("XT21", 40);
         Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("XT21")); // test method in manager
     }
 
