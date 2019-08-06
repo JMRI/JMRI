@@ -10695,7 +10695,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             log.debug("PopupMenuWillBecomeVisible");
             Set<Turnout> l = new HashSet<>();
             comboBox.getManager().getNamedBeanSet().forEach((turnout) -> {
-                if (currentTurnouts == null || !currentTurnouts.contains(turnout)) {
+                if (!currentTurnouts.contains(turnout)) {
                     if (!validatePhysicalTurnout(turnout.getDisplayName(), null)) {
                         l.add(turnout);
                     }
@@ -10723,7 +10723,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @return A PopupMenuListener
      */
     public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
-        return newTurnoutComboBoxPopupMenuListener(comboBox, null);
+        return new TurnoutComboBoxPopupMenuListener(comboBox, new ArrayList<Turnout>());
     }
 
     /**
