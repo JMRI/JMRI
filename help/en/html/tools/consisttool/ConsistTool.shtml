@@ -297,7 +297,7 @@
         option in the Consist Control's <i>File</i> menu.
         </p>
 
-	    <img src="images/ConsistTool-ScanForConsist.png" alt="The Scan For Consists Option is a Choice in the Consist Control Window's file Menu" />
+	    <img src="images/ConsistTool-ScanForConsists.png" alt="The Scan For Consists Option is a Choice in the Consist Control Window's file Menu" />
 
         <p>
         Once the scan completes, any consists discovered will be added to the 
