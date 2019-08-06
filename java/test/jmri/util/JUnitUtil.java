@@ -56,6 +56,7 @@ import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.internal.InternalReporterManager;
@@ -83,6 +84,7 @@ import jmri.util.managers.SignalHeadManagerThrowExceptionScaffold;
 import jmri.util.managers.SignalMastManagerThrowExceptionScaffold;
 import jmri.util.managers.TurnoutManagerThrowExceptionScaffold;
 import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
+import jmri.util.prefs.InitializationException;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
@@ -954,6 +956,16 @@ public class JUnitUtil {
 
     public static void initConnectionConfigManager() {
         InstanceManager.setDefault(ConnectionConfigManager.class, new ConnectionConfigManager());
+    }
+
+    public static void initRosterConfigManager() {
+        RosterConfigManager manager = new RosterConfigManager();
+        try {
+            manager.initialize(ProfileManager.getDefault().getActiveProfile());
+        } catch (InitializationException ex) {
+            log.error("Failed to initialize RosterConfigManager", ex);
+        }
+        InstanceManager.setDefault(RosterConfigManager.class, manager);
     }
 
     /*

@@ -260,7 +260,7 @@ public class ProfileManager extends Bean {
             os = new FileOutputStream(config);
             p.storeToXML(os, "Active profile configuration (saved at " + (new Date()).toString() + ")"); // NOI18N
             os.close();
-        } catch (Throwable ex) { // IOException, but also misc errors in Java XML processing
+        } catch (IOException ex) {
             log.error("While trying to save active profile {}", config, ex);
             if (os != null) {
                 os.close();
@@ -536,14 +536,14 @@ public class ProfileManager extends Bean {
         this.profiles.stream().map((p) -> {
             Element e = new Element(PROFILE);
             e.setAttribute(Profile.ID, p.getId());
-            e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(p.getPath(), true, true));
+            e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(null, p.getPath(), true, true));
             return e;
         }).forEach((e) -> {
             profilesElement.addContent(e);
         });
         this.searchPaths.stream().map((f) -> {
             Element e = new Element(Profile.PATH);
-            e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(f.getPath(), true, true));
+            e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(null, f.getPath(), true, true));
             e.setAttribute(DEFAULT, Boolean.toString(f.equals(this.defaultSearchPath)));
             return e;
         }).forEach((e) -> {
@@ -825,7 +825,7 @@ public class ProfileManager extends Bean {
         InstanceManager.getDefault(RosterConfigManager.class).initialize(profile);
         InstanceManager.getDefault(RosterConfigManager.class).initialize(tempProfile);
         if (exportExternalUserFiles) {
-            FileUtil.copy(new File(FileUtil.getUserFilesPath()), tempProfilePath);
+            FileUtil.copy(new File(FileUtil.getUserFilesPath(profile)), tempProfilePath);
             FileUtil.setUserFilesPath(tempProfile, FileUtil.getProfilePath(tempProfile));
             InstanceManager.getDefault(FileLocationsPreferences.class).savePreferences(tempProfile);
         }
