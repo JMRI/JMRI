@@ -74,7 +74,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        Assert.assertNotNull((XNetTurnout) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {

@@ -17,7 +17,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Override
     @Test
     public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
@@ -31,6 +31,7 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Override
     @After
     public void tearDown() {
+        scm = null;
         JUnitUtil.tearDown();
     }
 

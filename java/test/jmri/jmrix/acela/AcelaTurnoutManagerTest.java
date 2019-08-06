@@ -41,7 +41,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         Turnout o = t.newTurnout("AT11", "my name");
 
         log.debug("received turnout value {}", o);
-        Assert.assertNotNull((AcelaTurnout) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {

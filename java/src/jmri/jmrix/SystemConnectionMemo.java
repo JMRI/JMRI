@@ -28,6 +28,7 @@ abstract public class SystemConnectionMemo extends Bean {
     public static final String DISABLED = "ConnectionDisabled";
     public static final String USER_NAME = "ConnectionNameChanged";
     public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
+    public static final String INTERVAL = "ConnectionIntervalChanged";
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
     private String prefix;
@@ -297,11 +298,16 @@ abstract public class SystemConnectionMemo extends Bean {
 
     private ConsistManager consistManager = null;
 
-    protected int _interval = 250;
+    /**
+     * Duration in Milliseconds of interval between separate Turnout commands on the same connection.
+     * <p>
+     * Change from e.g. connection config dialog and scripts using {@link #setOutputInterval(int)}
+     */
+    private int _interval = 250;
 
     /**
      * Get the connection specific OutputInterval (in ms) to wait between/before commands
-     * are send, configured in AdapterConfig.
+     * are sent, configured in AdapterConfig.
      * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)}.
      */
     public int getOutputInterval() {
@@ -311,6 +317,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     public void setOutputInterval(int newInterval) {
         log.debug("Setting interval from {} to {}", _interval, newInterval);
+        this.propertyChangeSupport.firePropertyChange(INTERVAL, _interval, newInterval);
         _interval = newInterval;
     }
 

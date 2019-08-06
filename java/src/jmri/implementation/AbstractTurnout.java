@@ -141,9 +141,9 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Duration in Milliseconds of interval between separate Turnout commands.
-     * Note: Not updated after initialisation, which is not an issue as the real work is done in the TurnoutManager.
+     * Note: Not updated after initialisation, which is not an issue as only used in logging. Timing is done via the TurnoutManager.
      * <p>
-     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
+     * Change from e.g. LnTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
     private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getOutputInterval(mSystemName);
 
@@ -170,7 +170,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName);
         // nextWait time is calculated using actual TURNOUT_INTERVAL in TurnoutManager
         if (TURNOUT_INTERVAL > 0 && nextWait != null && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
-            log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(), nextWait);
+            log.debug("Turnout interval = {} ms (static), now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(), nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override

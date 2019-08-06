@@ -14,36 +14,20 @@ import org.junit.Test;
  */
 public class SystemConnectionMemoTest {
 
+    SystemConnectionMemo t = null;
+
     @Test
     public void testCTor() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        };
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testGetConsistManagerNull() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        };
         Assert.assertNull("null consist manager", t.get(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProvidesConsistManagerNull() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        };
         Assert.assertFalse("null consist manager", t.provides(jmri.ConsistManager.class));
     }
 
@@ -161,17 +145,32 @@ public class SystemConnectionMemoTest {
         Assert.assertTrue("null consist manager", t.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void testSetGetOutputInterval() {
+        Assert.assertEquals("default interval in memo", t.getOutputInterval(), 250);
+        t.setOutputInterval(123);
+        Assert.assertEquals("new interval set in memo", t.getOutputInterval(), 123);
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
         JUnitUtil.initDebugProgrammerManager();
+        t = new SystemConnectionMemo("T", "Test") {
+            @Override
+            protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+        };
     }
 
     @After
     public void tearDown() {
+        t = null;
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemoTest.class);
+
 }

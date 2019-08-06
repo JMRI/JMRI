@@ -55,7 +55,8 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Override
     @After
     public void tearDown(){
-       JUnitUtil.tearDown();
+        scm = null;
+        JUnitUtil.tearDown();
     }
 
 }

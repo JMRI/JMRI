@@ -25,6 +25,16 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         super(memo);
         InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+
+        // set listener for changes in memo
+        memo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
+                    handleIntervalChange();
+                }
+            }
+        });
     }
 
     /** {@inheritDoc} */
@@ -376,11 +386,15 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
+    private void handleIntervalChange() {
+        TURNOUT_INTERVAL = memo.getOutputInterval();
+        log.debug("TURNOUT_INTERVAL changed to {}", TURNOUT_INTERVAL);
+    }
+
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(@Nonnull String systemName) {
         // systemName parameter not used here, needed to override, used in ProxyTurnoutManager
-        TURNOUT_INTERVAL = memo.getOutputInterval(); // update value from memo
         return TURNOUT_INTERVAL;
     }
 
@@ -388,8 +402,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     public void setOutputInterval(@Nonnull String systemName, int newInterval) {
         // systemName parameter not used here, needed to override, used in ProxyTurnoutManager
-        TURNOUT_INTERVAL = newInterval;
-        log.debug("TURNOUT_INTERVAL set to: {}", TURNOUT_INTERVAL);
+        memo.setOutputInterval(newInterval); // local field will hear change and update automatically
+        log.debug("TURNOUT_INTERVAL set to: {}", newInterval);
     }
 
     /**
