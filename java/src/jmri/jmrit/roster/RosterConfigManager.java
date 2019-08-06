@@ -209,4 +209,16 @@ public class RosterConfigManager extends AbstractPreferencesManager {
         return roster;
     }
 
+    /**
+     * Set the roster for the profile.
+     * 
+     * @param profile the profile to set the roster for
+     * @param roster the roster for the profile
+     * @return the roster just set, so this method can be used in a chain
+     */
+    @Nonnull
+    public Roster setRoster(@CheckForNull Profile profile, @Nonnull Roster roster) {
+        rosters.put(profile, roster);
+        return getRoster(profile);
+    }
 }
