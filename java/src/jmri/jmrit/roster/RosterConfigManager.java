@@ -17,7 +17,6 @@ import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
-import jmri.util.FileUtilSupport;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.openide.util.lookup.ServiceProvider;
@@ -36,8 +35,8 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = PreferencesManager.class)
 public class RosterConfigManager extends AbstractPreferencesManager {
 
-    private final HashMap<Profile, String> directory = new HashMap<>();
-    private final HashMap<Profile, String> defaultOwner = new HashMap<>();
+    private final HashMap<Profile, String> directories = new HashMap<>();
+    private final HashMap<Profile, String> defaultOwners = new HashMap<>();
     private final HashMap<Profile, Roster> rosters = new HashMap<>();
 
     public static final String DIRECTORY = "directory";
@@ -45,12 +44,14 @@ public class RosterConfigManager extends AbstractPreferencesManager {
     private static final Logger log = LoggerFactory.getLogger(RosterConfigManager.class);
 
     public RosterConfigManager() {
-        log.debug("Roster is {}", this.directory);
-        FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
+        log.debug("Roster is {}", this.directories);
+        FileUtil.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
+            FileUtil.Property oldValue = (FileUtil.Property) evt.getOldValue();
+            FileUtil.Property newValue = (FileUtil.Property) evt.getNewValue();
+            Profile project = oldValue.getKey();
             log.debug("UserFiles changed from {} to {}", evt.getOldValue(), evt.getNewValue());
-            Profile project = ProfileManager.getDefault().getActiveProfile();
-            if (RosterConfigManager.this.getDirectory(project).equals(evt.getOldValue())) {
-                RosterConfigManager.this.setDirectory(project, FileUtil.PREFERENCES);
+            if (RosterConfigManager.this.getDirectory(project).equals(oldValue.getValue())) {
+                RosterConfigManager.this.setDirectory(project, newValue.getValue());
             }
         });
     }
@@ -111,11 +112,11 @@ public class RosterConfigManager extends AbstractPreferencesManager {
      */
     @Nonnull
     public String getDefaultOwner(@CheckForNull Profile profile) {
-        String owner = defaultOwner.get(profile);
+        String owner = defaultOwners.get(profile);
         // defaultOwner should never be null, but check anyway to ensure its not
         if (owner == null) {
             owner = ""; // NOI18N
-            defaultOwner.put(profile, owner);
+            defaultOwners.put(profile, owner);
         }
         return owner;
     }
@@ -130,8 +131,8 @@ public class RosterConfigManager extends AbstractPreferencesManager {
         if (defaultOwner == null) {
             defaultOwner = "";
         }
-        String oldDefaultOwner = this.defaultOwner.get(profile);
-        this.defaultOwner.put(profile, defaultOwner);
+        String oldDefaultOwner = this.defaultOwners.get(profile);
+        this.defaultOwners.put(profile, defaultOwner);
         firePropertyChange(DEFAULT_OWNER, oldDefaultOwner, defaultOwner);
     }
 
@@ -153,7 +154,7 @@ public class RosterConfigManager extends AbstractPreferencesManager {
      */
     @Nonnull
     public String getDirectory(@CheckForNull Profile profile) {
-        String directory = this.directory.get(profile);
+        String directory = directories.get(profile);
         if (directory == null) {
             directory = FileUtil.PREFERENCES;
         }
@@ -173,7 +174,7 @@ public class RosterConfigManager extends AbstractPreferencesManager {
         if (directory == null || directory.isEmpty()) {
             directory = FileUtil.PREFERENCES;
         }
-        String oldDirectory = this.directory.get(profile);
+        String oldDirectory = this.directories.get(profile);
         try {
             if (!FileUtil.getFile(directory).isDirectory()) {
                 throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory)); // NOI18N
@@ -187,8 +188,8 @@ public class RosterConfigManager extends AbstractPreferencesManager {
                 directory = directory + File.separator;
             }
         }
-        this.directory.put(profile, directory);
-        log.debug("Roster changed from {} to {}", oldDirectory, this.directory);
+        this.directories.put(profile, directory);
+        log.debug("Roster changed from {} to {}", oldDirectory, this.directories);
         firePropertyChange(DIRECTORY, oldDirectory, directory);
     }
 

@@ -50,6 +50,7 @@ import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil.Location;
+import jmri.util.FileUtil.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -759,7 +760,7 @@ public class FileUtilSupport extends Bean {
         }
         userFilesPath.put(profile, path);
         if ((old != null && !old.equals(path)) || (!path.equals(old))) {
-            this.firePropertyChange(FileUtil.PREFERENCES, old, path);
+            this.firePropertyChange(FileUtil.PREFERENCES, new Property(profile, old), new Property(profile, path));
         }
     }
 
@@ -1063,7 +1064,7 @@ public class FileUtilSupport extends Bean {
         }
         scriptsPath.put(profile, path);
         if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
-            this.firePropertyChange(FileUtil.SCRIPTS, old, path);
+            this.firePropertyChange(FileUtil.SCRIPTS, new Property(profile, old), new Property(profile, path));
         }
     }
 

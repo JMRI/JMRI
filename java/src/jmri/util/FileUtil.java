@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
+import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
 import javax.annotation.CheckForNull;
@@ -90,7 +91,7 @@ public final class FileUtil {
      * or {@link #getURL(java.lang.String) } instead of this method if possible.
      *
      * @param profile the profile to use as a base
-     * @param path the path to find
+     * @param path    the path to find
      * @return {@link java.io.File} at path
      * @throws java.io.FileNotFoundException if path cannot be found
      * @see #getURI(java.lang.String)
@@ -222,7 +223,7 @@ public final class FileUtil {
      * {@link ProfileManager#getActiveProfile()} as the base.
      *
      * @param pName the name, possibly starting with home:, profile:, program:,
-     *                  preference:, scripts:, or settings:
+     *              preference:, scripts:, or settings:
      * @return Absolute file name to use, or null. This will include
      *         system-specific file separators.
      * @since 2.7.2
@@ -256,7 +257,7 @@ public final class FileUtil {
      *
      * @param profile the Profile to use as a base.
      * @param pName   the name, possibly starting with home:, profile:,
-     *                    program:, preference:, scripts:, or settings:
+     *                program:, preference:, scripts:, or settings:
      * @return Absolute file name to use, or null. This will include
      *         system-specific file separators.
      * @since 4.17.3
@@ -295,7 +296,7 @@ public final class FileUtil {
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
@@ -312,10 +313,10 @@ public final class FileUtil {
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -342,7 +343,7 @@ public final class FileUtil {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
@@ -358,10 +359,10 @@ public final class FileUtil {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -388,7 +389,7 @@ public final class FileUtil {
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
@@ -406,10 +407,10 @@ public final class FileUtil {
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -421,11 +422,11 @@ public final class FileUtil {
      * @param profile             Profile to use as a base
      * @param file                File at path to be represented
      * @param ignoreUserFilesPath true if paths in the User files path should be
-     *                                stored as absolute paths, which is often
-     *                                not desirable.
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
      * @param ignoreProfilePath   true if paths in the profile should be stored
-     *                                as absolute paths, which is often not
-     *                                desirable.
+     *                            as absolute paths, which is often not
+     *                            desirable.
      * @return Storage format representation
      * @since 4.17.3
      */
@@ -438,7 +439,7 @@ public final class FileUtil {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
@@ -455,10 +456,10 @@ public final class FileUtil {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -470,11 +471,11 @@ public final class FileUtil {
      * @param profile             the profile to use as a base
      * @param filename            Filename to be represented
      * @param ignoreUserFilesPath true if paths in the User files path should be
-     *                                stored as absolute paths, which is often
-     *                                not desirable.
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
      * @param ignoreProfilePath   true if paths in the profile path should be
-     *                                stored as absolute paths, which is often
-     *                                not desirable.
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
      * @return Storage format representation
      * @since 4.17.3
      */
@@ -508,7 +509,8 @@ public final class FileUtil {
 
     /**
      * Get the user's files directory. If not set by the user, this is the same
-     * as the profile path for the Profile specified by {@link ProfileManager#getActiveProfile()}.
+     * as the profile path for the Profile specified by
+     * {@link ProfileManager#getActiveProfile()}.
      *
      * @see #getProfilePath()
      * @return User's files directory as a String
@@ -624,7 +626,7 @@ public final class FileUtil {
 
     /**
      * Set the JMRI program directory.
-     *
+     * <p>
      * Convenience method that calls
      * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
@@ -636,7 +638,7 @@ public final class FileUtil {
 
     /**
      * Set the JMRI program directory.
-     *
+     * <p>
      * If set, allows JMRI to be loaded from locations other than the directory
      * containing JMRI resources. This must be set very early in the process of
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
@@ -763,7 +765,7 @@ public final class FileUtil {
      * {@link java.net.URI} for that file. Search order is defined by
      * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
-     *
+     * <p>
      * Note that if the file for path is not found in one of the searchPaths,
      * all standard locations are also be searched through to find the file. If
      * you need to limit the locations where the file can be found use
@@ -1003,7 +1005,7 @@ public final class FileUtil {
      * Set the path to python scripts.
      *
      * @param profile the profile to set the path for
-     * @param path the scriptsPath to set
+     * @param path    the scriptsPath to set
      */
     public static void setScriptsPath(@Nullable Profile profile, @CheckForNull String path) {
         FileUtilSupport.getDefault().setScriptsPath(profile, path);
@@ -1130,6 +1132,47 @@ public final class FileUtil {
      */
     public static void rotate(@Nonnull File file, int max, @CheckForNull String extension) throws IOException {
         FileUtilSupport.getDefault().rotate(file, max, extension);
+    }
+
+    /**
+     * Get the default instance of FileUtilSupport.
+     *
+     * @return the default instance of FileUtilSupport
+     */
+    public static FileUtilSupport getDefault() {
+        return FileUtilSupport.getDefault();
+    }
+
+    /**
+     * PropertyChangeEvents for properties that are Profile-specific use a
+     * Property to enclose both the Profile and the value of the property.
+     */
+    public static class Property implements Map.Entry {
+
+        private final Profile key;
+        private final String value;
+
+        // package private
+        Property(Profile key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override
+        public Profile getKey() {
+            return key;
+        }
+
+        @Override
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public Object setValue(Object value) {
+            throw new UnsupportedOperationException("Immutable by design");
+        }
+
     }
 
     /* Private default constructor to ensure it's not documented. */
