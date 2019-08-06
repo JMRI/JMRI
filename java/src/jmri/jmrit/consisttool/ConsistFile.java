@@ -310,23 +310,18 @@ public class ConsistFile extends XmlFile {
     }
 
     /**
-     * Defines the preferences subdirectory in which LocoFiles are kept by
-     * default.
+     * Returns the preferences subdirectory in which Consist Files are kept 
+     * this is relative to the roster files location. 
      */
-    static private String fileLocation = null;
-
     static public String getFileLocation() {
-        if( fileLocation == null) {
-           fileLocation = Roster.getDefault().getRosterFilesLocation() + "consist" + File.separator;
-        }
-        return fileLocation;
+        return Roster.getDefault().getRosterFilesLocation() + "consist" + File.separator;
     }
 
+    /**
+     * @deprecated since 4.17.3 file location is determined by roster location.
+     */
+    @Deprecated
     static public void setFileLocation(String loc) {
-        fileLocation = loc;
-        if (!fileLocation.endsWith(File.separator)) {
-            fileLocation = fileLocation + File.separator;
-        }
     }
 
     /**
