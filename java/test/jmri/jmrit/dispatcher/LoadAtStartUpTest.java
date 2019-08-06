@@ -1,14 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalMastManager;
-import jmri.ThrottleManager;
-import jmri.util.FileUtilSupport;
-import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -16,6 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.SignalMastManager;
+import jmri.ThrottleManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -41,7 +42,6 @@ public class LoadAtStartUpTest {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/TestTrainDispatcherOptions.xml");
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-        FileUtilSupport.getDefault().setUserFilesPath("java/test/jmri/jmrit");
         // we need a throttle manager
         ThrottleManager m = InstanceManager.getDefault(ThrottleManager.class);
         // signal mast manager
