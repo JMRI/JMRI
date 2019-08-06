@@ -286,7 +286,7 @@ public class FirstTimeStartUpWizard {
                 }
             }
             Profile project = ProfileManager.getDefault().getActiveProfile();
-            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(project, owner.getText());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
             InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);

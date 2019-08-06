@@ -607,7 +607,7 @@ public class JUnitUtil {
      * tests of {@code git-working-copy/temp}.
      */
     public static void resetFileUtilSupport() {
-        FileUtilSupport.getDefault().setUserFilesPath(FileUtil.getPreferencesPath());
+        FileUtilSupport.getDefault().setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
     }
 
     static public interface ReleaseUntil {

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
@@ -22,6 +24,8 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
 import org.jdom2.Document;
@@ -179,16 +183,22 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Get the default Roster instance, creating it as required.
+     * Get the roster for the profile returned by {@link ProfileManager#getActiveProfile()}.
      *
-     * @return The default Roster object
+     * @return the roster for the active profile
      */
     public static synchronized Roster getDefault() {
-        return InstanceManager.getOptionalDefault(Roster.class).orElseGet(() -> {
-            log.debug("Creating Roster default instance.");
-            // Pass null to use defaults.
-            return InstanceManager.setDefault(Roster.class, new Roster(null));
-        });
+        return getRoster(ProfileManager.getDefault().getActiveProfile());
+    }
+
+    /**
+     * Get the roster for the specified profile.
+     * 
+     * @param profile the Profile to get the roster for
+     * @return the roster for the profile
+     */
+    public static synchronized @Nonnull Roster getRoster(@CheckForNull Profile profile) {
+        return InstanceManager.getDefault(RosterConfigManager.class).getRoster(profile);
     }
 
     /**
@@ -618,12 +628,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * to perform the actual work.
      *
      * @param name Filename for new file, including path info as needed.
+     * @throws java.io.FileNotFoundException if file does not exist
+     * @throws java.io.IOException if unable to write file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
             log.debug("writeFile " + name);
         }
-        // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
             file = new File(name);
@@ -637,7 +648,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * has to be done separately. See writeRosterFile() for a public function
      * that finds the default location, does a backup and then calls this.
      *
-     * @param file an op
+     * @param file the file to write to
+     * @throws java.io.IOException if unable to write file
      */
     void writeFile(File file) throws java.io.IOException {
         // create root element
@@ -805,6 +817,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Note that this does not clear any existing entries.
      *
      * @param name filename of roster file
+     * @throws org.jdom2.JDOMException if file is invalid XML
+     * @throws java.io.IOException if unable to read file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?
@@ -1269,7 +1283,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Get an array of all the RosterEntry-containing files in the target
-     * directory
+     * directory.
+     * 
+     * @return the list of file names for entries in this roster
      */
     static String[] getAllFileNames() {
         // ensure preferences will be found for read
