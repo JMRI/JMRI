@@ -402,7 +402,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     public void setOutputInterval(@Nonnull String systemName, int newInterval) {
         // systemName parameter not used here, needed to override, used in ProxyTurnoutManager
-        memo.setOutputInterval(newInterval); // local field will hear change and update automatically
+        memo.setOutputInterval(newInterval);
+        TURNOUT_INTERVAL = newInterval; // local field will hear change and update automatically?
         log.debug("TURNOUT_INTERVAL set to: {}", newInterval);
     }
 

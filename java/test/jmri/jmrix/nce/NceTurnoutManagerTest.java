@@ -46,6 +46,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     @After
     public void tearDown() {
+        nis = null;
         JUnitUtil.tearDown();
     }
 
