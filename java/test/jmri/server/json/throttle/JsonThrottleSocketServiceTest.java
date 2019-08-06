@@ -338,6 +338,7 @@ public class JsonThrottleSocketServiceTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
