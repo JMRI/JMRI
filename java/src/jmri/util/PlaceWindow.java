@@ -260,7 +260,6 @@ public class PlaceWindow {
         Point loc;
         Point parentLoc = parent.getLocation();
         Dimension parentDim = parent.getSize();
-        int screenNum = getScreen(parent, target);
         Dimension targetDim = target.getPreferredSize();
         Point compLoc;
         Dimension compDim;
