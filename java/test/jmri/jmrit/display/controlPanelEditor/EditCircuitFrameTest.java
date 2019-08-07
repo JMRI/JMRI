@@ -17,27 +17,26 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class EditCircuitFrameTest extends jmri.util.JmriJFrameTestBase {
+public class EditCircuitFrameTest {
 
     OBlockManager blkMgr;
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor("EditCircuitFrameTest");
-        frame.makeCircuitMenu(true);
-        CircuitBuilder cb = frame.getCircuitBuilder();
+        ControlPanelEditor fr = new ControlPanelEditor("EditCircuitFrameTest");
+        fr.makeCircuitMenu(true);
+        CircuitBuilder cb = fr.getCircuitBuilder();
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
         EditCircuitFrame cFrame = new EditCircuitFrame("Edit Circuit Frame", cb, ob1);
         Assert.assertNotNull("exists", cFrame);
         
         JUnitUtil.dispose(cFrame);
-        JUnitUtil.dispose(frame);
+        JUnitUtil.dispose(fr);
     }
 
     
     @Before
-    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -47,9 +46,8 @@ public class EditCircuitFrameTest extends jmri.util.JmriJFrameTestBase {
 
 
     @After
-    @Override
     public void tearDown() {
-        super.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EditCircuitFrameTest.class);

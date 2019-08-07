@@ -245,8 +245,8 @@ public class PlaceWindow {
      * Find the best place to position the target window inside the parent window.
      * Choose the first position (Left, Right, Below, Above) where there is no overlap.
      * If all overlap, choose first position (Left, Right, Below, Above) where there
-     * is no overlap of the component in the parent. Finally bail out using the lower 
-     * right corner.  
+     * is no overlap of the component in the parent. Finally bail out using the 
+     * upper left corner.  
      * @param parent Window containing the Component
      * @param comp Component contained in the parent Window 
      * @param target a popup or some kind of window with tools to
@@ -258,11 +258,9 @@ public class PlaceWindow {
             return new Point(0, 0);
         }
         Point loc;
-//        Point parentLoc = parent.getLocationOnScreen();
         Point parentLoc = parent.getLocation();
         Dimension parentDim = parent.getSize();
         int screenNum = getScreen(parent, target);
-        Dimension screen = getScreenSizeOf(screenNum);
         Dimension targetDim = target.getPreferredSize();
         Point compLoc;
         Dimension compDim;

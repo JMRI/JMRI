@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
+//import org.netbeans.jemmy.operators.JTableOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +46,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditCircuitFrame() {
+        getCPEandCB();
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB3");
         cb.setCurrentBlock(ob3);
@@ -67,6 +68,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditCircuitError() {
+        getCPEandCB();
 
         cb.editCircuitError("OB1");
         
@@ -76,6 +78,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditPortals() {
+        getCPEandCB();
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB2");
         cb.setCurrentBlock(ob3);
@@ -88,6 +91,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditCircuitPaths() {
+        getCPEandCB();
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB3");
         cb.setCurrentBlock(ob3);
@@ -100,6 +104,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditPortalDirection() {
+        getCPEandCB();
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB5");
         cb.setCurrentBlock(ob3);
@@ -112,6 +117,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditSignalFrame() {
+        getCPEandCB();
 
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB4");
         cb.setCurrentBlock(ob3);
@@ -124,6 +130,7 @@ public class CircuitBuilderTest {
 
     @Test
     public void testEditPortalError() {
+        getCPEandCB();
 
         cb.editPortalError("EastExit-EastJunction");
         
@@ -131,11 +138,11 @@ public class CircuitBuilderTest {
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         cpe.dispose();
-        System.out.println(" testEditPortalError Done!");
     }
 
     @Test
     public void testEditPortalErrorIcon() throws Exception{
+        getCPEandCB();
 
         OBlock block = InstanceManager.getDefault(OBlockManager.class).getByUserName("WestSiding");
         Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getByUserName("Crapolla");
@@ -148,6 +155,7 @@ public class CircuitBuilderTest {
     @Test
     @org.junit.Ignore("Cannot get button pushed!")
     public void testNoBlock() {
+        getCPEandCB();
         cb.editCircuitPaths("editCircuitPathsItem", false);
         
 //        JFrameOperator frame = new JFrameOperator(cb.getEditFrame());
@@ -157,15 +165,7 @@ public class CircuitBuilderTest {
         ok.push();
     }
 
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initOBlockManager();
-        JUnitUtil.initShutDownManager();
-
+    void getCPEandCB() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         File f = new File("java/test/jmri/jmrit/display/controlPanelEditor/valid/CircuitBuilderTest.xml");
         try {
@@ -179,9 +179,21 @@ public class CircuitBuilderTest {
         Assert.assertNotNull("exists", cb );
     }
 
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initShutDownManager();
+    }
+
     @After
     public void tearDown() {
-        cpe.dispose();
+        if (cpe != null) {
+            cpe.dispose();
+        }
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(CircuitBuilderTest.class);
