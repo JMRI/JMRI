@@ -11,15 +11,13 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Pete Cressman Copyright (C) 2019
  */
-public class EditPortalDirectionTest {
+public class EditSignalFrameTest {
 
     OBlockManager blkMgr;
 
@@ -27,23 +25,21 @@ public class EditPortalDirectionTest {
     @org.junit.Ignore("Cannot get button pushed!")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
+        ControlPanelEditor frame = new ControlPanelEditor("EditSignalFrameTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
+        Assert.assertNotNull("exists", cb);
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
-        EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1);
-        Assert.assertNotNull("exists", dFrame);
+        EditSignalFrame pFrame = new EditSignalFrame("Edit Signal Frame", cb, ob1);
+        Assert.assertNotNull("exists", pFrame);
         
-        JFrameOperator jfo = new JFrameOperator(dFrame);
-        Thread t = new Thread(() -> {
-            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
-            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
-            jbo.push();
-        });
-        t.start();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        JFrameOperator jfo = new JFrameOperator(pFrame);
+        JemmyUtil.confirmJOptionPane(jfo, Bundle.getMessage("incompleteCircuit"), 
+                Bundle.getMessage("needPortal", ob1.getDisplayName(), Bundle.getMessage("BlockSignal")), "OK");
         
         JUnitUtil.dispose(frame);
-        JUnitUtil.dispose(dFrame);
+        JUnitUtil.dispose(pFrame);
     }
 
     // The minimal setup for log4J
@@ -59,6 +55,5 @@ public class EditPortalDirectionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditPortalDirectionTest.class);
-
+    // private final static Logger log = LoggerFactory.getLogger(EditSignalFrameTest.class);
 }

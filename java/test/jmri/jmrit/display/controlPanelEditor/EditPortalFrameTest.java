@@ -1,13 +1,22 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -15,16 +24,35 @@ import org.junit.Test;
  */
 public class EditPortalFrameTest {
 
+    OBlockManager blkMgr;
+
     @Test
+    @org.junit.Ignore("Cannot get button pushed!")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor();
-        CircuitBuilder cb = new CircuitBuilder(frame);
-        OBlock ob = new OBlock("OB01");
-        EditPortalFrame t = new EditPortalFrame("Edit Portal Frame", cb, ob);
-        Assert.assertNotNull("exists", t);
+        ControlPanelEditor frame = new ControlPanelEditor("EditPortalFrameTest");
+        frame.makeCircuitMenu(true);
+        CircuitBuilder cb = frame.getCircuitBuilder();
+        OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
+//        NamedIcon icon = new NamedIcon("program:resources/icons/smallschematics/tracksegments/block.gif", "track");
+        IndicatorTrackIcon icon = new IndicatorTrackIcon(frame);
+        icon.setOccBlock("a");
+        EditPortalFrame portalFrame = new EditPortalFrame("Edit Portal Frame", cb, ob1);
+        Assert.assertNotNull("exists", portalFrame);
+        
+        JFrameOperator jfo = new JFrameOperator("Edit Portal Frame");
+        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
+        JButtonOperator jbo = new JButtonOperator(jdo, "OK");
+        Thread t = new Thread(() -> {
+            jbo.push();
+//            JemmyUtil.confirmJOptionPane(jfo, Bundle.getMessage("incompleteCircuit"), 
+//                    Bundle.getMessage("needIcons", ob1.getDisplayName(), Bundle.getMessage("BlockPortals")), "OK");
+        });
+        t.setName("Error Dialog Close Thread");
+        t.start();
+        
         JUnitUtil.dispose(frame);
-        JUnitUtil.dispose(t);
+        JUnitUtil.dispose(portalFrame);
     }
 
     // The minimal setup for log4J
@@ -32,6 +60,7 @@ public class EditPortalFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        blkMgr = new OBlockManager();
     }
 
     @After

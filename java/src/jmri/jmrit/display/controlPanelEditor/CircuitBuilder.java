@@ -482,6 +482,11 @@ public class CircuitBuilder {
         }
     }
 
+    // used for testing only
+    protected EditFrame getEditFrame() {
+        return _editFrame;
+    }
+
     /**
      * ************** Set up editing Frames ****************
      */
@@ -551,9 +556,9 @@ public class CircuitBuilder {
         }
     }
 
-    private void editPortalError(String sysName) {
+    protected void editPortalError(String name) {
         if (editingOK()) {
-            Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getBySystemName(sysName);
+            Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getPortal(name);
             _currentBlock = portal.getFromBlock();
             if (_currentBlock == null) {
                 _currentBlock = portal.getToBlock();
@@ -562,7 +567,7 @@ public class CircuitBuilder {
         }
     }
 
-    private void editPortalError(OBlock block, Portal portal, PortalIcon icon) {
+    protected void editPortalError(OBlock block, Portal portal, PortalIcon icon) {
         if (editingOK()) {
             _currentBlock = block;
             if (_currentBlock != null) {
@@ -640,6 +645,11 @@ public class CircuitBuilder {
                 selectPrompt();
             }
         }
+    }
+    
+    // for testing only
+    protected void setCurrentBlock(OBlock b) {
+        _currentBlock = b;
     }
 
     protected void hidePortalIcons() {
@@ -809,7 +819,7 @@ public class CircuitBuilder {
             _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).createNewOBlock(sysname, uname);
             if (_currentBlock != null) {
                 OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-                int num = manager.getObjectCount();;
+                int num = manager.getObjectCount();
                 if (num == 2) {
                     _editor.makeWarrantMenu(true, false);
                 }
@@ -1759,6 +1769,7 @@ public class CircuitBuilder {
             return button;
         }
 
+        @Override
         public void dispose() {
             _cbFrame = null;
             super.dispose();

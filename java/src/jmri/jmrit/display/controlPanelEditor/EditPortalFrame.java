@@ -76,7 +76,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             msg = _parent.checkForPortalIcons(block, "DirectionArrow");
         }
         if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -173,6 +173,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         return portalPanel;
     }
 
+    @Override
     protected void clearListSelection() {
         _portalList.clearSelection();
         _portalName.setText(null);
@@ -258,6 +259,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         }
     }
 
+    @Override
     protected void closingEvent(boolean close) {
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
         if (_canEdit && msg == null) {

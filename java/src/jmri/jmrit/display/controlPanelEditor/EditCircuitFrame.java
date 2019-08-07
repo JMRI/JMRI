@@ -11,10 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 
 import jmri.Sensor;
-import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
@@ -273,6 +271,7 @@ public class EditCircuitFrame extends EditFrame {
         _blockState.setText(stateText.toString());
     }
 
+    @Override
     protected void closingEvent(boolean close) {
         _parent.setIconGroup(_homeBlock);
         String msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");

@@ -2,12 +2,16 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -15,42 +19,36 @@ import org.junit.Test;
  */
 public class EditCircuitFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    ControlPanelEditor cpe;
-    CircuitBuilder cb;
-    OBlock ob;
+    OBlockManager blkMgr;
+
+    @Test
+    public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor frame = new ControlPanelEditor("EditCircuitFrameTest");
+        frame.makeCircuitMenu(true);
+        CircuitBuilder cb = frame.getCircuitBuilder();
+        OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
+        EditCircuitFrame cFrame = new EditCircuitFrame("Edit Circuit Frame", cb, ob1);
+        Assert.assertNotNull("exists", cFrame);
+        
+        JUnitUtil.dispose(cFrame);
+        JUnitUtil.dispose(frame);
+    }
+
     
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           jmri.util.ThreadingUtil.runOnGUI(() -> {
-               cpe = new ControlPanelEditor();
-               cb = new CircuitBuilder(cpe);
-               cpe.setVisible(true);
-           });
-           new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-           jmri.util.ThreadingUtil.runOnGUI(() -> {
-               ob = new OBlock("OB01");
-               frame = new EditCircuitFrame("Edit Circuit Frame", cb, ob);
-           });
-        
-           new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        }
+        blkMgr = new OBlockManager();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
     }
 
 
     @After
     @Override
     public void tearDown() {
-        if(cpe!=null){
-           cpe.setVisible(false);
-           cpe.dispose();
-        }
-        cpe = null;
-        cb = null;
-        ob = null;
         super.tearDown();
     }
 

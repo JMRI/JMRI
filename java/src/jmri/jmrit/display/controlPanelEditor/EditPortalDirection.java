@@ -128,6 +128,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         return portalPanel;
     }
 
+    @Override
     protected void clearListSelection() {
         _portalList.clearSelection();
         _parent._editor.highlight(null);
@@ -206,6 +207,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         }
     }
 
+    @Override
     protected void closingEvent(boolean close) {
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
         if (msg == null) {

@@ -167,6 +167,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         return signalPanel;
     }
 
+    @Override
     protected void clearListSelection() {
         _portalList.clearSelection();
         _parent._editor.highlight(null);
@@ -540,6 +541,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         }
     }
 
+    @Override
     protected void closingEvent(boolean close) {
         if (_currentPortal != null) {
             checkForSaveMast(_currentPortal);

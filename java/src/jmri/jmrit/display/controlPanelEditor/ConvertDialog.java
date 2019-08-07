@@ -35,6 +35,8 @@ class ConvertDialog extends JDialog {
         private CircuitBuilder _parent;
         private PositionableLabel _pos;
         FamilyItemPanel _panel;
+        DisplayFrame _filler;
+        java.awt.Point location;
 
         ConvertDialog(CircuitBuilder cb, PositionableLabel pos, OBlock block) {
             super(cb._editor, true);
@@ -46,17 +48,18 @@ class ConvertDialog extends JDialog {
                     _parent._editor.highlight(null);
                 }
             });
-            DisplayFrame filler = pos.makePaletteFrame("Dummy");
+            _filler = pos.makePaletteFrame("Dummy");
             String title;
             ActionListener updateAction;
             if (pos instanceof TurnoutIcon) {
                 title = "IndicatorTO";
-                _panel = new IndicatorTOItemPanel(filler, title, null, null, cb._editor) {
+                _panel = new IndicatorTOItemPanel(_filler, title, null, null, cb._editor) {
                     @Override
                     protected void showIcons() {
                          super.showIcons();
                          displayIcons();
                     }
+                    @Override
                     protected void hideIcons() {
                         super.hideIcons();
                         displayIcons();
@@ -67,12 +70,13 @@ class ConvertDialog extends JDialog {
                 };
             } else {
                 title = "IndicatorTrack";
-                _panel = new IndicatorItemPanel(filler, title, null, cb._editor) {
+                _panel = new IndicatorItemPanel(_filler, title, null, cb._editor) {
                     @Override
                     protected void showIcons() {
                         super.showIcons();
                         displayIcons();
                     }
+                    @Override
                     protected void hideIcons() {
                         super.hideIcons();
                         displayIcons();
@@ -84,13 +88,16 @@ class ConvertDialog extends JDialog {
             }
             _panel.init(updateAction);
             Dimension dim = _panel.getPreferredSize();
-            JScrollPane sp = new JScrollPane(_panel);
+//            JScrollPane sp = new JScrollPane(_panel);
             dim = new Dimension(dim.width +25, dim.height + 25);
-            sp.setPreferredSize(dim);
-            add(sp);
+//            add(_panel);
+//            sp.setPreferredSize(dim);
+            _panel.setPreferredSize(dim);
+            add(_panel);
             setTitle(Bundle.getMessage(title));
             pack();
-            setLocation(PlaceWindow.nextTo(cb._editor, pos, this));
+            location = PlaceWindow.inside(cb._editor, pos, this);
+            setLocation(location);
             setVisible(true);
         }
 
@@ -109,7 +116,7 @@ class ConvertDialog extends JDialog {
                     deltaDim.height + newDim.height + 10);
             setPreferredSize(dim);
             pack();
-            setLocation(PlaceWindow.nextTo(_parent._editor, null, this));
+            setLocation(location);
             repaint();
             if (log.isDebugEnabled()) {
                 log.debug(" panelDim= ({}, {}) totalDim= ({}, {}) setPreferredSize to ({}, {})", 

@@ -466,6 +466,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
     }
 
     //////////////////////////// end setup ////////////////////////////
+    @Override
     protected void clearListSelection() {
         log.debug("clearListSelection");
         _pathList.clearSelection();
@@ -747,6 +748,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         _pathListModel.dataChange();
     }
 
+    @Override
     protected void closingEvent(boolean close) {
         checkForSavePath();
         String msg = _parent.checkForTrackIcons(_homeBlock, "BlockPaths");
