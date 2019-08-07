@@ -607,14 +607,16 @@ public class JUnitUtil {
      * {@link jmri.util.FileUtilSupport} object (used by
      * {@link jmri.util.FileUtil}) to the default settings/user files path for
      * tests of {@code git-working-copy/temp}.
-     * @throws java.lang.NoSuchFieldException if unable to reset
-     * @throws java.lang.IllegalAccessException if unable to reset
      */
-    public static void resetFileUtilSupport() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        Field field = FileUtilSupport.class.getDeclaredField("defaultInstance");
-        field.setAccessible(true);
-        field.set(null, null);
-        FileUtilSupport.getDefault().setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
+    public static void resetFileUtilSupport() {
+        try {
+            Field field = FileUtilSupport.class.getDeclaredField("defaultInstance");
+            field.setAccessible(true);
+            field.set(null, null);
+            FileUtilSupport.getDefault().setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            log.error("Exception resetting FileUtilSupport", ex);
+        }
     }
 
     static public interface ReleaseUntil {
