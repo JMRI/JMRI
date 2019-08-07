@@ -314,7 +314,7 @@ public class RosterEntryTest {
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
-        File f = new File(LocoFile.getFileLocation() + "test_Roster_Entry_123456789ABC.xml");
+        File f = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC.xml");
         if (f.exists()) {
             f.delete();
         }
@@ -327,19 +327,19 @@ public class RosterEntryTest {
 
     @Test
     public void testEnsureFilenameExistsOld() throws IOException {
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
         RosterEntry r = new RosterEntry();
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
-        File f1 = new File(LocoFile.getFileLocation() + "test_Roster_Entry_123456789ABC.xml");
+        File f1 = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC.xml");
         if (!f1.exists()) {
             // create a dummy
             FileOutputStream f = new FileOutputStream(f1);
             f.write(0);
             f.close();
         }
-        File f2 = new File(LocoFile.getFileLocation() + "test_Roster_Entry_123456789ABC0.xml");
+        File f2 = new File(Roster.getDefault().getRosterFilesLocation() + "test_Roster_Entry_123456789ABC0.xml");
         if (!f2.exists()) {
             // create a dummy
             FileOutputStream f = new FileOutputStream(f2);

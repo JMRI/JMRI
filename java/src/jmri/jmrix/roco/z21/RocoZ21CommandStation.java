@@ -351,8 +351,16 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
     }
 
    /**
+    * <p>
     * Set flag bit 0x08000000 which tells the command station to send 
     * Occupancy information from LocoNet to the client
+    * </p>
+    * <p>
+    * If this flag is set to true, the Z21 will format Transponding messages
+    * as described in section 9.5 of the Z21 Lan Protocol.  This message format
+    * is currentlyunsupported by JMRI.
+    * </p>
+    *
     * @param flag true if flag is to be set.
     */
     public void setLocoNetOccupancyMessagesFlag(boolean flag){
