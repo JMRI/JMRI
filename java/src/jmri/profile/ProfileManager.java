@@ -58,6 +58,7 @@ public class ProfileManager extends Bean {
     private boolean autoStartActiveProfile = false;
     private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
     private int autoStartActiveProfileTimeout = 10;
+    volatile private static ProfileManager defaultInstance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
@@ -109,7 +110,10 @@ public class ProfileManager extends Bean {
      */
     @Nonnull
     public static ProfileManager getDefault() {
-        return ProfileManagerHolder.manager;
+        if (defaultInstance == null) {
+            defaultInstance = new ProfileManager();
+        }
+        return defaultInstance;
     }
 
     /**
@@ -962,13 +966,5 @@ public class ProfileManager extends Bean {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
             this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
         }
-    }
-
-    private static class ProfileManagerHolder {
-
-        /**
-         * Default instance of the ProfileManager
-         */
-        public static ProfileManager manager = new ProfileManager();
     }
 }
