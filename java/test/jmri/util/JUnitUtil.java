@@ -607,8 +607,13 @@ public class JUnitUtil {
      * {@link jmri.util.FileUtilSupport} object (used by
      * {@link jmri.util.FileUtil}) to the default settings/user files path for
      * tests of {@code git-working-copy/temp}.
+     * @throws java.lang.NoSuchFieldException if unable to reset
+     * @throws java.lang.IllegalAccessException if unable to reset
      */
-    public static void resetFileUtilSupport() {
+    public static void resetFileUtilSupport() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field field = FileUtilSupport.class.getDeclaredField("defaultInstance");
+        field.setAccessible(true);
+        field.set(null, null);
         FileUtilSupport.getDefault().setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
     }
 
@@ -922,7 +927,7 @@ public class JUnitUtil {
         // use reflection to reset static fields in the class.
         try {
             Class<?> c = jmri.managers.DefaultShutDownManager.class;
-            java.lang.reflect.Field f = c.getDeclaredField("shuttingDown");
+            Field f = c.getDeclaredField("shuttingDown");
             f.setAccessible(true);
             f.set(sm, false);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
@@ -974,7 +979,7 @@ public class JUnitUtil {
     public static void resetApplication() {
         try {
             Class<?> c = jmri.Application.class;
-            java.lang.reflect.Field f = c.getDeclaredField("name");
+            Field f = c.getDeclaredField("name");
             f.setAccessible(true);
             f.set(new jmri.Application(), null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
@@ -988,7 +993,7 @@ public class JUnitUtil {
     public static void resetAppsBase() {
         try {
             Class<?> c = apps.AppsBase.class;
-            java.lang.reflect.Field f = c.getDeclaredField("preInit");
+            Field f = c.getDeclaredField("preInit");
             f.setAccessible(true);
             f.set(null, false);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
@@ -1002,7 +1007,7 @@ public class JUnitUtil {
     public static void resetNodeIdentity() {
         try {
             Class<?> c = jmri.util.node.NodeIdentity.class;
-            java.lang.reflect.Field f = c.getDeclaredField("instance");
+            Field f = c.getDeclaredField("instance");
             f.setAccessible(true);
             f.set(c, null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {

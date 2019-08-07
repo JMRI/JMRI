@@ -303,7 +303,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             }
             InitializationException ex = this.configure(profile);
             InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((manager) -> {
-                manager.registerPref(this); // allow ProfileConfig.xml to be written correctly
+                manager.registerPref(this); // allow profile configuration to be written correctly
             });
             this.setInitialized(profile, true);
             if (ex != null) {

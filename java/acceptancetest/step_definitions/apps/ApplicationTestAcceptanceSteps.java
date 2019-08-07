@@ -37,7 +37,7 @@ public class ApplicationTestAcceptanceSteps implements En {
             try {
                 // create a custom profile
                 tempFolder = Files.createTempDirectory("AppTest").toFile();
-                File profileDir = new File(tempFolder.getAbsolutePath() + File.separator + "Name");
+                File profileDir = new File(tempFolder, "Name");
                 FileUtils.copyDirectory(new File(profile), profileDir);
                 System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath());
                 System.setProperty("org.jmri.profile", profileDir.getAbsolutePath());
@@ -90,6 +90,7 @@ public class ApplicationTestAcceptanceSteps implements En {
             System.clearProperty("org.jmri.profile");
             JUnitUtil.clearShutDownManager();
             JUnitUtil.resetAppsBase();
+            JUnitUtil.resetFileUtilSupport();
             JUnitUtil.tearDown();
         });
 
