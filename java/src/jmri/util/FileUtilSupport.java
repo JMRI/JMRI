@@ -75,11 +75,11 @@ public class FileUtilSupport extends Bean {
     /* path to jmri.jar */
     private String jarPath = null;
     /* path to the jython scripts directory */
-    private final HashMap<Profile, String> scriptsPath = new HashMap<>();
+    private final HashMap<Profile, String> scriptsPaths = new HashMap<>();
     /* path to the user's files directory */
-    private final HashMap<Profile, String> userFilesPath = new HashMap<>();
+    private final HashMap<Profile, String> userFilesPaths = new HashMap<>();
     /* path to profiles in use */
-    private final HashMap<Profile, String> profilePath = new HashMap<>();
+    private final HashMap<Profile, String> profilePaths = new HashMap<>();
 
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
@@ -741,7 +741,7 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public String getUserFilesPath(@Nullable Profile profile) {
-        String path = userFilesPath.get(profile);
+        String path = userFilesPaths.get(profile);
         return path != null ? path : getProfilePath(profile);
     }
 
@@ -754,11 +754,11 @@ public class FileUtilSupport extends Bean {
      *                system-specific separators
      */
     public void setUserFilesPath(@Nullable Profile profile, @Nonnull String path) {
-        String old = userFilesPath.get(profile);
+        String old = userFilesPaths.get(profile);
         if (!path.endsWith(File.separator)) {
             path = path + File.separator;
         }
-        userFilesPath.put(profile, path);
+        userFilesPaths.put(profile, path);
         if ((old != null && !old.equals(path)) || (!path.equals(old))) {
             this.firePropertyChange(FileUtil.PREFERENCES, new Property(profile, old), new Property(profile, path));
         }
@@ -774,7 +774,7 @@ public class FileUtilSupport extends Bean {
     @Nonnull
     @CheckReturnValue
     public String getProfilePath(@CheckForNull Profile profile) {
-        String path = profilePath.get(profile);
+        String path = profilePaths.get(profile);
         if (path == null) {
             File f = profile != null ? profile.getPath() : null;
             if (f != null) {
@@ -782,7 +782,7 @@ public class FileUtilSupport extends Bean {
                 if (!path.endsWith(File.separator)) {
                     path = path + File.separator;
                 }
-                profilePath.put(profile, path);
+                profilePaths.put(profile, path);
             }
         }
         return (path != null) ? path : this.getPreferencesPath();
@@ -821,14 +821,13 @@ public class FileUtilSupport extends Bean {
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
-     * <li>On Microsoft Windows systems, this is JMRI in the User's home
-     * directory.
-     * </li>
-     * <li>On OS X systems, this is Library/Preferences/JMRI in the User's home
+     * <li>On Microsoft Windows systems, this is {@code JMRI} in the User's home
      * directory.</li>
-     * <li>On Linux, Solaris, and othe UNIXes, this is .jmri in the User's home
-     * directory.</li>
-     * <li>This can be overridden with by setting the jmri.prefsdir Java
+     * <li>On OS X systems, this is {@code Library/Preferences/JMRI} in the
+     * User's home directory.</li>
+     * <li>On Linux, Solaris, and other UNIXes, this is {@code .jmri} in the
+     * User's home directory.</li>
+     * <li>This can be overridden with by setting the {@code jmri.prefsdir} Java
      * property when starting JMRI.</li>
      * </ul>
      * Use {@link #getHomePath()} to get the User's home directory.
@@ -1018,7 +1017,7 @@ public class FileUtilSupport extends Bean {
      * directory. Uses the Profile returned by
      * {@link ProfileManager#getActiveProfile()} as the base.
      *
-     * @return the scriptsPath using system-specific separators
+     * @return the scripts directory using system-specific separators
      */
     @Nonnull
     @CheckReturnValue
@@ -1032,16 +1031,16 @@ public class FileUtilSupport extends Bean {
      * directory.
      *
      * @param profile the Profile to use as the base
-     * @return the scriptsPath using system-specific separators
+     * @return the path to scripts directory using system-specific separators
      */
     @Nonnull
     @CheckReturnValue
     public String getScriptsPath(@Nullable Profile profile) {
-        String path = scriptsPath.get(profile);
+        String path = scriptsPaths.get(profile);
         if (path != null) {
             return path;
         }
-        // scriptsPath not set by user, return default if it exists
+        // scripts directory not set by user, return default if it exists
         File file = new File(this.getProgramPath() + File.separator + "jython" + File.separator); // NOI18N
         if (file.exists() && file.isDirectory()) {
             return file.getPath() + File.separator;
@@ -1054,15 +1053,15 @@ public class FileUtilSupport extends Bean {
      * Set the path to python scripts.
      *
      * @param profile the profile to use as a base
-     * @param path    the scriptsPath to set; null resets to the default,
+     * @param path    the scriptsPaths to set; null resets to the default,
      *                defined in {@link #getScriptsPath()}
      */
     public void setScriptsPath(@Nullable Profile profile, @CheckForNull String path) {
-        String old = scriptsPath.get(profile);
+        String old = scriptsPaths.get(profile);
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
         }
-        scriptsPath.put(profile, path);
+        scriptsPaths.put(profile, path);
         if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
             this.firePropertyChange(FileUtil.SCRIPTS, new Property(profile, old), new Property(profile, path));
         }

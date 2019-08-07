@@ -590,13 +590,13 @@ public final class FileUtil {
      * Get the preferences directory. This directory is set based on the OS and
      * is not normally settable by the user.
      * <ul>
-     * <li>On Microsoft Windows systems, this is JMRI in the User's home
+     * <li>On Microsoft Windows systems, this is {@code JMRI} in the User's home
      * directory.</li>
-     * <li>On OS X systems, this is Library/Preferences/JMRI in the User's home
-     * directory.</li>
-     * <li>On Linux, Solaris, and othe UNIXes, this is .jmri in the User's home
-     * directory.</li>
-     * <li>This can be overridden with by setting the jmri.prefsdir Java
+     * <li>On OS X systems, this is {@code Library/Preferences/JMRI} in the
+     * User's home directory.</li>
+     * <li>On Linux, Solaris, and other UNIXes, this is {@code .jmri} in the
+     * User's home directory.</li>
+     * <li>This can be overridden with by setting the {@code jmri.prefsdir} Java
      * property when starting JMRI.</li>
      * </ul>
      * Use {@link #getHomePath()} to get the User's home directory.
