@@ -379,8 +379,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                         if (!java.awt.GraphicsEnvironment.isHeadless() && !canErrorDialogDisplayed){
                             canErrorDialogDisplayed = true;
                             jmri.util.ThreadingUtil.runOnGUI(() -> {
-                                JDialog dialog = new JOptionPane(Bundle.getMessage("ERR_CAN_BUS_ERROR"), 
-                                    JOptionPane.ERROR_MESSAGE).createDialog(Bundle.getMessage("CBUS_ERROR"));
+                                JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
+                                pane.setMessageType(JOptionPane.ERROR_MESSAGE);
+                                JDialog dialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
                                 dialog.setModal(false);
                                 dialog.setVisible(true);
                                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -402,8 +403,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                         if (!java.awt.GraphicsEnvironment.isHeadless() && !invalidRequestDialogDisplayed){
                             invalidRequestDialogDisplayed = true;
                             jmri.util.ThreadingUtil.runOnGUI(() -> {
-                                JDialog dialog = new JOptionPane(Bundle.getMessage("ERR_INVALID_REQUEST"), 
-                                    JOptionPane.ERROR_MESSAGE).createDialog(Bundle.getMessage("CBUS_ERROR"));
+                                JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_INVALID_REQUEST"));
+                                pane.setMessageType(JOptionPane.ERROR_MESSAGE);
+                                JDialog dialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
                                 dialog.setModal(false);
                                 dialog.setVisible(true);
                                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {

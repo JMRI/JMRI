@@ -967,56 +967,36 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     public void testCanErrorsReceived() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         CbusThrottleManager  ncbtm = (CbusThrottleManager)tm;
-        
         CanReply r = new CanReply( 
             new int[]{CbusConstants.CBUS_ERR, 0x00, 0x00, CbusConstants.ERR_CAN_BUS_ERROR },0x11 );
-        
-        // pass the message 2 times, should only be 1 popup
-        ncbtm.reply(r);
-        ncbtm.reply(r);
-        
-        // JDialog is called within jmri.util.ThreadingUtil.runOnGUI
-        // though even when called without specifying the thread
-        // , taking out the Window close listener
-        // not able to get checkCanErrorDialog thread Alive working ok
-        // at time of writing . . . .
-        
-        //  Thread checkCanErrorDialog =
-        jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread checkCanErrorDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("CBUS_ERROR"), Bundle.getMessage("ButtonOK"));
-        // JUnitUtil.waitFor(()->{return !(checkCanErrorDialog.isAlive());}, "checkCanErrorDialog finished");  // NOI18N
+      
+        // pass the message twice, should only be 1 popup
+        ncbtm.reply(r);
+        ncbtm.reply(r);
         
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
-        
+        JUnitUtil.waitFor(()->{return !(checkCanErrorDialog.isAlive());}, "checkCanErrorDialog finished");
     }
 
     @Test
     public void testInvalidRequestErrorsReceived() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         CbusThrottleManager  ncbtm = (CbusThrottleManager)tm;
-        
         CanReply r = new CanReply( 
             new int[]{CbusConstants.CBUS_ERR, 0x00, 0x00, CbusConstants.ERR_INVALID_REQUEST },0x11 );
-        
-        // pass the message 2 times, should only be 1 popup
-        ncbtm.reply(r);
-        ncbtm.reply(r);
-        
-        // JDialog is called within jmri.util.ThreadingUtil.runOnGUI
-        // though even when called without specifying the thread
-        // , taking out the Window close listener
-        // not able to get checkCanErrorDialog thread Alive working ok
-        // at time of writing . . . .
-        
-        //  Thread checkCanErrorDialog =
-        jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread checkCbusInvalidRequestDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("CBUS_ERROR"), Bundle.getMessage("ButtonOK"));
-        // JUnitUtil.waitFor(()->{return !(checkCanErrorDialog.isAlive());}, "checkCanErrorDialog finished");  // NOI18N
+      
+        // pass the message twice, should only be 1 popup
+        ncbtm.reply(r);
+        ncbtm.reply(r);
         
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
-        
+        JUnitUtil.waitFor(()->{return !(checkCbusInvalidRequestDialog.isAlive());}, "checkCbusInvalidRequestDialog finished");
     }
     
     private CanSystemConnectionMemo memo;
