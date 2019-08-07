@@ -181,7 +181,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         z21CommandStation.setLocoNetMessagesFlag(true);
         z21CommandStation.setLocoNetLocomotiveMessagesFlag(true);
         z21CommandStation.setLocoNetTurnoutMessagesFlag(true);
-        z21CommandStation.setLocoNetOccupancyMessagesFlag(true);
 
         // and forward the flags to the command station
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(

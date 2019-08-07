@@ -78,16 +78,6 @@ public class ConsistFileTest {
 
     @After
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = ConsistFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset ConsistFile static fileLocation " + x);
-        }
-
        JUnitUtil.tearDown();    
     }
 }
