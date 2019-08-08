@@ -3,7 +3,6 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.GraphicsEnvironment;
 
 //import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
@@ -32,9 +31,6 @@ public class EditPortalFrameTest {
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
-//        NamedIcon icon = new NamedIcon("program:resources/icons/smallschematics/tracksegments/block.gif", "track");
-        IndicatorTrackIcon icon = new IndicatorTrackIcon(frame);
-//        icon.setOccBlock("a");
 
         new Thread(() -> {
             JFrameOperator jfo = new JFrameOperator("Edit Portal Frame");
