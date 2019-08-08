@@ -71,7 +71,7 @@ public class CircuitBuilder {
     private JMenu _todoMenu;   // error checking items
 
     // map OBlock to List of icons (track, portal, signal that represent it
-    private HashMap<OBlock, ArrayList<Positionable>> _circuitMap;
+    private HashMap<OBlock, ArrayList<Positionable>> _circuitMap = new HashMap<>();
 
     // list of track icons not belonging to an OBlock
     private final ArrayList<Positionable> _darkTrack = new ArrayList<>();
@@ -153,7 +153,6 @@ public class CircuitBuilder {
      */
     protected JMenu makeMenu() {
         _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));
-        _circuitMap = new HashMap<>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
         for (OBlock block : oblocks) {

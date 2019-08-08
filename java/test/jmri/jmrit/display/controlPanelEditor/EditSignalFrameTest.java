@@ -1,16 +1,18 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
-import jmri.util.swing.JemmyUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -22,7 +24,6 @@ public class EditSignalFrameTest {
     OBlockManager blkMgr;
 
     @Test
-    @org.junit.Ignore("Cannot get button pushed!")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("EditSignalFrameTest");
@@ -30,13 +31,16 @@ public class EditSignalFrameTest {
         CircuitBuilder cb = frame.getCircuitBuilder();
         Assert.assertNotNull("exists", cb);
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
+
+        new Thread(() -> {
+            JFrameOperator jfo = new JFrameOperator("Edit Signal Frame");
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
+            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
+            jbo.push();
+        }).start();
+
         EditSignalFrame pFrame = new EditSignalFrame("Edit Signal Frame", cb, ob1);
         Assert.assertNotNull("exists", pFrame);
-        
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        JFrameOperator jfo = new JFrameOperator(pFrame);
-        JemmyUtil.confirmJOptionPane(jfo, Bundle.getMessage("incompleteCircuit"), 
-                Bundle.getMessage("needPortal", ob1.getDisplayName(), Bundle.getMessage("BlockSignal")), "OK");
         
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(pFrame);

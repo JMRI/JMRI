@@ -75,7 +75,7 @@
     icons of your layout diagram.  The element types (OBlock, Portal,
     OPath, Signal) are created and edited using various editing modes of the tool.
     In short, it works as follows:
-    </p<p>
+    <p>
     First create an OBlock by selecting track icons. Then create Portals by dragging 
     an icon that overlaps two OBlocks. Then create OPaths by selecting the portal icons
     and track icons that indicate the path. Finally perhaps add a signal to protect an

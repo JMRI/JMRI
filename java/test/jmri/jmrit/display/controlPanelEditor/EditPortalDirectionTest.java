@@ -1,10 +1,10 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
-//import jmri.util.swing.JemmyUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -24,23 +24,22 @@ public class EditPortalDirectionTest {
     OBlockManager blkMgr;
 
     @Test
-    @org.junit.Ignore("Cannot get button pushed!")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
-        EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1);
-        Assert.assertNotNull("exists", dFrame);
-        
-        JFrameOperator jfo = new JFrameOperator(dFrame);
-        Thread t = new Thread(() -> {
+
+        new Thread(() -> {
+            JFrameOperator jfo = new JFrameOperator("Edit Direction Arrows");
             JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
             JButtonOperator jbo = new JButtonOperator(jdo, "OK");
             jbo.push();
-        });
-        t.start();
+        }).start();
+
+        EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1);
+        Assert.assertNotNull("exists", dFrame);
         
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(dFrame);

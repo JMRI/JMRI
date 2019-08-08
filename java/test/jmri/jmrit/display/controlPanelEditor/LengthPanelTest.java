@@ -1,7 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;

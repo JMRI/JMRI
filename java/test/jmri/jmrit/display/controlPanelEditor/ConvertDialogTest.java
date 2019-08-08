@@ -2,6 +2,7 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.palette.Bundle;
 //import jmri.jmrit.display.IndicatorTrackIcon;
@@ -11,6 +12,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 //import jmri.util.swing.JemmyUtil;
 
+import java.util.ArrayList;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.After;
@@ -30,7 +32,6 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class ConvertDialogTest {
 
     @Test
-//    @org.junit.Ignore("Cannot get button pushed! set icon = null to fake a test and get a little code coverage")
     public void testCTorConvert() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("ConvertDialogTest");
@@ -41,32 +42,32 @@ public class ConvertDialogTest {
         PositionableLabel pos = new PositionableLabel(icon, frame);
         pos.setLocation(200,100);
         frame.putItem(pos);
+        ArrayList<Positionable> selections = new ArrayList<>();
+        selections.add(pos);
+        frame.setSelectionGroup(selections);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
-//        System.out.println(" Open ConvertDialog!");
-        ConvertDialog dialog = new ConvertDialog(cb, null, ob1);
-        Assert.assertNotNull("exists",dialog);
-/*        System.out.println(" ConvertDialog Opened!");
+        new Thread(() -> {
+            // constructor for d will wait until the dialog is visible
+//            System.out.println(" thread running!");
+            String title = Bundle.getMessage("IndicatorTrack");
+            JDialogOperator d = new JDialogOperator(title);
+//            System.out.println(" JDialogOperator found \""+title+"\"!");
+//            new org.netbeans.jemmy.QueueTool().waitEmpty(200);
+            String label = Bundle.getMessage("updateButton");
+            JButtonOperator bo = new JButtonOperator(d, label);
+//            System.out.println(" JButtonOperator bo made for \""+label+"\"!");
+//            new org.netbeans.jemmy.QueueTool().waitEmpty(200);
+            bo.doClick();
+//            System.out.println(" JButtonOperator bo Done!");
+        }).start();
 
-        JDialogOperator jdo = new JDialogOperator(dialog);
-        System.out.println(" JDialogOperator jdo Done!");
-        
-        JFrameOperator jfo = new JFrameOperator(frame);
-        System.out.println(" JFrameOperator jfo Done!");
-/*        ComponentSearcher cs = new ComponentSearcher(dialog);
-//        cs.findComponent(chooser);
-//        JComponentOperator jco = new JComponentOperator(jdo, new ComponentChooser());
-        java.awt.Component[] comps = dialog.getComponents();
-        for (int i=0; i<comps.length; i++) {
-            if (comps[i] instanceof JPanel) {
-                JComponentOperator jco = new JComponentOperator(comps[i]);
-            }
-        }
-        JButtonOperator jbo = new JButtonOperator(jfo, Bundle.getMessage("updateButton"));
-        System.out.println(" JButtonOperator jbo Done!");
-        jbo.doClick();
-     
-        dialog.dispose();*/
+//        System.out.println(" Open ConvertDialog!");
+        ConvertDialog dialog = new ConvertDialog(cb, pos, ob1);
+        Assert.assertNotNull("exists",dialog);
+//        System.out.println(" ConvertDialog Opened!");
+
+        dialog.dispose();
         frame.dispose();
     }
 

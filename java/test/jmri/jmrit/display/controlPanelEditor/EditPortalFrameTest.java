@@ -7,7 +7,6 @@ import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
-//import jmri.util.swing.JemmyUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -27,7 +26,6 @@ public class EditPortalFrameTest {
     OBlockManager blkMgr;
 
     @Test
-    @org.junit.Ignore("Cannot get button pushed!")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalFrameTest");
@@ -36,20 +34,17 @@ public class EditPortalFrameTest {
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
 //        NamedIcon icon = new NamedIcon("program:resources/icons/smallschematics/tracksegments/block.gif", "track");
         IndicatorTrackIcon icon = new IndicatorTrackIcon(frame);
-        icon.setOccBlock("a");
+//        icon.setOccBlock("a");
+
+        new Thread(() -> {
+            JFrameOperator jfo = new JFrameOperator("Edit Portal Frame");
+            JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
+            JButtonOperator jbo = new JButtonOperator(jdo, "OK");
+            jbo.push();
+        }).start();
+
         EditPortalFrame portalFrame = new EditPortalFrame("Edit Portal Frame", cb, ob1);
         Assert.assertNotNull("exists", portalFrame);
-        
-        JFrameOperator jfo = new JFrameOperator("Edit Portal Frame");
-        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
-        JButtonOperator jbo = new JButtonOperator(jdo, "OK");
-        Thread t = new Thread(() -> {
-            jbo.push();
-//            JemmyUtil.confirmJOptionPane(jfo, Bundle.getMessage("incompleteCircuit"), 
-//                    Bundle.getMessage("needIcons", ob1.getDisplayName(), Bundle.getMessage("BlockPortals")), "OK");
-        });
-        t.setName("Error Dialog Close Thread");
-        t.start();
         
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(portalFrame);
