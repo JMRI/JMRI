@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     private ShutDownTask _shutDownTask;
 
     public DefaultCatalogTreeManager() {
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     /**
@@ -41,15 +43,6 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public int getXMLOrder() {
         return 65400;
-    }
-
-    /**
-     * This is a bogus systemPrefix. Naming is enforced in method
-     * createNewCatalogTree below.
-     */
-    @Override
-    public String getSystemPrefix() {
-        return "0";
     }
 
     /**
@@ -185,17 +178,6 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return null;
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultCatalogTreeManager instance() {
-        return InstanceManager.getDefault(DefaultCatalogTreeManager.class);
-    }
-
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");
@@ -214,6 +196,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
     }
 
+    @Override
     public boolean isIndexChanged() {
         return _indexChanged;
     }

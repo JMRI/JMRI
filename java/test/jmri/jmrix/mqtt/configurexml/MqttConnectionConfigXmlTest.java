@@ -15,6 +15,7 @@ public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstrac
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -23,6 +24,7 @@ public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstrac
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;

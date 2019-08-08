@@ -1,8 +1,10 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
@@ -17,23 +19,17 @@ import jmri.SignalHeadManager;
  * @author Bob Jacobsen Copyright (C) 2003
  */
 public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
-        implements SignalHeadManager, java.beans.PropertyChangeListener {
+        implements SignalHeadManager {
 
-    public AbstractSignalHeadManager() {
-        super();
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+    public AbstractSignalHeadManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
 
     /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALHEADS;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     /** {@inheritDoc} */

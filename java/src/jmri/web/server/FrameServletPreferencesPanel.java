@@ -37,7 +37,6 @@ import jmri.swing.EditableList;
 import jmri.swing.PreferencesPanel;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.ELProperty;
@@ -93,58 +92,47 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
 
         enableFrames.setText(Bundle.getMessage("LabelEnableFrames")); // NOI18N
 
-        Binding binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, preferences, ELProperty.create("${!disableFrames}"), enableFrames, BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, preferences, ELProperty.create("${!disableFrames}"), enableFrames, BeanProperty.create("selected")));
 
         clickDelay.setModel(new SpinnerNumberModel(1, 0, 999, 1));
         clickDelay.setToolTipText(Bundle.getMessage("ToolTipClickDelay")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${clickDelay}"), clickDelay, BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), clickDelay, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${clickDelay}"), clickDelay, BeanProperty.create("value")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), clickDelay, BeanProperty.create("enabled")));
 
         refreshDelay.setModel(new SpinnerNumberModel(5, 0, 999, 1));
         refreshDelay.setToolTipText(Bundle.getMessage("ToolTipRefreshDelay")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${refreshDelay}"), refreshDelay, BeanProperty.create("value"));
-        bindingGroup.addBinding(binding);
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), refreshDelay, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${refreshDelay}"), refreshDelay, BeanProperty.create("value")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), refreshDelay, BeanProperty.create("enabled")));
 
         useAjax.setText(Bundle.getMessage("LabelUseAjax")); // NOI18N
         useAjax.setToolTipText(Bundle.getMessage("ToolTipUseAjax")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${useAjax}"), useAjax, BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), useAjax, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${useAjax}"), useAjax, BeanProperty.create("selected")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), useAjax, BeanProperty.create("enabled")));
 
         refreshDelayLbl.setText(Bundle.getMessage("LabelRefreshDelay")); // NOI18N
         refreshDelayLbl.setToolTipText(Bundle.getMessage("ToolTipRefreshDelay")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), refreshDelayLbl, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), refreshDelayLbl, BeanProperty.create("enabled")));
 
         clickDelayLbl.setText(Bundle.getMessage("LabelClickDelay")); // NOI18N
         clickDelayLbl.setToolTipText(Bundle.getMessage("ToolTipClickDelay")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), clickDelayLbl, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), clickDelayLbl, BeanProperty.create("enabled")));
 
         disallowedFramesLbl.setText(Bundle.getMessage("LabelDisallowedFrames")); // NOI18N
         disallowedFramesLbl.setToolTipText(Bundle.getMessage("ToolTipDisallowedFrames")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), disallowedFramesLbl, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), disallowedFramesLbl, BeanProperty.create("enabled")));
 
         disallowedFrames.setModel(new DefaultEditableListModel<String>());
         disallowedFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         disallowedFrames.setToolTipText(Bundle.getMessage("ToolTipDisallowedFrames")); // NOI18N
         disallowedFrames.setListCellEditor(new DefaultListCellEditor<>(new JTextField()));
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), disallowedFrames, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, enableFrames, ELProperty.create("${selected}"), disallowedFrames, BeanProperty.create("enabled")));
 
         DefaultEditableListModel<String> model = (DefaultEditableListModel<String>) this.disallowedFrames.getModel();
         model.addListDataListener(this);
@@ -203,16 +191,13 @@ public class FrameServletPreferencesPanel extends JPanel implements ListDataList
         disableFrames.setText(Bundle.getMessage("LabelDisableFrames")); // NOI18N
         disableFrames.setToolTipText(Bundle.getMessage("ToolTipDisableFrames")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${disableFrames}"), disableFrames, BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${disableFrames}"), disableFrames, BeanProperty.create("selected")));
 
         redirectToPanels.setText(Bundle.getMessage("LabelRedirectFramesToPanels")); // NOI18N
         redirectToPanels.setToolTipText(Bundle.getMessage("ToolTipRedirectFramesToPanels")); // NOI18N
 
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${redirectFramesToPanels}"), redirectToPanels, BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
-        binding = Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, disableFrames, ELProperty.create("${selected}"), redirectToPanels, BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ_WRITE, preferences, ELProperty.create("${redirectFramesToPanels}"), redirectToPanels, BeanProperty.create("selected")));
+        bindingGroup.addBinding(Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, disableFrames, ELProperty.create("${selected}"), redirectToPanels, BeanProperty.create("enabled")));
 
         GroupLayout disableFramesPnlLayout = new GroupLayout(disableFramesPnl);
         disableFramesPnl.setLayout(disableFramesPnlLayout);

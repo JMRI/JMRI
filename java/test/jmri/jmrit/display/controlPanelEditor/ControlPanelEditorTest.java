@@ -32,6 +32,7 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -41,6 +42,7 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
     }
 
     @After
+    @Override
     public void tearDown() {
         if (e != null) {
             JUnitUtil.dispose(e);

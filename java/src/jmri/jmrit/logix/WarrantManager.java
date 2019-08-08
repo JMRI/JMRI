@@ -4,6 +4,7 @@ import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,23 +17,18 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  */
 public class WarrantManager extends AbstractManager<Warrant>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
     
     private HashMap<String, RosterSpeedProfile> _mergeProfiles;
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
     public WarrantManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.WARRANTS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -125,29 +121,6 @@ public class WarrantManager extends AbstractManager<Warrant>
         return InstanceManager.getOptionalDefault(WarrantManager.class).orElseGet(() -> {
             return InstanceManager.setDefault(WarrantManager.class, new WarrantManager());
         });
-    }
-
-    /**
-     * Get the default WarrantManager.
-     *
-     * @return the default WarrantManager, creating it if necessary
-     * @deprecated since 4.7.1; use {@link #getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantManager instance() {
-        return getDefault();
-    }
-
-    /**
-     * Get the default warrant preferences.
-     *
-     * @return the default preferences, created if necessary
-     * @deprecated since 4.7.1; use
-     * {@link jmri.jmrit.logix.WarrantPreferences#getDefault()} instead
-     */
-    @Deprecated
-    static public WarrantPreferences warrantPreferencesInstance() {
-        return WarrantPreferences.getDefault();
     }
 
     @Override

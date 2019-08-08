@@ -2,7 +2,9 @@ package jmri.util.managers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 
 /**
@@ -15,7 +17,7 @@ import jmri.jmrix.internal.InternalTurnoutManager;
 public class TurnoutManagerThrowExceptionScaffold extends InternalTurnoutManager {
 
     public TurnoutManagerThrowExceptionScaffold() {
-        super("I");
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */

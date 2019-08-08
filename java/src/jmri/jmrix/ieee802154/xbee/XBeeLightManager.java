@@ -1,7 +1,8 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import javax.annotation.*;
+import java.util.Locale;
 import jmri.Light;
+import jmri.NamedBean;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +15,19 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeLightManager extends AbstractLightManager {
 
-    protected String prefix = null;
-
     protected XBeeTrafficController tc = null;
 
-    public XBeeLightManager(XBeeTrafficController controller, String prefix) {
-        tc = controller;
-        this.prefix = prefix;
+    public XBeeLightManager(XBeeConnectionMemo memo) {
+        super(memo);
+        tc = (XBeeTrafficController) memo.getTrafficController();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XBeeConnectionMemo getMemo() {
+        return (XBeeConnectionMemo) memo;
     }
 
     // Multiple additions currently works partially, but not for all possible cases;
@@ -64,10 +66,22 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @param systemName Xbee id format with pins to be checked
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        super.validateSystemNameFormat(name, locale);
+        int pin = pinFromSystemName(name);
+        if (pin < 0 || pin > 7) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -182,7 +196,7 @@ public class XBeeLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        return Bundle.getMessage("AddOutputEntryToolTip");
+        return Bundle.getMessage("AddEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeLightManager.class);

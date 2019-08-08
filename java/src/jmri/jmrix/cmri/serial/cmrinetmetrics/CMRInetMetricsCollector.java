@@ -46,6 +46,7 @@ public class CMRInetMetricsCollector implements SerialListener {
      * Transmit packets.
      * Monitor any transmit packets to collect metrics.
      */
+    @Override
     public synchronized void message(SerialMessage l) 
     { 
        int aPacketTypeID = 0;
@@ -91,6 +92,7 @@ public class CMRInetMetricsCollector implements SerialListener {
      * Receive packets.
      * Monitor any read (reply) packets to collect metrics.
      */
+    @Override
     public synchronized void reply(SerialReply l) 
     { 
        int aPacketTypeID = 0;

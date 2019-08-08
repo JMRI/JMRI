@@ -17,6 +17,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     // need to override this to retain
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();

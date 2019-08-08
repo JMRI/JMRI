@@ -7,6 +7,7 @@ import jmri.Sensor;
 import jmri.jmrix.rfid.RfidMessage;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidSensorManager;
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.rfid.TimeoutRfidSensor;
 import org.slf4j.Logger;
@@ -24,12 +25,10 @@ import org.slf4j.LoggerFactory;
 public class StandaloneSensorManager extends RfidSensorManager {
 
     private final RfidTrafficController tc;
-    private final String prefix;
 
-    public StandaloneSensorManager(RfidTrafficController tc, String prefix) {
-        super(prefix);
-        this.tc = tc;
-        this.prefix = prefix;
+    public StandaloneSensorManager(RfidSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getTrafficController();
         attach();
     }
 
@@ -68,7 +67,7 @@ public class StandaloneSensorManager extends RfidSensorManager {
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
-        TimeoutRfidSensor sensor = (TimeoutRfidSensor) provideSensor(prefix + typeLetter() + "1");
+        TimeoutRfidSensor sensor = (TimeoutRfidSensor) provideSensor(getSystemNamePrefix() + "1");
         sensor.notify(idTag);
     }
 

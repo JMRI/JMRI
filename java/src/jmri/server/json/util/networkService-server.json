@@ -24,6 +24,10 @@
             "type": "string",
             "description": "JMRI simple version"
         },
+        "json": {
+            "type": "string",
+            "description": "Default JSON service version supported by service if present"
+        },
         "node": {
             "type": "string",
             "description": "Name of JMRI node"

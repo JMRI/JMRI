@@ -4,18 +4,21 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of locations used by operations
@@ -250,33 +253,27 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     private void editLocation(int row) {
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Location loc = locationsList.get(row);
-                log.debug("Edit location ({})", loc.getName());
-                for (LocationEditFrame lef : frameList) {
-                    if (lef._location == loc) {
-                        lef.dispose();
-                        frameList.remove(lef);
-                        break;
-                    }
+        SwingUtilities.invokeLater(() -> {
+            Location loc = locationsList.get(row);
+            log.debug("Edit location ({})", loc.getName());
+            for (LocationEditFrame lef : frameList) {
+                if (lef._location == loc) {
+                    lef.dispose();
+                    frameList.remove(lef);
+                    break;
                 }
-                LocationEditFrame lef = new LocationEditFrame(loc);
-                frameList.add(lef);
             }
+            LocationEditFrame lef = new LocationEditFrame(loc);
+            frameList.add(lef);
         });
     }
 
     private void launchYardmaster(int row) {
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("Yardmaster");
-                Location loc = locationsList.get(row);
-                new YardmasterFrame(loc);
-            }
+        SwingUtilities.invokeLater(() -> {
+            log.debug("Yardmaster");
+            Location loc = locationsList.get(row);
+            new YardmasterFrame(loc);
         });
     }
 

@@ -2236,7 +2236,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return Bundle.getMessage("BeanNameWarrant");
     }
 
-    private class CommandDelay extends Thread implements Runnable {
+    private class CommandDelay extends Thread {
 
         String nextSpeedType;
         long _startTime = 0;

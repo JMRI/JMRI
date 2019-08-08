@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * Invokes complete set of tests for the jmri.web.xmlio.JmriJFrameServlet class
+ * Invokes complete set of tests for the jmri.web.servlet.frameimage.JmriJFrameServlet class
  *
  * @author	Bob Jacobsen Copyright 2013
  */

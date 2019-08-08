@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author ken ccameron Copyright (C) 2013
  */
-public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends NcePortController {
 
     SerialPort activeSerialPort = null;
 
@@ -34,6 +34,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         option1Name = "Eprom"; // NOI18N
         // the default is 2006 or later
         options.put(option1Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
+        // TODO I18N
         setManufacturer(jmri.jmrix.nce.NceConnectionTypeList.NCE);
     }
 
@@ -94,7 +95,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         }
 
         return null; // indicates OK return
-
     }
 
     /**

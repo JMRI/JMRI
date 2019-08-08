@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,12 +16,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
-        implements TurnoutManager, java.beans.VetoableChangeListener {
+        implements TurnoutManager {
 
-    public AbstractTurnoutManager() {
-        //super(Manager.TURNOUTS);
+    public AbstractTurnoutManager(SystemConnectionMemo memo) {
+        super(memo);
         InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     /** {@inheritDoc} */

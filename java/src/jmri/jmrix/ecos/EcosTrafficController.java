@@ -113,18 +113,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosMessage.getExitProgMode();
     }
 
-    /**
-     * Static function returning the EcosTrafficController instance to use.
-     *
-     * @return The registered EcosTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EcosTrafficController instance() {
-        return self;
-    }
-
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete

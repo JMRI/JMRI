@@ -61,6 +61,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     /**
      * @return the collection of elements associated with this reporter.
      */
+    @Override
     public java.util.Collection getCollection(){
        return(collection);
     }

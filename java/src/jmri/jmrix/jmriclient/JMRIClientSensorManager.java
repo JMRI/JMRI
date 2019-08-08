@@ -12,24 +12,23 @@ import jmri.Sensor;
  */
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
-    private JMRIClientSystemConnectionMemo memo = null;
-    private String prefix = null;
-
     public JMRIClientSensorManager(JMRIClientSystemConnectionMemo memo) {
-        this.memo = memo;
-        this.prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public JMRIClientSystemConnectionMemo getMemo() {
+        return (JMRIClientSystemConnectionMemo) memo;
     }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new JMRIClientSensor(addr, memo);
+        int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        t = new JMRIClientSensor(addr, getMemo());
         t.setUserName(userName);
         return t;
     }

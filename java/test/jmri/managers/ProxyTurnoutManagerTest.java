@@ -2,6 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import jmri.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -57,18 +59,15 @@ public class ProxyTurnoutManagerTest {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideTurnout("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
-            System.out.println(ex.getMessage());
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
-        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
     }
 
     @Test
@@ -158,12 +157,7 @@ public class ProxyTurnoutManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS1"));
 
-        InternalTurnoutManager m = new InternalTurnoutManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalTurnoutManager m = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JS1"));
@@ -186,12 +180,7 @@ public class ProxyTurnoutManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalTurnoutManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(l);
     }
 

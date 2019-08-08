@@ -25,6 +25,7 @@ import org.junit.Test;
 @Ignore("Replaced with a Cucumber test")
 public class SoundProTest extends apps.LaunchJmriAppBase {
 
+    @Override
     protected void launch(String[] args) {
         SoundPro.main(args);
     }

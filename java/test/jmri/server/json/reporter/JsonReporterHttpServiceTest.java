@@ -20,6 +20,7 @@ import jmri.ReporterManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
@@ -37,6 +38,7 @@ import org.junit.Test;
 public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Reporter, JsonReporterHttpService> {
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, JsonException {
         ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
         Reporter reporter1 = manager.provideReporter("IR1"); // no value
@@ -126,7 +128,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         assertNull(manager.getReporter("JR1"));
         // create a default reporter manager that overrides provide() to require valid system name
         // this allows testing that invalid names are reported to clients correctly
-        InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager() {
+        InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public Reporter provide(String name) {
                 return this.newReporter(name, null);
@@ -203,6 +205,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonReporterHttpService(mapper);
@@ -212,6 +215,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

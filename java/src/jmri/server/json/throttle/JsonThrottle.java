@@ -26,7 +26,6 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -72,7 +71,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String CLIENTS = "clients"; // NOI18N
     private Throttle throttle;
-    private int speedSteps = 1;
+    private int speedSteps = 1; // Number of speed steps.
     private DccLocoAddress address = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
@@ -355,22 +354,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         log.debug("Found throttle {}", throttle.getLocoAddress());
         this.throttle = throttle;
         throttle.addPropertyChangeListener(this);
-        switch (throttle.getSpeedStepMode()) {
-            case DccThrottle.SpeedStepMode14:
-                this.speedSteps = 14;
-                break;
-            case DccThrottle.SpeedStepMode27:
-                this.speedSteps = 27;
-                break;
-            case DccThrottle.SpeedStepMode28:
-            case DccThrottle.SpeedStepMode28Mot:
-                this.speedSteps = 28;
-                break;
-            case DccThrottle.SpeedStepMode128:
-            default:
-                this.speedSteps = 126;
-                break;
-        }
+        this.speedSteps = throttle.getSpeedStepMode().numSteps;
         this.sendStatus();
     }
 

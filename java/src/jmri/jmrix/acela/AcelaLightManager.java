@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -19,18 +20,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AcelaLightManager extends AbstractLightManager {
 
-    private AcelaSystemConnectionMemo _memo = null;
-
     public AcelaLightManager(AcelaSystemConnectionMemo memo) {
-        _memo = memo;
+        super(memo);
     }
 
-    /**
-     * Get the configured system prefix for this connection.
-     */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public AcelaSystemConnectionMemo getMemo() {
+        return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
@@ -46,7 +42,7 @@ public class AcelaLightManager extends AbstractLightManager {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
-        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, _memo);
+        nAddress = AcelaAddress.getNodeAddressFromSystemName(systemName, getMemo());
         if (nAddress == -1) {
             return (null);
         }
@@ -57,8 +53,8 @@ public class AcelaLightManager extends AbstractLightManager {
 
         // Validate the systemName
         if (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
-            lgt = new AcelaLight(systemName, userName, _memo);
-            if (!AcelaAddress.validSystemNameConfig(systemName, 'L', _memo)) {
+            lgt = new AcelaLight(systemName, userName, getMemo());
+            if (!AcelaAddress.validSystemNameConfig(systemName, 'L', getMemo())) {
                 log.warn("Light System Name does not refer to configured hardware: {}", systemName);
             }
         } else {
@@ -69,9 +65,22 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINOUTPUTADDRESS} to
+     * {@value AcelaAddress#MAXOUTPUTADDRESS}.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINOUTPUTADDRESS,
+                AcelaAddress.MAXOUTPUTADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -86,7 +95,7 @@ public class AcelaLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (AcelaAddress.validSystemNameConfig(systemName, 'L', _memo));
+        return (AcelaAddress.validSystemNameConfig(systemName, 'L', getMemo()));
     }
 
     /**
@@ -98,15 +107,6 @@ public class AcelaLightManager extends AbstractLightManager {
     @Override
     public String convertSystemNameToAlternate(String systemName) {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
-    }
-
-    /**
-     * Allow access to AcelaLightManager.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaLightManager instance() {
-        return null; 
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaLightManager.class);

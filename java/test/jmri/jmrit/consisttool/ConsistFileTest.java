@@ -69,23 +69,15 @@ public class ConsistFileTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE));
+        JUnitUtil.resetProfileManager(profile );
         Roster.getDefault().setRosterLocation("");
-	InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
     @After
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = ConsistFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset ConsistFile static fileLocation " + x);
-        }
-
        JUnitUtil.tearDown();    
     }
 }

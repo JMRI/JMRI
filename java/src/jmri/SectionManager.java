@@ -1,11 +1,11 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +33,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class SectionManager extends AbstractManager<Section> implements InstanceManagerAutoDefault {
 
     public SectionManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
     }
@@ -44,11 +44,6 @@ public class SectionManager extends AbstractManager<Section> implements Property
     @Override
     public int getXMLOrder() {
         return Manager.SECTIONS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override

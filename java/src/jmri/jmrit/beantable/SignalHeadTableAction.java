@@ -913,13 +913,6 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             // clear older entries
             systemNameTextField.setText("");
             userNameTextField.setText("");
-            to1.refresh();
-            to2.refresh();
-            to3.refresh();
-            to4.refresh();
-            to5.refresh();
-            to6.refresh();
-            to7.refresh();
         }
         typeBox.setSelectedIndex(2);  // force GUI status consistent. Default set to Double Head type
         addFrame.pack();
@@ -2004,14 +1997,6 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                     cancelPressed(null);
                 }
             });
-        } else {
-            eto1.refresh();
-            eto2.refresh();
-            eto3.refresh();
-            eto4.refresh();
-            eto5.refresh();
-            eto6.refresh();
-            eto7.refresh();
         }
         // default the seven optional items to hidden, and system name to visible
         eSystemName.setVisible(false);

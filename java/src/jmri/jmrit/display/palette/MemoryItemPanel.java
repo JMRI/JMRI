@@ -28,7 +28,7 @@ import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeListener, ListSelectionListener {
+public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeListener {
 
     enum Type {
         READONLY, READWRITE, SPINNER, COMBO

@@ -34,6 +34,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private final ActionListener _mCodingTimeTimerActionListener;
     private int _mPresentDirection;
     private CodeButtonHandler _mCodeButtonHandler = null;
+    @Override
     public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler) { _mCodeButtonHandler = codeButtonHandler; }
     
     private LinkedList<SignalHeadPropertyChangeListenerMaintainer> _mSignalHeadPropertyChangeListenerLinkedList = new LinkedList<>();

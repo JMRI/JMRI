@@ -114,9 +114,9 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
             l.makeSystemName("1");
             Assert.fail("Expected exception not thrown");
         } catch (NamedBean.BadSystemNameException ex) {
-            Assert.assertEquals("Invalid system name for Turnout: name \"PT1\" has incorrect format", ex.getMessage());
+            Assert.assertEquals("\"PT1\" is not a recognized format.", ex.getMessage());
         }
-        JUnitAppender.assertWarnMessage("address did not match any valid forms: PT1");
+        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: \"PT1\" is not a recognized format.");
         String s = l.makeSystemName("B1");
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());

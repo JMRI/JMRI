@@ -152,6 +152,11 @@ public class StringUtil {
     /**
      * Create a String containing hexadecimal values from a byte[].
      *
+     * eg. byte[]{1,2,3,10} will return String "01 02 03 0A "
+     * eg. byte[]{-1} will return "FF "
+     * eg. byte[]{(byte)256} will return "00 "
+     * eg. byte[]{(byte)257} will return "01 "
+     *
      * @param bytes byte array. Can be zero length, but must not be null.
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
@@ -165,6 +170,29 @@ public class StringUtil {
             sb.append(' ');
         }
         return sb.toString();
+    }
+    
+    /**
+     * Convert an array of integers into a single spaced hex. string.
+     * Each int value will receive 2 hex characters.
+     * <p>
+     * eg. int[]{1,2,3,10} will return "01 02 03 0A "
+     * eg. int[]{-1} will return "FF "
+     * eg. int[]{256} will return "00 "
+     * eg. int[]{257} will return "01 "
+     *
+     * @param v the array of integers. Can be zero length, but must not be null.
+     * @return the formatted String or an empty String
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public String hexStringFromInts(@Nonnull int[] v) {
+        StringBuilder retval = new StringBuilder();
+        for (int e : v) {
+            retval.append(twoHexFromInt(e));
+            retval.append(" ");
+        }
+        return retval.toString();
     }
 
     /**
@@ -459,45 +487,6 @@ public class StringUtil {
             }
         }
         return result;
-    }
-
-    /**
-     * Replace various special characters with their "escaped" counterpart in
-     * UTF-8 character encoding, to facilitate use with web servers.
-     *
-     * @param s String to escape
-     * @return String with escaped values
-     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
-        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
-     * Replace various escaped character in UTF-8 character encoding with their
-     * "regular" counterpart, to facilitate use with web servers.
-     *
-     * @param s String to unescape
-     * @return String with escaped values replaced with regular values
-     * @throws java.io.UnsupportedEncodingException if unable to unescape from
-     *                                              UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
-        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**

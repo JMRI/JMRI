@@ -11,8 +11,7 @@ import java.util.Arrays;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
-        implements jmri.jmrix.PortAdapter {
+public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     // private control members
     private boolean opened = false;

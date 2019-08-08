@@ -39,7 +39,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author B. Milhaupt Copyright (C) 2017
  * @since 2.11.4
  */
-public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends RfidPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -155,16 +155,16 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
             case "MERG Concentrator": // NOI18N
                 // create a MERG Concentrator port controller
                 log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
                 this.getSystemConnectionMemo().configureManagers(
-                        new ConcentratorSensorManager(control, this.getSystemPrefix()),
-                        new ConcentratorReporterManager(control, this.getSystemPrefix()));
+                        new ConcentratorSensorManager(this.getSystemConnectionMemo()),
+                        new ConcentratorReporterManager(this.getSystemConnectionMemo()));
                 break;
             default:
                 // no connection at all - warn
@@ -172,8 +172,8 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
         }
 

@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006, 2018, 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <version version="5.1" author="Alain Le Marchand" lastUpdated="2019-07-28"/>
+  <!--  Only for fw version 3.11
+         Add the new CVs
+        Simplified productID for PD05 and PD12: no more version indicated -->
+    <version version="5" author="Alain Le Marchand" lastUpdated="2019-07-21"/>
+  <!--  New Firmware 3.10 and 3.11 with new CV156 and CV157
+        and changes to CV09, CV134, CV144
+        Add PD05A
+        -->
+  <version version="4" author="Alain Le Marchand" lastUpdated="2018-02-04"/>
+  <!--  New Firmware 3.08 and 3.09 with new CV65 -->
+  <version version="3" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
+  <!--  New Firmware 3.06 and 3.07 with new CV's and added translation to german -->
+  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151018"/>
+  <!--  Merged DH05C, DH10C, DH12A, DH16A, DH18A, DH21A, DH22A def files (same CV characteristics) -->
+  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150306"/>
+  <!--  Creation (new firmware).
+        3 firmware versions are defined here (3.05 = 3.05.104, 3.05.114, 3.05.15).
+        Those are maintenance release and do no bring any new CV or function.
+        -->
+  <decoder>
+    <family name="Train Decoders (2018)" mfg="Doehler und Haass">
+      <model model="DH05C v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="4" numFns="16" productID="DH05C_2018_09" comment="DH05C-0 / DH05C-1 / DH05C-3 with update from September 2018" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+          <label xml:lang="ca">AUX 3| SUSI ZCLK </label>
+        </output>
+        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+          <label xml:lang="ca">AUX 4| SUSI ZDAT</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat de llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="13.2" width="6.8" height="1.4" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH10C v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="4" numFns="16" productID="DH10C_2018_09" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from September 2018" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+          <label xml:lang="ca">AUX 3| SUSI XCLK</label>
+        </output>
+        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+        <!-- New from fw3.03  -->
+          <label xml:lang="de">AUX 4|(o. SUSI ZDAT)</label>
+          <label xml:lang="ca">AUX 4| SUSI ZDAT</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa Maniobres</label>
+        </output>
+        <size length="14.2" width="9.3" height="1.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH12A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="DH12A_2018_09" comment="DH12A with update from September 2018" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 12</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa maniobres</label>
+        </output>
+        <size length="14.5" width="8" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH16A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="DH16A_2018_09" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from September 2018" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="1.0A">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="1.0A">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa Maniobres</label>
+        </output>
+        <size length="16.7" width="10.9" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH18A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="16" productID="DH18A_2018_09" comment="DH18A with update from September 2018" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 5</label>
+          <label xml:lang="ca">AUX 5</label>
+        </output>
+        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 6</label>
+          <label xml:lang="ca">AUX 6</label>
+        </output>
+        <output name="9" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat de llum</label>
+        </output>
+        <output name="10" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="13.5" width="9.0" height="2.8" units="mm"/>
+        <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH21A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="8" numFns="16" productID="DH21A_2018_09" comment="DH21A with update from September 2018" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="1.0A">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="1.0A">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 5</label>
+          <label xml:lang="ca">AUX 5</label>
+        </output>
+        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+          <label xml:lang="de">AUX 6</label>
+          <label xml:lang="ca">AUX 6</label>
+        </output>
+        <output name="9" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat de llums</label>
+        </output>
+        <output name="10" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="20.7" width="15.8" height="5.2" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="DH22A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="6" numFns="16" productID="DH22A_2018_09" comment="DH22A with update from September 2018" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Posterior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="5" label="AUX|3" maxcurrent="1.0A">
+          <label xml:lang="de">AUX 3</label>
+          <label xml:lang="ca">AUX 3</label>
+        </output>
+        <output name="6" label="AUX|4" maxcurrent="1.0A">
+          <label xml:lang="de">AUX 4</label>
+          <label xml:lang="ca">AUX 4</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangiergang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="20.7" width="15.8" height="5.2" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="PD05A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="2" numFns="16" productID="PD05A" comment="PD05A-0 / PD05A-2 / PD05A-3 with update from September 2018" maxInputVolts="18V" maxMotorCurrent="0.5A" maxTotalCurrent="0.5A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="5.0" width="7.9" height="2.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+      <model model="PD12A v3.11.98 (firmware 3.11+)" lowVersionID="98" highVersionID="98" numOuts="4" numFns="16" productID="PD12A" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from September 2018" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="24.2" width="11.0" height="2.4" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <!-- Common D&H variable files -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv9_fw3.06.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv9_fw3.11.xml"/>
+      <!-- NON common D&H variable files. Deactivate or Activate depending on decoder model and firmware version -->
+      <!-- SECTION 1a - Standard variables with defaults for regular decoders  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+      <!-- SECTION 1b - Standard variables with defaults for low current decoder FH06  -->
+      <!--  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_low.xml"/> -->
+      <!-- SECTION 2 - Standard variables for decoders released after around 2012  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_95.xml"/>
+      <!-- New CV65 from Fw 3.08 and above -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_fw3.08.xml"/>
+      <!-- SECTION 3    - Analog functions  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+      <!-- SECTION 4    - Basic Railcom feedback  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+      <!-- SECTION 5    - Extra Railcom feedback options as of fw3.03 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
+      <!-- SECTION 6    - Extra general options as of fw3.03 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_energysaving_fw3.03.xml"/-->
+      <!--              - Extra general options as of fw3.10 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv144_fw3.10.xml"/>
+      <!-- SECTION 7    - Extra SUSI options as of fw3.03 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/-->
+      <!-- SECTION 8    - Motorola format as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola_fw3.06.xml"/>
+      <!-- SECTION 9    - Extra SUSI options as of fw3.05 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.05.xml"/-->
+      <!-- SECTION 10    - New Manufacturer ID and Version as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv260-265_fw3.06.xml"/>
+      <!-- SECTION 11    - New effects as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06.xml"/>
+      <!--               - New effects as of fw3.10 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv156-157_fw3.10.xml"/>
+      <!-- SECTION 12    - disable effects as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv125-133_fw3.06.xml"/>
+      <!-- SECTION 13    - shunt options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv138-143.xml"/>
+      <!-- SECTION 14    - acceleration options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv124_fw3.06.xml"/>
+      <!-- SECTION 15    - initialmapping options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv153_fw3.06.xml"/>
+      <!-- SECTION 16    - deceleration options as of fw3.06 -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv154-155_fw3.06.xml"/>
+      <!-- SECTION 17    - advanced function options as of fw3.06 -->
+      <!-- RK xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_adv_function_fw3.06.xml"/-->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
+    </variables>
+    <resets>
+     <factReset label="Reset All CVs" CV="8" default="8">
+      <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+      <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      <label xml:lang="de">Zurücksetzen aller CV auf die Werkseinstellungen</label>
+      <label xml:lang="ca">Reset a valors de fàbrica</label>
+     </factReset>
+    </resets>
+  </decoder>
+  <!-- Common pane(s) for all Doehler und Haass decoders  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_fw3.06.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common_fw3.10.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+  <!-- Pane(s) valid for some decoders only  -->
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
+</decoder-config>

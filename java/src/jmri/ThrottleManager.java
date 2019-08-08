@@ -1,6 +1,7 @@
 package jmri;
 
 import java.beans.PropertyChangeListener;
+import java.util.EnumSet;
 
 /**
  * Interface for allocating {@link Throttle} objects.
@@ -431,7 +432,7 @@ public interface ThrottleManager {
      *
      * @return an XOR of the possible modes specified in the throttle interface
      */
-    public int supportedSpeedModes();
+    public EnumSet<SpeedStepMode> supportedSpeedModes();
 
     /**
      * Provides a Proxy method to return the SpeedSetting, Direction, Function

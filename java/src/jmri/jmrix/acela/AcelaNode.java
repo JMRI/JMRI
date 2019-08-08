@@ -35,7 +35,7 @@ public class AcelaNode extends AbstractNode {
      */
     static final int MAXSENSORBITS = 16;  // Used to initialize arrays
     static final int MAXOUTPUTBITS = 16;  // Used to initialize arrays
-    private static int MAXNODE = 1024;
+    static final int MAXNODE = 1024;
     private static int MAXDELAY = 65535;
 
     // class constants

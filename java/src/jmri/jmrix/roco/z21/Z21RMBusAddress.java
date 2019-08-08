@@ -1,6 +1,9 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.Locale;
+import jmri.Manager;
 import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +70,62 @@ public class Z21RMBusAddress {
         }
         log.warn("Z21 RM Bus hardware address out of range in system name {}", systemName);
         return (-1);
+    }
+
+    /**
+     * Validate a system name format.
+     *
+     * @param name    the name to validate
+     * @param manager the manager requesting validation
+     * @param locale  the locale for user messages
+     * @return name, unchanged
+     * @see jmri.Manager#validateSystemNameFormat(java.lang.String,
+     * java.util.Locale)
+     */
+    public static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+        name = manager.validateSystemNamePrefix(name, locale);
+        String[] parts = name.substring(manager.getSystemNamePrefix().length()).split(":");
+        if (parts.length != 2) {
+            try {
+                return manager.validateIntegerSystemNameFormat(name, 1, 160, locale);
+            } catch (NumberFormatException ex) {
+                // ignore -- will throw in next statement
+            }
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidMissingParts", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidMissingParts", name));
+        }
+        int num;
+        try {
+            try {
+                num = Integer.parseInt(parts[0]);
+            } catch (NumberFormatException ex) {
+                // may have been base 16 instead of 10
+                num = Integer.parseInt(parts[0], 16);
+            }
+            if (num < 1 || num > 20) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidRMAddress", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidRMAddress", name));
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidRMAddress", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidRMAddress", name));
+        }
+        try {
+            num = Integer.parseInt(parts[1]);
+            if (num < 1 || num > 8) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
     }
 
     /**

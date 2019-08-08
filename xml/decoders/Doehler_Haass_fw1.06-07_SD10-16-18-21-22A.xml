@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 <version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
-<!-- 1 2016/07/10 Creation 
+<!-- 1 2016/07/10 Creation
 	Decoder template for the Doehler & Haass combo sound decoder
 	with Firmware v1.06 and 1.07.
 -->
@@ -491,7 +491,7 @@
 <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
 <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
 <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom_fw3.06.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
 <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/-->
 <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
 <!-- Pane(s) valid for some decoders only  -->

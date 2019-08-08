@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,8 @@ import org.slf4j.LoggerFactory;
 public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
-        super();
+        // use Internal memo as connection for this manager
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
@@ -197,12 +199,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
      */
     @Override
     protected void registerSelf() {
-    }
-
-    @Override
-    @CheckReturnValue
-    public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

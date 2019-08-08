@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrix.internal.InternalSensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -85,17 +86,15 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideSensor("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: \"\" needed non-empty suffix to follow " + l.getSystemNamePrefix());
-        Assert.assertTrue("Exception thrown properly", correct);
     }
 
     @Test
@@ -225,7 +224,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("content at index 2", s3, l.getNamedBeanList().get(lastEvent0));
 
         // can add a manager and still get notifications
-        l.addManager(new InternalSensorManager() { {prefix = "Z";} });
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("Z", "Zulu")));
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
@@ -482,12 +481,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
 
-        InternalSensorManager m = new InternalSensorManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalSensorManager m = new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setSensorManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("JS1"));
@@ -542,9 +536,9 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create and register the manager object
         l = new ProxySensorManager();
         // initially has three systems: IS, JS, KS
-        l.addManager(new InternalSensorManager() { {prefix = "J";} });
-        l.addManager(new InternalSensorManager() { {prefix = "I";} }); // not in alpha order to make it exciting
-        l.addManager(new InternalSensorManager() { {prefix = "K";} });
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet")));
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("I", "India"))); // not in alpha order to make it exciting
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("K", "Kilo")));
 
         jmri.InstanceManager.setSensorManager(l);
         

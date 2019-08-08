@@ -103,17 +103,6 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
         super.dispose();
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public synchronized ServerFrame getInstance() {
-        return InstanceManager.getDefault(ServerFrame.class);
-    }
-
     private void updateServerStatus() {
         Server server = InstanceManager.getDefault(Server.class);
         autoStartCheckBox.setSelected(server.getAutoStart());

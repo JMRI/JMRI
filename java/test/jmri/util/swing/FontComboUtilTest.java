@@ -18,7 +18,7 @@ public class FontComboUtilTest {
 
     // test constants
     @Test
-    public void testFontUtilConstants() {
+    public void testFontComboUtilConstants() {
         Assert.assertTrue("All and Character differ", (FontComboUtil.ALL != FontComboUtil.CHARACTER));
         Assert.assertTrue("All and Monospaced differ", (FontComboUtil.ALL != FontComboUtil.MONOSPACED));
         Assert.assertTrue("All and Proportional differ", (FontComboUtil.ALL != FontComboUtil.PROPORTIONAL));

@@ -8,6 +8,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SpeedStepMode;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /*
  * ************************ Thread running the train ****************
  */
-public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
+public class Engineer extends Thread implements java.beans.PropertyChangeListener {
 
     private int _idxCurrentCommand;     // current throttle command
     private String _currentCommand;
@@ -253,8 +254,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             } else {    // let non-speed commands go before wait
                 try {
                     if (_currentCommand.equals("SPEEDSTEP")) {
-                        int step = Integer.parseInt(ts.getValue());
-                        setSpeedStepMode(step);
+                        SpeedStepMode mode = SpeedStepMode.getByName(ts.getValue());
+                        _throttle.setSpeedStepMode(mode);
                     } else if (_currentCommand.equals("FORWARD")) {
                         boolean isForward = Boolean.parseBoolean(ts.getValue());
                         _throttle.setIsForward(isForward);
@@ -313,29 +314,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isTraceEnabled()) 
             log.debug("advanceToCommandIndex to {} - {}", _idxSkipToSpeedCommand+1, _commands.get(idx).toString());
             // Note: command indexes biased from 0 to 1 to match Warrant display of commands, which are 1-based.
-    }
-
-    private void setSpeedStepMode(int step) {
-        int stepMode = DccThrottle.SpeedStepMode128;
-        switch (step) {
-            case 14:
-                stepMode = DccThrottle.SpeedStepMode14;
-                break;
-            case 27:
-                stepMode = DccThrottle.SpeedStepMode27;
-                break;
-            case 28:
-                stepMode = DccThrottle.SpeedStepMode28;
-                break;
-            case 128:
-                stepMode = DccThrottle.SpeedStepMode128;
-                break;
-            case DccThrottle.SpeedStepMode28Mot:
-                stepMode = DccThrottle.SpeedStepMode28Mot;
-                break;
-            default:
-        }
-        _throttle.setSpeedStepMode(stepMode);
     }
 
     /**
@@ -1017,7 +995,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug("Exit runWarrant - " + msg);
     }
 
-    static private class CheckForTermination extends Thread implements Runnable {
+    static private class CheckForTermination extends Thread {
 
         Warrant oldWarrant;
         Warrant newWarrant;
@@ -1087,7 +1065,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /*
      * *************************************************************************************
      */
-     class ThrottleRamp extends Thread implements Runnable {
+     class ThrottleRamp extends Thread {
 
          private RampData _rampData;
          private String _endSpeedType;
