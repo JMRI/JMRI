@@ -134,7 +134,7 @@
     <code>@Immutable</code>, and 
     <code>@GuardedBy</code> annotations that are useful.
     See the discussion on the 
-    <a href="SpotBugs.html#annotations">JMRI SpotBugs page</a>.
+    <a href="SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
 
 <a id="ending" name="ending"></a>
 <h3>Ending Threads</h3>
