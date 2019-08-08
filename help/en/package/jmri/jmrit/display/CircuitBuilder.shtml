@@ -144,8 +144,8 @@
      	    a Portal whose OBlocks are the approach block and block protected by the the signal.
      	    <b>signal icon editing</b> mode. In this window you blahh
      		configure portal icons so they show the direction of travel when a warrant is allocated.</li>
-	 <a name="Errors" id="Errors"></a>
-     <li><b>Error Checks</b> - Provides information about objects that may require editing. These 
+	 <li><a name="Errors" id="Errors"></a>
+     		<b>Error Checks</b> - Provides information about objects that may require editing. These 
      		menu sub-items
      		either highlight the icons representing the object or display a list of track circuits or 
      		Portals that may require editing.  Selecting an item from such a list will open a window for 
@@ -457,7 +457,6 @@
     </ul>
 	Selecting a signal icon will select the portal if it protects the block there.
 	Otherwise a dialog windows opens to configure or replace protection.   
-    </p>
     
     <h2>Further Reference</h2>
     <ul>
