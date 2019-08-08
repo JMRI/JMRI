@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
-import jmri.util.swing.JemmyUtil;
+//import jmri.util.swing.JemmyUtil;
 
 import org.junit.After;
 import org.junit.Assert;

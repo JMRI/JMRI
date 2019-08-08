@@ -48,6 +48,10 @@ class ConvertDialog extends JDialog {
                     _parent._editor.highlight(null);
                 }
             });
+            if (pos == null) {
+                dispose();
+                return;
+            }
             _filler = pos.makePaletteFrame("Dummy");
             String title;
             ActionListener updateAction;

@@ -670,10 +670,8 @@ public class CircuitBuilder {
             JOptionPane.showMessageDialog(_editFrame,
                     Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("ErrorTitle"),
                     javax.swing.JOptionPane.ERROR_MESSAGE);
-            if (_editFrame != null) {
-                _editFrame.toFront();
-                _editFrame.setVisible(true);
-            }
+            _editFrame.toFront();
+            _editFrame.setVisible(true);
             return false;
         }
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);

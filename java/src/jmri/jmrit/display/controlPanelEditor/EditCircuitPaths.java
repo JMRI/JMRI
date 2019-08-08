@@ -404,14 +404,12 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             for (int i = 0; i < list.size(); i++) {
                 OPath path = (OPath) list.get(i);
                 ArrayList<Positionable> pathGp = makePathGroup(path);
-                if (pathGp != null) {
-                    if (pathGp.isEmpty()) {
-                        msg = Bundle.getMessage("noPathIcons", path.getName());
-                        break;
-                    } else {
-                        msg =  checkIcons(path.getName(), pathGp);
-                        break;
-                    }
+                if (pathGp.isEmpty()) {
+                    msg = Bundle.getMessage("noPathIcons", path.getName());
+                    break;
+                } else {
+                    msg =  checkIcons(path.getName(), pathGp);
+                    break;
                 }
             }
         }

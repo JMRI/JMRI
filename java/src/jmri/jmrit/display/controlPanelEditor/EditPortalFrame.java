@@ -317,7 +317,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             }
         } else {
             if (moved && block != null) {
-                if (!block.equals(_adjacentBlock) && _adjacentBlock != null) {
+                if (!block.equals(_adjacentBlock)) {
                     int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("repositionPortal",
                             name, _homeBlock.getDisplayName(), block.getDisplayName()),
                             Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION,
@@ -524,8 +524,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             String name = _portalName.getText();
             Portal portal = _homeBlock.getPortalByName(name);
             if (portal == null) {
-                PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
-                portalMgr = InstanceManager.getDefault(PortalManager.class);
+                PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
                 portal = portalMgr.createNewPortal(null, name);
                 portal.setFromBlock(_homeBlock, false);
                 _portalList.dataChange();
