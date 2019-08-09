@@ -15,12 +15,6 @@ public class CtcRunStartupTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new CtcRunStartup();
-    }
-
-    @Test
     public void testGetTitle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals("Start CTC Runtime", new CtcRunStartup().getTitle(CtcRunAction.class, Locale.US));  // NOI18N

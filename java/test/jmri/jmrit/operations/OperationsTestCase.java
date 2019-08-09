@@ -33,7 +33,7 @@ public class OperationsTestCase {
     public void reset() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
-
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
