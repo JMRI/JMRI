@@ -540,6 +540,9 @@ public class CbusEventTableAction {
     
     }
     
+    /**
+     * Class to provide access to the EventTableData.xml file
+     */
     public static class CbusEventTableXmlFile extends XmlFile {
         private static String fileLocation = FileUtil.getUserFilesPath() + "cbus" + File.separator;  // NOI18N
         private static String baseFileName = "EventTableData.xml";  // NOI18N
