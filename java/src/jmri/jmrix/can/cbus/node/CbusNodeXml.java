@@ -359,9 +359,6 @@ public class CbusNodeXml {
 
     public static class CbusNodeBackupFile extends XmlFile {
         
-        private static String fileLocation = FileUtil.getUserFilesPath() 
-            + "cbus" + File.separator + "nodes" + File.separator;  // NOI18N
-
         public String getDefaultFileName(int nodeNum) {
             return getFileLocation() + getFileName(nodeNum);
         }
@@ -388,7 +385,8 @@ public class CbusNodeXml {
          * @return path to location
          */
         public static String getFileLocation() {
-            return fileLocation;
+            return FileUtil.getUserFilesPath() 
+            + "cbus" + File.separator + "nodes" + File.separator;  // NOI18N
         }
         
         public boolean deleteFile(int nodeNum) {

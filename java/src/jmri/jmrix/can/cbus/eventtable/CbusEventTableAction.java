@@ -544,8 +544,6 @@ public class CbusEventTableAction {
      * Class to provide access to the EventTableData.xml file
      */
     public static class CbusEventTableXmlFile extends XmlFile {
-        private static String fileLocation = FileUtil.getUserFilesPath() + "cbus" + File.separator;  // NOI18N
-        private static String baseFileName = "EventTableData.xml";  // NOI18N
 
         public static String getDefaultFileName() {
             return getFileLocation() + getFileName();
@@ -553,13 +551,7 @@ public class CbusEventTableAction {
 
         public File getFile(boolean store) {
             // Verify that directory:cbus exists
-            File chkdir = new File(getFileLocation());
-            if (!chkdir.exists()) {
-                if (!chkdir.mkdir()) {
-                    log.error("Create directory:cbus failed");  // NOI18N
-                    return null;
-                }
-            }
+            FileUtil.createDirectory(getFileLocation());
 
             File file = findFile(getDefaultFileName());
             if (file == null && store) {
@@ -570,10 +562,7 @@ public class CbusEventTableAction {
         }
 
         public static String getFileName() {
-            if(baseFileName == null) {
-               baseFileName = "EventTableData.xml";  // NOI18N
-            }
-            return baseFileName;
+            return "EventTableData.xml";  // NOI18N
         }
 
         /**
@@ -582,10 +571,7 @@ public class CbusEventTableAction {
          * @return path to location
          */
         public static String getFileLocation() {
-            if(fileLocation==null){
-               fileLocation = FileUtil.getUserFilesPath() + "cbus" + File.separator;  // NOI18N
-            }
-            return fileLocation;
+            return FileUtil.getUserFilesPath() + "cbus" + File.separator;  // NOI18N
         }
     }
 
