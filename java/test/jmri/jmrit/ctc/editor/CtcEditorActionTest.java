@@ -325,9 +325,9 @@ public class CtcEditorActionTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-
+        JUnitUtil.resetFileUtilSupport();
         try {
             JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         } catch (java.io.IOException ioe) {
@@ -340,17 +340,7 @@ public class CtcEditorActionTest {
 
     @After
     public void tearDown() {
-        // use reflection to reset the static file location.
-        try {
-            Class<?> c = jmri.jmrit.ctc.CTCFiles.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset CTC static fileLocation " + x);
-        }
-
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);

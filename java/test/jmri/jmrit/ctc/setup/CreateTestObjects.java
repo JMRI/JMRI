@@ -4,7 +4,6 @@ package jmri.jmrit.ctc.setup;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -175,34 +174,17 @@ public class CreateTestObjects {
         final String PROP_FILE = "ProgramProperties.xml";
         final String SYS_FILE = "CTCSystem.xml";
 
-        File fromFile;
-        File toFile;
-        Path fromPath;
-        Path toPath;
-
-        toFile = CTCFiles.getFile(PROP_FILE);
-        if (!toFile.exists()) {
-            fromFile = new File(SOURCE_PATH + PROP_FILE);
-            toPath = toFile.toPath();
-            fromPath = fromFile.toPath();
-            try {
-                Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException ex) {
+        File propsFile = new File(SOURCE_PATH, PROP_FILE);
+        File sysFile = new File(SOURCE_PATH, SYS_FILE);
+        try {
+            Files.copy(propsFile.toPath(), CTCFiles.getFile(PROP_FILE).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
                 log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
-            }
         }
-
-        // Copy CTCSystem.xml
-        toFile = CTCFiles.getFile(SYS_FILE);
-        if (!toFile.exists()) {
-            fromFile = new File(SOURCE_PATH + SYS_FILE);
-            toPath = toFile.toPath();
-            fromPath = fromFile.toPath();
-            try {
-                Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException ex) {
-                log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
-            }
+        try {
+            Files.copy(sysFile.toPath(), CTCFiles.getFile(SYS_FILE).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+                log.error("Copy CTC System demo file failed", ex);  // NOI18N
         }
     }
 
