@@ -40,7 +40,7 @@ public class CTCFiles {
      * @return the full path and name.
      */
     public static String getFullName(String fileName) {
-        return getFileLocation() + fileName;
+        return new File(getFileLocation(), fileName).getAbsolutePath();
     }
 
     /**
