@@ -17,31 +17,31 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author Pete Cressman Copyright (C) 2019
  */
-public class EditCircuitPathsTest {
+public class EditSignalFrameTest {
 
     OBlockManager blkMgr;
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor("EditCircuitPathsTest");
+        ControlPanelEditor frame = new ControlPanelEditor("EditSignalFrameTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
         Assert.assertNotNull("exists", cb);
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
 
         new Thread(() -> {
-            JFrameOperator jfo = new JFrameOperator("Edit Circuit Paths");
+            JFrameOperator jfo = new JFrameOperator("Edit Signal Frame");
             JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
             JButtonOperator jbo = new JButtonOperator(jdo, "OK");
             jbo.push();
         }).start();
 
-        EditCircuitPaths pFrame = new EditCircuitPaths("Edit Circuit Paths", cb, ob1);
+        EditSignalFrame pFrame = new EditSignalFrame("Edit Signal Frame", cb, ob1);
         Assert.assertNotNull("exists", pFrame);
-
+        
         JUnitUtil.dispose(frame);
         JUnitUtil.dispose(pFrame);
     }
@@ -59,5 +59,5 @@ public class EditCircuitPathsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EditCircuitPathsTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(EditSignalFrameTest.class);
 }
