@@ -33,8 +33,6 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
 //  The "thing" we're protecting:
     private final NamedBeanHandle<SignalMast> _mNamedBeanHandleSignalMast;
 
@@ -46,7 +44,7 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
             SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal);
             if (signalMast != null) {
-                _mNamedBeanHandleSignalMast = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalMast);
+                _mNamedBeanHandleSignalMast = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalMast);
                 _mDangerAppearance = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
                 return;
             }

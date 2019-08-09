@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import jmri.jmrit.ctc.CTCFiles;
+import jmri.util.FileUtil;
 
 /**
  *
