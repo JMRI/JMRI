@@ -30,8 +30,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     public int maxSE; //Will hold the highest value of board number x 2 and we use this value to determine to tell the Tams MC how many S88 half-modules to poll
 
     public TamsSensorManager(TamsSystemConnectionMemo memo) {
-        this.memo = memo;
-        tc = memo.getTrafficController();
+        super(memo);
+        TamsTrafficController tc = memo.getTrafficController();
         //Connect to the TrafficManager
         tc.addTamsListener(this);
         TamsMessage tm = TamsMessage.setXSR();//auto reset after reading S88
@@ -44,23 +44,25 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         log.debug("TamsMessage added to poll queue = " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(0) & 0xFF, "") + " " + jmri.util.StringUtil.appendTwoHexFromInt(tm.getElement(1) & 0xFF, "") + " and replyType = " + tm.getReplyType());
     }
 
-    TamsSystemConnectionMemo memo;
-    TamsTrafficController tc;
     //The hash table simply holds the object number against the TamsSensor ref.
     private final Hashtable<Integer, Hashtable<Integer, TamsSensor>> _ttams = new Hashtable<>(); // stores known Tams Obj
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public TamsSystemConnectionMemo getMemo() {
+        return (TamsSystemConnectionMemo) memo;
     }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
+        TamsTrafficController tc = getMemo().getTrafficController();
         TamsSensor s = new TamsSensor(systemName, userName);
         log.debug("Creating new TamsSensor: {}", systemName);
         if (systemName.contains(":")) {
-            int board = 0;
-            int channel = 0;
+            int board;
+            int channel;
 
             String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
             int seperator = curAddress.indexOf(':');
@@ -266,28 +268,28 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         i = i + (r.getElement(2) & 0xff);//first 8 ports in third element of the reply
         log.debug("i after loading second byte= " + Integer.toString(i,2));
         int mask = 0b1000000000000000;
-        for (int port = 1; port <= 16; port++) {
+        for (int j = 1; j <= 16; j++) {
             int result = i & mask;
             //log.debug("mask= " + Integer.toString(mask,2));
             //log.debug("result= " + Integer.toString(result,2));
             if (sensorList != null) {
-                TamsSensor ms = sensorList.get(port);
+                TamsSensor ms = sensorList.get(j);
                 log.debug("ms: " + ms);
                 if (ms == null) {
                     log.debug("ms = NULL!");
                     StringBuilder sb = new StringBuilder();
                     sb.append(sensorprefix);
                     //Little work around to pad single digit address out.
-                    padPortNumber(port, sb);
+                    padPortNumber(j, sb);
                     ms = (TamsSensor) provideSensor(sb.toString());
                 }
                 if (ms != null) {
                     log.debug("ms = exists and is not null");
                     if (result == 0) {
                         ms.setOwnState(Sensor.INACTIVE);
-                        log.debug(sensorprefix + port + " INACTIVE");
+                        log.debug(sensorprefix + j + " INACTIVE");
                     } else {
-                        log.debug(sensorprefix + port + " ACTIVE");
+                        log.debug(sensorprefix + j + " ACTIVE");
                         ms.setOwnState(Sensor.ACTIVE);
                     }
                 }
@@ -296,5 +298,6 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         }
         log.debug("sensor decoding is done");
     }
+
     private final static Logger log = LoggerFactory.getLogger(TamsSensorManager.class);
 }

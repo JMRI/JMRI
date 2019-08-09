@@ -15,20 +15,19 @@ import jmri.Light;
 
 /**
  * XBeeLightManagerTest.java
- *
+ * <p>
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeLightManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
 public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
-        
+
     private XBeeTrafficController tc = null;
 
     @Override
     public String getSystemName(int i) {
         return "AL2:" + i;
     }
-
 
     @Test
     public void testCtor() {
@@ -42,7 +41,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provide("" + getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
@@ -51,7 +50,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provide("ALNode 1:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ALNode 1:2"));
+        Assert.assertEquals("correct object returned ", t, l.getBySystemName("ALNode 1:2"));
     }
 
     @Test
@@ -60,7 +59,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provide("AL00 02:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName("AL00 02:2"));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName("AL00 02:2"));
     }
 
     @Test
@@ -69,7 +68,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provide("AL00 13 A2 00 40 A0 4D 2D:2");
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t , l.getBySystemName("AL00 13 A2 00 40 A0 4D 2D:2"));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName("AL00 13 A2 00 40 A0 4D 2D:2"));
     }
 
     @Override
@@ -79,7 +78,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provideLight(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -115,16 +114,17 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         XBeeConnectionMemo m = new XBeeConnectionMemo();
         m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeLightManager(tc, "A");
+        m.setTrafficController(tc);
+        l = new XBeeLightManager(m);
         m.setLightManager(l);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
-        XBeeNode node = new XBeeNode(pan,uad,gad);
+        XBeeNode node = new XBeeNode(pan, uad, gad);
         RemoteXBeeDevice rd = new RemoteXBeeDevice(tc.getXBee(),
-             new XBee64BitAddress("0013A20040A04D2D"),
-             new XBee16BitAddress("0002"),
-             "Node 1");
+                new XBee64BitAddress("0013A20040A04D2D"),
+                new XBee16BitAddress("0002"),
+                "Node 1");
         node.setXBee(rd);
         tc.registerNode(node);
     }

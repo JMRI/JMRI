@@ -15,14 +15,8 @@ import org.slf4j.LoggerFactory;
  */
 public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager implements EasyDccListener {
 
-    EasyDccSystemConnectionMemo _memo = null;
-    private String prefix = "E";
     private EasyDccTrafficController trafficController = null;
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
-
-    public EasyDccTurnoutManager() {
-        log.debug("EasyDCC TurnoutManager null");
-    }
 
     /**
      * Create an new EasyDCC TurnoutManager.
@@ -30,25 +24,27 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      * @param memo the SystemConnectionMemo for this connection (contains the prefix string needed to parse names)
      */
     public EasyDccTurnoutManager(EasyDccSystemConnectionMemo memo) {
-        _memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
         // connect to the TrafficManager
         trafficController = memo.getTrafficController();
         // listen for turnout creation
         trafficController.addEasyDccListener(this);
-        log.debug("EasyDCC TurnoutManager prefix={}", prefix);
+        log.debug("EasyDCC TurnoutManager prefix={}", getSystemPrefix());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public EasyDccSystemConnectionMemo getMemo() {
+        return (EasyDccSystemConnectionMemo) memo;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new EasyDccTurnout(prefix, addr, _memo);
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        t = new EasyDccTurnout(getSystemPrefix(), addr, getMemo());
         t.setUserName(userName);
 
         return t;

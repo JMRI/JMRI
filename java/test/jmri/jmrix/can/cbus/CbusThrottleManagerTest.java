@@ -4,6 +4,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -16,7 +17,6 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 import org.slf4j.Logger;
@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2017   
  */
 public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
-    
-    private CanSystemConnectionMemo memo;
-    private CbusDummyCS _cs;
-    private CbusThrottleManager cbtm;
 
     @Test
     public void testCTor() {
@@ -39,7 +35,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @Test
     public void testIncomingFuntions() {
-        cbtm = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtm);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
         
@@ -139,21 +135,19 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("F26 off",false,cbtm.getThrottleInfo(addr,Throttle.F26));
         Assert.assertEquals("F27 off",false,cbtm.getThrottleInfo(addr,Throttle.F27));
         Assert.assertEquals("F28 off",false,cbtm.getThrottleInfo(addr,Throttle.F28));
-
-        cbtm = null;
         
     }
     
     @Test
     public void testIncomingFuntionsDecimal() {
-        CbusThrottleManager cbtmb = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtmb = ( CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(221,true);
         
         CbusThrottleListen throtListen = new CbusThrottleListen();
         cbtmb.requestThrottle(addr,throtListen,true);
         
-        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "throttle not created");
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFNON, 1, 0 },0x12 );
 
         for ( int i=0 ; (i < 29 ) ; i++){
@@ -173,7 +167,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     
     @Test
     public void testIncomingSpeedDirection() {
-        CbusThrottleManager cbtmb = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(422,true);
         
@@ -184,14 +178,18 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         
         Assert.assertEquals("speed setting",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("speed increment",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedIncrement"));
-        Assert.assertEquals("speed step mode",CbusConstants.CBUS_SS_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
-        
+        Assert.assertEquals("speed step mode",SpeedStepMode.NMRA_DCC_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
+
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );
         cbtmb.reply(r);
         Assert.assertEquals("speed setting 0",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("is forward 0",false,cbtmb.getThrottleInfo(addr,"IsForward"));
         
-        r.setElement(2, 1);
+        r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 77, 77 },0x12 );
+        cbtmb.reply(r);
+        Assert.assertEquals("different session speed unchanged",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 1 },0x12 );
         cbtmb.reply(r);  
         Assert.assertEquals("speed setting 1",-1.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("is forward 1",false,cbtmb.getThrottleInfo(addr,"IsForward"));
@@ -287,30 +285,60 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     public void testMessage() {
         
-        CbusThrottleManager cbtmb = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
         
         CbusThrottleListen throtListen = new CbusThrottleListen();
         cbtmb.requestThrottle(addr,throtListen,true);
         
-        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");        
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "Throttle didn't create");        
         
-        CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
+        CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 88 },0x12 );
+        r.setExtended(true);
         cbtmb.reply(r);
+        Assert.assertTrue((float)cbtmb.getThrottleInfo(addr,"SpeedSetting")==0f);
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        cbtmb.reply(r);
+        Assert.assertTrue((float)cbtmb.getThrottleInfo(addr,"SpeedSetting")==0f);
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
+        // rtr and extended both false by default
+        
+        cbtmb.reply(r);
+        
+        JUnitUtil.waitFor(()->{ return(((float)cbtmb.getThrottleInfo(addr,"SpeedSetting"))!=0f); }, "Speed command not received");
         Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_RESTP },0x12 );
         cbtmb.message(m);
         Assert.assertEquals("msg speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
-
+        
+        r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 44, 77 },0x12 );
+        cbtmb.reply(r);
+        Assert.assertEquals("msg speed setting unchanged wrong address",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
         cbtmb.reply(r);
         Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));
         m = new CanMessage( new int[]{CbusConstants.CBUS_ESTOP },0x12 );
+        
+        m.setExtended(true);
         cbtmb.message(m);
+        Assert.assertEquals("msg speed setting Extended CAN ignored",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        cbtmb.message(m);
+        Assert.assertEquals("msg speed setting Rtr CAN ignored",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        
+        m.setRtr(false);
+        cbtmb.message(m);
+        
         Assert.assertEquals("msg speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
 
@@ -332,11 +360,23 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         cbtmb.message(m);
         Assert.assertEquals("msg speed change estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
         Assert.assertEquals("msg estop reverse",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        
+        m = new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 22 },0x12 );
+        cbtmb.message(m);
+        Assert.assertEquals("addr unchanged as no session number match",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        
+        m = new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 1 },0x12 );
+        cbtmb.message(m);
+        
+        m = new CanMessage( new int[]{CbusConstants.CBUS_DSPD, 1, 11 },0x12 );
+        cbtmb.message(m);
+        Assert.assertEquals("msg speed change ignored as session cancelled",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        
     }
 
     @Test
     public void testCbdispose() {
-        CbusThrottleManager cbtmb = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtmb =  (CbusThrottleManager)tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(555,true);
         Assert.assertEquals("throttle use 0", 0, cbtmb.getThrottleUsageCount(addr));
@@ -346,11 +386,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)>0); }, "Throttle count did not increase");
         Assert.assertEquals("throttle use 1", 1, cbtmb.getThrottleUsageCount(addr));
         
-        cbtmb.disposeThrottle(cbt,throtListen);
+        Assert.assertTrue(cbtmb.disposeThrottle(cbt,throtListen));
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)==0); }, 
             "Throttle Count did not go 0 on dispose, add retry rule for this if regular?");
         Assert.assertEquals("disposed throttle use 0", 0, cbtmb.getThrottleUsageCount(addr));
         Assert.assertNull("NULL",cbtmb.getThrottleInfo(addr,Throttle.F28));
+        
+        Assert.assertFalse(cbtmb.disposeThrottle(null,throtListen));
+        
+        throtListen = null;
+        
     }
 
     private class CbusThrottleListen implements ThrottleListener {
@@ -430,8 +475,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        cbtm = new CbusThrottleManager(memo);
-        InstanceManager.setThrottleManager( cbtm );
+        CbusThrottleManager cbtm = new CbusThrottleManager(memo);
         cbtm.requestThrottle(129, throtListen, true);
         Assert.assertEquals("address request message", "[78] 40 C0 81",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x40 RLOC Request Loco
@@ -489,7 +533,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        cbtm = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtm = new CbusThrottleManager(memo);
         InstanceManager.setThrottleManager( cbtm );
 
         CbusNodeTableDataModel nodemodel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);        
@@ -589,7 +633,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        cbtm = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtm =  new CbusThrottleManager(memo);
         InstanceManager.setThrottleManager( cbtm );
 
         CbusNodeTableDataModel nodemodel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);        
@@ -670,7 +714,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        cbtm = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtm = new CbusThrottleManager(memo);
         InstanceManager.setThrottleManager( cbtm );
 
         CbusNodeTableDataModel nodemodel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);        
@@ -758,8 +802,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        cbtm = new CbusThrottleManager(memo);
-        InstanceManager.setThrottleManager( cbtm );
+        CbusThrottleManager cbtm = new CbusThrottleManager(memo);
+        // InstanceManager.setThrottleManager( cbtm );
 
         CbusNodeTableDataModel nodemodel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);        
         InstanceManager.store(nodemodel, CbusNodeTableDataModel.class);
@@ -841,7 +885,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
-        cbtm = new CbusThrottleManager(memo);
+        CbusThrottleManager cbtm = new CbusThrottleManager(memo);
         InstanceManager.setThrottleManager( cbtm );
 
         CbusNodeTableDataModel nodemodel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);        
@@ -892,6 +936,71 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         nodemodel.dispose();
     }
     
+    @Test
+    public void testStealShareOptionsEnabled() {
+        Assert.assertTrue("Can Silent Steal", tm.enablePrefSilentStealOption());
+        Assert.assertTrue("Can Silent Share", tm.enablePrefSilentShareOption());
+    }
+    
+    @Test
+    public void testIsLongAddress() {
+        
+        Assert.assertFalse("local isLong 1", CbusThrottleManager.isLongAddress(1));
+        Assert.assertFalse("local isLong 127", CbusThrottleManager.isLongAddress(127));
+        Assert.assertTrue("local isLong 128", CbusThrottleManager.isLongAddress(128));
+        Assert.assertTrue("local isLong 129", CbusThrottleManager.isLongAddress(129));
+        
+        Assert.assertFalse("can be long 0", tm.canBeLongAddress(0));
+        Assert.assertTrue("can be long 1", tm.canBeLongAddress(1));
+        
+    }
+    
+    @Test
+    public void testNotADccLocoAddress() {
+        CbusThrottleManager cbtmb = (CbusThrottleManager)tm;
+        
+        cbtmb.responseThrottleDecision(null,null,null);
+        JUnitAppender.assertErrorMessageStartsWith("null is not a DccLocoAddress");
+    }
+    
+    @Test
+    public void testCanErrorsReceived() {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        CbusThrottleManager  ncbtm = (CbusThrottleManager)tm;
+        CanReply r = new CanReply( 
+            new int[]{CbusConstants.CBUS_ERR, 0x00, 0x00, CbusConstants.ERR_CAN_BUS_ERROR },0x11 );
+        Thread checkCanErrorDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("CBUS_ERROR"), Bundle.getMessage("ButtonOK"));
+      
+        // pass the message twice, should only be 1 popup
+        ncbtm.reply(r);
+        ncbtm.reply(r);
+        
+        JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
+        JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
+        JUnitUtil.waitFor(()->{return !(checkCanErrorDialog.isAlive());}, "checkCanErrorDialog finished");
+    }
+
+    @Test
+    public void testInvalidRequestErrorsReceived() {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        CbusThrottleManager  ncbtm = (CbusThrottleManager)tm;
+        CanReply r = new CanReply( 
+            new int[]{CbusConstants.CBUS_ERR, 0x00, 0x00, CbusConstants.ERR_INVALID_REQUEST },0x11 );
+        Thread checkCbusInvalidRequestDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+            Bundle.getMessage("CBUS_ERROR"), Bundle.getMessage("ButtonOK"));
+      
+        // pass the message twice, should only be 1 popup
+        ncbtm.reply(r);
+        ncbtm.reply(r);
+        
+        JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
+        JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
+        JUnitUtil.waitFor(()->{return !(checkCbusInvalidRequestDialog.isAlive());}, "checkCbusInvalidRequestDialog finished");
+    }
+    
+    private CanSystemConnectionMemo memo;
+    private CbusDummyCS _cs;
     private DccThrottle throttle;
     private boolean failedThrottleRequest = false;
     
@@ -900,6 +1009,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback(); // do not use this tc normally
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
@@ -912,14 +1022,12 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        CbusThrottleManager dtm = (CbusThrottleManager)tm;
+        dtm.dispose();
         tm=null;
         _cs.dispose();
         _cs = null;
-        if (cbtm != null) { 
-            cbtm.dispose();
-        }
-        cbtm = null;
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);

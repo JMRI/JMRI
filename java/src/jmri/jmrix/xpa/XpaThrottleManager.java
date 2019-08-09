@@ -1,7 +1,9 @@
 package jmri.jmrix.xpa;
 
+import java.util.EnumSet;
+
 import jmri.LocoAddress;
-import jmri.ThrottleManager;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
@@ -79,4 +81,12 @@ public class XpaThrottleManager extends AbstractThrottleManager {
         return (num >= 100);
     }
 
+    /**
+     * What speed modes are supported by this system? value should be xor of
+     * possible modes specifed by the DccThrottle interface
+     */
+    @Override
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.INCREMENTAL);
+    }
 }

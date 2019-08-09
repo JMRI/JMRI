@@ -25,19 +25,16 @@ import org.slf4j.LoggerFactory;
 public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         implements AcelaListener {
 
-    private AcelaSystemConnectionMemo _memo = null;
-
     public AcelaSensorManager(AcelaSystemConnectionMemo memo) {
-        super();
-        _memo = memo;
+        super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public AcelaSystemConnectionMemo getMemo() {
+        return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
@@ -81,7 +78,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Acela Node exists
-        AcelaNode node = AcelaAddress.getNodeFromSystemName(sName, _memo);
+        AcelaNode node = AcelaAddress.getNodeFromSystemName(sName, getMemo());
         if (node == null) {
             log.warn("Sensor: {} refers to an undefined Acela Node.", sName);
             return s;
@@ -134,7 +131,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void reply(AcelaReply r) {
         // Determine which state we are in: Initializing Acela Network or Polling Sensors
-        boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();
+        boolean currentstate = getMemo().getTrafficController().getAcelaTrafficControllerState();
         //  Flag to indicate which state we are in: 
         //  false == Initializing Acela Network
         //  true == Polling Sensors
@@ -198,16 +195,16 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             }
                         }
                         int tempaddr = i + 1;
-                        new AcelaNode(tempaddr, nodetype, _memo.getTrafficController());
+                        new AcelaNode(tempaddr, nodetype, getMemo().getTrafficController());
                         log.info("Created a new Acela Node [{}] as a result of Acela network Poll of type: {}", tempaddr, replynodetype);
                     }
-                    _memo.getTrafficController().setAcelaTrafficControllerState(true);
+                    getMemo().getTrafficController().setAcelaTrafficControllerState(true);
                 }
             }
         } else {
             int replysize = r.getNumDataElements();
             if (replysize > 1) {  // Bob C: not good if only one sensor module !!
-                _memo.getTrafficController().updateSensorsFromPoll(r);
+                getMemo().getTrafficController().updateSensorsFromPoll(r);
             }
         }
     }
@@ -231,7 +228,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system Name is {}", sName);
                 if (sName.startsWith(getSystemPrefix() + "S")) { // multichar prefix
                     // This is an Acela Sensor
-                    tNode = AcelaAddress.getNodeFromSystemName(sName, _memo);
+                    tNode = AcelaAddress.getNodeFromSystemName(sName, getMemo());
                     if (tNode == node) {
                         // This sensor is for this new Acela Node - register it
                         node.registerSensor(getBySystemName(sName),

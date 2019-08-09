@@ -3,6 +3,7 @@ package jmri.jmrix.tmcc;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -52,7 +53,7 @@ public class SerialThrottle extends AbstractThrottle {
         this.f21 = false;
         this.address = address;
         this.isForward = true;
-
+        this.speedStepMode = SpeedStepMode.TMCC_32;
     }
 
     private DccLocoAddress address;
@@ -287,8 +288,7 @@ public class SerialThrottle extends AbstractThrottle {
      * @param Mode ignored, as only 32 is valid
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
-        speedStepMode = 32;
+    public void setSpeedStepMode(jmri.SpeedStepMode Mode) {
     }
 
     @Override

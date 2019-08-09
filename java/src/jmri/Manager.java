@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import jmri.NamedBean.BadSystemNameException;
 import jmri.beans.PropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -48,6 +49,15 @@ import jmri.beans.VetoableChangeProvider;
  * @author Bob Jacobsen Copyright (C) 2003
  */
 public interface Manager<E extends NamedBean> extends PropertyChangeProvider, VetoableChangeProvider {
+
+    /**
+     * Get the system connection for this manager.
+     * 
+     * @return the system connection for this manager
+     */
+    @CheckReturnValue
+    @Nonnull
+    public SystemConnectionMemo getMemo();
 
     /**
      * Provides access to the system prefix string. This was previously called

@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.managers.AbstractReporterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement ReporterManager for CAN CBUS systems.
  * <p>
- * System names are "MRnnnnn", where M is the user-configurable system prefix,
+ * System names are "MRnnnnn", where M is the user-configurable system getSystemPrefix(),
  * nnnnn is the reporter number without padding.
  * <p>
  * CBUS Reporters are NOT automatically created.
@@ -20,21 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusReporterManager extends AbstractReporterManager {
 
-    @SuppressWarnings("LeakingThisInConstructor")
     public CbusReporterManager(CanSystemConnectionMemo memo) {
-        this.tc = memo.getTrafficController();
-        this.prefix = memo.getSystemPrefix();
+        super(memo);
     }
     
-    private TrafficController tc;
-    private String prefix;
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     /**
@@ -43,8 +37,8 @@ public class CbusReporterManager extends AbstractReporterManager {
     @Override
     public Reporter createNewReporter(String systemName, String userName) {
         log.debug("ReporterManager create new CbusReporter: {}", systemName);
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        Reporter t = new CbusReporter(addr, tc, prefix);
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        Reporter t = new CbusReporter(addr, getMemo().getTrafficController(), getSystemPrefix());
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
         return t;

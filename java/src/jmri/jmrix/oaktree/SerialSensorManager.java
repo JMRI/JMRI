@@ -19,17 +19,12 @@ import org.slf4j.LoggerFactory;
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 
-    OakTreeSystemConnectionMemo _memo = null;
-    protected String prefix = "O";
-
     public SerialSensorManager() {
         this(jmri.InstanceManager.getDefault(OakTreeSystemConnectionMemo.class));
     }
 
     public SerialSensorManager(OakTreeSystemConnectionMemo memo) {
-        super();
-        _memo = memo;
-        prefix = getSystemPrefix();
+        super(memo);
     }
 
     /**
@@ -44,11 +39,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     static final int SENSORSPERNODE = 1000;
 
     /**
-     * Return the Oak Tree system prefix
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public OakTreeSystemConnectionMemo getMemo() {
+        return (OakTreeSystemConnectionMemo) memo;
     }
 
     /**
@@ -59,7 +54,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
+        String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Sensor system name - {}", systemName);
@@ -72,14 +67,14 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
+        String altName = SerialAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         s = getBySystemName(altName);
         if (s != null) {
             log.error("Sensor with name '{}' already exists as '{}'", systemName, altName);
             return null;
         }
         // check bit number
-        int bit = SerialAddress.getBitFromSystemName(sName, prefix);
+        int bit = SerialAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit <= 0) || (bit >= SENSORSPERNODE)) {
             log.error("Sensor bit number {} is outside the supported range, 1-{}",
                     Integer.toString(bit),
@@ -94,7 +89,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Serial Node exists
-        SerialNode node = SerialAddress.getNodeFromSystemName(sName, _memo.getTrafficController());
+        SerialNode node = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
         if (node == null) {
             log.warn("Sensor {} refers to an undefined Serial Node.", sName);
             return s;
@@ -117,7 +112,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), prefix));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     /**
@@ -134,7 +129,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void reply(SerialReply r) {
         // determine which node
-        SerialNode node = (SerialNode) _memo.getTrafficController().getNodeFromAddress(r.getAddr());
+        SerialNode node = (SerialNode) getMemo().getTrafficController().getNodeFromAddress(r.getAddr());
         if (node != null) {
             node.markChanges(r);
         }
@@ -158,7 +153,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system name is {}", sName);
                 if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
                     // This is a Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName, _memo.getTrafficController());
+                    tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
                         node.registerSensor(getBySystemName(sName),

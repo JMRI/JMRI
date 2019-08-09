@@ -9,11 +9,14 @@ import java.util.*;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.InstanceManager;
 
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.ProvidingManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import jmri.util.com.dictiography.collections.IndexedTreeSet;
 import org.slf4j.Logger;
@@ -158,7 +161,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         return internalManager;
     }
 
-    private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new java.util.Comparator<Manager<E>>(){
+    private final IndexedTreeSet<Manager<E>> mgrs = new IndexedTreeSet<>(new Comparator<Manager<E>>(){
         @Override
         public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
     });
@@ -563,6 +566,22 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     HashMap<String, ArrayList<PropertyChangeListener>> namedPropertyListenerMap = new HashMap<>();
     ArrayList<VetoableChangeListener> propertyVetoListenerList = new ArrayList<>();
     HashMap<String, ArrayList<VetoableChangeListener>> namedPropertyVetoListenerMap = new HashMap<>();
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return The system connection memo for the manager returned by
+     *         {@link #getDefaultManager()}, or the Internal system connection
+     *         memo if there is no default manager
+     */
+    @Override
+    public SystemConnectionMemo getMemo() {
+        try {
+            return getDefaultManager().getMemo();
+        } catch (IndexOutOfBoundsException ex) {
+            return InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        }
+    }
 
     /**
      * @return The system-specific prefix letter for the primary implementation

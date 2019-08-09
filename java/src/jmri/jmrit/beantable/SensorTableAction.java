@@ -29,7 +29,6 @@ import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.managers.ProxySensorManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -280,7 +279,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
-        p.setComboBoxLastSelection(systemSelectionCombo, ConnectionNameFromSystemName.getConnectionName(prefixBox.getSelectedItem().getSystemPrefix()));
+        p.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -306,7 +305,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText(
                 Bundle.getMessage("AddEntryToolTipLine1",
-                        ConnectionNameFromSystemName.getConnectionName(systemPrefix),
+                        connectionChoice.getMemo().getUserName(),
                         Bundle.getMessage("Sensors"),
                         addEntryToolTip));
         hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
@@ -515,12 +514,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      */
     @Override
     public void addToPanel(AbstractTableTabAction<Sensor> f) {
-        String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
+        String connectionName = senManager.getMemo().getUserName();
 
         if (senManager.getClass().getName().contains("ProxySensorManager")) {
-            systemPrefix = "All";
+            connectionName = "All";
         }
-        f.addToBottomBox(showDebounceBox, systemPrefix);
+        f.addToBottomBox(showDebounceBox, connectionName);
         showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
         showDebounceBox.addActionListener(new ActionListener() {
             @Override
@@ -528,7 +527,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 showDebounceChanged();
             }
         });
-        f.addToBottomBox(showPullUpBox, systemPrefix);
+        f.addToBottomBox(showPullUpBox, connectionName);
         showPullUpBox.setToolTipText(Bundle.getMessage("SensorPullUpToolTip"));
         showPullUpBox.addActionListener(new ActionListener() {
             @Override
@@ -536,7 +535,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 showPullUpChanged();
             }
         });
-        f.addToBottomBox(showStateForgetAndQueryBox, systemPrefix);
+        f.addToBottomBox(showStateForgetAndQueryBox, connectionName);
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
         showStateForgetAndQueryBox.addActionListener(new ActionListener() {
             @Override

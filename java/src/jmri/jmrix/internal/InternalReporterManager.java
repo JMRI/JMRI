@@ -10,6 +10,10 @@ import jmri.Reporter;
  */
 public class InternalReporterManager extends jmri.managers.AbstractReporterManager {
 
+    public InternalReporterManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+    }
+
     /**
      * Create an internal TrackReporter object
      *
@@ -25,8 +29,11 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return "I";
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
 }

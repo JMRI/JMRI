@@ -21,10 +21,12 @@ import org.slf4j.LoggerFactory;
  */
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
+    protected final LnTrafficController tc;
+    
     // ctor has to register for LocoNet events
-    public LnReporterManager(LnTrafficController tc, String prefix) {
-        this.prefix = prefix;
-        this.tc = tc;
+    public LnReporterManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getLnTrafficController();
         if (tc != null) {
             tc.addLocoNetListener(~0, this);
         } else {
@@ -32,12 +34,12 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         }
     }
 
-    LnTrafficController tc;
-    String prefix;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public LocoNetSystemConnectionMemo getMemo() {
+        return (LocoNetSystemConnectionMemo) memo;
     }
 
     @Override
@@ -51,8 +53,8 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     @Override
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new LnReporter(addr, tc, prefix);
+        int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        t = new LnReporter(addr, tc, getSystemPrefix());
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 
@@ -111,7 +113,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         // message type OK, check address
         int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
 
-        LnReporter r = (LnReporter) provideReporter(this.prefix+ "R" + addr); // NOI18N
+        LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
         r.message(l); // make sure it got the message
     }
 

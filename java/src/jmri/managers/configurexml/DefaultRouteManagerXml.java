@@ -503,7 +503,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         }
 
         // register new one with InstanceManager
-        DefaultRouteManager pManager = DefaultRouteManager.instance();
+        DefaultRouteManager pManager = InstanceManager.getDefault(DefaultRouteManager.class);
         InstanceManager.store(pManager, RouteManager.class);
         // register new one for configuration
         InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(pManager, jmri.Manager.ROUTES);

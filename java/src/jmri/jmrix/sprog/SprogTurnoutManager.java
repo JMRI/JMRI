@@ -13,15 +13,16 @@ import jmri.Turnout;
  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    SprogSystemConnectionMemo _memo = null;
-
     public SprogTurnoutManager(SprogSystemConnectionMemo memo) {
-        _memo = memo;
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public SprogSystemConnectionMemo getMemo() {
+        return (SprogSystemConnectionMemo) memo;
     }
 
     // Sprog-specific methods
@@ -30,10 +31,10 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
         Turnout t;
-        if (_memo.getSprogMode() == SprogConstants.SprogMode.OPS ) {
-            t = new SprogCSTurnout(addr, _memo);
+        if (getMemo().getSprogMode() == SprogConstants.SprogMode.OPS ) {
+            t = new SprogCSTurnout(addr, getMemo());
         } else {
-            t = new SprogTurnout(addr, _memo);
+            t = new SprogTurnout(addr, getMemo());
         }
         t.setUserName(userName);
         return t;

@@ -25,7 +25,13 @@ import org.junit.rules.TemporaryFolder;
  * @author Paul Bender Copyright (C) 2017
  */
 public class ImportRosterEngineActionTest extends OperationsTestCase {
-    
+
+    @Rule
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3);  // allow 3 retries
+
+    @Rule // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
+	public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(20);
+	    
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 

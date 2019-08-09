@@ -22,10 +22,8 @@ import org.slf4j.LoggerFactory;
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
 
-    public NceSensorManager(NceTrafficController tc, String prefix) {
-        super();
-        this.tc = tc;
-        this.prefix = prefix;
+    public NceSensorManager(NceSystemConnectionMemo memo) {
+        super(memo);
         for (int i = MINAIU; i <= MAXAIU; i++) {
             aiuArray[i] = null;
         }
@@ -41,17 +39,17 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 }
             }
         };
-        tc.addNceListener(listener);
+        memo.getNceTrafficController().addNceListener(listener);
     }
-
-    NceTrafficController tc = null;
-    String prefix = "N";
 
     private final NceSensorManager mInstance = null;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public NceSystemConnectionMemo getMemo() {
+        return (NceSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used
@@ -67,7 +65,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 log.warn("dispose interrupted");
             }
         }
-        tc.removeNceListener(listener);
+        getMemo().getNceTrafficController().removeNceListener(listener);
         super.dispose();
     }
 
@@ -176,7 +174,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
     public NceMessage makeAIUPoll(int aiuNo) {
         // use old 4 byte read command if not USB
-        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+        if (getMemo().getNceTrafficController().getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
             return makeAIUPoll4ByteReply(aiuNo);
         } else {
             return makeAIUPoll2ByteReply(aiuNo);
@@ -232,7 +230,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                         if (log.isDebugEnabled()) {
                             log.debug("queueing poll request for AIU " + aiuNo);
                         }
-                        tc.sendNceMessage(m, this);
+                        getMemo().getNceTrafficController().sendNceMessage(m, this);
                         awaitingReply = true;
                         try {
                             wait(pollTimeout);
