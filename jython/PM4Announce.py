@@ -129,7 +129,7 @@ jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get
 # If you take the default install options, then the command
 # line I inserted in the script will work for a Windows environment.
 # Step two is to set up PanelPro to run the Script everytime you start your Panel.
-# On PanelPro or Decoder Pro Screen  Select Edit - Preferences
+# On PanelPro or DecoderPro Screen  Select Edit - Preferences
 # Once the screen opens click the Show Advanced Preferences box
 # Scroll down to the run scripts at startup section - Click Add Script - scroll to where your
 # scripts are stored - On windows normally c:\Program Files\JMRI\Jython\your script name here.

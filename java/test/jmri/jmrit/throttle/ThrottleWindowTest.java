@@ -16,8 +16,9 @@ public class ThrottleWindowTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new ThrottleWindow();
+        JUnitUtil.initRosterConfigManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new ThrottleWindow();
         }
     }
 
