@@ -481,6 +481,9 @@ public class CbusEventTableAction {
         
     }
     
+    /**
+     * Saves table event data to the EventTableData.xml file
+     */
     protected void storeEventsToXml() {
         
         log.info("Saving event xml file");
