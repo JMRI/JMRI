@@ -182,6 +182,11 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     private boolean opened = false;
     InputStream serialStream = null;
 

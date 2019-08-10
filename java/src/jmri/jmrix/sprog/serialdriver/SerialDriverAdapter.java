@@ -205,6 +205,11 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     InputStream serialStream = null;
 
     /**

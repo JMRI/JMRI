@@ -169,6 +169,11 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
         return new int[]{19200};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     private boolean opened = false;
     InputStream serialStream = null;
 

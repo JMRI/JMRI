@@ -193,6 +193,11 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     /**
      * Set the baud rate. This currently does nothing, as there's only one
      * possible value

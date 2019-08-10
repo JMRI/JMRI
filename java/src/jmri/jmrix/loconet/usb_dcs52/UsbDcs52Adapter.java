@@ -39,12 +39,7 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validBaudNumbers().length; i++) {
-            if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumbers()[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -140,7 +135,7 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"57,600 baud"}; // NOI18N
+        return new String[]{"57,600 baud"}; // TODO I18N
     }
 
     /**
@@ -151,6 +146,11 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{57600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter

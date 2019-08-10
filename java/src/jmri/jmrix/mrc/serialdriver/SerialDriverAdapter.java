@@ -157,6 +157,11 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
         return new int[]{38400};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

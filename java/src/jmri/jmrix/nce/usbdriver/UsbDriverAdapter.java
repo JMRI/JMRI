@@ -57,13 +57,7 @@ public class UsbDriverAdapter extends NcePortController {
 
             // try to set it for communication via SerialDriver
             try {
-                // find the baud rate value, configure comm options
-                int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < validSpeeds.length; i++) {
-                    if (validSpeeds[i].equals(mBaudRate)) {
-                        baud = validSpeedValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
@@ -103,8 +97,8 @@ public class UsbDriverAdapter extends NcePortController {
 
     }
 
-    String[] option1Values = new String[]{"PowerCab", "SB3/SB3a", "Power Pro", "Twin", "SB5"};
-    String[] option2Values = new String[]{"V6.x.x", "V7.x.x"};
+    String[] option1Values = new String[]{"PowerCab", "SB3/SB3a", "Power Pro", "Twin", "SB5"}; // NOI18N
+    String[] option2Values = new String[]{"V6.x.x", "V7.x.x"}; // NOI18N
 
     /**
      * set up all of the other objects to operate with an NCE command station
@@ -249,6 +243,11 @@ public class UsbDriverAdapter extends NcePortController {
 
     private String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200")};
     private int[] validSpeedValues = new int[]{9600, 19200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

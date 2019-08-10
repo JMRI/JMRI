@@ -17,7 +17,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Acela system. This connects an Acela
- * interface to the CTI network via a serial comm port. Normally controlled by
+ * interface to the CTI network via a serial com port. Normally controlled by
  * the SerialDriverFrame class.
  * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
@@ -155,6 +155,11 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     public int[] validBaudNumbers() {
     // Only 9600 Baud for Acela
         return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // private control members

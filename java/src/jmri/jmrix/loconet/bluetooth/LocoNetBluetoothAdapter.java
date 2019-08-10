@@ -238,7 +238,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{""};
+        return new String[]{};
     }
 
     /**
@@ -246,7 +246,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
      */
     @Override
     public int[] validBaudNumbers() {
-        return new int[]{0};
+        return new int[]{};
     }
 
 }

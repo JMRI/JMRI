@@ -20,7 +20,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to LocoNet via a MS100 attached to a serial comm port.
+ * Provide access to LocoNet via a MS100 attached to a serial com port.
  * Normally controlled by the jmri.jmrix.loconet.ms100.ConnectionConfig class.
  * <p>
  * By default, this attempts to use 16600 baud. If that fails, it falls back to
@@ -187,6 +187,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     @Override
     public int[] validBaudNumbers() {
         return new int[]{16600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     /**

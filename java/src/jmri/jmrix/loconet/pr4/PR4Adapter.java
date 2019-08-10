@@ -11,8 +11,8 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
- * switch settings on the Digitrax PR4
+ * Override {@link jmri.jmrix.loconet.locobuffer.LocoBufferAdapter} so that it refers to the
+ * (switch) settings on the Digitrax PR4.
  * <p>
  * Based on PR3Adapter.java
  *
@@ -39,12 +39,7 @@ public class PR4Adapter extends LocoBufferAdapter {
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validBaudNumbers().length; i++) {
-            if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumbers()[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 

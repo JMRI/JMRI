@@ -111,12 +111,12 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
         }
 
-        //@Override
+        @Override
         public int[] validBaudNumbers() {
-            return null;
+            return new int[] {};
         }
 
         protected Dcc4PcPortControllerScaffold() throws Exception {
