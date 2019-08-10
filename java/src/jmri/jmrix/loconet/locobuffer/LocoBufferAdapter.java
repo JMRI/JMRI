@@ -21,7 +21,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
+ * Provide access to LocoNet via a LocoBuffer attached to a serial com port.
  * <p>
  * Normally controlled by the LocoBufferFrame class.
  *
@@ -269,6 +269,11 @@ public class LocoBufferAdapter extends LnPortController {
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200LB"), Bundle.getMessage("Baud57600LB")};
     protected int[] validSpeedValues = new int[]{19200, 57600};
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
@@ -289,7 +294,7 @@ public class LocoBufferAdapter extends LnPortController {
     private String[] packetizerOptions() {
         String[] retval = new String[packetizers.length];
         for (int i=0;i < packetizers.length; i++) {
-            retval[i]=packetizers[i][0];
+            retval[i] = packetizers[i][0];
         }
         return retval;
     }

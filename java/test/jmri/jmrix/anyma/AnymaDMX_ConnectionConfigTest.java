@@ -30,7 +30,7 @@ public class AnymaDMX_ConnectionConfigTest extends jmri.jmrix.AbstractUsbConnect
     @After
     @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 }

@@ -47,7 +47,7 @@ public class SerialDriverAdapter extends EasyDccPortController {
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -161,6 +161,11 @@ public class SerialDriverAdapter extends EasyDccPortController {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // private control members

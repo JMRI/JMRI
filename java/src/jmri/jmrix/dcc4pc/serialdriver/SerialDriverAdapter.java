@@ -184,6 +184,11 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         return new int[]{115200};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     InputStream serialStream = null;
 
     /**

@@ -25,7 +25,7 @@ public class MqttConnectionConfigTest extends jmri.jmrix.AbstractNetworkConnecti
     @After
     @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 }

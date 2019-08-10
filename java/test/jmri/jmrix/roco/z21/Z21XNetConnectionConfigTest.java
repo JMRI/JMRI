@@ -23,7 +23,7 @@ public class Z21XNetConnectionConfigTest extends jmri.jmrix.AbstractStreamConnec
     @After
     @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 
