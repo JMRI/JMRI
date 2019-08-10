@@ -49,8 +49,8 @@ public class CbusNodeSetupPaneTest {
         t = null;
     }
     
-    CanSystemConnectionMemo memo;
-    TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Before
     public void setUp() {

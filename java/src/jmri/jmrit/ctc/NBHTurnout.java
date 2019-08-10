@@ -39,8 +39,6 @@ public class NBHTurnout {
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
 //  The "thing" we're protecting:
     private final NamedBeanHandle<Turnout> _mNamedBeanHandleTurnout;
     private final boolean _mFeedbackDifferent;
@@ -48,7 +46,7 @@ public class NBHTurnout {
     public NBHTurnout(String module, String userIdentifier, String parameter, String turnout, boolean FeedbackDifferent) {
         Turnout tempTurnout = getSafeExistingJMRITurnout(module, userIdentifier, parameter, turnout);
         if (tempTurnout != null) {
-            _mNamedBeanHandleTurnout = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(turnout, tempTurnout);
+            _mNamedBeanHandleTurnout = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout, tempTurnout);
         } else {
             _mNamedBeanHandleTurnout = null;
         }
@@ -69,7 +67,7 @@ public class NBHTurnout {
     static private Turnout getExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(turnout)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            Turnout returnValue = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnout.trim());
+            Turnout returnValue = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnout);
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHTurnoutDoesNotExist") + " " + turnout); }    // NOI18N
             return returnValue;
         } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("RequiredTurnoutMissing")); }    // NOI18N

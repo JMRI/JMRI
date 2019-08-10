@@ -54,6 +54,7 @@ public class AudioTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Ignore("Audio table does not have Add... button")
+    @Override
     public void testAddButton() {
     }
 

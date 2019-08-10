@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.NamedBean.DisplayOptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,10 +107,8 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         String name;
         if (reporter == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (reporter.getUserName() != null) {
-            name = reporter.getUserName() + " (" + reporter.getSystemName() + ")";
         } else {
-            name = reporter.getSystemName();
+            name = reporter.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }

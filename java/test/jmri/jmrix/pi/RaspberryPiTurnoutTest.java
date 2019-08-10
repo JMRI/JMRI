@@ -25,6 +25,7 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         GpioProvider myprovider = new PiGpioProviderScaffold();

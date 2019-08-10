@@ -24,6 +24,7 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();

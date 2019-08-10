@@ -205,6 +205,7 @@ public class Layout implements VetoableChangeListener {
      * @param evt The scale ratio property change event.
      * @throws PropertyVetoException The message will depend on the actual error.
      */
+    @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         log.debug("scale change event: layout = {}, evt = {}", _layoutName, evt);
         double newRatio = (Double) evt.getNewValue();

@@ -17,7 +17,7 @@ class AutoActiveTrains_Simulator(jmri.jmrit.automat.AbstractAutomaton) :
 #   def init(self):
 
     def handle(self):
-        DF = jmri.jmrit.dispatcher.DispatcherFrame.instance()
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         trainsList=DF.getActiveTrainsList() #loop thru all trains
         if (trainsList.size() == 0): # kill the thread if no trains found TODO: add something outside to restart
             log.info("AutoActiveTrains_Simulator thread ended")

@@ -1,19 +1,25 @@
 package jmri.jmrix.loconet;
 
+import java.util.Map;
+import javax.annotation.Nonnull;
 import jmri.NmraPacket;
 import jmri.implementation.DccSignalMast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.SignalMast for signals implemented by an LNCP
+ * Extend jmri.SignalMast for signals implemented by an LNCP.
  * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.
  * <p>
- * This is a specific implementation for the RR-cirkits LNCP interface board A
- * more general implementation, which can work with any system(s), is available
+ * {@link #setAspect} does not immediately change the local aspect.  Instead, it produces
+ * the message on the network, waiting for that to return and do the local state change,
+ * notification, etc.
+ * <p>
+ * This is a specific implementation for the RR-cirkits LNCP interface board.
+ * A more general implementation, which can work with any system(s), is available
  * in {@link jmri.implementation.DccSignalMast}.
  *
  * @author Kevin Dickerson Copyright (C) 2002
@@ -22,14 +28,14 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     public LNCPSignalMast(String sys, String user) {
         super(sys, user, "F$lncpsm"); // NOI18N
-        packetRepeatCount = 1;
+        packetSendCount = 1;
         configureFromName(sys);
         init();
     }
 
     public LNCPSignalMast(String sys) {
         super(sys, null, "F$lncpsm"); // NOI18N
-        packetRepeatCount = 1;
+        packetSendCount = 1;
         configureFromName(sys);
         init();
     }
@@ -90,23 +96,24 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         if (myAddress(packet[0], packet[1])) {
             packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
             int aspect = packet[2];
-            for (String appearance : appearanceToOutput.keySet()) {
-                if (appearanceToOutput.get(appearance) == aspect) {
-                    setKnownState(appearance);
+            for (Map.Entry<String, Integer> entry : appearanceToOutput.entrySet()) {
+                if (entry.getValue() == aspect) {
+                    setKnownState(entry.getKey());
                     return;
                 }
             }
-            log.error("Aspect for id " + aspect + "on signal mast " + this.getDisplayName() + " not found");
+            log.error("Aspect for id {} on signal mast {} not found", aspect, this.getDisplayName());
         }
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
-            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
+            c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
-            log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
+            log.warn("Trying to set aspect ({}) that has not been configured on mast {}", aspect, getDisplayName());
         }
+        // super.setAspect(aspect); // see note in class description
     }
 
     public void setKnownState(String aspect) {
@@ -119,6 +126,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
+        super.dispose();
     }
 
     byte dccByteAddr1;
@@ -128,10 +136,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         if (a1 != dccByteAddr1) {
             return false;
         }
-        if (a2 != dccByteAddr2) {
-            return false;
-        }
-        return true;
+        return (a2 == dccByteAddr2);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class);

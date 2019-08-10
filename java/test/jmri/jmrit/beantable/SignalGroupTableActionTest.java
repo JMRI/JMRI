@@ -73,7 +73,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("user name", "TestGroup", _sGroupTable._userName.getText());
         _sGroupTable._systemName.setText("IF1");
         Assert.assertEquals("system name", "IF1", _sGroupTable._systemName.getText());
-        _sGroupTable.mainSignalComboBox.setSelectedBeanByName("VM1");
+        _sGroupTable.mainSignalComboBox.setSelectedItemByName("VM1");
         SignalGroup g = _sGroupTable.checkNamesOK();
         _sGroupTable.setValidSignalMastAspects();
         // add the head to the group:
@@ -101,6 +101,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -124,6 +125,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Test
     @Ignore("needs further setup")
     @ToDo("To Edit, the signal group needs a mast added to it")
+    @Override
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());

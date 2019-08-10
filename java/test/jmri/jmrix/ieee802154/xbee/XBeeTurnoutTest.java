@@ -81,7 +81,7 @@ public class XBeeTurnoutTest {
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("A");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "A"));
+        memo.setTurnoutManager(new XBeeTurnoutManager(memo));
         tc.setAdapterMemo(memo);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};

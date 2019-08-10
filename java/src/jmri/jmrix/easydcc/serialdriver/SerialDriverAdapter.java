@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends EasyDccPortController {
 
     public SerialDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial")); // pass customized user name
@@ -47,7 +47,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -147,11 +147,25 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 9,600 bps.
+     * {@inheritDoc}
+     * Currently only 9,600 bps.
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{Bundle.getMessage("Baud9600")};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // private control members

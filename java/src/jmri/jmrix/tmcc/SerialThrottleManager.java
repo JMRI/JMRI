@@ -1,7 +1,9 @@
 package jmri.jmrix.tmcc;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +30,17 @@ public class SerialThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        // the protocol doesn't require an interaction with the command
-        // station for this, so immediately trigger the callback.
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new throttle for {}", address);
-        notifyThrottleKnown(new SerialThrottle(_memo, address), address);
+        if (a instanceof DccLocoAddress ) {
+            // the protocol doesn't require an interaction with the command
+            // station for this, so immediately trigger the callback.
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new throttle for {}", address);
+            notifyThrottleKnown(new SerialThrottle(_memo, address), address);
+        }
+        else {
+            log.error("{} is not a DccLocoAddress",a);
+            failedThrottleRequest(a, "LocoAddress " +a+ " is not a DccLocoAddress");
+        }
     }
 
     /**
@@ -59,14 +67,13 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    /**
-     * @return current connection instance
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
+        /**
+     * What speed modes are supported by this system? value should be xor of
+     * possible modes specifed by the DccThrottle interface
      */
-    @Deprecated
-    static public SerialThrottleManager instance() {
-        log.warn("deprecated instance() call for TMCC SerialThrottleManager");
-        return null;
+    @Override
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.TMCC_32);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);

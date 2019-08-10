@@ -20,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class SimulatorAdapter extends MrcPortController implements
-        jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends MrcPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -101,12 +100,20 @@ public class SimulatorAdapter extends MrcPortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked"); // NOI18N
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override

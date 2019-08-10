@@ -2,8 +2,8 @@ package jmri.jmrix.ecos;
 
 import java.util.HashMap;
 import java.util.List;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -20,7 +20,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     private String _rosterId = null;
     private String _ecosProtocolString = null;
     private LocoAddress.Protocol _protocol = LocoAddress.Protocol.DCC;
-    private int _speedSteps = DccThrottle.SpeedStepMode128;
+    private SpeedStepMode _speedSteps = SpeedStepMode.NMRA_DCC_128;
     boolean direction;
     int currentSpeed;
     private boolean doNotAddToRoster = false;
@@ -174,7 +174,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     }
 
     //@TODO Need to udate this to return the new Protocol option from LocoAddress
-    public int getSpeedStepMode() {
+    public SpeedStepMode getSpeedStepMode() {
         return _speedSteps;
     }
 
@@ -193,13 +193,13 @@ public class EcosLocoAddress implements jmri.LocoAddress {
             _protocol = LocoAddress.Protocol.SELECTRIX;
         }
         if (protocol.endsWith("128")) {
-            _speedSteps = DccThrottle.SpeedStepMode128;
+            _speedSteps = SpeedStepMode.NMRA_DCC_128;
         } else if (protocol.endsWith("28")) {
-            _speedSteps = DccThrottle.SpeedStepMode28;
+            _speedSteps = SpeedStepMode.NMRA_DCC_28;
         } else if (protocol.endsWith("27")) {
-            _speedSteps = DccThrottle.SpeedStepMode27;
+            _speedSteps = SpeedStepMode.NMRA_DCC_27;
         } else if (protocol.endsWith("14")) {
-            _speedSteps = DccThrottle.SpeedStepMode14;
+            _speedSteps = SpeedStepMode.NMRA_DCC_14;
         }
     }
 

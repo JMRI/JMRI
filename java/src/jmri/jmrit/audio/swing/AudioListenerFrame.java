@@ -137,7 +137,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
+        String sName = sysName.getText();
         AudioListener l;
         try {
             l = (AudioListener) InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(sName);

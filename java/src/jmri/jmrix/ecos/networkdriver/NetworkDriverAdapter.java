@@ -7,14 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the ECOS system network connection.
+ * Implements NetworkPortAdapter for the ECOS system network connection.
  * <p>
  * This connects an ECOS command station via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  */
-public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter {
+public class NetworkDriverAdapter extends EcosPortController {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());

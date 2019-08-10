@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
- * <p>
- * Sensor system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -19,11 +17,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractSensor(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -95,18 +93,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         return useDefaultTimerSettings;
     }
     
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public void useDefaultTimerSettings(boolean boo) {
-        setUseDefaultTimerSettings(boo);
-    }
-    
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public boolean useDefaultTimerSettings() {
-        return getUseDefaultTimerSettings();
-    }
-
     protected Thread thr;
     protected Runnable r;
 

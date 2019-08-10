@@ -22,6 +22,7 @@ public class NceThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();

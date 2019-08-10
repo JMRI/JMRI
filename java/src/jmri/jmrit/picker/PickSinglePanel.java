@@ -33,6 +33,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _table.setCellSelectionEnabled(true);
         _table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 int row = getTable().getSelectedRow();
                 int col = getTable().getSelectedColumn(); // might be -1 if just inserted
@@ -120,7 +121,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
     }
 
     void addToTable() {
-        String sysname = _model.getManager().normalizeSystemName(_sysNametext.getText());
+        String sysname = _sysNametext.getText();
         if (sysname.length() > 1) {
             String uname = NamedBean.normalizeUserName(_userNametext.getText());
             if (uname != null && uname.trim().length() == 0) {

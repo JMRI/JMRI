@@ -19,22 +19,21 @@ import org.junit.Test;
 public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     @Override
-    public String getSystemName(int i){
-        return "PiT"+i;
+    public String getSystemName(int i) {
+        return l.getSystemPrefix() + "T" + i;
     }
 
+    @Test
+    public void ConstructorTest() {
+        Assert.assertNotNull(l);
+    }
 
-   @Test
-   public void ConstructorTest(){
-       Assert.assertNotNull(l);
-   }
+    @Test
+    public void checkPrefix() {
+        Assert.assertEquals("Prefix", "P", l.getSystemPrefix());
+    }
 
-   @Test
-   public void checkPrefix(){
-       Assert.assertEquals("Prefix","Pi",l.getSystemPrefix());
-   }
-
-    @Override    
+    @Override
     @Test
     public void testTurnoutPutGet() {
         // create
@@ -46,6 +45,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Turnout t = l.provide(getSystemName(20));
@@ -60,7 +60,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         // create
         Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -69,26 +69,26 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(16), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(16)));
+        Assert.assertNotNull("t1 real object returned ", t1);
+        Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
+        Assert.assertEquals("same by system ", t1, l.getBySystemName(getSystemName(16)));
 
         Turnout t2 = l.newTurnout(getSystemName(16), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2);
         // check
-        Assert.assertTrue("same new ", t1 == t2);
+        Assert.assertEquals("same new ", t1, t2);
     }
 
     @Override
     @Test
     public void testRename() {
         // get turnout
-        Turnout t1 = l.newTurnout(getSystemName(15),"before");
+        Turnout t1 = l.newTurnout(getSystemName(15), "before");
         Assert.assertNotNull("t1 real object ", t1);
         t1.setUserName("after");
         Turnout t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
     @Test
@@ -102,23 +102,20 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     protected int getNumToTest1() {
         return 19;
     }
- 
+
     @Override
     protected int getNumToTest2() {
         return 5;
     }
 
-
-
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-       JUnitUtil.setUp();
-       GpioProvider myprovider = new PiGpioProviderScaffold();
-       GpioFactory.setDefaultProvider(myprovider);
-       jmri.util.JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiTurnoutManager("Pi");
+        JUnitUtil.setUp();
+        GpioProvider myprovider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myprovider);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @After

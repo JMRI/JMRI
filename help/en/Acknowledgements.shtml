@@ -403,6 +403,9 @@
         "http://jmri.org/install/qsidriver/">great
         instructions</a>. <a name="F" id="F"></a></li>
 
+        <li>Jim Exler, <!-- jimexler -->
+        who fixed a Digitrax CV definition.
+        
         <li>Dave Falkenburg created the original DecoderPro
         application (and found the perfect name for it!) He created
         our Mac Classic and Mac OS X icons and worked on the
@@ -505,10 +508,12 @@
         <li>Sonny Hansen, who did a lot of work on the Danish
         translation</li>
 
-        <li>David Harris fixed some bugs in the Lenz decoder
+        <li>David Harris, 
+        who fixed some bugs in the Lenz decoder
         definitions</li>
 
-        <li>Matthew Harris, who provided instructions for
+        <li>Matthew Harris, 
+        who provided instructions for
         installing JMRI on EeePCs, updated the roster pane to work
         on small screens, improved handling of screen insets,
         provided a shutdown task, wrote our Windows installers,
@@ -523,7 +528,9 @@
         <li>Ian Havercroft, who provided the correct identification
         codes for ESU decoders</li>
 
-        <li>David Heap, who provided a QSI decoder fix
+        <li>David Heap, 
+        who has provided many updates for decoders, particularly
+        the difficult QSI and ESU decoders, 
         and improved how signal head aspects are supported.</li>
 
         <li>Rob Heikens, who created ESU decoder definitions and
@@ -531,6 +538,9 @@
 
         <li>Freek Heite, who located some important XpressNet
         info</li>
+
+        <li>Austin Hendrix, <!-- trainman419 -->
+        who improved the quality of the code and documentation.</li>
 
         <li>William Hipple, who registered the JMRI.org and
         DecoderPro.org domains for us</li>
@@ -1104,6 +1114,10 @@
 
         <li>Howard Watkins, who helped test the CBUS support and
         provide a sample script for Layout Editor</li>
+
+        <li>Todd Wegter, <!-- toddthetrainnut -->
+        who improved Bachrus speed matching.
+        </li>
 
         <li>Jim Wells, who created our logos and the great program
         icons</li>

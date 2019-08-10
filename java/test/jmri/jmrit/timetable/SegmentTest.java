@@ -2,6 +2,8 @@ package jmri.jmrit.timetable;
 
 import org.junit.*;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Tests for the Segment Class
  * @author Dave Sand Copyright (C) 2018
@@ -31,11 +33,12 @@ public class SegmentTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

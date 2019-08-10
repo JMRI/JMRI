@@ -26,6 +26,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +56,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
+    private final SystemConnectionMemo memo;
 
     private int settingTimer = 2000;
 
@@ -118,6 +121,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
@@ -246,8 +250,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    public SystemConnectionMemo getMemo() {
+        return memo;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        return memo.getSystemPrefix();
     }
 
     /** {@inheritDoc} */
@@ -260,30 +270,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @Override
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return always 'VALID'
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    /**
-     * Enforces, and as a user convenience converts to, the standard form for a system name
-     * for the NamedBeans handled by this manager.
-     *
-     * @param inputName System name to be normalized
-     * @throws NamedBean.BadSystemNameException If the inputName can't be converted to normalized form
-     * @return A system name in standard normalized form
-     */
-    @Override
-    @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
     }
 
     /** {@inheritDoc} */
@@ -344,7 +330,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      */
     @Override
     public SortedSet<DestinationPoints> getNamedBeanSet() {
-        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator());
+        TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
             List<String> uidList = e.getDestinationUniqueId();
             for (String uid : uidList) {
@@ -796,7 +782,10 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
                 for (int i = 0; i < lgx.getNumConditionals(); i++) {
                     String cdlName = lgx.getConditionalByNumberOrder(i);
                     jmri.implementation.DefaultConditional cdl = (jmri.implementation.DefaultConditional) lgx.getConditional(cdlName);
-                    String cdlUserName = (cdl.getUserName() == null) ? "" : cdl.getUserName();
+                    String cdlUserName = cdl.getUserName();
+                    if (cdlUserName == null) {
+                        cdlUserName = "";
+                    }
                     for (jmri.ConditionalVariable var : cdl.getStateVariableList()) {
                         if (var.getBean() == dPair.dp) {
                             String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
@@ -1418,21 +1407,23 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameTransit");  // NOI18N
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
     }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {
+    @Override
+    public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {
+    @Override
+    public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }
 
-    final List<ManagerDataListener> listeners = new ArrayList<>();
+    final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
     
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);

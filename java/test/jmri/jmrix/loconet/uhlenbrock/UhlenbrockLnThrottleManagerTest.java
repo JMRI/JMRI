@@ -25,6 +25,7 @@ public class UhlenbrockLnThrottleManagerTest extends jmri.managers.AbstractThrot
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();

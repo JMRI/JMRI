@@ -21,13 +21,13 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
+ * Provide access to LocoNet via a LocoBuffer attached to a serial com port.
  * <p>
  * Normally controlled by the LocoBufferFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
-public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+public class LocoBufferAdapter extends LnPortController {
 
     public LocoBufferAdapter() {
         this(new LocoNetSystemConnectionMemo());
@@ -244,24 +244,35 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         configureLeadsAndFlowControl(activeSerialPort, flow);
         
         log.info("LocoBuffer (serial) adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
+                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200LB"), Bundle.getMessage("Baud57600LB")};
     protected int[] validSpeedValues = new int[]{19200, 57600};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
@@ -283,7 +294,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     private String[] packetizerOptions() {
         String[] retval = new String[packetizers.length];
         for (int i=0;i < packetizers.length; i++) {
-            retval[i]=packetizers[i][0];
+            retval[i] = packetizers[i][0];
         }
         return retval;
     }

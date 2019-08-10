@@ -11,10 +11,10 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -25,8 +25,9 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    }
 
    @After
+   @Override
    public void tearDown(){
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
    }
 

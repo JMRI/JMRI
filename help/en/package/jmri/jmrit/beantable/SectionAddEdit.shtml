@@ -44,9 +44,7 @@
           letter should be "Y" to indicate a Section. This is
           usually followed by a number, but the program will accept
           any numeric or alphabetic characters. The system name
-          must be different from the System Name of other Sections.
-          JMRI will force all alphabetic characters in the System
-          Name to upper case.</p>
+          must be different from the System Name of other Sections.</p>
         </li>
 
         <li>

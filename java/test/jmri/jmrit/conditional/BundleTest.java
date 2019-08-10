@@ -15,13 +15,9 @@ public class BundleTest  {
         Assert.assertEquals("Row", Bundle.getMessage("ColumnLabelRow"));  // NOI18N
     }
 
-    @Test public void testBadKeyMessage() {
-        try {
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessage() {
             Bundle.getMessage("FFFFFTTTTTTT");  // NOI18N
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test public void testGoodKeyMessageArg() {
@@ -29,13 +25,9 @@ public class BundleTest  {
         Assert.assertEquals("Test \"test\" state is \"2\"", Bundle.getMessage("VarStateDescrpt", "Test", "test", "2"));  // NOI18N
     }
 
-    @Test public void testBadKeyMessageArg() {
-        try {
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessageArg() {
             Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});  // NOI18N
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");  // NOI18N
     }
 
     @Test public void testLocaleMessage() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 2 - Alain Le Marchand - for fw 3.10 -->
 <!-- version 1 - Ronald Kuhn - for fw 3.06 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Deceleration forward backward" CV="154" default="0">
@@ -7,13 +8,15 @@
      <label>Deceleration forward and backward</label>
      <label xml:lang="de">Bremsrampe vorwärts und rückwärts</label>
      <label xml:lang="ca">Desacceleració davant i darrere</label>
-    <tooltip xml:lang="de">&lt;html&gt;Eingestellt wird die Bremszeit aus höchster Fahrstufe in Sekunden,&lt;br&gt;bei kleineren Fahrstufen errechnet der Decoder die Bremsrampe selbstständig.&lt;/html&gt;</tooltip>
+    <tooltip>&lt;html&gt;If maximum speed step braking time is adjusted in seconds (times 8 from version 3.10),&lt;br&gt;at smaller speed steps the decoder generates the brake ramp independently.&lt;/html&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Eingestellt wird die Bremszeit aus höchster Fahrstufe in Sekunden (mal 8 von version 3.10),&lt;br&gt;bei kleineren Fahrstufen errechnet der Decoder die Bremsrampe selbstständig.&lt;/html&gt;</tooltip>
   </variable>
   <variable item="Deceleration backward" CV="155" default="0">
     <decVal/>
      <label>Deceleration backward</label>
      <label xml:lang="de">Bremsrampe rückwärts</label>
      <label xml:lang="ca">Rampa de deseccaleració enrere</label>
-     <tooltip xml:lang="de">&lt;html&gt;Ermöglicht unterschiedliche Bremszeiten&lt;br&gt;für vorwärts und rückwärts.&lt;/html&gt;</tooltip>
+     <tooltip>&lt;html&gt;Allows different brake times forward and backward.&lt;br&gt;0 = value from CV154 is used&lt;/html&gt;</tooltip>
+     <tooltip xml:lang="de">&lt;html&gt;Ermöglicht unterschiedliche Bremszeiten&lt;br&gt;für vorwärts und rückwärts.&lt;br&gt;0 = es wird der Wert aus CV154 genutzt&lt;/html&gt;</tooltip>
   </variable>
 </variables>

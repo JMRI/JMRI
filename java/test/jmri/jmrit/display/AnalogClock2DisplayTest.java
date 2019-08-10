@@ -61,6 +61,7 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         if (a != null) {
             a.dispose();

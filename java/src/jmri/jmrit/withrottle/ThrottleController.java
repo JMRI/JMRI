@@ -41,6 +41,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -451,7 +452,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                         break;
 
                     case 's':       //v>=2.0
-                        handleSpeedStepMode(Integer.parseInt(inPackage.substring(1)));
+                        handleSpeedStepMode(decodeSpeedStepMode(inPackage.substring(1)));
                         break;
 
                     case 'm':       //v>=2.0
@@ -755,7 +756,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     }
 
-    protected void handleSpeedStepMode(int newMode) {
+    protected void handleSpeedStepMode(SpeedStepMode newMode) {
         throttle.setSpeedStepMode(newMode);
     }
 
@@ -809,6 +810,25 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 break;
         }
 
+    }
+
+
+    private static SpeedStepMode decodeSpeedStepMode(String mode) {
+        // NOTE: old speed step modes use the original numeric values
+        // from when speed step modes were in DccThrottle. If the input does not match
+        // any of the old modes, decode based on the new speed step names.
+        if(mode.equals("1"))  {
+            return SpeedStepMode.NMRA_DCC_128;
+        } else if(mode.equals("2")) {
+            return SpeedStepMode.NMRA_DCC_28;
+        } else if(mode.equals("4")) {
+            return SpeedStepMode.NMRA_DCC_27;
+        } else if(mode.equals("8")) {
+            return SpeedStepMode.NMRA_DCC_14;
+        } else if(mode.equals("16")) {
+            return SpeedStepMode.MOTOROLA_28;
+        }
+        return SpeedStepMode.getByName(mode);
     }
 
     private final static Logger log = LoggerFactory.getLogger(ThrottleController.class);

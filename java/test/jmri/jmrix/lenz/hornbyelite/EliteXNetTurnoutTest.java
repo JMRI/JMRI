@@ -59,6 +59,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     }
 
     @Test
+    @Override
     public void checkIncoming() {
         t.setFeedbackMode(Turnout.MONITORING);
         jmri.util.JUnitUtil.waitFor(() -> {

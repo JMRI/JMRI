@@ -68,6 +68,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -469,19 +471,27 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public Color getBackgroundColor() {
-        TargetPane tmp = (TargetPane) _targetPanel;
-        return tmp.getBackgroundColor();
+        if (_targetPanel instanceof TargetPane) {
+            TargetPane tmp = (TargetPane) _targetPanel;
+            return tmp.getBackgroundColor();
+        } else {
+            return null;
+        }
     }
 
     public void setBackgroundColor(Color col) {
-        TargetPane tmp = (TargetPane) _targetPanel;
-        tmp.setBackgroundColor(col);
+        if (_targetPanel instanceof TargetPane) {
+            TargetPane tmp = (TargetPane) _targetPanel;
+            tmp.setBackgroundColor(col);
+        }
         JmriColorChooser.addRecentColor(col);
     }
 
     public void clearBackgroundColor() {
-        TargetPane tmp = (TargetPane) _targetPanel;
-        tmp.clearBackgroundColor();
+        if (_targetPanel instanceof TargetPane) {
+            TargetPane tmp = (TargetPane) _targetPanel;
+            tmp.clearBackgroundColor();
+        }
     }
 
     /**
@@ -1050,8 +1060,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 message = Bundle.getMessage("PanelCloseQuestion") + "\n"
                         + Bundle.getMessage("PanelCloseHelp");
             }
-            if (_targetPanel.getTopLevelAncestor() != null) {
-                name = ((JFrame) _targetPanel.getTopLevelAncestor()).getTitle();
+            Container ancestor = _targetPanel.getTopLevelAncestor();
+            if (ancestor instanceof JFrame) {
+                name = ((JFrame) ancestor).getTitle();
             }
             if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
                 int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
@@ -2208,6 +2219,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return result;
     }
 
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="iconEditor requested as exact type")
     SlipTurnoutIcon addSlip() {
         SlipTurnoutIcon result = new SlipTurnoutIcon(this);
         SlipIconAdder editor = (SlipIconAdder) getIconEditor("SlipTOEditor");
@@ -2402,6 +2414,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return result;
     }
 
+    @SuppressFBWarnings(value="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification="iconEditor requested as exact type")
     public MultiSensorIcon addMultiSensor() {
         MultiSensorIcon result = new MultiSensorIcon(this);
         MultiSensorIconAdder editor = (MultiSensorIconAdder) getIconEditor("MultiSensor");
@@ -2468,8 +2481,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public void setTitle() {
         String name = "";
-        if (_targetPanel.getTopLevelAncestor() != null) {
-            name = ((JFrame) _targetPanel.getTopLevelAncestor()).getTitle();
+        Container ancestor = _targetPanel.getTopLevelAncestor();
+        if (ancestor instanceof JFrame) {
+            name = ((JFrame) ancestor).getTitle();
         }
         if (name == null || name.equals("")) {
             super.setTitle(Bundle.getMessage("LabelEditor"));
@@ -2680,8 +2694,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void showToolTip(Positionable selection, MouseEvent event) {
         ToolTip tip = selection.getToolTip();
         String txt = tip.getText();
-        if (txt == null) {
-            tip.setText(selection.getNameString());
+        if (txt == null || txt.isEmpty()) {
+            return;
         }
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);

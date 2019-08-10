@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LearnThrottleFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -18,22 +18,22 @@ public class LearnThrottleFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
-           frame = new LearnThrottleFrame(wf);
+        JUnitUtil.initRosterConfigManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
+            frame = new LearnThrottleFrame(wf);
         }
     }
 
     @After
     @Override
     public void tearDown() {
-        if(wf !=null ) {
-           JUnitUtil.dispose(wf);
+        if (wf != null) {
+            JUnitUtil.dispose(wf);
         }
         wf = null;
         super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LearnThrottleFrameTest.class);
-
 }

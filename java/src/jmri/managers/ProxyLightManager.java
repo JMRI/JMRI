@@ -117,22 +117,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     /**
-     * Validate system name format. Locate a system specfic LightManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
-    }
-
-    /**
      * Validate system name against the hardware configuration Locate a system
      * specfic LightManager based on a system name.
      *
@@ -147,20 +131,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
             return ((LightManager) getMgr(i)).validSystemNameConfig(systemName);
         }
         return false;
-    }
-
-    /**
-     * Normalize a system name Locate a system specfic LightManager based on a
-     * system name. Returns "" if no manager exists. If a manager is found,
-     * return its determination of a normalized system name
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((LightManager) getMgr(i)).normalizeSystemName(systemName);
-        }
-        return "";
     }
 
     /**
@@ -225,8 +195,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLight");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
     }
 
 }

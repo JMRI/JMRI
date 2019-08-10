@@ -64,8 +64,9 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
        } else {
           Assert.assertEquals("port", Bundle.getMessage("noneSelected"), e.getAttribute("port").getValue());
        }
-       if(spc.getCurrentBaudRate()!=null) {
-          Assert.assertEquals("speed", spc.getCurrentBaudRate(), e.getAttribute("speed").getValue());
+       if(spc.getCurrentBaudNumber()!=null) {
+          Assert.assertEquals("speed", spc.getCurrentBaudNumber(), e.getAttribute("speed").getValue());
+          // speed is not stored as I18N formatted string but as int string
        } else {
           Assert.assertEquals("speed", Bundle.getMessage("noneSelected"), e.getAttribute("speed").getValue());
        }

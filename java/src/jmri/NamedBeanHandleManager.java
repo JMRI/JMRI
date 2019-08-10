@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,8 @@ import org.slf4j.LoggerFactory;
 public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
-        super();
+        // use Internal memo as connection for this manager
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
@@ -84,8 +86,8 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     public <T extends NamedBean> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
-         Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name
+         Although when we get a new bean we always return the first one that exists,
+         when a rename is performed it doesn't delete the bean with the old name;
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
@@ -201,12 +203,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
 
     @Override
     @CheckReturnValue
-    public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    @CheckReturnValue
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -265,8 +261,8 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
 
     @Override
     @CheckReturnValue
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanName");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);

@@ -153,7 +153,7 @@
     <enumChoice choice="Panto control" value="30">
         <choice>Panto control</choice>
     </enumChoice>
-    <enumChoiceGroup include="Essential Sound Unit,LokSound 5">
+    <enumChoiceGroup include="Essential Sound Unit,ESU LokSound 5">
         <enumChoice choice="PowerPack control" value="31">
             <choice>PowerPack control</choice>
         </enumChoice>

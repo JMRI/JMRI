@@ -18,12 +18,11 @@ package jmri.jmrit.vsdecoder;
  * 
  */
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class FloatTrigger extends Trigger implements PropertyChangeListener {
+class FloatTrigger extends Trigger {
 
     Float match_value;
     CompareType compare_type;

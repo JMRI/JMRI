@@ -12,7 +12,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
  * correctly with the IC-COM and Intellibox II on-board USB port. Note that the
  * jmri.jmrix.loconet.intellibox package is for the first version of Uhlenbrock
- * Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock is for the
+ * Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock) is for the
  * Intellibox II and the IB-COM.
  * <p>
  * Since this is by definition connected to an Intellibox II or IB-COM, the
@@ -33,11 +33,11 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
                 Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
-        configureBaudRate("Baud115200"); // Set the default baud rate (localized)
+        configureBaudRate(validSpeeds[3]); // Set the default baud rate (localized)
     }
 
     /**
-     * Set up all of the other objects to operate with a LocoBuffer connected to
+     * Set up all of the other objects to operate with an IB-II connected to
      * this port.
      */
     @Override
@@ -60,19 +60,25 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
-     *
-     * @return list of value baud rates
+     * {@inheritDoc}
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 3;
     }
 
     @Override
@@ -93,8 +99,8 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
 
         log.info("Uhlenbrock adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
+                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }

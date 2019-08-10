@@ -122,9 +122,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                 state--;
                 retry++;
                 value = lastValue;  // Restore the last good value. Needed for retries.
-            } else if (programmer.getMode() != ProgrammingMode.PAGEMODE
+            } else if (state == 1 && programmer.getMode() != ProgrammingMode.PAGEMODE
                     && programmer.getSupportedModes().contains(ProgrammingMode.PAGEMODE)) {
-                programmer.setMode(ProgrammingMode.PAGEMODE);
+                programmer.setMode(ProgrammingMode.PAGEMODE); // Try paged mode only if test1 (CV8)
                 retry = 0;
                 state--;
                 value = lastValue;  // Restore the last good value. Needed for retries.

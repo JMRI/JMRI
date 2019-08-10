@@ -23,7 +23,7 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
         Assert.assertNotNull("exists",tm);
     }
 
@@ -33,7 +33,7 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
         
         Turnout t = tm.provideTurnout("DT0");
         Assert.assertNotNull("exists",t);
@@ -46,7 +46,7 @@ public class DCCppTurnoutManagerTest {
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
 
-        DCCppTurnoutManager tm = new DCCppTurnoutManager(tc,memo.getSystemPrefix());
+        DCCppTurnoutManager tm = new DCCppTurnoutManager(memo);
         
         Turnout t = tm.provideTurnout("DT10");
         Assert.assertNotNull("exists",t);

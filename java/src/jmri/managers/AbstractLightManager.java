@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +17,15 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 public abstract class AbstractLightManager extends AbstractManager<Light>
-        implements LightManager, java.beans.PropertyChangeListener {
+        implements LightManager {
 
     /**
      * Create a new LightManager instance.
+     * 
+     * @param memo the system connection
      */
-    public AbstractLightManager() {
-        super();
+    public AbstractLightManager(SystemConnectionMemo memo) {
+        super(memo);
     }
 
     /** {@inheritDoc} */
@@ -45,17 +48,9 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light provideLight(@Nonnull String name) {
-        Light t = getLight(name);
-        if (t == null) {
-            if (name.startsWith(getSystemPrefix() + typeLetter())) {
-                return newLight(name, null);
-            } else if (name.length() > 0) {
-                return newLight(makeSystemName(name), null);
-            } else {
-                throw new IllegalArgumentException("\"" + name + "\" is invalid");
-            }
-        }
-        return t;
+        Light light = getLight(name);
+        // makeSystemName checks for validity
+        return light == null ? newLight(makeSystemName(name, true), null) : light;
     }
 
     /**
@@ -76,8 +71,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @CheckForNull
-    public Light getBySystemName(@Nonnull String name
-    ) {
+    public Light getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
@@ -86,8 +80,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @CheckForNull
-    public Light getByUserName(@Nonnull String key
-    ) {
+    public Light getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
@@ -100,12 +93,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         log.debug("newLight: {};{}",
                 ((systemName == null) ? "null" : systemName),
                 ((userName == null) ? "null" : userName));
-        // is system name in correct format?
-        if (validSystemNameFormat(systemName) != NameValidity.VALID) {
-            log.error("Invalid system name for newLight: {} needed {}{} followed by a suffix",
-                    systemName, getSystemPrefix(), typeLetter());
-            throw new IllegalArgumentException("\"" + systemName + "\" is invalid");
-        }
+        systemName = validateSystemNameFormat(systemName);
 
         // return existing if there is one
         Light s;
@@ -173,15 +161,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     @Nonnull
-    public String normalizeSystemName(@Nonnull String systemName) {
-        return systemName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return "";
     }
@@ -208,8 +187,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @return a string for the type of object handled by this manager
      */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLight");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
     }
 
     /**

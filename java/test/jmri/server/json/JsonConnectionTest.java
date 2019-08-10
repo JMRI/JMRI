@@ -65,8 +65,9 @@ public class JsonConnectionTest {
         Assert.assertNotEquals("Invalid message is not passed", invalid, baos.toString("UTF-8"));
         Assert.assertEquals("Invalid message is replaced with error", error, baos.toString("UTF-8"));
         baos.reset();
-        // suppress warnings from validating invalid message
+        // suppress warnings from validating invalid message (there are five)
         JUnitAppender.checkForMessageStartingWith("Errors validating");
+        JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
         JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
         JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
         JUnitAppender.checkForMessageStartingWith("JSON Validation Error");
