@@ -30,7 +30,7 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
     @After
     @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 

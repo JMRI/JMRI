@@ -177,6 +177,7 @@ public class MultiThrottleTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
         InstanceManager.setDefault(WiThrottlePreferences.class, new WiThrottlePreferences());
         JUnitUtil.initDebugThrottleManager();

@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintRosterEntryTest {
 
@@ -24,8 +24,8 @@ public class PrintRosterEntryTest {
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-DTD.xml"));
         r.setFileName("java/test/jmri/jmrit/roster/ACL1012-DTD.xml");
-        PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
-        Assert.assertNotNull("exists",t);
+        PrintRosterEntry t = new PrintRosterEntry(r, jf, "xml/programmers/Basic.xml");
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(jf);
     }
 
@@ -35,16 +35,16 @@ public class PrintRosterEntryTest {
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
         r.setFileName("java/test/jmri/jmrit/roster/ACL1012-Schema.xml");
-        PrintRosterEntry t = new PrintRosterEntry(r,jf,"xml/programmers/Basic.xml");
-        Assert.assertNotNull("exists",t);
+        PrintRosterEntry t = new PrintRosterEntry(r, jf, "xml/programmers/Basic.xml");
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -53,5 +53,4 @@ public class PrintRosterEntryTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintRosterEntryTest.class);
-
 }

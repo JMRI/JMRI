@@ -173,7 +173,7 @@ public class CbusAddress {
      * @param r CanReply being tested
      * @return true if matches
      */
-    boolean match(CanReply r) {
+    public boolean match(CanReply r) {
         if (r.getNumDataElements() != aFrame.length) {
             return false;
         }
@@ -219,6 +219,39 @@ public class CbusAddress {
             }
         } else {
             for (int i = 0; i < aFrame.length; i++) {
+                if (aFrame[i] != r.getElement(i)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Does the CbusAddress match a CanReply event request.
+     *
+     * @param r CanReply being tested
+     * @return true if matches
+     */
+    public boolean matchRequest(CanReply r) {
+        if (r.getNumDataElements() != aFrame.length) {
+            return false;
+        }
+        if (CbusMessage.isShort(r)) {
+            // Skip node number for short events
+            if (CbusConstants.CBUS_ASRQ != r.getElement(0)) {
+                return false;
+            }
+            for (int i = 3; i < aFrame.length; i++) {
+                if (aFrame[i] != r.getElement(i)) {
+                    return false;
+                }
+            }
+        } else {
+            if (CbusConstants.CBUS_AREQ != r.getElement(0)) {
+                return false;
+            }
+            for (int i = 1; i < aFrame.length; i++) {
                 if (aFrame[i] != r.getElement(i)) {
                     return false;
                 }

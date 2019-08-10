@@ -247,14 +247,19 @@ public interface Turnout extends DigitalIO {
     public void setTurnoutOperation(@Nullable TurnoutOperation toper);
 
     /**
-     * return the inverted state of the specified state
+     * Return the inverted state of the specified state
+     * Does NOT invert INCONSISTENT
      * @param inState the specified state
      * @return the inverted state
      */
     public static int invertTurnoutState(int inState) {
-        int result = CLOSED;
-        if (result == inState) {
+        int result = UNKNOWN;
+        if (inState == CLOSED) {
             result = THROWN;
+        } else if (inState == THROWN){
+            result = CLOSED;
+        } else if (inState == INCONSISTENT){
+            result = INCONSISTENT;
         }
         return result;
     }

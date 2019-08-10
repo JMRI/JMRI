@@ -84,7 +84,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public String getCurrentPortName() {
         if (mPort == null) {
             if (getPortNames() == null) {
-                // This shouldn't happen in normal operation
+                // this shouldn't happen in normal operation
                 // but in the tests this can happen if the receive thread has been interrupted
                 log.error("Port names returned as null");
                 return null;
@@ -105,7 +105,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *
      * @param serialPort Port to be updated
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}
-     * @param rts        Set RTS active if true
+     * @param rts        set RTS active if true
      * @param dtr        set DTR active if true
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
@@ -123,7 +123,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
+        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts); // not connected in some serial ports and adapters
         serialPort.setDTR(dtr);
     }
 
@@ -145,6 +145,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         mBaudRate = rate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void configureBaudRateFromNumber(String indexString) {
         int baudNum;
@@ -197,7 +200,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 log.debug("old format baud number: {}", indexString);
             }
         }
-        // fetch baud rate description from ValidBaudRates[] array copy and set
+        // fetch baud rate description from validBaudRates[] array copy and set
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] == baudNum) {
                 index = i;
@@ -209,21 +212,25 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         log.debug("mBaudRate set to: {}", mBaudRate);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void configureBaudIndex(int index) {
-        if ((validBaudNumbers() != null) && (validBaudNumbers().length > 0)) {
-            for (int i = 0; i < validBaudNumbers().length; i++) {
-                if (validBaudRates()[i].equals(mBaudRate)) {
-                    mBaudRate = validBaudRates()[i];
-                    break;
-                }
-            }
+    public void configureBaudRateFromIndex(int index) {
+        if (validBaudRates().length > index) {
+            mBaudRate = validBaudRates()[index];
+            log.debug("mBaudRate set by index to: {}", mBaudRate);
         } else {
             log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter, mBaudRate already null
         }
     }
 
     protected String mBaudRate = null;
+
+    @Override
+    public int defaultBaudIndex() {
+        return -1;
+    }
 
     /**
      * {@inheritDoc}
@@ -246,13 +253,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
             return "";
         }
-        // start with some value, not the default per se
-        // changed once the user explicitly opens the prefs connection config option details
         String baudNumString = "";
-        if (numbers.length > 0) {
-            baudNumString = Integer.toString(numbers[0]);
-        }
-        // find the configured baud rate value
+        // first try to find the configured baud rate value
         if (mBaudRate != null) {
             for (int i = 0; i < numbers.length; i++) {
                 if (rates[i].equals(mBaudRate)) {
@@ -260,7 +262,12 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                     break;
                 }
             }
+        } else if (defaultBaudIndex() > -1) {
+            // use default
+            baudNumString = Integer.toString(numbers[defaultBaudIndex()]);
+            log.debug("using default port speed {}", baudNumString);
         }
+        log.debug("mBaudRate = {}, matched to string {}", mBaudRate, baudNumString);
         return baudNumString;
     }
 
@@ -275,7 +282,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 }
             }
         }
-        return 0; // (none)
+        return defaultBaudIndex(); // default index or -1 if port speed not supported
     }
 
     /**

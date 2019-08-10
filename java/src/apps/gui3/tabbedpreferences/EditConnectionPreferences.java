@@ -81,7 +81,7 @@ public class EditConnectionPreferences extends AppConfigBase {
         this.dialog = dialog;
         
         /*
-         * Adds the place holders for the menu managedPreferences so that any managedPreferences add by
+         * Adds the place holders for the menu managedPreferences so that any managedPreferences added by
          * third party code is added to the end
          */
         preferencesArray.add(new PreferencesCatItems("CONNECTIONS", rb
