@@ -79,7 +79,7 @@ le d&#233;codeur install&#233; permettent la relecture des valeurs du  d&#233;co
 <input name="button" id="button" value="Lecture feuille compl&#232;te" type=" button">
 </strong>. Les r&#233;glages individuels seront rouge alors qu'ils sont en train 
 d'&#234;tre lu (intelligent, hein?) et deviendront blanc une fois que les valeurs auront &#233;t&#233; lues aves succ&#232;s 
-depuis le d&#233;codeur. Encore une fois, Decoder Pro doit poser "Vingt questions" pour 
+depuis le d&#233;codeur. Encore une fois, DecoderPro doit poser "Vingt questions" pour 
 obtenir cette information, et parfois m&#234;me doit demander &#224; une seconde fois.
   <p>
 Soyez patient, sp&#233;cialement avec les vieux ordinateurs. Dans la partie la plus basse du

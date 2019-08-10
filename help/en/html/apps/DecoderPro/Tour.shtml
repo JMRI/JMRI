@@ -217,7 +217,7 @@
               one CV. Another example is configuring a Soundtraxx
               decoder's mapping between functions and sounds. This
               involves bits and values spread across a dozen
-              different CVs, but Decoder Pro turns that
+              different CVs, but DecoderPro turns that
               configuration job into simple checking of boxes.</p>
 
               <p>Each selection box, checkbox or radiobutton is

@@ -192,6 +192,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 displayState(turnoutState());
             }
             setToolTip(new ToolTip(block.getDescription(), 0, 0));
+        } else {
+            setToolTip(new ToolTip(null, 0, 0));
         }
     }
 

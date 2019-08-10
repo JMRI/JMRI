@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import jmri.AddressedProgrammerManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
@@ -9,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * Test simple functioning of DccConsist
  *
@@ -17,13 +17,15 @@ import org.junit.Test;
  */
 public class DccConsistTest extends AbstractConsistTestBase {
 
-    @Test public void testCtor2() {
+    @Test
+    public void testCtor2() {
         // integer constructor test.
         DccConsist c = new DccConsist(12);
         Assert.assertNotNull(c);
     }
 
-    @Test public void testCtor3() {
+    @Test
+    public void testCtor3() {
         // integer constructor test.
         DccConsist c = new DccConsist(new DccLocoAddress(12, true));
         Assert.assertNotNull(c);
@@ -34,12 +36,13 @@ public class DccConsistTest extends AbstractConsistTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
-        c = new DccConsist(new DccLocoAddress(12, true), jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class, new ConsistPreferencesManager());
+        JUnitUtil.initDebugProgrammerManager();
+        c = new DccConsist(new DccLocoAddress(12, true), InstanceManager.getDefault(AddressedProgrammerManager.class));
     }
-   
+
     @After
     @Override
     public void tearDown() {

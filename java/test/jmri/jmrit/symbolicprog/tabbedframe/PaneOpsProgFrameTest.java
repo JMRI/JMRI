@@ -3,6 +3,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitUtil;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -33,15 +34,16 @@ public class PaneOpsProgFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugProgrammerManager();
         setupDoc();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // variables for the test XML structures

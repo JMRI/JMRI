@@ -1,4 +1,3 @@
-//  I put this comment in to trigger another CI run.  That's it.
 /*
 For this warning:
 Note: C:\Users\NetBeansJMRI\Documents\NetBeansProjects\CTCTest\src\packageTest\FrmMainForm.java uses unchecked or unsafe operations.
@@ -30,26 +29,17 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-// import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *
@@ -1159,11 +1149,10 @@ public class FrmMainForm extends JFrame {
                 _mCheckJMRIObject.analyzeClass(codeButtonHandlerData, errors);
             });
             if (!errors.isEmpty()) {
-                StringBuffer stringBuffer = new StringBuffer();
-                for (String error : errors) {
-                    stringBuffer.append(error);
-                    stringBuffer.append("\n");
-                }
+                StringBuilder stringBuffer = new StringBuilder();
+                errors.forEach((error) -> {
+                    stringBuffer.append(error).append("\n");
+                });
                 JOptionPane.showMessageDialog(this, stringBuffer.toString());
             }
         }

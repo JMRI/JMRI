@@ -304,13 +304,14 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case SOURCEAPPCOL:
                     case COMCOL:
                     case DESTAPPCOL:
-                    case MAXSPEEDCOL:
                         return String.class;
                     case ENABLECOL:
                         return Boolean.class;
                     case EDITLOGICCOL:
                     case DELCOL:
                         return JButton.class;
+                    case MAXSPEEDCOL:
+                        return Float.class;
                     default:
                         return null;
                 }
