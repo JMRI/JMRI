@@ -171,7 +171,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertEquals("new outputInterval in memo", 20, memo.getOutputInterval()); // direct set & get
         lnis.getSystemConnectionMemo().setOutputInterval(30);
         Assert.assertEquals("new outputInterval via tc", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // set & get via tc
-        lnis.getSystemConnectionMemo().setOutputInterval(40);
+        l.setOutputInterval("LT22", 40);
         Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("LT22")); // test method in manager
     }
 
