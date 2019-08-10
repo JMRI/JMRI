@@ -31,6 +31,7 @@ public class JsonClientHandlerTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(
                 new NullProfile("JsonClientHandlerTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

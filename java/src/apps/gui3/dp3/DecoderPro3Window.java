@@ -9,14 +9,14 @@ import jmri.jmrit.roster.swing.RosterFrame;
 public class DecoderPro3Window extends RosterFrame {
 
     /**
-     * Loads Decoder Pro 3 with the default set of menus and toolbars
+     * Loads DecoderPro 3 with the default set of menus and toolbars
      */
     public DecoderPro3Window() {
         super(Application.getApplicationName());
     }
 
     /**
-     * Loads Decoder Pro 3 with specific menu and toolbar files.
+     * Loads DecoderPro 3 with specific menu and toolbar files.
      *
      * @param menuFile XML file with menu structure
      * @param toolbarFile XML file with toolbar structure

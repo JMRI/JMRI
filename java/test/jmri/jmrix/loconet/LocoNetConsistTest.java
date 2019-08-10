@@ -111,6 +111,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();

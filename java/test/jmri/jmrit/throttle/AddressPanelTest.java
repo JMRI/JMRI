@@ -21,13 +21,13 @@ public class AddressPanelTest {
 
     @Before
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

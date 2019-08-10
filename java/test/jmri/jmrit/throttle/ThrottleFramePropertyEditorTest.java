@@ -29,6 +29,7 @@ public class ThrottleFramePropertyEditorTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

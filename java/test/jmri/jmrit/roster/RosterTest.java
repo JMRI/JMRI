@@ -2,7 +2,6 @@ package jmri.jmrit.roster;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -321,9 +320,8 @@ public class RosterTest {
     public void testDefaultLocation() {
         Assert.assertTrue("creates a default", Roster.getDefault() != null);
         Assert.assertEquals("always same", Roster.getDefault(), Roster.getDefault());
-
-        // since we created it when we referenced it, should be in InstanceManager
-        Assert.assertTrue("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class) != null);
+        // Default roster not stored in InstanceManager
+        Assert.assertNull("registered a default", jmri.InstanceManager.getNullableDefault(Roster.class));
     }
 
     @Test
@@ -408,6 +406,7 @@ public class RosterTest {
             // use the default reset.
             JUnitUtil.resetProfileManager();
         }
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

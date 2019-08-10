@@ -2,7 +2,6 @@ package apps;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.ShutDownManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
