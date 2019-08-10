@@ -189,6 +189,11 @@ public class MS100Adapter extends LnPortController {
         return new int[]{16600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     /**
      * Set the second port option. Only to be used after construction, but
      * before the openPort call

@@ -47,7 +47,7 @@ public class GcSerialDriverAdapter extends GcPortController {
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
                 int baud = currentBaudNumber(mBaudRate);

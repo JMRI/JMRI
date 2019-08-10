@@ -192,6 +192,11 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     /**
      * {@inheritDoc}
      * This currently does nothing, as there's only one
