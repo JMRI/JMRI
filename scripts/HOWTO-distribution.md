@@ -431,9 +431,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.3+Re9dde08.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.3/JMRI.4.17.3+Re9dde08.dmg) | 7b42a549476c8af8b109e568eb77eecbddc730433bfade208559d7f88271b8d2
-[JMRI.4.17.3+Re9dde08.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.3/JMRI.4.17.3+Re9dde08.exe) | d8215c1b1051c591e43306d7f250170ceb0e3e3c428677cf567c8b05a9ad30a5
-[JMRI.4.17.3+Re9dde08.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.3/JMRI.4.17.3+Re9dde08.tgz) | 8248b66466b063e5b9b0e0c3e989aae57f265712554516e501f107137ec1ce9e
+[JMRI.4.17.3+R12d2ded.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.3/JMRI.4.17.3+R12d2ded.dmg) | cafed6ba6c104edbc9ab2cbb61e3d5ffae8d18f2fd1a786130510a602025fcd6
+[JMRI.4.17.3+R12d2ded.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.3/JMRI.4.17.3+R12d2ded.exe) | 7786d7b6e86ca84aaf53f975ee16a083fee908d1de26957a0653d7c644636a1f
+[JMRI.4.17.3+R12d2ded.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.3/JMRI.4.17.3+R12d2ded.tgz) | 60e6643df875ff2a1fc553059adbd112e813c1a1390411bc502b32978a751518
+
 
 
 ```
@@ -489,7 +490,7 @@ This is the next release in the 4.16 cycle. It's intended to be created around (
 
 - Confirm that the tag for the current release (v4.17.3 for release 4.17.3) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.17.3) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
-- Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
+- Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from pending items
 
 - If this is a production release, update the "Downloads" badge in the JMRI/JMRI README.md file in the JMRI and website repositories and commit back.
 
