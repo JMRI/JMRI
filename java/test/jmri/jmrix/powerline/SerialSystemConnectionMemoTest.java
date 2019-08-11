@@ -35,11 +35,12 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
           public void receiveLoop(){
           }
        });
+       memo.getTrafficController().setAdapterMemo(memo); // indirect way to link the two and prevent an NPE
        memo.setSerialAddress(new SerialAddress(memo));
        memo.setTurnoutManager(new SerialTurnoutManager(memo.getTrafficController()));
        memo.setLightManager(new SerialLightManager(memo.getTrafficController()){
           @Override
-          protected jmri.Light createNewSpecificLight(String systemName,String userName){ 
+          protected jmri.Light createNewSpecificLight(String systemName, String userName){
              return null;
           }
        });
@@ -49,7 +50,6 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
           }
        });
        scm = memo;
-       memo.getTrafficController().setAdapterMemo(memo); // indirect way to link the two and prevent an NPE
     }
 
     @Override
