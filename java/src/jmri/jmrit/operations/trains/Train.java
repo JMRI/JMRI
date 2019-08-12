@@ -2167,14 +2167,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Returns a formated string providing the train's description. {0} = lead
-     * engine number, {1} = train's departure direction {2} = lead engine road.
+     * engine number, {1} = train's departure direction {2} = lead engine road
+     * {3} = DCC address of lead engine.
      *
      * @return The train's description.
      */
     public String getDescription() {
         String description
                 = MessageFormat.format(_description, new Object[]{getLeadEngineNumber(), getTrainDepartsDirection(),
-            getLeadEngineRoadName()});
+            getLeadEngineRoadName(), getLeadEngineDccAddress()});
         return description;
     }
 
@@ -3379,6 +3380,13 @@ public class Train implements java.beans.PropertyChangeListener {
             return NONE;
         }
         return getLeadEngine().toString();
+    }
+    
+    public String getLeadEngineDccAddress() {
+        if (getLeadEngine() == null) {
+            return NONE;
+        }
+        return getLeadEngine().getDccAddress();
     }
 
     /**
