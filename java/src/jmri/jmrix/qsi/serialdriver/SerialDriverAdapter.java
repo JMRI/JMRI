@@ -50,7 +50,7 @@ public class SerialDriverAdapter extends QsiPortController {
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -167,6 +167,11 @@ public class SerialDriverAdapter extends QsiPortController {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{19200};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     private boolean opened = false;

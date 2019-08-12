@@ -197,7 +197,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         log.debug("loading {} ...", url);
         try {
             if (url == null
-                    || (new File(url.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
+                    || (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)
                     || (new File(url.toURI())).getName().equals(Profile.CONFIG)) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 List<PreferencesManager> providers = new ArrayList<>(InstanceManager.getList(PreferencesManager.class));
@@ -247,7 +247,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                         }
                     }
                 }
-                if (url != null && (new File(url.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
+                if (url != null && (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)) {
                     log.debug("Loading legacy configuration...");
                     return this.legacy.load(url, registerDeferred);
                 }

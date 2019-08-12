@@ -74,6 +74,7 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         _memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         _memo.setEasyDccTrafficController(new EasyDccTrafficControlScaffold(_memo));

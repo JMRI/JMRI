@@ -266,6 +266,7 @@ public class MultiThrottleControllerTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initRosterConfigManager();
         cis = new ControllerInterfaceScaffold();
         tcls = new ThrottleControllerListenerScaffold();
         controller = new MultiThrottleController('A',"test",tcls,cis);

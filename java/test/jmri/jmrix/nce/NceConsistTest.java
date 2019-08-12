@@ -94,6 +94,7 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         // prepare an interface
         nnis = new NceInterfaceScaffold();

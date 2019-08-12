@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
@@ -39,7 +41,9 @@ public class JsonRosterSocketServiceTest {
 
         connection = new JsonMockConnection((DataOutputStream) null);
 
-        InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.getDefault(RosterConfigManager.class).setRoster(ProfileManager.getDefault().getActiveProfile(),
+                new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
         connection = new JsonMockConnection((DataOutputStream) null);
     }
 

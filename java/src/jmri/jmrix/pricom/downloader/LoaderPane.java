@@ -55,7 +55,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     PdiFile pdiFile;
 
-    // populate the comm port part of GUI, invoked as part of startup
+    // populate the com port part of GUI, invoked as part of startup
     protected void addCommGUI() {
         // load the port selection part
         portBox.setToolTipText(Bundle.getMessage("TipSelectPort"));

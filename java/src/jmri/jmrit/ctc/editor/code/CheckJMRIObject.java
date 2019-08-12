@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
-import jmri.TurnoutManager;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 
@@ -26,12 +23,6 @@ import jmri.jmrit.ctc.editor.gui.FrmMainForm;
  *
  */
 public class CheckJMRIObject {
-    private static final SensorManager SENSOR_MANAGER = InstanceManager.sensorManagerInstance();
-    private static final TurnoutManager TURNOUT_MANAGER = InstanceManager.turnoutManagerInstance(); //????
-    private static final SignalHeadManager SIGNAL_HEAD_MANAGER = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-    private static final SignalMastManager SIGNAL_MAST_MANAGER = InstanceManager.getDefault(jmri.SignalMastManager.class);
-    private static final BlockManager BLOCK_MANAGER = InstanceManager.getDefault(BlockManager.class);
-    private static final FrmMainForm MAIN_FORM = InstanceManager.getDefault(FrmMainForm.class);
 
 //  Putting these strings ANYWHERE in a string variable definition (with EXACT case!)
 //  will cause this routine to try to validate it against JMRI Simple Server:
@@ -192,20 +183,20 @@ public class CheckJMRIObject {
     }
 
     private boolean lowLevelCheck(OBJECT_TYPE objectType, String JMRIObjectName) {
-        if (!MAIN_FORM._mPanelLoaded) return true;
+        if (!InstanceManager.getDefault(FrmMainForm.class)._mPanelLoaded) return true;
         switch(objectType) {
             case SENSOR:
-                if (SENSOR_MANAGER.getSensor(JMRIObjectName) != null) return true;
+                if (InstanceManager.sensorManagerInstance().getSensor(JMRIObjectName) != null) return true;
                 break;
             case TURNOUT:
-                if (TURNOUT_MANAGER.getTurnout(JMRIObjectName) != null) return true;
+                if (InstanceManager.turnoutManagerInstance().getTurnout(JMRIObjectName) != null) return true;
                 break;
             case SIGNAL:
-                if (SIGNAL_HEAD_MANAGER.getSignalHead(JMRIObjectName) != null) return true; // Try BOTH:
-                if (SIGNAL_MAST_MANAGER.getSignalMast(JMRIObjectName) != null) return true;
+                if (InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(JMRIObjectName) != null) return true; // Try BOTH:
+                if (InstanceManager.getDefault(SignalMastManager.class).getSignalMast(JMRIObjectName) != null) return true;
                 break;
             case BLOCK:
-                if (BLOCK_MANAGER.getBlock(JMRIObjectName) != null) return true;
+                if (InstanceManager.getDefault(BlockManager.class).getBlock(JMRIObjectName) != null) return true;
                 break;
             default:
                 break;

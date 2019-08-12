@@ -18,8 +18,8 @@ import jmri.implementation.AbstractSignalMast;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
-    static HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<NBHAbstractSignalCommon>();
-    public static void resetSignalsUsed() { _mSignalsUsed = new HashSet<NBHAbstractSignalCommon>(); }
+    static final HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<>();
+    public static void resetSignalsUsed() { _mSignalsUsed.clear(); }
     private NBHSensor _mLeftSensor;
     private NBHSensor _mNormalSensor;
     private NBHSensor _mRightSensor;

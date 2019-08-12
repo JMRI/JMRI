@@ -29,7 +29,7 @@
       <h1>Utilisation du Compteur JMRI avec NCE</h1>
 
       <h2>Installation</h2>La fonction compteur de vitesse au sein
-      de Decoder Pro est utilis&eacute;e pour mesurer la vitesse
+      de DecoderPro est utilis&eacute;e pour mesurer la vitesse
       d'un train &agrave; l'&eacute;chelle. Une fois que tout est
       configur&eacute;, la vitesse est automatiquement
       calcul&eacute;e en fonction des mouvements de la machine
@@ -50,7 +50,7 @@
       d'entr&eacute;e auxiliaire) fabriqu&eacute;e aussi par NCE.
       L'AIU a besoin d'&ecirc;tre connect&eacute;e avec le bus cab.
       Une fois que l'AIU est connect&eacute;e au bus cab, et donc
-      &agrave; la Centrale, Decoder Pro fait le reste.</p>
+      &agrave; la Centrale, DecoderPro fait le reste.</p>
 
       <p>La voie utilis&eacute;e doit &ecirc;tre reli&eacute;e
       &agrave; la ligne principale depuis le syst&egrave;me NCE. Ne

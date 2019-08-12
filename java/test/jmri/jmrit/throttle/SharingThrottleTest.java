@@ -1,14 +1,11 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
-import jmri.util.swing.JemmyUtil;
 import org.junit.*;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * Test sharing functionality of ThrottleFrame
@@ -89,6 +86,7 @@ public class SharingThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         // these tests use the SharingThrottleManager.
         jmri.ThrottleManager m = new jmri.managers.SharingThrottleManager();
         jmri.InstanceManager.setThrottleManager(m);

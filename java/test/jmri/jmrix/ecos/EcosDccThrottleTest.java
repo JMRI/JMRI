@@ -411,6 +411,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     public static void earlySetup() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo();
         tc = new EcosInterfaceScaffold();
@@ -418,7 +419,6 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         tc.setAdapterMemo(memo);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

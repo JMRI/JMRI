@@ -127,6 +127,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
         add(_bottom1Panel);
+        _initialized = true;
     }
 
     /**
@@ -811,9 +812,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
     
     protected void showIcons() {
-        if (log.isDebugEnabled()) {
-            log.debug("showIcons for= {}, {}", _itemType, _family);
-        }
         boolean isPalette = (_paletteFrame instanceof ItemPalette); 
         Dimension totalDim;
         if (isPalette) {
@@ -834,6 +832,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         } else {
             _previewPanel.setVisible(true);
             _previewPanel.invalidate(); // force redraw
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("showIcons for= {}, {}. oldDim= ({}, {}) totalDim= ({}, {})",
+                    _itemType, _family, oldDim.width, oldDim.height, totalDim.width, totalDim.height);
         }
         reSizeDisplay(isPalette, oldDim, totalDim);
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
