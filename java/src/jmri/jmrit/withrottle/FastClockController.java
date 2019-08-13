@@ -50,7 +50,7 @@ public class FastClockController extends AbstractController {
         
         isValid = true;
         
-        updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
+        updateMinsSetpoint((short)(fastClock.userGetRate() * UPDATE_MINUTES));
         setReSyncSetpoint();
         // request callback to update time
         fastClock.addMinuteChangeListener(minuteListener);
@@ -129,7 +129,11 @@ public class FastClockController extends AbstractController {
             }
         }
     }
-    
+
+    private static void updateMinsSetpoint(short newVal) {
+        updateMinsSetpoint = newVal;
+    }
+
     private void setReSyncSetpoint() {
         updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
     }
