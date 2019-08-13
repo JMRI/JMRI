@@ -119,7 +119,11 @@ public class Source implements PropertyChangeListener {
         }
     }
 
-    PointDetails getPoint() {
+    /**
+     * @since 4.17.4
+     * Making the source object available for scripting in Jython.
+     */
+    public PointDetails getPoint() {
         return pd;
     }
 
