@@ -120,7 +120,7 @@ public class FastClockController extends AbstractController {
             for (ControllerInterface listener : listeners) {
                 listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + fastClock.userGetRate());
             }
-            if (fastClock.getRun() == false) {
+            if (!fastClock.getRun()) {
                 //  Not running, send rate of 0
                 //  This will stop a running clock without changing stored rate
                 for (ControllerInterface listener : listeners) {
@@ -135,7 +135,7 @@ public class FastClockController extends AbstractController {
     }
 
     private void setReSyncSetpoint() {
-        updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
+        updateMinsSetpoint((short)(fastClock.userGetRate() * UPDATE_MINUTES));
     }
 
     // private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
