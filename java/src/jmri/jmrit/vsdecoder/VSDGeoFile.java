@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 import jmri.jmrit.XmlFile;
+import jmri.Scale;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
 import jmri.util.FileUtil;
@@ -42,6 +43,7 @@ public class VSDGeoFile extends XmlFile {
     private int num_issues;
     boolean geofile_ok;
     int num_setups;
+    Scale _layout_scale;
     float layout_scale;
     int check_time; // Time interval in ms for track following updates
 
@@ -88,12 +90,17 @@ public class VSDGeoFile extends XmlFile {
         // Get some layout parameters and route geometric data
         n = root.getChildText("layout-scale");
         if (n != null) {
-            layout_scale = Float.parseFloat(n);
+            _layout_scale = jmri.ScaleManager.getScale(n);
+            if (_layout_scale == null) {
+                _layout_scale = jmri.ScaleManager.getScale("N"); // default
+                log.info("{}: Element layout-scale '{}' unknown, defaulting to N", VSDGeoDataFileName, n); // NOI18N
+            }
         } else {
-            layout_scale = 160.0f; // default
-            log.info("{}: Element layout-scale missing. Default value {} used", VSDGeoDataFileName, layout_scale);
+            _layout_scale = jmri.ScaleManager.getScale("N"); // default
+            log.info("{}: Element layout-scale missing, defaulting to N", VSDGeoDataFileName); // NOI18N
         }
-        log.debug("layout-scale: {}", layout_scale);
+        layout_scale = (float) _layout_scale.getScaleRatio(); // Take this for further calculations
+        log.debug("layout-scale: {}, used for further calculations: {}", _layout_scale.toString(), layout_scale);
 
         n = root.getChildText("check-time");
         if (n != null) {
@@ -104,7 +111,6 @@ public class VSDGeoFile extends XmlFile {
             }
         } else {
             check_time = 2000; // default
-            log.info("{}: Element check-time missing. Default value {} used", VSDGeoDataFileName, check_time);
         }
         log.debug("check-time: {}", check_time);
 
