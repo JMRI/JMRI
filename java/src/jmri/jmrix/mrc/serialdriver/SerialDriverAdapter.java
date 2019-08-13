@@ -47,7 +47,7 @@ public class SerialDriverAdapter extends MrcPortController {
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD);
             } catch (UnsupportedCommOperationException e) {
@@ -146,7 +146,7 @@ public class SerialDriverAdapter extends MrcPortController {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"38,400 bps"};//IN18N
+        return new String[]{"38,400 bps"}; //IN18N
     }
 
     /**
@@ -155,6 +155,11 @@ public class SerialDriverAdapter extends MrcPortController {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{38400};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // private control members

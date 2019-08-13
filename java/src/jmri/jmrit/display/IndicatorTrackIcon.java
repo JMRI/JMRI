@@ -160,6 +160,8 @@ public class IndicatorTrackIcon extends PositionableIcon
             setStatus(block, block.getState());
             displayState(_status);
             setToolTip(new ToolTip(block.getDescription(), 0, 0));
+        } else {
+            setToolTip(new ToolTip(null, 0, 0));
         }
     }
 

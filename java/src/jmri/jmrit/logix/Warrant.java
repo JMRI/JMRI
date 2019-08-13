@@ -1082,6 +1082,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     fireRunStatus("SpeedChange", null, idx);
                     return ret;
                 default:
+                    return false;
             }
         }
         int state = runState;

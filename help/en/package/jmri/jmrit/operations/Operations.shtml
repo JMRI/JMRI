@@ -4892,6 +4892,15 @@
    select which automation you want to copy. Then press "Copy" and that should open a new automation
    window with a copy of the automation you selected.
 
+   <h5>Resume Automations</h5>
+   This tool will restart all automations that were running when the operation files were last
+   saved. The function is the same as pressing the "Resume" button for each automation in the Run
+   column of the main automation window. Note that for the program to detect that an automation was
+   running when the files were saved, the current action pointer must not be at the first action in
+   the automation, therefore it is recommended that you not use any of the "Wait for" actions as the
+   very first line item of an automation, instead use "Do Nothing" action followed by the needed "Wait for"
+   action.
+
    <p>This is the end of the automation section.</p>
 
    <a name="PrintSavedTrainManifests" id="PrintSavedTrainManifests"></a>

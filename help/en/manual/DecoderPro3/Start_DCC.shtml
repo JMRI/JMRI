@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Decoder Pro Manual: Getting Started</title><!-- Style -->
+  <title>DecoderPro Manual: Getting Started</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -67,7 +67,7 @@
       with very little memory, it can get very complex for those of
       us that are not on speaking terms with binary code.</p>
 
-      <p>Decoder Pro attempts to help overcome the inevitable
+      <p>DecoderPro attempts to help overcome the inevitable
       complexity of this system by providing a clear, usable, user
       friendly <span class="ACCENT">open source</span> software
       solution for programming these on-board decoders. Programming

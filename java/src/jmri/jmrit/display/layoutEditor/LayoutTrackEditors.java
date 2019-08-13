@@ -465,15 +465,10 @@ public class LayoutTrackEditors {
             panel1.add(turnoutNameLabel);
 
             // add combobox to select turnout
-            editLayoutTurnout1stTurnoutComboBox = new NamedBeanComboBox<>(
-                    InstanceManager.turnoutManagerInstance(),
-                    layoutTurnout.getTurnout(),
-                    DisplayOptions.DISPLAYNAME);
+            editLayoutTurnout1stTurnoutComboBox = new NamedBeanComboBox<>
+                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutTurnout1stTurnoutComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
             LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, false, true);
-
-            editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox));
-            // editLayoutTurnout1stTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
-            // editLayoutTurnout1stTurnoutComboBox.setDisabledColor(Color.red);
 
             panel1.add(editLayoutTurnout1stTurnoutComboBox);
             contentPane.add(panel1);
@@ -481,16 +476,10 @@ public class LayoutTrackEditors {
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
 
-            editLayoutTurnout2ndTurnoutComboBox = new NamedBeanComboBox<>(
-                    InstanceManager.turnoutManagerInstance(),
-                    layoutTurnout.getSecondTurnout(),
-                    DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, false);
-
-            editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
-                    layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout2ndTurnoutComboBox));
-            // editLayoutTurnout2ndTurnoutComboBox.setEnabledColor(Color.green.darker().darker());
-            // editLayoutTurnout2ndTurnoutComboBox.setDisabledColor(Color.red);
+            editLayoutTurnout2ndTurnoutComboBox = new NamedBeanComboBox<>
+                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutTurnout2ndTurnoutComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
+            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, true);
 
             editLayoutTurnout2ndTurnoutCheckBox.addActionListener((ActionEvent e) -> {
                 boolean additionalEnabled = editLayoutTurnout2ndTurnoutCheckBox.isSelected();
@@ -611,10 +600,20 @@ public class LayoutTrackEditors {
             contentPane.add(panel5);
         }
 
-        editLayoutTurnout1stTurnoutComboBox.setSelectedItem(layoutTurnout.getTurnout());
-
-        editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
         // Set up for Edit
+        editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
+
+        List<Turnout> currentTurnouts = new ArrayList<>();
+        currentTurnouts.add(layoutTurnout.getTurnout());
+        currentTurnouts.add(layoutTurnout.getSecondTurnout());
+
+        editLayoutTurnout1stTurnoutComboBox.setSelectedItem(layoutTurnout.getTurnout());
+        editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(
+                layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox, currentTurnouts));
+
+        editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
+                layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout2ndTurnoutComboBox, currentTurnouts));
+
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         editLayoutTurnoutBlockNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockName()));
         editLayoutTurnoutBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlock()));
@@ -956,40 +955,27 @@ public class LayoutTrackEditors {
             Container contentPane = editLayoutSlipFrame.getContentPane();
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
+            // Setup turnout A
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));  // NOI18N
             panel1.add(turnoutNameLabel);
-            editLayoutSlipTurnoutAComboBox = new NamedBeanComboBox<>(
-                    InstanceManager.turnoutManagerInstance(),
-                    layoutSlip.getTurnout(),
-                    DisplayOptions.DISPLAYNAME);
+            editLayoutSlipTurnoutAComboBox = new NamedBeanComboBox<>
+                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutSlipTurnoutAComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
             LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, false, true);
-
-            editLayoutSlipTurnoutAComboBox.addPopupMenuListener(
-                    layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutAComboBox));
-            // editLayoutSlipTurnoutAComboBox.setEnabledColor(Color.green.darker().darker());
-            // editLayoutSlipTurnoutAComboBox.setDisabledColor(Color.red);
-
             panel1.add(editLayoutSlipTurnoutAComboBox);
             contentPane.add(panel1);
 
+            // Setup turnout B
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
             JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));  // NOI18N
             panel1a.add(turnoutBNameLabel);
-
-            editLayoutSlipTurnoutBComboBox = new NamedBeanComboBox<>(
-                    InstanceManager.turnoutManagerInstance(),
-                    layoutSlip.getTurnoutB(),
-                    DisplayOptions.DISPLAYNAME);
+            editLayoutSlipTurnoutBComboBox = new NamedBeanComboBox<>
+                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutSlipTurnoutBComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
             LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, false, true);
-
-            editLayoutSlipTurnoutBComboBox.addPopupMenuListener(
-                    layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutBComboBox));
-            // editLayoutSlipTurnoutBComboBox.setEnabledColor(Color.green.darker().darker());
-            // editLayoutSlipTurnoutBComboBox.setDisabledColor(Color.red);
-
             panel1a.add(editLayoutSlipTurnoutBComboBox);
 
             contentPane.add(panel1a);
@@ -1079,8 +1065,18 @@ public class LayoutTrackEditors {
         editLayoutSlipHiddenBox.setSelected(layoutSlip.isHidden());
 
         // Set up for Edit
+        List<Turnout> currentTurnouts = new ArrayList<>();
+        currentTurnouts.add(layoutSlip.getTurnout());
+        currentTurnouts.add(layoutSlip.getTurnoutB());
+
         editLayoutSlipTurnoutAComboBox.setSelectedItem(layoutSlip.getTurnout());
+        editLayoutSlipTurnoutAComboBox.addPopupMenuListener(
+                layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutAComboBox, currentTurnouts));
+
         editLayoutSlipTurnoutBComboBox.setSelectedItem(layoutSlip.getTurnoutB());
+        editLayoutSlipTurnoutBComboBox.addPopupMenuListener(
+                layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutBComboBox, currentTurnouts));
+
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         editLayoutSlipBlockNameComboBox.setSelectedItem(bm.getBlock(layoutSlip.getBlockName()));
         editLayoutSlipBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlock()));
@@ -1656,6 +1652,8 @@ public class LayoutTrackEditors {
     private boolean editLayoutTurntableOpen = false;
     private boolean editLayoutTurntableNeedsRedraw = false;
 
+    private List<Turnout> turntableTurnouts = new ArrayList<>();
+
     /**
      * Edit a Turntable.
      */
@@ -1769,6 +1767,12 @@ public class LayoutTrackEditors {
     private void updateRayPanel() {
         for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
             editLayoutTurntableRayPanel.remove(comp);
+        }
+
+        // Create list of turnouts to be retained in the NamedBeanComboBox
+        turntableTurnouts.clear();
+        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
+            turntableTurnouts.add(rt.getTurnout());
         }
 
         editLayoutTurntableRayPanel.setLayout(new BoxLayout(editLayoutTurntableRayPanel, BoxLayout.Y_AXIS));
@@ -1925,13 +1929,13 @@ public class LayoutTrackEditors {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(top);
 
-            turnoutNameComboBox = new NamedBeanComboBox<>(
-                    InstanceManager.turnoutManagerInstance(),
-                    rayTrack.getTurnout(),
-                    DisplayOptions.DISPLAYNAME);
+            turnoutNameComboBox = new NamedBeanComboBox<>
+                    (InstanceManager.getDefault(TurnoutManager.class));
+            turnoutNameComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
             LayoutEditor.setupComboBox(turnoutNameComboBox, false, true);
             turnoutNameComboBox.setSelectedItem(rayTrack.getTurnout());
-
+            turnoutNameComboBox.addPopupMenuListener(
+                    layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox, turntableTurnouts));
             String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
             String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
             String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};

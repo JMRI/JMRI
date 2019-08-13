@@ -208,6 +208,7 @@ public class JsonThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugCommandStation();
         InstanceManager.store(new TestThrottleManager(), ThrottleManager.class);
     }

@@ -26,7 +26,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    @After
    @Override
    public void tearDown(){
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
    }
 
