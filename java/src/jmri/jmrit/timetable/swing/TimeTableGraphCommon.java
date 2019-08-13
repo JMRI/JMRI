@@ -303,19 +303,17 @@ public class TimeTableGraphCommon {
                     }
                     continue;
                 }
-
-                if (activeSeg) {
-                    if (stopSegmentId != _segmentId) {
-                        // No longer in active segment, do the end process
-                        setEnd(stop, true);
+                // activeSeg
+                if (stopSegmentId != _segmentId) {
+                    // No longer in active segment, do the end process
+                    setEnd(stop, true);
+                    break;
+                } else {
+                    drawLine(stop);
+                    if (_lastStop) {
+                        // At the end, do the end process
+                        setEnd(stop, false);
                         break;
-                    } else {
-                        drawLine(stop);
-                        if (_lastStop) {
-                            // At the end, do the end process
-                            setEnd(stop, false);
-                            break;
-                        }
                     }
                 }
             }
