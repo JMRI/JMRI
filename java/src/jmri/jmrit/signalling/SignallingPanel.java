@@ -1,7 +1,6 @@
 package jmri.jmrit.signalling;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.Box;
@@ -60,39 +58,38 @@ import org.slf4j.LoggerFactory;
  * Masts).
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @author Egbert Broerse Copyright (C) 2017, 2018
+ * @author Egbert Broerse Copyright (C) 2017, 2018, 2019
  */
 public class SignallingPanel extends JmriPanel {
 
-    NamedBeanComboBox<SignalMast> sourceMastBox;
-    NamedBeanComboBox<SignalMast> destMastBox;
-    JLabel fixedSourceMastLabel = new JLabel();
-    JLabel fixedDestMastLabel = new JLabel();
-    JLabel sourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")), JLabel.TRAILING);  // NOI18N
-    JLabel destMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DestMast")), JLabel.TRAILING);  // NOI18N
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
-    JButton updateButton = new JButton(Bundle.getMessage("UpdateLogicButton"));  // NOI18N
-    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));  // NOI18N
-    JCheckBox useLayoutEditor = new JCheckBox(Bundle.getMessage("UseLayoutEditorPaths"));  // NOI18N
-    JCheckBox useLayoutEditorTurnout = new JCheckBox(Bundle.getMessage("UseTurnoutDetails"));  // NOI18N
-    JCheckBox useLayoutEditorBlock = new JCheckBox(Bundle.getMessage("UseBlockDetails"));  // NOI18N
-    JCheckBox allowAutoMastGeneration = new JCheckBox(Bundle.getMessage("AllowAutomaticSignalMast"));  // NOI18N
-    JCheckBox lockTurnouts = new JCheckBox(Bundle.getMessage("LockTurnouts"));  // NOI18N
-    JButton sizer = new JButton("Sizer");  // NOI18N
+    private NamedBeanComboBox<SignalMast> sourceMastBox;
+    private NamedBeanComboBox<SignalMast> destMastBox;
+    private JLabel fixedSourceMastLabel = new JLabel();
+    private JLabel fixedDestMastLabel = new JLabel();
+    private static final JLabel sourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")), JLabel.TRAILING);  // NOI18N
+    private static final JLabel destMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DestMast")), JLabel.TRAILING);  // NOI18N
+    private static final JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
+    private static final JButton updateButton = new JButton(Bundle.getMessage("UpdateLogicButton"));  // NOI18N
+    private static final JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));  // NOI18N
+    private JCheckBox useLayoutEditor = new JCheckBox(Bundle.getMessage("UseLayoutEditorPaths"));  // NOI18N
+    private JCheckBox useLayoutEditorTurnout = new JCheckBox(Bundle.getMessage("UseTurnoutDetails"));  // NOI18N
+    private JCheckBox useLayoutEditorBlock = new JCheckBox(Bundle.getMessage("UseBlockDetails"));  // NOI18N
+    private JCheckBox allowAutoMastGeneration = new JCheckBox(Bundle.getMessage("AllowAutomaticSignalMast"));  // NOI18N
+    private JCheckBox lockTurnouts = new JCheckBox(Bundle.getMessage("LockTurnouts"));  // NOI18N
+    private static final JButton sizer = new JButton("Sizer");  // NOI18N
 
     // fields to store the items currently being configured
-    SignalMast sourceMast;
-    SignalMast destMast;
-    SignalMastLogic sml;
+    private SignalMast sourceMast;
+    private SignalMast destMast;
+    private SignalMastLogic sml;
 
-    SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
+    private static SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
+    private static jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
-    jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
-
-    JFrame jFrame;
+    private JFrame jFrame;
     
     // Size of the individual bean tables inside the shared pane
-    static final Dimension TABLESIZEPREFERRED = new Dimension(720, 200);
+    private static final Dimension TABLESIZEPREFERRED = new Dimension(720, 200);
     
     /**
      * Create an empty JPanel to configure a new Signal Mast Logic.
@@ -136,7 +133,7 @@ public class SignallingPanel extends JmriPanel {
             allowAutoMastGeneration.setSelected(sml.allowAutoMaticSignalMastGeneration(destMast));
             lockTurnouts.setSelected(sml.isTurnoutLockAllowed(destMast));
 
-            Float pathSpeed = sml.getMaximumSpeed(dest);
+            float pathSpeed = sml.getMaximumSpeed(dest);
             if (pathSpeed == 0.0f) {
                 mastSpeed.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathSpeed")) + " " + Bundle.getMessage("NoneSet"));  // NOI18N
             } else {
@@ -144,7 +141,7 @@ public class SignallingPanel extends JmriPanel {
                 if (speed != null) {
                     mastSpeed.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathSpeed")) + " " + speed);  // NOI18N
                 } else {
-                    mastSpeed.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathSpeed")) + " " + Float.toString(pathSpeed));  // NOI18N
+                    mastSpeed.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathSpeed")) + " " + pathSpeed);  // NOI18N
                 }
             }
         } else if (dest == null) {
@@ -258,7 +255,7 @@ public class SignallingPanel extends JmriPanel {
         // selection radiobuttons for All/Included items
         JPanel py = new JPanel();
         py.add(new JLabel(Bundle.getMessage("Show")));  // NOI18N
-        selGroup = new ButtonGroup();
+        ButtonGroup selGroup = new ButtonGroup();
         allButton = new JRadioButton(Bundle.getMessage("All"), true);  // NOI18N
         selGroup.add(allButton);
         py.add(allButton);
@@ -275,7 +272,7 @@ public class SignallingPanel extends JmriPanel {
                 }
             }
         });
-        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);  // NOI18N
+        JRadioButton includedButton = new JRadioButton(Bundle.getMessage("Included"), false);  // NOI18N
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener(new ActionListener() {
@@ -365,38 +362,29 @@ public class SignallingPanel extends JmriPanel {
         }
     }
 
-    JScrollPane _manualBlockScrollPane;
-    JScrollPane _autoBlockScrollPane;
-    JScrollPane _manualTurnoutScrollPane;
-    JScrollPane _manualSignalMastScrollPane;
-    JScrollPane _autoSignalMastScrollPane;
-    JScrollPane _autoTurnoutScrollPane;
-    JScrollPane _manualSensorScrollPane;
+    private JScrollPane _manualBlockScrollPane;
+    private JScrollPane _manualSignalMastScrollPane;
+    private JScrollPane _manualSensorScrollPane;
 
-    JPanel p2xc = null;
-    JPanel p2xt = null;
-    JPanel p2xs = null;
-    JPanel p2xm = null;
+    private BlockModel _blockModel;
+    private AutoBlockModel _autoBlockModel;
+    private List<ManualBlockList> _manualBlockList;
+    private List<AutoBlockList> _automaticBlockList = new ArrayList<AutoBlockList>();
 
-    BlockModel _blockModel;
-    AutoBlockModel _autoBlockModel;
-    List<ManualBlockList> _manualBlockList;
-    List<AutoBlockList> _automaticBlockList = new ArrayList<AutoBlockList>();
+    private TurnoutModel _turnoutModel;
+    private AutoTurnoutModel _autoTurnoutModel;
+    private List<ManualTurnoutList> _manualTurnoutList;
+    private List<AutoTurnoutList> _automaticTurnoutList = new ArrayList<AutoTurnoutList>();
 
-    TurnoutModel _turnoutModel;
-    AutoTurnoutModel _autoTurnoutModel;
-    List<ManualTurnoutList> _manualTurnoutList;
-    List<AutoTurnoutList> _automaticTurnoutList = new ArrayList<AutoTurnoutList>();
+    private SensorModel _sensorModel;
+    private List<ManualSensorList> _manualSensorList;
 
-    SensorModel _sensorModel;
-    List<ManualSensorList> _manualSensorList;
+    private SignalMastModel _signalMastModel;
+    private AutoMastModel _autoSignalMastModel;
+    private List<ManualSignalMastList> _manualSignalMastList;
+    private List<AutoSignalMastList> _automaticSignalMastList = new ArrayList<AutoSignalMastList>();
 
-    SignalMastModel _signalMastModel;
-    AutoMastModel _autoSignalMastModel;
-    List<ManualSignalMastList> _manualSignalMastList;
-    List<AutoSignalMastList> _automaticSignalMastList = new ArrayList<AutoSignalMastList>();
-
-    JPanel p2xb = new JPanel();
+    private JPanel p2xb = new JPanel();
 
     /**
      * Compose GUI for setting up Blocks tab for an SML.
@@ -404,7 +392,7 @@ public class SignallingPanel extends JmriPanel {
      * @return a JPanel containing the SML control blocks configuration
      *         interface
      */
-    JPanel buildBlocksPanel() {
+    private JPanel buildBlocksPanel() {
         JPanel blockPanel = new JPanel();
         blockPanel.setLayout(new BoxLayout(blockPanel, BoxLayout.Y_AXIS));
 
@@ -417,13 +405,9 @@ public class SignallingPanel extends JmriPanel {
         if ((sml != null) && (destMast != null)) {
             List<Block> blkList = sml.getAutoBlocks(destMast);
             _automaticBlockList = new ArrayList<AutoBlockList>(blkList.size());
-            Iterator<Block> iterBlk = blkList.iterator();
-            while (iterBlk.hasNext()) {
-                Block blk = iterBlk.next();
-
+            for (Block blk : blkList) {
                 AutoBlockList blockitem = new AutoBlockList(blk);
                 blockitem.setState(sml.getAutoBlockState(blk, destMast));
-
                 _automaticBlockList.add(blockitem);
             }
         }
@@ -475,7 +459,7 @@ public class SignallingPanel extends JmriPanel {
         blockPanel.add(p2xc);
         p2xc.setVisible(true);
 
-        ROW_HEIGHT = manualBlockTable.getRowHeight();
+        setRowHeight(manualBlockTable.getRowHeight());
         p2xcSpace.setVisible(false);
 
         JPanel p2xaSpace = new JPanel();
@@ -509,18 +493,18 @@ public class SignallingPanel extends JmriPanel {
         stateColumnA.setMinWidth(90);
         stateColumnA.setMaxWidth(100);
 
-        _autoBlockScrollPane = new JScrollPane(autoBlockTable);
+        JScrollPane _autoBlockScrollPane = new JScrollPane(autoBlockTable);
         p2xb.add(_autoBlockScrollPane, BorderLayout.CENTER);
         blockPanel.add(p2xb);
         p2xb.setVisible(true);
 
-        ROW_HEIGHT = autoBlockTable.getRowHeight();
+        setRowHeight(autoBlockTable.getRowHeight());
         p2xaSpace.setVisible(false);
 
         return blockPanel;
     }
 
-    JPanel p2xa = new JPanel();
+    private JPanel p2xa = new JPanel();
 
     /**
      * Compose GUI for setting up the Turnouts tab for an SML.
@@ -528,7 +512,7 @@ public class SignallingPanel extends JmriPanel {
      * @return a JPanel containing the SML control turnouts configuration
      *         interface
      */
-    JPanel buildTurnoutPanel() {
+    private JPanel buildTurnoutPanel() {
         JPanel turnoutPanel = new JPanel();
         turnoutPanel.setLayout(new BoxLayout(turnoutPanel, BoxLayout.Y_AXIS));
 
@@ -543,9 +527,7 @@ public class SignallingPanel extends JmriPanel {
         if ((sml != null) && (destMast != null)) {
             List<Turnout> turnList = sml.getAutoTurnouts(destMast);
             _automaticTurnoutList = new ArrayList<AutoTurnoutList>(turnList.size());
-            Iterator<Turnout> iterTurn = turnList.iterator();
-            while (iterTurn.hasNext()) {
-                Turnout turn = iterTurn.next();
+            for (Turnout turn : turnList) {
                 String systemName = turn.getSystemName();
                 String userName = turn.getUserName();
                 AutoTurnoutList turnitem = new AutoTurnoutList(systemName, userName);
@@ -554,7 +536,7 @@ public class SignallingPanel extends JmriPanel {
             }
         }
 
-        p2xt = new JPanel();
+        JPanel p2xt = new JPanel();
         JPanel p2xcSpace = new JPanel();
         p2xcSpace.setLayout(new BoxLayout(p2xcSpace, BoxLayout.Y_AXIS));
         p2xcSpace.add(new JLabel("XXX"));  // NOI18N
@@ -598,7 +580,7 @@ public class SignallingPanel extends JmriPanel {
         stateColumnC.setMinWidth(9 * Math.max(SET_TO_ANY.length(), SET_TO_CLOSED.length()) + 30);
         stateColumnC.setMaxWidth(stateColumnC.getMinWidth() + 10); // was fixed 100
         // remaining space is filled by UserName
-        _manualTurnoutScrollPane = new JScrollPane(manualTurnoutTable);
+        JScrollPane _manualTurnoutScrollPane = new JScrollPane(manualTurnoutTable);
         p2xt.add(_manualTurnoutScrollPane, BorderLayout.CENTER);
         turnoutPanel.add(p2xt);
         p2xt.setVisible(true);
@@ -637,7 +619,7 @@ public class SignallingPanel extends JmriPanel {
         stateColumnA.setMinWidth(90);
         stateColumnA.setMaxWidth(100);
 
-        _autoTurnoutScrollPane = new JScrollPane(autoTurnoutTable);
+        JScrollPane _autoTurnoutScrollPane = new JScrollPane(autoTurnoutTable);
         p2xa.add(_autoTurnoutScrollPane, BorderLayout.CENTER);
         turnoutPanel.add(p2xa);
         p2xa.setVisible(true);
@@ -654,7 +636,7 @@ public class SignallingPanel extends JmriPanel {
      * @return a JPanel containing the SML control sensors configuration
      *         interface
      */
-    JPanel buildSensorPanel() {
+    private JPanel buildSensorPanel() {
         JPanel sensorPanel = new JPanel();
         sensorPanel.setLayout(new BoxLayout(sensorPanel, BoxLayout.Y_AXIS));
 
@@ -666,7 +648,7 @@ public class SignallingPanel extends JmriPanel {
             _manualSensorList.add(new ManualSensorList(systemName, userName));
         }
 
-        p2xs = new JPanel();
+        JPanel p2xs = new JPanel();
         JPanel p2xsSpace = new JPanel();
         p2xsSpace.setLayout(new BoxLayout(p2xsSpace, BoxLayout.Y_AXIS));
         p2xsSpace.add(new JLabel("XXX"));  // NOI18N
@@ -720,7 +702,7 @@ public class SignallingPanel extends JmriPanel {
         return sensorPanel;
     }
 
-    JPanel p2xsm = new JPanel();
+    private JPanel p2xsm = new JPanel();
 
     /**
      * Compose GUI for setting up the Signal Masts tab for an SML.
@@ -728,7 +710,7 @@ public class SignallingPanel extends JmriPanel {
      * @return a JPanel containing the SML control signal masts configuration
      *         interface
      */
-    JPanel buildSignalMastPanel() {
+    private JPanel buildSignalMastPanel() {
         JPanel SignalMastPanel = new JPanel();
         SignalMastPanel.setLayout(new BoxLayout(SignalMastPanel, BoxLayout.Y_AXIS));
 
@@ -738,7 +720,7 @@ public class SignallingPanel extends JmriPanel {
             _manualSignalMastList.add(new ManualSignalMastList(m));
         }
 
-        p2xm = new JPanel();
+        JPanel p2xm = new JPanel();
         JPanel p2xmSpace = new JPanel();
         p2xmSpace.setLayout(new BoxLayout(p2xmSpace, BoxLayout.Y_AXIS));
         p2xmSpace.add(new JLabel("XXX"));  // NOI18N
@@ -817,7 +799,7 @@ public class SignallingPanel extends JmriPanel {
         stateColumnA.setMinWidth(90);
         stateColumnA.setMaxWidth(100);
 
-        _autoSignalMastScrollPane = new JScrollPane(autoMastTable);
+        JScrollPane _autoSignalMastScrollPane = new JScrollPane(autoMastTable);
         p2xsm.add(_autoSignalMastScrollPane, BorderLayout.CENTER);
         SignalMastPanel.add(p2xsm);
         p2xsm.setVisible(true);
@@ -836,7 +818,7 @@ public class SignallingPanel extends JmriPanel {
      *
      * @param e the event heard
      */
-    void updatePressed(ActionEvent e) {
+    private void updatePressed(ActionEvent e) {
         sourceMast = sourceMastBox.getSelectedItem();
         destMast = destMastBox.getSelectedItem();
         boolean smlPairAdded = false;
@@ -914,44 +896,48 @@ public class SignallingPanel extends JmriPanel {
         sml.setBlocks(hashBlocks, destMast);
 
         Hashtable<NamedBeanHandle<Turnout>, Integer> hashTurnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
-        for (int i = 0; i < _includedManualTurnoutList.size(); i++) {
-            String turnoutName = _includedManualTurnoutList.get(i).getDisplayName();
-            Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_includedManualTurnoutList.get(i).getDisplayName());
-            NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnoutName, turnout);
-            hashTurnouts.put(namedTurnout, _includedManualTurnoutList.get(i).getState());
+        for (ManualTurnoutList mtl : _includedManualTurnoutList) {
+            String turnoutName = mtl.getDisplayName();
+            Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+            if (turnout != null) {
+                NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnoutName, turnout);
+                hashTurnouts.put(namedTurnout, mtl.getState());
+            }
             // no specific value, just show the current turnout state as selection in comboBox.
             // for existing SML pair, will be updated to show present setting by editDetails()
         }
         sml.setTurnouts(hashTurnouts, destMast);
 
         Hashtable<NamedBeanHandle<Sensor>, Integer> hashSensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>();
-        for (int i = 0; i < _includedManualSensorList.size(); i++) {
-            String sensorName = _includedManualSensorList.get(i).getDisplayName();
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(_includedManualSensorList.get(i).getDisplayName());
-            NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sensor);
-            hashSensors.put(namedSensor, _includedManualSensorList.get(i).getState());
+        for (ManualSensorList msl : _includedManualSensorList) {
+            String sensorName = msl.getDisplayName();
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(msl.getDisplayName());
+            if (sensor != null) {
+                NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sensor);
+                hashSensors.put(namedSensor, msl.getState());
+            }
             // no specific value, just show the current sensor state as selection in comboBox.
             // for existing SML pair, will be updated to show present setting by editDetails()
         }
         sml.setSensors(hashSensors, destMast);
 
         Hashtable<SignalMast, String> hashSignalMasts = new Hashtable<SignalMast, String>();
-        for (int i = 0; i < _includedManualSignalMastList.size(); i++) {
-            if (_includedManualSignalMastList.get(i).getMast() == sourceMast || _includedManualSignalMastList.get(i).getMast() == destMast) {
+        for (ManualSignalMastList msml : _includedManualSignalMastList) {
+            if (msml.getMast() == sourceMast || msml.getMast() == destMast) {
                 // warn user that control mast is either source or destination mast of this pair, but allow as a valid choice
                 int mes = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(Bundle.getMessage("SignalMastCriteriaOwn"), // NOI18N
-                        new Object[]{_includedManualSignalMastList.get(i).getMast().getDisplayName()}),
+                        msml.getMast().getDisplayName()),
                         Bundle.getMessage("SignalMastCriteriaOwnTitle"), // NOI18N
                         JOptionPane.YES_NO_OPTION);
                 if (mes == 0) { // Yes
-                    hashSignalMasts.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
+                    hashSignalMasts.put(msml.getMast(), msml.getSetToState());
                 } else { // No
-                    _includedManualSignalMastList.get(i).setIncluded(false); // deselect "Included" checkBox for signal mast in manualSignalList
+                    msml.setIncluded(false); // deselect "Included" checkBox for signal mast in manualSignalList
                     initializeIncludedList();
                     _signalMastModel.fireTableDataChanged();
                 }
             } else {
-                hashSignalMasts.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
+                hashSignalMasts.put(msml.getMast(), msml.getSetToState());
             }
         }
         sml.setMasts(hashSignalMasts, destMast);
@@ -1012,39 +998,35 @@ public class SignallingPanel extends JmriPanel {
     /**
      * Create new lists of control items configured as part of an SML.
      */
-    void initializeIncludedList() {
-        _includedManualBlockList = new ArrayList<ManualBlockList>();
-        for (int i = 0; i < _manualBlockList.size(); i++) {
-            if (_manualBlockList.get(i).isIncluded()) {
-                _includedManualBlockList.add(_manualBlockList.get(i));
+    private void initializeIncludedList() {
+        _includedManualBlockList = new ArrayList<>();
+        for (ManualBlockList mbl : _manualBlockList) {
+            if (mbl.isIncluded()) {
+                _includedManualBlockList.add(mbl);
             }
         }
 
         if ((sml != null) && (destMast != null)) {
             List<Block> blkList = sml.getAutoBlocks(destMast);
             _automaticBlockList = new ArrayList<AutoBlockList>(blkList.size());
-            Iterator<Block> iter = blkList.iterator();
-            while (iter.hasNext()) {
-                Block blk = iter.next();
+            for (Block blk : blkList) {
                 AutoBlockList newABlk = new AutoBlockList(blk);
                 _automaticBlockList.add(newABlk);
                 newABlk.setState(sml.getAutoBlockState(blk, destMast));
             }
         }
 
-        _includedManualTurnoutList = new ArrayList<ManualTurnoutList>();
-        for (int i = 0; i < _manualTurnoutList.size(); i++) {
-            if (_manualTurnoutList.get(i).isIncluded()) {
-                _includedManualTurnoutList.add(_manualTurnoutList.get(i));
+        _includedManualTurnoutList = new ArrayList<>();
+        for (ManualTurnoutList mtl : _manualTurnoutList) {
+            if (mtl.isIncluded()) {
+                _includedManualTurnoutList.add(mtl);
             }
         }
 
         if ((sml != null) && (destMast != null)) {
             List<Turnout> turnList = sml.getAutoTurnouts(destMast);
             _automaticTurnoutList = new ArrayList<AutoTurnoutList>(turnList.size());
-            Iterator<Turnout> iter = turnList.iterator();
-            while (iter.hasNext()) {
-                Turnout turn = iter.next();
+            for (Turnout turn : turnList) {
                 String systemName = turn.getSystemName();
                 String userName = turn.getUserName();
                 AutoTurnoutList newAturn = new AutoTurnoutList(systemName, userName);
@@ -1070,9 +1052,7 @@ public class SignallingPanel extends JmriPanel {
         if ((sml != null) && (destMast != null)) {
             List<SignalMast> mastList = sml.getAutoMasts(destMast);
             _automaticSignalMastList = new ArrayList<AutoSignalMastList>(mastList.size());
-            Iterator<SignalMast> iter = mastList.iterator();
-            while (iter.hasNext()) {
-                SignalMast mast = iter.next();
+            for (SignalMast mast : mastList) {
                 AutoSignalMastList newAmast = new AutoSignalMastList(mast);
                 _automaticSignalMastList.add(newAmast);
                 newAmast.setState(sml.getAutoSignalMastState(mast, destMast));
@@ -1080,9 +1060,7 @@ public class SignallingPanel extends JmriPanel {
         }
     }
 
-    ButtonGroup selGroup = null;
-    JRadioButton allButton = null;
-    JRadioButton includedButton = null;
+    private JRadioButton allButton;
 
     private boolean showAll = true;   // false indicates show only included items
 
@@ -1097,6 +1075,10 @@ public class SignallingPanel extends JmriPanel {
 
     private static int ROW_HEIGHT;
 
+    private static void setRowHeight(int newHeight) {
+        ROW_HEIGHT = newHeight;
+    }
+
     /**
      * Cancels "Show Included Only" option
      */
@@ -1109,7 +1091,7 @@ public class SignallingPanel extends JmriPanel {
     /**
      * Fill in existing SML configuration on the edit panel
      */
-    void editDetails() {
+    private void editDetails() {
         int setRow = 0;
         for (int i = _manualBlockList.size() - 1; i >= 0; i--) {
             ManualBlockList block = _manualBlockList.get(i);
@@ -1258,9 +1240,10 @@ public class SignallingPanel extends JmriPanel {
         }
     }
 
-    /**
+    /*
      * A series of Lists to store all SML properties during Edit.
      */
+
     /**
      * A paired list of manually configurable Layout Blocks and a corresponding
      * Set To State used during edit of an SML.
@@ -1609,7 +1592,7 @@ public class SignallingPanel extends JmriPanel {
 
         public static final int SNAME_COLUMN = 0;
         public static final int UNAME_COLUMN = 1;
-        public static final int INCLUDE_COLUMN = 2;
+        static final int INCLUDE_COLUMN = 2;
         public static final int STATE_COLUMN = 3;
     }
 
@@ -1631,8 +1614,8 @@ public class SignallingPanel extends JmriPanel {
             }
         }
 
-        public static final int SPEED_COLUMN = 4;
-        public static final int PERMISSIVE_COLUMN = 5;
+        private static final int SPEED_COLUMN = 4;
+        private static final int PERMISSIVE_COLUMN = 5;
 
         @Override
         public int getColumnCount() {
@@ -2091,16 +2074,15 @@ public class SignallingPanel extends JmriPanel {
         Vector<String> getAspectVector(int row) {
             Vector<String> comboaspects = boxMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (comboaspects == null) {
-                // create a new one with right aspects
-                Vector<String> v = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                // create a new one with correct aspects
+                comboaspects = InstanceManager.getDefault(jmri.SignalMastManager.class)
                         .getSignalMast((String) this.getValueAt(row, SNAME_COLUMN)).getValidAspects();
-                comboaspects = v;
                 boxMap.put(this.getValueAt(row, SNAME_COLUMN), comboaspects); // and store it
             }
             return comboaspects;
         }
 
-        Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
+        private Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
 
         // end of methods to display STATE_COLUMN (Aspect) ComboBox
         
@@ -2177,8 +2159,8 @@ public class SignallingPanel extends JmriPanel {
             }
         }
 
-        public static final int SPEED_COLUMN = 3;
-        public static final int PERMISSIVE_COLUMN = 4;
+        static final int SPEED_COLUMN = 3;
+        static final int PERMISSIVE_COLUMN = 4;
 
         @Override
         public int getColumnCount() {
@@ -2328,4 +2310,5 @@ public class SignallingPanel extends JmriPanel {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignallingPanel.class);
+
 }
