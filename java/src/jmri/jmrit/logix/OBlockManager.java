@@ -15,7 +15,6 @@ import jmri.managers.AbstractManager;
  * use a Block member and inheritance). Perhaps now the proxyManager
  * strategy of interface/implementation pairs like other Managers should be
  * implemented.
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <p>

@@ -29,11 +29,9 @@ import org.slf4j.LoggerFactory;
  * sensor and the OBlock will pass state changes of the sensor on to its
  * warrant.
  * <p>
- * <p>
  * Entrances (exits when train moves in opposite direction) to OBlocks have
  * Portals. A Portal object is a pair of OBlocks. Each OBlock has a list of its
  * Portals.
- * <p>
  * <p>
  * When an OBlock (Detection Circuit) has a Portal whose entrance to the OBlock
  * has a signal, then the OBlock and its chains of adjacent OBlocks up to the
@@ -41,13 +39,10 @@ import org.slf4j.LoggerFactory;
  * "Block" in the sense of a prototypical railroad. Preferably all entrances to
  * the "Block" should have entrance Portals with a signal.
  * <p>
- * <p>
- * <p>
  * A Portal has a list of paths (OPath objects) for each OBlock it separates.
  * The paths are determined by the turnout settings of the turnouts contained in
  * the block. Paths are contained within the Block boundaries. Names of OPath
  * objects only need be unique within an OBlock.
- * <p>
  * <br>
  * <hr>
  * This file is part of JMRI.
