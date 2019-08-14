@@ -1864,12 +1864,13 @@ public class Train implements java.beans.PropertyChangeListener {
                             return true;
                         }
                         // check to see if train length is okay
-                        if (getStatusCode() == CODE_BUILDING
-                                && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
+                        if (getStatusCode() == CODE_BUILDING &&
+                                rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
                             setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
                                     new Object[]{getName(), getRoute().getName(), rldest.getId(),
                                             rldest.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
-                                            rldest.getName(), car.toString()}));
+                                            rldest.getName(), car.toString(),
+                                            rldest.getTrainLength() + length - rldest.getMaxTrainLength()}));
                             if (debugFlag) {
                                 log.debug("Car ("
                                         + car.toString()
