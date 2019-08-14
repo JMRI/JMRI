@@ -153,6 +153,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if (!allowUnLit() || newLit == getLit()) {
             return;
         }
+        super.setLit(newLit);
         if (newLit) {
             // This will force the signalmast to send out the commands to set the aspect again.
             setAspect(getAspect());
@@ -176,7 +177,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 }
             }
         }
-        super.setLit(newLit);
     }
 
     public String getTurnoutName(String appearance) {
