@@ -284,6 +284,7 @@ public class EcosLocoToRoster implements EcosListener {
         String[] lines = msg.split("\n");
         if (m.getResultCode() == 0) {
             // TODO use this if branch?
+            //
             //            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", cv[")) {
             //                startval = lines[0].indexOf("(") + 1;
             //                endval = (lines[0].substring(startval)).indexOf(",") + startval;

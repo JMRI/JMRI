@@ -170,6 +170,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         if (!allowUnLit() || newLit == getLit()) {
             return;
         }
+        super.setLit(newLit);
         if (newLit) {
             if (getAspect() != null) {
                 setAspect(getAspect());
@@ -181,7 +182,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 //c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, unLitId), packetRepeatCount);
             }
         }
-        super.setLit(newLit);
     }
 
     public void setUnLitBits(@Nonnull char[] bits) {
