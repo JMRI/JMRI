@@ -15,7 +15,6 @@ import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -30,7 +29,6 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -216,7 +214,7 @@ public class SignallingPanel extends JmriPanel {
                 useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
                 useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
                 // Setup for display of all Turnouts, if needed
-                boolean valid = false;
+                boolean valid;
                 if (useLayoutEditor.isSelected()) {
                     jFrame.pack();
                     if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
@@ -576,7 +574,7 @@ public class SignallingPanel extends JmriPanel {
                 getColumn(TurnoutModel.STATE_COLUMN);
         // stateColumnC.setCellEditor(new DefaultCellEditor(stateCCombo)); // moved to ManualTurnoutTable class
         stateColumnC.setResizable(false);
-        log.debug("L = " + SET_TO_ANY.length());
+        log.debug("L = {}", SET_TO_ANY.length());
         stateColumnC.setMinWidth(9 * Math.max(SET_TO_ANY.length(), SET_TO_CLOSED.length()) + 30);
         stateColumnC.setMaxWidth(stateColumnC.getMinWidth() + 10); // was fixed 100
         // remaining space is filled by UserName
@@ -831,7 +829,7 @@ public class SignallingPanel extends JmriPanel {
             return;
         }
         if ((sml == null) && (useLayoutEditor.isSelected())) {
-            boolean valid = false;
+            boolean valid;
             try {
                 valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
                         destMast, LayoutBlockConnectivityTools.MASTTOMAST);
@@ -1402,8 +1400,8 @@ public class SignallingPanel extends JmriPanel {
     }
 
     /**
-     * A paired list of manually configured Signal Masts and a corresponding Set
-     * To State used during edit of an SML.
+     * A paired list of manually configured Signal Masts and a corresponding Set To
+     * State used during edit of an SML.
      */
     private class ManualSignalMastList extends SignalMastElement {
 
@@ -1639,7 +1637,7 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(blockList.get(r).isIncluded());
+                    return blockList.get(r).isIncluded();
                 case SNAME_COLUMN:
                     return blockList.get(r).getSysName();
                 case UNAME_COLUMN:
@@ -1687,10 +1685,10 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    blockList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    blockList.get(r).setIncluded((Boolean) type);
                     break;
                 case STATE_COLUMN:
-                    log.debug("State = " + type);  // NOI18N
+                    log.debug("State = {}", type);  // NOI18N
                     blockList.get(r).setSetToState((String) type);
                     break;
                 default:
@@ -1750,7 +1748,7 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(turnoutList.get(r).isIncluded());
+                    return turnoutList.get(r).isIncluded();
                 case SNAME_COLUMN:
                     return turnoutList.get(r).getSysName();
                 case UNAME_COLUMN:
@@ -1773,10 +1771,10 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    turnoutList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    turnoutList.get(r).setIncluded((Boolean) type);
                     break;
                 case STATE_COLUMN:
-                    log.debug("State = " + type);  // NOI18N
+                    log.debug("State = {}", type);  // NOI18N
                     if (type != null) {
                         turnoutList.get(r).setSetToState((String) type);
                         fireTableRowsUpdated(r, r); // use new value
@@ -1839,7 +1837,7 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(sensorList.get(r).isIncluded());
+                    return sensorList.get(r).isIncluded();
                 case SNAME_COLUMN:
                     return sensorList.get(r).getSysName();
                 case UNAME_COLUMN:
@@ -1861,7 +1859,7 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    sensorList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    sensorList.get(r).setIncluded((Boolean) type);
                     break;
                 case STATE_COLUMN:
                     sensorList.get(r).setSetToState((String) type);
@@ -1923,7 +1921,7 @@ public class SignallingPanel extends JmriPanel {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return Boolean.valueOf(signalMastList.get(r).isIncluded());
+                    return signalMastList.get(r).isIncluded();
                 case SNAME_COLUMN:
                     return signalMastList.get(r).getSysName();
                 case UNAME_COLUMN:
@@ -1959,7 +1957,7 @@ public class SignallingPanel extends JmriPanel {
                     }
                     break;
                 case INCLUDE_COLUMN:
-                    signalMastList.get(r).setIncluded(((Boolean) type).booleanValue());
+                    signalMastList.get(r).setIncluded((Boolean) type);
                     break;
                 default:
                     break;
