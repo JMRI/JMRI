@@ -1,6 +1,7 @@
 package jmri.jmrit.signalling;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -66,9 +68,6 @@ public class SignallingPanel extends JmriPanel {
     private JLabel fixedDestMastLabel = new JLabel();
     private static final JLabel sourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")), JLabel.TRAILING);  // NOI18N
     private static final JLabel destMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("DestMast")), JLabel.TRAILING);  // NOI18N
-    private static final JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
-    private static final JButton updateButton = new JButton(Bundle.getMessage("UpdateLogicButton"));  // NOI18N
-    private static final JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));  // NOI18N
     private JCheckBox useLayoutEditor = new JCheckBox(Bundle.getMessage("UseLayoutEditorPaths"));  // NOI18N
     private JCheckBox useLayoutEditorTurnout = new JCheckBox(Bundle.getMessage("UseTurnoutDetails"));  // NOI18N
     private JCheckBox useLayoutEditorBlock = new JCheckBox(Bundle.getMessage("UseBlockDetails"));  // NOI18N
@@ -81,8 +80,7 @@ public class SignallingPanel extends JmriPanel {
     private SignalMast destMast;
     private SignalMastLogic sml;
 
-    private static SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
-    private static jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    private jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     private JFrame jFrame;
     
@@ -109,6 +107,9 @@ public class SignallingPanel extends JmriPanel {
     public SignallingPanel(SignalMast source, SignalMast dest, JFrame frame) {
         super();
         jFrame = frame;
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
+        JButton updateButton = new JButton(Bundle.getMessage("UpdateLogicButton"));  // NOI18N
+        JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));  // NOI18N
         JLabel mastSpeed = new JLabel();
 
         if (source != null) {
@@ -146,6 +147,7 @@ public class SignallingPanel extends JmriPanel {
             sml = null;
         }
 
+        SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
         sourceMastBox = new NamedBeanComboBox<>(smm, sourceMast, DisplayOptions.DISPLAYNAME);
         sourceMastBox.setMaximumSize(sourceMastBox.getPreferredSize());
         destMastBox = new NamedBeanComboBox<>(smm, destMast, DisplayOptions.DISPLAYNAME);
@@ -200,19 +202,22 @@ public class SignallingPanel extends JmriPanel {
 
         JPanel editor = new JPanel();
         editor.setLayout(new BoxLayout(editor, BoxLayout.Y_AXIS));
+        useLayoutEditor.setAlignmentX(Component.LEFT_ALIGNMENT);
         editor.add(useLayoutEditor);
 
-        editor.add(useLayoutEditorTurnout);
-        editor.add(useLayoutEditorBlock);
-        useLayoutEditorBlock.setVisible(false);
-        useLayoutEditorTurnout.setVisible(false);
+        JPanel useLayoutEditorSubPanel = new JPanel(); // indent 2 options connected to LayoutEditor choice
+        useLayoutEditorSubPanel.setLayout(new BoxLayout(useLayoutEditorSubPanel, BoxLayout.Y_AXIS));
+        useLayoutEditorSubPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        useLayoutEditorSubPanel.add(useLayoutEditorTurnout);
+        useLayoutEditorSubPanel.add(useLayoutEditorBlock);
+        editor.add(useLayoutEditorSubPanel);
+        useLayoutEditorSubPanel.setVisible(false);
 
         useLayoutEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
-                useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
+                
+                useLayoutEditorSubPanel.setVisible(useLayoutEditor.isSelected());
                 // Setup for display of all Turnouts, if needed
                 boolean valid;
                 if (useLayoutEditor.isSelected()) {
@@ -348,13 +353,11 @@ public class SignallingPanel extends JmriPanel {
         if ((sml != null) && (destMast != null)) {  // edit an existing SML, fix destination mast
             fixedDestMastLabel.setVisible(true);
             destMastBox.setVisible(false);
-            useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
-            useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
+            useLayoutEditorSubPanel.setVisible(useLayoutEditor.isSelected());
             initializeIncludedList();
             editDetails(); // pick up details for an existing SML configuration
         } else {
-            useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
-            useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
+            useLayoutEditorSubPanel.setVisible(useLayoutEditor.isSelected());
             fixedDestMastLabel.setVisible(false);
             destMastBox.setVisible(true);
         }
@@ -960,7 +963,7 @@ public class SignallingPanel extends JmriPanel {
      */
     void applyPressed(ActionEvent e) {
         updatePressed(e); // store edits
-        if (destOK) { // enable user to correct configuration if warned the destMast in incorrect by skipping pane closing
+        if (destOK) { // enable user to correct configuration if warned the destMast is incorrect by skipping pane closing
             cancelPressed(e); // close panel signaling acceptance of edits/Apply to the user
         }
     }
@@ -971,8 +974,10 @@ public class SignallingPanel extends JmriPanel {
      * @param e the event heard
      */
     void cancelPressed(ActionEvent e) {
-        jFrame.setVisible(false);
-        jFrame.dispose();
+        if (jFrame != null) {
+            jFrame.setVisible(false);
+            jFrame.dispose();
+        }
         jFrame = null;
     }
 
@@ -1543,7 +1548,7 @@ public class SignallingPanel extends JmriPanel {
          * This is a lightweight version of the
          * {@link jmri.jmrit.beantable.RowComboBoxPanel} RowComboBox cell editor
          * class, some of the hashtables not needed here since we only need
-         * identical options for all rows in a colomn.
+         * identical options for all rows in a column.
          *
          * @see SignalMastModel.AspectComboBoxPanel for a full application with
          * row specific comboBox choices.
