@@ -157,7 +157,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
             } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
                 // we're waiting for this thread to finish in the main method,
                 // so any exception here means we failed.
-                log.error("caught timeout exception while waiting for modal dialog", tee);
+                log.error("caught timeout exception while waiting for modal dialog in SignalMastLogicTableActionTest", tee);
             }
         });
         t.setName("Activate Routing Dialog Close Thread");
@@ -171,7 +171,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
             } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
                 // we're waiting for this thread to finish in the main method,
                 // so any exception here means we failed.
-                log.error("caught timeout exception while waiting for modal dialog", tee);
+                log.error("caught timeout exception while waiting for modal dialog in SignalMastLogicTableActionTest", tee);
             }
         });
         t2.setName("Confirm Routing Activated Dialog Close Thread");
@@ -185,7 +185,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
             } catch( org.netbeans.jemmy.TimeoutExpiredException tee) {
                 // we're waiting for this thread to finish in the main method,
                 // so any exception here means we failed.
-                log.error("caught timeout exception while waiting for modal dialog", tee);
+                log.error("caught timeout exception while waiting for modal dialog in SignalMastLogicTableActionTest", tee);
             }
         });
         t3.setName("LE Autorouting Dialog Close Thread");
