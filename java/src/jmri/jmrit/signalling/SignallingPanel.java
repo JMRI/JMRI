@@ -186,10 +186,10 @@ public class SignallingPanel extends JmriPanel {
                         boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
                                 destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
                         if (!valid) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                         }
                     } catch (jmri.JmriException je) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnabletoValidate"));  // NOI18N
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnableToValidate"));
                     }
                 }
             }
@@ -242,10 +242,10 @@ public class SignallingPanel extends JmriPanel {
                             valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
                                     destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.MASTTOMAST);
                             if (!valid) {
-                                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
+                                JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                             }
                         } catch (jmri.JmriException je) {
-                            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnabletoValidate"));  // NOI18N
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnableToValidate"));
                         }
                     }
                 }
@@ -712,7 +712,7 @@ public class SignallingPanel extends JmriPanel {
      *         interface
      */
     private JPanel buildSignalMastPanel() {
-        JPanel SignalMastPanel = new JPanel();
+        JPanel SignalMastPanel = new JPanel(); // TODO make this a shared variable
         SignalMastPanel.setLayout(new BoxLayout(SignalMastPanel, BoxLayout.Y_AXIS));
 
         jmri.SignalMastManager bm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
@@ -825,8 +825,16 @@ public class SignallingPanel extends JmriPanel {
         boolean smlPairAdded = false;
         destOK = true;
 
+        // TODO bind all these dialogs to parent SignalMastPanel (make that a shared var) for gui test to find them
+        if ((sourceMastBox.getSelectedItem() == null) || (destMastBox.getSelectedItem() == null)) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSignalMastNull",
+                    Bundle.getMessage("SourceMast"), Bundle.getMessage("SourceMast")));
+            destOK = false;
+            log.debug("No Source or Destination Mast selected, keep pane open");  // NOI18N
+            return;
+        }
         if (sourceMast == destMast || fixedSourceMastLabel.getText().equals(destMast.getDisplayName())) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSignalMastIdentical"));  // NOI18N
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSignalMastIdentical"));
             destOK = false;
             log.debug("Destination Mast check failed, keep pane open");  // NOI18N
             return;
@@ -837,11 +845,11 @@ public class SignallingPanel extends JmriPanel {
                 valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
                         destMast, LayoutBlockConnectivityTools.MASTTOMAST);
                 if (!valid) {
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));  // NOI18N
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorUnReachableDestination"));
                     return;
                 }
             } catch (jmri.JmriException je) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnabletoValidate"));  // NOI18N
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningUnableToValidate"));
             }
         }
 
@@ -853,7 +861,7 @@ public class SignallingPanel extends JmriPanel {
                 sml.setDestinationMast(destMast);
             } else {
                 // show replace/update dialog
-                int mes = JOptionPane.showConfirmDialog(null, Bundle.getMessage("WarningExistingPair"), // NOI18N
+                int mes = JOptionPane.showConfirmDialog(null, Bundle.getMessage("WarningExistingPair"),
                         Bundle.getMessage("WarningTitle"), // NOI18N
                         JOptionPane.YES_NO_OPTION);
                 if (mes == JOptionPane.NO_OPTION) {
@@ -872,12 +880,12 @@ public class SignallingPanel extends JmriPanel {
         }
         initializeIncludedList();
         sml.allowAutoMaticSignalMastGeneration(allowAutoMastGeneration.isSelected(), destMast);
-        boolean layouteditorgen = true;
+        boolean layoutEditorGen = true;
         try {
             sml.useLayoutEditor(useLayoutEditor.isSelected(), destMast);
         } catch (jmri.JmriException je) {
             JOptionPane.showMessageDialog(null, je.toString());
-            layouteditorgen = false;
+            layoutEditorGen = false;
         }
 
         try {
@@ -885,7 +893,7 @@ public class SignallingPanel extends JmriPanel {
                 sml.useLayoutEditorDetails(useLayoutEditorTurnout.isSelected(), useLayoutEditorBlock.isSelected(), destMast);
             }
         } catch (jmri.JmriException ji) {
-            if (layouteditorgen) {
+            if (layoutEditorGen) {
                 JOptionPane.showMessageDialog(null, ji.toString());
             }
         }
