@@ -303,17 +303,20 @@ public class TimeTableGraphCommon {
                     }
                     continue;
                 }
-                // activeSeg
-                if (stopSegmentId != _segmentId) {
-                    // No longer in active segment, do the end process
-                    setEnd(stop, true);
-                    break;
-                } else {
-                    drawLine(stop);
-                    if (_lastStop) {
-                        // At the end, do the end process
-                        setEnd(stop, false);
-                        break;
+
+                if (activeSeg) {
+                    if (stopSegmentId != _segmentId) {
+                        // No longer in active segment, do the end process
+                        setEnd(stop, true);
+                        activeSeg = false;
+                        continue;
+                    } else {
+                        drawLine(stop);
+                        if (_lastStop) {
+                            // At the end, do the end process
+                            setEnd(stop, false);
+                            break;
+                        }
                     }
                 }
             }
@@ -662,4 +665,5 @@ public class TimeTableGraphCommon {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraphCommon.class);
+
 }

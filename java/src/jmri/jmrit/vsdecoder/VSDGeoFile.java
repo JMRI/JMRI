@@ -108,11 +108,13 @@ public class VSDGeoFile extends XmlFile {
             // Process some limitations; values in milliseconds
             if (check_time < 500 || check_time > 5000) {
                 check_time = 2000; // default
+                log.info("{}: Element check-time not in range, defaulting to {} ms", VSDGeoDataFileName, check_time); // NOI18N
             }
         } else {
             check_time = 2000; // default
+            log.info("{}: Element check-time missing, defaulting to {} ms", VSDGeoDataFileName, check_time); // NOI18N
         }
-        log.debug("check-time: {}", check_time);
+        log.debug("check-time: {} ms", check_time);
 
         // Detect number of "setup" tags and maximal number of "geodataset" tags
         num_setups = 0; // # setup
