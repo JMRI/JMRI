@@ -1,8 +1,16 @@
 package jmri.jmrit.beantable;
 
+import jmri.InstanceManager;
+import jmri.SignalMastLogic;
+import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
-import org.junit.*;
 import jmri.util.junit.annotations.*;
+import jmri.util.swing.JemmyUtil;
+import org.junit.*;
+import org.netbeans.jemmy.operators.*;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -12,7 +20,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",a);
+        Assert.assertNotNull("exists", a);
     }
 
     @Override
@@ -32,7 +40,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
 
     @Override
     public String getAddFrameName(){
-        return Bundle.getMessage("TitleAddSignalMastLogic");
+        return "Seinmastlogicaparen"; //"Signaling Mast Pairs"; // can't use Bundle i18n as not in path
     }
 
     @Test
@@ -49,9 +57,73 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Override
-    @Ignore("no add button on signal mast logic table")
-    @ToDo("re-write parent class test to add signal mast logic then edit")
+
     public void testEditButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        VirtualSignalMast sm1 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "mast 1");
+        VirtualSignalMast sm2 = new VirtualSignalMast("IF$vsm:basic:one-searchlight($2)", "mast 2");
+        // provide a signal mast logic:
+        SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);
+        sml.setDestinationMast(sm2);
+        Assert.assertNotNull("SignalMastLogic is null!", sml);
+        sml.allowAutoMaticSignalMastGeneration(false, sm2);
+
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
+        Assert.assertNotNull("found frame", f);
+
+        //new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrameOperator jfo = new JFrameOperator(f);
+        JTableOperator tbl = new JTableOperator(jfo, 0);
+
+        tbl.setValueAt("new comment", 0, 4);
+        // find the "Edit" button and press it.  This is in the table body.
+        tbl.clickOnCell(0, 7);
+
+        JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
+
+        // find the "Delete" button and press it.  This is in the table body.
+        tbl.clickOnCell(0, 5);
+
+        JUnitUtil.dispose(f2);
+        JUnitUtil.dispose(f);
+        sml.dispose();
+    }
+
+    @Test
+    public void testSmlTableMenu() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
+        //new org.netbeans.jemmy.QueueTool().waitEmpty();
+        JFrameOperator jfo = new JFrameOperator(f);
+        JMenuBarOperator mainbar = new JMenuBarOperator(jfo);
+        mainbar.pushMenu(Bundle.getMessage("MenuTools")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("MenuTools"));
+        JPopupMenu jpm = jmo.getPopupMenu();
+
+        // Menu AutoCreate
+        JMenuItem findMenuItem = (JMenuItem) jpm.getComponent(0);
+        Assert.assertEquals(findMenuItem.getText(), (Bundle.getMessage("MenuItemAutoGen")));
+        new JMenuItemOperator(findMenuItem).doClick();
+
+        new Thread(() -> {
+            JFrameOperator jfo2 = new JFrameOperator(f);
+            JDialogOperator jdo = new JDialogOperator(jfo2, ""); // "Select an Option"  is a default title, Jemmy can't find it
+            JButtonOperator jbo = new JButtonOperator(jdo, 2); // NOI18N
+            jbo.pushNoBlock();
+
+            //        JFrame dia = JFrameOperator.waitJFrame("Select an Option", true, true);
+            //        JDialogOperator jdo = new JDialogOperator(dia); // NOI18N
+            //        JemmyUtil.confirmJOptionPane(jdo, "", Bundle.getMessage("EnableLayoutBlockRouting"), "Yes");
+            //        JemmyUtil.pressButton(jdo, "Cancel");
+
+        }).start();
+
+        JUnitUtil.dispose(f);
     }
 
     // The minimal setup for log4J
