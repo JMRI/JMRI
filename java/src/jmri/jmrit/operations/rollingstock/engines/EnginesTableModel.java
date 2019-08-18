@@ -220,9 +220,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public List<Engine> getEngineList(int sort) {
         List<Engine> list;
         switch (sort) {
-            case SORTBY_NUMBER:
-                list = engineManager.getByNumberList();
-                break;
             case SORTBY_ROAD:
                 list = engineManager.getByRoadNameList();
                 break;
@@ -259,6 +256,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SORTBY_LAST:
                 list = engineManager.getByLastDateList();
                 break;
+            case SORTBY_NUMBER:
             default:
                 list = engineManager.getByNumberList();
         }
