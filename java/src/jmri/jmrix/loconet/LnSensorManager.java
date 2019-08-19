@@ -92,7 +92,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             }
             ns = (LnSensor) newSensor(s, null);
         }
-        ns.message(l);  // have it update state
+        ns.messageFromManager(l);  // have it update state
     }
 
     volatile LnSensorUpdateThread thread;

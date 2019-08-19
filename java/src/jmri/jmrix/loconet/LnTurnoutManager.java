@@ -184,10 +184,10 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 LnTurnout t = (LnTurnout) provideTurnout(s);
                 
                 // process the message to put the turnout in the right state
-                t.message(l);
+                t.messageFromManager(l);
             }
         } else {
-            lnT.message(l);
+            lnT.messageFromManager(l);
         }
     }
 

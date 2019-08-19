@@ -43,9 +43,6 @@ public class LnSensor extends AbstractSensor  {
         if (log.isDebugEnabled()) {
             log.debug("create address {}", a);
         }
-
-        // At construction, register for messages
-        //tc.addLocoNetListener(~0, this);
     }
 
     /**
@@ -61,38 +58,23 @@ public class LnSensor extends AbstractSensor  {
     }
 
     /**
-     * User request to set the state, which means that we broadcast that to all
-     * listeners by putting it out on LocoNet. In turn, the code in this class
-     * should use setOwnState to handle internal sets and bean notifies.
-     *
+     * User request to set the state, which means that we need to broadcast the
+     * new state over the loconet so that other attached devices. The incoming message
+     * will in turn, be processed by the SensorManager.
      */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
-        switch (s) {
-            case Sensor.ACTIVE:
-                if (getRawState() != Sensor.ACTIVE) {
-                      setOwnState(Sensor.ACTIVE);
-                }
-                break;
-            case Sensor.INACTIVE:
-                if (getRawState() != Sensor.INACTIVE) {
-                    setOwnState(Sensor.INACTIVE);
-                }
-                break;
-            case Sensor.UNKNOWN:
-                if (getRawState() != Sensor.UNKNOWN) {
-                    setOwnState(Sensor.UNKNOWN);
-                }
-                break;
-            case Sensor.INCONSISTENT:
-                if (getRawState() != Sensor.INCONSISTENT) {
-                    setOwnState(Sensor.INCONSISTENT);
-                }
-                break;
-            default:
-                log.error("LnSensor given invalid state[{}] setting to INCONSISTENT", s);
-                setOwnState(Sensor.INCONSISTENT);
-        }
+        // send OPC_INPUT_REP with new state to this address
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode(LnConstants.OPC_INPUT_REP);
+        a.insertAddress(l);
+        // set state
+        if ((s == Sensor.ACTIVE) ^ _inverted) {
+            l.setElement(2, l.getElement(2) | 0x10);
+        } // otherwise is already OK
+        l.setElement(2, l.getElement(2) | 0x40);
+        // send
+        tc.sendLocoNetMessage(l);
     }
 
     /**
@@ -103,8 +85,7 @@ public class LnSensor extends AbstractSensor  {
      * directly)
      *
      */
-    //@Override
-    public void message(LocoNetMessage l) {
+    public void messageFromManager(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
             case LnConstants.OPC_INPUT_REP: {               /* page 9 of LocoNet PE */
@@ -136,12 +117,6 @@ public class LnSensor extends AbstractSensor  {
                 return;
         }
         // reach here only in error
-    }
-
-    @Override
-    public void dispose() {
-        //tc.removeLocoNetListener(~0, this);
-        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnSensor.class);

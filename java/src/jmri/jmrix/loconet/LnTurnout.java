@@ -251,7 +251,7 @@ public class LnTurnout extends AbstractTurnout {
     //                              Object oldValue,
     //                        Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
-    public void message(LocoNetMessage l) {
+    public void messageFromManager(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
             case LnConstants.OPC_SW_ACK:

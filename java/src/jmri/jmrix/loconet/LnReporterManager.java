@@ -105,15 +105,21 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         // check message type
         int addr;
         switch (l.getOpCode()) {
-            case 0xD0:
+            case LnConstants.OPC_MULTI_SENSE:
                 if ((l.getElement(1) & 0xC0) == 0) {
                     addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
                     break;
                 }
                 return;
-            case 0xe5:
+            case LnConstants.OPC_PEER_XFER:
                 if (l.getElement(1) == 0x09 && l.getElement(2) == 0x00) {
                     addr = (l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1;
+                    break;
+                }
+                return;
+            case LnConstants.OPC_LISSY_UPDATE:
+                if (l.getElement(1) == 0x08) {
+                    addr =  (l.getElement(4) & 0x7F);
                     break;
                 }
                 return;
@@ -122,7 +128,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         }
         log.info("Reporter[{}]",addr);
         LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
-        r.message(l); // make sure it got the message
+        r.messageFromManager(l); // make sure it got the message
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class);
