@@ -335,9 +335,14 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
         am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-            String u = am.getAudio(s).getUserName();
-            if (u != null) {
-                assignedBuffer.addItem(u);
+            Audio a = am.getAudio(s);
+            if (a != null) {
+                String u = a.getUserName();
+                if (u != null) {
+                    assignedBuffer.addItem(u);
+                } else {
+                    assignedBuffer.addItem(s);
+                }
             } else {
                 assignedBuffer.addItem(s);
             }

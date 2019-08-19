@@ -330,7 +330,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             disposefinal();
         } else if (!hasTempEntries) {
             disposefinal();
-        } else if ((hasTempEntries) && (p.getAdhocLocoFromEcos() == EcosPreferences.ASK)) {
+        } else if (p.getAdhocLocoFromEcos() == EcosPreferences.ASK) {
 
             final JDialog dialog = new JDialog();
             dialog.setTitle(Bundle.getMessage("RemoveLocoTitle"));
@@ -602,7 +602,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                     }
                 } else {
                     EcosLocoAddress tmploco;
-                    log.debug("Forwarding on State change for " + ecosObjectId);
+                    log.debug("Forwarding on State change for {}", ecosObjectId);
                     String strLocoObject = Integer.toString(ecosObjectId);
                     tmploco = _tecos.get(strLocoObject);
                     if (tmploco != null) {
@@ -703,7 +703,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             loco = ecoslines[i];
             loco = loco.replaceAll("[\\n\\r]", "");
             if (getByEcosObject(loco) == null) {
-                log.debug("We are to add loco " + loco + " to the Ecos Loco List");
+                log.debug("We are to add loco {} to the Ecos Loco List", loco);
                 EcosMessage mout = new EcosMessage("get(" + loco + ", addr, name, protocol)");
                 tc.sendEcosMessage(mout, this);
             }
