@@ -1,7 +1,7 @@
 package jmri.util;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.ExpectedState;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -31,7 +31,7 @@ public class NamedBeanExpectedValue<T extends NamedBean, S extends Object> exten
      * @param name  the name
      * @param state the expected state
      */
-    public NamedBeanExpectedValue(@Nonnull T bean, @Nonnull String name, @Nullable S state) {
+    public NamedBeanExpectedValue(@Nonnull T bean, @Nonnull String name, @CheckForNull S state) {
         this.handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, bean);
         this.state = state;
     }
