@@ -537,7 +537,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected abstract JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent);
+    protected abstract JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
 
     /**
      * show the popup menu for this layout track
