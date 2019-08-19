@@ -103,16 +103,24 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     @Override
     public void message(LocoNetMessage l) {
         // check message type
-        if (l.getOpCode() != 0xD0) {
-            return;
+        int addr;
+        switch (l.getOpCode()) {
+            case 0xD0:
+                if ((l.getElement(1) & 0xC0) == 0) {
+                    addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
+                    break;
+                }
+                return;
+            case 0xe5:
+                if (l.getElement(1) == 0x09 && l.getElement(2) == 0x00) {
+                    addr = (l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1;
+                    break;
+                }
+                return;
+            default:
+                return;
         }
-        if ((l.getElement(1) & 0xC0) != 0) {
-            return;
-        }
-
-        // message type OK, check address
-        int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
-
+        log.info("Reporter[{}]",addr);
         LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
         r.message(l); // make sure it got the message
     }

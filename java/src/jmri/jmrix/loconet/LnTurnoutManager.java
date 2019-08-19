@@ -126,7 +126,8 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         // parse message type
         int addr;
         switch (l.getOpCode()) {
-            case LnConstants.OPC_SW_REQ: {               /* page 9 of LocoNet PE */
+            case LnConstants.OPC_SW_REQ:
+            case LnConstants.OPC_SW_ACK: {               /* page 9 of LocoNet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
@@ -174,7 +175,8 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         }
         // reach here for LocoNet switch command; make sure that a Turnout with this name exists
         String s = prefix + "T" + addr; // NOI18N
-        if (getBySystemName(s) == null) {
+        LnTurnout lnT = (LnTurnout) getBySystemName(s);
+        if (lnT == null) {
             // no turnout with this address, is there a light?
             String sx = prefix + "L" + addr; // NOI18N
             if (jmri.InstanceManager.lightManagerInstance().getBySystemName(sx) == null) {
@@ -184,6 +186,8 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
                 // process the message to put the turnout in the right state
                 t.message(l);
             }
+        } else {
+            lnT.message(l);
         }
     }
 

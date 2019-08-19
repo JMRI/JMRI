@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnSensor extends AbstractSensor implements LocoNetListener {
+public class LnSensor extends AbstractSensor  {
 
     private LnSensorAddress a;
 
@@ -45,7 +45,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         }
 
         // At construction, register for messages
-        tc.addLocoNetListener(~0, this);
+        //tc.addLocoNetListener(~0, this);
     }
 
     /**
@@ -68,17 +68,31 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
-        // send OPC_INPUT_REP with new state to this address
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_INPUT_REP);
-        a.insertAddress(l);
-        // set state
-        if ((s == Sensor.ACTIVE) ^ _inverted) {
-            l.setElement(2, l.getElement(2) | 0x10);
-        } // otherwise is already OK
-        l.setElement(2, l.getElement(2) | 0x40);
-        // send
-        tc.sendLocoNetMessage(l);
+        switch (s) {
+            case Sensor.ACTIVE:
+                if (getRawState() != Sensor.ACTIVE) {
+                      setOwnState(Sensor.ACTIVE);
+                }
+                break;
+            case Sensor.INACTIVE:
+                if (getRawState() != Sensor.INACTIVE) {
+                    setOwnState(Sensor.INACTIVE);
+                }
+                break;
+            case Sensor.UNKNOWN:
+                if (getRawState() != Sensor.UNKNOWN) {
+                    setOwnState(Sensor.UNKNOWN);
+                }
+                break;
+            case Sensor.INCONSISTENT:
+                if (getRawState() != Sensor.INCONSISTENT) {
+                    setOwnState(Sensor.INCONSISTENT);
+                }
+                break;
+            default:
+                log.error("LnSensor given invalid state[{}] setting to INCONSISTENT", s);
+                setOwnState(Sensor.INCONSISTENT);
+        }
     }
 
     /**
@@ -89,7 +103,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * directly)
      *
      */
-    @Override
+    //@Override
     public void message(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
@@ -126,7 +140,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
 
     @Override
     public void dispose() {
-        tc.removeLocoNetListener(~0, this);
+        //tc.removeLocoNetListener(~0, this);
         super.dispose();
     }
 

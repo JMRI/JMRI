@@ -35,6 +35,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
     // LnSensor test for incoming status message
     @Test
     public void testLnSensorStatusMsg() {
+        // create a new unregistered sensor.
         LnSensor s = new LnSensor("LS044", lnis, "L");
         LocoNetMessage m;
 
@@ -44,7 +45,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(1, 0x15);     // all but lowest bit of address
         m.setElement(2, 0x60);     // Aux (low addr bit high), sensor low
         m.setElement(3, 0x38);
-        lnis.sendTestMessage(m);
+        s.message(m);
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, s.getKnownState());
 
         m = new LocoNetMessage(4);
@@ -52,7 +53,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(1, 0x15);     // all but lowest bit of address
         m.setElement(2, 0x70);     // Aux (low addr bit high), sensor high
         m.setElement(3, 0x78);
-        lnis.sendTestMessage(m);
+        s.message(m);
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, s.getKnownState());
     }
 
