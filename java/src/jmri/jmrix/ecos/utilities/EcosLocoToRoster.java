@@ -283,25 +283,28 @@ public class EcosLocoToRoster implements EcosListener {
         String msg = m.toString();
         String[] lines = msg.split("\n");
         if (m.getResultCode() == 0) {
-            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", cv[")) {
-                startval = lines[0].indexOf("(") + 1;
-                endval = (lines[0].substring(startval)).indexOf(",") + startval;
-                //The first part of the messages is always the object id.
-                int object = Integer.parseInt(lines[0].substring(startval, endval));
-                if (object == _ecosObjectInt) {
-                    for (int i = 1; i < lines.length - 1; i++) {
-                        if (lines[i].contains("cv[")) {
-                            //int startcvnum = lines[i].indexOf("[")+1;
-                            //int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
-                            //int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
-                            //int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
-                            //int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
-                            //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
-                            //String strcvnum = "CV"+cvnum;
-                        }
-                    }
-                }
-            } else if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", funcdesc")) {
+            // TODO use this if branch?
+            //
+            //            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", cv[")) {
+            //                startval = lines[0].indexOf("(") + 1;
+            //                endval = (lines[0].substring(startval)).indexOf(",") + startval;
+            //                //The first part of the messages is always the object id.
+            //                int object = Integer.parseInt(lines[0].substring(startval, endval));
+            //                if (object == _ecosObjectInt) {
+            //                    for (int i = 1; i < lines.length - 1; i++) {
+            //                        if (lines[i].contains("cv[")) {
+            //                            //int startcvnum = lines[i].indexOf("[")+1;
+            //                            //int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
+            //                            //int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
+            //                            //int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
+            //                            //int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
+            //                            //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
+            //                            //String strcvnum = "CV"+cvnum;
+            //                        }
+            //                    }
+            //                }
+            //            } else if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", funcdesc")) {
+            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", funcdesc")) {
                 int functNo = 0;
                 try {
                     startval = lines[1].indexOf("[") + 1;
@@ -458,8 +461,6 @@ public class EcosLocoToRoster implements EcosListener {
         Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
     }
-
-//    JComboBox combo;
 
     public void comboPanel() {
         frame.setTitle(Bundle.getMessage("DecoderSelectionXTitle", ecosLoco.getEcosDescription()));

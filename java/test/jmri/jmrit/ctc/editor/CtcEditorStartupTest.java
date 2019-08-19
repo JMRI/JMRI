@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import java.util.Locale;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.netbeans.jemmy.EventTool;
 
 /**
  * Tests for the CtcEditorStartup Class

@@ -3,6 +3,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -18,7 +19,7 @@ public class PaneSetTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false, 42);
         RosterEntry re = new RosterEntry();
         PaneProgFrame pc = new PaneProgFrame(null, re,
                 "test frame", "programmers/Basic.xml",
@@ -29,8 +30,8 @@ public class PaneSetTest {
                 return null;
             }
         };
-        PaneSet t = new PaneSet(pc,re,p);
-        Assert.assertNotNull("exists",t);
+        PaneSet t = new PaneSet(pc, re, p);
+        Assert.assertNotNull("exists", t);
         new org.netbeans.jemmy.QueueTool().waitEmpty(10);
         pc.dispose();
     }
@@ -38,14 +39,15 @@ public class PaneSetTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugProgrammerManager();
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -4,8 +4,8 @@ Contents of this folder:
 	COPYING				Software license  (See also below)
 	CONTENTS			This file
 	
-	Decoder Pro			Macintosh Classic Application
-	Decoder Pro X		Mac OS X Application (some systems will show as Decoder Pro X.app)
+	DecoderPro			Macintosh Classic Application
+	DecoderPro X		Mac OS X Application (some systems will show as DecoderPro X.app)
 	DecoderPro.bat		Application start script for Windows
 	DecoderProDebug.bat	Application start script for Windows with debug window
 	DecoderPro.csh		Application start script for Linux

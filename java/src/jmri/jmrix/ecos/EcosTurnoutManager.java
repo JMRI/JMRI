@@ -117,7 +117,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         //As the event will come from one object, we shall check to see if it is an extended address,
                         // if it is we also forward the message onto the slaved address.
                         if (et.getExtended() != 0) {
-                            log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
+                            log.debug("This is also an extended turnout so forwarding on change to {}", et.getSlaveAddress());
                             EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
                             etx.reply(m);
                         }
@@ -237,7 +237,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                             et.setUserName(name);
                         }
                     }
-                } else if (ecosObjectId >= 20000 && ecosObjectId <= 30000) {
+                } else if (ecosObjectId >= 20000) { // ecosObjectId <= 30000 is always true at this point (Spotbugs)
                     log.debug("Reply for specific turnout");
                     et = _tecos.get(ecosObjectId);
                     if (et != null) {
@@ -245,7 +245,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         //As the event will come from one object, we shall check to see if it is an extended address,
                         // if it is we also forward the message onto the slaved address.
                         if (et.getExtended() != 0) {
-                            log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
+                            log.debug("This is also an extended turnout so forwarding on change to {}", et.getSlaveAddress());
                             EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
                             etx.reply(m);
                         }

@@ -340,7 +340,7 @@
         <dd>
           <p>All of the .xml files in the "programmers"
           subdirectory will appear in the selection box when you
-          create a new programmer in Decoder Pro. To use your new
+          create a new programmer in DecoderPro. To use your new
           file, just put it in the "programmers" subdirectory of
           the "prefs" directory and select it. You don't have to
           restart the program, as the list is remade each time you

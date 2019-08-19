@@ -585,14 +585,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Get/Set occupied sense.
+     * Get occupied sensor state.
      *
-     * @return occ sense
+     * @return occupied sensor state, defaults to Sensor.ACTIVE
      */
     public int getOccupiedSense() {
         return occupiedSense;
     }
 
+    /**
+     * Set occupied sensor state.
+     *
+     * @param sense eg. Sensor.INACTIVE
+     */
     public void setOccupiedSense(int sense) {
         occupiedSense = sense;
     }
@@ -600,7 +605,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Test block occupancy.
      *
-     * @return occ state
+     * @return occupancy state
      */
     public int getOccupancy() {
         if (occupancyNamedSensor == null) {
@@ -639,8 +644,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public int getState() {
         return getOccupancy();
     }
-
-    //dummy for completion of NamedBean interface
+    
+    /**
+     * Does nothing, do not use.
+     * Dummy for completion of NamedBean interface
+     */
     @Override
     public void setState(int i) {
         log.error("this state does nothing {}", getDisplayName());

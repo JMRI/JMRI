@@ -556,7 +556,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                 initiateRead();
                 fastClockCounter = curRate;
             }
-
         }
     }
 

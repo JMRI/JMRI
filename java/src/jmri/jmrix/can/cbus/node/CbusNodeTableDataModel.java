@@ -939,18 +939,16 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     public void startupSearchNodeXmlFile() {
         // ensure preferences will be found for read
-        FileUtil.createDirectory(fileLocation);
+        FileUtil.createDirectory(CbusNodeXml.CbusNodeBackupFile.getFileLocation());
         // create an array of file names from node dir in preferences, then loop
         List<String> names = new ArrayList<>();
-        log.debug("directory of TrainInfoFiles is {}", fileLocation);
-        File fp = new File(fileLocation);
+        File fp = new File(CbusNodeXml.CbusNodeBackupFile.getFileLocation());
         if (fp.exists()) {
             String[] fpList = fp.list(new XmlFilenameFilter());
             if (fpList !=null ) {
                 names.addAll(Arrays.asList(fpList));
             }
         }
-        log.debug("directory: {} nodes found : {}",fileLocation,names);
         names.forEach((nb) -> {
             log.debug("Node: {}",nb);
             int nodeNum =  jmri.util.StringUtil.getFirstIntFromString(nb);
@@ -961,9 +959,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             }
         });
     }
-    
-    private String fileLocation = FileUtil.getProfilePath()
-            + "cbus" + File.separator;
     
     /**
      * Disconnect from the network

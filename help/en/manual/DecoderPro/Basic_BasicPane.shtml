@@ -132,7 +132,7 @@
       The individual settings will turn red while they are in the
       process of being read (clever, eh?), and will turn white once
       the values have been read successfully from the decoder. Once
-      again, Decoder Pro must play "Twenty Questions" to get this
+      again, DecoderPro must play "Twenty Questions" to get this
       information, and sometimes even has to ask a couple of times.
 
       <p>Be patient, especially with older computers. At the very

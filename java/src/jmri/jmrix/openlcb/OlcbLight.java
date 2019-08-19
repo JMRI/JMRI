@@ -88,11 +88,11 @@ public class OlcbLight extends AbstractLight {
         if (lightListener==null){
             return;
         }
-        _finishedLoad = true;
         lightControlList.stream().forEach((lc) -> {
             lc.activateLightControl();
         });
         mActive = true; // set flag for control listeners
+        _finishedLoad = true;
     }
     
     /** {@inheritDoc} */

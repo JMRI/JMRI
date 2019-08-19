@@ -68,7 +68,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     }
 
     /**
-     * Rephrase option 1, so that it doesn't talk about LocoBuffer
+     * Rephrase option 1, so that it doesn't talk about LocoBuffer.
      */
     public String option1Name() {
         return Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial"));

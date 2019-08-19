@@ -40,9 +40,15 @@ public class Profile implements Comparable<Profile> {
     public static final String CONFIG = "profile.xml"; // NOI18N
     public static final String SHARED_PROPERTIES = PROFILE + "/" + PROPERTIES; // NOI18N
     public static final String SHARED_CONFIG = PROFILE + "/" + CONFIG; // NOI18N
+    /**
+     * {@value #CONFIG_FILENAME} may be present in older profiles
+     */
     public static final String CONFIG_FILENAME = "ProfileConfig.xml"; // NOI18N
     public static final String UI_CONFIG = "user-interface.xml"; // NOI18N
     public static final String SHARED_UI_CONFIG = PROFILE + "/" + UI_CONFIG; // NOI18N
+    /**
+     * {@value #UI_CONFIG_FILENAME} may be present in older profiles
+     */
     public static final String UI_CONFIG_FILENAME = "UserPrefsProfileConfig.xml"; // NOI18N
     /**
      * The filename extension for JMRI profile directories. This is needed for

@@ -4,10 +4,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalHead;
 import jmri.SignalHeadManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -15,6 +12,7 @@ import org.netbeans.jemmy.EventTool;
 
 /**
  * Tests for the CtcRunAction Class
+ *
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunActionTest {
@@ -70,7 +68,6 @@ public class CtcRunActionTest {
         sh = hm.getSignalHead("Right-L");
         Assert.assertFalse(sh.getHeld());  // NOI18N
 
-
 //         log.warn("Test SHM = {}", hm);
 //         log.warn("DEBUG = {}", sm.getSensor("IS:DEBUGCTC").getKnownState());
 //         log.warn("SN = {}", sm.getSensor("IS3:SN").getKnownState());
@@ -93,12 +90,12 @@ public class CtcRunActionTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
 
         try {
             JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
+        } catch (java.io.IOException ioe) {
             Assert.fail("failed to setup profile for test");
         }
 
@@ -108,17 +105,7 @@ public class CtcRunActionTest {
 
     @After
     public void tearDown() {
-        // use reflection to reset the static file location.
-        try {
-            Class<?> c = jmri.jmrit.ctc.CTCFiles.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset CTC static fileLocation " + x);
-        }
-
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcRunActionTest.class);
