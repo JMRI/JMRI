@@ -507,7 +507,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             ENUM_MAP = Collections.unmodifiableMap(map);
         }
 
-        public static ToolBarSide getName(@Nullable String name) {
+        public static ToolBarSide getName(@CheckForNull String name) {
             return ENUM_MAP.get(name);
         }
 
@@ -1853,7 +1853,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     private void recursiveSetFont(
             @Nonnull Container inContainer,
-            @Nullable Font inFont) {
+            @CheckForNull Font inFont) {
         if (false) { //<<== disabled as per <https://github.com/JMRI/JMRI/pull/3145#issuecomment-283940658>
             for (Component c : inContainer.getComponents()) {
                 c.setFont(inFont);
@@ -4953,7 +4953,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc,
-            boolean requireUnconnected, @Nullable LayoutTrack avoid) {
+            boolean requireUnconnected, @CheckForNull LayoutTrack avoid) {
         boolean result = false; // assume failure (pessimist!)
 
         foundTrack = null;
@@ -6997,7 +6997,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public boolean validatePhysicalTurnout(
             @Nonnull String inTurnoutName,
-            @Nullable Component inOpenPane) {
+            @CheckForNull Component inOpenPane) {
         //check if turnout name was entered
         if (inTurnoutName.isEmpty()) {
             //no turnout entered
@@ -8313,7 +8313,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return sh;
     }
 
-    public boolean containsSignalHead(@Nullable SignalHead head) {
+    public boolean containsSignalHead(@CheckForNull SignalHead head) {
         if (head != null) {
             for (SignalHeadIcon h : signalList) {
                 if (h.getSignalHead() == head) {
@@ -8324,7 +8324,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return false;
     }
 
-    public void removeSignalHead(@Nullable SignalHead head) {
+    public void removeSignalHead(@CheckForNull SignalHead head) {
         if (head != null) {
             for (SignalHeadIcon h : signalList) {
                 if (h.getSignalHead() == head) {
@@ -9329,7 +9329,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlock the block
      * @return true if block was highlighted
      */
-    public boolean highlightBlock(@Nullable Block inBlock) {
+    public boolean highlightBlock(@CheckForNull Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
         blockIDComboBox.setSelectedItem(inBlock);

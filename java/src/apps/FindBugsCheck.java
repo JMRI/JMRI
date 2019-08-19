@@ -117,10 +117,10 @@ public class FindBugsCheck {
         jaNullableParm(jaCheckForNullReturn());
     }
 
-    @Nullable public FindBugsCheck fbNullableReturn() {
+    @CheckForNull public FindBugsCheck fbNullableReturn() {
         return null;
     }
-    public void fbNullableParm(@Nullable FindBugsCheck p) {
+    public void fbNullableParm(@CheckForNull FindBugsCheck p) {
         p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void fbTestNullable() {

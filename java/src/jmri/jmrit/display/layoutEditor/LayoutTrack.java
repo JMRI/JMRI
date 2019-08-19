@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.JPopupMenu;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -135,7 +135,7 @@ public abstract class LayoutTrack {
     protected Map<String, String> decorations = null;
 
     protected Color getColorForTrackBlock(
-            @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+            @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
         if (layoutBlock != null) {
             if (forceBlockTrackColor) {
@@ -148,19 +148,19 @@ public abstract class LayoutTrack {
     }
 
     // optional parameter forceTrack = false
-    protected Color getColorForTrackBlock(@Nullable LayoutBlock lb) {
+    protected Color getColorForTrackBlock(@CheckForNull LayoutBlock lb) {
         return getColorForTrackBlock(lb, false);
     }
 
     protected Color setColorForTrackBlock(Graphics2D g2,
-            @Nullable LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+            @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
         g2.setColor(result);
         return result;
     }
 
     // optional parameter forceTrack = false
-    protected Color setColorForTrackBlock(Graphics2D g2, @Nullable LayoutBlock lb) {
+    protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
         return setColorForTrackBlock(g2, lb, false);
     }
 
@@ -537,7 +537,7 @@ public abstract class LayoutTrack {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    protected abstract JPopupMenu showPopup(@Nullable MouseEvent mouseEvent);
+    protected abstract JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent);
 
     /**
      * show the popup menu for this layout track
