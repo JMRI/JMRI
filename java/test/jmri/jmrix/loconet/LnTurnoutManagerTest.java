@@ -165,14 +165,14 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     @Test
     @Override
-    public void testSetAndGetOutputInterval() { // LnTurnoutManager has no direct access to Memo, ask TC
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval("LT22")); // only the prefix is used to find the manager
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
         memo.setOutputInterval(20);
         Assert.assertEquals("new outputInterval in memo", 20, memo.getOutputInterval()); // direct set & get
         lnis.getSystemConnectionMemo().setOutputInterval(30);
         Assert.assertEquals("new outputInterval via tc", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // set & get via tc
-        l.setOutputInterval("LT22", 40);
-        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("LT22")); // test method in manager
+        l.setOutputInterval(40);
+        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval()); // test method in manager
     }
 
     private LocoNetInterfaceScaffold lnis;

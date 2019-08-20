@@ -98,15 +98,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     public void testRegisterDuplicateSystemName() {
     }
 
-    @Test
-    @Override
-    public void testSetAndGetOutputInterval() {
-        Turnout t1 = l.newTurnout(getSystemName(17), "mine");
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
-        l.setOutputInterval(t1.getSystemName(), 50);
-        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
-    }
-
     @Override
     protected int getNumToTest1() {
         return 19;

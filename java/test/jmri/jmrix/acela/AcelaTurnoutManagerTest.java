@@ -57,12 +57,12 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     @Test
     @Override
-    public void testSetAndGetOutputInterval() { // AcelaTurnoutManager has direct access to Memo
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval("AT21")); // only the prefix is used to find the manager
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
         memo.setOutputInterval(30);
         Assert.assertEquals("new outputInterval in memo", 30, memo.getOutputInterval()); // direct set & get
-        l.setOutputInterval("AT21", 40);
-        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("AT21")); // test method in manager
+        l.setOutputInterval(40);
+        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval()); // test method in manager
     }
 
     AcelaNode a0, a1, a2, a3;

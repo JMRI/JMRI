@@ -9,6 +9,8 @@ import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
+import javax.annotation.Nonnull;
+
 /**
  * Dummy implementation of TurnoutManager for testing purposes.
  *
@@ -268,22 +270,18 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public void removeDataListener(ManagerDataListener<Turnout> e) {}
 
     @Override
+    @Nonnull
     public SystemConnectionMemo getMemo() {
         return new InternalSystemConnectionMemo("J", "Juliet");
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int getOutputInterval(String systemName) {
+    public int getOutputInterval() {
         return 0;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void setOutputInterval(String systemName, int newInterval) {}
+    public void setOutputInterval(int newInterval) {}
 
-    /** {@inheritDoc} */
-    @Override
-    public LocalTime outputIntervalEnds(String systemName) { return null; }
+    @Nonnull
+    public LocalTime outputIntervalEnds() { return LocalTime.now(); }
 
 }

@@ -866,13 +866,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
-     * @return the interval (delay) in Ms between output commands for the manager.
-     */
-    public static int getOutputInterval(@Nonnull String SystemName) {
-        return 0;
-    }
-
-    /**
      * Register a {@link ManagerDataListener} to hear about adding or removing
      * items from the list of NamedBeans.
      *

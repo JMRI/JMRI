@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import java.beans.*;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -145,7 +144,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * Change from e.g. LnTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
-    private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getOutputInterval(mSystemName);
+    private int turnoutInterval = InstanceManager.turnoutManagerInstance().getOutputInterval();
 
     /**
      * Set the delay as configured for the connection of this Turnout.
@@ -153,8 +152,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * @param newInterval the delay in Milliseconds
      */
     public void setOutputInterval(int newInterval) {
-        TURNOUT_INTERVAL = newInterval;
-        log.debug("(jmri.implementation.AbstractTurnout_TURNOUT_INTERVAL set to: {}", newInterval);
+        turnoutInterval = newInterval;
+        log.debug("(jmri.implementation.AbstractTurnout_turnoutInterval set to: {}", newInterval);
     }
 
     protected Thread thr;
@@ -167,10 +166,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedStateAtInterval(int s) {
-        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName);
-        // nextWait time is calculated using actual TURNOUT_INTERVAL in TurnoutManager
-        if (TURNOUT_INTERVAL > 0 && nextWait != null && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
-            log.debug("Turnout interval = {} ms (static), now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(), nextWait);
+        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
+        // nextWait time is calculated using actual turnoutInterval in TurnoutManager
+        if (turnoutInterval > 0 && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
+            log.debug("Turnout interval = {} ms (static), now() = {}, waitUntil = {}", turnoutInterval, LocalTime.now(), nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override
@@ -189,7 +188,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             thr = new Thread(r);
             thr.start();
         } else {
-            log.debug("nextWait {}", (nextWait == null ? "= NULL" : "N/A"));
+            log.debug("nextWait has passed");
             setCommandedState(s);
         }
     }
