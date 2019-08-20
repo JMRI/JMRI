@@ -105,6 +105,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         return point;
     }
 
+    /**
+     * @since 4.17.4
+     * Making the source object available for scripting in Jython.
+     */
+    public Source getSource() {
+        return src ;
+    }
+
     boolean getUniDirection() {
         return uniDirection;
     }

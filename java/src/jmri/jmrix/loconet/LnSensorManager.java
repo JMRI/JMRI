@@ -40,7 +40,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
-    
+
     // to free resources when no longer used
     @Override
     public void dispose() {
@@ -265,6 +265,16 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         @Override
         public void run() {
             sm.setUpdateBusy();
+            while (!tc.status()) {
+                try {
+                    // Delay 500 mSec to allow init of traffic controller, listeners.
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    sm.setUpdateNotBusy();
+                    return; // and stop work
+                }
+            }
             byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
             byte sw2[] = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
             // create and initialize LocoNet message
@@ -281,7 +291,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 msg.setElement(1, sw1[k]);
                 msg.setElement(2, sw2[k]);
-                        
+
                 tc.sendLocoNetMessage(msg);
                 log.debug("LnSensorUpdate sent");
             }

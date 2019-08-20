@@ -719,12 +719,11 @@ public class LightTableActionTest extends AbstractTableActionBase {
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-
+        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.LightTable";
         a = new LightTableAction();
@@ -734,10 +733,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.tearDown();
-
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightTableActionTest.class);
