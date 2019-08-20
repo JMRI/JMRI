@@ -154,6 +154,10 @@
     repository and included in a release, this will be how other JMRI users find out 
     about them.  You can also cut&amp;paste what you write here into 
     your pull request (see below) to help explain your change to the people reviewing it.
+    If your work requires that the users be warned about something, i.e. to do a
+    migration, please also add that to the 
+    <a href="../../../releasenotes/current-draft-warnings.shtml">help/en/releasenotes/current-draft-warnings.shtml</a> 
+    file which works similarly.
     
 <h3>Commit Changes to Your Local Repository</h3>
       You should

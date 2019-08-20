@@ -10,6 +10,10 @@ import jmri.implementation.AbstractVariableLight;
  */
 public class InternalLightManager extends jmri.managers.AbstractLightManager {
 
+    public InternalLightManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+    }
+
     /**
      * Create and return an internal (no layout connection) Light
      */
@@ -33,19 +37,17 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return "I";
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
 
     @Override
     public boolean validSystemNameConfig(String systemName) {
         return true;
-    }
-
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
     }
 
     @Override

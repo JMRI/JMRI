@@ -10,18 +10,20 @@ import org.junit.*;
  */
 public class VSDecoderFrameTest extends jmri.util.JmriJFrameTestBase {
 
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new VSDecoderFrame();
-	}
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new VSDecoderFrame();
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         super.tearDown();

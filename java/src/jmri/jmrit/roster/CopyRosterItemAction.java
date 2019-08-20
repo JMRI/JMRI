@@ -57,7 +57,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         log.debug("doTransfer starts");
 
         // ensure preferences will be found
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // locate the file
         //File f = new File(mFullFromFilename);
@@ -83,7 +83,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
 
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(LocoFile.getFileLocation() + mToEntry.getFileName());
+        File fout = new File(Roster.getDefault().getRosterFilesLocation() + mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;

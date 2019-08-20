@@ -15,6 +15,7 @@ import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,20 +40,15 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cresman Copyright (C) 2009
  */
 public class DefaultConditionalManager extends AbstractManager<Conditional>
-        implements ConditionalManager, java.beans.PropertyChangeListener {
+        implements ConditionalManager {
 
-    public DefaultConditionalManager() {
-        super();
+    public DefaultConditionalManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.CONDITIONALS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -144,7 +140,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
      * special logic
      *
-     * @param name  system name of Conditional (must be trimmed and upper case)
+     * @param name  system name of Conditionals
      * @return the parent Logix or null
      */
     @Override
@@ -322,18 +318,19 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return nameList;
     }
 
-    static DefaultConditionalManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of the DefaultConditionalManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultConditionalManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultConditionalManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultConditionalManager.class);
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameConditional");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
     }
 
     // --- Conditional Where Used processes ---

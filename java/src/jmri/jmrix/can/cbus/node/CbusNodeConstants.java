@@ -337,7 +337,6 @@ public class CbusNodeConstants {
         result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "CANDISP"); // NOI18N
         result.put(60, "CANCOMPUTE"); // NOI18N
-        result.put(61, "CANCMDDC"); // NOI18N
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -468,7 +467,6 @@ public class CbusNodeConstants {
         result.put(58, "CBUS module based on Raspberry Pi");
         result.put(59, "25K80 version of CANLED64");
         result.put(60, "Event processing engine");
-        result.put(61, "8-Channel DC command station");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -594,7 +592,6 @@ public class CbusNodeConstants {
         // result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:candisp"); // NOI18N
         result.put(60, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cancompute"); // NOI18N
-        result.put(61, "https://www.merg.org.uk/forum/viewtopic.php?f=45&t=6376"); // NOI18N
         
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N
@@ -678,6 +675,73 @@ public class CbusNodeConstants {
         result.put(65534, "Reserved for Command Station");
         result.put(65535, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
+    }
+    
+    private static final Map<String, BackupType> nameIndex =
+            new HashMap<String, BackupType>(BackupType.values().length);
+    static {
+        for (BackupType t : BackupType.values()) {
+            nameIndex.put(t.name(), t);
+        }
+    }
+    
+    private static final Map<BackupType, String> displayPhraseIndex =
+            new HashMap<BackupType, String>(BackupType.values().length);
+    static {
+        displayPhraseIndex.put(BackupType.INCOMPLETE, Bundle.getMessage("BackupIncomplete"));
+        displayPhraseIndex.put(BackupType.COMPLETE, Bundle.getMessage("BackupComplete"));
+        displayPhraseIndex.put(BackupType.COMPLETEDWITHERROR, Bundle.getMessage("BackupCompleteError"));
+        displayPhraseIndex.put(BackupType.NOTONNETWORK, Bundle.getMessage("BackupNotOnNetwork"));
+        displayPhraseIndex.put(BackupType.OUTSTANDING, Bundle.getMessage("BackupOutstanding"));
+    }
+    
+    /*
+     * Get the display phrase for an enum value
+     * <p>
+     * eg. displayPhrase(BackupType.INCOMPLETE) will return "Backup InComplete"
+     *
+     * @param type The enum to translate
+     * @return The phrase
+     *
+     */
+    public static String displayPhrase(BackupType type) {
+        return displayPhraseIndex.get(type);
+    }
+    
+    /*
+     * Get the enum type for a String value
+     * <p>
+     * eg. lookupByName("Complete") will return BackupType.COMPLETE
+     *
+     * @param name The String to lookup
+     * @return The BackupType enum, else null
+     *
+     */
+    public static BackupType lookupByName(String name) {
+        return nameIndex.get(name);
+    }
+    
+    /*
+     * enum to represent Node Backup Conditions in a CBUS Node XML File
+     *
+     */
+    public enum BackupType{
+        INCOMPLETE(0),
+        COMPLETE(1),
+        COMPLETEDWITHERROR(2),
+        NOTONNETWORK(3),
+        OUTSTANDING(4);
+        
+        private final int v;
+
+        private BackupType(final int v) {
+            this.v = v;
+        }
+    
+        public int getValue() {
+            return v;
+        }
+    
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeConstants.class);

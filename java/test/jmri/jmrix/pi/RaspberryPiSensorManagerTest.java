@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * Tests for RaspberryPiSensorManager.
  * <p>
- * This is somehow not reseting the GPIO support, so each reference to a "pin"
+ * This is somehow not resetting the GPIO support, so each reference to a "pin"
  * needs to be do a different one, even across multiple test types.
  *
  * @author Paul Bender Copyright (C) 2016
@@ -19,7 +19,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
 
     @Override
     public String getSystemName(int i) {
-        return "PIS" + i;
+        return l.getSystemPrefix() + "S" + i;
     }
 
     @Test
@@ -29,7 +29,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
 
     @Test
     public void checkPrefix(){
-        Assert.assertEquals("Prefix","PI",l.getSystemPrefix());
+        Assert.assertEquals("Prefix", "P", l.getSystemPrefix());
     }
 
     @Override
@@ -96,7 +96,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @Override
     @Test
     public void testPullResistanceConfigurable(){
-       Assert.assertTrue("Pull Resistance Configurable",l.isPullResistanceConfigurable());
+       Assert.assertTrue("Pull Resistance Configurable", l.isPullResistanceConfigurable());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiSensorManager("Pi");
+       l = new RaspberryPiSensorManager(new RaspberryPiSystemConnectionMemo());
     }
 
     @After

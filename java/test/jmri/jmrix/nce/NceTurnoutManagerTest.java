@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnoutManager class
@@ -18,7 +16,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
 
     private NceInterfaceScaffold nis = null;
 
-    @After 
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -31,7 +29,7 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         // prepare an interface, register
         nis = new NceInterfaceScaffold();
         // create and register the manager object
-        l = new NceTurnoutManager(nis, "N");
+        l = new NceTurnoutManager(nis.getAdapterMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
@@ -45,25 +43,13 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("NT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
-        Assert.assertTrue(null != (NceTurnout) o);
+        Assert.assertNotNull(o);
 
-        // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("NT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("NT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertEquals(o, l.getBySystemName("NT21"));
+        Assert.assertEquals(o, l.getByUserName("my name"));
 
     }
 
-
-    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceTurnoutManagerTest.class);
 
 }

@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
- * Abstract base for classes representing a CMRI communications port
+ * Abstract base for classes representing a CMRI communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -28,4 +28,5 @@ public abstract class SerialPortAdapter extends jmri.jmrix.AbstractSerialPortCon
     // check that this object is ready to operate
     @Override
     public abstract boolean status();
+
 }

@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
+import jmri.InstanceManager;
 import jmri.Reportable;
 import jmri.LocoAddress;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -86,6 +88,28 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testLnReporterGetLocoAddress() {
         LocoAddress t = ((LnReporter)r).getLocoAddress("7413 enter");
         Assert.assertEquals("getLocoAddress", t.getNumber(), 7413);
+    }
+
+    @Test
+    public void testCollectionAfterMessage() {
+        LnReporter lr = ((LnReporter)r);
+
+        LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x20, 0x02, 0x7D, 0x03, 0x73});
+        lr.message(l);
+
+       // Check that the collection has one element.
+       Assert.assertEquals("Collection Size 1 after message", 1, lr.getCollection().size());
+       Assert.assertTrue("Current Report contained in collection",lr.getCollection().contains(lr.getCurrentReport()));
+
+
+        l = new LocoNetMessage(new int[]{0xD0, 0x00, 0x02, 0x7D, 0x03, 0x53});
+        lr.message(l);
+
+       // Check that the collection wass cleared.
+       Assert.assertEquals("Collection Size 0 after clear message", 0, lr.getCollection().size());
+       Assert.assertTrue("Collection Empty", lr.getCollection().isEmpty());
+       // eventually, the current report should be changed to null on an exit.
+       //Assert.assertNull("Current Report Null",lr.getCurrentReport());
     }
 
     private jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;

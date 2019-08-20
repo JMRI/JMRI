@@ -125,6 +125,7 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonSignalHeadHttpService(mapper);
@@ -133,6 +134,7 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }

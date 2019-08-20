@@ -152,7 +152,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
         if (getProtocol() == Mx1Packetizer.BINARY) {
-            turnoutManager = new Mx1TurnoutManager(getMx1TrafficController(), getSystemPrefix());
+            turnoutManager = new Mx1TurnoutManager(this);
             InstanceManager.setTurnoutManager(turnoutManager);
         }
     }

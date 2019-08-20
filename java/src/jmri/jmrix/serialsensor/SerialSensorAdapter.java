@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
 import jmri.InstanceManager;
@@ -27,8 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
-public class SerialSensorAdapter extends AbstractSerialPortController
-        implements jmri.jmrix.SerialPortAdapter {
+public class SerialSensorAdapter extends AbstractSerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -176,7 +176,8 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps.
+     * {@inheritDoc}
+     * Currently only 19,200 bps.
      */
     @Override
     public String[] validBaudRates() {
@@ -184,8 +185,22 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     }
 
     /**
-     * Set the baud rate. This currently does nothing, as there's only one
-     * possible value
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     * This currently does nothing, as there's only one
+     * possible value.
      */
     @Override
     public void configureBaudRate(String rate) {

@@ -1,8 +1,9 @@
 package jmri.jmrix;
 
+import java.util.ResourceBundle;
+import jmri.InstanceManager;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,7 +57,7 @@ abstract public class SystemConnectionMemoTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists",scm);
+        Assert.assertNotNull("exists", scm);
     }
 
     @Test
@@ -67,10 +68,25 @@ abstract public class SystemConnectionMemoTestBase {
     @Test
     public void testGetAndSetPrefix() {
        scm.setSystemPrefix("A2");
-       Assert.assertEquals("System Prefix after set","A2",scm.getSystemPrefix());
+       Assert.assertEquals("System Prefix after set", "A2", scm.getSystemPrefix());
     }
 
-    // The minimal setup for log4J
+    @Test
+    public void testMultipleMemosSamePrefix() {
+        SystemConnectionMemo t = new SystemConnectionMemo("t", "test"){
+            @Override
+            protected ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+        };
+        Assert.assertEquals("t", t.getSystemPrefix());
+        t.register();
+        Assert.assertTrue(InstanceManager.getList(SystemConnectionMemo.class).contains(t));
+        Assert.assertFalse(scm.setSystemPrefix("t"));
+        Assert.assertTrue(scm.setSystemPrefix("t2"));
+        Assert.assertEquals("t2", scm.getSystemPrefix());
+    }
+    
     @Before
     abstract public void setUp();
 

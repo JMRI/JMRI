@@ -22,6 +22,7 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -33,6 +34,7 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -138,41 +138,38 @@ abstract public class PaneProgFrame extends JmriJFrame
     protected void installComponents() {
 
         // create ShutDownTasks
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-
-            if (decoderDirtyTask == null) {
-                decoderDirtyTask
-                        = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                                Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
-                                (String) null, this
-                        ) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        return !checkDirtyDecoder();
-                    }
-                };
-            }
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
-            if (fileDirtyTask == null) {
-                fileDirtyTask
-                        = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                                Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
-                                Bundle.getMessage("PromptSaveQuit"), this
-                        ) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        return !checkDirtyFile();
-                    }
-
-                    @Override
-                    public boolean doPrompt() {
-                        boolean result = storeFile(); // storeFile false if failed, abort shutdown
-                        return result;
-                    }
-                };
-            }
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
+        if (decoderDirtyTask == null) {
+            decoderDirtyTask
+                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                            Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
+                            (String) null, this
+                    ) {
+                @Override
+                public boolean checkPromptNeeded() {
+                    return !checkDirtyDecoder();
+                }
+            };
         }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
+        if (fileDirtyTask == null) {
+            fileDirtyTask
+                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                            Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
+                            Bundle.getMessage("PromptSaveQuit"), this
+                    ) {
+                @Override
+                public boolean checkPromptNeeded() {
+                    return !checkDirtyFile();
+                }
+
+                @Override
+                public boolean doPrompt() {
+                    boolean result = storeFile(); // storeFile false if failed, abort shutdown
+                    return result;
+                }
+            };
+        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
 
         // Create a menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -878,13 +875,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         // deregister shutdown hooks
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(decoderDirtyTask);
-        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(decoderDirtyTask);
         decoderDirtyTask = null;
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(fileDirtyTask);
-        }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(fileDirtyTask);
         fileDirtyTask = null;
 
         // do the close itself

@@ -97,7 +97,7 @@
 
       <p>On the server computer, open the Preferences, and select
       the Start Up group. click the "Add &#9662;" button, select
-      "Perform action..." and select "Start Simple JMRI Server"
+      "Perform action..." and select "Start JMRI Simple Server"
       from the list of options. Save the preferences and restart
       the program.</p>
 

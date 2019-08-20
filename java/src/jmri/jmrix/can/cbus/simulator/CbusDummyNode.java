@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.simulator;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusSend;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusSimulator
  * @since 4.15.2
  */
-public class CbusDummyNode extends CbusNode implements CanListener {
+public class CbusDummyNode extends CbusNode {
     
     private TrafficController tc;
     private CanSystemConnectionMemo memo;
@@ -155,10 +154,10 @@ public class CbusDummyNode extends CbusNode implements CanListener {
      */
     @Override
     public void addNewEvent( CbusNodeEvent newEvent ) {
-        if (_nodeEvents == null) {
+        if (getTotalNodeEvents() == -1) {
             resetNodeEvents();
         }
-        _nodeEvents.add(newEvent);
+        super.addNewEvent(newEvent);
     }
     
     private void sendENRSP(){
@@ -189,6 +188,14 @@ public class CbusDummyNode extends CbusNode implements CanListener {
             sendCMDERR(7);
             return;
         }
+        
+        // for future sim. of CMDERR5 support
+        // if (varIndex>40) {
+        //    
+        //    sendCMDERR(5);
+        //    return;
+        // }
+        
         try {
             CanReply r = new CanReply(6);
             r.setElement(0, CbusConstants.CBUS_NEVAL);
@@ -306,7 +313,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     // sim of FiLM Button
     public void flimButton() {
         // send request for node number
-        if ( getNodeType() >0 ) {
+        if ( getParameter(3) >0 ) { // module type set
             setNodeInSetupMode(true);
             CanReply r = new CanReply(3);
             r.setElement(0, CbusConstants.CBUS_RQNN);
@@ -347,7 +354,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
 
     private void passMessage(CanMessage m) {
         // log.debug("dummy node canMessage {}",m);
-        if ( getNodeType() == 0 ) {
+        if ( getParameter(3) == 0 ) { // module type unset
             return;
         }
         int opc = m.getElement(0);

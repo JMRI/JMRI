@@ -11,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class FunctionPanelTest {
 
@@ -21,17 +21,17 @@ public class FunctionPanelTest {
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
         RosterEntry re = new RosterEntry("file here");
-        FunctionPanel t = new FunctionPanel(re,ltf);
-        Assert.assertNotNull("exists",t);
+        FunctionPanel t = new FunctionPanel(re, ltf);
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -40,5 +40,4 @@ public class FunctionPanelTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(FunctionPanelTest.class);
-
 }

@@ -247,6 +247,7 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
+    @Override
     public String toMonitorString() {
         switch(getOpCode()){
            case 0x0010:

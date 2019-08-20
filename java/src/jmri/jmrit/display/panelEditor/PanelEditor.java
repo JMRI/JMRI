@@ -229,8 +229,9 @@ public class PanelEditor extends Editor implements ItemListener {
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    if (getTargetPanel().getTopLevelAncestor() != null) {
-                        ((JFrame) getTargetPanel().getTopLevelAncestor()).setTitle(newName);
+                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
+                    if (ancestor instanceof JFrame) {
+                        ((JFrame) ancestor).setTitle(newName);
                     }
                     editor.setTitle();
                     InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(editor);
@@ -1138,7 +1139,7 @@ public class PanelEditor extends Editor implements ItemListener {
         }
         if (!removed) {
             _selectionGroup.add(p);
-        } else if (removed && _selectionGroup.isEmpty()) {
+        } else if (_selectionGroup.isEmpty()) {
             _selectionGroup = null;
         }
         _targetPanel.repaint();

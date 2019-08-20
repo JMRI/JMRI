@@ -24,6 +24,7 @@ public class JynstrumentTest {
            public void init(){
            }
 
+           @Override
            protected void quit(){
            }
         };

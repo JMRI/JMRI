@@ -13,18 +13,16 @@ import jmri.Turnout;
  */
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    public MrcTurnoutManager(MrcTrafficController tc, String prefix) {
-        super();
-        this.prefix = prefix;
-        this.tc = tc;
+    public MrcTurnoutManager(MrcSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getMrcTrafficController();
     }
 
-    String prefix = "";
     MrcTrafficController tc = null;
 
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public MrcSystemConnectionMemo getMemo() {
+        return (MrcSystemConnectionMemo) memo;
     }
 
     @Override

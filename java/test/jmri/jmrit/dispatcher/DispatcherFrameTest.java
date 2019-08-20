@@ -2,7 +2,6 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.Scale;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -168,6 +167,8 @@ public class DispatcherFrameTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After

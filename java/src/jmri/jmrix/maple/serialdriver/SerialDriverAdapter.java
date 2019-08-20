@@ -16,12 +16,12 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Maple via a serial comm port. Normally controlled by the
+ * Provide access to Maple via a serial com port. Normally controlled by the
  * maple.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  */
-public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -167,12 +167,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(selectedSpeed)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
@@ -181,38 +176,34 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Set the baud rate.
+     * {@inheritDoc}
      */
     @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 57600};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 1;
+    }
 
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @deprecated JMRI Since 4.11.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated 
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

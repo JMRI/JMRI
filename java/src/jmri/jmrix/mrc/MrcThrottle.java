@@ -32,7 +32,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     public MrcThrottle(MrcSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getMrcTrafficController();
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -208,7 +208,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         this.speedSetting = speed;
         MrcMessage m;
         int value;
-        if (super.speedStepMode == SpeedStepMode128) {
+        if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             log.debug("setSpeedSetting= {}", speed); //IN18N
             //MRC use a value between 0-127 no matter what the controller is set to
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop

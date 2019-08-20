@@ -25,6 +25,7 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new JMRIClientSystemConnectionMemo();
@@ -36,6 +37,7 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
 	memo = null;
 	panel = pane = null;

@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -16,23 +17,21 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    GrapevineSystemConnectionMemo memo = null;
-
-    public SerialTurnoutManager(GrapevineSystemConnectionMemo _memo) {
-       memo = _memo;
+    public SerialTurnoutManager(GrapevineSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * Return the Grapevine system prefix.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public GrapevineSystemConnectionMemo getMemo() {
+        return (GrapevineSystemConnectionMemo) memo;
     }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        String prefix = memo.getSystemPrefix();
+        String prefix = getSystemPrefix();
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
@@ -51,24 +50,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName, memo);
+        t = new SerialTurnout(sName, userName, getMemo());
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T', memo.getTrafficController())) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo().getTrafficController())) {
             // system name does not correspond to configured hardware
             log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         log.debug("new turnout {} for prefix {}", systemName, prefix);
         return t;
-    }
-
-    /**
-     *
-     * @deprecated  Since JMRI 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
     }
 
     @Override
@@ -157,25 +147,19 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return 'true' if system name has a valid format,
-     * else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
     /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else
-     * returns ""
+     * {@inheritDoc}
      */
     @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
+    public NameValidity validSystemNameFormat(String systemName) {
+        return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 
     /**

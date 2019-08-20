@@ -2,8 +2,8 @@ package jmri.jmrix.dccpp;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,14 +49,16 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     public DCCppThrottle(DCCppSystemConnectionMemo memo, LocoAddress address, DCCppTrafficController controller) {
         super(memo);
         this.tc = controller;
-        this.setDccAddress(((DccLocoAddress) address).getNumber());
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
-        this.speedStepMode = DccThrottle.SpeedStepMode128;
+        if (address instanceof DccLocoAddress) {
+            this.setDccAddress(((DccLocoAddress) address).getNumber());
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",address);
+        }
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
-        if (log.isDebugEnabled()) {
-            log.debug("DCCppThrottle constructor called for address " + address);
-        }
+        log.debug("DCCppThrottle constructor called for address {}", address);
     }
 
     /*
@@ -204,7 +206,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * setting, even though we store it.
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
     }
 
@@ -237,14 +239,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     protected int getDccAddressLow() {
         return DCCppCommandStation.getDCCAddressLow(this.address);
-    }
-
-
-    // to handle quantized speed. Note this can change! Valued returned is
-    // always positive.
-    @Override
-    public float getSpeedIncrement() {
-        return speedIncrement;
     }
 
     // Handle incoming messages for This throttle.

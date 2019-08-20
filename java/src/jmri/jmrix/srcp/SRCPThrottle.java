@@ -3,6 +3,7 @@ package jmri.jmrix.srcp;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -24,11 +25,11 @@ public class SRCPThrottle extends AbstractThrottle {
      */
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address) {
         // default to 128 speed steps with 28 functions and NMRA protocl.
-        this(memo, address, "N", SpeedStepMode128, 28);
+        this(memo, address, "N", SpeedStepMode.NMRA_DCC_128, 28);
     }
 
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
-            String protocol, int mode, int functions) {
+            String protocol, SpeedStepMode mode, int functions) {
         super(memo);
         if (!protocol.equals("N")) {
             throw new IllegalArgumentException("Protocol " + protocol + " not supported");
@@ -208,23 +209,20 @@ public class SRCPThrottle extends AbstractThrottle {
         ((SRCPBusConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(m, null);
     }
 
-    @Override
-    public void setSpeedStepMode(int Mode) {
-        super.setSpeedStepMode(Mode);
-        switch (Mode) {
-            case SpeedStepMode14:
-                maxsteps = 14;
+    @Override	
+    public void setSpeedStepMode(SpeedStepMode Mode) {	
+        super.setSpeedStepMode(Mode);	
+        switch (Mode) {	
+            case NMRA_DCC_14:	
+            case NMRA_DCC_27:	
+            case NMRA_DCC_28:	
+            case NMRA_DCC_128:
+                maxsteps = Mode.numSteps;
+                break;	
+            default:	
+                maxsteps = 126;	
                 break;
-            case SpeedStepMode27:
-                maxsteps = 27;
-                break;
-            case SpeedStepMode28:
-                maxsteps = 28;
-                break;
-            case SpeedStepMode128:
-            default:
-                maxsteps = 126;
-        }
+        }	
     }
 
     @Override

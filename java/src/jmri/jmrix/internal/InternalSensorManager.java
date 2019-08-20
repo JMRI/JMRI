@@ -12,13 +12,8 @@ import org.slf4j.LoggerFactory;
  */
 public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
-    public InternalSensorManager() {
-        log.debug("InternalSensorManager constructed");
-    }
-    
-    public InternalSensorManager(String prefix) {
-        log.debug("InternalSensorManager constructed");
-        this.prefix = prefix;
+    public InternalSensorManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
     
     /** {@inheritDoc} */
@@ -64,12 +59,6 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
     /** {@inheritDoc} */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
@@ -111,10 +100,12 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class);

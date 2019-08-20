@@ -35,43 +35,48 @@
       programming capabilities. These include:</p>
 
       <dl>
-        <dt><a href="../signaling/index.shtml">Signaling</a></dt>
 
+        <dt><a href="../signaling/index.shtml">Signaling</a></dt>
         <dd>JMRI provides signaling logic from simple to
         prototypical, which can be used to drive your signals in
         many applications.</dd>
 
-        <dt><a href="../Routes.shtml">Routes</a></dt>
+        <dt><a href="../EntryExit.shtml">Entry Exit (NX)</a></dt>
+        <dd>NX Routing builds a dynamic valid path between two
+        locations on a
+        <a href="../../apps/PanelPro/index.shtml#le">Layout Editor
+        Panel</a>.</dd>
 
+        <dt><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dt>
+        <dd>Warrants let you automatically run trains on layouts with
+        <a href="../../apps/PanelPro/index.shtml#cpe">Control Panel Editor Panels</a>.</dd>
+
+        <dt><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dt>
+        <dd>Dispatcher lets you dispatch and (automatically) run
+        trains on layouts with <a href="../../apps/PanelPro/index.shtml#le">Layout
+        Editor Panels</a>.</dd>
+
+        <dt><a href="../Routes.shtml">Routes</a></dt>
         <dd>A simple form of automation is to define Routes, which
         allow you to simplify the control of your turnouts.</dd>
 
-        <dt><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dt>
-
-        <dd>Dispatcher lets you dispatch and (automatically) run
-          trains on layouts with <a href="../../apps/PanelPro/PanelPro.shtml#le">Layout Editor Panels</a>.</dd>
-
-        <dt><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dt>
-
-        <dd>Warrants let you automatically run trains on layouts with
-          <a href="../../apps/PanelPro/PanelPro.shtml#cpe">Control Panel Editor Panels</a>.</dd>
+        <dt><a href="../uss/index.shtml">USS CTC</a></dt>
+        <dd>A set of tools to help in the automation of US&amp;S CTC Panels.</dd>
 
         <dt><a href="../Logix.shtml">Logix</a></dt>
-
         <dd>Using JMRI Logix, you can specify actions to happen
         when various conditions occur on the layout.</dd>
 
         <dt><a href="../scripting/index.shtml">Scripting</a></dt>
-
         <dd>JMRI provides a very powerful scripting tool. Based on
         a real programming language, it gives you access to all the
         JMRI capabilities.</dd>
 
         <dt><a href="viaJava.shtml">Writing your own code in
         Java</a></dt>
-
         <dd>The JMRI libraries greatly simplify writing a program
         to make your layout do exactly what you want.</dd>
+
       </dl>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

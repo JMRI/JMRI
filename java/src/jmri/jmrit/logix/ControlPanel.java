@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.EnumSet;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JInternalFrame;
@@ -21,6 +23,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.DccThrottle;
+import jmri.SpeedStepMode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +69,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private int MAX_SPEED = 126;
 
     // Save the speed step mode to aid in storage of the throttle.
-    //private int _speedStepMode = DccThrottle.SpeedStepMode128;
+    //private int _speedStepMode = SpeedStepMode.NMRA_DCC_128;
     /**
      * Constructor.
      */
@@ -148,7 +152,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 _emergencyStop = (speed < 0.0F);
             }
         } else if (e.getPropertyName().equals("SpeedSteps")) {
-            int steps = ((Integer) e.getNewValue()).intValue();
+            SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedSteps(steps);
             _throttleFrame.setSpeedStepMode(steps);
         } else if (e.getPropertyName().equals("IsForward")) {
@@ -190,23 +194,23 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * @param steps Desired number of speed steps. One of 14,27,28,or 128.
      *              Defaults to 128 step mode
      */
-    public void setSpeedSteps(int steps) {
+    public void setSpeedSteps(SpeedStepMode steps) {
         // Save the old speed as a float
         float oldSpeed = (speedSlider.getValue() / (MAX_SPEED * 1.0f));
 
-        if (steps == DccThrottle.SpeedStepMode14) {
+        if (steps == SpeedStepMode.NMRA_DCC_14) {
             speedStep14Button.setSelected(true);
             speedStep27Button.setSelected(false);
             speedStep28Button.setSelected(false);
             speedStep128Button.setSelected(false);
             MAX_SPEED = 14;
-        } else if (steps == DccThrottle.SpeedStepMode27) {
+        } else if (steps == SpeedStepMode.NMRA_DCC_27) {
             speedStep14Button.setSelected(false);
             speedStep27Button.setSelected(true);
             speedStep28Button.setSelected(false);
             speedStep128Button.setSelected(false);
             MAX_SPEED = 27;
-        } else if (steps == DccThrottle.SpeedStepMode28) {
+        } else if (steps == SpeedStepMode.NMRA_DCC_28) {
             speedStep14Button.setSelected(false);
             speedStep27Button.setSelected(false);
             speedStep28Button.setSelected(true);
@@ -395,32 +399,32 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedStep14Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setSpeedSteps(DccThrottle.SpeedStepMode14);
-                _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode14);
+                setSpeedSteps(SpeedStepMode.NMRA_DCC_14);
+                _throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
             }
         });
 
         speedStep27Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setSpeedSteps(DccThrottle.SpeedStepMode27);
-                _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode27);
+                setSpeedSteps(SpeedStepMode.NMRA_DCC_27);
+                _throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_27);
             }
         });
 
         speedStep28Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setSpeedSteps(DccThrottle.SpeedStepMode28);
-                _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
+                setSpeedSteps(SpeedStepMode.NMRA_DCC_28);
+                _throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
             }
         });
 
         speedStep128Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setSpeedSteps(DccThrottle.SpeedStepMode128);
-                _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
+                setSpeedSteps(SpeedStepMode.NMRA_DCC_128);
+                _throttle.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
             }
         });
         // set by default which speed selection method is on top
@@ -503,23 +507,23 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * DCC system
      */
     private void configureAvailableSpeedStepModes() {
-        int modes = jmri.InstanceManager.throttleManagerInstance().supportedSpeedModes();
-        if ((modes & DccThrottle.SpeedStepMode128) != 0) {
+        EnumSet<SpeedStepMode> modes = jmri.InstanceManager.throttleManagerInstance().supportedSpeedModes();
+        if (modes.contains(SpeedStepMode.NMRA_DCC_128)) {
             speedStep128Button.setEnabled(true);
         } else {
             speedStep128Button.setEnabled(false);
         }
-        if ((modes & DccThrottle.SpeedStepMode28) != 0) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_28)) {
             speedStep28Button.setEnabled(true);
         } else {
             speedStep28Button.setEnabled(false);
         }
-        if ((modes & DccThrottle.SpeedStepMode27) != 0) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_27)) {
             speedStep27Button.setEnabled(true);
         } else {
             speedStep27Button.setEnabled(false);
         }
-        if ((modes & DccThrottle.SpeedStepMode14) != 0) {
+        if (modes.contains(SpeedStepMode.NMRA_DCC_14)) {
             speedStep14Button.setEnabled(true);
         } else {
             speedStep14Button.setEnabled(false);

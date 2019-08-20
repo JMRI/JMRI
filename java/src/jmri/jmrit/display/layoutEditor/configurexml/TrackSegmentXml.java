@@ -84,7 +84,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 
         // store decorations
         Map<String, String> decorations = p.getDecorations();
-        if ((decorations != null) && (decorations.size() > 0)) {
+        if (decorations.size() > 0) {
             Element decorationsElement = new Element("decorations");
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
                 String name = entry.getKey();

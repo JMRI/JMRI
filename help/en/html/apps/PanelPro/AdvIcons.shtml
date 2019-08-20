@@ -24,9 +24,58 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Advanced Icons in PanelPro</h1><a name="memoryicon"
-      id="memoryicon"></a>
+      <h1>JMRI: Icons in (Control) Panel Editor</h1>
 
+        <h3>Select an Icon to use</h3>
+        <p>To select the icon, click the "Change
+        Icon..." button to pop an icon editor panel.<br>
+        <a href="../../../package/jmri/jmrit/display/images/PanelEditor.png"><img src=
+        "../../../package/jmri/jmrit/display/images/PanelEditor.png" alt=
+        "Screen shot of panel editor" width="299" height="392"
+        hspace="0" vspace="0" align="right"></a>
+        <br>
+        The current icon is shown at the top. To change it, use the
+        tree in the bottom of the window to select a new one, then
+        click on the icon at the top of the icon editor panel to
+        load the selected icon. This is a general mechanism: Any
+        icon on an icon editor window can be replaced by selecting
+        the desired new one and clicking on the icon to be
+        replaced.</p>
+
+        <h3>Available Icons</h3>
+        <p>The JMRI library contains lots of user
+        contributed icons for representing CTC panels, LEDs, etc. You
+        can browse through them with the tree in the bottom of the
+        editor frame. Perhaps the best way to see what each looks
+        like is to select it in the tree, then click on the icon next
+        to the "Add icon" button. That will load it.</p>
+
+        <p>You can also create your own icons and use them by
+        selecting from the "file" section.</p>
+
+        <p>For little bits of track, e.g. to connect turnouts, you
+        might want</p>
+        <pre>
+ resources -&gt; icons -&gt; small schematics -&gt;tracksegments
+</pre>then block.gif, etc.
+
+        <p>We do need to do a better job of organizing the available
+        icons!</p>
+
+        <h3>Manipulating Icons</h3>To move an icon around on the
+        panel, you "meta-drag" it. On a Mac, that's "hold the cmd key
+        and drag with the cursor"; on windows, it might be the
+        Windows or control key. Or it might be a right-drag. Sorry, I
+        don't have a Windows machine here to figure it out.
+
+        <p>There's also a pop-up menu (ctrl-click on a Mac) that will
+        provide various ways to manipulate the icon. It will let you
+        rotate the icon so that it points in whatever direction you
+        want. Text labels can have their font, size and color
+        changed. You can also remove icons from the panel with the
+        popup menu.</p>
+
+      <a name="memoryicon" id="memoryicon"></a>
       <h3>Memory Icons</h3>Memory objects are meant for scripting
       control; the first implementation is a MemoryIcon that lets
       you put a multi-state icon on the screen.

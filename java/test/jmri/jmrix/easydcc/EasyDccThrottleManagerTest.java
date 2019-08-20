@@ -23,6 +23,7 @@ public class EasyDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new EasyDccTrafficControlScaffold(null);

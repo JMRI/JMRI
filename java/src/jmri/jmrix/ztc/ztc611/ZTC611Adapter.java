@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2017
  */
-public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class ZTC611Adapter extends XNetSerialPortController {
 
     public ZTC611Adapter() {
         super();
@@ -150,12 +150,7 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
@@ -169,13 +164,29 @@ public class ZTC611Adapter extends XNetSerialPortController implements jmri.jmri
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
     protected int[] validSpeedValues = new int[]{19200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};

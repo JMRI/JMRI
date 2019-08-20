@@ -13,25 +13,23 @@ import jmri.Turnout;
  */
 public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    private String prefix = null;
-    private XpaSystemConnectionMemo memo = null;
-
-    public XpaTurnoutManager(XpaSystemConnectionMemo m) {
-         super();
-         prefix = m.getSystemPrefix();
-         memo = m;
+    public XpaTurnoutManager(XpaSystemConnectionMemo memo) {
+         super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XpaSystemConnectionMemo getMemo() {
+        return (XpaSystemConnectionMemo) memo;
     }
 
     // Xpa-specific methods
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        Turnout t = new XpaTurnout(addr, memo);
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        Turnout t = new XpaTurnout(addr, getMemo());
         t.setUserName(userName);
         return t;
     }

@@ -2,6 +2,8 @@ package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -126,7 +128,8 @@ public class ConditionalTreeEditTest {
         jto.expandRow(0);
         jto.expandRow(2);
         jto.selectRow(4);
-        new JComboBoxOperator(editFrame, 2).selectItem("Sensor 4");  // NOI18N
+        Sensor sensor4 = InstanceManager.getDefault(SensorManager.class).getByUserName("Sensor 4"); // NOI18N
+        new JComboBoxOperator(editFrame, 2).getModel().setSelectedItem(sensor4);
 
         // Cancel and end the edit
         JButtonOperator jbo = new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel"));  // NOI18N

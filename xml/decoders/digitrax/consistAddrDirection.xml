@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>33</revnumber>
+      <date>2019-07-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>This file is deprecated in favor of the standard one</revremark>
+    </revision>
+    <revision>
       <revnumber>32</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -39,14 +45,5 @@
       <revremark>Revision in original Digitrax_01x3.xml file</revremark>
     </revision>
   </revhistory>
-  <variable CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
-    <decVal max="127"/>
-    <label>Advanced Consist address</label>
-    <label xml:lang="it">Indirizzo Consist Avanzati</label>
-  </variable>
-  <variable CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-    <label>Advanced Consist direction</label>
-    <label xml:lang="it">Direzione Consist Avanzati</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
 </variables>

@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     private ShutDownTask _shutDownTask;
 
     public DefaultCatalogTreeManager() {
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     /**
@@ -41,15 +43,6 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public int getXMLOrder() {
         return 65400;
-    }
-
-    /**
-     * This is a bogus systemPrefix. Naming is enforced in method
-     * createNewCatalogTree below.
-     */
-    @Override
-    public String getSystemPrefix() {
-        return "0";
     }
 
     /**
@@ -72,16 +65,15 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
 
     @Override
     public CatalogTree getBySystemName(String key) {
-        String name = key.toUpperCase();
         if (log.isDebugEnabled()) {
-            log.debug("getBySystemName: systemName= {}", name);
-            CatalogTree tree = _tsys.get(name);
+            log.debug("getBySystemName: systemName= {}", key);
+            CatalogTree tree = _tsys.get(key);
             if (tree != null) {
                 CatalogTreeNode root = tree.getRoot();
                 log.debug("root= {}, has {} children", root.toString(), root.getChildCount());
             }
         }
-        return _tsys.get(name);
+        return _tsys.get(key);
     }
 
     @Override
@@ -96,29 +88,28 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
             log.error("SystemName cannot be null. UserName= {}", userName);
             return null;
         }
-        String systemName = sysName.toUpperCase();
 
         // return existing if there is one
         CatalogTree s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
+            if (getBySystemName(sysName) != s) {
                 log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, s.getSystemName());
+                        userName, sysName, s.getSystemName());
             }
             return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        if ((s = getBySystemName(sysName)) != null) {
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
                 log.warn("Found memory via system name ({}) with non-null userName ({})",
-                        systemName, userName);
+                        sysName, userName);
             }
             return s;
         }
 
         // doesn't exist, make a new one
-        s = createNewCatalogTree(systemName, userName);
+        s = createNewCatalogTree(sysName, userName);
 
         // save in the maps
         register(s);
@@ -187,20 +178,9 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return null;
     }
 
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static DefaultCatalogTreeManager instance() {
-        return InstanceManager.getDefault(DefaultCatalogTreeManager.class);
-    }
-
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameCatalog");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");
     }
 
     @Override
@@ -216,6 +196,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
     }
 
+    @Override
     public boolean isIndexChanged() {
         return _indexChanged;
     }
@@ -223,32 +204,31 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
-        InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
-            if (changed) {
-                if (_shutDownTask == null) {
-                    _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
-                            Bundle.getMessage("IndexChanged"),
-                            Bundle.getMessage("SaveAndQuit"), null) {
-                        @Override
-                        public boolean checkPromptNeeded() {
-                            return !_indexChanged;
-                        }
+        jmri.ShutDownManager sdm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+        if (changed) {
+            if (_shutDownTask == null) {
+                _shutDownTask = new SwingShutDownTask("PanelPro Save default icon check",
+                        Bundle.getMessage("IndexChanged"),
+                        Bundle.getMessage("SaveAndQuit"), null) {
+                    @Override
+                    public boolean checkPromptNeeded() {
+                        return !_indexChanged;
+                    }
 
-                        @Override
-                        public boolean doPrompt() {
-                            storeImageIndex();
-                            return true;
-                        }
-                    };
-                    sdm.register(_shutDownTask);
-                }
-            } else {
-                if (_shutDownTask != null) {
-                    sdm.deregister(_shutDownTask);
-                    _shutDownTask = null;
-                }
+                    @Override
+                    public boolean doPrompt() {
+                        storeImageIndex();
+                        return true;
+                    }
+                };
+                sdm.register(_shutDownTask);
             }
-        });
+        } else {
+            if (_shutDownTask != null) {
+                sdm.deregister(_shutDownTask);
+                _shutDownTask = null;
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultCatalogTreeManager.class);

@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>13</minor>
-    <test>5</test>
+    <minor>15</minor>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -164,6 +164,7 @@
       <systemName>IF$xsm:AAR-1946:PL-2-high($0001)-3t</systemName>
       <userName>Matrix1</userName>
       <unlit allowed="no" />
+      <delay duration="0" />
       <outputs>
         <output matrixCol="output1">IT11</output>
         <output matrixCol="output2">IT12</output>
@@ -190,6 +191,7 @@
       <systemName>NF$dsm:AAR-1946:PL-2-high(12)</systemName>
       <userName>DCC1</userName>
       <unlit allowed="no" />
+      <packetsendcount>3</packetsendcount>
       <aspect defines="Clear">
         <number>1</number>
       </aspect>

@@ -30,17 +30,15 @@ public class NBHSignalHead extends NBHAbstractSignalCommon {
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
 //  The "thing" we're protecting:
     private final NamedBeanHandle<SignalHead> _mNamedBeanHandleSignalHead;
 
     protected NBHSignalHead(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal.trim());
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
             if (signalHead != null) {
-                _mNamedBeanHandleSignalHead = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalHead);
+                _mNamedBeanHandleSignalHead = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalHead);
                 return;
             }
         }
