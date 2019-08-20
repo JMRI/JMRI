@@ -126,7 +126,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
             default:
                 return;
         }
-        log.info("Reporter[{}]",addr);
+        log.debug("Reporter[{}]",addr);
         LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
         r.messageFromManager(l); // make sure it got the message
     }
