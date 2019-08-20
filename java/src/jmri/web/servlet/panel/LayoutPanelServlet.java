@@ -7,12 +7,16 @@ import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.util.ColorUtil;
+
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -88,8 +92,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         }
 
         // include LayoutBlocks
-        LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
-        java.util.Iterator<LayoutBlock> iter = tm.getNamedBeanSet().iterator();
+        LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        java.util.Iterator<LayoutBlock> iter = lbm.getNamedBeanSet().iterator();
         SensorManager sm = InstanceManager.sensorManagerInstance();
         int num = 0;
         while (iter.hasNext()) {
@@ -100,7 +104,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             }
             if (b.getUseCount() > 0) {
                 // save only those LayoutBlocks that are in use--skip abandoned ones
-                Element elem = new Element("layoutblock").setAttribute("systemname", b.getSystemName());
+                Element elem = new Element("layoutblock").setAttribute("systemName", b.getSystemName());
                 String uname = b.getUserName();
                 if (uname != null && !uname.isEmpty()) {
                     elem.setAttribute("username", uname);
@@ -137,18 +141,28 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         log.debug("Number of layoutblock elements: {}", num);
 
         // include LayoutTracks
+        TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         List<LayoutTrack> layoutTracks = editor.getLayoutTracks();
         for (Object sub : layoutTracks) {
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {
+                    if (e.getName() == "layoutturnout") { // add turnout systemName for layoutturnout 
+                        Attribute tna = e.getAttribute("turnoutname");
+                        if (tna != null) {
+                            Turnout t = tm.getTurnout(tna.getValue());
+                            if (t != null) {
+                                e.setAttribute("systemName", t.getSystemName());
+                            }
+                        }
+                    }
                     panel.addContent(e);
                 }
             } catch (Exception e) {
                 log.error("Error storing panel LayoutTrack element: " + e);
             }
         }
-        log.debug("Number of layoutblock elements: {}", layoutTracks.size());
+        log.debug("Number of LayoutTrack elements: {}", layoutTracks.size());
 
         //write out formatted document
         Document doc = new Document(panel);
