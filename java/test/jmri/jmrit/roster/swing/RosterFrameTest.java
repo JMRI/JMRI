@@ -275,6 +275,7 @@ public class RosterFrameTest {
         jmri.InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
         jmri.InstanceManager.setDefault(jmri.jmrit.symbolicprog.ProgrammerConfigManager.class, new jmri.jmrit.symbolicprog.ProgrammerConfigManager());
         JUnitUtil.initDebugProgrammerManager();
+        JUnitUtil.initRosterConfigManager();
         Roster.getDefault(); // ensure exists
         if(!GraphicsEnvironment.isHeadless()){
            frame = new RosterFrame();

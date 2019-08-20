@@ -490,6 +490,7 @@ public class PrintCarRosterAction extends AbstractAction {
         }
 
         private void loadSortByComboBox(JComboBox<String> box) {
+            box.removeAllItems();
             for (int i = panel.carsTableModel.SORTBY_NUMBER; i <= panel.carsTableModel.SORTBY_LAST; i++) {
                 box.addItem(panel.carsTableModel.getSortByName(i));
             }

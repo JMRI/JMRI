@@ -40,6 +40,7 @@ public class SpeedoConsoleActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initDebugThrottleManager();
     }

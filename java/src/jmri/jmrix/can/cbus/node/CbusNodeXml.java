@@ -322,12 +322,10 @@ public class CbusNodeXml {
      * Add an xml entry advising Node Not on Network
      */
     protected void nodeNotOnNetwork(){
-        
         CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
         newBup.setBackupResult(BackupType.NOTONNETWORK);
         _backupInfos.add(0,newBup);
         doStore(false);
-        
     }
 
     /**
@@ -361,23 +359,13 @@ public class CbusNodeXml {
 
     public static class CbusNodeBackupFile extends XmlFile {
         
-        private String fileLocation = FileUtil.getProfilePath() 
-            + "cbus" + File.separator;  // NOI18N
-
         public String getDefaultFileName(int nodeNum) {
             return getFileLocation() + getFileName(nodeNum);
         }
 
         public File getFile(int nodeNum, boolean store) {
-            // Verify that cbus:node directory exists
-            File chkdir = new File(getFileLocation());
-            if (!chkdir.exists()) {
-                if (!chkdir.mkdir()) {
-                    log.error("Create directory: cbus/ failed for node {} directory {}",
-                        nodeNum,getFileLocation());
-                    return null;
-                }
-            }
+            // Verify that cbus/node/ directory exists
+            FileUtil.createDirectory(getFileLocation());
             
             File file = findFile(getDefaultFileName(nodeNum));
             if (file == null && store) {
@@ -396,8 +384,9 @@ public class CbusNodeXml {
          *
          * @return path to location
          */
-        public String getFileLocation() {
-            return fileLocation;
+        public static String getFileLocation() {
+            return FileUtil.getUserFilesPath() 
+            + "cbus" + File.separator + "nodes" + File.separator;  // NOI18N
         }
         
         public boolean deleteFile(int nodeNum) {

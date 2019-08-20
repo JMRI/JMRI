@@ -40,7 +40,7 @@ import jmri.swing.JTablePersistenceManager;
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    EnginesTableModel enginesModel;
+    public EnginesTableModel enginesModel;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);

@@ -1,5 +1,7 @@
 package jmri.jmrit.consisttool;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -30,15 +33,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008
  */
-public class ConsistFile extends XmlFile {
+public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
     protected ConsistManager consistMan = null;
 
     public ConsistFile() {
         super();
         consistMan = InstanceManager.getDefault(jmri.ConsistManager.class);
-        // set the location to a subdirectory of the defined roster
-        // directory
+        Roster.getDefault().addPropertyChangeListener(this);
     }
 
     /**
@@ -310,23 +312,18 @@ public class ConsistFile extends XmlFile {
     }
 
     /**
-     * Defines the preferences subdirectory in which LocoFiles are kept by
-     * default.
+     * Returns the preferences subdirectory in which Consist Files are kept 
+     * this is relative to the roster files location. 
      */
-    static private String fileLocation = null;
-
     static public String getFileLocation() {
-        if( fileLocation == null) {
-           fileLocation = Roster.getDefault().getRosterLocation() + "roster" + File.separator + "consist" + File.separator;
-        }
-        return fileLocation;
+        return Roster.getDefault().getRosterFilesLocation() + "consist" + File.separator;
     }
 
+    /**
+     * @deprecated since 4.17.3 file location is determined by roster location.
+     */
+    @Deprecated
     static public void setFileLocation(String loc) {
-        fileLocation = loc;
-        if (!fileLocation.endsWith(File.separator)) {
-            fileLocation = fileLocation + File.separator;
-        }
     }
 
     /**
@@ -337,6 +334,23 @@ public class ConsistFile extends XmlFile {
     public static String defaultConsistFilename() {
         return getFileLocation() + "consist.xml";
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getSource() instanceof Roster) {
+            if (evt.getPropertyName().equals(RosterConfigManager.DIRECTORY)) {
+                try {
+                   this.writeFile(consistMan.getConsistList());
+                } catch(IOException ioe){
+                   log.error("Unable to write consist information to new consist folder");
+                }
+            }
+        }
+    }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ConsistFile.class);
 }

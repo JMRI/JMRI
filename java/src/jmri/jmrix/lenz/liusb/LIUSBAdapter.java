@@ -19,7 +19,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to XpressNet via a LIUSB on an FTDI Virtual Comm Port.
+ * Provide access to XpressNet via a LIUSB on an FTDI Virtual Com Port.
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author Paul Bender Copyright (C) 2005-2010
@@ -150,12 +150,7 @@ public class LIUSBAdapter extends XNetSerialPortController {
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
@@ -188,6 +183,11 @@ public class LIUSBAdapter extends XNetSerialPortController {
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600")};
     protected int[] validSpeedValues = new int[]{57600};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm23150")

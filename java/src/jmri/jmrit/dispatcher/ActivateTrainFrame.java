@@ -722,8 +722,8 @@ public class ActivateTrainFrame {
             trainName = (String) trainSelectBox.getSelectedItem();
             // get lead engine for this train
             Train train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(trainName);
-            if (train != null && train.getLeadEngine() != null) {
-                dccAddress = train.getLeadEngine().getDccAddress();
+            if (train != null) {
+                dccAddress = train.getLeadEngineDccAddress();
             }
         } else if (_TrainsFromUser) {
             trainName = trainNameField.getText();

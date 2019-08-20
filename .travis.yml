@@ -33,6 +33,11 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then start-pulseaudio-x11 ; fi
   # silence errors from firefox about dbus.
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dbus-launch ; fi
+  # install Code Climate test coverage reporter
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter ; fi
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
   - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
@@ -56,6 +61,7 @@ env:
   - MAVEN_OPTS=-Xmx1536m
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
+  - CC_TEST_REPORTER_ID=b584d95af6e0716d39b5117f5cbd365af573363628a7848b92b297a93c55fa42
   matrix:
   - HEADLESS=false STATIC=false
   - HEADLESS=true STATIC=false
@@ -70,3 +76,4 @@ matrix:
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then mvn jacoco:report coveralls:report -U -P travis-coverage ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && "$HEADLESS" == "false" ]] ; then JACOCO_SOURCE_PATH=java/src ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco ; ./cc-test-reporter upload-coverage ; fi

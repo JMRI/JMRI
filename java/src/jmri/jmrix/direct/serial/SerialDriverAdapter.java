@@ -186,6 +186,11 @@ public class SerialDriverAdapter extends PortController {
         return new int[]{19200};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialInStream = null;

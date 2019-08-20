@@ -121,11 +121,11 @@ public class CallOn {
                         if (ProjectsCommonSubs.isNullOrEmptyString(externalBlockName)) {
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError")); // NOI18N
                         }
-                        Block externalBlock = blockManager.getBlock(externalBlockName);
+                        Block externalBlock = InstanceManager.getDefault(BlockManager.class).getBlock(externalBlockName);
                         if (externalBlock == null) {
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError2"));    // NOI18N
                         }
-                        NamedBeanHandle<Block> namedBeanHandleExternalBlock = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(externalBlockName, externalBlock);
+                        NamedBeanHandle<Block> namedBeanHandleExternalBlock = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(externalBlockName, externalBlock);
                         _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, 0, null, namedBeanHandleExternalBlock, route));
                     }
                 } catch (CTCException e) { e.logError(); return; }
@@ -236,6 +236,4 @@ NOTE:
         return "Red";   // NOI18N    Should NEVER happen, but if programmers screw up, default to some "sane" value.
     }
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-    private static final BlockManager blockManager = InstanceManager.getDefault(BlockManager.class);
 }
