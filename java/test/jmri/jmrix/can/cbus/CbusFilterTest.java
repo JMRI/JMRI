@@ -12,8 +12,8 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -52,14 +52,14 @@ public class CbusFilterTest {
         @Override
         public void passIncrement(int id){ 
             _increments.addElement(id);
-            log.info("passIncrement id {} vector {}",id,_increments);
+            // log.info("passIncrement id {} vector {}",id,_increments);
         }
         
         @Override
         public void addNode(int nodenum, int position) {
             Assert.assertFalse("Node already in list",_nodes.contains(position));
             _nodes.addElement(nodenum);
-            log.info("nodenum position {} {} vector {}",nodenum,position,_nodes);
+            // log.info("nodenum position {} {} vector {}",nodenum,position,_nodes);
         }
     }
 
@@ -771,6 +771,6 @@ public class CbusFilterTest {
         _nodes = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusFilterTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusFilterTest.class);
 
 }

@@ -4092,10 +4092,11 @@ public class Llnmon {
             int[] packetInt = new int[len];
             packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
             packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-            if (len >= 2) {
-                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-            }
+
+            // len >= 2 always true at this point
+            packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+
             if (len >= 3) {
                 packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
                 packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));

@@ -38,8 +38,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
     private int _intAddr;
     private DccLocoAddress _dccAddr;
     protected int THROTTLE_TIMEOUT = 5000;
-    private boolean canErrorDialogDisplayed = false;
-    private boolean invalidRequestDialogDisplayed = false;
+    private JDialog canErrorDialog;
+    private JDialog invalidErrorDialog;
 
     private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
 
@@ -209,6 +209,20 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
         }
     }
 
+    private boolean isCanErrorDialogVisible(){
+        if ( canErrorDialog!=null && canErrorDialog.isVisible()) {
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean isInvalidErrorDialogVisible(){
+        if ( invalidErrorDialog!=null && invalidErrorDialog.isVisible()) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -373,51 +387,28 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                     case CbusConstants.ERR_LOCO_NOT_FOUND:
                         log.warn(Bundle.getMessage("ERR_LOCO_NOT_FOUND") + " {}", handle);
                         break;
-
                     case CbusConstants.ERR_CAN_BUS_ERROR:
                         log.error(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
-                        if (!java.awt.GraphicsEnvironment.isHeadless() && !canErrorDialogDisplayed){
-                            canErrorDialogDisplayed = true;
+                        if (!java.awt.GraphicsEnvironment.isHeadless() && !isCanErrorDialogVisible()){
                             jmri.util.ThreadingUtil.runOnGUI(() -> {
                                 JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
                                 pane.setMessageType(JOptionPane.ERROR_MESSAGE);
-                                JDialog dialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
-                                dialog.setModal(false);
-                                dialog.setVisible(true);
-                                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                                    @Override
-                                    public void windowClosed(java.awt.event.WindowEvent e) {
-                                        canErrorDialogDisplayed = false;
-                                    }
-                                    @Override
-                                    public void windowClosing(java.awt.event.WindowEvent e) {
-                                        canErrorDialogDisplayed = false;
-                                    }
-                                });
+                                canErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
+                                canErrorDialog.setModal(false);
+                                canErrorDialog.setVisible(true);
                                 return;
                             });
                         }
                         return;
                     case CbusConstants.ERR_INVALID_REQUEST:
                         log.error(Bundle.getMessage("ERR_INVALID_REQUEST"));
-                        if (!java.awt.GraphicsEnvironment.isHeadless() && !invalidRequestDialogDisplayed){
-                            invalidRequestDialogDisplayed = true;
+                        if (!java.awt.GraphicsEnvironment.isHeadless() && !isInvalidErrorDialogVisible()){
                             jmri.util.ThreadingUtil.runOnGUI(() -> {
                                 JOptionPane pane = new JOptionPane(Bundle.getMessage("ERR_INVALID_REQUEST"));
                                 pane.setMessageType(JOptionPane.ERROR_MESSAGE);
-                                JDialog dialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
-                                dialog.setModal(false);
-                                dialog.setVisible(true);
-                                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                                    @Override
-                                    public void windowClosed(java.awt.event.WindowEvent e) {
-                                        invalidRequestDialogDisplayed = false;
-                                    }
-                                    @Override
-                                    public void windowClosing(java.awt.event.WindowEvent e) {
-                                        invalidRequestDialogDisplayed = false;
-                                    }
-                                });
+                                invalidErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
+                                invalidErrorDialog.setModal(false);
+                                invalidErrorDialog.setVisible(true);
                                 return;
                             });
                         }

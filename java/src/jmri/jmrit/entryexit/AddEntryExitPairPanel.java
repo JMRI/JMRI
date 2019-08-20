@@ -303,13 +303,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     static final int NUMCOL = ENABLEDCOL + 1;
 
-    //Need to add a property change listener to catch when paths go active.
     class TableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
         //needs a method to for when panel changes
         //need a method to delete an item
         //Possibly also to set a route.
-        //Add a propertychange listener to hear when the route goes active.
+        // Since 4.17.4 has added functionality a property change listener to catch when paths go active.
         TableModel(LayoutEditor panel) {
             setPanel(panel);
             nxPairs.addPropertyChangeListener(this);
