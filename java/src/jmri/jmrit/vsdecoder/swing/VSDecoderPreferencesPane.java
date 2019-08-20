@@ -159,7 +159,7 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
         });
         jbSave.setVisible(false);
 
-        jbCancel.setText(Bundle.getMessage("VSDecoderPrefsReset"));
+        jbCancel.setText(Bundle.getMessage("ButtonCancel"));
         jbCancel.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {

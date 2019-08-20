@@ -256,7 +256,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
                 curFractionalMinutes = (int) CORRECTION - (int) (CORRECTION * frac_min);
                 setClock();
             }
-        } else if (setInternal && !correctFastClock && !synchronizeWithInternalClock) {
+        } else if (setInternal) {
             inSyncWithInternalFastClock = false;
             initiateRead();
         }

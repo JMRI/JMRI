@@ -789,11 +789,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     }
 
     private boolean handleMessageDuplexInfoQuery(LocoNetMessage m) {
-        if (getDuplexGroupIdentityMessageType(m) == DuplexGroupMessageType.DUPLEX_GROUP_NAME_QUERY_MESSAGE) {
-            return true;
-        } else {
-            return false;
-        }
+        return (getDuplexGroupIdentityMessageType(m) == DuplexGroupMessageType.DUPLEX_GROUP_NAME_QUERY_MESSAGE);
     }
 
     /**
@@ -815,16 +811,14 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             // remove trailing spaces from name
             i = (gr_name.length() - 1);
             while ((gr_name.charAt(i) == ' ') && (i > 0)) {
-                if (i > 0) {
-                    gr_name = gr_name.substring(0, i);
-                }
+                gr_name = gr_name.substring(0, i);
                 i--;
             }
             gr_password = extractDuplexGroupPassword(m);
             gr_ch = extractDuplexGroupChannel(m);
             gr_id = extractDuplexGroupID(m);
 
-            if (awaitingGroupReadReport == true) {
+            if (awaitingGroupReadReport) {
                 awaitingGroupReadReport = false;
                 acceptedGroupName = gr_name;
                 acceptedGroupChannel = Integer.toString(gr_ch, LnDplxGrpInfoImplConstants.GENERAL_DECIMAL_RADIX);
