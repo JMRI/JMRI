@@ -147,7 +147,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {
-                    if (e.getName() == "layoutturnout") { // add turnout systemName for layoutturnout 
+                    if (e.getName().equals("layoutturnout")) { // add turnout systemName for layoutturnout 
                         Attribute tna = e.getAttribute("turnoutname");
                         if (tna != null) {
                             Turnout t = tm.getTurnout(tna.getValue());
