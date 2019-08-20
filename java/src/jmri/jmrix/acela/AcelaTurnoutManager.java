@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * to establish Acela support.
  */
 public class AcelaTurnoutManager extends AbstractTurnoutManager {
- 
+
     public AcelaTurnoutManager(AcelaSystemConnectionMemo memo) {
        super(memo);
     }
