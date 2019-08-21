@@ -2,6 +2,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.EnumSet;
+import javax.annotation.Nonnull;
 
 /**
  * Interface for allocating {@link Throttle} objects.
@@ -59,7 +60,7 @@ public interface ThrottleManager {
      *         be made; false may be returned if a the throttle is already in
      *         use
      */
-    public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l, boolean canHandleDecisions);
+    public boolean requestThrottle(@Nonnull BasicRosterEntry re, ThrottleListener l, boolean canHandleDecisions);
 
 
     /**
