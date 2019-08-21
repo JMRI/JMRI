@@ -152,7 +152,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         });
 
-        // set optional delay interval between (actually before) output (Turnout) commands
+        // set/change delay interval between (actually before) output (Turnout) commands
         outputIntervalSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -418,7 +418,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
         outputIntervalReset.addActionListener((ActionEvent event) -> {
-            outputIntervalSpinner.setValue(250);
+            int defaultInterval = 250; // 250 was previously hard coded for Routes interval
+            outputIntervalSpinner.setValue(defaultInterval);
+            adapter.getSystemConnectionMemo().setOutputInterval(defaultInterval);
         });
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));

@@ -30,7 +30,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
-                    handleIntervalChange();
+                    handleIntervalChange((Integer) e.getNewValue());
                 }
             }
         });
@@ -385,9 +385,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
-    private void handleIntervalChange() {
-        turnoutInterval = memo.getOutputInterval();
-        log.debug("turnoutInterval changed to {}", turnoutInterval);
+    private void handleIntervalChange(int newVal) {
+        turnoutInterval = newVal;
+        log.debug("in memo turnoutInterval changed to {}", turnoutInterval);
     }
 
     /** {@inheritDoc} */

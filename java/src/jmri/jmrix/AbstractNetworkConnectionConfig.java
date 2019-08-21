@@ -217,7 +217,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             });
         }
 
-        // set optional delay interval between (actually before) output (Turnout) commands
+        // set/change delay interval between (actually before) output (Turnout) commands
         outputIntervalSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
