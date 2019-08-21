@@ -1121,6 +1121,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 cdlNode.setText(buildNodeText("Conditional", cdl, i));  // NOI18N
                 _cdlModel.nodeChanged(cdlNode);
             }
+            return;
         }
 
         if (_curNodeType.equals("Variables")) {  // NOI18N

@@ -259,7 +259,7 @@
       <pre>
         &lt;?xml version="1.0" encoding="UTF-8"?&gt;
         &lt;vsdecoder-geodata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-           &lt;layout-scale>160&lt;/layout-scale&gt;
+           &lt;layout-scale>N&lt;/layout-scale&gt;
            &lt;check-time>2000&lt;/check-time&gt;
            &lt;setup&gt;
               &lt;geodataset&gt;
@@ -278,7 +278,7 @@
 
       <p>The general attributes are:</p>
       <ul>
-        <li>layout scale (default: 160)</li>
+        <li>layout scale (default: N)</li>
         <li>check time (interval for calculating a new loco position; minimum: 500, maximum: 5000, default: 2000 milliseconds).</li>
       </ul>
 

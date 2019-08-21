@@ -174,8 +174,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                 // icon names based on states returned from JSON server,
                 $widget['state'] = UNKNOWN; //initial state is unknown
                 $widget.jsonType = ""; //default to no JSON type (avoid undefined)
-                if (typeof $widget["id"] !== "undefined") {
-                    $widget.systemName = $widget["id"];
+                
+                if ((typeof $widget["systemName"] == "undefined") &&  //set systemName from id if missing 
+                	  (typeof $widget["id"] !== "undefined")) {  
+                	$widget.systemName = $widget["id"];
                 }
                 $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
                 $widget['widgetFamily'] = $getWidgetFamily($widget, this);
@@ -579,8 +581,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 //store these blocks in a persistent var
                                 //by both username and systemname since references may be by either
                                 $gBlks[$widget.username] = $widget
-                                $gBlks[$widget.systemname] = $widget;
-                                jmri.getLayoutBlock($widget.systemname);
+                                $gBlks[$widget.systemName] = $widget;
+                                jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name

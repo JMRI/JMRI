@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -66,8 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>The event status of JMRI Turnouts can be queried via CBUS commands AREQ / ASRQ.</li>
-                <li>CBUS Node Manager - CMDERR5 support for CANMIO U and general improvements.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -142,10 +141,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>The CV19 references in multiple decoder definitions
-            have been updated to use common fragment files.</li>
-          <li>The Schema references in numerous fragment files have been updated to 
-            a consistent form.</li>
+          <li></li>
         </ul>
 
         <h4>Arnold</h4>
@@ -185,7 +181,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>Alain Le Marchand updated some definitions</li>
+                <li></li>
             </ul>
 
         <h4>ESU</h4>
@@ -210,8 +206,7 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li>Fixed some duplicate definitions of "Motor Output 2"</li>
-                <li>Updated from DTD to Schema checks</li>
+                <li></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -273,7 +268,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -340,7 +335,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved functioning of Supporting Turnouts using feedback.</li>
+	        <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -415,7 +410,7 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -451,11 +446,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>CircuitBuilder now allows a portal to have a second icon to connect blocks
-            that are not adjacent on the layout diagram.</li>
-            <li>Configuring signals for use with warrants has been added to CircuitBuilder.</li>
-            <li>Several checks for errors and omissions have been added to CircuitBuilder.
-            See the updated help page for details on this and the new features.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -469,7 +460,7 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>

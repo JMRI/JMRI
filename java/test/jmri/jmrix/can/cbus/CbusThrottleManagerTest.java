@@ -972,11 +972,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Thread checkCanErrorDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("CBUS_ERROR"), Bundle.getMessage("ButtonOK"));
       
-        // pass the message twice, should only be 1 popup
-        ncbtm.reply(r);
+        // pass the message
         ncbtm.reply(r);
         
-        JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
         JUnitUtil.waitFor(()->{return !(checkCanErrorDialog.isAlive());}, "checkCanErrorDialog finished");
     }
@@ -990,11 +988,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Thread checkCbusInvalidRequestDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("CBUS_ERROR"), Bundle.getMessage("ButtonOK"));
       
-        // pass the message twice, should only be 1 popup
-        ncbtm.reply(r);
+        // pass the message
         ncbtm.reply(r);
         
-        JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
         JUnitUtil.waitFor(()->{return !(checkCbusInvalidRequestDialog.isAlive());}, "checkCbusInvalidRequestDialog finished");
     }

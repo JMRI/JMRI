@@ -71,7 +71,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName);
         AudioListener al = activeAudioFactory.getActiveAudioListener();
         if (al != null) {
-            metersPerUnit = al.getMetersPerUnit();
+            storeMetersPerUnit(al.getMetersPerUnit());
         }
     }
 
@@ -85,8 +85,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName, userName);
         AudioListener al = activeAudioFactory.getActiveAudioListener();
         if (al != null) {
-            metersPerUnit = al.getMetersPerUnit();
+            storeMetersPerUnit(al.getMetersPerUnit());
         }
+    }
+
+    private static void storeMetersPerUnit(float newVal) {
+        metersPerUnit = newVal;
     }
 
     public boolean isAudioAlive() {

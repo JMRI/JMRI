@@ -308,7 +308,8 @@ public class TimeTableGraphCommon {
                     if (stopSegmentId != _segmentId) {
                         // No longer in active segment, do the end process
                         setEnd(stop, true);
-                        break;
+                        activeSeg = false;
+                        continue;
                     } else {
                         drawLine(stop);
                         if (_lastStop) {
@@ -664,4 +665,5 @@ public class TimeTableGraphCommon {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraphCommon.class);
+
 }

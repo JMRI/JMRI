@@ -64,7 +64,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     @Override
     public boolean status() {
-        return (ostream != null && istream != null);
+        return (ostream != null && istream != null && xmtThread != null && rcvThread != null);
     }
 
     /**

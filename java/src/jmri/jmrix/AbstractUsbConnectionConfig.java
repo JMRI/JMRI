@@ -492,7 +492,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                 boolean isSelected,
                 boolean cellHasFocus) {
 
-            String displayName = name;
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -502,14 +501,13 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
                 setBackground(list.getBackground());
             }
             if (invalidPort != null) {
-                String port = displayName;
-                if ((port == null) || port.isEmpty() || port.equals(invalidPort)) {
+                if ((name == null) || name.isEmpty() || name.equals(invalidPort)) {
                     list.setSelectionForeground(Color.red);
                     setForeground(Color.red);
                 }
             }
 
-            setText(displayName);
+            setText(name);
 
             return this;
         }

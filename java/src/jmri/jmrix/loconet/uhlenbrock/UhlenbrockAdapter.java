@@ -12,7 +12,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
  * correctly with the IC-COM and Intellibox II on-board USB port. Note that the
  * jmri.jmrix.loconet.intellibox package is for the first version of Uhlenbrock
- * Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock is for the
+ * Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock) is for the
  * Intellibox II and the IB-COM.
  * <p>
  * Since this is by definition connected to an Intellibox II or IB-COM, the
@@ -33,11 +33,11 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
                 Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
-        configureBaudRate(Bundle.getMessage("Baud115200")); // Set the default baud rate (localized)
+        configureBaudRate(validSpeeds[3]); // Set the default baud rate (localized)
     }
 
     /**
-     * Set up all of the other objects to operate with a LocoBuffer connected to
+     * Set up all of the other objects to operate with an IB-II connected to
      * this port.
      */
     @Override
@@ -74,6 +74,11 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
     @Override
     public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 3;
     }
 
     @Override
