@@ -70,6 +70,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public void message(LocoNetMessage l) {
         // parse message type
         LnSensorAddress a;
+        LnSensor ns;
         switch (l.getOpCode()) {
             case LnConstants.OPC_INPUT_REP:                /* page 9 of LocoNet PE */
 
@@ -83,14 +84,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
         // reach here for LocoNet sensor input command; make sure we know about this one
         String s = a.getNumericAddress();
-        if (null == getBySystemName(s)) {
+        ns = (LnSensor) getBySystemName(s);
+        if (ns == null) {
             // need to store a new one
             if (log.isDebugEnabled()) {
                 log.debug("Create new LnSensor as {}", s);
             }
-            LnSensor ns = (LnSensor) newSensor(s, null);
-            ns.message(l);  // have it update state
+            ns = (LnSensor) newSensor(s, null);
         }
+        ns.messageFromManager(l);  // have it update state
     }
 
     volatile LnSensorUpdateThread thread;
