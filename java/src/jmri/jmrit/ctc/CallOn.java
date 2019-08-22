@@ -205,6 +205,7 @@ NOTE:
             foundGroupingData._mSignal.setHeld(false);
         }
 
+        signalDirectionIndicatorsObject.setRequestedDirection(signalDirectionLever);
 // These two statements MUST be last thing in this order:
         signalDirectionIndicatorsObject.setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE();
         signalDirectionIndicatorsObject.startCodingTime();

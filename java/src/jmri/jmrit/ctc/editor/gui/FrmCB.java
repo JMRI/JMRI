@@ -63,7 +63,7 @@ public class FrmCB extends javax.swing.JFrame {
         _mCheckJMRIObject = checkJMRIObject;
         _mArrayListOfSelectableOSSectionUniqueIDs = CommonSubs.getArrayListOfSelectableOSSectionUniqueIDs(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
         _mCodeButtonInternalSensor.setText(_mCodeButtonHandlerData._mCodeButtonInternalSensor);
-        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor, false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor, true);   // NOI18N
         CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor2, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2, true);  // NOI18N
         CommonSubs.populateJComboBoxWithColumnDescriptionsAndSelectViaUniqueID(_mOSSectionSwitchSlavedToUniqueID, _mCTCSerialData, _mCodeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
         CommonSubs.setMillisecondsEdit(_mCodeButtonDelayTime);

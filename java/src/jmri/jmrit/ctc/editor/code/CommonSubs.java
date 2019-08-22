@@ -143,15 +143,33 @@ public class CommonSubs {
         setSelectedIndexOfJComboBoxViaUniqueID(jComboBox, ctcSerialData, uniqueID);
     }
 
+//  A blank entry will ALWAYS appear as the first selection.
     public static void populateJComboBoxWithColumnDescriptions(JComboBox<String> jComboBox, CTCSerialData ctcSerialData) {
         ArrayList<String> userDescriptions = new ArrayList<>();
-        userDescriptions.add("");   // None is specified.
+        userDescriptions.add("");   // None can be specified.
         ArrayList<Integer> arrayListOfSelectableOSSectionUniqueIDs = getArrayListOfSelectableOSSectionUniqueIDs(ctcSerialData.getCodeButtonHandlerDataArrayList());
         for (Integer uniqueID : arrayListOfSelectableOSSectionUniqueIDs) {
             userDescriptions.add(ctcSerialData.getMyShortStringNoCommaViaUniqueID(uniqueID));
         }
 //      Collections.sort(userDescriptions);
         jComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(userDescriptions)));
+    }
+
+//  NO blank entry as the first selection, returns true if any in list, else false.
+//  Also populates "uniqueIDS" with corresponding values.
+    public static boolean populateJComboBoxWithColumnDescriptionsExceptOurs(JComboBox<String> jComboBox, CTCSerialData ctcSerialData, int ourUniqueID, ArrayList<Integer> uniqueIDS) {
+        ArrayList<String> userDescriptions = new ArrayList<>();
+        uniqueIDS.clear();
+        ArrayList<Integer> arrayListOfSelectableOSSectionUniqueIDs = getArrayListOfSelectableOSSectionUniqueIDs(ctcSerialData.getCodeButtonHandlerDataArrayList());
+        for (Integer uniqueID : arrayListOfSelectableOSSectionUniqueIDs) {
+            if (ourUniqueID != uniqueID) {
+                userDescriptions.add(ctcSerialData.getMyShortStringNoCommaViaUniqueID(uniqueID));
+                uniqueIDS.add(uniqueID);
+            }
+        }
+//      Collections.sort(userDescriptions);
+        jComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(userDescriptions)));
+        return !userDescriptions.isEmpty();
     }
 
     /**
