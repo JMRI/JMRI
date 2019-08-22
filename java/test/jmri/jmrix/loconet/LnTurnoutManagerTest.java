@@ -157,20 +157,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertEquals("Check outbound message byte 2", 0x20, lnis.outbound.get(0).getElement(2));
     }
 
-
-
-    @Test
-    @Override
-    public void testSetAndGetOutputInterval() {
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
-        memo.setOutputInterval(20);
-        Assert.assertEquals("new outputInterval in memo", 20, memo.getOutputInterval()); // direct set & get
-        lnis.getSystemConnectionMemo().setOutputInterval(30);
-        Assert.assertEquals("new outputInterval via tc", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // set & get via tc
-        l.setOutputInterval(40);
-        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval()); // test method in manager
-    }
-
     private LocoNetInterfaceScaffold lnis;
     private LocoNetSystemConnectionMemo memo;
 

@@ -55,16 +55,6 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         Assert.assertNotNull(t.getByUserName("my name"));
     }
 
-    @Test
-    @Override
-    public void testSetAndGetOutputInterval() {
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
-        memo.setOutputInterval(30);
-        Assert.assertEquals("new outputInterval in memo", 30, memo.getOutputInterval()); // direct set & get
-        l.setOutputInterval(40);
-        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval()); // test method in manager
-    }
-
     AcelaNode a0, a1, a2, a3;
 
     // The minimal setup for log4J

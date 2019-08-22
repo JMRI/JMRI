@@ -51,13 +51,6 @@ public class LnTurnout extends AbstractTurnout {
         this.controller = controller;
 
         _number = number;
-        // At construction, set interval from memo
-        if (this.controller != null) {
-            setOutputInterval(controller.getSystemConnectionMemo().getOutputInterval());
-            // needed for LocoNet because in current master full configuration is delayed
-        } else {
-            log.warn("No LocoNet connection, outputInterval not set");
-        }
         // update feedback modes
         _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
         _activeFeedbackType = MONITORING;

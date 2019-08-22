@@ -15,16 +15,6 @@ import org.junit.Before;
  */
 public class Z21XNetTurnoutManagerTest extends jmri.jmrix.lenz.XNetTurnoutManagerTest {
 
-    @Test
-    @Override
-    public void testSetAndGetOutputInterval() {
-        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
-        lnis.getSystemConnectionMemo().setOutputInterval(30); // get Memo via TC
-        Assert.assertEquals("new outputInterval in memo", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // direct set & get
-        l.setOutputInterval(40);
-        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval()); // test method in manager
-    }
-
     @Override
     @After
     public void tearDown() {

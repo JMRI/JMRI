@@ -298,7 +298,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval() {
-        return 250;
+        return 0;
     }
 
     /** {@inheritDoc} */

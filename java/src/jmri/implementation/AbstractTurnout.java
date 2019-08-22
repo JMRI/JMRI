@@ -74,7 +74,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //        public void firePropertyChange(String propertyName,
-    //                               Object oldValue,
+    //                        Object oldValue,
     //                        Object newValue)
     // _once_ if anything has changed state
     /**
@@ -138,24 +138,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
-    /**
-     * Duration in Milliseconds of interval between separate Turnout commands.
-     * Note: Not updated after initialisation, which is not an issue as only used in logging. Timing is done via the TurnoutManager.
-     * <p>
-     * Change from e.g. LnTurnout extensions and scripts using {@link #setOutputInterval(int)}
-     */
-    private int turnoutInterval = InstanceManager.turnoutManagerInstance().getOutputInterval();
-
-    /**
-     * Set the delay as configured for the connection of this Turnout.
-     *
-     * @param newInterval the delay in Milliseconds
-     */
-    public void setOutputInterval(int newInterval) {
-        turnoutInterval = newInterval;
-        log.debug("(jmri.implementation.AbstractTurnout_turnoutInterval set to: {}", newInterval);
-    }
-
     protected Thread thr;
     protected Runnable r;
     protected LocalTime nextWait;
@@ -168,8 +150,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public void setCommandedStateAtInterval(int s) {
         nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
         // nextWait time is calculated using actual turnoutInterval in TurnoutManager
-        if (turnoutInterval > 0 && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
-            log.debug("Turnout interval = {} ms (static), now() = {}, waitUntil = {}", turnoutInterval, LocalTime.now(), nextWait);
+        if (nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
+            log.debug("Turnout now() = {}, waitUntil = {}", LocalTime.now(), nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override

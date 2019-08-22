@@ -129,12 +129,12 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
 
     @Test
     public void testThrownText(){
-         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+         Assert.assertEquals("thrown text", Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
     }
 
     @Test
     public void testClosedText(){
-         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
+         Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
     }
 
     @Test
@@ -159,4 +159,5 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     protected int getNumToTest2() {
         return 7;
     }
+
 }
