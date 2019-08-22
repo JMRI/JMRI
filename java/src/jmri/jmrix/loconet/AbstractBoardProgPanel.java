@@ -546,7 +546,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             return;
         }
         // check for right type, unit
-        if (m.getOpCode() != 0xb4
+        if ((m.getOpCode() != LnConstants.OPC_LONG_ACK)
                 || ((m.getElement(1) != 0x00) && (m.getElement(1) != 0x50))) {
             return;
         }

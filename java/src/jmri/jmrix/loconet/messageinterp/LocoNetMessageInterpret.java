@@ -2270,7 +2270,7 @@ public class LocoNetMessageInterpret {
     private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
         int slot = l.getElement(2); // slot number for this request
         String mode;
-        int command = l.getElement(0);
+        int command = l.getOpCode();
         int id1 = l.getElement(11); // ls 7 bits of ID code
         int id2 = l.getElement(12); // ms 7 bits of ID code
         /*
@@ -4461,7 +4461,7 @@ public class LocoNetMessageInterpret {
                     return "routes unknown\n";
                 default:
                     return Bundle.getMessage(
-                            ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
+                            ((l.getOpCode() == LnConstants.OPC_ALM_WRITE)
                             ? "LN_MSG_ALM_WRITE"
                             : "LN_MSG_ALM_WRITE_REPLY"),
                             l.getElement(2),
