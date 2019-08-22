@@ -7,34 +7,53 @@ package apps;
  *       Instead, when past its useful point, just comment out the body of the
  *       class so as to leave the code examples present.
  * <p>
- * Tests Nonnull, Nullable and CheckForNull from both
- * javax.annotation and edu.umd.cs.findbugs annotations
- * packages.
+ * Tests Nonnull, Nullable and CheckForNull from 
+ * javax.annotation annotations.
  * <p>
- * Comments indicate observed (and unobserved) warnings from SpotBugs 3.0.1
- * <p>
- * This has no main() because it's not expected to run:  It will certainly
+ * This has no main() because it's not expected to run:  Many methods will certainly
  * throw a NullPointerException right away.  The idea is for SpotBugs to
  * find those in static analysis. This is in java/src, instead of java/test,
  * so that our usual CI infrastructure builds it.
  * <p>
- * Types are explicitly qualified (instead of using 'import') to make it
+ * Annotations are explicitly qualified (instead of using 'import') to make it
  * completely clear which is being used at each point.  That makes this the
  * code less readable, so it's not recommended for general use.
  * <p>
- * The "ja" prefix means that javax annotations are used; "fb"
- * that FindBugs/SpotBugs annotations are used. "no" means un-annotated.
+ * The "ja" prefix means that javax annotations are used. "no" means un-annotated.
  * <p>
- * The comments are the warnings thrown by SpotBugs 3.1.9
+ * A previous version (Git SHA 4049c5d690) also had "fb" as a prefix 
+ * for using the edu.umd.cs.findbugs.annotations form of annotations.
+ * There were found to work exactly the same as the (preferred) javax.annotation forms,
+ * including when intermixed with each other.
+ * <p>
+ * The comments are the warnings thrown (and not thrown) by SpotBugs 3.1.9
  * <p>
  * Summary: <ul>
- * <li>The javax.annotation and edu.umd.cs.findbugs.annotations versions work the same
- *          (So we should use the javax.annotation ones as they're the future standard)
- * <li>Nullable doesn't detect the errors that CheckForNull does flag
- * <li>Parameter passing isn't always being checked by SpotBugs
+ * <li>Parameter declaration handling:
+ *   <ul>
+ *   <li>@Nonnull means that references are assumed OK
+ *   <li>Both @CheckForNull and @Nullable are checked for dereferences
+ *   <li>Parameters with no annotation are not checked (i.e. acts like @Nonnull, no null checks required before dereferencing)
+ *   </ul>
+ * <li>Passing explicit null parameters
+ *   <ul>
+ *   <li>@Nonnull will flag a passed null
+ *   <li>@CheckForNull and @Nullable accept a passed null (but previously flagged any dereferences in the method declaration, i.e. that the annotation wasn't OK)
+ *   <li>No annotation results in a NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS warning from analyzing the body of the method, effectively working like @Nonnull with a different error
+ *   </ul>
+ * <li>Parameter passing of return values isn't always checked by SpotBugs.
+ *      For example, a @CheckForNull return value is accepted for an @Nonnull parameter.
+ *      Perhaps this will improve with time.
+ * <li>Return values are properly checked for @CheckForNull, but not for @Nullable.
+ *   <ul>
+ *   <li>A @CheckForNull return value is flagged if it's dereferenced.
+ *   <li>A @Nullable return value is <u>not</u> flagged if it's dereferenced.
+ *   <li>Return values without annotation are also not flagged when dereferenced.
+ *   </ul>
  * </ul>
+ * Bottom line:  When flagging return values, use @CheckForNull.  
  * @see apps.CheckerFrameworkCheck
- * @author Bob Jacobsen 2016
+ * @author Bob Jacobsen 2016, 2019
  */
 public class FindBugsCheck {
 
@@ -42,8 +61,10 @@ public class FindBugsCheck {
         System.out.println("test "+this.getClass());
     }
 
- //  comment out the rest of the file to avoid SpotBugs counting these deliberate warnings
+ /* //  comment out the rest of the file to avoid SpotBugs counting these deliberate warnings
 
+    // Test no annotations 
+    
     public FindBugsCheck noAnnotationReturn() {
         return null;
     }
@@ -51,20 +72,30 @@ public class FindBugsCheck {
         p.test();
     }
     public void noAnnotationTest() {
+        FindBugsCheck p;
+
         noAnnotationReturn().test();
+        p = noAnnotationReturn();
+        p.test();
 
         noAnnotationParm(this);
         noAnnotationParm(null); // Null passed for non-null parameter NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS
         
-        noAnnotationParm(noAnnotationReturn());
+        noAnnotationParm(noAnnotationReturn()); // maybe should be flagged?
+        p = noAnnotationReturn();
+        noAnnotationParm(p);
         
         noAnnotationParm(jaNonnullReturn());
-        noAnnotationParm(jaNullableReturn()); // should be flagged?
-        noAnnotationParm(jaCheckForNullReturn()); // should be flagged?
+        p = jaNonnullReturn();
+        noAnnotationParm(p);
 
-        noAnnotationParm(fbNonnullReturn());
-        noAnnotationParm(fbNullableReturn()); // should be flagged?
-        noAnnotationParm(fbCheckForNullReturn()); // should be flagged?
+        noAnnotationParm(jaNullableReturn()); // maybe should be flagged?
+        p = jaNullableReturn();
+        noAnnotationParm(p);
+
+        noAnnotationParm(jaCheckForNullReturn()); // maybe should be flagged?
+        p = jaCheckForNullReturn();
+        noAnnotationParm(p);
     }
 
     // Test Nonnull
@@ -76,45 +107,32 @@ public class FindBugsCheck {
         p.test();
     }
     public void jaTestNonnull() {
+        FindBugsCheck p;
+
         jaNonnullReturn().test();
+        p = jaNonnullReturn();
+        if (p!=null) p.test(); // Redundant nullcheck of p, which is known to be non-null RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE
 
         jaNonNullParm(this);
         jaNonNullParm(null); // Null passed for non-null parameter NP_NONNULL_PARAM_VIOLATION
         
-        jaNonNullParm(noAnnotationReturn());
+        jaNonNullParm(noAnnotationReturn()); // should be flagged
+        p = noAnnotationReturn();
+        jaNonNullParm(p);
 
         jaNonNullParm(jaNonnullReturn());
-        jaNonNullParm(jaNullableReturn()); // should be flagged?
-        jaNonNullParm(jaCheckForNullReturn()); // definitely should be flagged!
+        p = jaNonnullReturn();
+        jaNonNullParm(p);
 
-        jaNonNullParm(fbNonnullReturn());
-        jaNonNullParm(fbNullableReturn()); // should be flagged?
-        jaNonNullParm(fbCheckForNullReturn()); // definitely should be flagged!
+        jaNonNullParm(jaNullableReturn()); // should be flagged
+        p = jaNullableReturn();
+        jaNonNullParm(p);
+
+        jaNonNullParm(jaCheckForNullReturn()); // should be flagged
+        p = jaCheckForNullReturn();
+        jaNonNullParm(p);
+
     }
-
-    @edu.umd.cs.findbugs.annotations.NonNull public FindBugsCheck fbNonnullReturn() {
-        return null; // may return null, but is declared @Nonnull NP_NONNULL_RETURN_VIOLATION
-    }
-    public void fbNonNullParm(@edu.umd.cs.findbugs.annotations.NonNull FindBugsCheck p) {
-        p.test();
-    }
-    public void fbTestNonnull() {
-        fbNonnullReturn().test();
-
-        fbNonNullParm(this);
-        fbNonNullParm(null); // Null passed for non-null parameter NP_NONNULL_PARAM_VIOLATION
-
-        fbNonNullParm(noAnnotationReturn()); // should be flagged?
-
-        fbNonNullParm(fbNonnullReturn());
-        fbNonNullParm(fbNullableReturn()); // should be flagged?
-        fbNonNullParm(fbCheckForNullReturn()); // definitely should be flagged!
-
-        fbNonNullParm(jaNonnullReturn());
-        fbNonNullParm(jaNullableReturn()); // should be flagged?
-        fbNonNullParm(jaCheckForNullReturn()); // definitely should be flagged!
-    }
-
 
     // Test Nullable
 
@@ -125,45 +143,32 @@ public class FindBugsCheck {
         p.test(); // p must be non-null but is marked as nullable NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE
     }
     public void jaTestNullable() {
-        jaNullableReturn().test(); // isn't flagged
+        FindBugsCheck p;
+
+        jaNullableReturn().test(); // should be flagged
+        p = jaNullableReturn();
+        if (p!=null) p.test();
 
         jaNullableParm(this);
         jaNullableParm(null);
 
         jaNullableParm(noAnnotationReturn());
+        p = noAnnotationReturn();
+        jaNullableParm(p);
 
         jaNullableParm(jaNonnullReturn());
+        p = jaNonnullReturn();
+        jaNullableParm(p);
+
         jaNullableParm(jaNullableReturn());
+        p = jaNullableReturn();
+        jaNullableParm(p);
+
         jaNullableParm(jaCheckForNullReturn());
+        p = jaCheckForNullReturn();
+        jaNullableParm(p);
 
-        jaNullableParm(fbNonnullReturn());
-        jaNullableParm(fbNullableReturn());
-        jaNullableParm(fbCheckForNullReturn());
     }
-
-    @edu.umd.cs.findbugs.annotations.Nullable public FindBugsCheck fbNullableReturn() {
-        return null;
-    }
-    public void fbNullableParm(@edu.umd.cs.findbugs.annotations.Nullable FindBugsCheck p) {
-        p.test(); // p must be non-null but is marked as nullable NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE
-    }
-    public void fbTestNullable() {
-        fbNullableReturn().test(); // isn't flagged
-
-        fbNullableParm(this);
-        fbNullableParm(null);
-
-        fbNullableParm(noAnnotationReturn());
-        
-        fbNullableParm(fbNonnullReturn());
-        fbNullableParm(fbNullableReturn());
-        fbNullableParm(fbCheckForNullReturn());
-
-        fbNullableParm(jaNonnullReturn());
-        fbNullableParm(jaNullableReturn());
-        fbNullableParm(jaCheckForNullReturn());
-    }
-
 
     // Test CheckForNull
 
@@ -174,45 +179,32 @@ public class FindBugsCheck {
         p.test(); // p must be non-null but is marked as nullable NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE
     }
     public void jaTestCheckForNull() {
+        FindBugsCheck p;
+
         jaCheckForNullReturn().test(); // Possible null pointer dereference NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
+        p = jaCheckForNullReturn(); 
+        if (p!=null) p.test();
 
         jaCheckForNullParm(this);
         jaCheckForNullParm(null);
 
         jaCheckForNullParm(noAnnotationReturn());
+        p = noAnnotationReturn();
+        jaCheckForNullParm(p);
         
         jaCheckForNullParm(jaNonnullReturn());
-        jaCheckForNullParm(jaNullableReturn());
-        jaCheckForNullParm(jaCheckForNullReturn());
-
-        jaCheckForNullParm(fbNonnullReturn());
-        jaCheckForNullParm(fbNullableReturn());
-        jaCheckForNullParm(fbCheckForNullReturn());
-    }
-
-    @edu.umd.cs.findbugs.annotations.CheckForNull public FindBugsCheck fbCheckForNullReturn() {
-        return null;
-    }
-    public void fbCheckForNullParm(@edu.umd.cs.findbugs.annotations.CheckForNull FindBugsCheck p) {
-        p.test(); // p must be non-null but is marked as nullable NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE
-    }
-    public void fbTestCheckForNull() {
-        fbCheckForNullReturn().test(); // Possible null pointer dereference NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE
-
-        fbCheckForNullParm(this);
-        fbCheckForNullParm(null);
-
-        fbCheckForNullParm(noAnnotationReturn());
+        p = jaNonnullReturn();
+        jaCheckForNullParm(p);
         
-        fbCheckForNullParm(fbNonnullReturn());
-        fbCheckForNullParm(fbNullableReturn());
-        fbCheckForNullParm(fbCheckForNullReturn());
-
-        fbCheckForNullParm(jaNonnullReturn());
-        fbCheckForNullParm(jaNullableReturn());
-        fbCheckForNullParm(jaCheckForNullReturn());
+        jaCheckForNullParm(jaNullableReturn());
+        p = jaNullableReturn();
+        jaCheckForNullParm(p);
+        
+        jaCheckForNullParm(jaCheckForNullReturn());
+        p = jaCheckForNullReturn();
+        jaCheckForNullParm(p);
     }
 
- //end of commenting out file
+ */ // end of commenting out file
 
 }
