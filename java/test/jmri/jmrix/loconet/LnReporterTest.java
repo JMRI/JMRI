@@ -32,7 +32,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testTranspond3Enter146() {
         LnReporter a = new LnReporter(146, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x11, 0x7D, 0x03, 0x00});
-        a.message(l);
+        a.messageFromManager(l);
         Assert.assertEquals("Transponding 3 enter 146", "3 enter", ((Reportable)a.getLastReport()).toReportString());
     }
 
@@ -40,7 +40,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testTranspond257Enter146() {
         LnReporter a = new LnReporter(146, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x11, 0x02, 0x01, 0x00});
-        a.message(l);
+        a.messageFromManager(l);
         Assert.assertEquals("Transponding 257 enter 146", "257 enter", ((Reportable)a.getLastReport()).toReportString());
     }
 
@@ -48,7 +48,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testTranspond257Exit146() {
         LnReporter a = new LnReporter(146, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x11, 0x02, 0x01, 0x00});
-        a.message(l);
+        a.messageFromManager(l);
         Assert.assertEquals("Transponding 257 exits 146", "257 exits", ((Reportable)a.getLastReport()).toReportString());
     }
 
@@ -56,7 +56,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testTranspond3Exits146() {
         LnReporter a = new LnReporter(146, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x11, 0x7D, 0x03, 0x00});
-        a.message(l);
+        a.messageFromManager(l);
         Assert.assertEquals("Transponding 3 exits 146", "3 exits", ((Reportable)a.getLastReport()).toReportString());
     }
 
@@ -64,7 +64,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testTranspond1056Enter175() {
         LnReporter a = new LnReporter(175, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
-        a.message(l);
+        a.messageFromManager(l);
         Assert.assertEquals("Transponding 1056 enter 175", "1056 enter", ((Reportable)a.getLastReport()).toReportString());
     }
 
@@ -72,7 +72,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testLnReporterLissy1() {
         LnReporter a1 = new LnReporter(1, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
-        a1.message(l);
+        a1.messageFromManager(l);
         Assert.assertEquals("Lissy message 1", "8501 seen southbound", ((Reportable)a1.getLastReport()).toReportString());
     }
 
@@ -80,7 +80,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void testLnReporterLissy2() {
         LnReporter a3 = new LnReporter(3, tc, "L");
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x40, 0x03, 0x42, 0x35, 0x05});
-        a3.message(l);
+        a3.messageFromManager(l);
         Assert.assertEquals("Lissy message 2", "8501 seen northbound", ((Reportable)a3.getLastReport()).toReportString());
     }
 
@@ -95,17 +95,17 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
         LnReporter lr = ((LnReporter)r);
 
         LocoNetMessage l = new LocoNetMessage(new int[]{0xD0, 0x20, 0x02, 0x7D, 0x03, 0x73});
-        lr.message(l);
+        lr.messageFromManager(l);
 
        // Check that the collection has one element.
        Assert.assertEquals("Collection Size 1 after message", 1, lr.getCollection().size());
        Assert.assertTrue("Current Report contained in collection",lr.getCollection().contains(lr.getCurrentReport()));
 
 
-        l = new LocoNetMessage(new int[]{0xD0, 0x00, 0x02, 0x7D, 0x03, 0x53});
-        lr.message(l);
+       l = new LocoNetMessage(new int[]{0xD0, 0x00, 0x02, 0x7D, 0x03, 0x53});
+       lr.messageFromManager(l);
 
-       // Check that the collection wass cleared.
+       // Check that the collection was cleared.
        Assert.assertEquals("Collection Size 0 after clear message", 0, lr.getCollection().size());
        Assert.assertTrue("Collection Empty", lr.getCollection().isEmpty());
        // eventually, the current report should be changed to null on an exit.

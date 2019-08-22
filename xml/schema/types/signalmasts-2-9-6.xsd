@@ -409,8 +409,7 @@
             <xs:complexType>
                 <xs:attribute name="duration" use="required">
                     <xs:annotation>
-                        <xs:documentation>Specifies mast-specific delay before each separate output command
-                        </xs:documentation>
+                        <xs:documentation>Specifies mast-specific delay before each separate output command</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
             </xs:complexType>
