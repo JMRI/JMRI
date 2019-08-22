@@ -211,13 +211,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     @Override
     public void configureBaudIndex(int index) {
-        if ((validBaudNumbers() != null) && (validBaudNumbers().length > 0)) {
-            for (int i = 0; i < validBaudNumbers().length; i++) {
-                if (validBaudRates()[i].equals(mBaudRate)) {
-                    mBaudRate = validBaudRates()[i];
-                    break;
-                }
-            }
+        if ((validBaudRates() != null) && (validBaudRates().length > index)) {
+            mBaudRate = validBaudRates()[index];
         } else {
             log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter, mBaudRate already null
         }
