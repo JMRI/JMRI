@@ -39,7 +39,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
     }
-    
+
     // DCCpp-specific methods
 
     /** {@inheritDoc} */
@@ -171,6 +171,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
 
     /**
      * Get the bit address from the system name.
+     *
      * @param systemName a valid LocoNet-based Turnout System Name
      * @return the turnout number extracted from the system name
      */
