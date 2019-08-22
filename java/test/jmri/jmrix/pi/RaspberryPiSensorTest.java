@@ -49,7 +49,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("2nd state", Sensor.INACTIVE, t.getState());
 
-	t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
+	    t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.INACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("Final state", Sensor.ACTIVE, t.getState());
@@ -81,7 +81,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     @Override
     @After
     public void tearDown() {
-	t.dispose();
+	    t.dispose();
         JUnitUtil.tearDown();
     }
 

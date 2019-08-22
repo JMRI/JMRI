@@ -13,6 +13,8 @@ import org.junit.Test;
 
 /**
  * Tests for RaspberryPiTurnoutManager.
+ * <p>
+ * Resets the GPIO support by disposing the turnouts + pins.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -34,81 +36,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     }
 
     @Override
-    @Test
-    public void testTurnoutPutGet() {
-        // create
-        Turnout t = l.newTurnout(getSystemName(18), "mine");
-        // check
-        Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
-        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(18)));
-    }
-
-    @Test
-    @Override
-    public void testProvideName() {
-        // create
-        Turnout t = l.provide(getSystemName(20));
-        // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(20)));
-    }
-
-    @Override
-    @Test
-    public void testDefaultSystemName() {
-        // create
-        Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
-        // check
-        Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
-    }
-
-    @Override
-    @Test
-    public void testSingleObject() {
-        // test that you always get the same representation
-        Turnout t1 = l.newTurnout(getSystemName(16), "mine");
-        Assert.assertNotNull("t1 real object returned ", t1);
-        Assert.assertEquals("same by user ", t1, l.getByUserName("mine"));
-        Assert.assertEquals("same by system ", t1, l.getBySystemName(getSystemName(16)));
-
-        Turnout t2 = l.newTurnout(getSystemName(16), "mine");
-        Assert.assertNotNull("t2 real object returned ", t2);
-        // check
-        Assert.assertEquals("same new ", t1, t2);
-    }
-
-    @Override
-    @Test
-    public void testRename() {
-        // get turnout
-        Turnout t1 = l.newTurnout(getSystemName(15), "before");
-        Assert.assertNotNull("t1 real object ", t1);
-        t1.setUserName("after");
-        Turnout t2 = l.getByUserName("after");
-        Assert.assertEquals("same object", t1, t2);
-        Assert.assertNull("no old object", l.getByUserName("before"));
-    }
-
-    @Test
-    @Ignore("This test doesn't work for this class")
-    @ToDo("RaspberryPiSensor.init throws the error: com.pi4j.io.gpio.exception.GpioPinExistsException: This GPIO pin already exists: GPIO 1")
-    @Override
-    public void testRegisterDuplicateSystemName() {
-    }
-
-    @Override
-    protected int getNumToTest1() {
-        return 19;
-    }
-
-    @Override
-    protected int getNumToTest2() {
-        return 5;
-    }
-
-    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -120,6 +47,15 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @After
     public void tearDown() {
+        // unprovisionPin if it exists to allow reuse of GPIO pin in next test (without need to override test)
+        RaspberryPiTurnout t1 = (RaspberryPiTurnout) l.getTurnout(getSystemName(getNumToTest1()));
+        if (t1 != null) {
+            t1.dispose();
+        }
+        RaspberryPiTurnout t2 = (RaspberryPiTurnout) l.getTurnout(getSystemName(getNumToTest2()));
+        if (t2 != null) {
+            t2.dispose();
+        }
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();

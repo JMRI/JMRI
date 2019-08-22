@@ -48,9 +48,9 @@ public abstract class AbstractTurnoutTestBase {
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
-            if(e.getPropertyName().equals("KnownState")){
-		    listenStatus = ((Integer) e.getNewValue()).intValue();
-	    }
+            if (e.getPropertyName().equals("KnownState")) {
+		        listenStatus = ((Integer) e.getNewValue()).intValue();
+	        }
         }
     }
 

@@ -39,7 +39,7 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
 
     @After
     public void tearDown() {
-	t.dispose();
+	    t.dispose();
         JUnitUtil.tearDown();
     }
 
