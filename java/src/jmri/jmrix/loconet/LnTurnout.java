@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnTurnout extends AbstractTurnout implements LocoNetListener {
+public class LnTurnout extends AbstractTurnout {
 
     public LnTurnout(String prefix, int number, LocoNetInterface controller) throws IllegalArgumentException {
         // a human-readable turnout number must be specified!
@@ -53,11 +53,10 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         _number = number;
         // At construction, register for messages
         if (this.controller != null) {
-            this.controller.addLocoNetListener(~0, this);
             setOutputInterval(controller.getSystemConnectionMemo().getOutputInterval());
-            // needed for LocoNet because in current master JMRI 4.13.5 full configuration is delayed
+            // needed for LocoNet because in current master full configuration is delayed
         } else {
-            log.warn("No LocoNet connection, turnout won't update");
+            log.warn("No LocoNet connection, outputInterval not set");
         }
         // update feedback modes
         _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
@@ -259,8 +258,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     //                              Object oldValue,
     //                        Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
-    @Override
-    public void message(LocoNetMessage l) {
+    public void messageFromManager(LocoNetMessage l) {
         // parse message type
         switch (l.getOpCode()) {
             case LnConstants.OPC_SW_ACK:
@@ -417,7 +415,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         if(consistencyTask != null ) {
            consistencyTask.cancel();
         }
-        this.controller.removeLocoNetListener(~0, this);
         super.dispose();
     }
 

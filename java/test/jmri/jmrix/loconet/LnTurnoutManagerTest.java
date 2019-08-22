@@ -121,14 +121,10 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
         @Test
     public void testOpcLongAck() {
-        LocoNetSystemConnectionMemo memo2 = new LocoNetSystemConnectionMemo(lnis,
-                new jmri.jmrix.loconet.SlotManager(lnis));
-        lnis.setSystemConnectionMemo(memo2);
-
         Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
         ((LnTurnoutManager)l).mTurnoutNoRetry=false;
 
-        Turnout t = ((LnTurnoutManager)l).createNewTurnout("LT1","");
+        Turnout t = ((LnTurnoutManager)l).provideTurnout("LT1");   // createNewTurnout does not register it.
         LocoNetMessage m = new LocoNetMessage(new int[] {0xb0, 0x00, 0x20, 0x6f});
         lnis.sendTestMessage(m);
         Assert.assertEquals("check now closed", Turnout.CLOSED, t.getKnownState());
@@ -196,6 +192,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     public void tearDown() {
         memo.dispose();
         lnis = null;
+        l = null;
         JUnitUtil.tearDown();
     }
 
