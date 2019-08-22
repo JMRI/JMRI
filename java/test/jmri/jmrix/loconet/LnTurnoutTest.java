@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
+    LnTurnout lnt;
+
     @Override
     public int numListeners() {
         return lnis.numListeners();
@@ -64,7 +66,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);     // set CLOSED
         m.setElement(2, 0x30);
         m.setElement(3, 0x00);
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
         m = new LocoNetMessage(4);
@@ -72,7 +74,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);     // set THROWN
         m.setElement(2, 0x10);
         m.setElement(3, 0x00);
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
     @Test
@@ -83,7 +85,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);     // set CLOSED
         m.setElement(2, 0x30);
         m.setElement(3, 0x00);
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
         m = new LocoNetMessage(4);
@@ -91,7 +93,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);     // set THROWN
         m.setElement(2, 0x10);
         m.setElement(3, 0x00);
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
@@ -115,7 +117,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);     // set CLOSED
         m.setElement(2, 0x20);
         m.setElement(3, 0x7b);
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
     }
@@ -141,7 +143,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);     // set thrown
         m.setElement(2, 0x10);
         m.setElement(3, 0x7b);
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
 
     }
@@ -164,8 +166,9 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
         m.setElement(2, 0x40);
-        m.setElement(3, 0x1A);     // AUX reports THROWN
-        lnis.sendTestMessage(m);
+        m.setElement(3, 0x1A);     // AUX reports THROWN\
+
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after AUX report THROWN is INCONSISTENT", jmri.Turnout.INCONSISTENT, t.getKnownState());
 
@@ -176,7 +179,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x70);
         m.setElement(3, 0x2A);     // SWITCH reports CLOSED
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
 
@@ -191,7 +194,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x60);
         m.setElement(3, 0x3A);     // AUX reports THROWN
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after SWITCH report THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report THROWN is INCONSISTENT", jmri.Turnout.INCONSISTENT, t.getKnownState());
 
@@ -201,7 +204,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x50);
         m.setElement(3, 0x0A);     // SWITCH reports CLOSED
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after AUX report CLOSED is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals("KnownState after AUX report CLOSED is THROWN", jmri.Turnout.THROWN, t.getKnownState());
 
@@ -216,7 +219,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x40);
         m.setElement(3, 0x1A);     // AUX reports THROWN
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after AUX report THROWN is INCONSISTENT", jmri.Turnout.INCONSISTENT, t.getKnownState());
 
@@ -226,7 +229,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x70);
         m.setElement(3, 0x2A);     // SWITCH reports CLOSED
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
 
@@ -241,7 +244,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x50);
         m.setElement(3, 0x0A);     // SWITCH reports CLOSED
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after AUX report CLOSED is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals("KnownState after AUX report CLOSED is THROWN", jmri.Turnout.THROWN, t.getKnownState());
 
@@ -251,7 +254,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x60);
         m.setElement(3, 0x3A);     // AUX reports THROWN
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after SWITCH report THROWN is THROWN", jmri.Turnout.THROWN, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report THROWN is THROWN", jmri.Turnout.THROWN, t.getKnownState());
 
@@ -266,7 +269,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x70);
         m.setElement(3, 0x2A);     // SWITCH reports CLOSED
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after SWITCH report CLOSED is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
 
@@ -276,7 +279,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(1, 0x14);
         m.setElement(2, 0x40);
         m.setElement(3, 0x1A);     // AUX reports THROWN
-        lnis.sendTestMessage(m);
+        lnt.messageFromManager(m);
         Assert.assertEquals("CommandedState after AUX report THROWN is CLOSED", jmri.Turnout.CLOSED, t.getCommandedState());
         Assert.assertEquals("KnownState after AUX report THROWN is CLOSED", jmri.Turnout.CLOSED, t.getKnownState());
 
@@ -379,6 +382,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
         // create object under test
         t = new LnTurnout("L", 21, lnis);
+        lnt=(LnTurnout) t;
     }
 
     @After
