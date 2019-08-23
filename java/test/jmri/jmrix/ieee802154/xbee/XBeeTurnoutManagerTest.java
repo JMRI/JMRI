@@ -14,10 +14,7 @@ import org.junit.Test;
 import jmri.Turnout;
 
 /**
- * XBeeTurnoutManagerTest.java
- * <p>
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnoutManager
- * class
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnoutManager class.
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */

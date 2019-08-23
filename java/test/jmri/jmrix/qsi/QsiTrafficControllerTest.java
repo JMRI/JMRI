@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the QsiTrafficController class
+ * JUnit tests for the QsiTrafficController class.
  *
  * @author	Bob Jacobsen
  */

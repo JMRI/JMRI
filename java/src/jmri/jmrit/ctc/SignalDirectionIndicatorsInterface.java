@@ -19,4 +19,5 @@ public interface SignalDirectionIndicatorsInterface {
     public void forceAllSignalsToHeld();
     public int getSignalsInTheFieldDirection();
     public void setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE();
+    public void setRequestedDirection(int direction);
 }

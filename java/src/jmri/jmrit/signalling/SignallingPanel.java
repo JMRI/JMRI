@@ -83,10 +83,10 @@ public class SignallingPanel extends JmriPanel {
     private jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     private JFrame jFrame;
-    
+
     // Size of the individual bean tables inside the shared pane
     private static final Dimension TABLESIZEPREFERRED = new Dimension(720, 200);
-    
+
     /**
      * Create an empty JPanel to configure a new Signal Mast Logic.
      *
@@ -216,7 +216,7 @@ public class SignallingPanel extends JmriPanel {
         useLayoutEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 useLayoutEditorSubPanel.setVisible(useLayoutEditor.isSelected());
                 // Setup for display of all Turnouts, if needed
                 boolean valid;
@@ -828,7 +828,7 @@ public class SignallingPanel extends JmriPanel {
         // TODO bind all these dialogs to parent SignalMastPanel (make that a shared var) for gui test to find them
         if ((sourceMastBox.getSelectedItem() == null) || (destMastBox.getSelectedItem() == null)) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSignalMastNull",
-                    Bundle.getMessage("SourceMast"), Bundle.getMessage("SourceMast")));
+                    Bundle.getMessage("SourceMast"), Bundle.getMessage("DestMast")));
             destOK = false;
             log.debug("No Source or Destination Mast selected, keep pane open");  // NOI18N
             return;
@@ -2098,7 +2098,7 @@ public class SignallingPanel extends JmriPanel {
         private Hashtable<Object, Vector<String>> boxMap = new Hashtable<>();
 
         // end of methods to display STATE_COLUMN (Aspect) ComboBox
-        
+
     }
 
     /**

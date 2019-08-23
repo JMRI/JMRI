@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract class providing the basic logic of the Sensor interface
+ * Abstract class providing the basic logic of the Sensor interface.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
@@ -92,7 +92,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public boolean getUseDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
-    
+
     protected Thread thr;
     protected Runnable r;
 
@@ -305,6 +305,5 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public PullResistance getPullResistance(){
        return PullResistance.PULL_OFF;
     }
-
 
 }
