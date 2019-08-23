@@ -872,7 +872,8 @@ public class FrmMainForm extends JFrame {
         _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmIL dialog = new FrmIL(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mCheckJMRIObject,
-                                     _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
+                                    _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD,
+                                    _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

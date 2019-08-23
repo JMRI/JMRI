@@ -8,7 +8,7 @@ import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.srcp.SRCPTrafficController;
 
 /**
- * Description:	Frame for user input of SRCP messages
+ * Frame for user input of SRCP messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */
