@@ -421,6 +421,17 @@ public class CsOpSwAccess implements LocoNetListener {
     public CmdStnOpSwStateType getState() {
         return cmdStnOpSwState;
     }
+    
+    /**
+     * Dispose of object's helper objects
+     * 
+     * Stops the timers
+     * 
+     */
+    public void dispose() {
+        csOpSwAccessTimer.stop();
+        csOpSwValidTimer.stop();
+    }
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(CsOpSwAccess.class);
