@@ -429,8 +429,12 @@ public class CsOpSwAccess implements LocoNetListener {
      * 
      */
     public void dispose() {
-        csOpSwAccessTimer.stop();
-        csOpSwValidTimer.stop();
+        if (csOpSwAccessTimer != null) {
+            csOpSwAccessTimer.stop();
+        }
+        if (csOpSwValidTimer != null) {
+            csOpSwValidTimer.stop();
+        }
     }
 
     // initialize logging
