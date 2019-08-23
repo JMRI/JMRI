@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide simple way to load and play sounds in JMRI.
- * <P>
+ * <p>
  * This is placed in the jmri.jmrit package by process of elimination. It
  * doesn't belong in the base jmri package, as it's not a basic interface. Nor
  * is it a specific implementation of a basic interface, which would put it in
  * jmri.jmrix. It seems most like a "tool using JMRI", or perhaps a tool for use
  * with JMRI, so it was placed in jmri.jmrit.
- * <P>
+ *
  * @see jmri.jmrit.sound
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2006
@@ -97,7 +97,7 @@ public class Sound {
     private Clip openClip() {
         Clip newClip = null;
         try {
-            newClip = AudioSystem.getClip();
+            newClip = AudioSystem.getClip(null);
             newClip.addLineListener(event -> {
                 if (LineEvent.Type.STOP.equals(event.getType())) {
                     if (autoClose) {

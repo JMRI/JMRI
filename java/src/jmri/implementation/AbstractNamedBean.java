@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
+import jmri.beans.Beans;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -86,29 +87,42 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * {@inheritDoc}
-     * 
-     * @return user name if not null or empty, else return system name
      */
     @Override
+    @CheckReturnValue
+    @Nonnull
     final public String getDisplayName() {
-        String name = getUserName();
-        if (name != null && !name.isEmpty()) {
-            return name;
-        } else {
-            return getSystemName();
-        }
+        return NamedBean.super.getDisplayName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    final public String getDisplayName(DisplayOptions displayOptions) {
+        return NamedBean.super.getDisplayName(displayOptions);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @CheckReturnValue
+    @Nonnull
+    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName() {
-        String name = getUserName();
-        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
-            name = getSystemName() + "(" + name + ")";
-        } else {
-            name = getSystemName();
-        }
-        return name;
+        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @CheckReturnValue
+    @Nonnull
+    @SuppressWarnings("deprecation") // overrides deprecated method
+    final public String getFullyFormattedDisplayName(boolean userNameFirst) {
+        return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
 
     // implementing classes will typically have a function/listener to get
@@ -125,7 +139,8 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
+    public synchronized void addPropertyChangeListener(@Nonnull PropertyChangeListener l,
+                                                       String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -137,22 +152,52 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-        if (l != null) {
-            register.remove(l);
-            listenerRefs.remove(l);
+    public synchronized void addPropertyChangeListener(@Nonnull String propertyName,
+                                                       @Nonnull PropertyChangeListener l, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, l);
+        if (beanRef != null) {
+            register.put(l, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(l, listenerRef);
         }
     }
 
     @Override
-    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
+        }
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
+        }
+    }
+
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
         register.entrySet().forEach((entry) -> {
             PropertyChangeListener l = entry.getKey();
@@ -196,12 +241,21 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners().length;
     }
 
+    @Override
+    @Nonnull
     public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     final public String getSystemName() {
         return mSystemName;
     }
@@ -266,7 +320,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(String key,Object value){
+    public void setProperty(@Nonnull String key,Object value){
          if (parameters == null) {
              parameters = new HashMap<>();
          }
@@ -287,7 +341,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public Object getProperty(String key) {
+    public Object getProperty(@Nonnull String key) {
         if (parameters == null) {
             parameters = new HashMap<>();
         }
@@ -296,6 +350,7 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     @Override
     @OverridingMethodsMustInvokeSuper
+    @Nonnull
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             parameters = new HashMap<>();

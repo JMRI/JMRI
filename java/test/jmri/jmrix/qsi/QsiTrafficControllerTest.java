@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the QsiTrafficController class
+ * JUnit tests for the QsiTrafficController class.
  *
  * @author	Bob Jacobsen
  */
@@ -189,7 +189,12 @@ public class QsiTrafficControllerTest {
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected QsiPortControllerScaffold() throws Exception {

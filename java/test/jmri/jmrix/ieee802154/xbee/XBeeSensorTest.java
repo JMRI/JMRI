@@ -71,13 +71,15 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
-        memo.setSystemPrefix("ABC");
-        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
+        memo.setTrafficController(tc);
+        memo.setSystemPrefix("ABC");
+        memo.setSensorManager(new XBeeSensorManager(memo));
         t = new XBeeSensor("ABCS1234", "XBee Sensor Test", tc) {
             @Override
             public void requestUpdateFromLayout() {
@@ -90,6 +92,7 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
 	t.dispose();
         tc.terminate();

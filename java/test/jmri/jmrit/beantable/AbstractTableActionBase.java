@@ -4,11 +4,13 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
@@ -88,10 +90,10 @@ public abstract class AbstractTableActionBase {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+	JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        new QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
+	JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
@@ -119,7 +121,7 @@ public abstract class AbstractTableActionBase {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+	JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	//Enter 1 in the text field labeled "Hardware address:"
@@ -127,10 +129,10 @@ public abstract class AbstractTableActionBase {
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        new JTextFieldOperator(hwAddressField).enterText("1");
+        new JTextFieldOperator(hwAddressField).setText("1");
 
 	//and press create
-	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+	JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
@@ -144,7 +146,7 @@ public abstract class AbstractTableActionBase {
 
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
-	jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
+	JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	//Enter 1 in the text field labeled "Hardware address:"
@@ -155,13 +157,13 @@ public abstract class AbstractTableActionBase {
         new JTextFieldOperator(hwAddressField).enterText("1");
 
 	//and press create
-	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+	JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
 	// find the "Edit" button and press it.  This is in the table body.
 	tbl.clickOnCell(0,tbl.findColumn(Bundle.getMessage("ButtonEdit")));
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+	JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
 
 	JUnitUtil.dispose(f1);

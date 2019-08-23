@@ -25,11 +25,11 @@ import org.slf4j.LoggerFactory;
  * and options set accordingly
  * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -275,17 +275,6 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
             log.error("IO Exception {}", ioe.getMessage());
             throw (ioe);
         }
-    }
-
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static OptionsFile instance() {
-        return InstanceManager.getDefault(OptionsFile.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsFile.class);

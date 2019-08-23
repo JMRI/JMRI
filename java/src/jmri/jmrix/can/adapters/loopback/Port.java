@@ -2,11 +2,13 @@ package jmri.jmrix.can.adapters.loopback;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
- * Loopback connection to simulate a CAN link
+ * Loopback connection to simulate a CAN link.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
@@ -16,13 +18,13 @@ public class Port extends AbstractSerialPortController {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
-        mPort = "(none)";
+        mPort = "(none)"; // is hidden from user in connection config UI
     }
 
     @Override
     public void configure() {
 
-        // Register the CAN traffic controller being used for this connection
+        // register the CAN traffic controller being used for this connection
         this.getSystemConnectionMemo().setTrafficController(new LoopbackTrafficController());
 
         // do central protocol-specific configuration    
@@ -52,9 +54,20 @@ public class Port extends AbstractSerialPortController {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return new String[]{"None"};
+    } // is hidden from user in connection config UI
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{0}; // array length must match that of validBaudRates
     }
 
     @Override

@@ -137,7 +137,19 @@
 
       <a name="tools" id="tools"></a>
       <h2>JMRI Maple Systems Tools</h2>
-      N/A
+      <ul>
+        <li>Maple network traffic can be viewed with <a href=
+          "../../../package/jmri/jmrix/maple/serialmon/SerialMonFrame.shtml">
+          Maple Monitor</a></li>
+
+        <li>The <a href=
+          "../../../package/jmri/jmrix/maple/assignment/ListFrame.shtml">
+          Maple List Tool</a> lets you assign Maple Inputs and Outputs</li>
+
+        <li>Nodes can be configured with the <a href=
+          "../../../package/jmri/jmrix/maple/nodeconfig/NodeConfigFrame.shtml">
+          Configure Nodes</a> tool</li>
+      </ul>
 
       <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>

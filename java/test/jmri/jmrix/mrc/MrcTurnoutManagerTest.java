@@ -18,7 +18,7 @@ public class MrcTurnoutManagerTest {
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
-        MrcTurnoutManager t = new MrcTurnoutManager(tc,"test");
+        MrcTurnoutManager t = new MrcTurnoutManager(memo);
         Assert.assertNotNull("exists",t);
     }
 

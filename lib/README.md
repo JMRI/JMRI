@@ -13,7 +13,7 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs
+- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
@@ -22,7 +22,7 @@ On macOS, most of these changes can be affected with:
 ```
 find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-(you may need to install gsed using [Homebrew](http://brew.sh))
+(you may need to install gsed using [Homebrew](http://brew.sh)), although this probably doesn't fix the Javadoc links.
 
 On Linux, these same changes can be affected with:
 ```
@@ -50,6 +50,13 @@ After that, add and commit the additional files that were created within lib/
 - from https://github.com/rhwood/jsplitbutton
 - javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1
 
+##### jinputvalidator-0.6.0.jar
+- version 0.6.0
+- provides validation for JComponents
+- contributed by Randall Wood
+- from https://github.com/rhwood/jinputvalidator
+- javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
+
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3
@@ -76,7 +83,7 @@ After that, add and commit the additional files that were created within lib/
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.22 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.22/openlcb-0.7.22.jar or the maven central repository.
+- 0.7.26 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.26/openlcb-0.7.26.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -107,6 +114,10 @@ After that, add and commit the additional files that were created within lib/
 - version 2.9.8
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 - JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8
+
+##### json-schema-validator-1.0.10.jar
+- JSON Schema validation library
+- from https://github.com/networknt/json-schema-validator/releases
 
 ##### mqtt-client-0.4.0.jar
 starting in JMRI 4.11.5
@@ -227,9 +238,9 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://patrick.lidstone.net/html/dev_tools.html
 - See license http://patrick.lidstone.net/html/xap.html
 
-##### xbee-api-0.9.jar
-- PBender 03-Mar-2014 This version comes from the XBee library source repository
-- (we needed some of the functionality, but the pre-compiled library has not been updated).
+##### xbee-java-library-1.2.1.jar
+- Official XBee support library from Digi
+- from https://github.com/digidotcom/XBeeJavaLibrary
 
 ##### xercesImpl.jar
 - version Xerces-J 2.11.0

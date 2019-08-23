@@ -34,17 +34,17 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         if (JsonConsist.CONSISTS.equals(type)) {
-            this.connection.sendMessage(this.service.doGetList(type, locale));
+            this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
         } else {
             DccLocoAddress address = new DccLocoAddress(data.path(JSON.ADDRESS).asInt(), data.path(JSON.IS_LONG_ADDRESS).asBoolean());
             String name = address.getNumber() + (address.isLongAddress() ? "L" : "");
             if (method.equals(JSON.PUT)) {
-                this.connection.sendMessage(this.service.doPut(type, name, data, locale));
+                this.connection.sendMessage(this.service.doPut(type, name, data, locale, id), id);
             } else {
-                this.connection.sendMessage(this.service.doPost(type, name, data, locale));
+                this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
             }
             if (!this.consists.contains(address)) {
                 this.service.manager.getConsist(address).addConsistListener(this.consistListener);
@@ -54,9 +54,9 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
     }
 
     @Override
@@ -74,9 +74,9 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
         public void consistReply(LocoAddress locoaddress, int status) {
             try {
                 try {
-                    connection.sendMessage(service.getConsist(getLocale(), locoaddress));
+                    connection.sendMessage(service.getConsist(getLocale(), locoaddress, 0), 0);
                 } catch (JsonException ex) {
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
                 // this IO execption caused by broken comms with client
@@ -98,18 +98,19 @@ public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpS
         public void notifyConsistListChanged() {
             try {
                 try {
-                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS, getLocale()));
+                    connection.sendMessage(service.doGetList(JsonConsist.CONSISTS,
+                            service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
                 } catch (JsonException ex) {
-                    connection.sendMessage(ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
-                // this IO execption caused by broken comms with client
+                // this IO exception caused by broken communications with client
                 service.manager.removeConsistListListener(this);
             }
             try {
                 (new ConsistFile()).writeFile(service.manager.getConsistList());
             } catch (IOException ex) {
-                // this IO execption caused by unable to write file
+                // this IO exception caused by unable to write file
                 log.error("Unable to write consist file \"{}\"", ConsistFile.defaultConsistFilename(), ex);
             }
         }

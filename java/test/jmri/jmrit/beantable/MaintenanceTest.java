@@ -9,9 +9,7 @@ import java.awt.GraphicsEnvironment;
 import org.junit.*;
 import org.junit.rules.Timeout;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -75,9 +73,11 @@ public class MaintenanceTest {
         String[] result;
         
         // hit on sensor via to-capital system name
-        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
-        result = Maintenance.getTypeAndNames("is1");
-        checkReturnString(result, "Sensor", null, "IS1", "1");  //num listeners is empirical
+        InstanceManager.getDefault(SensorManager.class).provideSensor("is1");
+        result = Maintenance.getTypeAndNames("IS1");
+        checkReturnString(result, "", "IS1", "IS1", "0"); // Sensor "IS1" not found
+        result = Maintenance.getTypeAndNames("ISis1"); // because "is" is invalid prefix, system name is "ISis1"
+        checkReturnString(result, "Sensor", null, "ISis1", "1"); // num listeners is empirical
     }
 
     void checkReturnString(String[] result, String compare, String username, String systemname, String listeners) {

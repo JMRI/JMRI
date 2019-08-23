@@ -3,6 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -19,7 +20,8 @@ public abstract class AbstractTableTabActionBase {
     protected String helpTarget = "index"; // index is default value specified in AbstractTableTabAction.
 
     @Test
-    @Ignore("test causes NPE while executing a.actionPerformed")
+    @Ignore("test causes an NPE while executing a.actionPerformed")
+    @ToDo("The underlying class under test inherits the actionPerformed method from AbstractTableAction, which expects a model to be set by createModel(), which doesn't happen for AbstractTableTabAction classes")
     public void testExecute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         a.actionPerformed(null);

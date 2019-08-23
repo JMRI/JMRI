@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class implements a SignalMast that use <B>OpenLCB Events</B>
- * to set aspects
- * <P>
+ * to set aspects.
+ * <p>
  * This implementation writes out to the OpenLCB when it's commanded to
  * change appearance, and updates its internal state when it hears Events from
  * the network (including its own events).
@@ -49,8 +49,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * EventIDs are returned in format in which they were provided.
  * <p>
- * To keep OpenLCB distributed state consistent, setAspect does not immediately
- * change the local aspect.  Instead, it produced the relevant EventId on the 
+ * To keep OpenLCB distributed state consistent, {@link #setAspect} does not immediately
+ * change the local aspect.  Instead, it produces the relevant EventId on the
  * network, waiting for that to return and do the local state change, notification, etc.
  * <p>
  * Needs to have held/unheld, lit/unlit state completed - those need to Produce and Consume events as above
@@ -126,7 +126,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         try {
             mastNumber = Integer.parseInt(tmp);
             if (mastNumber > lastRef) {
-                lastRef = mastNumber;
+                setLastRef(mastNumber);
             }
         } catch (NumberFormatException e) {
             log.warn("Mast number of SystemName {} is not in the correct format: {} is not an integer", systemName, tmp);
@@ -172,7 +172,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         aspectMachine.setState(aspect);
         // Normally, the local state is changed by super.setAspect(aspect); here; see comment at top
     }
@@ -230,12 +230,22 @@ public class OlcbSignalMast extends AbstractSignalMast {
     }
 
     /**
-     * Provide the last used sequence number
+     *
+     * @param newVal for ordinal of all OlcbSignalMasts in use
+     */
+    protected static void setLastRef(int newVal) {
+        lastRef = newVal;
+    }
+
+    /**
+     * Provide the last used sequence number of all OlcbSignalMasts in use.
      */
     public static int getLastRef() {
         return lastRef;
     }
     protected static volatile int lastRef = 0;
+    // TODO narrow access variable
+    //private static volatile int lastRef = 0;
 
     public void setLitEventId(String event) { litMachine.setEventForState(Boolean.TRUE, event); }
     public String getLitEventId() { return litMachine.getEventStringForState(Boolean.TRUE); }
@@ -246,8 +256,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public String getHeldEventId() { return heldMachine.getEventStringForState(Boolean.TRUE); }
     public void setNotHeldEventId(String event) { heldMachine.setEventForState(Boolean.FALSE, event); }
     public String getNotHeldEventId() { return heldMachine.getEventStringForState(Boolean.FALSE); }
-
-    
 
     /**
      * Implement a general state machine where state transitions are 

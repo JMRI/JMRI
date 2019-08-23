@@ -22,22 +22,21 @@ import org.openlcb.OlcbInterface;
 public class OlcbLightManager extends AbstractLightManager {
 
     public OlcbLightManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
     
-    CanSystemConnectionMemo memo;
-    
-    String prefix = "M";
     // Whether we accumulate partially loaded lights in pendingLights.
     private boolean isLoading = false;
     // Lights that are being loaded from XML.
     private final ArrayList<OlcbLight> pendingLights = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
-    } 
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
+    }
     
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
@@ -137,5 +136,13 @@ public class OlcbLightManager extends AbstractLightManager {
             default:
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddLightEntryToolTip");
     }
 }

@@ -2,6 +2,8 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +19,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     @Override
     @Test
     public void testIdTagCreation() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.createNewIdTag("RD0413276BC1", "Test Tag");
 
         Assert.assertNotNull("IdTag is not null", t);
@@ -26,7 +28,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     @Override
     @Test
     public void testIdTagNames() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.createNewIdTag("RD0413276BC1", "Test Tag");
 
         Assert.assertEquals("IdTag system name is 'RD0413276BC1'", "RD0413276BC1", t.getSystemName());
@@ -37,7 +39,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     @Override
     @Test
     public void testIdTagSingleRetrieval() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.newIdTag("RD0413276BC1", "Test Tag");
 
         Assert.assertNotNull("Returned IdTag is not null", t);
@@ -62,7 +64,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     @Override
     @Test
     public void testIdTagMultiRetrieval() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t1 = m.newIdTag("RD0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("RD0413275FCA", "Test Tag 2");
 
@@ -88,7 +90,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     @Override
     @Test
     public void testIdTagProviderCreate() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.provideIdTag("0413276BC1");
 
         Assert.assertNotNull("IdTag is not null", t);
@@ -104,8 +106,9 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     }
 
     @Test
+    @Override
     public void testIdTagProviderGet() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t1 = m.newIdTag("RD0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("RD0413275FCA", "Test Tag 2");
 
@@ -123,17 +126,27 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
+        l = getManager();
     }
 
     @After
+    @Override
     public void tearDown() {
+        l = null;
         JUnitUtil.tearDown();
     }
 
     // Override init method so as not to load file
     // nor register shutdown task during tests.
+    @Override
     protected DefaultIdTagManager getManager() {
         return new DefaultRailComManager() {
             @Override

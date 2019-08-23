@@ -90,7 +90,6 @@ public class SimplePowerServerTest extends jmri.jmris.AbstractPowerServerTestBas
         Assert.assertEquals("status as a result of parsing off", "POWER OFF\n", sb.toString());
     }
 
-    @Ignore("Not ready yet")
     @Test
     // test parsing a bad status message.
     public void testParseBadStatus() throws Exception {

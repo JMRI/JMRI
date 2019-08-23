@@ -23,6 +23,7 @@ public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();

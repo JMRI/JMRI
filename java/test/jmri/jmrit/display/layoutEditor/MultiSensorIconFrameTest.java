@@ -2,38 +2,37 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of MultiSensorIconFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class MultiSensorIconFrameTest {
+public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
+        
+    private LayoutEditor e;
 
-    @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor();
-        MultiSensorIconFrame t = new MultiSensorIconFrame(e);
-        Assert.assertNotNull("exists", t);
-        JUnitUtil.dispose(e);
-    }
-
-    // from here down is testing infrastructure
     @Before
-    public void setUp() throws Exception {
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           e = new LayoutEditor();
+           frame = new MultiSensorIconFrame(e);
+        }
+        
     }
 
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    @Override
+    public void tearDown() {
+        if(e!=null){
+           JUnitUtil.dispose(e);
+        }
+        e = null;
+        super.tearDown();
     }
 
 }

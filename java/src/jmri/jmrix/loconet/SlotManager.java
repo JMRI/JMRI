@@ -232,7 +232,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     javax.swing.Timer staleSlotCheckTimer = null;
 
     /**
-     * Scan the slot array looking for slots that are in-use but have
+     * Scan the slot array looking for slots that are in-use or common but have
      * not had any updates in over 90s and issue a read slot request to update
      * their state as the command station may have purged or stopped updating
      * the slot without telling us via a LocoNet message.
@@ -246,7 +246,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // We will just check the normal loco slots 1 to 120
         for (int i = 1; i <= 120; i++) {
             slot = _slots[i];
-            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE)
+            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
                 sendReadSlot(i);
             }
@@ -266,7 +266,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Add a slot listener, if it is not already registered
      * <p>
      * The slot listener will be invoked every time a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be added
      */
     public synchronized void addSlotListener(SlotListener l) {
@@ -281,7 +281,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * The slot listener will be removed from the list of listeners which are
      * invoked whenever a slot changes state.
-     * <p>
+     *
      * @param l Slot Listener to be removed
      */
     public synchronized void removeSlotListener(SlotListener l) {
@@ -388,13 +388,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Checks a LocoNet message to see if it encodes a DCC "direct function" packet.
-     * <p>
+     *
      * @param m  a LocoNet Message
      * @return the loco address if the LocoNet message encodes a "direct function" packet,
      * else returns -1
      */
     int getDirectFunctionAddress(LocoNetMessage m) {
-        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
+        if (m.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -433,7 +433,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return an integer containing the bytes of the DCC packet, except the address bytes.
      */
     int getDirectDccPacket(LocoNetMessage m) {
-        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
+        if (m.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -812,8 +812,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
-        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         ret.add(ProgrammingMode.ADDRESSMODE);
         ret.add(csOpSwProgrammingMode);

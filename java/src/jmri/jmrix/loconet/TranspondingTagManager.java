@@ -1,15 +1,9 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Reporter;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +17,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
 
+    @SuppressWarnings("deprecation")
     public TranspondingTagManager() {
+        super(new jmri.jmrix.ConflictingSystemConnectionMemo("L", "LocoNet")); // NOI18N
         InstanceManager.store(this, TranspondingTagManager.class);
-    }
-
-    @Override
-    public String getSystemPrefix() {
-       // since this applies to Loconet, we will use the typical
-       // loconet prefix of L.  Transponding tags are not associated
-       // with any specific loconet connection (i.e. they can move
-       // from one to another).
-       return "L";
     }
 
     @Override
@@ -75,7 +62,7 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
         // save in the maps
         register(s);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }

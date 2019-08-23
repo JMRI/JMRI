@@ -100,7 +100,7 @@ public class OlcbThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop

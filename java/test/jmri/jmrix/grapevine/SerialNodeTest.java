@@ -434,21 +434,21 @@ public class SerialNodeTest {
 
         // created first four only
         s1 = sm.getSensor("GS1001");
-        Assert.assertTrue("s1 exists", s1 != null);
+        Assert.assertNotNull("s1 exists", s1);
         s2 = sm.getSensor("GS1002");
-        Assert.assertTrue("s2 exists", s2 != null);
+        Assert.assertNotNull("s2 exists", s2);
         s3 = sm.getSensor("GS1003");
-        Assert.assertTrue("s3 exists", s3 != null);
+        Assert.assertNotNull("s3 exists", s3);
         s4 = sm.getSensor("GS1004");
-        Assert.assertTrue("s4 exists", s4 != null);
+        Assert.assertNotNull("s4 exists", s4);
         s5 = sm.getSensor("GS1005");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1006");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1007");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1008");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("2 check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("2 check s2", Sensor.INACTIVE, s2.getKnownState());
@@ -462,13 +462,13 @@ public class SerialNodeTest {
         b.markChanges(r);
         // create first four only
         s5 = sm.getSensor("GS1005");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1006");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1007");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1008");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("3 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("3 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -483,13 +483,13 @@ public class SerialNodeTest {
 
         // create next four
         s5 = sm.getSensor("GS1005");
-        Assert.assertTrue("s5 exists", s5 != null);
+        Assert.assertNotNull("s5 exists", s5);
         s6 = sm.getSensor("GS1006");
-        Assert.assertTrue("s6 exists", s6 != null);
+        Assert.assertNotNull("s6 exists", s6);
         s7 = sm.getSensor("GS1007");
-        Assert.assertTrue("s7 exists", s7 != null);
+        Assert.assertNotNull("s7 exists", s7);
         s8 = sm.getSensor("GS1008");
-        Assert.assertTrue("s8 exists", s8 != null);
+        Assert.assertNotNull("s8 exists", s8);
 
         Assert.assertEquals("4 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("4 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -518,22 +518,22 @@ public class SerialNodeTest {
         b.markChanges(r);
 
         // created first four only
-        s1 = sm.getSensor("GS1p1");
-        Assert.assertTrue("s1 exists", s1 != null);
-        s2 = sm.getSensor("GS1p2");
-        Assert.assertTrue("s2 exists", s2 != null);
-        s3 = sm.getSensor("GS1p3");
-        Assert.assertTrue("s3 exists", s3 != null);
-        s4 = sm.getSensor("GS1p4");
-        Assert.assertTrue("s4 exists", s4 != null);
-        s5 = sm.getSensor("GS1p5");
-        Assert.assertTrue("s5 not exist", s5 == null);
-        s6 = sm.getSensor("GS1p6");
-        Assert.assertTrue("s6 not exist", s6 == null);
-        s7 = sm.getSensor("GS1p7");
-        Assert.assertTrue("s7 not exist", s7 == null);
-        s8 = sm.getSensor("GS1p8");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        s1 = sm.getSensor("GS1001");
+        Assert.assertNotNull("s1 exists", s1);
+        s2 = sm.getSensor("GS1002");
+        Assert.assertNotNull("s2 exists", s2);
+        s3 = sm.getSensor("GS1003");
+        Assert.assertNotNull("s3 exists", s3);
+        s4 = sm.getSensor("GS1004");
+        Assert.assertNotNull("s4 exists", s4);
+        s5 = sm.getSensor("GS1005");
+        Assert.assertNull("s5 not exist", s5);
+        s6 = sm.getSensor("GS1006");
+        Assert.assertNull("s6 not exist", s6);
+        s7 = sm.getSensor("GS1007");
+        Assert.assertNull("s7 not exist", s7);
+        s8 = sm.getSensor("GS1008");
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("2 check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("2 check s2", Sensor.INACTIVE, s2.getKnownState());
@@ -546,14 +546,14 @@ public class SerialNodeTest {
         r.setElement(3, 0x50);
         b.markChanges(r);
         // create first four only
-        s5 = sm.getSensor("GS1p5");
-        Assert.assertTrue("s5 not exist", s5 == null);
-        s6 = sm.getSensor("GS1p6");
-        Assert.assertTrue("s6 not exist", s6 == null);
-        s7 = sm.getSensor("GS1p7");
-        Assert.assertTrue("s7 not exist", s7 == null);
-        s8 = sm.getSensor("GS1p8");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        s5 = sm.getSensor("GS1005");
+        Assert.assertNull("s5 not exist", s5);
+        s6 = sm.getSensor("GS1006");
+        Assert.assertNull("s6 not exist", s6);
+        s7 = sm.getSensor("GS1007");
+        Assert.assertNull("s7 not exist", s7);
+        s8 = sm.getSensor("GS1008");
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("3 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("3 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -568,13 +568,13 @@ public class SerialNodeTest {
 
         // create next four
         s5 = sm.getSensor("GS1005");
-        Assert.assertTrue("s5 exists", s5 != null);
+        Assert.assertNotNull("s5 exists", s5);
         s6 = sm.getSensor("GS1006");
-        Assert.assertTrue("s6 exists", s6 != null);
+        Assert.assertNotNull("s6 exists", s6);
         s7 = sm.getSensor("GS1007");
-        Assert.assertTrue("s7 exists", s7 != null);
+        Assert.assertNotNull("s7 exists", s7);
         s8 = sm.getSensor("GS1008");
-        Assert.assertTrue("s8 exists", s8 != null);
+        Assert.assertNotNull("s8 exists", s8);
 
         Assert.assertEquals("4 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("4 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -604,21 +604,21 @@ public class SerialNodeTest {
 
         // create correct nibble only
         s1 = sm.getSensor("GS1005");
-        Assert.assertTrue("s1 exists", s1 != null);
+        Assert.assertNotNull("s1 exists", s1);
         s2 = sm.getSensor("GS1006");
-        Assert.assertTrue("s2 exists", s2 != null);
+        Assert.assertNotNull("s2 exists", s2);
         s3 = sm.getSensor("GS1007");
-        Assert.assertTrue("s3 exists", s3 != null);
+        Assert.assertNotNull("s3 exists", s3);
         s4 = sm.getSensor("GS1008");
-        Assert.assertTrue("s4 exists", s4 != null);
+        Assert.assertNotNull("s4 exists", s4);
         s5 = sm.getSensor("GS1001");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1002");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1003");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1004");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("2 check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("2 check s2", Sensor.INACTIVE, s2.getKnownState());
@@ -633,13 +633,13 @@ public class SerialNodeTest {
 
         // create correct nibble only
         s5 = sm.getSensor("GS1001");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1002");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1003");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1004");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("3 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("3 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -654,13 +654,13 @@ public class SerialNodeTest {
 
         // create other nibble
         s5 = sm.getSensor("GS1001");
-        Assert.assertTrue("s5 exist", s5 != null);
+        Assert.assertNotNull("s5 exist", s5);
         s6 = sm.getSensor("GS1002");
-        Assert.assertTrue("s6 exist", s6 != null);
+        Assert.assertNotNull("s6 exist", s6);
         s7 = sm.getSensor("GS1003");
-        Assert.assertTrue("s7 exist", s7 != null);
+        Assert.assertNotNull("s7 exist", s7);
         s8 = sm.getSensor("GS1004");
-        Assert.assertTrue("s8 exist", s8 != null);
+        Assert.assertNotNull("s8 exist", s8);
 
         Assert.assertEquals("4 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("4 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -690,21 +690,21 @@ public class SerialNodeTest {
 
         // created first four only
         s1 = sm.getSensor("GS1009");
-        Assert.assertTrue("s1 exists", s1 != null);
+        Assert.assertNotNull("s1 exists", s1);
         s2 = sm.getSensor("GS1010");
-        Assert.assertTrue("s2 exists", s2 != null);
+        Assert.assertNotNull("s2 exists", s2);
         s3 = sm.getSensor("GS1011");
-        Assert.assertTrue("s3 exists", s3 != null);
+        Assert.assertNotNull("s3 exists", s3);
         s4 = sm.getSensor("GS1012");
-        Assert.assertTrue("s4 exists", s4 != null);
+        Assert.assertNotNull("s4 exists", s4);
         s5 = sm.getSensor("GS1013");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1014");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1015");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1016");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("2 check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("2 check s2", Sensor.INACTIVE, s2.getKnownState());
@@ -718,13 +718,13 @@ public class SerialNodeTest {
         b.markChanges(r);
         // create first four only
         s5 = sm.getSensor("GS1013");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1014");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1015");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1016");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("3 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("3 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -739,13 +739,13 @@ public class SerialNodeTest {
 
         // create next four
         s5 = sm.getSensor("GS1013");
-        Assert.assertTrue("s5 exist", s5 != null);
+        Assert.assertNotNull("s5 exist", s5);
         s6 = sm.getSensor("GS1014");
-        Assert.assertTrue("s6 exist", s6 != null);
+        Assert.assertNotNull("s6 exist", s6);
         s7 = sm.getSensor("GS1015");
-        Assert.assertTrue("s7 exist", s7 != null);
+        Assert.assertNotNull("s7 exist", s7);
         s8 = sm.getSensor("GS1016");
-        Assert.assertTrue("s8 exist", s8 != null);
+        Assert.assertNotNull("s8 exist", s8);
 
         Assert.assertEquals("4 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("4 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -775,21 +775,21 @@ public class SerialNodeTest {
 
         // create correct nibble only
         s1 = sm.getSensor("GS1013");
-        Assert.assertTrue("s1 exists", s1 != null);
+        Assert.assertNotNull("s1 exists", s1);
         s2 = sm.getSensor("GS1014");
-        Assert.assertTrue("s2 exists", s2 != null);
+        Assert.assertNotNull("s2 exists", s2);
         s3 = sm.getSensor("GS1015");
-        Assert.assertTrue("s3 exists", s3 != null);
+        Assert.assertNotNull("s3 exists", s3);
         s4 = sm.getSensor("GS1016");
-        Assert.assertTrue("s4 exists", s4 != null);
+        Assert.assertNotNull("s4 exists", s4);
         s5 = sm.getSensor("GS1009");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1010");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1011");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1012");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("2 check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("2 check s2", Sensor.INACTIVE, s2.getKnownState());
@@ -804,13 +804,13 @@ public class SerialNodeTest {
 
         // create correct nibble only
         s5 = sm.getSensor("GS1009");
-        Assert.assertTrue("s5 not exist", s5 == null);
+        Assert.assertNull("s5 not exist", s5);
         s6 = sm.getSensor("GS1010");
-        Assert.assertTrue("s6 not exist", s6 == null);
+        Assert.assertNull("s6 not exist", s6);
         s7 = sm.getSensor("GS1011");
-        Assert.assertTrue("s7 not exist", s7 == null);
+        Assert.assertNull("s7 not exist", s7);
         s8 = sm.getSensor("GS1012");
-        Assert.assertTrue("s8 not exist", s8 == null);
+        Assert.assertNull("s8 not exist", s8);
 
         Assert.assertEquals("3 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("3 check s2", Sensor.ACTIVE, s2.getKnownState());
@@ -825,13 +825,13 @@ public class SerialNodeTest {
 
         // create other nibble
         s5 = sm.getSensor("GS1009");
-        Assert.assertTrue("s5 exist", s5 != null);
+        Assert.assertNotNull("s5 exist", s5);
         s6 = sm.getSensor("GS1010");
-        Assert.assertTrue("s6 exist", s6 != null);
+        Assert.assertNotNull("s6 exist", s6);
         s7 = sm.getSensor("GS1011");
-        Assert.assertTrue("s7 exist", s7 != null);
+        Assert.assertNotNull("s7 exist", s7);
         s8 = sm.getSensor("GS1012");
-        Assert.assertTrue("s8 exist", s8 != null);
+        Assert.assertNotNull("s8 exist", s8);
 
         Assert.assertEquals("4 check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("4 check s2", Sensor.ACTIVE, s2.getKnownState());

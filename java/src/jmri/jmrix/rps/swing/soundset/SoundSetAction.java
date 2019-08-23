@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
- * Swing action to create and register a SoundSetFrame object
+ * Swing action to create and register a SoundSetFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  */

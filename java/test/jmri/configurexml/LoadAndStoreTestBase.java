@@ -296,8 +296,10 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);
+
 }

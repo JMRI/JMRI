@@ -179,7 +179,7 @@ public class HexFileFrame extends JmriJFrame {
             LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
             LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
         } else {
-            log.info("Sensor Manager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+            log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
         }
 
         // Install a debug programmer, replacing the existing LocoNet one
@@ -207,6 +207,11 @@ public class HexFileFrame extends JmriJFrame {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {
+                if (!(a instanceof DccLocoAddress)) {
+                    log.error("{} is not a DccLocoAddress",a);
+                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
+                    return;
+                }
                 connectedAddresses++;
                 DccLocoAddress address = (DccLocoAddress) a;
                 //create some testing situations

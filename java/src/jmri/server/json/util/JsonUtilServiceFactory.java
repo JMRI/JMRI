@@ -30,9 +30,11 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
     @Override
     public String[] getSentTypes() {
         // retain ERROR on behalf of JsonException for schema handling
+        // retain LIST on behalf of JSON servers for schema handling
         // retain PONG on behalf of JSON servers for schema handling
         return new String[]{JsonException.ERROR,
             JSON.CONFIG_PROFILE,
+            JSON.LIST,
             JSON.NETWORK_SERVICE,
             JSON.PANEL,
             JSON.PONG,

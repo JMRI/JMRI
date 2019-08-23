@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2015
  * 
  */
-public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class LocationTrackBlockingOrderFrame extends OperationsFrame {
 
     LocationTrackBlockingOrderTableModel trackModel = new LocationTrackBlockingOrderTableModel();
     JTable trackTable = new JTable(trackModel);
@@ -132,27 +132,16 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         }
     }
 
-
     private void enableButtons(boolean enabled) {
         resetButton.setEnabled(enabled);
+        reorderButton.setEnabled(enabled);
         saveButton.setEnabled(enabled);
     }
 
     @Override
     public void dispose() {
-        if (_location != null) {
-            _location.removePropertyChangeListener(this);
-        }
         trackModel.dispose();
         super.dispose();
-    }
-
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
-        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class);

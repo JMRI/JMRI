@@ -18,9 +18,15 @@ import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Handle changing layout editor drawing options
- *
+/*******************************************************************************
+ * Handle changing layout editor drawing options.
+ * 
+ * since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here.
+ * Color settings blockDefaultColor, blockOccupiedColor and blockAlternativeColor respects the original solution. 
+ * It would be useful to drop the original defaultTrackColor, defaultOccupiedTrackColor 
+ * and defaultAlternativeTrackColor variables In {@link LayoutEditor} and use only those of 
+ * {@link LayoutTrackDrawingOptions}. 
+ * 
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTrackDrawingOptionsDialog extends JDialog {
@@ -68,6 +74,14 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         optionsPanel = new javax.swing.JPanel();
         optionLabel = new javax.swing.JLabel();
+
+        javax.swing.JLabel blockDefaultColorLabel = new javax.swing.JLabel();
+        blockDefaultColorButton = new javax.swing.JButton();
+        javax.swing.JLabel blockOccupiedColorLabel = new javax.swing.JLabel();
+        blockOccupiedColorButton = new javax.swing.JButton();
+        javax.swing.JLabel blockAlternativeColorLabel = new javax.swing.JLabel();
+        blockAlternativeColorButton = new javax.swing.JButton();
+        
         mainlineLabel = new javax.swing.JLabel();
         railCountLabel = new javax.swing.JLabel();
         mainRailCountSpinner = new javax.swing.JSpinner();
@@ -120,9 +134,10 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         optionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(ltdOptions.getName()));
         java.awt.GridBagLayout optionsPanelLayout = new java.awt.GridBagLayout();
         optionsPanelLayout.columnWidths = new int[] {0, 5, 0, 5, 0};
-        optionsPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        optionsPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         optionsPanel.setLayout(optionsPanelLayout);
 
+        // 0 -------------------------------------------------------------------
         optionLabel.setFont(optionLabel.getFont().deriveFont(optionLabel.getFont().getStyle() | java.awt.Font.BOLD));
         optionLabel.setText(Bundle.getMessage("OptionLabelText"));
         optionLabel.setToolTipText(Bundle.getMessage("OptionToolTip"));
@@ -144,6 +159,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.weightx = 30.0;
         optionsPanel.add(mainlineLabel, gridBagConstraints);
 
+        sidelineLabel.setFont(sidelineLabel.getFont().deriveFont(sidelineLabel.getFont().getStyle() | java.awt.Font.BOLD));
+        sidelineLabel.setText(Bundle.getMessage("SidelineLabelText"));
+        sidelineLabel.setToolTipText(Bundle.getMessage("SidelineColumnToolTip"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 30.0;
+        optionsPanel.add(sidelineLabel, gridBagConstraints);
+        
+        // 2 -------------------------------------------------------------------
         railCountLabel.setText(Bundle.getMessage("RailCountLabelText"));
         railCountLabel.setToolTipText(Bundle.getMessage("RailCountToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -158,6 +184,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailCountSpinner.setName(""); // NOI18N
         mainRailCountSpinner.setValue(ltdOptions.getMainRailCount());
         mainRailCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainRailCountSpinnerStateChanged(evt);
             }
@@ -174,6 +201,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailCountSpinner.setName(""); // NOI18N
         sideRailCountSpinner.setValue(ltdOptions.getSideRailCount());
         sideRailCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailCountSpinnerStateChanged(evt);
             }
@@ -185,6 +213,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideRailCountSpinner, gridBagConstraints);
 
+        // 4 -------------------------------------------------------------------
         railWidthLabel.setText(Bundle.getMessage("RailWidthLabelText"));
         railWidthLabel.setToolTipText(Bundle.getMessage("RailWidthToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -200,6 +229,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailWidthSpinner.setName(""); // NOI18N
         mainRailWidthSpinner.setValue(ltdOptions.getMainRailWidth());
         mainRailWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainRailWidthSpinnerStateChanged(evt);
             }
@@ -217,6 +247,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailWidthSpinner.setName(""); // NOI18N
         sideRailWidthSpinner.setValue(ltdOptions.getSideRailWidth());
         sideRailWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailWidthSpinnerStateChanged(evt);
             }
@@ -228,6 +259,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideRailWidthSpinner, gridBagConstraints);
 
+        // 6 -------------------------------------------------------------------
         railGapLabel.setText(Bundle.getMessage("RailGapLabelText"));
         railGapLabel.setToolTipText(Bundle.getMessage("RailGapToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -243,6 +275,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailGapSpinner.setName(""); // NOI18N
         sideRailGapSpinner.setValue(ltdOptions.getSideRailGap());
         sideRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideRailGapSpinnerStateChanged(evt);
             }
@@ -260,6 +293,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailGapSpinner.setName(""); // NOI18N
         mainRailGapSpinner.setValue(ltdOptions.getMainRailGap());
         mainRailGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainRailGapSpinnerStateChanged(evt);
             }
@@ -271,6 +305,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainRailGapSpinner, gridBagConstraints);
 
+        // 8 -------------------------------------------------------------------
         railColorLabel.setText(Bundle.getMessage("RailColorLabelText"));
         railColorLabel.setToolTipText(Bundle.getMessage("RailColorToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -286,6 +321,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailColorButton.setEnabled(ltdOptions.getMainRailCount() > 0);
         mainRailColorButton.setOpaque(true);
         mainRailColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainRailColorButtonActionPerformed(evt);
             }
@@ -315,6 +351,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideRailColorButton.setEnabled(ltdOptions.getSideRailCount() > 0);
         sideRailColorButton.setOpaque(true);
         sideRailColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideRailColorButtonActionPerformed(evt);
             }
@@ -338,6 +375,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideRailColorButton, gridBagConstraints);
 
+        // 10 ------------------------------------------------------------------
         blockLineWidthLabel.setText(Bundle.getMessage("BlockLineWidthLabelText"));
         blockLineWidthLabel.setToolTipText(Bundle.getMessage("BlockLineWidthToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -352,6 +390,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBlockLineWidthSpinner.setName(""); // NOI18N
         mainBlockLineWidthSpinner.setValue(ltdOptions.getMainBlockLineWidth());
         mainBlockLineWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainBlockLineWidthSpinnerStateChanged(evt);
             }
@@ -368,6 +407,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBlockLineWidthSpinner.setName(""); // NOI18N
         sideBlockLineWidthSpinner.setValue(ltdOptions.getSideBlockLineWidth());
         sideBlockLineWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideBlockLineWidthSpinnerStateChanged(evt);
             }
@@ -379,11 +419,178 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideBlockLineWidthSpinner, gridBagConstraints);
 
+        // 12 ------------------------------------------------------------------
+        blockLineDashPercentageX10Label.setText(Bundle.getMessage("BlockLineDashPercentageX10LabelText"));
+        blockLineDashPercentageX10Label.setToolTipText(Bundle.getMessage("BlockLineDashPercentageX10ToolTip"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
+        optionsPanel.add(blockLineDashPercentageX10Label, gridBagConstraints);
+
+        mainBlockLineDashPercentageX10Spinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 9, 1));
+        mainBlockLineDashPercentageX10Spinner.setToolTipText(Bundle.getMessage("MainBlockLineWidthToolTip"));
+        mainBlockLineDashPercentageX10Spinner.setEnabled(ltdOptions.getMainBlockLineWidth() > 0);
+        mainBlockLineDashPercentageX10Spinner.setName(""); // NOI18N
+        mainBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getMainBlockLineDashPercentageX10());
+        mainBlockLineDashPercentageX10Spinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainBlockLineDashPercentageX10SpinnerStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        optionsPanel.add(mainBlockLineDashPercentageX10Spinner, gridBagConstraints);
+
+        sideBlockLineDashPercentageX10Spinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 9, 1));
+        sideBlockLineDashPercentageX10Spinner.setToolTipText(Bundle.getMessage("SideBlockLineDashPercentageX10ToolTip"));
+        sideBlockLineDashPercentageX10Spinner.setEnabled(ltdOptions.getSideBlockLineWidth() > 0);
+        sideBlockLineDashPercentageX10Spinner.setName(""); // NOI18N
+        sideBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getSideBlockLineDashPercentageX10());
+        sideBlockLineDashPercentageX10Spinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sideBlockLineDashPercentageX10SpinnerStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        optionsPanel.add(sideBlockLineDashPercentageX10Spinner, gridBagConstraints);
+
+        // 14 ------------------------------------------------------------------
+        blockDefaultColorLabel.setText(Bundle.getMessage("BlockDefaultColorLabelText"));
+        blockDefaultColorLabel.setToolTipText(Bundle.getMessage("BlockDefaultColorToolTip"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
+        optionsPanel.add(blockDefaultColorLabel, gridBagConstraints);
+
+        blockDefaultColorButton.setBackground(layoutEditor.getDefaultTrackColorColor());
+        blockDefaultColorButton.setToolTipText(Bundle.getMessage("BlockDefaultColorToolTip"));
+        blockDefaultColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        blockDefaultColorButton.setEnabled(true);
+        blockDefaultColorButton.setOpaque(true);
+        blockDefaultColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockDefaultColorButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout blockDefaultColorButtonLayout = new javax.swing.GroupLayout(blockDefaultColorButton);
+        blockDefaultColorButton.setLayout(blockDefaultColorButtonLayout);
+        blockDefaultColorButtonLayout.setHorizontalGroup(
+            blockDefaultColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        blockDefaultColorButtonLayout.setVerticalGroup(
+            blockDefaultColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 14;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        optionsPanel.add(blockDefaultColorButton, gridBagConstraints);
+
+        // 16 ------------------------------------------------------------------
+        blockOccupiedColorLabel.setText(Bundle.getMessage("BlockOccupiedColorLabelText"));
+        blockOccupiedColorLabel.setToolTipText(Bundle.getMessage("BlockOccupiedColorToolTip"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
+        optionsPanel.add(blockOccupiedColorLabel, gridBagConstraints);
+
+        blockOccupiedColorButton.setBackground(layoutEditor.getDefaultOccupiedTrackColorColor());
+        blockOccupiedColorButton.setToolTipText(Bundle.getMessage("BlockOccupiedColorToolTip"));
+        blockOccupiedColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        blockOccupiedColorButton.setEnabled(true);
+        blockOccupiedColorButton.setOpaque(true);
+        blockOccupiedColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockOccupiedColorButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout blockOccupiedColorButtonLayout = new javax.swing.GroupLayout(blockOccupiedColorButton);
+        blockOccupiedColorButton.setLayout(blockOccupiedColorButtonLayout);
+        blockOccupiedColorButtonLayout.setHorizontalGroup(
+            blockOccupiedColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        blockOccupiedColorButtonLayout.setVerticalGroup(
+            blockOccupiedColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 16;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        optionsPanel.add(blockOccupiedColorButton, gridBagConstraints);
+
+        // 18 ------------------------------------------------------------------
+        blockAlternativeColorLabel.setText(Bundle.getMessage("BlockAlternativeColorLabelText"));
+        blockAlternativeColorLabel.setToolTipText(Bundle.getMessage("BlockAlternativeColorToolTip"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
+        optionsPanel.add(blockAlternativeColorLabel, gridBagConstraints);
+
+        blockAlternativeColorButton.setBackground(layoutEditor.getDefaultAlternativeTrackColorColor());
+        blockAlternativeColorButton.setToolTipText(Bundle.getMessage("BlockAlternativeColorToolTip"));
+        blockAlternativeColorButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        blockAlternativeColorButton.setEnabled(true);
+        blockAlternativeColorButton.setOpaque(true);
+        blockAlternativeColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blockAlternativeColorButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout blockAlternativeColorButtonLayout = new javax.swing.GroupLayout(blockAlternativeColorButton);
+        blockAlternativeColorButton.setLayout(blockAlternativeColorButtonLayout);
+        blockAlternativeColorButtonLayout.setHorizontalGroup(
+            blockAlternativeColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        blockAlternativeColorButtonLayout.setVerticalGroup(
+            blockAlternativeColorButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 18;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
+        optionsPanel.add(blockAlternativeColorButton, gridBagConstraints);
+
+        // 20 ------------------------------------------------------------------
         ballastWidthLabel.setText(Bundle.getMessage("BallastWidthLabelText"));
         ballastWidthLabel.setToolTipText(Bundle.getMessage("BallastWidthToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
         optionsPanel.add(ballastWidthLabel, gridBagConstraints);
@@ -392,13 +599,14 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBallastWidthSpinner.setToolTipText(Bundle.getMessage("MainBallastWidthToolTip"));
         mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
         mainBallastWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainBallastWidthSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainBallastWidthSpinner, gridBagConstraints);
@@ -407,22 +615,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBallastWidthSpinner.setToolTipText(Bundle.getMessage("SideBallastWidthToolTip"));
         sideBallastWidthSpinner.setValue(ltdOptions.getSideBallastWidth());
         sideBallastWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideBallastWidthSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideBallastWidthSpinner, gridBagConstraints);
 
+        // 22 ------------------------------------------------------------------
         ballastColorLabel.setText(Bundle.getMessage("BallastColorLabelText"));
         ballastColorLabel.setToolTipText(Bundle.getMessage("BallastColorToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
         optionsPanel.add(ballastColorLabel, gridBagConstraints);
@@ -433,6 +643,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainBallastColorButton.setEnabled(ltdOptions.getMainBallastWidth() > 0);
         mainBallastColorButton.setOpaque(true);
         mainBallastColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainBallastColorButtonActionPerformed(evt);
             }
@@ -451,7 +662,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainBallastColorButton, gridBagConstraints);
@@ -462,6 +673,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideBallastColorButton.setEnabled(ltdOptions.getSideBallastWidth() > 0);
         sideBallastColorButton.setOpaque(true);
         sideBallastColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideBallastColorButtonActionPerformed(evt);
             }
@@ -480,16 +692,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideBallastColorButton, gridBagConstraints);
 
+        // 24 ------------------------------------------------------------------
         tieLengthLabel.setText(Bundle.getMessage("TieLengthLabelText"));
         tieLengthLabel.setToolTipText(Bundle.getMessage("TieLengthToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
         optionsPanel.add(tieLengthLabel, gridBagConstraints);
@@ -498,13 +711,14 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieLengthSpinner.setToolTipText(Bundle.getMessage("MainTieLengthToolTip"));
         mainTieLengthSpinner.setValue(ltdOptions.getMainTieLength());
         mainTieLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTieLengthSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainTieLengthSpinner, gridBagConstraints);
@@ -513,22 +727,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieLengthSpinner.setToolTipText(Bundle.getMessage("SideTieLengthToolTip"));
         sideTieLengthSpinner.setValue(ltdOptions.getSideTieLength());
         sideTieLengthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideTieLengthSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideTieLengthSpinner, gridBagConstraints);
 
+        // 26 ------------------------------------------------------------------
         tieWidthLabel.setText(Bundle.getMessage("TieWidthLabelText"));
         tieWidthLabel.setToolTipText(Bundle.getMessage("TieWidthToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 26;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
         optionsPanel.add(tieWidthLabel, gridBagConstraints);
@@ -538,13 +754,14 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieWidthSpinner.setEnabled(ltdOptions.getMainTieLength() > 0);
         mainTieWidthSpinner.setValue(ltdOptions.getMainTieWidth());
         mainTieWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTieWidthSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 26;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainTieWidthSpinner, gridBagConstraints);
@@ -554,22 +771,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieWidthSpinner.setEnabled(ltdOptions.getSideTieLength() > 0);
         sideTieWidthSpinner.setValue(ltdOptions.getSideTieWidth());
         sideTieWidthSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideTieWidthSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 26;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideTieWidthSpinner, gridBagConstraints);
 
+        // 28 ------------------------------------------------------------------
         tieGapLabel.setText(Bundle.getMessage("TieGapLabelText"));
         tieGapLabel.setToolTipText(Bundle.getMessage("TieGapToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 22;
+        gridBagConstraints.gridy = 28;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
         optionsPanel.add(tieGapLabel, gridBagConstraints);
@@ -579,13 +798,14 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieGapSpinner.setEnabled(ltdOptions.getMainTieLength() > 0);
         mainTieGapSpinner.setValue(ltdOptions.getMainTieGap());
         mainTieGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mainTieGapSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 22;
+        gridBagConstraints.gridy = 28;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainTieGapSpinner, gridBagConstraints);
@@ -595,22 +815,24 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieGapSpinner.setEnabled(ltdOptions.getSideTieLength() > 0);
         sideTieGapSpinner.setValue(ltdOptions.getSideTieGap());
         sideTieGapSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sideTieGapSpinnerStateChanged(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 22;
+        gridBagConstraints.gridy = 28;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideTieGapSpinner, gridBagConstraints);
 
+        // 30 ------------------------------------------------------------------
         tieColorLabel.setText(Bundle.getMessage("TieColorLabelText"));
         tieColorLabel.setToolTipText(Bundle.getMessage("TieColorToolTip"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 24;
+        gridBagConstraints.gridy = 30;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
         optionsPanel.add(tieColorLabel, gridBagConstraints);
@@ -621,6 +843,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainTieColorButton.setEnabled(ltdOptions.getMainTieLength() > 0);
         mainTieColorButton.setOpaque(true);
         mainTieColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mainTieColorButtonActionPerformed(evt);
             }
@@ -639,7 +862,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 24;
+        gridBagConstraints.gridy = 30;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(mainTieColorButton, gridBagConstraints);
@@ -650,6 +873,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         sideTieColorButton.setEnabled(ltdOptions.getSideTieLength() > 0);
         sideTieColorButton.setOpaque(true);
         sideTieColorButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideTieColorButtonActionPerformed(evt);
             }
@@ -668,90 +892,41 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 24;
+        gridBagConstraints.gridy = 30;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
         optionsPanel.add(sideTieColorButton, gridBagConstraints);
 
-        sidelineLabel.setFont(sidelineLabel.getFont().deriveFont(sidelineLabel.getFont().getStyle() | java.awt.Font.BOLD));
-        sidelineLabel.setText(Bundle.getMessage("SidelineLabelText"));
-        sidelineLabel.setToolTipText(Bundle.getMessage("SidelineColumnToolTip"));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 30.0;
-        optionsPanel.add(sidelineLabel, gridBagConstraints);
-
-        blockLineDashPercentageX10Label.setText(Bundle.getMessage("BlockLineDashPercentageX10LabelText"));
-        blockLineDashPercentageX10Label.setToolTipText(Bundle.getMessage("BlockLineDashPercentageX10ToolTip"));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE_LEADING;
-        optionsPanel.add(blockLineDashPercentageX10Label, gridBagConstraints);
-
-        mainBlockLineDashPercentageX10Spinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 9, 1));
-        mainBlockLineDashPercentageX10Spinner.setToolTipText(Bundle.getMessage("MainBlockLineWidthToolTip"));
-        mainBlockLineDashPercentageX10Spinner.setEnabled(ltdOptions.getMainBlockLineWidth() > 0);
-        mainBlockLineDashPercentageX10Spinner.setName(""); // NOI18N
-        mainBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getMainBlockLineDashPercentageX10());
-        mainBlockLineDashPercentageX10Spinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                mainBlockLineDashPercentageX10SpinnerStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
-        optionsPanel.add(mainBlockLineDashPercentageX10Spinner, gridBagConstraints);
-
-        sideBlockLineDashPercentageX10Spinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 9, 1));
-        sideBlockLineDashPercentageX10Spinner.setToolTipText(Bundle.getMessage("SideBlockLineDashPercentageX10ToolTip"));
-        sideBlockLineDashPercentageX10Spinner.setEnabled(ltdOptions.getSideBlockLineWidth() > 0);
-        sideBlockLineDashPercentageX10Spinner.setName(""); // NOI18N
-        sideBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getSideBlockLineDashPercentageX10());
-        sideBlockLineDashPercentageX10Spinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sideBlockLineDashPercentageX10SpinnerStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.BASELINE;
-        optionsPanel.add(sideBlockLineDashPercentageX10Spinner, gridBagConstraints);
-
-        presetsLabel.setText("Presets:");
+        presetsLabel.setText(Bundle.getMessage("ButtonPresets"));
 
         presetsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Classic JMRI", "Drafting", "Realistic", "Realistic Oh!", "Garrish", "--", "Custom" }));
         presetsComboBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 presetsComboBoxActionPerformed(evt);
             }
         });
 
-        applyButton.setText("Apply");
+        applyButton.setText(Bundle.getMessage("ButtonApply"));
         applyButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 applyButtonActionPerformed(evt);
             }
         });
 
-        cancelButton.setText("Cancel");
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setActionCommand("cancelActionCommand");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
 
-        okButton.setText("Ok");
+        okButton.setText(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
             }
@@ -801,7 +976,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 68, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -816,14 +991,50 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     |* action performed methods *|
     \*==========================*/
 
+    /***************************************************************************
+     * OK button action performed.
+     * Non-systemic color adjustment solution for blockDefaultColor, blockOccupiedColor and blockAlternativeColor.
+     * 
+     * @param evt event
+     */
     private void okButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         log.debug("okButtonActionPerformed({}", evt);
+        
+        // ----------------------------------------            
+        layoutEditor.setDefaultTrackColor(ltdOptions.getBlockDefaultColor());
+        layoutEditor.setDefaultOccupiedTrackColor(ltdOptions.getBlockOccupiedColor());
+        layoutEditor.setDefaultAlternativeTrackColor(ltdOptions.getBlockAlternativeColor());
+        layoutEditor.setDirty();
+        layoutEditor.redrawPanel();
+        // ----------------------------------------            
+
         ltdOptions.setName(layoutEditor.getLayoutName());
         layoutEditor.setLayoutTrackDrawingOptions(ltdOptions);
         ltdOptions = null;
         setVisible(false);
         dispose();
     }//GEN-LAST:event_okButtonActionPerformed
+
+    /***************************************************************************
+     * Apply button action performed.
+     * Non-systemic color adjustment solution for blockDefaultColor, blockOccupiedColor and blockAlternativeColor.
+     * 
+     * @param evt event
+     */
+    private void applyButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
+        
+        // ----------------------------------------            
+        layoutEditor.setDefaultTrackColor(ltdOptions.getBlockDefaultColor());
+        layoutEditor.setDefaultOccupiedTrackColor(ltdOptions.getBlockOccupiedColor());
+        layoutEditor.setDefaultAlternativeTrackColor(ltdOptions.getBlockAlternativeColor());
+        layoutEditor.setDirty();
+        layoutEditor.redrawPanel();
+        // ----------------------------------------            
+
+        LayoutTrackDrawingOptions ltdo = new LayoutTrackDrawingOptions(ltdOptions);
+        ltdo.setName(layoutEditor.getLayoutName());
+        layoutEditor.setLayoutTrackDrawingOptions(ltdo);
+    }//GEN-LAST:event_applyButtonActionPerformed
 
     private void presetsComboBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_presetsComboBoxActionPerformed
         log.debug("presetsComboBoxActionPerformed({}", evt);
@@ -841,7 +1052,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                     break;
                 }
             }
-        }
+        } 
     }//GEN-LAST:event_presetsComboBoxActionPerformed
 
     private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -994,12 +1205,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         mainRailWidthSpinner.setEnabled(value > 0);
     }//GEN-LAST:event_mainRailCountSpinnerStateChanged
 
-    private void applyButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        LayoutTrackDrawingOptions ltdo = new LayoutTrackDrawingOptions(ltdOptions);
-        ltdo.setName(layoutEditor.getLayoutName());
-        layoutEditor.setLayoutTrackDrawingOptions(ltdo);
-    }//GEN-LAST:event_applyButtonActionPerformed
-
     private void mainRailColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_mainRailColorButtonActionPerformed
         JButton button = (JButton) evt.getSource();
         Color value = button.getBackground();
@@ -1072,6 +1277,43 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         log.info("*sideTieColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_sideTieColorButtonActionPerformed
 
+    private void blockDefaultColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_blockDefaultColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        Color newColor = JmriColorChooser.showDialog(null, Bundle.getMessage("DefaultTrackColor"), value);
+        if ((newColor != null) && !newColor.equals(value)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setBlockDefaultColor(newColor);
+        }
+        log.info("*blockDefaultColorButtonActionPerformed({})", newColor);
+    }//GEN-LAST:event_blockDefaultColorButtonActionPerformed
+
+    private void blockOccupiedColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_blockOccupiedColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        Color newColor = JmriColorChooser.showDialog(null, Bundle.getMessage("DefaultOccupiedTrackColor"), value);
+        if ((newColor != null) && !newColor.equals(value)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setBlockOccupiedColor(newColor);
+        }
+        log.info("*blockOccupiedColorButtonActionPerformed({})", newColor);
+    }//GEN-LAST:event_blockOccupiedColorButtonActionPerformed
+
+    private void blockAlternativeColorButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_blockAlternativeColorButtonActionPerformed
+        JButton button = (JButton) evt.getSource();
+        Color value = button.getBackground();
+        Color newColor = JmriColorChooser.showDialog(null, Bundle.getMessage("DefaultAlternativeTrackColor"), value);
+        if ((newColor != null) && !newColor.equals(value)) {
+            makeCustomPreset();
+            button.setBackground(newColor);
+            ltdOptions.setBlockAlternativeColor(newColor);
+        }
+        log.info("*blockAlternativeColorButtonActionPerformed({})", newColor);
+    }//GEN-LAST:event_blockAlternativeColorButtonActionPerformed
+
+    
     private void mainBlockLineDashPercentageX10SpinnerStateChanged(ChangeEvent evt) {//GEN-FIRST:event_mainBlockLineDashPercentageX10SpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
         Integer value = (Integer) spinner.getValue();
@@ -1094,6 +1336,10 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private void setupControls() {
         copyToCustom = false;   // prevent xxx.setValue's from creating custom preset
 
+        blockDefaultColorButton.setBackground(ltdOptions.getBlockDefaultColor());
+        blockOccupiedColorButton.setBackground(ltdOptions.getBlockOccupiedColor());
+        blockAlternativeColorButton.setBackground(ltdOptions.getBlockAlternativeColor());
+        
         mainBallastColorButton.setBackground(ltdOptions.getMainBallastColor());
         mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
         mainBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getMainBlockLineDashPercentageX10());
@@ -1164,6 +1410,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideTieLength(0);
         tempLTDO.setSideTieWidth(0);
+        tempLTDO.setBlockDefaultColor(Color.GRAY);
+        tempLTDO.setBlockOccupiedColor(Color.RED);
+        tempLTDO.setBlockAlternativeColor(Color.WHITE);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(draftingPresetName);
@@ -1191,6 +1440,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideTieLength(0);
         tempLTDO.setSideTieWidth(0);
+        tempLTDO.setBlockDefaultColor(Color.GRAY);
+        tempLTDO.setBlockOccupiedColor(Color.RED);
+        tempLTDO.setBlockAlternativeColor(Color.WHITE);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(realisticPresetName);
@@ -1218,6 +1470,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieGap(6);
         tempLTDO.setSideTieLength(9);
         tempLTDO.setSideTieWidth(3);
+        tempLTDO.setBlockDefaultColor(Color.GRAY);
+        tempLTDO.setBlockOccupiedColor(Color.RED);
+        tempLTDO.setBlockAlternativeColor(Color.WHITE);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(realisticOhPresetName);
@@ -1245,6 +1500,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieGap(12);
         tempLTDO.setSideTieLength(18);
         tempLTDO.setSideTieWidth(6);
+        tempLTDO.setBlockDefaultColor(Color.GRAY);
+        tempLTDO.setBlockOccupiedColor(Color.RED);
+        tempLTDO.setBlockAlternativeColor(Color.WHITE);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(british70sPresetName);
@@ -1272,14 +1530,17 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideTieLength(0);
         tempLTDO.setSideTieWidth(0);
+        tempLTDO.setBlockDefaultColor(Color.GRAY);
+        tempLTDO.setBlockOccupiedColor(Color.RED);
+        tempLTDO.setBlockAlternativeColor(Color.WHITE);
         ltdoList.add(tempLTDO);
 
         tempLTDO = new LayoutTrackDrawingOptions(csdazd71PresetName);
         tempLTDO.setMainBallastColor(Color.decode("#000000"));
         tempLTDO.setMainBallastWidth(0);
-        tempLTDO.setMainBlockLineDashPercentageX10(8);
-        tempLTDO.setMainBlockLineWidth(8);
-        tempLTDO.setMainRailColor(Color.decode("#202020"));
+        tempLTDO.setMainBlockLineDashPercentageX10(6);
+        tempLTDO.setMainBlockLineWidth(6);
+        tempLTDO.setMainRailColor(Color.decode("#000000"));
         tempLTDO.setMainRailCount(1);
         tempLTDO.setMainRailGap(0);
         tempLTDO.setMainRailWidth(10);
@@ -1289,9 +1550,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setMainTieWidth(0);
         tempLTDO.setSideBallastColor(Color.decode("#000000"));
         tempLTDO.setSideBallastWidth(0);
-        tempLTDO.setSideBlockLineDashPercentageX10(8);
-        tempLTDO.setSideBlockLineWidth(8);
-        tempLTDO.setSideRailColor(Color.decode("#202020"));
+        tempLTDO.setSideBlockLineDashPercentageX10(6);
+        tempLTDO.setSideBlockLineWidth(6);
+        tempLTDO.setSideRailColor(Color.decode("#000000"));
         tempLTDO.setSideRailCount(1);
         tempLTDO.setSideRailGap(0);
         tempLTDO.setSideRailWidth(10);
@@ -1299,6 +1560,9 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideTieLength(0);
         tempLTDO.setSideTieWidth(0);
+        tempLTDO.setBlockDefaultColor(Color.decode("#606060"));
+        tempLTDO.setBlockOccupiedColor(Color.decode("#E00000"));
+        tempLTDO.setBlockAlternativeColor(Color.decode("#FFFFE0"));
         ltdoList.add(tempLTDO);
 
         ltdoList.add(ltdOptions);
@@ -1316,6 +1580,11 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
+    
+    private javax.swing.JButton blockDefaultColorButton;
+    private javax.swing.JButton blockOccupiedColorButton;
+    private javax.swing.JButton blockAlternativeColorButton;
+    
     private javax.swing.JLabel ballastWidthLabel;
     private javax.swing.JLabel blockLineDashPercentageX10Label;
     private javax.swing.JLabel blockLineWidthLabel;

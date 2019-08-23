@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Turnout interface to RaspberryPi GPIO pins.
- * <P>
+ * <p>
  * 
  * @author Paul Bender Copyright (C) 2015 
  */
-public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java.io.Serializable {
+public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Serializable {
 
     // in theory gpio can be static, because there will only ever
     // be one, but the library handles the details that make it a 

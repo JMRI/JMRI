@@ -1,14 +1,19 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  * Represents a locomotive on the layout
@@ -266,6 +271,63 @@ public class Engine extends RollingStock {
             return getConsist().isLead(this);
         }
         return false;
+    }
+
+    /**
+     * Get the DCC address for this engine from the JMRI roster. Does 4
+     * attempts, 1st by road and number, 2nd by number, 3rd by dccAddress using
+     * the engine's road number, 4th by id.
+     * 
+     * @return dccAddress
+     */
+    public String getDccAddress() {
+        RosterEntry re = getRosterEntry();
+        if (re != null) {
+            return re.getDccAddress();
+        }
+        return NONE;
+    }
+    
+    /**
+     * Get the RosterEntry for this engine from the JMRI roster. Does 4
+     * attempts, 1st by road and number, 2nd by number, 3rd by dccAddress using
+     * the engine's road number, 4th by id.
+     * 
+     * @return RosterEntry, can be null
+     */
+    public RosterEntry getRosterEntry() {
+        RosterEntry rosterEntry = null;
+        // 1st by road name and number
+        List<RosterEntry> list =
+                Roster.getDefault().matchingList(getRoadName(), getNumber(), null, null, null, null, null);
+        if (list.size() > 0) {
+            rosterEntry = list.get(0);
+            log.debug("Roster Loco found by road and number: {}", rosterEntry.getDccAddress());
+            // 2nd by road number
+        } else if (!getNumber().equals(NONE)) {
+            list = Roster.getDefault().matchingList(null, getNumber(), null, null, null, null, null);
+            if (list.size() > 0) {
+                rosterEntry = list.get(0);
+                log.debug("Roster Loco found by number: {}", rosterEntry.getDccAddress());
+            }
+        }
+        // 3rd by dcc address
+        if (rosterEntry == null) {
+            list = Roster.getDefault().matchingList(null, null, getNumber(), null, null, null, null);
+            if (list.size() > 0) {
+                rosterEntry = list.get(0);
+                log.debug("Roster Loco found by dccAddress: {}", rosterEntry.getDccAddress());
+            }
+        }
+        // 4th by id
+        if (rosterEntry == null) {
+            list = Roster.getDefault().matchingList(null, null, null, null, null, null, getNumber());
+            if (list.size() > 0) {
+                rosterEntry = list.get(0);
+                log.debug("Roster Loco found by roster id: {}", rosterEntry.getDccAddress());
+            }
+        }
+        return rosterEntry;
     }
 
     /**

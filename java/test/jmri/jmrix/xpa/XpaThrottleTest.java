@@ -1,5 +1,6 @@
 package jmri.jmrix.xpa;
 
+import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.After;
@@ -8,8 +9,8 @@ import org.junit.Test;
 
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class
- * <p>
+ * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class.
+ *
  * @author	Paul Bender
  */
 public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
@@ -32,6 +33,16 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(expResult, result, 0.0);
     }
 
+    /**
+     * Test of getSpeedStepMode method, of class AbstractThrottle.
+     */
+    @Override
+    @Test
+    public void testGetSpeedStepMode() {
+        SpeedStepMode expResult = SpeedStepMode.INCREMENTAL;
+        SpeedStepMode result = instance.getSpeedStepMode();
+        Assert.assertEquals(expResult, result);
+    }
     /**
      * Test of getIsForward method, of class AbstractThrottle.
      */

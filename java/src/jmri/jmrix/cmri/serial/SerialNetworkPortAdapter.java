@@ -16,4 +16,5 @@ public abstract class SerialNetworkPortAdapter extends jmri.jmrix.AbstractNetwor
     public CMRISystemConnectionMemo getSystemConnectionMemo() {
         return (CMRISystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
 }

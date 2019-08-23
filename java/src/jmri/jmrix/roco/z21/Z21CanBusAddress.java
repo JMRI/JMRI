@@ -1,11 +1,14 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.Locale;
+import jmri.Manager;
 import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import jmri.ReporterManager;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 CanBus  
- * <P>
+ * <p>
  * One address format is supported for Reporters and Sensors: 
  * <ul>
  * <li>
@@ -69,6 +72,57 @@ public class Z21CanBusAddress {
             return (-1);
         }
         return (num);
+    }
+
+    /**
+     * Validate a system name format.
+     *
+     * @param name    the name to validate
+     * @param manager the manager requesting validation
+     * @param locale  the locale for user messages
+     * @return name, unchanged
+     * @see jmri.Manager#validateSystemNameFormat(java.lang.String,
+     * java.util.Locale)
+     */
+    public static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+        name = manager.validateSystemNamePrefix(name, locale);
+        String[] parts = name.substring(manager.getSystemNamePrefix().length()).split(":");
+        if (parts.length != 2) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidMissingParts", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidMissingParts", name));
+        }
+        int num;
+        try {
+            try {
+                num = Integer.parseInt(parts[0]);
+            } catch (NumberFormatException ex) {
+                // may have been base 16 instead of 10
+                num = Integer.parseInt(parts[0], 16);
+            }
+            if (num < 0 || num > 65535) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidCanAddress", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidCanAddress", name));
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidCanAddress", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidCanAddress", name));
+        }
+        try {
+            num = Integer.parseInt(parts[1]);
+            if (num < 1 || num > 8) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+            }
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+        }
+        return name;
     }
 
     /**

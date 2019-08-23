@@ -37,18 +37,17 @@ import org.slf4j.LoggerFactory;
  * a train to proceed from an Origin to a Destination. WarrantTableAction
  * provides the menu for panels to List, Edit and Create Warrants. It launches
  * the appropriate frame for each action.
- * <BR>
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
@@ -662,9 +661,8 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         private void makeWarrant() {
-            String sysName = _sysNameBox.getText().trim();
-            String userName = _userNameBox.getText().trim();
-            sysName = sysName.toUpperCase();
+            String sysName = _sysNameBox.getText();
+            String userName = _userNameBox.getText();
             if (!sysName.startsWith("IW")) {
                 sysName = "IW" + sysName;
             }
@@ -699,4 +697,5 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class);
+
 }

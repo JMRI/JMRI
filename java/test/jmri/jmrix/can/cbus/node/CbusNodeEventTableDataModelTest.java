@@ -20,8 +20,8 @@ public class CbusNodeEventTableDataModelTest {
     @Test
     public void testCTor() {
         
-        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
-            new CanSystemConnectionMemo(), 3,CbusNodeEventTableDataModel.MAX_COLUMN);
+        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
+            memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
         
         t = null;
@@ -30,12 +30,12 @@ public class CbusNodeEventTableDataModelTest {
     @Test
     public void testNodeNoEv() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
+        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
+        
+        Assert.assertTrue("default rowcount", t.getRowCount() == 0 );
+        Assert.assertTrue("getValueAt no node null", t.getValueAt(0,1) == null ); 
+        
         
         CbusNode myNode = new CbusNode(memo,12345);
         
@@ -44,7 +44,7 @@ public class CbusNodeEventTableDataModelTest {
       //  Assert.assertEquals("starting 0 rowcount",0,t.getRowCount() );
         
         Assert.assertTrue( t.getRowCount()== 0 );
-        Assert.assertTrue( t.getColumnCount()== 6 );
+        Assert.assertTrue( t.getColumnCount()== 7 );
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
@@ -54,11 +54,10 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
         Assert.assertTrue("column has NO width", CbusNodeEventTableDataModel.getPreferredWidth(999) > 0 );
         
+        
         myNode.dispose();
         myNode = null;
         t = null;
-        memo = null;
-        tcis = null;
         
     }
     
@@ -69,11 +68,10 @@ public class CbusNodeEventTableDataModelTest {
         // not headless as setValueAt triggers window open
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
+        jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane mainpane = new 
+            jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane();
         
-        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel(
+        CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( mainpane,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
         CbusNode myNode = new CbusNode(memo,12345);        
@@ -113,52 +111,49 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (String)t.getValueAt(
             0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN) == "" );
             
-        Assert.assertEquals("starting ev vars","[1, 2, 3, 4]",t.getValueAt( 
+        Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (Integer)t.getValueAt(
+            0,CbusNodeEventTableDataModel.EV_INDEX_COLUMN) == -1 );
+            
+        Assert.assertEquals("starting ev vars","1, 2, 3, 4",t.getValueAt( 
             0,CbusNodeEventTableDataModel.EV_VARS_COLUMN) );
             
-        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );            
-        
-        t.updateFromNode(0,CbusNodeEventTableDataModel.EV_VARS_COLUMN);
-        
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
-        
-        nodeModel.addNode(myNode);
-        
-        t.setValueAt("doclick",0,CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN);
-        t.disposeEvFrame();
-        try {
-            t.disposeEvFrame();
-        } catch (Exception e) {
-            Assert.assertTrue("edit event frame was successfully disposed of so caused a null exception",true);
-        }
-        
-        t.setValueAt("doclick",0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN);
-        try {
-            t.disposeEvFrame();
-        } catch (Exception e) {
-            Assert.assertTrue("no event frame was created so caused a null exception",true);
-        }
-        
-        nodeModel.dispose();
-        nodeModel = null;
+        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
+
+        mainpane.dispose();
+        mainpane = null;
         myNode.dispose();
         myNode = null;
         myNodeEvent = null;
         t = null;
-        memo = null;
-        tcis = null;
         
     }    
+    
+    private CbusNodeTableDataModel nodeModel;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
     
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
     }
 
     @After
     public void tearDown() {
+        
+        memo = null;
+        tcis = null;
+        
+        nodeModel.dispose();
+        nodeModel = null;
+        
         JUnitUtil.tearDown();
     }
 

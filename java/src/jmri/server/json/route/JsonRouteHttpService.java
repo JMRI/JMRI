@@ -29,8 +29,8 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
     }
 
     @Override
-    public ObjectNode doGet(Route route, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(route, name, type, locale); // throws JsonException if route == null
+    public ObjectNode doGet(Route route, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = this.getNamedBean(route, name, type, locale, id); // throws JsonException if route == null
         ObjectNode data = root.with(JSON.DATA);
         if (route != null) {
             switch (route.getState()) {
@@ -74,12 +74,11 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
      *               updated.
      * @param locale the requesting client's Locale.
      * @return a JSON description of the requested route. Since a route changes
-     *         state on a separete thread, this may return a route in the state
+     *         state on a separate thread, this may return a route in the state
      *         prior to this call, the target state, or an intermediate state.
      */
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Route route = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Route route, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         switch (state) {
             case JSON.ACTIVE:
@@ -91,27 +90,28 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", ROUTE, state)); // NOI18N
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", ROUTE, state), id); // NOI18N
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(route, name, type, locale, id);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type));
+    public JsonNode doPut(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type), id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case ROUTE:
             case ROUTES:
                 return doSchema(type,
                         server,
                         "jmri/server/json/route/route-server.json",
-                        "jmri/server/json/route/route-client.json");
+                        "jmri/server/json/route/route-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
         }
     }
 

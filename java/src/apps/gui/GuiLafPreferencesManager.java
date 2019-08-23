@@ -42,6 +42,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String GRAPHICTABLESTATE = "graphicTableState";
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
+    public final static String EDITOR_USE_OLD_LOC_SIZE= "editorUseOldLocSize";
     /**
      * Smallest font size a user can set the font size to other than zero
      * ({@value}). A font size of 0 indicates that the system default font size
@@ -67,6 +68,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
+    private boolean editorUseOldLocSize = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
     private boolean dirty = false;
@@ -100,6 +102,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
+            this.setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
             log.debug("About to setDefault Locale");
@@ -160,6 +163,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
         preferences.putBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()); // use graphic icons in bean table state column
+        preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, this.isEditorUseOldLocSize());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
@@ -388,14 +392,43 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @return the lookAndFeel
+     * @return the editorUseOldLocSize value
+     */
+    public boolean isEditorUseOldLocSize() {
+        return editorUseOldLocSize;
+    }
+
+    /**
+     * @param editorUseOldLocSize the editorUseOldLocSize value to set
+     */
+    public void setEditorUseOldLocSize(boolean editorUseOldLocSize) {
+        boolean oldEditorUseOldLocSize = this.editorUseOldLocSize;
+        this.editorUseOldLocSize = editorUseOldLocSize;
+        this.setDirty(true);
+        this.setRestartRequired(false);
+        firePropertyChange(EDITOR_USE_OLD_LOC_SIZE, oldEditorUseOldLocSize, editorUseOldLocSize);
+    }
+
+    /**
+     * Get the name of the class implementing the preferred look and feel. Note
+     * this may not be the in-use look and feel if the preferred look and feel
+     * is not available on the current platform; and will be overwritten if
+     * preferences are saved on a platform where the preferred look and feel is
+     * not available.
+     * 
+     * @return the look and feel class name
      */
     public String getLookAndFeel() {
         return lookAndFeel;
     }
 
     /**
-     * @param lookAndFeel the lookAndFeel to set
+     * Set the name of the class implementing the preferred look and feel. Note
+     * this change only takes effect after the application is restarted, because
+     * Java has some issues setting the look and feel correctly on already open
+     * windows.
+     * 
+     * @param lookAndFeel the look and feel class name
      */
     public void setLookAndFeel(String lookAndFeel) {
         String oldLookAndFeel = this.lookAndFeel;
@@ -411,8 +444,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public void applyLookAndFeel() {
         String lafClassName = null;
         for (LookAndFeelInfo LAF : UIManager.getInstalledLookAndFeels()) {
-            if (LAF.getName().equals(this.lookAndFeel)) {
+            // accept either name or classname of look and feel
+            if (LAF.getClassName().equals(this.lookAndFeel) || LAF.getName().equals(this.lookAndFeel)) {
                 lafClassName = LAF.getClassName();
+                break; // use first match, not last match (unlikely to be different, but you never know)
             }
         }
         log.debug("Look and feel selection \"{}\" ({})", this.lookAndFeel, lafClassName);
@@ -459,15 +494,17 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             }
         }
     }
-    
+
     /**
-     * Stand-alone service routine to 
+     * Stand-alone service routine to
      * set the default Locale.
      *
      * Intended to be invoked early, as soon as a profile is
-     * available, to ensure the correct language is set as 
+     * available, to ensure the correct language is set as
      * startup proceeds. Must be followed eventually
      * by a complete {@link #setLocale}.
+     * 
+     * @param profile The profile to get the locale from
      */
     public static void setLocaleMinimally(Profile profile) {
         String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found

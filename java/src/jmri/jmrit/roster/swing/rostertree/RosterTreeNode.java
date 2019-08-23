@@ -8,7 +8,7 @@ import jmri.jmrit.roster.RosterEntry;
 /**
  * Create a TreeNode representing the entire Roster.
  *
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  */
 public class RosterTreeNode extends DefaultMutableTreeNode {

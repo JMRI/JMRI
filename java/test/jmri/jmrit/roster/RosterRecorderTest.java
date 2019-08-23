@@ -8,21 +8,21 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RosterRecorderTest {
 
     @Test
     public void testCTor() {
         RosterRecorder t = new RosterRecorder();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -31,5 +31,4 @@ public class RosterRecorderTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RosterRecorderTest.class);
-
 }

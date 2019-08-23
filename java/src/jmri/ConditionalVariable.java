@@ -781,7 +781,7 @@ public class ConditionalVariable {
             case OBLOCK:
                 return Bundle.getMessage("BeanNameOBlock"); // NOI18N
             case ENTRYEXIT:
-                return Bundle.getMessage("EntryExit"); // NOI18N
+                return Bundle.getMessage("BeanNameEntryExit"); // NOI18N
             default:
                 return "";
         }
@@ -919,7 +919,7 @@ public class ConditionalVariable {
                         new Object[]{rbx.getString("OBlockStatus"), getName(), _dataString});
             case ENTRYEXIT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("EntryExit"), getBean().getUserName(), type}); // NOI18N
+                        new Object[]{Bundle.getMessage("BeanNameEntryExit"), getBean().getUserName(), type}); // NOI18N
             case NONE:
                 return getName() + " type " + type;
             default:

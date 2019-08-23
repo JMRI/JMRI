@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    AbstractManagerTest.class,
     DefaultConditionalManagerTest.class,
     DefaultIdTagManagerTest.class,
     DefaultLogixManagerTest.class,
@@ -29,8 +30,7 @@ import org.junit.runners.Suite;
     DefaultSignalGroupManagerTest.class,
     DefaultSignalMastLogicManagerTest.class,
     DefaultSignalMastManagerTest.class,
-    DeferringProgrammerManagerTest.class,
-    GeneralManagerTest.class,
+    DeferringProgrammerManagerTest.class
 })
 
 /**

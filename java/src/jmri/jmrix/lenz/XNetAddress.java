@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Lenz XpressNet
- * <P>
+ * <p>
  * Two address format are supported: 
  * <ul>
  * <li> 
@@ -41,7 +41,8 @@ public class XNetAddress {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix)) {
             // here if an invalid XpressNet system name
-            log.error("invalid character in header field of XpressNet system name: {}", systemName);
+            log.error("invalid character in header field of XpressNet system name: {} wants prefix {}", 
+                systemName, prefix);
             return (-1);
         }
         // name must be in the Xtnnnnn or XSmm:pp format (X is user 
@@ -52,7 +53,7 @@ public class XNetAddress {
             if( ( systemName.charAt(prefix.length())=='S' ||
                   systemName.charAt(prefix.length())=='s' ) && 
                   curAddress.contains(":")) {
-               //Address format passed is in the form of encoderAddress:input or T:turnout address
+               // Address format passed is in the form of encoderAddress:input or T:turnout address
                int seperator = curAddress.indexOf(":");
                int encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                int input = Integer.parseInt(curAddress.substring(seperator + 1));
@@ -81,7 +82,8 @@ public class XNetAddress {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 
-            log.error("invalid character in header field of system name: {}", systemName);
+            log.error("invalid character in header field of system name: {} wants prefix {} type {}", 
+                systemName, prefix, type);
             return NameValidity.INVALID;
         }
         if (getBitFromSystemName(systemName, prefix) > 0) {

@@ -33,7 +33,7 @@ function getRosterTable(group) {
                 hideEmptyColumns("#roster tr th");
                 $(".roster-entry td").click(function(event) {
                     if (event.target === this) {
-                        window.open("/web/webThrottle.html?loconame=" + $(this).parent().data("id"), $(this).parent().data("address")).focus();
+                        window.open("/web/webThrottle.html?loconame=" + $(this).parent().data("rosterEntry"), $(this).parent().data("address")).focus();
                     }
                 });
                 $(".roster-entry td").css("cursor", "pointer");

@@ -166,7 +166,7 @@ programmateurs autonome comme le PR2 Digitrax et PR3. La relecture des CVs d&#23
 par un PR3 (en mode programmmation autonome) ou une voie contr&#244;l&#233;e par une centrale Chief ou Zephyr.</p>
 
 <p>L'&#233;tape suivante montre comment ajouter une connexion &#224; JMRI (DecoderPro, PanelPro, etc.) 
-pour un syst&#232;me bas&#233; sur Loconet.</p>
+pour un syst&#232;me bas&#233; sur LocoNet.</p>
 <ol>
  <li>Connectez votre adaptateur au LocoNet, et connectez votre ordinateur, avec
    le c&#226;ble s&#233;rie ou USB appropri&#233;.</li>
@@ -250,7 +250,7 @@ directement dans la centrale &#224; l'aide d'un r&#233;gulateur Digitrax.</p>
  <h2><a name="Using">Utiliser JMRI avec LocoNet&reg;</h2>
 JMRI fournit un certain nombre de fonctionnalit&#233;s qui lui permettent d'interagir avec LocoNet:
 <ul>
-  <li>Plusieurs &#233;quipement Loconet peuvent &#234;tre adress&#233;s directement par JMRI, telles que les sorties individuelles aiguillage sur une DS54, ou des d&#233;tection individuelle de canton sur un BFL 16x Pour plus d'informations sur les outils JMRI LocoNet sp&#233;cifiques. Pour de plus amples informations sur la fa&#231;on de trouver ces adresses, voir <a href= "Addressing.shtml"> cette page</a>.</li>
+  <li>Plusieurs &#233;quipement LocoNet peuvent &#234;tre adress&#233;s directement par JMRI, telles que les sorties individuelles aiguillage sur une DS54, ou des d&#233;tection individuelle de canton sur un BFL 16x Pour plus d'informations sur les outils JMRI LocoNet sp&#233;cifiques. Pour de plus amples informations sur la fa&#231;on de trouver ces adresses, voir <a href= "Addressing.shtml"> cette page</a>.</li>
   <li>JMRI fournit une vari&#233;t&#233; d'outils concernant LocoNet. Il s'agit principalement de
    permettre la configuration de la fonctionnalit&#233; de l'appareil LocoNet, mais inclure &#233;galement
    certains outils de surveillance d'&#233;tat. Des informations sur ces outils peuvent &#234;tre trouv&#233;es
@@ -320,7 +320,7 @@ pour plus d'informations.
       </ul>
 <h4><a name="TurnoutCmdHandling">Command Station Turnout Command Rejection 
         and JMRI Turnout Command Handling</a></h4>
-     <p>Les centrales de commande Digitrax passent des messages Loconet de commande de commutation sur
+     <p>Les centrales de commande Digitrax passent des messages LocoNet de commande de commutation sur
        signal de la voie DCC afin que les d&#233;codeurs d'accessoires connect&#233;s &#224; la voie peuvent
        recevoir les commandes de commutation. Les stations de commande Digitrax semblent stocker
        les demandes de commutation et les transmettre au signal de Voie DCC d'une mani&#232;re
@@ -329,7 +329,7 @@ pour plus d'informations.
        d'un trafic de commande de commutation LocoNet pouvant &#234;tre important, peut d&#233;border.
        Lorsque cela arrive, la station de commande r&#233;pond avec un message
        (a \ <LONG_ACK\> opcode) en disant qu'il a rejet&#233; (ne pas accepter) la commande de commutation. Lorsque la centrale de commande nous donne la r&#233;ponse, la commande de commutation est pas plac&#233;e dans la m&#233;moire tampon et est oubli&#233;e.<br>
-     Cela peut &#234;tre probl&#233;matique, en fonction de la r&#233;ponse au message de rejet Loconet de l'appareil qui a envoy&#233; la
+     Cela peut &#234;tre probl&#233;matique, en fonction de la r&#233;ponse au message de rejet LocoNet de l'appareil qui a envoy&#233; la
        commande de commutation. De nombreux dispositifs LocoNet ne remarquent pas le message de rejet, il ne faut
        pas essayer d'envoyer &#224; nouveau la commande de commutation. D'autres dispositifs de LocoNet
        peuvent pr&#234;ter attention au message de rejet et peuvent attendre un certain temps avant de
@@ -339,7 +339,7 @@ pour plus d'informations.
        de l'&#233;quipement qui prend en charge les messages des d&#233;codeurs d'accesoires connect&#233;s &#224; la voie . Notez que cela peut inclure des dispositifs connecter &#224; LocoNet et qui contr&#244;le le signal DCC de la voie qui
        est disponible sur les fils de "RailSync LocoNet".</p>
        <ul>
-     <li>JMRI dispose de plusieurs m&#233;canismes pour aider &#224; g&#233;rer ces demandes de commutation Loconet temporaire
+     <li>JMRI dispose de plusieurs m&#233;canismes pour aider &#224; g&#233;rer ces demandes de commutation LocoNet temporaire
       dans le tampons surcharg&#233;. Ces m&#233;canismes sont contr&#244;l&#233;s par l'option "Turnout 
       Command Handling" pour chaque connexion bas&#233;e sur LocoNet. Les quatre options "Turnout 
       Command Handling" de Traitement des commandes sont d&#233;crites ci-dessous.
@@ -352,7 +352,7 @@ pour plus d'informations.
        JMRI ajoute une temporisation suppl&#233;mentaire entre les commandes de commutation qu'il
        envoie &#224; LocoNet. Cela devrait r&#233;duire les probabilit&#233;s que les commandes JMRI provoqueraient un d&#233;bordement du Tampon de commande de commutation de la centrale Digitrax, mais n'a pas d'effet sur les autres appareils LocoNet qui g&#233;n&#232;rent les commandes de commutations LocoNet. Le m&#233;canisme de relance d&#233;crit ci-dessus pour le mode "Normal"
        est activ&#233;.</li>
-	    <li>Unefois seulement - Cela d&#233;sactive le m&#233;canisme de relance de JMRI pour les commandes de commutation rejet&#233;es. JMRI va pas renvoyer les messages Loconet de commande de commutation. La temporisation entre deux envois de commandes de commutation de JMRI &#224; LocoNet est le m&#234;me qu'en mode "Normal".</li>
+	    <li>Unefois seulement - Cela d&#233;sactive le m&#233;canisme de relance de JMRI pour les commandes de commutation rejet&#233;es. JMRI va pas renvoyer les messages LocoNet de commande de commutation. La temporisation entre deux envois de commandes de commutation de JMRI &#224; LocoNet est le m&#234;me qu'en mode "Normal".</li>
       <li> Deux fois - Cette option d&#233;sactive &#224; la fois le m&#233;canisme JMRI de relance des commandes rejet&#233;es et augmente le d&#233;lai entre deux commandes de commutation envoy&#233;es par JMRI &#224; LocoNet.</li>
     </ul>
      <p>Ces options ne prendronts effet qu'apr&#232;s l'enregistrement des pr&#233;f&#233;rences et le red&#233;mmarage de JMRI.<br>
@@ -368,7 +368,7 @@ pour plus d'informations.
        Voir l'outil JMRI LocoNet de <a href="../../../package/jmri/jmrix/l	oconet/cmdstnconfig/CmdStnConfigFrame.shtml">
        Configuration de la centrale de commande</a> .
        </li>
-	  <li>Une bonne fa&#231;on d'&#233;viter ce probl&#232;me est d'emp&#234;cher la centrale Digitrax de recevoir les messages LocoNet de commande de commutation. Cela peut se faire en utilisant uniquement des dispositifs qui envoient et/ou re&#231;oivent des messages de commande de commutation via le bus de donn&#233;es LocoNet, et de mettre en oeuvre un Loconet <i>autonome</i> pour une utilisation par ces dispositifs. Ce LocoNet autonome peut &#234;tre reli&#233; s&#233;par&#233;ment &#224; JMRI de sorte que JMRI puisse acc&#233;der &#224; la centrale de commande,
+	  <li>Une bonne fa&#231;on d'&#233;viter ce probl&#232;me est d'emp&#234;cher la centrale Digitrax de recevoir les messages LocoNet de commande de commutation. Cela peut se faire en utilisant uniquement des dispositifs qui envoient et/ou re&#231;oivent des messages de commande de commutation via le bus de donn&#233;es LocoNet, et de mettre en oeuvre un LocoNet <i>autonome</i> pour une utilisation par ces dispositifs. Ce LocoNet autonome peut &#234;tre reli&#233; s&#233;par&#233;ment &#224; JMRI de sorte que JMRI puisse acc&#233;der &#224; la centrale de commande,
        r&#233;gulateurss, horloge rapide, et d'autres ressources via une connexion LocoNet,
        et des signaux d'acc&#232;s et de branchements via une autre connexion LocoNet.
        Cela n&#233;cessite un adaptateur LocoNet distinct pour chaque connexion.<br>
@@ -464,7 +464,7 @@ pour plus d'informations.
         </ul>
       </li>
       <li>Une &#233;tude technique ax&#233;e sur <a href="DigitraxPower/index.shtml">les questions d'alimentation</a> dans certains produits Digitrax</li>
-      <li><a href="StandaloneLocoNet.shtml">Loconet Autonome</a></li>
+      <li><a href="StandaloneLocoNet.shtml">LocoNet Autonome</a></li>
     </ul>
   </li>  
 </ul>

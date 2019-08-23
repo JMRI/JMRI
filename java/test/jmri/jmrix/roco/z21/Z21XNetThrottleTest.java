@@ -277,6 +277,7 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         ((Z21XNetThrottle)instance).throttleDispose();
         JUnitUtil.tearDown();

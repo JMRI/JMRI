@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * SRCPSensor implementation of the Sensor interface.
- * <P>
- *
- * Description:	extend jmri.AbstractSensor for SRCP layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2010
@@ -28,7 +25,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
      * @param memo   associated connection memo
      */
     public SRCPSensor(int number, SRCPBusConnectionMemo memo) {
-        super(memo.getSystemPrefix() + "s" + number);
+        super(memo.getSystemPrefix() + "S" + number);
         _number = number;
         _bus = memo.getBus();
         tc = memo.getTrafficController();

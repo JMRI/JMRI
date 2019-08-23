@@ -7,15 +7,14 @@ package jmri;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Steve Young Copyright (C) 2018
  * @author Paul Bender Copyright (C) 2019
@@ -77,12 +76,6 @@ public interface CabSignal {
     public void forwardCabSignalToLayout();
 
     /*
-     * Disable the cab signal.  This method causes isCabSignalActive to return 
-     * false and the on-layout cab signal to be cleared, if possible.
-     */
-    public void disableCabSignal();
-
-    /*
      * get whether this cab signal is on or off
      *
      * @return true if on, false if off
@@ -95,6 +88,13 @@ public interface CabSignal {
      * @param active true if on, false if off
      */
     public void setCabSignalActive(boolean active);
+
+    /*
+     * set whether a Master Cab signal button is on or off
+     *
+     * @param active true if on, false if off
+     */
+    public void setMasterCabSigPauseActive(boolean active);
 
     /**
      * Add a listener for consist events

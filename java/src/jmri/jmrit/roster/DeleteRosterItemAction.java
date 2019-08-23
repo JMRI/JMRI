@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Remove a locomotive from the roster.
  *
- * <P>
+ * <p>
  * In case of error, this moves the definition file to a backup. This action
  * posts a dialog box to select the loco to be deleted, and then posts an "are
  * you sure" dialog box before acting.
@@ -85,7 +85,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         // find the file for the selected entry
         for (RosterEntry re : entries) {
             String filename = roster.fileFromTitle(re.titleString());
-            String fullFilename = LocoFile.getFileLocation() + filename;
+            String fullFilename = Roster.getDefault().getRosterFilesLocation() + filename;
             log.debug("resolves to [{}], [{}]", filename, fullFilename);
 
             // prompt for one last chance
@@ -108,11 +108,11 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
             if (rosterGroup == null) {
                 try {
                     // ensure preferences will be found
-                    FileUtil.createDirectory(LocoFile.getFileLocation());
+                    FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
                     // move original file to backup
                     LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                    df.makeBackupFile(LocoFile.getFileLocation() + filename);
+                    df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + filename);
 
                 } catch (Exception ex) {
                     log.error("error during locomotive file output: " + ex);

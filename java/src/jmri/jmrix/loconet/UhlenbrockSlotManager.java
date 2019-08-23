@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Only change compared to standard Loconet SlotManager is CV programming. The
+ * Only change compared to standard LocoNet SlotManager is CV programming. The
  * Uhlenbrock IB-COM / Intellibox II uses some special and undocumented means
  * (OPC_IMM_PACKET).
  *
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lisby Copyright (C) 2014
  */
-public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
+public class UhlenbrockSlotManager extends SlotManager {
 
     public UhlenbrockSlotManager(LnTrafficController tc) {
         super(tc);

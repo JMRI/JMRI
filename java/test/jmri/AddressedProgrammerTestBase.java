@@ -26,12 +26,14 @@ abstract public class AddressedProgrammerTestBase extends ProgrammerTestBase {
     }
 
     @Test
+    @Override
     public void testGetCanRead() {
         Assume.assumeTrue(programmer instanceof AddressedProgrammer);
         Assert.assertFalse("can read", programmer.getCanRead());
     }
     
     @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
     public void testSetGetMode() {
         Assume.assumeTrue(programmer instanceof AddressedProgrammer);
         programmer.setMode(ProgrammingMode.REGISTERMODE);

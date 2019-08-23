@@ -107,7 +107,8 @@
       these "system names". JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
-      <h2 id="format">System Name Format</h2>
+      <a name="format" id="format"></a>
+      <h2>System Name Format</h2>
       
       A system name is formed from a short "system prefix" representing
       the hardware system, followed by a single upper case "type letter"
@@ -164,8 +165,8 @@
       a system connection in the preferences to any other uppercase or lowercase
       letter. You can call your NCE connection "P" if you want to.
       If you have two of them, you can call one "X" and the other
-      "Y". You can also use an upper case letter followed by
-      digits, e.g. "N1" and "N2".</p>
+      "Y". You can also use a lower case or upper case letter followed by
+      digits, e.g. "N1" and "n2".</p>
 
       <h4>Default System Letters</h4>
       <p>Note that some of these are placeholders, and have no underlying
@@ -289,7 +290,7 @@
 
         <li>B Block - A software object that keeps track of the
         contents of a specific block of track.
-        Block system names are all upper case, have no trailing whitespace and start with IB.</li>
+        Block system names start with IB.</li>
 
         <li>D iDentity - A software object that holds information
         about an identity tag that is, typically, attached to a
@@ -308,26 +309,22 @@
         name is "IG12". For historical reasons, Groups were not required to have
         a system prefix or type letter until late;
         <span class="since">Since JMRI 4.13.4</span>Using only one single letter
-        in the system name is no longer compatible with system name normalization.
+        in the system name is no longer compatible with system name validation.
 
         <li>H signal Head - One part of a signal (which may have
         multiple heads). Also interpreted to include indicators on
         control panels that are acting to display signal
         aspects.
-        SignalHead system names are all upper case, have no trailing whitespace and mostly, 
-        but not always, start with IH.
+        SignalHead system names mostly, but not always, start with IH.
         </li>
-
-        <li>I dIgitalIO - DigitalIO is a one bit input/output device, for example
-		turnout or sensor.</li>
-
-        <li>L Light - another form of output, used to e.g. control
-        lights on a layout</li>
 
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
         information temporarily and display it on panels, etc.
-        Memory system names are all upper case, have no trailing whitespace and start with IM.</li>
+        Memory system names start with IM.</li>
+
+        <li>L Light - another form of output, used to e.g. control
+        lights on a layout</li>
 
         <li>N eNtry/exit destination points</li>
 
@@ -337,8 +334,6 @@
         can. For example, the system specific part might be B for
         main layout power, e.g. LPB or S42 for subdistrict channel
         2 on card 4, e.g. LPS42.</li>
-
-        <li>Q LogixNG - Logix Next Generation (under development by danieb987)</li>
 
         <li>R Reporters - a general purpose mechanism for reporting
         complicated information from the layout, e.g. locomotive
@@ -352,20 +347,15 @@
         generally be either ACTIVE or INACTIVE. This is most
         commonly used for block occupancy detectors.</li>
 
+        <li>Y Sections - holds a map of trackwork.
+        Section system names start with IY.</li>
+        
         <li>T Turnout - actually a general purpose output on the
         layout</li>
 
-        <li>V AnalogIO (think Variable) - an analog input/output device.</li>
-
         <li>X logiX - a set of logic equations used to control the
         layout.
-        Logix system names are all upper case, have no trailing whitespace and start with IX.</li>
-
-        <li>Y Sections - holds a map of trackwork.
-        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
-        
-        <li>Z StringIO (ztrings) - A input/output device for strings</li>
-
+        Logix system names start with IX.</li>
       </ul>
 
 
@@ -522,18 +512,29 @@
           <td>int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71(?)</td>
+          <td>pin: 7</td>
         </tr>
         <tr>
           <td>DigiXbee</td>
           <td>o</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>o (Turnouts)</td>
           <td>4:3:4</td>
           <td>ModuleAddress:Pin1:Pin2</td>
           <td>ZT4:3:4</td>
           <td>int : int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71(?)</td>
+          <td>pin: 7</td>
         </tr>
         <tr>
           <td>Grapevine</td>
@@ -812,7 +813,7 @@
           <td> </td>
           <td> </td>
           <td>1</td>
-          <td>511</td>
+          <td>99</td>
         </tr>
         <tr>
           <td>X10</td>
@@ -892,9 +893,10 @@ SENSOR GROUP:my group:LS2
       <p>To make this possible, two informal rules are used:</p>
 
       <ul>
-        <li>Users should not use the : (colon, ASCII 0x3A), "
-        (double quote, ASCII 0x22), nor $ (dollar sign, ASCII 0x24
-        ) characters in their system or user names. Automatic tools
+        <li>Users should not use the <code>:</code> (colon,
+        ASCII 0x3A), <code>"</code> (double quote, ASCII
+        0x22), nor <code>$</code> (dollar sign, ASCII 0x24)
+        characters in their system or user names. Automatic tools
         should use at least one of these to make sure they don't
         collide with user-selected names. Quotes should always be
         used in pairs to allow nesting.</li>
@@ -938,7 +940,7 @@ SENSOR GROUP:my group:LS2
         <a href="http://jmri.org/JavaDoc/doc/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
         for more information.</li>
         
-        <li>The system name convention doesn't provide a specific
+        <li>The system name convention does not provide a specific
         way to identify more than one adapter of a given type. E.g.
         if you're connected to more than one LocoNet, or more than
         one command station of any single type, you can either give
@@ -957,11 +959,10 @@ SENSOR GROUP:my group:LS2
       
       <h3>Normalized form of Names, and how to work with it</h3>
       
-          After multiple long discussions, we decided that both system and user names 
+          After multiple long discussions, we decided that user names 
           should be kept in a "normal" form which enforces certain restrictions.
           For user names, that's that leading and trailing whitespace (spaces, tabs) 
-          are not allowed.  For system names, it depends on the system, but 
-          at least the system-prefix and type letter must be correct.
+          are not allowed.
           
           <p>
           The code to make sure that names are in normal form 
@@ -978,7 +979,7 @@ SENSOR GROUP:my group:LS2
         <p>
           Because system names may vary from type to type 
           and manager to manager, there are two manager-specific 
-          methods of interest: <code>manager.normalizeSystemName(input)</code>
+          methods of interest: <code>manager.validateSystemNameFormat(input, locale)</code>
           and <code>manager.makeSystemName(input)</code>.
           Since most NamedBeans are created by managers, and 
           managers know about the complete set of NamedBeans, that's the right place to
@@ -988,11 +989,11 @@ SENSOR GROUP:my group:LS2
           provided system name argument because it's invalid, it should throw
           a <code>NamedBean.BadSystemNameException</code>. The constructor should
           not in any way transform the system name that it was given. It has to use
-          it as given or, if it can't, throw the exception.
+          it as given or, if it can not, throw the exception.
         <p>
           For more information, see the Javadoc for
             <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>, 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#normalizeSystemName-java.lang.String-">normalizeSystemName</a>,
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#validateSystemName-java.lang.String-">validateSystemNameFormat</a>,
             <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#makeSystemName-java.lang.String-">makeSystemName</a>,
             <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadUserNameException.html">BadUserNameException</a>,
             and
@@ -1005,19 +1006,16 @@ SENSOR GROUP:my group:LS2
             <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75" alt="combobox"></a>
             
 <pre style="font-family: monospace;">
-        import jmri.util.swing.JmriBeanComboBox;
+        import jmri.swing.NamedBeanComboBox;
 
         // the first argument is the manager, the 2nd is a bean to select or null
         // the third determines how the beans are displayed
-        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.html">JmriBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
+        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/swing/NamedBeanComboBox.html">NamedBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
                                                     currentSensor, 
-                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
+                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
         
-        // to get the selected item, depending on what you want:
-        selectComboBox.getNamedBean()                                       
-        selectComboBox.getSystemName()                                       
-        selectComboBox.getUserName()                                        
-        selectComboBox.getDisplayName()                                       
+        // to get the selected item:
+        selectComboBox.getSelectedItem()
 </pre>
 
         <li>Table format:

@@ -63,7 +63,7 @@
             <p><input name="checkbox" type="checkbox" id="checkbox"
             checked> <strong>Synchronize Internal Fast Clock and
             <em>system</em> Fast Clock</strong> will normally be
-            checked. (Loconet shown with Digitrax).</p>
+            checked. (LocoNet shown with Digitrax).</p>
 
             <p><input type="checkbox" name="checkbox2" id=
             "checkbox2"> <strong>Correct hardware clock</strong>

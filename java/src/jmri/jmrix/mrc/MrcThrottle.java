@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an MRC connection.
- * <P>
+ * <p>
  * Addresses of 99 and below are considered short addresses, and over 100 are
  * considered long addresses. This is not the MRC system standard, but is used
  * as an expedient here.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -32,7 +32,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     public MrcThrottle(MrcSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getMrcTrafficController();
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -197,7 +197,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      *
      * @param speed Number from 0 to 1, or less than zero for emergency stop
      */
@@ -208,7 +208,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         this.speedSetting = speed;
         MrcMessage m;
         int value;
-        if (super.speedStepMode == SpeedStepMode128) {
+        if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             log.debug("setSpeedSetting= {}", speed); //IN18N
             //MRC use a value between 0-127 no matter what the controller is set to
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop

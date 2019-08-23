@@ -15,6 +15,7 @@ import org.junit.Test;
 public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 

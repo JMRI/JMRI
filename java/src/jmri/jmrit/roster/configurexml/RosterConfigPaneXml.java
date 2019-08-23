@@ -5,13 +5,16 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterConfigPane;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of Roster default values.
- * <P>
+ * <p>
  * This class is named as being the persistant form of the RosterConfigPane
  * class, but there's no object of that form created when this is read back.
  * Instead, this persists static members of the roster.Roster class.
@@ -52,14 +55,15 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
+        Profile project = ProfileManager.getDefault().getActiveProfile();
         if (shared.getAttribute("directory") != null) {
-            InstanceManager.getDefault(RosterConfigManager.class).setDirectory(shared.getAttribute("directory").getValue());
+            InstanceManager.getDefault(RosterConfigManager.class).setDirectory(project, shared.getAttribute("directory").getValue());
             if (log.isDebugEnabled()) {
                 log.debug("set roster location (1): " + shared.getAttribute("directory").getValue());
             }
         }
         if (shared.getAttribute("ownerDefault") != null) {
-            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(shared.getAttribute("ownerDefault").getValue());
+            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(project, shared.getAttribute("ownerDefault").getValue());
         }
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {

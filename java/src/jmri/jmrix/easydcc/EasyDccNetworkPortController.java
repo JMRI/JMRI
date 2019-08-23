@@ -6,8 +6,8 @@ import jmri.jmrix.SystemConnectionMemo;
  * Abstract base for classes representing an EasyDCC communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001
-  */
-public abstract class EasyDccNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements jmri.jmrix.NetworkPortAdapter {
+ */
+public abstract class EasyDccNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
 
     /**
      * Base class. Implementations will provide InputStream and OutputStream

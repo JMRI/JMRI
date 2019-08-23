@@ -84,6 +84,7 @@ public class Z21Reply extends AbstractMRReply {
     }
 
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @Override
     public String toMonitorString() {
         switch(getOpCode()){
            case 0x0010:

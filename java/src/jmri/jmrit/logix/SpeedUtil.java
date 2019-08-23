@@ -217,6 +217,9 @@ public class SpeedUtil {
     // for now use global values set in WarrantPreferences
     // user's ramp speed increase amount
     protected float getRampThrottleIncrement() {
+        if (_rampThrottleIncrement <= 0) {
+            _rampThrottleIncrement = WarrantPreferences.getDefault().getThrottleIncrement();
+        }
         return _rampThrottleIncrement;
     }
     protected void setRampThrottleIncrement(float incr) {
@@ -224,6 +227,9 @@ public class SpeedUtil {
     }
 
     protected int getRampTimeIncrement() {
+        if (_rampTimeIncrement <= 0) {
+            _rampTimeIncrement = WarrantPreferences.getDefault().getTimeIncrement();
+        }
         return _rampTimeIncrement;
     }
     protected void setRampTimeIncrement(int incr) {
@@ -270,6 +276,9 @@ public class SpeedUtil {
     protected RosterSpeedProfile getSessionProfile() {
         return _sessionProfile;
     }
+    protected void resetSpeedProfile() {
+        _mergeProfile = null;
+    }
 
     private void makeSpeedTree() {
         if (_rosterId == null) {
@@ -302,16 +311,15 @@ public class SpeedUtil {
     }
     
     private void makeRampParameters() {
-        WarrantPreferences preferences = WarrantPreferences.getDefault();
-        _rampTimeIncrement = preferences.getTimeIncrement();
-        _rampThrottleIncrement = preferences.getThrottleIncrement();
+        _rampTimeIncrement = getRampTimeIncrement();    // get a value if not already set
+        _rampThrottleIncrement = getRampThrottleIncrement();
         // Can't use actual speed step amount since these numbers are needed before throttle is acquired
         // Nevertheless throttle % is a reasonable approximation
         // default cv setting of momentum speed change per 1% of throttle increment
         _ma = 10;  // acceleration momentum time 
         _md = 10;  // deceleration momentum time
         if (_rosterEntry!=null) {
-            String fileName = jmri.jmrit.roster.LocoFile.getFileLocation() + _rosterEntry.getFileName();
+            String fileName = Roster.getDefault().getRosterFilesLocation() + _rosterEntry.getFileName();
             File file;
             Element root;
             XmlFile xmlFile = new XmlFile() {};
@@ -374,8 +382,8 @@ public class SpeedUtil {
                 _rampTimeIncrement = (int)_md;
             }
         }
-        if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, _ma= {}ms/step, _md= {}ms/step. throttleIncr= {} ()timeIncr= {}",
-                _rosterId, _ma, _md, _rampThrottleIncrement, _rampTimeIncrement);
+        if (log.isDebugEnabled()) log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampStepIncr= {} timeIncr= {} throttleStep= {}",
+                _rosterId, getAddress(), _ma, _md, _rampThrottleIncrement, _rampTimeIncrement, getThrottleSpeedStepIncrement());
     }
 
     // return milliseconds per one speed step
@@ -446,7 +454,7 @@ public class SpeedUtil {
         getSpeedProfile();
         // adjust user's setting to be throttle speed step settings
         float stepIncrement = _throttle.getSpeedIncrement();
-        _rampThrottleIncrement = stepIncrement * Math.round(_rampThrottleIncrement/stepIncrement);
+        _rampThrottleIncrement = stepIncrement * Math.round(getRampThrottleIncrement()/stepIncrement);
         if (log.isTraceEnabled()) log.debug("User's Ramp increment modified to {} ({} speed steps)",
                 _rampThrottleIncrement, Math.round(_rampThrottleIncrement/stepIncrement));
     }
@@ -597,7 +605,9 @@ public class SpeedUtil {
 
     /**
      * Get ramp length needed to change speed using the WarrantPreference deltas for 
-     * throttle increment and time increment.  This should only be used for ramping down.
+     * throttle increment and time increment.  This should only be used for ramping down
+     * when the warrant is interrupted for a signal or obstacle ahead.  The length is 
+     * increased by 40 scale feet to allow a safety margin.
      * @param curSetting current throttle setting
      * @param curSpeedType current speed type
      * @param toSpeedType Speed type change
@@ -609,7 +619,8 @@ public class SpeedUtil {
         }
         float fromSpeed = modifySpeed(curSetting, curSpeedType);
         float toSpeed = modifySpeed(curSetting, toSpeedType);
-        return getRampForSpeedChange(fromSpeed, toSpeed).getRampLength();
+        return getRampForSpeedChange(fromSpeed, toSpeed).getRampLength()
+                + 12192 / WarrantPreferences.getDefault().getLayoutScale();
     }
 
     /**
@@ -619,7 +630,7 @@ public class SpeedUtil {
      * @return distance in millimeters
      */
     protected RampData getRampForSpeedChange(float fromSpeed, float toSpeed) {
-        RampData ramp = new RampData(_rampThrottleIncrement, _rampTimeIncrement);
+        RampData ramp = new RampData(getRampThrottleIncrement(), getRampTimeIncrement());
         ramp.makeThrottleSettings(fromSpeed, toSpeed);
         if (ramp.isUpRamp()) {
             makeUpRamp(ramp);
@@ -734,22 +745,31 @@ public class SpeedUtil {
         if (Math.abs(elapsedTime - _timeAtSpeed) > 10) {
             mergeOK = false;
         }
-        // measuredSpeed is the actual measured speed
-        float measuredSpeed = 1000 * length / elapsedTime;  // SpeedProfile is mm/sec
-        float aveSettings = _settingsTravelled / _timeAtSpeed;
-        // aveSpeed is the average speed according to the distances calculated from the SpeedProfile
-/*        if (log.isDebugEnabled()) {
-            float aveSpeed = 1000 * _distanceTravelled / _timeAtSpeed;
-            float profileSpeed =  getSpeedProfile().getSpeed(aveSettings, isForward);
-            log.debug("{} changes on block {}: length={} exitSetting={} speed={}. calcDist={} aveThrottleSetting={} aveProfileSpeed={} calcAveSpeed={}",
-                   _numchanges, fromBlock.getDisplayName(), length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
-        }*/
+        float measuredSpeed = 0;
+        float aveSettings = 0;
+        if (mergeOK) {
+            // measuredSpeed is the actual measured speed
+            measuredSpeed = length / elapsedTime;
+            aveSettings = _settingsTravelled / _timeAtSpeed;
+            /*  if (log.isDebugEnabled()) {
+                float aveSpeed = 1000 * _distanceTravelled / _timeAtSpeed;
+                float profileSpeed =  getSpeedProfile().getSpeed(aveSettings, isForward);
+                log.debug("{} changes on block {}: length={} exitSetting={} speed={}. calcDist={} aveThrottleSetting={} aveProfileSpeed={} calcAveSpeed={}",
+                       _numchanges, fromBlock.getDisplayName(), length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
+            }*/
+            // check for legitimate speed - derailing, abort, etc. can make bogus measurement.
+            float ratio = getTrackSpeed(aveSettings) / measuredSpeed;
+            if (ratio > 0.0f && (ratio < 0.5f || ratio > 2.0f)) {
+                mergeOK = false;    // discard
+            }
+            measuredSpeed *= 1000;    // SpeedProfile is mm/sec
+        }
         if (!mergeOK) {
             clearStats();
             return;
         }
-        float stepIncrement = _throttle.getSpeedIncrement();
 
+        float stepIncrement = _throttle.getSpeedIncrement();
         aveSettings = stepIncrement * Math.round(aveSettings/stepIncrement);
         setSpeed(_sessionProfile, aveSettings, measuredSpeed, isForward);
         if (log.isDebugEnabled())  {

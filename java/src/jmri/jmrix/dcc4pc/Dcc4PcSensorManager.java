@@ -26,8 +26,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         implements Dcc4PcListener {
 
     public Dcc4PcSensorManager(Dcc4PcTrafficController tc, Dcc4PcSystemConnectionMemo memo) {
+        super(memo);
         this.tc = tc;
-        this.memo = memo;
         this.reportManager = memo.get(jmri.ReporterManager.class);
         jmri.InstanceManager.store(this, Dcc4PcSensorManager.class);
         this.boardManager = new Dcc4PcBoardManager(tc, this);
@@ -47,7 +47,6 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     Dcc4PcBoardManager boardManager;
 
     Dcc4PcTrafficController tc;
-    Dcc4PcSystemConnectionMemo memo;
 
     @Override
     public Dcc4PcSensor getSensor(String name) {
@@ -55,9 +54,12 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public Dcc4PcSystemConnectionMemo getMemo() {
+        return (Dcc4PcSystemConnectionMemo) memo;
     }
 
     @Override

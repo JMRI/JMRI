@@ -19,8 +19,7 @@ import java.awt.event.MouseMotionListener;
  * @author Paul Bender Copyright (c) 2016
  *
  */
-public class EditorScaffold extends Editor implements MouseListener, MouseMotionListener,
-        ActionListener, KeyListener, java.beans.VetoableChangeListener {
+public class EditorScaffold extends Editor {
 
     public EditorScaffold() {
         this("foo");

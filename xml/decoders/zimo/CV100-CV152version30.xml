@@ -11,6 +11,9 @@
 <!-- version 1.4 5 jan 2015 Mark Waters   - fixed dimming mask inverted -->
 <!-- version 1.5 23 Jan 2015 Mark Waters -  added more includes for CV133 for newer decoders -->
 <!-- version 1.6 14 Dec 2016 Ronald Kuhn -  added german translation and Function Decoder-->
+<!-- version 1.7 15 Apr 2019 Ronald Kuhn -  added some german translation -->
+<!-- version 1.8 06 May 2019 Ronald Kuhn -  added CV144 Bit4 & Bit5 -->
+<!-- version 1.9 25 Jun 2019 Ronald Kuhn -  CV114 & CV152 tooltip correction -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -618,8 +621,8 @@
     <label xml:lang="it">Smorzamento Luci frontali</label>
     <label xml:lang="cs">Tlumení předního světla</label>
     <label xml:lang="de">Dimmung Lvor</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim Rear Light" mask="XXXXXXVX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -627,8 +630,8 @@
     <label xml:lang="it">Smorzamento Luci posteriori</label>
     <label xml:lang="cs">Tlumení zadního světla</label>
     <label xml:lang="de">Dimmung Lrück</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -636,8 +639,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 1</label>
     <label xml:lang="de">Dimmung FA1</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -645,8 +648,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 2</label>
     <label xml:lang="de">Dimmung FA2</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -654,8 +657,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 3</label>
     <label xml:lang="de">Dimmung FA3</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -663,8 +666,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 4</label>
     <label xml:lang="de">Dimmung FA4</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -672,8 +675,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 5</label>
     <label xml:lang="de">Dimmung FA5</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -681,8 +684,8 @@
     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 6</label>
     <label xml:lang="de">Dimmung FA6</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="115" item="Uncoupler" default="0">
     <decVal max="99"/>
@@ -965,7 +968,7 @@
     <label xml:lang="cs">Metoda DC zastavení v závislosti na polaritě</label>
     <label xml:lang="de">polaritätsabhängige DC-Bremsabschnitte</label>
   </variable>
-  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="124" item="SUSI" mask="VXXXXXXX" default="0" minOut="6" exclude="195,197,228,226,232,235,247,MX689_v30">
     <!-- value 0 => Susi,  value 1 => normal function outputs -->
     <enumVal>
       <enumChoice choice="SUSI Serial interface for sound board">
@@ -989,6 +992,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Front light effect generated</label>
     <label xml:lang="it">Effetti Luci frontali</label>
@@ -1008,6 +1012,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Rear light effect generated</label>
     <label xml:lang="it">Effetti Luci posteriori</label>
@@ -1027,6 +1032,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 1 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 1</label>
@@ -1046,6 +1052,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 2 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 2</label>
@@ -1065,6 +1072,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 3 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 3</label>
@@ -1084,6 +1092,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 4 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 4</label>
@@ -1097,38 +1106,40 @@
     <label xml:lang="cs">Chování funkčního výstupu 4</label>
     <label xml:lang="de">FA4 Verhalten</label>
   </variable>
-  <variable CV="131" mask="VVVVVVXX" minOut="7" item="Output 7 effect generated">
+  <variable CV="131" mask="VVVVVVXX" item="Output 7 effect generated" minOut="7">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Function output 5 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 5</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 5</label>
     <label xml:lang="de">FA5 Effekt</label>
   </variable>
-  <variable CV="131" mask="XXXXXXVV" minOut="7" item="Output 7 behavior">
+  <variable CV="131" mask="XXXXXXVV" item="Output 7 behavior" minOut="7">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 5 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 5</label>
     <label xml:lang="cs">Chování funkčního výstupu 5</label>
     <label xml:lang="de">FA5 Verhalten</label>
   </variable>
-  <variable CV="132" mask="VVVVVVXX" minOut="8" item="Output 8 effect generated">
+  <variable CV="132" mask="VVVVVVXX" item="Output 8 effect generated" minOut="8">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth8.xml"/>
     </enumVal>
     <label>Functin output 6 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 6</label>
     <label xml:lang="cs">Generátor efektů funkčního výstupu 6</label>
     <label xml:lang="de">FA6 Effekt</label>
   </variable>
-  <variable CV="132" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
+  <variable CV="132" mask="XXXXXXVV" item="Output 8 behavior" minOut="8">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 6 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 6</label>
@@ -1201,7 +1212,7 @@
     <label xml:lang="de">Asymmetrie-Schwelle</label>
     <label xml:lang="cs">Práh asymetrického DCC</label>
   </variable>
-  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="135" item="km/h speed regulation control and range" opsOnly="yes" default="0"  mask="XXXVVVVV" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>
       <enumChoice choice="Not Active">
         <choice>Not Active</choice>
@@ -1394,12 +1405,30 @@
     <label xml:lang="cs">Rychlostní korekce pro zastavení řízené vzdáleností (HLU)</label>
     <label xml:lang="de">Distanzgesteuerter Halt - Schnellfahr-Kompensation (HLU)</label>
   </variable>
+  <variable CV="144" item="Jingle Sound CV Write" mask="XXXVXXXX" default="0" include="190,221,222,225,246,253">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Jingle Sound CV Write</label>
+    <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
+    <tooltip>The writing of values is confirmed by a jingle.</tooltip>
+    <tooltip xml:lang="de">Das Schreiben von Werten wird durch einen Jingle bestätigt.</tooltip>
+  </variable>
+  <variable CV="144" item="Service Mode Programming Read Locked" mask="XXVXXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Service Mode Programming Read Locked</label>
+    <!--label xml:lang="it">Blocco programmazione in modo Servizio</label-->
+    <!--label xml:lang="cs">Zámek programování v servisním režimu</label-->
+    <label xml:lang="de">„Service mode“-Sperre CV lesen</label>
+    <tooltip>Read CV's in "Service mode" locked</tooltip>
+    <tooltip xml:lang="de">CV's lesen im "Service mode" gesperrt</tooltip>
+  </variable>
   <variable CV="144" item="Service Mode Programming Locked" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Service Mode Programming Locked</label>
     <label xml:lang="it">Blocco programmazione in modo Servizio</label>
     <label xml:lang="cs">Zámek programování v servisním režimu</label>
-    <label xml:lang="de">Programmiersperre</label>
+    <label xml:lang="de">„Service mode“-Sperre CV schreiben</label>
+    <tooltip>Programming lock only in "Service mode"</tooltip>
+    <tooltip xml:lang="de">Programmiersperre nur im „Service mode“</tooltip>
   </variable>
   <variable CV="144" item="Software Update Locked" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1407,6 +1436,8 @@
     <label xml:lang="it">Blocco aggiornamento Software</label>
     <label xml:lang="cs">Zámek softwarových aktualizací</label>
     <label xml:lang="de">Updatesperre</label>
+    <tooltip>Lock the software update</tooltip>
+    <tooltip xml:lang="de">Sperre des Software-Updates</tooltip>
   </variable>
   <variable CV="145" item="Kick Start" default="0" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>
@@ -1459,6 +1490,7 @@
     <label xml:lang="cs">Vyrovnání vůle převodovky motoru</label>
     <label xml:lang="de">Ausgleich Leergang</label>
     <tooltip>Motor Backlash Control</tooltip>
+    <tooltip xml:lang="de">Ausgleich des Getriebe-Leerganges bei Richtungsumkehr</tooltip>
    </variable>
   <variable CV="147" default="0" item="Total PWM Period" exclude="228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
@@ -1488,7 +1520,7 @@
     <label xml:lang="cs">Regulace při plné rychlosti</label>
     <label xml:lang="de">EMK - Ausregelung bei Vollgeschwindigkeit</label>
   </variable>
-  <variable CV="151" item="Advanced Group 1 Option 1" default="0" tooltip="Motor braked by shorting output" exclude="228,226,232,235,247,MX689_v30">
+  <variable CV="151" item="Advanced Group 1 Option 1" default="0" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>
       <enumChoice choice="No Braking">
         <choice>No Braking</choice>
@@ -1555,6 +1587,8 @@
     <label xml:lang="it">Freno motore</label>
     <label xml:lang="cs">Motorová brzda</label>
     <label xml:lang="de">Motorbremse</label>
+    <tooltip>Motor braked by shorting output</tooltip>
+    <tooltip xml:lang="de">Reduziert die Ausregelung des Motors auf 10 - 90 % des Wertes laut CV #58.</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 7" mask="XXXXXXXV" default="0" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1562,8 +1596,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 7</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 7</label>
     <label xml:lang="de">Dimmung FA7</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 8" mask="XXXXXXVX" default="0" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1571,8 +1605,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 8</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 8</label>
     <label xml:lang="de">Dimmung FA8</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 9" mask="XXXXXVXX" default="0" minOut="11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1580,8 +1614,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 9</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 9</label>
     <label xml:lang="de">Dimmung FA9</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 10" mask="XXXXVXXX" default="0" minOut="12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1589,8 +1623,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 10</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 10</label>
     <label xml:lang="de">Dimmung FA10</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 11" mask="XXXVXXXX" default="0" minOut="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1598,8 +1632,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 11</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 11</label>
     <label xml:lang="de">Dimmung FA11</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 12" mask="XXVXXXXX" default="0" minOut="14">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1607,8 +1641,8 @@
     <label xml:lang="it">Funzione smorzamento uscita 12</label>
     <label xml:lang="cs">Tlumení funkčního výstupu 12</label>
     <label xml:lang="de">Dimmung FA12</label>
-    <tooltip>If checked the Output is NOT dimmed</tooltip>
-    <tooltip xml:lang="de">Wenn gesetzt wird er Ausgang NICHT gedimmt</tooltip>
+    <tooltip>If checked the Output is dimmed</tooltip>
+    <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
   </variable>
   <variable CV="152" item="FO3 + FO4 directional setting" mask="XVXXXXXX" default="0" minOut="6">
     <enumVal>

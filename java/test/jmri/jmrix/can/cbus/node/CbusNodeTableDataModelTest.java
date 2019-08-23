@@ -4,13 +4,16 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -19,8 +22,8 @@ import org.junit.Test;
  */
 public class CbusNodeTableDataModelTest {
     
-    CanSystemConnectionMemo memo;
-    TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Test
     public void testCTor() {
@@ -72,14 +75,13 @@ public class CbusNodeTableDataModelTest {
         CbusNodeTableDataModel t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         t.startup(); // so preferences available in table model
-        
-        // default is add to table
-        Assert.assertTrue("default add cs pref",cbcfgm.getCbusPreferences().getAddCommandStations()== true );
-        Assert.assertTrue("default add node pref",cbcfgm.getCbusPreferences().getAddNodes()== true );
+
         Assert.assertTrue("default getCsByNum0 null",t.getCsByNum(0)== null );
         
-        Assert.assertTrue("default search cs pref",cbcfgm.getCbusPreferences().getStartupSearchForCs()== true );
-        Assert.assertTrue("default search node pref",cbcfgm.getCbusPreferences().getStartupSearchForNodes()== true );
+        Assert.assertTrue("default search cs pref",cbcfgm.getCbusPreferences().getStartupSearchForCs()== false );
+        Assert.assertTrue("default search node pref",cbcfgm.getCbusPreferences().getStartupSearchForNodes()== false );
+        
+        cbcfgm.getCbusPreferences().setAddCommandStations(true);
         
         CanMessage m = new CanMessage( tcis.getCanid() );
         m.setNumDataElements(8);
@@ -96,7 +98,6 @@ public class CbusNodeTableDataModelTest {
         // ignores CanMessage
         Assert.assertTrue("ignores CanMessage",t.getCsByNum(0)== null );
         Assert.assertTrue("ignores CanMessage row",t.getRowCount()== 0 );
-        
         
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -125,6 +126,7 @@ public class CbusNodeTableDataModelTest {
         Assert.assertTrue("getValueAt cs tot bytes",(Integer)t.getValueAt(0,CbusNodeTableDataModel.NODE_TOTAL_BYTES_COLUMN)== -1 );
         Assert.assertTrue("getValueAt cs byte remain",(float)t.getValueAt(0,CbusNodeTableDataModel.BYTES_REMAINING_COLUMN)== 0.0f );
         Assert.assertTrue("getValueAt cs ev md",(boolean)t.getValueAt(0,CbusNodeTableDataModel.NODE_IN_LEARN_MODE_COLUMN)== false );
+        Assert.assertNull("getValueAt null",t.getValueAt(0,999) );
         
         t.setValueAt(7,0,CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
         Assert.assertTrue("setValueAt does nothing",(Integer)t.getValueAt(0,CbusNodeTableDataModel.NODE_EVENTS_COLUMN)== -1 );
@@ -133,6 +135,10 @@ public class CbusNodeTableDataModelTest {
         Assert.assertTrue("setValueAt user nm",(String)t.getValueAt(0,CbusNodeTableDataModel.NODE_USER_NAME_COLUMN)=="Alonso" );
         
         Assert.assertTrue("no node 7 CanReply",t.getNodeByNodeNum(7) == null );
+        
+        
+        cbcfgm.getCbusPreferences().setAddNodes(true);
+        t.startASearchForNodes(null,1000);
         
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -147,9 +153,6 @@ public class CbusNodeTableDataModelTest {
         
         Assert.assertTrue("provides node 7 CanReply",t.getNodeByNodeNum(7) != null );
         Assert.assertTrue("getListOfNodeNumberNames 2 length list",t.getListOfNodeNumberNames().size() == 2 );
-        
-        Assert.assertEquals("Message sent to node exit learn mode", "[5f8] 54 00 07",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         t.dispose();
         t = null;
@@ -177,6 +180,7 @@ public class CbusNodeTableDataModelTest {
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
         Assert.assertTrue("column has NO width", CbusNodeTableDataModel.getPreferredWidth(999) > 0 );
+        Assert.assertNull("column class null", t.getColumnClass(999));
         
         Assert.assertTrue("cell not editable", 
             t.isCellEditable(0,CbusNodeTableDataModel.NODE_NUMBER_COLUMN) == false );
@@ -196,13 +200,196 @@ public class CbusNodeTableDataModelTest {
         t.dispose();
         t = null;
     }
+    
+    @Test
+    public void testNextUrgentFetch() {
+        
+        // using loopback to check the ability to monitor the CAN traffic
+        TrafficControllerScaffold tcis = new TrafficControllerScaffoldLoopback();
+        memo.setTrafficController(tcis);
+        
+        CbusNodeTableDataModel t = new CbusNodeTableDataModel(
+            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+            
+        CbusNode n1 = t.provideNodeByNodeNum(1);
+        
+        
+        // t.setUrgentFetch(int tabindex, int nodenum, int urgentNodeBefore, int urgentNodeAfter){
+        
+        // tabindex values see Cbus @NodeConfigToolPane#userViewChanged
+        // 0 - Parameters
+        // 1 - NV's
+        // 2 - EV's
+        
+        t.sendNextBackgroundFetch();
+        
+        CbusNode n2 = t.provideNodeByNodeNum(2);
+        CbusNode n3 = t.provideNodeByNodeNum(3);
+        
+        Assert.assertNotNull("exists",n2);
+        Assert.assertNotNull("exists",n3);
+        
+        Assert.assertEquals("1 Messages sent to get node parameters", 1, tcis.outbound.size() );
+        
+        Assert.assertEquals("Message sent to query num parameters", "[5f8] 73 00 01 00",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
 
+        // respond from nodes with 7 parameters
+        CanReply r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_PARAN); // node parameter response
+        r.setElement(1, 0x00); // node hi
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 0); // param
+        r.setElement(4, 7); // val
+
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>1); }, " outbound 2 didn't arrive");
+        
+        Assert.assertEquals("2 Message sent to ", 2, tcis.outbound.size() );
+        Assert.assertEquals("Message sent to nodes param1", "[5f8] 73 00 01 01",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 1); // param
+        r.setElement(4, 165); // val
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>2); }, " outbound 8 didn't arrive");
+        Assert.assertEquals("3 Message sent to ", 3, tcis.outbound.size() );
+        Assert.assertEquals("Message sent to nodes request param3", "[5f8] 73 00 01 03",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+            
+            
+      //  t.setUrgentFetch(1,2,1,3 );
+            
+            
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 3); // param
+        r.setElement(4, 29); // val
+
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>3); }, " outbound 3 didn't arrive");
+        Assert.assertEquals("4 Message sent to ", 4, tcis.outbound.size() );
+        Assert.assertEquals("Message sent to nodes request param 6", "[5f8] 73 00 01 06",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 6); // param
+        r.setElement(4, 3); // 3 x nv's
+
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>4); }, " outbound 15 didn't arrive");
+        Assert.assertEquals("5 Message sent to ", 5, tcis.outbound.size() );
+        Assert.assertEquals("Message sent to nodes request param 5", "[5f8] 73 00 01 05",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 5); // param
+        r.setElement(4, 2); // 3 x ev vars per event
+
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        
+        // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>5); }, " outbound 6 didn't arrive");
+        
+        
+        
+        
+        
+        Assert.assertEquals("Total Node Events ", -1, n1.getTotalNodeEvents() );
+        
+        
+        
+        
+        
+        
+      //  Assert.assertEquals("Outbound String", "", tcis.outbound.toString() );
+        
+        Assert.assertEquals("6 Message sent to ", 6, tcis.outbound.size() );
+        Assert.assertEquals("Message sent to nodes request param 7", "[5f8] 73 00 01 07",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 7); // param
+        r.setElement(4, 1); // Major FW Version
+
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>6); }, " outbound 7 didn't arrive");
+        
+        Assert.assertEquals("7 Message sent to ", 7, tcis.outbound.size() );
+        
+        // Assert.assertEquals("Outbound String", "", tcis.outbound.toString() );
+        Assert.assertEquals("Message sent to nodes request param 2", "[5f8] 73 00 01 02",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+       
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 2); // param
+        r.setElement(4, 2); // Minor FW Version
+
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+       
+        JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>7); }, " outbound 8 didn't arrive");
+        
+        Assert.assertEquals("8 Message sent to ", 8, tcis.outbound.size() );
+        
+        // Assert.assertEquals("Outbound String", "", tcis.outbound.toString() );
+        Assert.assertEquals("Message sent to nodes request num evs", "[5f8] 58 00 01",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        Assert.assertEquals("Total Node Events unset", -1, n1.getTotalNodeEvents() );
+        
+        r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_NUMEV); // node parameter response
+        r.setElement(1, 0x00); // node hi
+        r.setElement(2, 1); // node 1
+        r.setElement(3, 2); // num ev's
+        
+        n1.reply(r);
+        t.sendNextBackgroundFetch();
+        
+        Assert.assertEquals("Total Node Events 2", 2, n1.getTotalNodeEvents() );
+        
+        JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>8); }, " outbound 9 didn't arrive");
+        Assert.assertEquals("9 Message sent to ", 9, tcis.outbound.size() );
+        
+        
+        n1.dispose();
+        n2.dispose();
+        n3.dispose();
+        n1 = null;
+        n2 = null;
+        n3 = null;
+        
+        t.dispose();
+        t = null;
+    
+    }
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
@@ -210,10 +397,10 @@ public class CbusNodeTableDataModelTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         
         memo = null;
         tcis = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeTableDataModelTest.class);

@@ -24,7 +24,8 @@ import org.junit.Test;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <p> * @author B. Milhaupt Copyright (C) 2018
+ *
+ * @author B. Milhaupt Copyright (C) 2018
  *
  */
 public class BundleTest {
@@ -32,13 +33,9 @@ public class BundleTest {
         Assert.assertEquals("Set Global (Track) Power to 'Force Idle, Broadcast Emergency STOP'.\n", Bundle.getMessage("LN_MSG_IDLE"));
     }
 
-    @Test public void testBadKeyMessage() {
-        try {
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessage() {
             Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test public void testGoodKeyMessageArg() {
@@ -46,13 +43,9 @@ public class BundleTest {
         Assert.assertEquals("Request status of switch SystemName (UserName).\n", Bundle.getMessage("LN_MSG_SW_STATE", "SystemName", "UserName"));
     }
 
-    @Test public void testBadKeyMessageArg() {
-        try {
+    @Test(expected = java.util.MissingResourceException.class)
+    public void testBadKeyMessageArg() {
             Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test public void testLocaleMessage() {

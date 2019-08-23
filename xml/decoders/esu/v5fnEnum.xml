@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <enumChoice choice="F0"/>
+    <enumChoice choice="F1"/>
+    <enumChoice choice="F2"/>
+    <enumChoice choice="F3"/>
+    <enumChoice choice="F4"/>
+    <enumChoice choice="F5"/>
+    <enumChoice choice="F6"/>
+    <enumChoice choice="F7"/>
+    <enumChoice choice="F8"/>
+    <enumChoice choice="F9"/>
+    <enumChoice choice="F10"/>
+    <enumChoice choice="F11"/>
+    <enumChoice choice="F12"/>
+    <enumChoice choice="F13"/>
+    <enumChoice choice="F14"/>
+    <enumChoice choice="F15"/>
+    <enumChoice choice="F16"/>
+    <enumChoice choice="F17"/>
+    <enumChoice choice="F18"/>
+    <enumChoice choice="F19"/>
+    <enumChoice choice="F20"/>
+    <enumChoice choice="F21"/>
+    <enumChoice choice="F22"/>
+    <enumChoice choice="F23"/>
+    <enumChoice choice="F24"/>
+    <enumChoice choice="F25"/>
+    <enumChoice choice="F26"/>
+    <enumChoice choice="F27"/>
+    <enumChoice choice="F28"/>
+    <enumChoice choice="F30"/>
+    <enumChoice choice="F31"/>
+</enumVal>

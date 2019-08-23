@@ -31,15 +31,14 @@ import org.slf4j.LoggerFactory;
  * type of locomtive, say, an EMD GP7).
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
@@ -818,10 +817,10 @@ public class VSDecoder implements PropertyChangeListener {
         n = e.getChildText("create-xy-series");
         if ((n != null) && (n.equals("yes"))) {
             create_xy_series = true;
-            log.debug("Profile {}: xy-position-coordinates will be created in JMRI System console", getProfileName());
+            log.debug("Profile {}: xy-position-coordinates will be created in JMRI System Console", getProfileName());
         } else {
             create_xy_series = false;
-            log.debug("Profile {}: xy-position-coordinates will NOT be created in JMRI System console", getProfileName());
+            log.debug("Profile {}: xy-position-coordinates will NOT be created in JMRI System Console", getProfileName());
         }
 
         // Check for an optional sound start-position.

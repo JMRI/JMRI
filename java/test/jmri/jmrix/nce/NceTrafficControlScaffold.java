@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the NceTrafficController class
+ * Stands in for the NceTrafficController class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceTrafficControlScaffold extends NceTrafficController {
 
     public NceTrafficControlScaffold() {
@@ -68,6 +68,7 @@ public class NceTrafficControlScaffold extends NceTrafficController {
      *
      * @return the name of the port
      */
+    @Override
     public String getPortName() {
         return jmri.jmrix.JmrixConfigPane.NONE_SELECTED; 
     }

@@ -46,7 +46,7 @@
       accomplished with the AIU (Auxiliary Input Unit) manufactured
       by NCE as well. The AIU needs to be connected with the cab
       bus. Once the AIU is connected into the cab bus, and thus
-      into the Command Station, Decoder Pro does the rest.</p>
+      into the Command Station, DecoderPro does the rest.</p>
 
       <p>The track used must be connected to the mainline from the
       NCE system. Do NOT connect it to the programming tracking

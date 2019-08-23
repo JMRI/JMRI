@@ -29,12 +29,12 @@ import jmri.util.StringUtil;
 
 /**
  * User interface for sending CAN frames to exercise the system
- * <P>
+ * <p>
  * When sending a sequence of operations:
- * <UL>
- * <LI>Send the next message and start a timer
- * <LI>When the timer trips, repeat if buttons still down.
- * </UL>
+ * <ul>
+ * <li>Send the next message and start a timer
+ * <li>When the timer trips, repeat if buttons still down.
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
@@ -70,7 +70,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
         entry.add(jLabel1);
         entry.add(packetTextField);
-        packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
+        packetTextField.setToolTipText(Bundle.getMessage("EnterFrameToolTip"));
         topPane.add(entry);
         topPane.add(sendButton);
         
@@ -101,7 +101,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
             numbercheckboxpane.add(mUseField[i]);
             pane2.add(numbercheckboxpane);
             pane2.add(mPacketField[i]);
-            mPacketField[i].setToolTipText(Bundle.getMessage("EnterHexToolTip"));
+            mPacketField[i].setToolTipText(Bundle.getMessage("EnterFrameToolTip"));
             pane2.add(numberSpinner[i]);
         }
         

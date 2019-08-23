@@ -167,7 +167,7 @@
 
         <li><a href="#Schedules">Schedules</a></li>
 
-        <li><a href="#SchedulesAndLoads">Schedules and Loads</a></li>
+        <li><a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and Loads</a></li>
         
         <li><a href="#ControllingCarsToSpur">Controlling Cars to the Spur / Industry</a></li> 
 
@@ -432,7 +432,8 @@
 
    <h3>Display and Help</h3>
    To adjust the display font size or appearance of the JMRI windows, select "Preferences..." found
-   under "Edit" in the main window menu bar. The <a href="../../../apps/TabbedPreferences.shtml">JMRI:
+   under "Edit" (on Windows/Linux) or PanelPro (on macOS) in the main window menu bar.
+   The <a href="../../../apps/TabbedPreferences.shtml">JMRI:
     Preferences Pane</a> will appear with options to make <a
     href="../../../apps/TabbedPreferences.shtml#Connection">Layout Connections</a>, change the
    window <a href="../../../apps/TabbedPreferences.shtml#Display">Display</a> appearance and font
@@ -636,12 +637,12 @@
    </p>
 
    <p>
-    If you want a caboose or car with FRED for your train, first configure some of the cars to be
-    the last car in the train by selecting the "Caboose" or "FRED" <a href="#CabooseFredHazardous">checkbox</a>
-    in the <a href="#CarsEdit">Edit Car</a> window. Now change the optional train requirements radio button to "Caboose"
-    or "FRED" in the <a href="#TrainEdit">Edit Train</a> window. Be sure that the last location in
-    your trains route has a track that will accept the caboose car or the train will not build
-    properly.
+    If you want a caboose or car with FRED for your train, first configure some of the cars to be the last car in the
+    train by selecting the "Caboose" or "FRED" <a href="#CabooseFredHazardous">checkbox</a> in the <a href="#CarsEdit">Edit
+     Car</a> window. Now change the optional train requirements radio button to "Caboose" or "FRED" in the <a
+     href="#TrainEdit">Edit Train</a> window. Place the caboose on a track at the first location in your train's route.
+    Be sure that the last location in your trains route has a track that will accept the caboose or the train will not
+    build properly.
    </p>
 
    <p>
@@ -1821,9 +1822,10 @@
    <a name="AddLogo" id="AddLogo"></a>
    <h3>Add Logo</h3>
    If you want a logo in the top right hand corner of your Manifests and switch lists, press the
-   "Add Logo" button and select a file with the image you want to display. You can also have a
+   "Add Logo" button and select a file with the image you want to display. The supported
+   image file extensions are .gif, .png, .jpg, plus others. You can also have a
    different logo for every train in your roster, see <a href="#TrainManifestOptions">Train
-    Manifest Options</a> for details. 
+    Manifest Options</a> for details.
     
    <a name="MisplacedCarsComment" id="MisplacedCarsComment"></a>
 
@@ -2110,11 +2112,12 @@
    <p>
     <img src="images/AddYard.png">
    </p>
-   <p>Now enter the name of the yard along with the length of the track in scale feet or in
-    actual inches. Append a double quote (") to the length when entering actual inches and the
-    program will convert the length into scale feet. Append cm if you want to convert from
-    centimeters to scale meters. Press the "Add Yard Track" button at the bottom of the window and
-    the disabled fields should now appear.</p>
+   <p>Now enter the name of the yard along with the length of the track in scale feet or in actual inches. Append a
+    double quote (") to the length when entering actual inches and the program will convert the length into scale feet.
+    Append cm if you want to convert from centimeters to scale meters. If you don't want the program to load your yard
+    to capacity with cars or locomotives, enter a smaller value for the track length. This can be useful for large
+    yards where track space for switching cars is needed. Press the "Add Yard Track" button at the bottom of the
+    window and the disabled fields should now appear.</p>
 
    <a name="TrackServiceDirection" id="TrackServiceDirection"></a>
    <h4>Track Service Direction</h4>
@@ -2273,60 +2276,83 @@
 
    <h4>Schedule Line Items</h4>
 
-   <p>Each car type entered in a schedule has optional line items controlled by the various pull
-    down menus. The first option is the "Random" value, which allows you to create some randomness
-    to the schedule. If you select a value of 15, it means that the item has a 15 percent chance of
-    being selected if all of the other criteria for the schedule item was met, and there was track
-    space available for the car. This feature is useful for a RIP track where you would want cars to
-    be randomly sent to the repair facility. For example, a random value of 2 would mean that
-    roughly 1 in 50 cars could be sent the to RIP track.</p>
+   <p>Each car type entered in a schedule has optional line items controlled by the various pull down menus. You can
+    leave all of the line items blank if you want to keep things simple and have the program only consider the car types
+    being delivered. All line items are optional and you can selectively choose the one's you want to use.</p>
+
+   <h5>Random</h5>
+
+   <p>The first option is the "Random" value, which allows you to create some randomness to the schedule. If you
+    select a value of 15, it means that the item has a 15 percent chance of being selected if all of the other criteria
+    for the schedule item was met, and there was track space available for the car. This feature is useful for a RIP
+    track where you would want cars to be randomly sent to the repair facility. For example, a random value of 2 would
+    mean that roughly 1 in 50 cars could be sent the to RIP track.</p>
+
+   <h5>Delivery</h5>
 
    <p>
-    Select from the "Delivery" pull down menu the train schedule (day) when you want the car delivered,
-    or leave it blank if a car can be delivered at any time. Select under "Pickup" when you want the
-    car pulled from the spur. When a train schedule (day) is selected for either delivery or pickup, a
-    car will only be serviced when that train schedule (day) is active. See Trains -&gt; Tools -&gt; <a
+    Select from the "Delivery" pull down menu the train schedule (day) when you want the car delivered, or leave it
+    blank if a car can be delivered at any time. When a train schedule (day) is selected for either delivery or pickup,
+    a car will only be serviced when that train schedule (day) is active. See Trains -&gt; Tools -&gt; <a
      href="#TrainSchedules">Train Schedules</a> to select the train schedule (day) for your session.
    </p>
 
-   <p>
-    You can if you wish specify a particular "Road" for the type of car you entered, or leave it
-    blank if you don't care about the road name. Note only car roads that are accepted by this spur
-    are shown. To review which car roads are available see the <a href="#RoadOptions">road
-     options</a> for this spur.
-   </p>
+   <h5>Road</h5>
 
    <p>
-    You can also specify the car load received and shipped. Leaving the "Receive" field blank allows
-    any load to be received by the spur/industry. When the "Ship" field is blank, the program will
-    only place the default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a>
-    for how the program deals with the default loads.
-   </p>
-   
-   <p>The "Receive" pull down menu will only show the loads that the spur can service for that particular
-   car type. To review which car loads are available see the <a href="#LoadOptions">load
-     options</a> for this spur.
+    You can if you wish specify a particular "Road" for the type of car you entered, or leave it blank if you don't care
+    about the road name. Note only car roads that are accepted by this spur are shown. To review which car roads are
+    available see the <a href="#RoadOptions">road options</a> for this spur.
    </p>
 
+   <h5>Receive</h5>
+
    <p>
-    You can decide where a car is to be sent after being serviced by the spur/industry. Use the
-    "Destination" field to tell the program where the car is to be delivered. If you want to car
-    delivered to a specific track at the destination, select the track you want under the "Track"
-    field. Only destination tracks that can accept the car type are shown in the track pull down
-    menu. The destination loaded by a schedule is shown as the car's <a href="#CarsSet">Final
+    You can optionally specify the car load received. Leaving the "Receive" field blank allows any load to be received
+    by the spur/industry. The "Receive" pull down menu will only show the loads that the spur can service for that
+    particular car type. To review which car loads are available see the <a href="#LoadOptions">load options</a> for
+    this spur.
+   </p>
+
+   <h5>Ship</h5>
+
+   <p>
+    You can optionally specify the car load shipped. When the "Ship" field is blank, the program will only place the
+    default empty "E" or default load "L" into the car. See <a href="#Sidings">Spurs</a> for how the program deals with
+    the default loads.
+   </p>
+
+   <h5>Destination and Track</h5>
+
+   <p>
+    You can decide where a car is to be sent after being serviced by the spur/industry. Use the "Destination" field to
+    tell the program where the car is to be delivered. If you want to car delivered to a specific track at the
+    destination, select the track you want under the "Track" field. Only destination tracks that can accept the car type
+    are shown in the track pull down menu. The destination loaded by a schedule is shown as the car's <a href="#CarsSet">Final
      Destination</a> in the various car windows.
    </p>
+
+   <h5>Pickup</h5>
+
+   <p>
+    Select under "Pickup" when you want the car pulled from the spur. When a train schedule (day) is selected for either
+    delivery or pickup, a car will only be serviced when that train schedule (day) is active. See Trains -&gt; Tools
+    -&gt; <a href="#TrainSchedules">Train Schedules</a> to select the train schedule (day) for your session.
+   </p>
+
+   <h5>Count</h5>
 
    <p>If you wanted the same car type to be delivered consecutively in sequential mode, increase the "Count" to the
     number that you wish. The maximum count is 100 and the minimum is 1. For example, a count of 3 is equal to entering
     the exact same schedule item three times in a row.</p>
 
-   <p>The "Wait" field allows you determine how many trains will try to service the spur before
-    picking up the car. Useful if you want a car to remain still for several operating sessions.
-    Note that the car's load won't change immediately if there's a wait count. Once the wait count
-    reaches zero, the program will switch the car load to the schedule item's ship load, or whatever
-    is appropriate if a ship load wasn't specified. Each time a train is built that could service
-    the car, the car's wait count is decremented.</p>
+   <h5>Wait</h5>
+
+   <p>The "Wait" field allows you determine how many trains will try to service the spur before picking up the car.
+    Useful if you want a car to remain still for several operating sessions. Note that the car's load won't change
+    immediately if there's a wait count. Once the wait count reaches zero, the program will switch the car load to the
+    schedule item's ship load, or whatever is appropriate if a ship load wasn't specified. Each time a train is built
+    that could service the car, the car's wait count is decremented.</p>
 
    <h4>Schedule Example</h4>
 
@@ -2417,7 +2443,7 @@
    </p>
 
    <a name="SchedulesAndLoads" id="SchedulesAndLoads"></a>
-   <h3>Schedules and Loads</h3>
+   <h3>Purposely Moving Cars Using Schedules and Loads</h3>
    You've entered all of your cars, tracks, and trains and have been playing with the program for
    awhile. You're happy with where the cars end up, but watching the car movements generated by the
    program over several sessions has you thinking that it would be nice if the car movements had a
@@ -3236,8 +3262,8 @@
 
    <p>When the utility checkbox is selected, it instructions the program when printing Manifests
     and switch lists to not show the individual car's road and number, but rather the quantity of
-    cars needed of that type. For example, prototype trains when shipping coal don't normally list
-    the cars in the train by the car's road number but instead shows the number of cars, the type of
+    cars needed of that type. For example, prototype unit trains when shipping coal don't normally list
+    the cars in the train by the car's road number but instead it shows the number of cars, the type of
     car, and the car's load on the train's Manifest.</p>
 
    <p>If you use the utility feature, it is strongly recommended that you select the utility
@@ -4865,6 +4891,15 @@
    This tool will allow you to make a copy of an automation. Enter a name for the new automation and
    select which automation you want to copy. Then press "Copy" and that should open a new automation
    window with a copy of the automation you selected.
+
+   <h5>Resume Automations</h5>
+   This tool will restart all automations that were running when the operation files were last
+   saved. The function is the same as pressing the "Resume" button for each automation in the Run
+   column of the main automation window. Note that for the program to detect that an automation was
+   running when the files were saved, the current action pointer must not be at the first action in
+   the automation, therefore it is recommended that you not use any of the "Wait for" actions as the
+   very first line item of an automation, instead use "Do Nothing" action followed by the needed "Wait for"
+   action.
 
    <p>This is the end of the automation section.</p>
 

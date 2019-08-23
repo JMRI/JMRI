@@ -8,7 +8,7 @@ import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE
- * systems
+ * systems.
  *
  * @see jmri.GlobalProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002, 2016
@@ -113,4 +113,5 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManager.class);
+
 }

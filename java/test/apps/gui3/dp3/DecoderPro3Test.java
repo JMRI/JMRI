@@ -58,7 +58,7 @@ public class DecoderPro3Test {
         // shutdown the application
         AppsBase.handleQuit();
         // remove a frame opened by DecoderPro3
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", false, false);
+        JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
     }
 
     // The minimal setup for log4J

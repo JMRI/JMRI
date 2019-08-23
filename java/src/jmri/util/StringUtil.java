@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 
 /**
  * Common utility methods for working with Strings.
- * <P>
+ * <p>
  * We needed a place to refactor common string-processing idioms in JMRI code,
  * so this class was created. It's more of a library of procedures than a real
  * class, as (so far) all of the operations have needed no state information.
- * <P>
+ * <p>
  * In some cases, these routines use a Java 1.3 or later method, falling back to
  * an explicit implementation when running on Java 1.1
  *
@@ -152,6 +152,11 @@ public class StringUtil {
     /**
      * Create a String containing hexadecimal values from a byte[].
      *
+     * eg. byte[]{1,2,3,10} will return String "01 02 03 0A "
+     * eg. byte[]{-1} will return "FF "
+     * eg. byte[]{(byte)256} will return "00 "
+     * eg. byte[]{(byte)257} will return "01 "
+     *
      * @param bytes byte array. Can be zero length, but must not be null.
      * @return String of hex values, ala "01 02 0A B1 21 ".
      */
@@ -165,6 +170,29 @@ public class StringUtil {
             sb.append(' ');
         }
         return sb.toString();
+    }
+    
+    /**
+     * Convert an array of integers into a single spaced hex. string.
+     * Each int value will receive 2 hex characters.
+     * <p>
+     * eg. int[]{1,2,3,10} will return "01 02 03 0A "
+     * eg. int[]{-1} will return "FF "
+     * eg. int[]{256} will return "00 "
+     * eg. int[]{257} will return "01 "
+     *
+     * @param v the array of integers. Can be zero length, but must not be null.
+     * @return the formatted String or an empty String
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public String hexStringFromInts(@Nonnull int[] v) {
+        StringBuilder retval = new StringBuilder();
+        for (int e : v) {
+            retval.append(twoHexFromInt(e));
+            retval.append(" ");
+        }
+        return retval.toString();
     }
 
     /**
@@ -215,7 +243,117 @@ public class StringUtil {
         }
         return b;
     }
-
+    
+    /**
+     * Create an int[] from a String containing paired hexadecimal values.
+     * <p>
+     * Option to include array length as leading array value
+     * <p>
+     * eg. #("01020AB121",true) returns int[5, 1, 2, 10, 177, 33]
+     * <p>
+     * eg. ("01020AB121",false) returns int[1, 2, 10, 177, 33]
+     *
+     * @param s String of hex value pairs, eg "01020AB121".
+     * @param headerTotal if true, adds index [0] with total of pairs found 
+     * @return int array, with one field for each pair.
+     *
+     */
+    @Nonnull
+    static public int[] intBytesWithTotalFromNonSpacedHexString(@Nonnull String s, boolean headerTotal) {
+        if (s.length() % 2 == 0) {
+            int numBytes = ( s.length() / 2 );
+            if ( headerTotal ) {
+                int[] arr = new int[(numBytes+1)];
+                arr[0]=numBytes;
+                for (int i = 0; i < numBytes; i++) {
+                    arr[(i+1)] = getByte(i,s);
+                }
+                return arr;
+            }
+            else {
+                int[] arr = new int[(numBytes)];
+                for (int i = 0; i < numBytes; i++) {
+                    arr[(i)] = getByte(i,s);
+                }
+                return arr;
+            }
+        } else {
+            return new int[]{0};
+        }
+    }
+    
+    /**
+     * Get a single hex digit from a String.
+     * <p>
+     * eg. getHexDigit(0,"ABCDEF") returns 10
+     * eg. getHexDigit(3,"ABCDEF") returns 14
+     *
+     * @param index digit offset, 0 is very first digit on left.
+     * @param byteString String of hex values, eg "01020AB121".
+     * @return hex value of single digit
+     */
+    static public int getHexDigit(int index, @Nonnull String byteString) {
+        int b = 0;
+        b = byteString.charAt(index);
+        if ((b >= '0') && (b <= '9')) {
+            b = b - '0';
+        } else if ((b >= 'A') && (b <= 'F')) {
+            b = b - 'A' + 10;
+        } else if ((b >= 'a') && (b <= 'f')) {
+            b = b - 'a' + 10;
+        } else {
+            b = 0;
+        }
+        return (byte) b;
+    }
+    
+    /**
+     * Get a single hex data byte from a string
+     * <p>
+     * eg. getByte(2,"0102030405") returns 3
+     * 
+     * @param b The byte offset, 0 is byte 1
+     * @param byteString the whole string, eg "01AB2CD9"
+     * @return The value, else 0
+     */
+    static public int getByte(int b, @Nonnull String byteString) {
+        if ((b >= 0)) {
+            int index = b * 2;
+            int hi = getHexDigit(index++, byteString);
+            int lo = getHexDigit(index, byteString);
+            if ((hi < 16) && (lo < 16)) {
+                return (hi * 16 + lo);
+            }
+        }
+        return 0;
+    }
+    
+    /**
+     * Create a hex byte[] of Unicode character values from a String containing full text (non hex) values.
+     * <p>
+     * eg fullTextToHexArray("My FroG",8) would return byte[0x4d,0x79,0x20,0x46,0x72,0x6f,0x47,0x20]
+     *
+     * @param s String, eg "Test", value is trimmed to max byte length
+     * @param numBytes Number of bytes expected in return ( eg. to match max. message size )
+     * @return hex byte array, with one byte for each character. Right padded with empty spaces (0x20)
+     *
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
+        byte[] b = new byte[numBytes];
+        java.util.Arrays.fill(b, (byte) 0x20);
+        s = s.substring(0, Math.min(s.length(), numBytes));
+        String convrtedNoSpaces = String.format( "%x", 
+            new java.math.BigInteger(1, s.getBytes(/*YOUR_CHARSET?*/) ) );
+        int byteNum=0;
+        for (int i = 0; i < convrtedNoSpaces.length(); i+=2) {
+            b[byteNum] = (byte) Integer.parseInt(convrtedNoSpaces.substring(i, i + 2), 16);
+            byteNum++;
+        }
+        return b;
+    }
+    
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
@@ -230,6 +368,7 @@ public class StringUtil {
      * Sort String[] representing numbers, in ascending order.
      *
      * @param values the Strings to sort
+     * @throws NumberFormatException if string[] doesn't only contain numbers
      */
     static public void numberSort(@Nonnull String[] values) throws NumberFormatException {
         for (int i = 0; i <= values.length - 2; i++) { // stop sort early to save time!
@@ -348,45 +487,6 @@ public class StringUtil {
             }
         }
         return result;
-    }
-
-    /**
-     * Replace various special characters with their "escaped" counterpart in
-     * UTF-8 character encoding, to facilitate use with web servers.
-     *
-     * @param s String to escape
-     * @return String with escaped values
-     * @throws java.io.UnsupportedEncodingException if unable to escape in UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLEncoder#encode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
-        return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
-    }
-
-    /**
-     * Replace various escaped character in UTF-8 character encoding with their
-     * "regular" counterpart, to facilitate use with web servers.
-     *
-     * @param s String to unescape
-     * @return String with escaped values replaced with regular values
-     * @throws java.io.UnsupportedEncodingException if unable to unescape from
-     *                                              UTF-8
-     * @deprecated since 4.9.1; use
-     * {@link java.net.URLDecoder#decode(java.lang.String, java.lang.String)}
-     * directly
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated // since 4.9.1
-    static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
-        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
-        return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
     /**

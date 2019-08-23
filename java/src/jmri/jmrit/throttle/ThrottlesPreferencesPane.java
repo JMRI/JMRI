@@ -36,6 +36,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     private JCheckBox cbIgnoreThrottlePosition;
     private JCheckBox cbSaveThrottleOnLayoutSave;
     private JCheckBox cbSilentSteal;
+    private JCheckBox cbSilentShare;
     private JLabel labelApplyWarning;
     private JButton jbApply;
     private JButton jbCancel;
@@ -65,10 +66,16 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         gridBagConstraints13.ipady = 16;
         gridBagConstraints13.anchor = GridBagConstraints.WEST;
         gridBagConstraints13.gridy = 99;
+        
+        GridBagConstraints gridBagConstraints16 = new GridBagConstraints();
+        gridBagConstraints16.gridx = 0;
+        gridBagConstraints16.insets = new Insets(2, 5, 2, 2);
+        gridBagConstraints16.anchor = GridBagConstraints.WEST;
+        gridBagConstraints16.gridy = 12;
 
         GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
         gridBagConstraints15.gridx = 0;
-        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
+        gridBagConstraints15.insets = new Insets(8, 5, 2, 2);
         gridBagConstraints15.anchor = GridBagConstraints.WEST;
         gridBagConstraints15.gridy = 11;
         
@@ -157,6 +164,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbIgnoreThrottlePosition = new JCheckBox();
         cbSaveThrottleOnLayoutSave = new JCheckBox();
         cbSilentSteal = new JCheckBox();
+        cbSilentShare = new JCheckBox();
 
         labelApplyWarning = new JLabel();
 
@@ -172,6 +180,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         labelApplyWarning.setText(Bundle.getMessage("ExThrottleLabelApplyWarning"));
         cbSaveThrottleOnLayoutSave.setText(Bundle.getMessage("ExThrottleSaveThrottleOnLayoutSave"));
         cbSilentSteal.setText(Bundle.getMessage("ExThrottleSilentSteal"));
+        cbSilentShare.setText(Bundle.getMessage("ExThrottleSilentShare"));
 
         ActionListener al = (ActionEvent evt) -> {
             checkConsistancy();
@@ -180,6 +189,16 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbUseToolBar.addActionListener(al);
         cbUseRosterImage.addActionListener(al);
         cbEnableAutoLoad.addActionListener(al);
+        
+        // only the steal checkbox OR the share checkbox should be selected
+        ActionListener stealCheck = (ActionEvent evt) -> {
+            checkStealButtonOk();
+        };
+        ActionListener shareCheck = (ActionEvent evt) -> {
+            checkShareButtonOk();
+        };
+        cbSilentSteal.addActionListener(stealCheck);
+        cbSilentShare.addActionListener(shareCheck);
 
         jbSave.setText(Bundle.getMessage("ButtonSave"));
         jbSave.addActionListener(this::jbSaveActionPerformed);
@@ -207,7 +226,14 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         this.add(cbUseToolBar, gridBagConstraints12);
         this.add(cbUseFunctionIcon, gridBagConstraints14);
         this.add(cbSilentSteal,gridBagConstraints15 );
+        this.add(cbSilentShare,gridBagConstraints16 );
         this.add(labelApplyWarning, gridBagConstraints13);
+        
+        if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
+            cbSilentSteal.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentStealOption());
+            cbSilentShare.setEnabled(InstanceManager.throttleManagerInstance().enablePrefSilentShareOption());
+        }
+        
     }
 
     private void setComponents(ThrottlesPreferences tp) {
@@ -225,6 +251,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         cbHideUndefinedButtons.setSelected(tp.isHidingUndefinedFuncButt());
         cbIgnoreThrottlePosition.setSelected(tp.isIgnoringThrottlePosition());
         cbSilentSteal.setSelected(tp.isSilentSteal());
+        cbSilentShare.setSelected(tp.isSilentShare());
     }
 
     private ThrottlesPreferences getThrottlesPreferences() {
@@ -236,6 +263,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         tp.setUseRosterImage(cbUseRosterImage.isSelected());
         tp.setSaveThrottleOnLayoutSave(cbSaveThrottleOnLayoutSave.isSelected());
         tp.setSilentSteal(cbSilentSteal.isSelected());
+        tp.setSilentShare(cbSilentShare.isSelected());
         tp.setEnableRosterSearch(cbEnableRosterSearch.isSelected());
         tp.setAutoLoad(cbEnableAutoLoad.isSelected());
         tp.setHideUndefinedFuncButt(cbHideUndefinedButtons.isSelected());
@@ -258,6 +286,18 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
                 cbIgnoreThrottlePosition.setSelected(true);
                 cbIgnoreThrottlePosition.setEnabled(false);
             }
+        }
+    }
+    
+    private void checkStealButtonOk() {
+        if (cbSilentShare.isSelected()){
+            cbSilentShare.setSelected(false);
+        }
+    }
+    
+    private void checkShareButtonOk() {
+        if (cbSilentSteal.isSelected()){
+            cbSilentSteal.setSelected(false);
         }
     }
 

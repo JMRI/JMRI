@@ -50,7 +50,7 @@ Un exemple pr&#233;d&#233;finie de SSL est fourni dans l'installation de JMRI ( 
 Pour utiliser cet exemple:
 <ul>
 <li> D&#233;marrez le programme PanelPro, et s&#233;lectionnez "Pr&#233;f&#233;rences..." dans le menu &#201;dition ( depuis le menu PanelPro sur OS X ). 
-Sur le panneau qui s'ouvre, cliquez sur Connexions &#224; gauche et s&#233;lectionnez "Digitrax" comme Fabricant Syst&#232;me et "Loconet Simulateur" comme Connexion Syst&#232;me.
+Sur le panneau qui s'ouvre, cliquez sur Connexions &#224; gauche et s&#233;lectionnez "Digitrax" comme Fabricant Syst&#232;me et "LocoNet Simulateur" comme Connexion Syst&#232;me.
 Cliquez sur "Enregistrer" en bas &#224; gauche du volet Pr&#233;f&#233;rences et quitter PanelPro. Cela vous permettra de reprendre l'exemple (qui
 utilise des adresses LocoNet pour les Feux de Signalisation, Aiguillages et Capteurs), m&#234;me lorsque
 votre ordinateur n'est pas connect&#233; &#224; un r&#233;seau .

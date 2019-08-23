@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
     jmri.jmrix.tams.swing.monitor.PackageTest.class,
     TamsComponentFactoryTest.class,
     TamsMenuTest.class,
-    TamsNamedPaneActionTest.class
+    TamsNamedPaneActionTest.class,
+    BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.tams.swing package.

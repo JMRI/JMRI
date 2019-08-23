@@ -6,9 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for XBeeNodeManager
- * </P>
+ * Tests for XBeeNodeManager.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeNodeManagerTest {
@@ -38,6 +37,5 @@ public class XBeeNodeManagerTest {
         tc = null;
         jmri.util.JUnitUtil.tearDown();
     }
-
 
 }

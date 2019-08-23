@@ -270,7 +270,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             oldId = self.currentThrottle.getLocoAddress()
             self.msgText("stop and release the current loco: " + oldId.toString() + "\n")
             self.doStop();
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
             self.currentThrottle = None
             self.msgText("Throttle " + oldId.toString() + " released\n")
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -566,7 +566,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             #print("RB2: releasing throttle\n")
             self.currentThrottle.setSpeedSetting(0)
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
         self.isAborting = True
         return
 
@@ -1039,8 +1039,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     isOk = False
         if (isOk) :
             # clear id from any existing blocks
-            for x in blocks.getSystemNameList().toArray() :
-                b = blocks.getBySystemName(x)
+            for b in blocks.getNamedBeanSet() :
                 if (b != blocks.getBlock(self.blockStart.text) and b.getValue() == self.locoAddress.text) :
                     b.setValue("")
             self.startButton.setEnabled(True)
@@ -1235,10 +1234,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findCurrentBlocks(self) :
         # search the block list for the matching loco
         blockList = []
-        blockArray = blocks.getSystemNameList().toArray()
-        #self.msgText("blocks #: " + len(blockArray).toString() + "\n")
-        for x in blockArray :
-            b = blocks.getBySystemName(x)
+        for b in blocks.getNamedBeanSet() :
             if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
         return blockList

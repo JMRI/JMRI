@@ -33,6 +33,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     private Block _nextBlock = null;
     private SignalMast _nextMast = null;
     private boolean _cabSignalActive = true;
+    private boolean _masterPausedButtonActive = false;
     private PropertyChangeListener _cconSignalMastListener = null;
 
     public DefaultCabSignal(LocoAddress address){
@@ -42,6 +43,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * A method for cleaning up the cab signal 
      */
+    @Override
     public void dispose(){
         if (_nextMast != null) {
             _nextMast.removePropertyChangeListener(_cconSignalMastListener);
@@ -51,6 +53,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
        _nextBlock = null;
        _nextMast = null;
        _cabSignalActive = true;
+       _masterPausedButtonActive = false;
     }
 
     /**
@@ -58,6 +61,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return the cab signal address
      */
+    @Override
     public LocoAddress getCabSignalAddress(){
         return _address;
     }
@@ -67,6 +71,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param position is a Block the locomotive is in.
      */
+    @Override
     synchronized public void setBlock(Block position){
         log.debug("CabSignal for {} set block {}",getCabSignalAddress(),position);
         Block oldCurrentBlock = _currentBlock;
@@ -93,6 +98,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Set the Block of the locomotive by searching the block list.
      */
+    @Override
     synchronized public void setBlock(){
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         Set<Block> blockSet = bmgr.getNamedBeanSet();
@@ -125,6 +131,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The current Block position
      */
+    @Override
     synchronized public Block getBlock(){
         return _currentBlock;
     }
@@ -136,6 +143,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The next Block position
      */
+    @Override
     public Block getNextBlock(){
         Block oldNextBlock = _nextBlock;
         if(getBlock()==null){
@@ -198,6 +206,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The next SignalMast position
      */
+    @Override
     public SignalMast getNextMast(){
         SignalMast oldNextMast = _nextMast;
         if (_nextMast != null) {
@@ -207,28 +216,30 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         if(getBlock()!=null){
            LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         
-           Block b = getBlock();
-           Block nB = getNextBlock();
-           while(_nextMast == null && nB !=null ) {
-              _nextMast = lbm.getFacingSignalMast(b, nB);
-              b = nB;
-              nB = nextBlockOnPath(b,b.getDirection()); 
-           }
-           if ( _nextMast == null) {
-              _nextMast = lbm.getSignalMastAtEndBumper(getBlock(),null);
-           }
-           if ( _nextMast != null) {
-              // add signal changelistener
-              _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
-                 // aspect changed?, need to notify
-                 firePropertyChange("MastChanged",e.getNewValue(),e.getOldValue());
-                 forwardCabSignalToLayout();
-              });
-           }
+            Block b = getBlock();
+            Block nB = getNextBlock();
+            while(_nextMast == null && nB !=null ) {
+                _nextMast = lbm.getFacingSignalMast(b, nB);
+                b = nB;
+                nB = nextBlockOnPath(b,b.getDirection()); 
+            }
+            if ( _nextMast == null) {
+                // use block b which is the last non-null block in the path
+                _nextMast = lbm.getSignalMastAtEndBumper(b,null);
+            }
+           
+            if ( _nextMast != null) {
+                // add signal changelistener
+                _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
+                // aspect changed?, need to notify
+                firePropertyChange("MastChanged",e.getNewValue(),e.getOldValue());
+                forwardCabSignalToLayout();
+                });
+            }
         }
         if(_nextMast!=null) {
             if(!_nextMast.equals(oldNextMast)) {
-               firePropertyChange("NextMast",_nextMast,oldNextMast);
+                firePropertyChange("NextMast",_nextMast,oldNextMast);
             }
         } else {
             // currentNextMast is null, notify if old next mast was not.
@@ -242,8 +253,12 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Forward the current cab signal value to the layout.
      */
+    @Override
     public void forwardCabSignalToLayout() {
         if (!isCabSignalActive() ) {
+            return;
+        }
+        if (_masterPausedButtonActive) {
             return;
         }
 
@@ -255,7 +270,6 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         }
         // and forward the message on to the layout.
         forwardAspectToLayout();
-       
     }
 
     /**
@@ -271,6 +285,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return true if on, false if off
      */
+    @Override
     public boolean isCabSignalActive(){
         return _cabSignalActive;
     }
@@ -280,20 +295,36 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param active true if on, false if off
      */
+    @Override
     public void setCabSignalActive(boolean active){
-        if(_cabSignalActive!=active && active == true ) {
-           setBlock();
-        }
         _cabSignalActive = active;
+        if(_cabSignalActive) {
+           getNextMast(); // refreshes block, mast, and sends if master button not paused
+        }
+        else {
+            resetLayoutCabSignal(); // send data invalid to layout
+        }
     }
-
+    
     /*
-     * Disable the cab signal.  
+     * Set when initialised and when Master PAUSED button is toggled
      *
+     * @param active true if paused, false if resumed
      */
-    public void disableCabSignal(){
-        setCabSignalActive(false);
-        resetLayoutCabSignal();
+    @Override
+    public void setMasterCabSigPauseActive (boolean active) {
+        _masterPausedButtonActive = active;
+        if ( !isCabSignalActive() ){
+            return; // if cabsig has already been disabled no action needed
+        }
+        if ( _masterPausedButtonActive ) {
+            log.debug("master paused");
+            resetLayoutCabSignal(); // send data invalid to layout
+        }
+        else {
+            log.debug("master not paused");
+            getNextMast(); // refreshes block, mast, and sends if single cabsig enabled
+        }
     }
 
     /**

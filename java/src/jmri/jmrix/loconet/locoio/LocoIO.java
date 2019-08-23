@@ -16,7 +16,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  *
  * Programming SV's
  * <p>
- * The SV's in a LocoIO hardware module can be programmed using Loconet OPC_PEER_XFER messages.
+ * The SV's in a LocoIO hardware module can be programmed using LocoNet OPC_PEER_XFER messages.
  * <p>
  * Commands for setting SV's:
  * <p>

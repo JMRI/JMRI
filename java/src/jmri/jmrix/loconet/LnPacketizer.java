@@ -48,6 +48,7 @@ public class LnPacketizer extends LnTrafficController {
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnPacketizer() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnPacketizer");  
     }
 
     public LnPacketizer(LocoNetSystemConnectionMemo m) {
@@ -63,7 +64,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     @Override
     public boolean status() {
-        return (ostream != null && istream != null);
+        return (ostream != null && istream != null && xmtThread != null && rcvThread != null);
     }
 
     /**
@@ -312,7 +313,7 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: {}", msg);
+                        log.warn("Ignore LocoNet packet with bad checksum: {}", msg);
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!

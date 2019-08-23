@@ -24,6 +24,7 @@ public class SerialFilterAction extends AbstractAction {
 //        this("CMRInet Message Filter");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 		// create a SerialMonFrame
 		SerialFilterFrame f = new SerialFilterFrame(_memo);

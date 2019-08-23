@@ -38,7 +38,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getMessage(String key) {
+    static public String getMessage(String key) {
         return getBundle().handleGetMessage(key);
     }
 

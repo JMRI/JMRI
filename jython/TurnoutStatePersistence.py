@@ -46,7 +46,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
     def execute(self):
 
         # Write an info entry to the log
-        self.log.info("Write turnout state to file: {}}", turnoutFile)
+        self.log.info("Write turnout state to file: '%s'" % turnoutFile)
 
         # Open file
         csvFile = com.csvreader.CsvWriter(turnoutFile)
@@ -83,7 +83,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
             turnoutCount +=1
 
         # Write an info entry to the log
-        self.log.info("Stored state of {} turnouts", turnoutCount)
+        self.log.info("Stored state of %d turnouts" % turnoutCount)
 
         # Append a comment to the end of the file
         csvFile.writeComment("Written by JMRI version %s on %s" % (jmri.Version.name(), (java.util.Date()).toString()))

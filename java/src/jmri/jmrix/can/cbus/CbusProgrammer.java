@@ -15,7 +15,9 @@ import jmri.jmrix.can.TrafficController;
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
  * @author Bob Jacobsen Copyright (C) 2008
+ * @deprecated since 4.17.1; use {@link jmri.jmrix.can.cbus.node.CbusNode} instead
  */
+@Deprecated
 public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
 
     public CbusProgrammer(int nodenumber, TrafficController tc) {
@@ -214,7 +216,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
 
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
-     * <P>
+     * <p>
      * Here, it sends a request to exit from programming mode. But subclasses,
      * e.g. ops mode, may redefine that.
      */

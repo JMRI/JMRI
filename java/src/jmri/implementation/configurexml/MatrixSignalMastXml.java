@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for DefaultSignalMastManager objects.
+ * Handle XML configuration for MatrixSignalMast objects.
  *
  * @author Bob Jacobsen Copyright: (C) 2009
  * @author Egbert Broerse Copyright: (C) 2016, 2017
@@ -23,7 +23,7 @@ public class MatrixSignalMastXml
 
     /**
      * Default implementation for storing the contents of a
-     * MatrixSignalMastManager
+     * MatrixSignalMastManager.
      *
      * @param o Object to store, of type MatrixSignalMast
      * @return e Element containing the complete info
@@ -49,6 +49,15 @@ public class MatrixSignalMastXml
             unlit.setAttribute("allowed", "no");
         }
         e.addContent(unlit);
+
+        // store mast-specific delay, since 4.15.7
+        Element delay = new Element("delay");
+        if (p.getMatrixMastCommandDelay() > 0) {
+            delay.setAttribute("duration", Integer.toString(p.getMatrixMastCommandDelay()));
+        } else {
+            delay.setAttribute("duration", "0");
+        }
+        e.addContent(delay);
 
         List<String> outputs = p.getOutputs();
         // convert char[] to xml-storable simple String
@@ -130,6 +139,13 @@ public class MatrixSignalMastXml
             }
         }
 
+        if (shared.getChild("delay") != null) { // load mast-specific delay, since 4.15.7
+            Element delay = shared.getChild("delay");
+            if (delay.getAttribute("duration") != null) {
+                m.setMatrixMastCommandDelay(Integer.parseInt(delay.getAttribute("duration").getValue()));
+            }
+        }
+
         Element outps = shared.getChild("outputs"); // multiple
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
@@ -165,4 +181,5 @@ public class MatrixSignalMastXml
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastXml.class);
+
 }

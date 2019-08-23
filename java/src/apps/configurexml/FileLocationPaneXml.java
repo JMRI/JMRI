@@ -3,6 +3,7 @@ package apps.configurexml;
 import apps.FileLocationPane;
 import java.util.List;
 import jmri.ConfigureManager;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of directory locations.
- * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
  */
@@ -60,11 +60,11 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
          FileUtil.setUserFilesPath(userLocation.getValue());*/
         String value = loadUserLocations(shared, "defaultUserLocation");
         if (value != null) {
-            FileUtil.setUserFilesPath(value);
+            FileUtil.setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), value);
         }
         value = loadUserLocations(shared, "defaultScriptLocation");
         if (value != null) {
-            FileUtil.setScriptsPath(value);
+            FileUtil.setScriptsPath(ProfileManager.getDefault().getActiveProfile(), value);
         }
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {

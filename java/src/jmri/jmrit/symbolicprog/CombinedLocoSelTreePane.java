@@ -34,11 +34,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
- * <P>
+ * <p>
  * This is an extension of the CombinedLocoSelPane class to use a JTree instead
  * of a JComboBox for the decoder selection. The loco selection (Roster
  * manipulation) parts are unchanged.
- * <P>
+ * <p>
  * The JComboBox implementation always had to have selected entries, so we added
  * dummy "select from .." items at the top {@literal &} used those to indicate
  * that there was no selection in that box. Here, the lack of a selection
@@ -519,7 +519,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
     /**
      * Set the decoder selection to a specific decoder from a selected Loco.
-     * <P>
+     * <p>
      * This must not trigger an update event from the Tree selection, so we
      * remove and replace the listener.
      *

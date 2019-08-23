@@ -46,6 +46,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -68,6 +69,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Ignore("IdTag table has no Edit button")
+    @Override
     public void testEditButton() {
     }
 

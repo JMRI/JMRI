@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Definition of objects to handle configuring an LocoNet Bluetooth layout
+ * Definition of objects to handle configuring a LocoNet Bluetooth layout
  * connection via a LocoNetBluetoothAdapter object.
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
@@ -23,7 +23,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -34,6 +35,9 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return "BT Locobridge";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
@@ -86,4 +90,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+
 }

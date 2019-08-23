@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -39,8 +37,6 @@ import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
@@ -50,14 +46,14 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.swing.NamedBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a Route Table.
  *
- * Based in part on SignalHeadTableAction.java by Bob Jacobsen
+ * Based in part on {@link SignalHeadTableAction} by Bob Jacobsen
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007
@@ -96,22 +92,22 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         // late initialization of string "constants" so that TurnoutManager
         // has time to be fully configured
-        SET_TO_CLOSED = Bundle.getMessage("Set") + " "
-                + InstanceManager.turnoutManagerInstance().getClosedText();
-        SET_TO_THROWN = Bundle.getMessage("Set") + " "
-                + InstanceManager.turnoutManagerInstance().getThrownText();
-        turnoutInputModes = new String[]{
+        RouteTableAction.setClosedString(Bundle.getMessage("Set") + " "
+                + InstanceManager.turnoutManagerInstance().getClosedText());
+        RouteTableAction.setThrownString(Bundle.getMessage("Set") + " "
+                + InstanceManager.turnoutManagerInstance().getThrownText());
+        RouteTableAction.setTurnoutInputModes(new String[]{
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
             Bundle.getMessage("OnConditionChange"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
-        };
-        lockTurnoutInputModes = new String[]{
+        });
+        RouteTableAction.setLockTurnoutModes(new String[]{
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
             Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
             Bundle.getMessage("OnConditionChange")
-        };
+        });
 
         m = new BeanTableDataModel<Route>() {
             static public final int ENABLECOL = NUMCOLUMN;
@@ -129,7 +125,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                     return "";  // no heading on "Set"
                 }
                 if (col == SETCOL) {
-                    return "";    // no heading on "Edit"
+                    return "";  // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
                     return Bundle.getMessage("ColumnHeadEnabled");
@@ -286,7 +282,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             /**
              * Delete the bean after all the checking has been done.
-             * <P>
+             * <p>
              * Deactivate the Route, then use the superclass to delete it.
              */
             @Override
@@ -413,18 +409,18 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     JTextField soundFile = new JTextField(20);
     JTextField scriptFile = new JTextField(20);
-    JmriBeanComboBox turnoutsAlignedSensor;
+    NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
 
-    JmriBeanComboBox sensor1;
+    NamedBeanComboBox<Sensor> sensor1;
 
     JComboBox<String> sensor1mode = new JComboBox<>(sensorInputModes);
-    JmriBeanComboBox sensor2;
+    NamedBeanComboBox<Sensor> sensor2;
     JComboBox<String> sensor2mode = new JComboBox<>(sensorInputModes);
-    JmriBeanComboBox sensor3;
+    NamedBeanComboBox<Sensor> sensor3;
     JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
 
-    JmriBeanComboBox cTurnout;
-    JmriBeanComboBox cLockTurnout;
+    NamedBeanComboBox<Turnout> cTurnout;
+    NamedBeanComboBox<Turnout> cLockTurnout;
     JSpinner timeDelay = new JSpinner();
 
     JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
@@ -486,12 +482,12 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         // Set up window
         if (addFrame == null) {
-            turnoutsAlignedSensor = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
-            sensor1 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
-            sensor2 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
-            sensor3 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
-            cTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
-            cLockTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
+            turnoutsAlignedSensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
+            sensor1 = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
+            sensor2 = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
+            sensor3 = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
+            cTurnout = new NamedBeanComboBox<>(InstanceManager.turnoutManagerInstance());
+            cLockTurnout = new NamedBeanComboBox<>(InstanceManager.turnoutManagerInstance());
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddRoute"), false, true); // title later changed for Edit
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100, 30);
@@ -575,7 +571,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 80));
 
-            ROW_HEIGHT = routeTurnoutTable.getRowHeight();
+            RouteTableAction.setRowHeight(routeTurnoutTable.getRowHeight());
             JComboBox<String> stateTCombo = new JComboBox<>();
             stateTCombo.addItem(SET_TO_CLOSED);
             stateTCombo.addItem(SET_TO_THROWN);
@@ -686,8 +682,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             p27.setLayout(new FlowLayout());
             p27.add(new JLabel(Bundle.getMessage("LabelEnterSensorAligned")));
             p27.add(turnoutsAlignedSensor);
-            turnoutsAlignedSensor.setFirstItemBlank(true);
-            turnoutsAlignedSensor.setSelectedBean(null);
+            turnoutsAlignedSensor.setAllowNull(true);
+            turnoutsAlignedSensor.setSelectedItem(null);
             turnoutsAlignedSensor.setToolTipText(Bundle.getMessage("TooltipEnterSensor"));
             contentPanel.add(p27);
 
@@ -717,12 +713,12 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             pS.add(sensor3mode);
             p32.add(pS);
 
-            sensor1.setFirstItemBlank(true);
-            sensor2.setFirstItemBlank(true);
-            sensor3.setFirstItemBlank(true);
-            sensor1.setSelectedBean(null);
-            sensor2.setSelectedBean(null);
-            sensor3.setSelectedBean(null);
+            sensor1.setAllowNull(true);
+            sensor2.setAllowNull(true);
+            sensor3.setAllowNull(true);
+            sensor1.setSelectedItem(null);
+            sensor2.setSelectedItem(null);
+            sensor3.setSelectedItem(null);
             String sensorHint = Bundle.getMessage("TooltipEnterSensors");
             sensor1.setToolTipText(sensorHint);
             sensor2.setToolTipText(sensorHint);
@@ -735,18 +731,18 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             JPanel p34 = new JPanel();
             p34.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))));
             p34.add(cTurnout);
-            cTurnout.setFirstItemBlank(true);
-            cTurnout.setSelectedBean(null);
+            cTurnout.setAllowNull(true);
+            cTurnout.setSelectedItem(null);
             cTurnout.setToolTipText(Bundle.getMessage("TooltipEnterTurnout"));
             p34.add(new JLabel("   " + Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelCondition"))));
             cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
             p34.add(cTurnoutStateBox);
             p3.add(p34);
-            // add added delay
+            // add additional route-specific delay
             JPanel p36 = new JPanel();
             p36.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelTurnoutDelay"))));
             timeDelay.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
-//            timeDelay.setValue(0); // reset from possible previous use
+            // timeDelay.setValue(0); // reset from possible previous use
             timeDelay.setPreferredSize(new JTextField(5).getPreferredSize());
             p36.add(timeDelay);
             timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
@@ -767,8 +763,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             JPanel p44 = new JPanel();
             p44.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))));
             p44.add(cLockTurnout);
-            cLockTurnout.setFirstItemBlank(true);
-            cLockTurnout.setSelectedBean(null);
+            cLockTurnout.setAllowNull(true);
+            cLockTurnout.setSelectedItem(null);
             cLockTurnout.setToolTipText(Bundle.getMessage("TooltipEnterTurnout"));
             p44.add(new JLabel("   " + Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelCondition"))));
             cLockTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipLockTurnout"));
@@ -949,7 +945,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             }
         }
         // check if a Route with this system name already exists
-        sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+        sName = InstanceManager.getDefault(jmri.RouteManager.class).makeSystemName(sName);
         g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
@@ -963,7 +959,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * Check name and return a new or existing Route object with the name
      * as entered in the _systemName field on the addFrame pane.
      *
-     * @return The new/updated Route object
+     * @return the new/updated Route object
      */
     Route checkNamesOK() {
         // Get system name and user name
@@ -981,7 +977,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 return null;
             }
             try {
-                sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+                sName = InstanceManager.getDefault(jmri.RouteManager.class).makeSystemName(sName);
                 g = InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
@@ -1032,50 +1028,51 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      */
     void setControlInformation(Route g) {
         // Get sensor control information if any
-        if (sensor1.getSelectedBean() != null) {
-            if ((!g.addSensorToRoute(sensor1.getSelectedDisplayName(), sensorModeFromBox(sensor1mode)))) {
+        Sensor sensor = sensor1.getSelectedItem();
+        if (sensor != null) {
+            if ((!g.addSensorToRoute(sensor.getSystemName(), sensorModeFromBox(sensor1mode)))) {
                 log.error("Unexpected failure to add Sensor '{}' to route '{}'.",
-                        sensor1.getSelectedDisplayName(), g.getSystemName());
+                        sensor.getSystemName(), g.getSystemName());
             }
         }
 
-        if (sensor2.getSelectedBean() != null) {
-            if ((!g.addSensorToRoute(sensor2.getSelectedDisplayName(), sensorModeFromBox(sensor2mode)))) {
+        if (sensor2.getSelectedItem() != null) {
+            if ((!g.addSensorToRoute(sensor2.getSelectedItemDisplayName(), sensorModeFromBox(sensor2mode)))) {
                 log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
-                        sensor2.getSelectedDisplayName(), g.getSystemName());
+                        sensor2.getSelectedItemDisplayName(), g.getSystemName());
             }
         }
 
-        if (sensor3.getSelectedBean() != null) {
-            if ((!g.addSensorToRoute(sensor3.getSelectedDisplayName(), sensorModeFromBox(sensor3mode)))) {
+        if (sensor3.getSelectedItem() != null) {
+            if ((!g.addSensorToRoute(sensor3.getSelectedItemDisplayName(), sensorModeFromBox(sensor3mode)))) {
                 log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
-                        sensor3.getSelectedDisplayName(), g.getSystemName());
+                        sensor3.getSelectedItemDisplayName(), g.getSystemName());
             }
         }
 
         //Turnouts Aligned sensor
-        if (turnoutsAlignedSensor.getSelectedBean() != null) {
-            g.setTurnoutsAlignedSensor(turnoutsAlignedSensor.getSelectedDisplayName());
+        if (turnoutsAlignedSensor.getSelectedItem() != null) {
+            g.setTurnoutsAlignedSensor(turnoutsAlignedSensor.getSelectedItemDisplayName());
         } else {
             g.setTurnoutsAlignedSensor("");
         }
 
         // Set turnout information if there is any
-        if (cTurnout.getSelectedBean() != null) {
-            g.setControlTurnout(cTurnout.getSelectedDisplayName());
+        if (cTurnout.getSelectedItem() != null) {
+            g.setControlTurnout(cTurnout.getSelectedItemDisplayName());
             // set up Control Turnout state
             g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
         } else {
             // No Control Turnout was entered
             g.setControlTurnout("");
         }
-        // set Delay information
+        // set route specific Delay information, see jmri.implementation.DefaultRoute#SetRouteThread()
         int addDelay = (Integer) timeDelay.getValue(); // from a JSpinner with 0 set as minimum
         g.setRouteCommandDelay(addDelay);
 
         // Set Lock Turnout information if there is any
-        if (cLockTurnout.getSelectedBean() != null) {
-            g.setLockControlTurnout(cLockTurnout.getSelectedDisplayName());
+        if (cLockTurnout.getSelectedItem() != null) {
+            g.setLockControlTurnout(cLockTurnout.getSelectedItemDisplayName());
             // set up control turnout state
             g.setLockControlTurnoutState(turnoutModeFromBox(cLockTurnoutStateBox));
         } else {
@@ -1201,7 +1198,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         soundFile.setText(g.getOutputSoundName());
 
         // get Turnout Aligned sensor
-        turnoutsAlignedSensor.setSelectedBean(g.getTurnoutsAlgdSensor());
+        turnoutsAlignedSensor.setSelectedItem(g.getTurnoutsAlgdSensor());
 
         // set up Sensors if there are any
         Sensor[] temNames = new Sensor[Route.MAX_CONTROL_SENSORS];
@@ -1210,26 +1207,26 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             temNames[k] = g.getRouteSensor(k);
             temModes[k] = g.getRouteSensorMode(k);
         }
-        sensor1.setSelectedBean(temNames[0]);
+        sensor1.setSelectedItem(temNames[0]);
         setSensorModeBox(temModes[0], sensor1mode);
 
-        sensor2.setSelectedBean(temNames[1]);
+        sensor2.setSelectedItem(temNames[1]);
         setSensorModeBox(temModes[1], sensor2mode);
 
-        sensor3.setSelectedBean(temNames[2]);
+        sensor3.setSelectedItem(temNames[2]);
         setSensorModeBox(temModes[2], sensor3mode);
 
         // set up Control Turnout if there is one
-        cTurnout.setSelectedBean(g.getCtlTurnout());
+        cTurnout.setSelectedItem(g.getCtlTurnout());
 
         setTurnoutModeBox(g.getControlTurnoutState(), cTurnoutStateBox);
 
         // set up Lock Control Turnout if there is one
-        cLockTurnout.setSelectedBean(g.getLockCtlTurnout());
+        cLockTurnout.setSelectedItem(g.getLockCtlTurnout());
 
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
-        // set up additional Delay
+        // set up additional route specific Delay
         timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts
         // set up buttons and notes
@@ -1332,12 +1329,12 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     void clearPage() {
         _systemName.setText("");
         _userName.setText("");
-        sensor1.setSelectedBean(null);
-        sensor2.setSelectedBean(null);
-        sensor3.setSelectedBean(null);
-        cTurnout.setSelectedBean(null);
-        cLockTurnout.setSelectedBean(null);
-        turnoutsAlignedSensor.setSelectedBean(null);
+        sensor1.setSelectedItem(null);
+        sensor2.setSelectedItem(null);
+        sensor3.setSelectedItem(null);
+        cTurnout.setSelectedItem(null);
+        cLockTurnout.setSelectedItem(null);
+        turnoutsAlignedSensor.setSelectedItem(null);
         soundFile.setText("");
         scriptFile.setText("");
         for (int i = _turnoutList.size() - 1; i >= 0; i--) {
@@ -1481,16 +1478,16 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
         //String sensorSystemName = turnoutsAlignedSensor.getText();
-        if (turnoutsAlignedSensor.getSelectedBean() != null) {
+        if (turnoutsAlignedSensor.getSelectedItem() != null) {
             // verify name (logix doesn't use "provideXXX")
-            //Sensor s = turnoutsAlignedSensor.getSelectedBean();
+            //Sensor s = turnoutsAlignedSensor.getSelectedItem();
             /*if (s == null) {
              s = InstanceManager.sensorManagerInstance().getBySystemName(sensorSystemName);
              }*/
             //if (s != null) {
-            String sensorSystemName = turnoutsAlignedSensor.getSelectedDisplayName();
+            String sensorSystemName = turnoutsAlignedSensor.getSelectedItemDisplayName();
             cSystemName = logixSystemName + "1A"; // NOI18N
-            cUserName = turnoutsAlignedSensor.getSelectedDisplayName() + "A " + uName; // NOI18N
+            cUserName = turnoutsAlignedSensor.getSelectedItemDisplayName() + "A " + uName; // NOI18N
 
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -1529,8 +1526,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         }
 
         ///////////////// Set lock turnout information if there is any //////////////////////////
-        if (cLockTurnout.getSelectedBean() != null) {
-            String turnoutLockSystemName = cLockTurnout.getSelectedDisplayName();
+        if (cLockTurnout.getSelectedItem() != null) {
+            String turnoutLockSystemName = cLockTurnout.getSelectedItemDisplayName();
             // verify name (logix doesn't use "provideXXX")
             cSystemName = logixSystemName + "1L"; // NOI18N
             cUserName = turnoutLockSystemName + "L " + uName; // NOI18N
@@ -1621,7 +1618,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * @throws IllegalArgumentException if "user input no good"
      */
     // why are the controls being passed, and not their selections?
-    int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds,
+    int makeSensorConditional(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlSensorVar(jmriBox, sensorbox, false, onChange);
@@ -1632,7 +1629,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 varList.add(cloneVariable(vetoList.get(i)));
             }
             String cSystemName = prefix + numConds + "T";
-            String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
+            String cUserName = jmriBox.getSelectedItemDisplayName() + numConds + "C " + uName;
             Conditional c = null;
             try {
                 c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
@@ -1671,7 +1668,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * @throws IllegalArgumentException if "user input no good"
      */
     // why are the controls being passed, and not their selections?
-    int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox<String> box, int numConds,
+    int makeTurnoutConditional(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
         ConditionalVariable cVar = makeCtrlTurnoutVar(jmriBox, box, false, onChange);
@@ -1682,7 +1679,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 varList.add(cloneVariable(vetoList.get(i)));
             }
             String cSystemName = prefix + numConds + "T";
-            String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
+            String cUserName = jmriBox.getSelectedItemDisplayName() + numConds + "C " + uName;
             Conditional c = null;
             try {
                 c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
@@ -1729,10 +1726,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return list;
     }
 
-    ConditionalVariable makeCtrlSensorVar(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox,
+    ConditionalVariable makeCtrlSensorVar(NamedBeanComboBox<Sensor> jmriBox, JComboBox<String> sensorbox,
             boolean makeVeto, boolean onChange) {
-        String devName = jmriBox.getSelectedDisplayName();
-        if (jmriBox.getSelectedBean() == null /*|| devName.length() == 0*/) {
+        String devName = jmriBox.getSelectedItemDisplayName();
+        if (jmriBox.getSelectedItem() == null /*|| devName.length() == 0*/) {
             return null;
         }
         Operator oper = Conditional.Operator.AND;
@@ -1782,13 +1779,13 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
-    ConditionalVariable makeCtrlTurnoutVar(JmriBeanComboBox jmriBox, JComboBox<String> box,
+    ConditionalVariable makeCtrlTurnoutVar(NamedBeanComboBox<Turnout> jmriBox, JComboBox<String> box,
             boolean makeVeto, boolean onChange) {
 
-        if (jmriBox.getSelectedBean() == null) {
+        if (jmriBox.getSelectedItem() == null) {
             return null;
         }
-        String devName = jmriBox.getSelectedDisplayName();
+        String devName = jmriBox.getSelectedItemDisplayName();
         int mode = turnoutModeFromBox(box);
         Operator oper = Conditional.Operator.AND;
         Conditional.Type type;
@@ -2120,13 +2117,34 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         Bundle.getMessage("OnConditionChange")
     };
 
+    // safe methods to set tho above 4 static field values
     private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
         Route.VETOCLOSED, Route.VETOTHROWN};
+
+    private static void setClosedString(@Nonnull String newVal) {
+        SET_TO_CLOSED = newVal;
+    }
+
+    private static void setThrownString(@Nonnull String newVal) {
+        SET_TO_THROWN = newVal;
+    }
+
+    private static void setTurnoutInputModes(@Nonnull String[] newArray) {
+        turnoutInputModes = newArray;
+    }
+
+    private static void setLockTurnoutModes(@Nonnull String[] newArray) {
+        lockTurnoutInputModes = newArray;
+    }
+
+    private synchronized static void setRowHeight(int newVal) {
+        ROW_HEIGHT = newVal;
+    }
 
     private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList<RouteTurnout> _includedTurnoutList;
 
-    private ArrayList<RouteSensor> _sensorList;        // array of all Sensorsy
+    private ArrayList<RouteSensor> _sensorList;        // array of all Sensors
     private ArrayList<RouteSensor> _includedSensorList;
 
     private abstract class RouteElement {

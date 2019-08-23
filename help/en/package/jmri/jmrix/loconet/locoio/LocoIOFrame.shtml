@@ -9,7 +9,7 @@
   <title>JMRI: Configure LocoIO (deprecated)</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help Loconet configure LocoIO"><!-- Style -->
+  "JMRI help LocoNet configure LocoIO"><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -27,10 +27,10 @@
     <div id="mainContent">
       <h1>Configure LocoIO (deprecated)</h1>
 
-      <p>The dedicated Loconet LocoIO programmer tool is no longer
+      <p>The dedicated LocoNet LocoIO programmer tool is no longer
       supported as of JMRI version 3.</p>
 
-      <p>You're still welcome to use it, of course, but please
+      <p>You're still welcome to use it for the original boards, but please
       consider switching over to configuring your LocoIO boards
       with <a href=
       "../../apps/DecoderPro/index.shtml">DecoderPro</a>. There's a

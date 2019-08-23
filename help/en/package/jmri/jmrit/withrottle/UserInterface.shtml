@@ -48,21 +48,28 @@
       <p>When using a WiFi throttle, if the computer enters sleep
       mode, control will be lost. System preferences may need to be
       adjusted to prevent the computer from putting itself to sleep
-      when it is inactive. <a href=
+      when it is inactive. 
+      <a href=
       "http://enginedriver.mstevetodd.com"><img src=
       "images/EngineDriverScreen.png" height="200" width="120"
       align="right" style="margin:20px;" alt=
       "EngineDriver for Android devices" title=
-      "EngineDriver for Android devices"></a> <a href=
+      "EngineDriver for Android devices"></a> 
+      
+      <a href=
       "http://withrottle.com"><img src="images/WiT150x250.png"
       height="250" width="150" align="right" alt=
       "WiThrottle for Apple devices" title=
-      "WiThrottle for Apple devices"></a> <a href=
-      "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
-      <img src="images/DigiTrainsScreen.png" height="120" width=
-      "200" align="right" style="margin:20px;" alt=
-      "DigiTrains for Android devices" title=
-      "DigiTrains for Android devices"></a></p>
+      "WiThrottle for Apple devices"></a> 
+      
+      <a href=
+      "https://play.google.com/store/apps/details?id=digitrainspro.digitrainspro.hu">
+      <img src="https://lh3.googleusercontent.com/GImAaAj7eFkLrMk2e8obXFW465F-C07FNlwXmzvP6HOQkPQ2rCg0d2BnTFy34Y-HYQ=s180" height="120" width=
+      "120" align="right" style="margin:20px;" alt=
+      "DigiTrainsPro for Android devices" title=
+      "DigiTrainsPro for Android devices"></a>
+      
+      </p>
 
       <p>To use your iPhone, iPad or iPod Touch with JMRI as a
       throttle, you run the <a href=
@@ -72,13 +79,19 @@
 
       <p>To use your Android device with JMRI as a throttle, you
       run the <a href="http://enginedriver.mstevetodd.com">Engine
-      Driver</a> app or <a href=
-      "https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
-      Digitrains</a> on the Android device. These free apps are
-      available from the <a href=
+      Driver</a> app 
+      (available from available from the <a href=
       "https://play.google.com/store/apps/details?id=jmri.enginedriver">
       Google Play Store</a> or the <a href=
-      "http://enginedriver.mstevetodd.com">EngineDriver site</a></p>
+      "http://enginedriver.mstevetodd.com">EngineDriver site</a>)
+      or <a href=
+      "https://play.google.com/store/apps/details?id=digitrainspro.digitrainspro.hu">
+      DigitrainsPro</a> on the Android device
+      (available from the <a href=
+      "https://play.google.com/store/apps/details?id=digitrainspro.digitrainspro.hu">
+      Google Play Store</a>).
+    
+      </p>
 
       <p>You can connect from a Windows computer using the
       <a href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j?activetab=pivot:overviewtab">Train Throttle Windows App</a>

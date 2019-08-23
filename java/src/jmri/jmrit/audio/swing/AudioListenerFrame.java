@@ -23,15 +23,14 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -138,7 +137,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
+        String sName = sysName.getText();
         AudioListener l;
         try {
             l = (AudioListener) InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(sName);

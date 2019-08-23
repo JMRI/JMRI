@@ -73,10 +73,8 @@ public class DetectionPanel extends JPanel {
                 }
             }
         });
-        _openPicklistButton.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         JPanel p = new JPanel();
         p.add(_openPicklistButton);
-        p.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         panel.add(p);
         add(panel);
 
@@ -124,7 +122,7 @@ public class DetectionPanel extends JPanel {
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
+//        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -216,7 +214,7 @@ public class DetectionPanel extends JPanel {
         if (_pathBoxes != null) {
             for (int i = 0; i < _pathBoxes.size(); i++) {
                 if (_pathBoxes.get(i).isSelected()) {
-                    paths.add(_pathBoxes.get(i).getName().trim());
+                    paths.add(_pathBoxes.get(i).getName());
                 }
             }
         }
@@ -230,7 +228,7 @@ public class DetectionPanel extends JPanel {
         }
         for (int k = 0; k < iconPath.size(); k++) {
             for (int i = 0; i < _pathBoxes.size(); i++) {
-                String name = _pathBoxes.get(i).getName().trim();
+                String name = _pathBoxes.get(i).getName();
                 if (iconPath.get(k).equals(name)) {
                     _pathBoxes.get(i).setSelected(true);
                 }

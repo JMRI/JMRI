@@ -152,6 +152,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
         if (consistType == ADVANCED_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
             addToAdvancedConsist(LocoAddress, directionNormal);
+            //set the value in the roster entry for CV19
+            setRosterEntryCVValue(LocoAddress);
         } else if (consistType == CS_CONSIST) {
             if (consistList.size() < 8) {
                 addToConsistList(LocoAddress, directionNormal);
@@ -196,6 +198,8 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
         if (consistType == ADVANCED_CONSIST) {
+            //reset the value in the roster entry for CV19
+            resetRosterEntryCVValue(LocoAddress);
             removeFromAdvancedConsist(LocoAddress);
             removeFromConsistList(LocoAddress);
         } else if (consistType == CS_CONSIST) {
