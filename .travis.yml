@@ -19,7 +19,7 @@ services:
 
 before_install:
   # dump Travis CI environment
-  set | grep '^[A-Z].*='
+  - set | grep '^[A-Z].*='
   # ensure no unwanted defaults are set
   # see https://github.com/travis-ci/travis-ci/issues/4613#issuecomment-181845546
   - export MAVEN_SKIP_RC="true"
