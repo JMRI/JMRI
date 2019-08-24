@@ -18,6 +18,8 @@ services:
   - xvfb
 
 before_install:
+  # dump Travis CI environment
+  set | grep '^[A-Z].*='
   # ensure no unwanted defaults are set
   # see https://github.com/travis-ci/travis-ci/issues/4613#issuecomment-181845546
   - export MAVEN_SKIP_RC="true"
@@ -61,7 +63,7 @@ env:
   - MAVEN_OPTS=-Xmx1536m
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=filesystem
-  - CC_TEST_REPORTER_ID=b584d95af6e0716d39b5117f5cbd365af573363628a7848b92b297a93c55fa42
+  - CC_TEST_REPORTER_ID=1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
   matrix:
   - HEADLESS=false STATIC=false
   - HEADLESS=true STATIC=false
