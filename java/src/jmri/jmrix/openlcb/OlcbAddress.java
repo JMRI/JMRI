@@ -215,6 +215,8 @@ public class OlcbAddress {
      *
      * @return null if entire string can't be parsed.
      */
+     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "Documented API, no resources to improve")
     public OlcbAddress[] split() {
         // reject strings ending in ";"
         if (aString.endsWith(";")) {

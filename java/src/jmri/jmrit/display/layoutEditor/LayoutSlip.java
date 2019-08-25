@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -150,7 +150,7 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    public void setTurnoutB(@Nullable String tName) {
+    public void setTurnoutB(@CheckForNull String tName) {
         boolean reactivate = false;
         if (namedTurnoutB != null) {
             deactivateTurnout();
@@ -199,7 +199,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
@@ -712,7 +712,7 @@ public class LayoutSlip extends LayoutTurnout {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -1674,9 +1674,9 @@ public class LayoutSlip extends LayoutTurnout {
      */
     @Override
     protected int getConnectivityStateForLayoutBlocks(
-            @Nullable LayoutBlock thisLayoutBlock,
-            @Nullable LayoutBlock prevLayoutBlock,
-            @Nullable LayoutBlock nextLayoutBlock,
+            @CheckForNull LayoutBlock thisLayoutBlock,
+            @CheckForNull LayoutBlock prevLayoutBlock,
+            @CheckForNull LayoutBlock nextLayoutBlock,
             boolean suppress) {
         int result = Turnout.UNKNOWN;
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -37,7 +37,7 @@ public class JsonPowerHttpService extends JsonHttpService {
 
     @Override
     // Nullable to override inherited NonNull requirement
-    public JsonNode doGet(String type, @Nullable String name, JsonNode parameters, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode parameters, Locale locale, int id) throws JsonException {
         ObjectNode data = mapper.createObjectNode();
         try {
             PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
