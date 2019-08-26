@@ -1,7 +1,8 @@
 package apps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import cucumber.api.java8.En;
-import org.junit.Assert;
 import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.nio.file.Files;
@@ -34,6 +35,7 @@ public class ApplicationTestAcceptanceSteps implements En {
         });
 
         Given("^I am using profile (.*)$", (String profile) -> {
+            boolean exceptionThrown = false;
             try {
                 // create a custom profile
                 tempFolder = Files.createTempDirectory("AppTest").toFile();
@@ -42,8 +44,9 @@ public class ApplicationTestAcceptanceSteps implements En {
                 System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath());
                 System.setProperty("org.jmri.profile", profileDir.getAbsolutePath());
             } catch (java.io.IOException ioe) {
-                Assert.fail("Unable to create temporary profile");
+                exceptionThrown = true;
             }
+            assertThat(!exceptionThrown);
         });
 
         When("^starting application (.*) with (.*)", (String application, String frametitle) -> {
@@ -54,10 +57,10 @@ public class ApplicationTestAcceptanceSteps implements En {
                 String[] params = new String[]{frametitle};
                 method.invoke(null, (Object) params);
             } catch (java.lang.ClassNotFoundException cnf) {
-                Assert.fail("Class " + application + " not found");
+                fail("Class {} not found",application);
             } catch (java.lang.NoSuchMethodException
                     | java.lang.IllegalAccessException ex) {
-                Assert.fail("Error calling main method");
+                fail("Error calling main method",ex);
             }
         });
 

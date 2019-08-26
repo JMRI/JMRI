@@ -217,25 +217,30 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     private void loadData() {
         tc.addEcosListener(this);
 
-        Roster.getDefault().addPropertyChangeListener(this);
+        try {
 
-        EcosMessage m = new EcosMessage("request(10, view)");
-        tc.sendWaitMessage(m, this);
+           Roster.getDefault().addPropertyChangeListener(this);
 
-        /*m = new EcosMessage("queryObjects(10)");
-         tc.sendWaitMessage(m, this);*/
-        m = new EcosMessage("queryObjects(10, addr, name, protocol)");
-        tc.sendEcosMessage(m, this);
+           EcosMessage m = new EcosMessage("request(10, view)");
+           tc.sendWaitMessage(m, this);
 
-        if (ecosLocoShutDownTask == null) {
-            ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
-                @Override
-                public boolean execute() {
-                    return shutdownDispose();
-                }
-            };
+           /*m = new EcosMessage("queryObjects(10)");
+           tc.sendWaitMessage(m, this);*/
+           m = new EcosMessage("queryObjects(10, addr, name, protocol)");
+           tc.sendEcosMessage(m, this);
+
+           if (ecosLocoShutDownTask == null) {
+               ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
+                   @Override
+                   public boolean execute() {
+                       return shutdownDispose();
+                   }
+               };
+           }
+           jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
+        } catch(java.lang.NullPointerException npe) {
+            log.debug("Delayed initialization of EcosLocoAddressManager failed, no roster information available");
         }
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(ecosLocoShutDownTask);
     }
 
     public void monitorLocos(boolean monitor) {
@@ -309,6 +314,12 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     /* Dispose is dealt with at shutdown */
     @Override
     public void dispose() {
+    }
+
+    public void terminateThreads() {
+       if(waitPrefLoad!=null){
+          waitPrefLoad.interrupt();
+       }
     }
 
     public boolean shutdownDispose() {

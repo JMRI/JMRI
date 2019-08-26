@@ -64,12 +64,6 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         throttleManager.requestThrottle(consistAddress, this, false);
     }
 
-    // Clean Up local storage
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
     // Set the Consist Type
     @Override
     public void setConsistType(int consist_type) {

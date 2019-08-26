@@ -2,7 +2,7 @@ package jmri.managers;
 
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
@@ -56,7 +56,7 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
      * @param programmer the programmer to use; if null, acts as if no
      *                   programmer is available
      */
-    public DefaultProgrammerManager(@Nullable Programmer programmer) {
+    public DefaultProgrammerManager(@CheckForNull Programmer programmer) {
         this.programmer = programmer;
     }
 
@@ -67,7 +67,7 @@ public class DefaultProgrammerManager implements AddressedProgrammerManager, Glo
      *                   programmer is available
      * @param memo       the associated connection
      */
-    public DefaultProgrammerManager(@Nullable Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@CheckForNull Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
         this(programmer);
         this.userName = memo.getUserName();
     }
