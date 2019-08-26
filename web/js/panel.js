@@ -551,8 +551,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 break;
                         }
-                        $widget['safeName'] = $safeName($widget.name);
-                        $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                        $widget['safeName'] = $safeName($widget.name);                                            
+                        switch ($widget['orientation']) { //use orientation instead of degrees if populated
+                        	case "vertical_up"   : $widget.degrees = 270;
+                        	case "vertical_down" : $widget.degrees = 90;
+                        }
+                        $gWidgets[$widget.id] = $widget; //store widget in persistent array                        
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
                         $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
@@ -579,8 +583,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['state'] = UNKNOWN;  //add a state member for this block
                                 $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                                 //store these blocks in a persistent var
-                                //by both username and systemname since references may be by either
-                                $gBlks[$widget.username] = $widget
                                 $gBlks[$widget.systemName] = $widget;
                                 jmri.getLayoutBlock($widget.systemName);
                                 break;
