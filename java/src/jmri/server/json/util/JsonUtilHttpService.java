@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -58,8 +58,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    // use @Nullable to override @Nonnull specified in superclass
-    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale, int id) throws JsonException {
+    // use @CheckForNull to override @Nonnull specified in superclass
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case JSON.HELLO:
                 return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval(), id);
@@ -113,8 +113,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    // Use @Nullable to override non-null requirement of superclass
-    public JsonNode doPost(String type, @Nullable String name,
+    // Use @CheckForNull to override non-null requirement of superclass
+    public JsonNode doPost(String type, @CheckForNull String name,
             JsonNode data, Locale locale, int id) throws JsonException {
         return this.doGet(type, name, data, locale, id);
     }

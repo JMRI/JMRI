@@ -3,7 +3,7 @@ package jmri.managers;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.SystemConnectionMemo;
@@ -75,7 +75,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         // add normalize? see AbstractSensor

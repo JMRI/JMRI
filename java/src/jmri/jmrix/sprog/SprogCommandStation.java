@@ -488,6 +488,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      *
      * @return byte[] null if no packet
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by Sprog docs")
     private byte[] getNextPacket() {
         SprogSlot s;
 

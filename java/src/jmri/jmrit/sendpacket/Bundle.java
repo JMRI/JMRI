@@ -3,7 +3,7 @@ package jmri.jmrit.sendpacket;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.Bundle { // Note: uses specific jmrix labels
 
-    @Nullable
+    @CheckForNull
     private static final String name = null; // No local resources
 
     //
@@ -81,7 +81,7 @@ public class Bundle extends jmri.jmrit.Bundle { // Note: uses specific jmrix lab
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

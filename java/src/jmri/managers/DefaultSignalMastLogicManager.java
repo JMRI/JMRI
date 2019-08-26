@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -300,13 +301,14 @@ public class DefaultSignalMastLogicManager
             throw e;
         }
 
-        for (SignalMast key : validPaths.keySet()) {
+        for (Map.Entry<SignalMast, List<NamedBean>> entry : validPaths.entrySet()) {
+            SignalMast key = entry.getKey();
             SignalMastLogic sml = getSignalMastLogic(key);
             if (sml == null) {
                 sml = newSignalMastLogic(key);
             }
 
-            List<NamedBean> validDestMast = validPaths.get(key);
+            List<NamedBean> validDestMast = entry.getValue();
             for (NamedBean sm : validDestMast) {
                 if (!sml.isDestinationValid((SignalMast) sm)) {
                     try {

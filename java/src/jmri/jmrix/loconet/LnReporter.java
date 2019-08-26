@@ -194,14 +194,6 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
     int lastLoco = -1;
 
     /**
-      * {@inheritDoc}
-      */
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    /**
      * Parses out a (possibly old) LnReporter-generated report string to extract info used by
      * the public PhysicalLocationReporter methods.  Returns a Matcher that, if successful, should
      * have the following groups defined.

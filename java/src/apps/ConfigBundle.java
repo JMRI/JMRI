@@ -2,7 +2,7 @@ package apps;
 
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -78,7 +78,7 @@ public class ConfigBundle extends apps.Bundle {
     private final static ConfigBundle b = new ConfigBundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

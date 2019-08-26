@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
@@ -76,7 +76,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public PositionableLabel(@Nullable NamedIcon s, @Nonnull Editor editor) {
+    public PositionableLabel(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s);
         _editor = editor;
         _icon = true;

@@ -10,7 +10,7 @@ package jmri.jmrit.ctc;
 
 public class SignalDirectionIndicatorsNull  implements SignalDirectionIndicatorsInterface {
     public SignalDirectionIndicatorsNull() {}
-    
+
     @Override
     public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler) {}
     @Override
@@ -41,4 +41,6 @@ public class SignalDirectionIndicatorsNull  implements SignalDirectionIndicators
     public int getSignalsInTheFieldDirection() { return CTCConstants.OUTOFCORRESPONDENCE; }
     @Override
     public void setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE() {}
+    @Override
+    public void setRequestedDirection(int direction) {}
 }

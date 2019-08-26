@@ -3,7 +3,7 @@ package jmri;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Manage tasks to be completed when the program shuts down normally.
@@ -51,7 +51,7 @@ public interface ShutDownManager {
      *
      * @param task the task not to execute
      */
-    public void deregister(@Nullable ShutDownTask task);
+    public void deregister(@CheckForNull ShutDownTask task);
 
     /**
      * Provide access to the current registered shutdown tasks.
