@@ -25,6 +25,9 @@ public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
         l = new EcosReporterManager(memo);

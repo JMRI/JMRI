@@ -74,6 +74,8 @@ public class EcosLocoAddressManagerTest {
         };
         EcosLocoAddressManager t = new EcosLocoAddressManager(memo);
         Assert.assertNotNull("exists",t);
+        t.terminateThreads();
+        memo.dispose();
     }
 
     @Before

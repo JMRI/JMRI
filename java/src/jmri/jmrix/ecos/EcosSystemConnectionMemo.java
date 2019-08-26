@@ -88,7 +88,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private EcosSensorManager sensorManager;
     private EcosTurnoutManager turnoutManager;
-    private EcosLocoAddressManager locoManager;
+    protected EcosLocoAddressManager locoManager;
     private EcosPreferences prefManager;
     private EcosDccThrottleManager throttleManager;
     private EcosPowerManager powerManager;
@@ -205,6 +205,10 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (reporterManager != null) {
             reporterManager.dispose();
             reporterManager = null;
+        }
+        if (locoManager != null) {
+            locoManager.terminateThreads();
+            locoManager = null;
         }
         if (programmerManager != null) {
             InstanceManager.deregister(programmerManager, jmri.jmrix.ecos.EcosProgrammerManager.class);
