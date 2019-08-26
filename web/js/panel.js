@@ -1240,8 +1240,8 @@ function $drawTurnout($widget) {
 //    } else {
 //       jmri.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
     }
-    var cenx = $widget.xcen;
-    var ceny = $widget.ycen
+    var cenx = $widget.xcen * 1.0;
+    var ceny = $widget.ycen * 1.0;
     var ax = $gPts[$widget.ident + PT_A].x;
     var ay = $gPts[$widget.ident + PT_A].y;
     var bx = $gPts[$widget.ident + PT_B].x;
@@ -1251,10 +1251,10 @@ function $drawTurnout($widget) {
     var abx = (ax * 1) + ((bx - ax) * 0.5); // midpoint AB
     var aby = (ay * 1) + ((by - ay) * 0.5);
     if ($gPanel.turnoutdrawunselectedleg == 'yes') { //only calculate midpoints if needed
-        var cenbx = (cenx * 1) + ((bx - cenx) * 0.5); // midpoint cenB
-        var cenby = (ceny * 1) + ((by - ceny) * 0.5);
-        var cencx = (cenx * 1) + ((cx - cenx) * 0.5); // midpoint cenC
-        var cency = (ceny * 1) + ((cy - ceny) * 0.5);
+    	var cenbx = (cenx * 1) + ((bx - cenx) * 0.5); // midpoint cenB
+    	var cenby = (ceny * 1) + ((by - ceny) * 0.5);
+    	var cencx = (cenx * 1) + ((cx - cenx) * 0.5); // midpoint cenC
+    	var cency = (ceny * 1) + ((cy - ceny) * 0.5);
     }
     var dx, dy, dcx, dcy;
     if (typeof $gPts[$widget.ident + PT_D] !== "undefined") {
@@ -1308,6 +1308,11 @@ function $drawTurnout($widget) {
             if ($widget.state == $widget.continuing) {
                 $drawLine(ax, ay, bx, by, $color, $width); //A to B
                 $drawLine(dx, dy, cx, cy, $color, $width); //D to C
+                if ($widget.type == DOUBLE_XOVER) {
+                	//TODO: draw this
+                } else if ($widget.type == RH_XOVER || $widget.type == LH_XOVER) {
+                    $drawLine((abx+cenx)*0.5, (aby+ceny)*0.5, (dcx+cenx)*0.5, (dcy+ceny)*0.5, $color, $width);//center of midAB to midDC
+                }
             } else {
                 if ($widget.type == DOUBLE_XOVER) {
                     $drawLine(ax, ay, cx, cy, $color, $width); //A to C
