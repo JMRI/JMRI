@@ -95,10 +95,10 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
         Z21Reply reply = new Z21Reply(msg,14);
         znis.sendTestMessage(reply);
 
-        // see if sensor exists
-        // note that name matches case of name sent
+        // see if sensor exists note that the node value is numeric,
+        // but in hex format.
         Assert.assertNotNull(l.getBySystemName("ZSabcd:1"));
-        Assert.assertNull(l.getBySystemName("ZSABCD:1"));
+        Assert.assertNotNull(l.getBySystemName("ZSABCD:1"));
     }
 
     @Test
