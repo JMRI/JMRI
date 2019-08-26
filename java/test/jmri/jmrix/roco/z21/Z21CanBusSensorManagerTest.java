@@ -46,7 +46,8 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
         Sensor t = l.provideSensor("ZSabcd:5");
         // check
         Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(5)));
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZSabcd:5"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName(getSystemName(5)));
     }
 
     @Test
@@ -55,7 +56,8 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
         Sensor t = l.provideSensor("ZSa1c3:5");
         // check
         Assert.assertNotNull("real object returned ", t);
-        Assert.assertEquals("system name correct ", t,l.getBySystemName("ZSA1C3:5"));
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZSa1c3:5"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZSA1C3:5"));
     }
 
     @Test

@@ -233,9 +233,15 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     public Sensor getBySystemName(String sName){
        Sensor s = super.getBySystemName(sName);
-       if(s == null) {
+       if(s == null && sName.contains(":")) {
           // normalize the hex characters in the system name to upper case.
-          return super.getBySystemName(sName.toUpperCase());
+          String curAddress = sName.substring(getSystemPrefix().length() +1);
+          try {
+             return super.getBySystemName(createSystemName(curAddress, getSystemPrefix()));
+          } catch (JmriException je) {
+             // format isn't correct, but s already equals null, so just return
+             // that.
+          }
        }
        return s;
     }
