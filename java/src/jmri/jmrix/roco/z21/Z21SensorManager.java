@@ -228,6 +228,18 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public Sensor getBySystemName(String sName){
+       Sensor s = super.getBySystemName(sName);
+       if(s == null) {
+          // normalize the hex characters in the system name to upper case.
+          return super.getBySystemName(sName.toUpperCase());
+       }
+       return s;
+    }
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
