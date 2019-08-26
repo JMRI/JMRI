@@ -54,6 +54,8 @@ public class EcosMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         jmri.jmrix.ecos.EcosInterfaceScaffold tc = new jmri.jmrix.ecos.EcosInterfaceScaffold();
         memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc);
