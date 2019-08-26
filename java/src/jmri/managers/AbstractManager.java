@@ -25,6 +25,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.NmraPacket;
@@ -207,7 +208,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 log.debug("the named bean is registered twice: {}", systemName);
             } else {
                 log.error("systemName is already registered: {}", systemName);
-                throw new IllegalArgumentException("systemName is already registered: " + systemName);
+                throw new DuplicateSystemNameException("systemName is already registered: " + systemName);
             }
         } else {
             // Check if the manager already has a bean with a system name that is
@@ -225,7 +226,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                     String msg = String.format("systemName is already registered. Current system name: %s. New system name: %s",
                             oldSysName, systemName);
                     log.error(msg);
-                    throw new IllegalArgumentException(msg);
+                    throw new DuplicateSystemNameException(msg);
                 }
             }
         }
