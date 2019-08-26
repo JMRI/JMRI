@@ -64,8 +64,10 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
             e2 = m.provide(s2);
         } catch (
                 IllegalArgumentException |
+                com.pi4j.io.gpio.exception.GpioPinExistsException |
                 NullPointerException |
                 ArrayIndexOutOfBoundsException ex) {
+            // jmri.jmrix.pi.RaspberryPiTurnout(Providing)ManagerTest gives a GpioPinExistsException here.
             // jmri.jmrix.openlcb.OlcbLightProvidingManagerTest gives a NullPointerException here.
             // jmri.jmrix.openlcb.OlcbSensorProvidingManagerTest gives a ArrayIndexOutOfBoundsException here.
             // Some other tests give an IllegalArgumentException here.

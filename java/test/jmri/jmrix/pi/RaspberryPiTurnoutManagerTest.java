@@ -2,7 +2,7 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import jmri.Turnout;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
@@ -35,13 +35,15 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         Assert.assertEquals("Prefix", "P", l.getSystemPrefix());
     }
 
+    private GpioProvider myProvider;
+
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        GpioProvider myprovider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myprovider);
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
+        myProvider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myProvider);
         l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo());
     }
 
@@ -52,10 +54,31 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         if (t1 != null) {
             t1.dispose();
         }
-        RaspberryPiTurnout t2 = (RaspberryPiTurnout) l.getTurnout(getSystemName(getNumToTest2()));
-        if (t2 != null) {
-            t2.dispose();
+        t1 = (RaspberryPiTurnout) l.getTurnout(getSystemName(getNumToTest2()));
+        if (t1 != null) {
+            t1.dispose();
         }
+        t1 = (RaspberryPiTurnout) l.getTurnout(getSystemName(1));
+        if (t1 != null) {
+            t1.dispose();
+        }
+        t1 = (RaspberryPiTurnout) l.getTurnout(getSystemName(2));
+        if (t1 != null) {
+            t1.dispose();
+        }
+        RaspberryPiSensor s1 = (RaspberryPiSensor) InstanceManager.sensorManagerInstance().getSensor("PS1");
+        if (s1 != null) {
+            s1.dispose();
+        }
+        s1 = (RaspberryPiSensor) InstanceManager.sensorManagerInstance().getSensor("PS2");
+        if (s1 != null) {
+            s1.dispose();
+        }
+        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        myProvider.shutdown();
+        // GpioFactory.setDefaultProvider(null);
+        l.dispose();
+
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();

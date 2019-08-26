@@ -2,6 +2,7 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
@@ -49,7 +50,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("2nd state", Sensor.INACTIVE, t.getState());
 
-	    t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
+        t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.INACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("Final state", Sensor.ACTIVE, t.getState());
@@ -68,20 +69,43 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_DOWN, t.getPullResistance());
     }
 
-    // The minimal setup for log4J
+    private GpioProvider myProvider;
+
     @Override
     @Before
     public void setUp() {
-        GpioProvider myprovider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myprovider);
         JUnitUtil.setUp();
-        t = new RaspberryPiSensor("PiS1");
+        JUnitUtil.resetInstanceManager();
+        myProvider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myProvider);
+
+        // unprovisionPin if it exists to allow reuse of GPIO pin in test
+        RaspberryPiSensor s1 = (RaspberryPiSensor) InstanceManager.sensorManagerInstance().getSensor("PS1");
+        if (s1 != null) {
+            s1.dispose();
+        }
+        RaspberryPiTurnout t1 = (RaspberryPiTurnout) InstanceManager.turnoutManagerInstance().getTurnout("PT1");
+        if (t1 != null) {
+            t1.dispose();
+        }
+        t = new RaspberryPiSensor("PS1");
     }
 
     @Override
     @After
     public void tearDown() {
-	    t.dispose();
+        RaspberryPiTurnout t1 = (RaspberryPiTurnout) InstanceManager.turnoutManagerInstance().getTurnout("PT1");
+        if (t1 != null) {
+            t1.dispose();
+        }
+        if (t != null) {
+            t.dispose(); // is supposed to unprovisionPin 1
+        }
+        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        myProvider.shutdown();
+
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

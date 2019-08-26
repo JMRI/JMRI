@@ -96,7 +96,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals(0, l.getObjectCount());
     }
 
-
     @Test
     public void testDefaultSystemName() {
         // create
@@ -178,7 +177,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         t1.setUserName("after");
         Sensor t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
     @Test
