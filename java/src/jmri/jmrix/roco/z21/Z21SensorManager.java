@@ -230,6 +230,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     /**
      * {@inheritDoc}
      */
+    @Override
     public Sensor getBySystemName(String sName){
        Sensor s = super.getBySystemName(sName);
        if(s == null) {
