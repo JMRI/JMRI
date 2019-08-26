@@ -27,7 +27,9 @@ public class EcosPreferencesTest  {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
 
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);

@@ -23,6 +23,8 @@ import jmri.util.junit.annotations.ToDo;
  * @author Paul Bender Copyright (C) 2017
  */
 public class EcosDccThrottleTest extends AbstractThrottleTest {
+        
+    private EcosSystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
@@ -422,7 +424,6 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @Before
     @Override
     public void setUp() {
-        EcosSystemConnectionMemo memo = null;
         if (!GraphicsEnvironment.isHeadless()) {
             memo = new EcosSystemConnectionMemo(tc) {
                 @Override
@@ -445,7 +446,8 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
             memo = new EcosSystemConnectionMemo(tc) {
                 @Override
                 public EcosLocoAddressManager getLocoAddressManager() {
-                    return new EcosLocoAddressManager(this);
+                    locoManager = new EcosLocoAddressManager(this);
+                    return locoManager;
                 }
 
                 @Override
@@ -497,6 +499,9 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
+       if(memo!=null) {
+          memo.dispose();
+       }
     }
 
     @AfterClass
