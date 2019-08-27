@@ -25,6 +25,8 @@ import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
  *
@@ -117,9 +119,11 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     }
                     //if layoutblock has no occupancy sensor, use one from block, if it is populated
                 } else {
-                    Sensor s = b.getBlock().getSensor();
-                    if (s != null) {
-                        elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
+                    if (b.getBlock() != null) {
+                        Sensor s = b.getBlock().getSensor();
+                        if (s != null) {
+                            elem.setAttribute("occupancysensor", s.getSystemName()); //send systemname
+                        }
                     }
                 }
 
@@ -141,21 +145,12 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         log.debug("Number of layoutblock elements: {}", num);
 
         // include LayoutTracks
-        TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         List<LayoutTrack> layoutTracks = editor.getLayoutTracks();
         for (Object sub : layoutTracks) {
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {
-                    if (e.getName().equals("layoutturnout")) { // add turnout systemName for layoutturnout 
-                        Attribute tna = e.getAttribute("turnoutname");
-                        if (tna != null) {
-                            Turnout t = tm.getTurnout(tna.getValue());
-                            if (t != null) {
-                                e.setAttribute("systemName", t.getSystemName());
-                            }
-                        }
-                    }
+                    replaceUserNames(e);
                     panel.addContent(e);
                 }
             } catch (Exception e) {
@@ -172,6 +167,88 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 .setTextMode(Format.TextMode.TRIM));
 
         return fmt.outputString(doc);
+    }
+
+    /**
+     * replace userName value of attrName with systemName for type attrType
+     *
+     * @param e        element to be updated
+     * @param beanType bean type to use for userName lookup
+     * @param attrName attribute name to replace
+     * 
+     */
+    private void replaceUserNameAttribute(@NonNull Element e, @NonNull String beanType, @NonNull String attrName) {
+
+        String sn = "";
+        Attribute a = e.getAttribute(attrName);
+        if (a == null) return;
+        String un = a.getValue();
+
+        switch(beanType) {
+            case "turnout" :
+                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(un);
+                if (t == null) return;
+                sn = t.getSystemName(); 
+                break;
+            case "layoutBlock" :
+                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(un);
+                if (lb == null) return;
+                sn = lb.getSystemName(); 
+                break;
+            default:
+                return; 
+        }
+        if (!un.equals(sn)) {
+            a.setValue(sn);            
+            log.debug("systemName '{}' replaced userName '{}' for {}", sn, un, attrName);
+        }
+    }
+
+    /**
+     * replace child element value of attrName with systemName for type attrType
+     *
+     * @param e        element to be updated
+     * @param beanType bean type to use for userName lookup
+     * @param childName child element name whose text will be replaced
+     * 
+     */
+    private void replaceUserNameChild(@NonNull Element e, @NonNull String beanType, @NonNull String childName) {
+
+        String sn = "";
+        Element c = e.getChild(childName);
+        if (c == null) return;
+        String un = c.getText();
+
+        switch(beanType) {
+            case "turnout" :
+                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(un);
+                if (t == null) return;
+                sn = t.getSystemName();
+                break;
+            default:
+                return;
+        }
+        if (!un.equals(sn)) {
+            c.setText(sn);            
+            log.debug("systemName '{}' replaced userName '{}' for {}", sn, un, childName);
+        }
+    }
+
+    
+    /**
+     * update the element replacing username with systemname for known attributes and children
+     *
+     * @param e element to be updated
+     */
+    private void replaceUserNames(Element e) {
+        replaceUserNameAttribute(e, "turnout", "turnoutname");
+        replaceUserNameAttribute(e, "turnout", "secondturnoutname");
+        replaceUserNameAttribute(e, "layoutBlock", "blockname");
+        replaceUserNameAttribute(e, "layoutBlock", "blockbname");
+        replaceUserNameAttribute(e, "layoutBlock", "blockcname");
+        replaceUserNameAttribute(e, "layoutBlock", "blockdname");
+        replaceUserNameChild(e, "turnout", "turnout");
+        replaceUserNameChild(e, "turnout", "turnoutB");
     }
 
     @Override
