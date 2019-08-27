@@ -25,7 +25,6 @@ import org.junit.Test;
 public abstract class AbstractTurnoutTestBase {
 
     // implementing classes must provide these abstract members:
-    //
     @Before
     abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
@@ -49,7 +48,7 @@ public abstract class AbstractTurnoutTestBase {
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
             if (e.getPropertyName().equals("KnownState")) {
-                listenStatus = ((Integer) e.getNewValue()).intValue();
+                listenStatus = (Integer) e.getNewValue();
             }
         }
     }
@@ -239,23 +238,23 @@ public abstract class AbstractTurnoutTestBase {
             return t.getKnownState() != Turnout.UNKNOWN;
         });
 
-        Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Inactive)", Turnout.THROWN, t.getKnownState());
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Active, Inactive)", Turnout.THROWN, t.getKnownState());
 
         Assert.assertEquals("listener notified of change for TWOSENSOR feedback", Turnout.THROWN,listenStatus);
 
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("known state for TWOSENSOR feedback (Inactive,Inactive)", Turnout.INCONSISTENT, t.getKnownState());
+        Assert.assertEquals("known state for TWOSENSOR feedback (Inactive, Inactive)", Turnout.INCONSISTENT, t.getKnownState());
 
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive,Active)", Turnout.CLOSED, t.getKnownState());
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive, Active)", Turnout.CLOSED, t.getKnownState());
 
         Assert.assertEquals("listener notified of change for TWOSENSOR feedback ", Turnout.CLOSED,listenStatus);
 
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Active)", Turnout.INCONSISTENT, t.getKnownState());
+        Assert.assertEquals("state changed by TWOSENSOR feedback (Active, Active)", Turnout.INCONSISTENT, t.getKnownState());
     }
 
     @Test 

@@ -79,27 +79,14 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         myProvider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myProvider);
 
-        // unprovisionPin if it exists to allow reuse of GPIO pin in test
-        RaspberryPiSensor s1 = (RaspberryPiSensor) InstanceManager.sensorManagerInstance().getSensor("PS1");
-        if (s1 != null) {
-            s1.dispose();
-        }
-        RaspberryPiTurnout t1 = (RaspberryPiTurnout) InstanceManager.turnoutManagerInstance().getTurnout("PT1");
-        if (t1 != null) {
-            t1.dispose();
-        }
-        t = new RaspberryPiSensor("PS1");
+        t = new RaspberryPiSensor("PS4");
     }
 
     @Override
     @After
     public void tearDown() {
-        RaspberryPiTurnout t1 = (RaspberryPiTurnout) InstanceManager.turnoutManagerInstance().getTurnout("PT1");
-        if (t1 != null) {
-            t1.dispose();
-        }
         if (t != null) {
-            t.dispose(); // is supposed to unprovisionPin 1
+            t.dispose(); // is supposed to unprovisionPin 4
         }
         // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
         myProvider.shutdown();

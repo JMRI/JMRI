@@ -34,15 +34,6 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
         myProvider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myProvider);
 
-        // unprovisionPin if it exists to allow reuse of GPIO pin in test
-        RaspberryPiTurnout t1 = (RaspberryPiTurnout) InstanceManager.turnoutManagerInstance().getTurnout("PT2");
-        if (t1 != null) {
-            t1.dispose();
-        }
-        RaspberryPiSensor s1 = (RaspberryPiSensor) InstanceManager.sensorManagerInstance().getSensor("PS2");
-        if (s1 != null) {
-            s1.dispose();
-        }
         t = new RaspberryPiTurnout("PT2"){
             @Override
             protected void forwardCommandChangeToLayout(int s){}
@@ -51,11 +42,6 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
 
     @After
     public void tearDown() {
-        // unprovisionPin if it exists to allow reuse of GPIO pin in test
-        RaspberryPiSensor s1 = (RaspberryPiSensor) InstanceManager.sensorManagerInstance().getSensor("PS2");
-        if (s1 != null) {
-            s1.dispose();
-        }
         if (t != null) {
             t.dispose(); // is supposed to unprovisionPin 2
         }
