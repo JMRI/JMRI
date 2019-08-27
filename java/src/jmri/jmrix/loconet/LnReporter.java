@@ -18,7 +18,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Extend jmri.AbstractIdTagReporter for LocoNet layouts.
  * <p>
- * This implementation reports Transponding messages.
+ * This implementation reports Transponding messages from LocoNet-based "Reporters".
+ * 
+ * For LocoNet connections, a "Reporter" represents either a Digitrax "transponding zone" or a 
+ * Lissy "measurement zone".  The messages from these Reporters are handled by this code.
+ * 
+ * The LnReporterManager is responsible for decode of appropriate LocoNet messages
+ * and passing only those messages to the Reporter which match its Reporter address.
+ * 
  * <p>
  * Each transponding message creates a new current report. The last report is
  * always available, and is the same as the contents of the last transponding
