@@ -116,7 +116,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
                 -1, r2.getState());
 
         LocoNetMessage m2 = new LocoNetMessage(new int[] {0xe5, 0x09, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00});
-        ((LnReporter)r2).messageFromManager(m2);
+        r2.messageFromManager(m2);
         Assert.assertEquals("MessageFromManagerFindReport- check state after message 1", 
                 3, r2.getState());
         
@@ -369,7 +369,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
         
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x07, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
         a1.messageFromManager(l);
-        Assert.assertEquals("bad Lissy message check report is null", null, ((Reportable)a1.getLastReport()));
+        Assert.assertEquals("bad Lissy message check report is null", null, a1.getLastReport());
     }
 
     
