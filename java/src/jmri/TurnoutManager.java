@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Locate a Turnout object representing some specific turnout on the layout.
@@ -131,7 +131,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      *                                  be parsed
      */
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.

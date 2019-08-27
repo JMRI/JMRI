@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -155,7 +155,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     // Nullable overrides super class'es non-null requirement for name
-    public JsonNode doPut(String type, @Nullable String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPut(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case CAR:
                 if (data.path(ROAD).isMissingNode()) {

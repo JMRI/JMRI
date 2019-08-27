@@ -2,7 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.util.EnumSet;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -403,7 +403,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * 
      * @return the LocoNetSlot 
      */
-    @Nullable
+    @CheckForNull
     public LocoNetSlot getLocoNetSlot() {
         if (slot == null) return slot;
         log.debug("getLocoNetSlot is returning slot {}", slot.getSlot());

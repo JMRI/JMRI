@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -91,8 +91,8 @@ public class TrackSegment extends LayoutTrack {
     private ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
 
     public TrackSegment(@Nonnull String id,
-            @Nullable LayoutTrack c1, int t1,
-            @Nullable LayoutTrack c2, int t2,
+            @CheckForNull LayoutTrack c1, int t1,
+            @CheckForNull LayoutTrack c2, int t2,
             boolean dash, boolean main,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -128,8 +128,8 @@ public class TrackSegment extends LayoutTrack {
 
     // alternate constructor for loading layout editor panels
     public TrackSegment(@Nonnull String id,
-            @Nullable String c1Name, int t1,
-            @Nullable String c2Name, int t2,
+            @CheckForNull String c1Name, int t1,
+            @CheckForNull String c2Name, int t2,
             boolean dash, boolean main, boolean hide,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -193,7 +193,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectTrack    the track we want to connect to
      * @param connectionType  where on that track we want to be connected
      */
-    protected void setNewConnect1(@Nullable LayoutTrack connectTrack, int connectionType) {
+    protected void setNewConnect1(@CheckForNull LayoutTrack connectTrack, int connectionType) {
         connect1 = connectTrack;
         type1 = connectionType;
     }
@@ -204,7 +204,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectTrack    the track we want to connect to
      * @param connectionType  where on that track we want to be connected
      */
-    protected void setNewConnect2(@Nullable LayoutTrack connectTrack, int connectionType) {
+    protected void setNewConnect2(@CheckForNull LayoutTrack connectTrack, int connectionType) {
         connect2 = connectTrack;
         type2 = connectionType;
     }
@@ -216,7 +216,7 @@ public class TrackSegment extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@Nullable LayoutTrack oldTrack, @Nullable LayoutTrack newTrack, int newType) {
+    public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, int newType) {
         boolean result = false; // assume failure (pessimist!)
         // trying to replace old track with null?
         if (newTrack == null) {
@@ -423,7 +423,7 @@ public class TrackSegment extends LayoutTrack {
         return getConnectName(connect2, type2);
     }
 
-    private String getConnectName(@Nullable LayoutTrack layoutTrack, int type) {
+    private String getConnectName(@CheckForNull LayoutTrack layoutTrack, int type) {
         return (layoutTrack == null) ? null : layoutTrack.getName();
     }
 
@@ -448,7 +448,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
     @Override
-    public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
 
@@ -467,7 +467,7 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    public void setBezierControlPoint(@Nullable Point2D p, int index) {
+    public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
         if (index < 0) {
             index += bezierControlPoints.size();
         }
@@ -484,7 +484,7 @@ public class TrackSegment extends LayoutTrack {
      * Set up a Layout Block for a Track Segment.
      */
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
-    public void setLayoutBlock(@Nullable LayoutBlock newLayoutBlock) {
+    public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != newLayoutBlock) {
             // block has changed, if old block exists, decrement use
@@ -500,7 +500,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
-    public void setLayoutBlockByName(@Nullable String name) {
+    public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
             LayoutBlock b = layoutEditor.provideLayoutBlock(name);
             namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
@@ -772,7 +772,7 @@ public class TrackSegment extends LayoutTrack {
             @Nonnull String titleKey, @Nonnull String toolTipKey,
             @Nonnull Supplier<Integer> val,
             @Nonnull Consumer<Integer> set,
-            @Nullable Predicate<Integer> predicate) {
+            @CheckForNull Predicate<Integer> predicate) {
         int oldVal = val.get();
         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                 Bundle.getMessage(titleKey)) + oldVal));
