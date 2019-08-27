@@ -91,6 +91,154 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     }
 
     @Test
+    public void testIsTranspondingLocationReport() {
+        LocoNetMessage m = new LocoNetMessage(new int[] {0x81, 0x7e});
+        Assert.assertFalse("isTranspondingLocationReport-0x81", ((LnReporter)r).isTranspondingLocationReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingLocationReport-0xE5 0x09 0x00", ((LnReporter)r).isTranspondingLocationReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x49, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingLocationReport-0xD0 0x49", ((LnReporter)r).isTranspondingLocationReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x59, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingLocationReport-0xD0 0x59", ((LnReporter)r).isTranspondingLocationReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x69, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingLocationReport-0xD0 0x69", ((LnReporter)r).isTranspondingLocationReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x79, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingLocationReport-0xD0 0x79", ((LnReporter)r).isTranspondingLocationReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x01, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertTrue("isTranspondingLocationReport-0xD0 0x01", ((LnReporter)r).isTranspondingLocationReport(m));
+    }
+
+
+    @Test
+    public void testIsTranspondingFindReport() {
+        LocoNetMessage m = new LocoNetMessage(new int[] {0x81, 0x7e});
+        Assert.assertFalse("isTranspondingLocationReport-0x81", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertTrue("isTranspondingFindReport-0xE5 0x09 0x00", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x01", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x02", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x04", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x08", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x10", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x20", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x40", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xe5, 0x09, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xE5 0x09 0x7f", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x49, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xD0 0x49", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x59, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xD0 0x59", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x69, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xD0 0x69", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x79, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xD0 0x79", ((LnReporter)r).isTranspondingFindReport(m));
+
+        m = new LocoNetMessage(new int[] {0xD0, 0x01, 0x00, 0x00, 0x00, 0x00});
+        Assert.assertFalse("isTranspondingFindReport-0xD0 0x01", ((LnReporter)r).isTranspondingFindReport(m));
+    }
+
+    @Test
+    public void testGetLocoAddrFromTranspondingMsg() {
+        LocoNetMessage m = new LocoNetMessage(new int[] {0, 0, 0, 0, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0 0 0", 0, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 1, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 1 0 0", 128, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 2, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 2 0 0", 256, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 4, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 4 0 0", 512, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 8, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 8 0 0", 1024, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x10, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x10 0 0", 2048, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x20, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x20 0 0", 4096, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0 0", 8192, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x01, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x01 0", 8193, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x02, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x02 0", 8194, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x04, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x04 0", 8196, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x08, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x08 0", 8200, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x10, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x10 0", 8208, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x20, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x20 0", 8224, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x40, 0x40, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x40 0x40 0", 8256, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0 0", 0, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x01, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x01 0", 1, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x02, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x02 0", 2, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x04, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x04 0", 4, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x08, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x08 0", 8, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x10, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x10 0", 16, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x20, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x20 0", 32, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x40, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x40 0", 64, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+
+        m = new LocoNetMessage(new int[] {0, 0, 0, 0x7D, 0x7f, 0});
+        Assert.assertEquals("getLocoAddrFromTranspondingMsg-0 0 0 0x7D 0x7F 0", 127, ((LnReporter)r).getLocoAddrFromTranspondingMsg(m));
+    }
+    @Test
     public void testCollectionAfterMessage() {
         LnReporter lr = ((LnReporter)r);
 

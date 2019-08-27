@@ -65,8 +65,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
       */
     public void messageFromManager(LocoNetMessage l) {
         // check message type
-        if (((l.getOpCode() == LnConstants.OPC_MULTI_SENSE) && ((l.getElement(1) & 0xC0) == 0))
-                    || (l.getOpCode() == LnConstants.OPC_PEER_XFER && l.getElement(1) == 0x09 && l.getElement(2) == 00 )) {
+        if (isTranspondingLocationReport(l) || isTranspondingFindReport(l)) {
             transpondingReport(l);
         }
         if ((l.getOpCode() == LnConstants.OPC_LISSY_UPDATE) && (l.getElement(1) == 0x08)) {
@@ -77,8 +76,40 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
     }
 
     /**
+     * Check if message is a Transponding Location Report message
+     * 
+     * A Transponding Location Report message is sent by transponding hardware
+     * when a transponding mobile decoder enters or leaves a transponding zone.
+     * 
+     * @param l LocoNet message to check
+     * @return true if message is a Transponding Location Report, else false.
+     */
+    public final boolean isTranspondingLocationReport(LocoNetMessage l) {
+        return ((l.getOpCode() == LnConstants.OPC_MULTI_SENSE)
+            && ((l.getElement(1) & 0xC0) == 0)) ;
+    }
+
+    /**
+     * Check if message is a Transponding Find Report message
+     * 
+     * A Transponding Location Report message is sent by transponding hardware
+     * in response to a Transponding Find Request message when the addressed
+     * decoder is within a transponding zone and the decoder is transponding-enabled.
+     * 
+     * @param l LocoNet message to check
+     * @return true if message is a Transponding Find Report, else false.
+     */
+    public final boolean isTranspondingFindReport(LocoNetMessage l) {
+        return (l.getOpCode() == LnConstants.OPC_PEER_XFER
+            && l.getElement(1) == 0x09
+            && l.getElement(2) == 0 );
+    }
+
+    /**
      * Handle transponding message passed to us by the LnReporting Manager
      *
+     * Assumes that the LocoNet message is a valid transponding message.
+     * 
      * @param l - incoming loconetmessage
      */
     void transpondingReport(LocoNetMessage l) {
@@ -86,25 +117,14 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         int loco;
         IdTag idTag;
         if (l.getOpCode() == LnConstants.OPC_MULTI_SENSE) {
-            // get direction
-            enter = ((l.getElement(1) & 0x20) != 0);
-            // get loco address
-            if (l.getElement(3) == 0x7D) {
-                loco = l.getElement(4);
-            } else {
-                loco = l.getElement(3) * 128 + l.getElement(4);
-            }
+            enter = ((l.getElement(1) & 0x20) != 0); // get reported direction
         } else {
-            // a response a find request. Always handled as entry.
-            enter = true;
-            // get loco address
-            if (l.getElement(3) == 0x7D) {
-                loco = l.getElement(4);
-            } else {
-                loco = l.getElement(3) * 128 + l.getElement(4);
-            }
+            enter = true; // a response for a find request. Always handled as entry.
         }
+        loco = getLocoAddrFromTranspondingMsg(l); // get loco address
+
         notify(null); // set report to null to make sure listeners update
+
         idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag("" + loco);
         idTag.setProperty("entryexit", "enter");
         if (enter) {
@@ -121,6 +141,22 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         log.debug("Tag: " + idTag);
         notify(idTag);
         setState(enter ? loco : -1);
+    }
+
+    /**
+     * extract long or short address from transponding message
+     * 
+     * Assumes that the LocoNet message is a valid transponding message.
+     * 
+     * @param l LocoNet message
+     * @return loco address
+     */
+    public int getLocoAddrFromTranspondingMsg(LocoNetMessage l) {
+        if (l.getElement(3) == 0x7D) {
+            return l.getElement(4);
+        }
+        return l.getElement(3) * 128 + l.getElement(4);
+        
     }
 
     /**
@@ -144,32 +180,6 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         notify(idTag);
         setState(loco);
     }
-
-    /**
-      * {@inheritDoc}
-      */
-    @Override
-    public void notify(IdTag id) {
-        log.debug("Notify: " + this.mSystemName);
-        if (id != null) {
-            log.debug("Tag: " + id);
-            AbstractIdTagReporter r;
-            if ((r = (AbstractIdTagReporter) id.getWhereLastSeen()) != null) {
-                log.debug("Previous reporter: " + r.getSystemName());
-                if (!(r.equals(this)) && r.getCurrentReport() == id) {
-                    log.debug("Notify previous");
-                    r.notify(null);
-                } else {
-                    log.debug("Current report was: " + r.getCurrentReport());
-                }
-            }
-            id.setWhereLastSeen(this);
-            log.debug("Seen here: " + this.mSystemName);
-        }
-        setReport(id);
-        setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
-    }
-
 
     /**
      * Provide an int value for use in scripts, etc. This will be the numeric
@@ -201,7 +211,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
      * matcher.group(2) : (enter | exit | seen)
      * matcher.group(3) | (northbound | southbound) -- Lissy messages only
      * <p>
-     * NOTE: This code is dependent on the transpondingReport() and lissyReport() methods.  
+     * NOTE: This code is dependent on the transpondingReport() and lissyReport() methods.
      * If they change, the regex here must change.
      */
     private Matcher parseReport(String rep) {
@@ -243,14 +253,17 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         Matcher m = this.parseReport(rep);
         if (m.find()) {
             log.debug("Parsed direction: {}", m.group(2)); // NOI18N
-            if (m.group(2).equals("enter")) { // NOI18N
-                // LocoNet Enter message
-                return (PhysicalLocationReporter.Direction.ENTER);
-            } else if (m.group(2).equals("seen")) { // NOI18N
-                // Lissy message.  Treat them all as "entry" messages.
-                return (PhysicalLocationReporter.Direction.ENTER);
-            } else {
-                return (PhysicalLocationReporter.Direction.EXIT);
+            switch (m.group(2)) {
+                case "enter":
+                    // NOI18N
+                    // LocoNet Enter message
+                    return (PhysicalLocationReporter.Direction.ENTER);
+                case "seen":
+                    // NOI18N
+                    // Lissy message.  Treat them all as "entry" messages.
+                    return (PhysicalLocationReporter.Direction.ENTER);
+                default:
+                    return (PhysicalLocationReporter.Direction.EXIT);
             }
         } else {
             return (PhysicalLocationReporter.Direction.UNKNOWN);
