@@ -65,6 +65,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     JFileChooser fileChooser;
     // AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
 
+    private final static String prefix = "IAB";
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
         super(title, model);
@@ -188,7 +190,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText("IAB" + nextCounter()); // NOI18N
+            sysName.setText(prefix + nextCounter()); // NOI18N
         }
         userName.setText(null);
         url.setText(null);
@@ -254,11 +256,17 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     void applyPressed(ActionEvent e) {
+        String sName = sysName.getText();
+        if (!sName.startsWith(prefix)) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("AudioCreateError", prefix),
+                    Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            sysName.setText(prefix + counter);
+            return;
+        }
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText();
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -303,8 +311,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         return counter++;
     }
 
-    private static int prevCounter() {
-        return counter--;
+    private static void prevCounter() {
+        counter--;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class);

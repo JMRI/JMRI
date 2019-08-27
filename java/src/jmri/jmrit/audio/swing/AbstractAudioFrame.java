@@ -37,25 +37,23 @@ import jmri.util.JmriJFrame;
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
-    // static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle"); // changed to Bundle method
-
     AbstractAudioFrame frame = this;
 
     JPanel main = new JPanel();
-    JScrollPane scroll
+    private JScrollPane scroll
             = new JScrollPane(main,
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     AudioTableDataModel model;
 
-    static final int INT_PRECISION = (int) Math.pow(10, Audio.DECIMAL_PLACES);
+    private static final int INT_PRECISION = (int) Math.pow(10, Audio.DECIMAL_PLACES);
     static final float FLT_PRECISION = 1 / (float) INT_PRECISION;
 
     // Common UI components for Add/Edit Audio
-    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    private static final JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JTextField sysName = new JTextField(5);
-    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+    private static final JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextField userName = new JTextField(15);
 
     /**
@@ -96,16 +94,16 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         frame.getContentPane().add(p);
 
         frame.add(scroll);
-
     }
 
     /**
-     * Method to populate the Audio frame with default values
+     * Populate the Audio frame with default values.
      */
     abstract public void resetFrame();
 
     /**
-     * Method to populate the Audio frame with current values
+     * Populate the Audio frame with current values.
+     *
      * @param a Audio object to use
      */
     public void populateFrame(Audio a) {
@@ -115,8 +113,8 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
     //private static final Logger log = LoggerFactory.getLogger(AbstractAudioFrame.class);
     /**
-     * A convenience class to create a JPanel to edit a Vector3f object using 3
-     * separate JSpinner Swing objects
+     * Convenience class to create a JPanel to edit a Vector3f object using 3
+     * separate JSpinner Swing objects.
      */
     protected static class JPanelVector3f extends JPanel {
 
@@ -176,11 +174,10 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
                 unitsLabel.setText(units);
                 this.add(unitsLabel);
             }
-
         }
 
         /**
-         * Set the value of this object
+         * Set the value of this object.
          *
          * @param value value to set
          */
@@ -205,7 +202,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
     /**
      * A convenience class to create a JPanel for editing a float value using
-     * combined JSlider and JSPinner Swing objects
+     * combined JSlider and JSPinner Swing objects.
      */
     protected static class JPanelSliderf extends JPanel {
 
@@ -257,7 +254,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         }
 
         /**
-         * Set the value of this object
+         * Set the value of this object.
          *
          * @param value value to set
          */
@@ -266,7 +263,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         }
 
         /**
-         * Retrieve the current value of this object
+         * Retrieve the current value of this object.
          *
          * @return current value
          */
@@ -274,4 +271,5 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             return AbstractAudio.roundDecimal((Float) spinner.getValue());
         }
     }
+
 }
