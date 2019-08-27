@@ -154,41 +154,39 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         autoCreateInternalReporter = true;
     }
 
-    synchronized private String createSystemName(String curAddress, String prefix) throws JmriException {
+    private String createSystemName(String curAddress, String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
         if (curAddress.contains(":")) {
             // Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = curAddress.indexOf(":");
+            input = Integer.parseInt(curAddress.substring(seperator + 1));
             try {
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
-                input = Integer.parseInt(curAddress.substring(seperator + 1));
+                return getSystemPrefix() + typeLetter() + encoderAddress
+                                         + ":" + input;
             } catch (NumberFormatException ex) {
                 // system name may include hex values for CAN sensors.
                 try {
                     encoderAddress = Integer.parseInt(curAddress.substring(0, seperator), 16);
-                    input = Integer.parseInt(curAddress.substring(seperator + 1));
                     return getSystemPrefix() + typeLetter() + String.format("%4x", encoderAddress) + ":" + input;
                 } catch (NumberFormatException ex1) {
                     log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                     throw new JmriException("Hardware Address passed should be a number");
                 }
             }
-            iName = ((encoderAddress - 1) * 8) + input;
         } else {
             // Entered in using the old format
             try {
-                iName = Integer.parseInt(curAddress);
+                int iName = Integer.parseInt(curAddress);
+                return getSystemPrefix() + typeLetter() + iName;
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
-        return getSystemPrefix() + typeLetter() + iName;
     }
-
-    int iName; // must synchronize to avoid race conditions.
 
     /**
      * {@inheritDoc}
