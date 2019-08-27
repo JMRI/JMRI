@@ -156,7 +156,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             b = createNewBlock(name, null);
         } else {
-            b = createNewBlock(makeSystemName(name), null);
+            b = createNewBlock(name);
         }
         if (b == null) {
             throw new IllegalArgumentException("Could not create block \"" + name + "\"");
