@@ -148,7 +148,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
-        if (name == null || name.isEmpty()) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("Could not create block, no name supplied");
         }
         Block b = getBlock(name);
