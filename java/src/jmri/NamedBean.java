@@ -641,24 +641,13 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
         }
 
         /**
-         * Create a exception, suitable for display to the user. This
-         * takes the same arguments as
-         * {@link jmri.Bundle#getMessage(java.lang.String, java.lang.Object...)}
-         * as it uses that method to create both the localized and loggable
-         * messages.
-         * <p>
-         * Use {@link #getLocalizedMessage()} to display the message to the
-         * user, and use {@link #getMessage()} to record the message in logs.
-         * <p>
-         * <strong>Note</strong> the message must be accessible by
-         * {@link jmri.Bundle}.
+         * Create a exception.
          *
          * @param message bundle key to be translated
-         * @param subs    One or more objects to be inserted into the message
          */
-        public DuplicateSystemNameException(String message, Object... subs) {
-            this(Bundle.getMessage(Locale.ENGLISH, message, subs),
-                    Bundle.getMessage(message, subs));
+        public DuplicateSystemNameException(String message) {
+            super(message);
+            localizedMessage = super.getMessage();
         }
 
         /**
