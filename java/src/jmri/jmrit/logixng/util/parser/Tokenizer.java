@@ -196,7 +196,7 @@ public class Tokenizer {
             return TokenType.SPACE;
         }
         
-        if ((currentToken._tokenType == TokenType.STRING) && (ch != '"')) {
+        if (currentToken._tokenType == TokenType.STRING) {
             return TokenType.SAME_AS_LAST;
         }
         
