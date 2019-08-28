@@ -94,7 +94,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     public class MyTimer extends Timer {
         
         private TimerTask _task;
-        private long _delay;
+//        private long _delay;
         
         @Override
         public void schedule(TimerTask task, long delay) {
@@ -102,7 +102,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 throw new RuntimeException("Only one task at the time can be executed");
             }
             _task = task;
-            _delay = delay;
+//            _delay = delay;
         }
         
         @Override
@@ -133,7 +133,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         @Override
         public void cancel() {
             _task = null;
-            _delay = 0;
+//            _delay = 0;
         }
         
         @Override

@@ -1,0 +1,48 @@
+package jmri.jmrit.logixng.digital.actions;
+
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * Test ActionTimer
+ * 
+ * @author Daniel Bergqvist 2019
+ */
+public class ActionThrottleTest extends AbstractDigitalActionTestBase {
+
+    @Test
+    public void testCtor() {
+        ActionThrottle t = new ActionThrottle("IQDA321");
+        Assert.assertNotNull("exists",t);
+        t = new ActionThrottle("IQDA321", null);
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testToString() {
+        ActionThrottle a1 = new ActionThrottle("IQDA321", null);
+        Assert.assertEquals("strings are equal", "Throttle", a1.getShortDescription());
+        ActionThrottle a2 = new ActionThrottle("IQDA321", null);
+        Assert.assertEquals("strings are equal", "Throttle", a2.getLongDescription());
+    }
+    
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        _base = new ActionTimer("IQDA321");
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+    
+}
