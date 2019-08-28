@@ -231,7 +231,7 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
 
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
-            trafficLocking.fileReadComplete(_mCBHashMap, _mSIDIHashMap, _mSWDIHashMap);
+            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
         }
 
 /*  As a final item, if the developer wants us to lock all of the lockable

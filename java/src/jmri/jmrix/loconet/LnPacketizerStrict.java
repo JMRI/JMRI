@@ -169,7 +169,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 }
                             } else if (msg.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
                                 waitingOnLack = false;
-                            } else if ( msg.getOpCode() == 0xe6 ) { // Extended slot status
+                            } else if ( msg.getOpCode() == LnConstants.OPC_ALM_READ ) { // Extended slot status
                                 waitingOnLack = false;
                             }
                             // check for CS busy

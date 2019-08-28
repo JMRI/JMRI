@@ -2,10 +2,10 @@ package jmri.web;
 
 import cucumber.api.java8.En;
 import java.io.File;
+import java.util.LinkedHashSet;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.ConfigureManager;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +14,9 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Sets.newLinkedHashSet;
 
 /**
  * Cucumber step definitions for Web Server Acceptance tests.
@@ -50,7 +53,12 @@ public class WebServerAcceptanceSteps implements En {
 
         Then("^a page with title (.*) is returned$", (String pageTitle) -> {
             waitLoad();
-            Assert.assertEquals("Page Title", pageTitle, webDriver.getTitle());
+            assertThat(webDriver.getTitle()).isEqualTo(pageTitle);
+        });
+
+        Then("^either (.*) or (.*) is returned as the title$", (String pageTitle,String formatedPageTitle) -> {
+            waitLoad();
+            assertThat(webDriver.getTitle()).isIn(newLinkedHashSet(pageTitle,formatedPageTitle));
         });
 
 
@@ -82,11 +90,11 @@ public class WebServerAcceptanceSteps implements En {
            for(i =0; i< rows.size(); i++){
                List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
                if(cols.size()>0 && cols.get(0).getText().equals(item)){
-                  Assert.assertEquals("Expected State",state, cols.get(cols.size()-1).getText());
+                  assertThat(cols.get(cols.size()-1).getText()).isEqualTo(state);
                   break;
                }
            }
-           Assert.assertNotEquals("item found",i,rows.size());
+           assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
         });
 
     }

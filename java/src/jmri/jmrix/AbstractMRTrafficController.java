@@ -92,7 +92,6 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 @enduml
  */
 
-
 abstract public class AbstractMRTrafficController {
 
     private Thread shutdownHook = null; // retain shutdown hook for 

@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -1105,7 +1105,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      *
      * @return an Element or null if the requested element does not exist
      */
-    @Nullable
+    @CheckForNull
     private Element readElement(@Nonnull String elementName, @Nonnull String namespace) {
         org.w3c.dom.Element element = ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).getConfigurationFragment(elementName, namespace, false);
         if (element != null) {
