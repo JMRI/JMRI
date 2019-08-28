@@ -686,7 +686,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
             super(logging);
             localizedMessage = display;
         }
-        
+
         @Override
         public String getLocalizedMessage() {
             return localizedMessage;
