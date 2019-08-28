@@ -159,7 +159,6 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
                     this.getSystemName(), this.getAssignedBufferName());
             return false;
         }
-
     }
 
     @Override
@@ -226,14 +225,11 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         } else {
             initialised = init();
         }
-
     }
 
     @Override
     protected void doPlay() {
-        if (log.isDebugEnabled()) {
-            log.debug("Play JavaSoundAudioSource ({})", this.getSystemName());
-        }
+        log.debug("Play JavaSoundAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             doRewind();
             doResume();
@@ -242,9 +238,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doStop() {
-        if (log.isDebugEnabled()) {
-            log.debug("Stop JavaSoundAudioSource ({})", this.getSystemName());
-        }
+        log.debug("Stop JavaSoundAudioSource ({})", this.getSystemName());
         if (initialised && isBound()) {
             doPause();
             doRewind();
@@ -332,7 +326,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     }
 
     /**
-     * Calculates the panning of this Source between fully left (-1.0f) and
+     * Calculate the panning of this Source between fully left (-1.0f) and
      * fully right (1.0f)
      * <p>
      * Calculated internally from the relative positions of this source and the
@@ -521,7 +515,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
 
         /**
-         * Sets the gain of this AudioChannel
+         * Set the gain of this AudioChannel.
          *
          * @param gain the gain (0.0f to 1.0f)
          */
@@ -546,7 +540,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
 
         /**
-         * Sets the pan of this AudioChannel
+         * Set the pan of this AudioChannel.
          *
          * @param pan the pan (-1.0f to 1.0f)
          */
@@ -558,7 +552,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
 
         /**
-         * Sets the pitch of this AudioChannel
+         * Set the pitch of this AudioChannel.
          * <p>
          * Calculated as a ratio of the initial sample rate
          *
@@ -572,4 +566,5 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
 
     }
+
 }
