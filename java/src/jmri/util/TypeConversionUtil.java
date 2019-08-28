@@ -90,6 +90,33 @@ public final class TypeConversionUtil {
     }
     
     
+    private static boolean convertStringToBoolean(@Nonnull String str, boolean do_i18n) {
+        // try to parse the string as a number
+        try {
+            double number;
+            if (do_i18n) {
+                number = IntlUtilities.doubleValue(str);
+            } else {
+                number = Double.parseDouble(str);
+            }
+//                System.err.format("The string: '%s', result: %1.4f%n", str, (float)number);
+            return ! ((-0.5 < number) && (number < 0.5));
+        } catch (NumberFormatException | ParseException ex) {
+            log.debug("The string '{}' cannot be parsed as a number", str);
+        }
+
+//            System.err.format("The string: %s, %s%n", str, value.getClass().getName());
+        String patternString = "^0(\\.0+)?$";
+        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        if (matcher.matches()) {
+//                System.err.format("The string: '%s', result: %b%n", str, false);
+            return false;
+        }
+//            System.err.format("The string: '%s', result: %b%n", str, !str.isEmpty());
+        return !str.isEmpty();
+    }
+    
     /**
      * Convert a value to a boolean.
      * <P>
@@ -136,32 +163,24 @@ public final class TypeConversionUtil {
         } else if (value instanceof Boolean) {
             return (Boolean)value;
         } else {
-            String str = value.toString();
-            
-            // try to parse the string as a number
-            try {
-                double number;
-                if (do_i18n) {
-                    number = IntlUtilities.doubleValue(str);
-                } else {
-                    number = Double.parseDouble(str);
-                }
-//                System.err.format("The string: '%s', result: %1.4f%n", str, (float)number);
-                return ! ((-0.5 < number) && (number < 0.5));
-            } catch (NumberFormatException | ParseException ex) {
-                log.debug("The string '{}' cannot be parsed as a number", str);
-            }
-            
-//            System.err.format("The string: %s, %s%n", str, value.getClass().getName());
-            String patternString = "^0(\\.0+)?$";
-            Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(str);
-            if (matcher.matches()) {
-//                System.err.format("The string: '%s', result: %b%n", str, false);
-                return false;
-            }
-//            System.err.format("The string: '%s', result: %b%n", str, !str.isEmpty());
-            return !str.isEmpty();
+            return convertStringToBoolean(value.toString(), do_i18n);
+        }
+    }
+    
+    private static long convertStringToLong(@Nonnull String str) {
+        String patternString = "(\\-?\\d+)";
+        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        // Only look at the beginning of the string
+        if (matcher.lookingAt()) {
+            String theNumber = matcher.group(1);
+            long number = Long.parseLong(theNumber);
+//            System.err.format("Number: %1.5f%n", number);
+            log.debug("the string {} is converted to the number {}", str, number);
+            return number;
+        } else {
+            log.warn("the string \"{}\" cannot be converted to a number", str);
+            return 0;
         }
     }
     
@@ -198,21 +217,24 @@ public final class TypeConversionUtil {
         } else if (value instanceof Boolean) {
             return ((Boolean)value) ? 1 : 0;
         } else {
-            String str = value.toString();
-            String patternString = "(\\-?\\d+)";
-            Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(str);
-            // Only look at the beginning of the string
-            if (matcher.lookingAt()) {
-                String theNumber = matcher.group(1);
-                long number = Long.parseLong(theNumber);
-//                System.err.format("Number: %1.5f%n", number);
-                log.debug("the string {} is converted to the number {}", str, number);
-                return number;
-            } else {
-                log.warn("the string \"{}\" cannot be converted to a number", str);
-                return 0;
-            }
+            return convertStringToLong(value.toString());
+        }
+    }
+    
+    private static double convertStringToDouble(@Nonnull String str, boolean do_i18n) {
+        String patternString = "(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
+        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(str);
+        // Only look at the beginning of the string
+        if (matcher.lookingAt()) {
+            String theNumber = matcher.group(1);
+            double number = Double.parseDouble(theNumber);
+//            System.err.format("Number: %1.5f%n", number);
+            log.debug("the string {} is converted to the number {}", str, number);
+            return number;
+        } else {
+            log.warn("the string \"{}\" cannot be converted to a number", str);
+            return 0.0d;
         }
     }
     
@@ -261,21 +283,7 @@ public final class TypeConversionUtil {
                     log.debug("The string '{}' cannot be parsed as a number", value);
                 }
             }
-            String str = value.toString();
-            String patternString = "(\\-?\\d+(\\.\\d+)?(e\\-?\\d+)?)";
-            Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(str);
-            // Only look at the beginning of the string
-            if (matcher.lookingAt()) {
-                String theNumber = matcher.group(1);
-                double number = Double.parseDouble(theNumber);
-//                System.err.format("Number: %1.5f%n", number);
-                log.debug("the string {} is converted to the number {}", str, number);
-                return number;
-            } else {
-                log.warn("the string \"{}\" cannot be converted to a number", str);
-                return 0.0d;
-            }
+            return convertStringToDouble(value.toString(), do_i18n);
         }
     }
     
