@@ -183,16 +183,18 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     public Reporter getBySystemName(String sName){
        Reporter r = super.getBySystemName(sName);
        if(r == null && sName.contains(":")) {
-          // normalize the hex characters in the system name to upper case.
-          String curAddress = sName.substring(getSystemPrefix().length() +1);
-          try {
-             return super.getBySystemName(createSystemName(curAddress));
-          } catch (JmriException je) {
-             // format isn't correct, but r already equals null, so just return
-             // that.
-          }
+         r = getBySystemNameWithNormalizedHexModuleAddress(sName);
        }
        return r;
+    }
+
+    private Reporter getBySystemNameWithNormalizedHexModuleAddress(String sName) {
+        try {
+            String curAddress = sName.substring(getSystemPrefix().length() + 1);
+            return super.getBySystemName(createSystemName(curAddress));
+        } catch (JmriException je) {
+            return null;
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);
