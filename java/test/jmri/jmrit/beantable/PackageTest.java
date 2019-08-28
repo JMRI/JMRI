@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         BlockTableActionTest.class,
         LightTableWindowTest.class,
         LogixTableActionTest.class,
+        LogixNGTableActionTest.class,
         LRouteTableActionTest.class,
         OBlockTableActionTest.class,
         RouteTableActionTest.class,
