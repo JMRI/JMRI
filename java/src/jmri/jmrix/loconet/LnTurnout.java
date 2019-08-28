@@ -239,37 +239,36 @@ public class LnTurnout extends AbstractTurnout {
     }
 
     private void handleReceivedOpSwAckReq(LocoNetMessage l) {
-        int sw1 = l.getElement(1);
         int sw2 = l.getElement(2);
-        if (myAddress(sw1, sw2)) {
+        if (myAddress(l.getElement(1), sw2)) {
 
             log.debug("SW_REQ received with valid address");
             //sort out states
             int state;
-            if ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0) {
-                state = CLOSED;
-            } else {
-                state = THROWN;
-            }
+            state = ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0) ? CLOSED : THROWN;
             state = adjustStateForInversion(state);
 
             newCommandedState(state);
-            boolean on = ((sw2 & LnConstants.OPC_SW_REQ_OUT) != 0);
-            switch (getFeedbackMode()) {
-                case MONITORING:
-                    if ((!on) || (!_useOffSwReqAsConfirmation)) {
-                        newKnownState(state);
-                    }
-                    break;
-                case DIRECT:
-                    newKnownState(state);
-                    break;
-                default:
-                    break;                    
-            }
+            computeKnownStateOpSwAckReq(sw2, state);
         }
     }
 
+    private void computeKnownStateOpSwAckReq(int sw2, int state) {
+        boolean on = ((sw2 & LnConstants.OPC_SW_REQ_OUT) != 0);
+        switch (getFeedbackMode()) {
+            case MONITORING:
+                if ((!on) || (!_useOffSwReqAsConfirmation)) {
+                    newKnownState(state);
+                }
+                break;
+            case DIRECT:
+                newKnownState(state);
+                break;
+            default:
+                break;                    
+        }
+
+    }
     private void setKnownStateFromOutputStateClosedReport() {
         newCommandedState(CLOSED);
         if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
