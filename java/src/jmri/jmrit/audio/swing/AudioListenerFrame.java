@@ -136,9 +136,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
     private void applyPressed(ActionEvent e) {
         String sName = sysName.getText();
-        if (!sName.startsWith(prefix)) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("AudioCreateError", prefix),
-                    Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+        if (entryError(sName, prefix, "$")) { // no index for AudioListener
             return;
         }
         String user = userName.getText();

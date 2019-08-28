@@ -353,10 +353,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     private void applyPressed(ActionEvent e) {
         String sName = sysName.getText();
-        if (!sName.startsWith(prefix)) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("AudioCreateError", prefix),
-                    Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            sysName.setText(prefix + counter);
+        if (entryError(sName, prefix, "" + counter)) {
             return;
         }
         String user = userName.getText();

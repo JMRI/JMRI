@@ -2,16 +2,7 @@ package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
 import java.util.Hashtable;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
@@ -109,6 +100,24 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     public void populateFrame(Audio a) {
         sysName.setText(a.getSystemName());
         userName.setText(a.getUserName());
+    }
+
+    /**
+     * Check System Name user input.
+     *
+     * @param entry string retrieved from text field
+     * @param counter index of all similar (Source/Buffer) items
+     * @param prefix (AudioListener/Source/Buffer) system name prefix string to compare entry against
+     * @return true if prefix doesn't match
+     */
+    protected boolean entryError(String entry, String prefix, String counter) {
+        if (!entry.startsWith(prefix)) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("AudioCreateError", prefix),
+                    Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            sysName.setText(prefix + counter);
+            return true;
+        }
+        return false;
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AbstractAudioFrame.class);
