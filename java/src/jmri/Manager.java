@@ -648,7 +648,14 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public static final int IDTAGS = SIGNALMASTLOGICS + 10;
     public static final int LOGIXS = IDTAGS + 10;
     public static final int CONDITIONALS = LOGIXS + 10;
-    public static final int AUDIO = LOGIXS + 10;
+    public static final int LOGIXNGS = CONDITIONALS + 10;               // LogixNG
+    public static final int DIGITAL_EXPRESSIONS = LOGIXNGS + 10;        // LogixNG Expression
+    public static final int DIGITAL_ACTIONS = DIGITAL_EXPRESSIONS + 10; // LogixNG Action
+    public static final int ANALOG_EXPRESSIONS = DIGITAL_ACTIONS + 10;  // LogixNG AnalogExpression
+    public static final int ANALOG_ACTIONS = ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
+    public static final int STRING_EXPRESSIONS = ANALOG_ACTIONS + 10;   // LogixNG StringExpression
+    public static final int STRING_ACTIONS = STRING_EXPRESSIONS + 10;   // LogixNG StringAction
+    public static final int AUDIO = STRING_ACTIONS + 10;
     public static final int TIMEBASE = AUDIO + 10;
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;

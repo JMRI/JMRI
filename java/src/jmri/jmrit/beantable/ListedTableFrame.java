@@ -95,6 +95,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
             addTable("jmri.jmrit.beantable.IdTagTableTabAction", Bundle.getMessage("MenuItemIdTagTable"), false);
             addTable("jmri.jmrit.beantable.RailComTableAction", Bundle.getMessage("MenuItemRailComTable"), true);
+            addTable("jmri.jmrit.beantable.LogixNGTableAction", Bundle.getMessage("MenuItemLogixNGTable"), true);
             ListedTableFrame.setInit(true);
         }
     }

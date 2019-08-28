@@ -66,6 +66,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRailComTable"), "jmri.jmrit.beantable.RailComTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGTable"), "jmri.jmrit.beantable.LogixNGTableAction"));
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
@@ -133,6 +134,10 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // add start web server menu item (immediate action)
         add(new jmri.web.server.WebServerAction());
+
+        add(new JSeparator());
+        // LogixNG menu
+        add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
     }
 
 }
