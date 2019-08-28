@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.RailComManager;
 import jmri.JmriException;
 import jmri.Reporter;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,7 +68,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                 register(r);
                 return r;
             } else {
-                log.warn("Invalid Reporter name: {} " + systemName);
+                log.warn("Invalid Reporter name: {} ", systemName);
                 throw new IllegalArgumentException("Invalid Reporter name: " + systemName);
             }
         }
@@ -77,11 +76,6 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         Reporter r = new Z21Reporter(systemName, userName, getMemo());
         register(r);
         return r;
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     // the Z21 Listener interface
@@ -98,12 +92,13 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         // reporter.
         if (autoCreateInternalReporter && msg.isRailComDataChangedMessage()) {
             log.debug("Received RailComDatachanged message");
-            Z21Reporter r = (Z21Reporter) getBySystemName(getSystemPrefix() + typeLetter() + 1); // there is only one built in reporter.
+            String systemName = getSystemPrefix() + typeLetter() + 1;
+            Z21Reporter r = (Z21Reporter) getBySystemName(systemName); // there is only one built in reporter.
             if (null == r) {
-                log.debug("Creating reporter {}", getSystemPrefix() + typeLetter() + 1);
+                log.debug("Creating reporter {}",systemName);
                 // need to create a new one, and send the message on 
                 // to the newly created object.
-                ((Z21Reporter) provideReporter(getSystemPrefix() + typeLetter() + 1)).reply(msg);
+                ((Z21Reporter) provideReporter(systemName)).reply(msg);
             }
             // LAN_CAN_DETECTOR message are related to CAN reporters.
         } else if (msg.isCanDetectorMessage()) {
@@ -154,13 +149,13 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         autoCreateInternalReporter = true;
     }
 
-    private String createSystemName(String curAddress, String prefix) throws JmriException {
+    private String createSystemName(String curAddress) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
         if (curAddress.contains(":")) {
             // Address format passed is in the form of encoderAddress:input or T:turnout address
-            int seperator = curAddress.indexOf(":");
+            int seperator = curAddress.indexOf(':');
             input = Integer.parseInt(curAddress.substring(seperator + 1));
             try {
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
@@ -198,7 +193,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
           // normalize the hex characters in the system name to upper case.
           String curAddress = sName.substring(getSystemPrefix().length() +1);
           try {
-             return super.getBySystemName(createSystemName(curAddress, getSystemPrefix()));
+             return super.getBySystemName(createSystemName(curAddress));
           } catch (JmriException je) {
              // format isn't correct, but s already equals null, so just return
              // that.
