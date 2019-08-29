@@ -31,8 +31,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     @Override
     @Nonnull
     public String getTagID() {
-        // TODO: Convert this to allow for >1 char system name length
-        // Or, is this really necessary as it will always be 'I'nternal???
+        // this will always be 'I'nternal, so assume prefix is 2 characters.
         return this.mSystemName.substring(2);
     }
 
@@ -82,5 +81,4 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
         return Bundle.getMessage("BeanNameReporter");
     }
 
-//    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class);
 }
