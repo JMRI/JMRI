@@ -24,7 +24,7 @@ public class DefaultSignalMastManagerXml
 
     /**
      * Default implementation for storing the contents of a
-     * DefaultSignalMastManager
+     * DefaultSignalMastManager.
      *
      * @param o Object to store
      * @return Element containing the complete info
@@ -71,7 +71,7 @@ public class DefaultSignalMastManagerXml
     }
 
     /**
-     * Create a DefaultSignalMastManager
+     * Create a DefaultSignalMastManager.
      *
      * @param shared Top level Element to unpack.
      * @param perNode Top level Element that is per-node.
@@ -102,7 +102,7 @@ public class DefaultSignalMastManagerXml
                 }
             } else {
                 String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via " + adapterName);
+                log.debug("load via {}", adapterName);
                 try {
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
@@ -120,7 +120,7 @@ public class DefaultSignalMastManagerXml
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via " + adapterName);
+                log.debug("load via {}", adapterName);
                 try {
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
@@ -138,7 +138,7 @@ public class DefaultSignalMastManagerXml
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via " + adapterName);
+                log.debug("load via {}", adapterName);
                 try {
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
@@ -156,7 +156,7 @@ public class DefaultSignalMastManagerXml
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via " + adapterName);
+                log.debug("load via {}", adapterName);
                 try {
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
@@ -174,7 +174,7 @@ public class DefaultSignalMastManagerXml
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via " + adapterName);
+                log.debug("load via {}", adapterName);
                 try {
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
@@ -192,7 +192,7 @@ public class DefaultSignalMastManagerXml
             for (int i = 0; i < list.size(); i++) {
                 Element e = list.get(i);
                 String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via " + adapterName);
+                log.debug("load via {}", adapterName);
                 try {
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
@@ -214,15 +214,13 @@ public class DefaultSignalMastManagerXml
                 String slaveName = e.getChild("slaveMast").getText();
                 SignalMast masterMast = m.getSignalMast(masterName);
                 if (masterMast == null) {
-                    log.error("Unable to add mast repeater {}:{}. Master mast must exist." +
-                            masterName + " : " + slaveName);
+                    log.error("Unable to add mast repeater {}: {}. Master mast must exist.", masterName, slaveName);
                     result = false;
                     continue;
                 }
                 SignalMast slaveMast = m.getSignalMast(slaveName);
                 if (slaveMast == null) {
-                    log.error("Unable to add mast repeater {}:{}. Slave mast must exist." +
-                            masterName + " : " + slaveName);
+                    log.error("Unable to add mast repeater {}: {}. Slave mast must exist.", masterName, slaveName);
                     result = false;
                     continue;
                 }
@@ -231,7 +229,7 @@ public class DefaultSignalMastManagerXml
                 try {
                     smr = m.provideRepeater(masterMast, slaveMast);
                 } catch (JmriException e1) {
-                    log.error("Unable to add mast repeater {}:{}. {}", masterName, slaveName, e1);
+                    log.error("Unable to add mast repeater {}: {}. {}", masterName, slaveName, e1);
                     result = false;
                     continue;
                 }
@@ -262,4 +260,5 @@ public class DefaultSignalMastManagerXml
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class);
+
 }

@@ -66,11 +66,13 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
                     log.error("System name null during store, skipped");
                     continue;
                 }
-                log.debug("system name is " + sname);
+                log.debug("system name is {}", sname);
                 SignalHead sub = sm.getBySystemName(sname);
-                Element e = ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    signalheads.addContent(e);
+                if (sub != null) {
+                    Element e = ConfigXmlManager.elementFromObject(sub);
+                    if (e != null) {
+                        signalheads.addContent(e);
+                    }
                 }
             }
         }
@@ -126,13 +128,13 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         // load the contents
         List<Element> items = shared.getChildren();
         if (log.isDebugEnabled()) {
-            log.debug("Found " + items.size() + " signal heads");
+            log.debug("Found {} signal heads", items.size());
         }
         for (int i = 0; i < items.size(); i++) {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via " + adapterName);
+            log.debug("load via {}", adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it

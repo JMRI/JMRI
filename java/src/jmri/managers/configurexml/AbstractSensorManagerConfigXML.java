@@ -27,7 +27,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
     }
 
     /**
-     * Default implementation for storing the contents of a SensorManager
+     * Default implementation for storing the contents of a SensorManager.
      *
      * @param o Object to store, of type SensorManager
      * @return Element containing the complete info
@@ -58,9 +58,11 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         // store the sensors
         while (iter.hasNext()) {
             String sname = iter.next();
-            log.debug("system name is " + sname);
+            log.debug("system name is {}", sname);
             Sensor s = tm.getBySystemName(sname);
-
+            if (s == null) {
+                continue;
+            }
             String inverted = s.getInverted() ? "true" : "false";
 
             Element elem = new Element("sensor")
@@ -70,7 +72,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             // store common part
             storeCommon(s, elem);
 
-            log.debug("store sensor " + sname);
+            log.debug("store sensor {}", sname);
             if (s.getUseDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
             } else {
@@ -87,7 +89,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             }
 
             sensors.addContent(elem);
-
         }
         return sensors;
     }
@@ -125,7 +126,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + sensorList.size() + " sensors");
+            log.debug("Found {} sensors", sensorList.size());
         }
         SensorManager tm = InstanceManager.sensorManagerInstance();
         tm.setDataListenerMute(true);
@@ -152,7 +153,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             } catch (NumberFormatException ex) {
                 log.error(ex.toString());
             }
-
         }
 
         for (int i = 0; i < sensorList.size(); i++) {
@@ -175,9 +175,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 }
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("create sensor: (" + sysName + ")");
-            }
+            log.debug("create sensor: ({})", sysName);
 
             Sensor s;
 
@@ -237,4 +235,5 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class);
+
 }

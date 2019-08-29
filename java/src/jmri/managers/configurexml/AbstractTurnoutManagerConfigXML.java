@@ -34,7 +34,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
     /**
      * Default implementation for storing the contents of a TurnoutManager and
-     * associated TurnoutOperation's
+     * associated TurnoutOperations.
      *
      * @param o Object to store, of type TurnoutManager
      * @return Element containing the complete info
@@ -65,11 +65,14 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             // store the turnouts
             while (iter.hasNext()) {
                 String sname = iter.next();
-                log.debug("system name is " + sname);
+                log.debug("system name is {}", sname);
                 Turnout t = tm.getBySystemName(sname);
+                if (t == null) {
+                    continue;
+                }
                 Element elem = new Element("turnout");
                 elem.addContent(new Element("systemName").addContent(sname));
-                log.debug("store turnout " + sname);
+                log.debug("store turnout {}", sname);
 
                 storeCommon(t, elem);
 
@@ -147,7 +150,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
                 // add element
                 turnouts.addContent(elem);
-
             }
         }
         return turnouts;
@@ -187,7 +189,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         }
         List<Element> turnoutList = shared.getChildren("turnout");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + turnoutList.size() + " turnouts");
+            log.debug("Found {} turnouts", turnoutList.size());
         }
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         tm.setDataListenerMute(true);
@@ -218,7 +220,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             Element elem = turnoutList.get(i);
             String sysName = getSystemName(elem);
             if (sysName == null) {
-                log.error("unexpected null in systemName " + elem);
+                log.error("unexpected null in systemName {}", elem);
                 result = false;
                 break;
             }
@@ -226,9 +228,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
             checkNameNormalization(sysName, userName, tm);
 
-            if (log.isDebugEnabled()) {
-                log.debug("create turnout: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
-            }
+            log.debug("create turnout: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Turnout t = tm.getBySystemName(sysName);
             if (t == null) {
                 t = tm.newTurnout(sysName, userName);
@@ -263,7 +263,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 try {
                     t.setFeedbackMode(a.getValue());
                 } catch (IllegalArgumentException e) {
-                    log.error("Can not set feedback mode: '" + a.getValue() + "' for turnout: '" + sysName + "' user name: '" + (userName == null ? "" : userName) + "'");
+                    log.error("Can not set feedback mode: '{}' for turnout: '{}' user name: '{}'",
+                            a.getValue(), sysName, (userName == null ? "" : userName));
                     result = false;
                 }
             }
@@ -308,7 +309,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 if ((iNum == 1) || (iNum == 2)) {
                     t.setNumberOutputBits(iNum);
                 } else {
-                    log.warn("illegal number of output bits for control of turnout " + sysName);
+                    log.warn("illegal number of output bits for control of turnout {}", sysName);
                     t.setNumberOutputBits(1);
                     result = false;
                 }
@@ -323,7 +324,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 if (iType >= 0) {
                     t.setControlType(iType);
                 } else {
-                    log.warn("illegal control type for control of turnout " + sysName);
+                    log.warn("illegal control type for control of turnout {}", sysName);
                     t.setControlType(0);
                     result = false;
                 }
@@ -393,4 +394,5 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManagerConfigXML.class);
+
 }

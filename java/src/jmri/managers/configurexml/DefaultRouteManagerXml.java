@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for configuring RouteManagers
+ * Provides the functionality for configuring RouteManagers.
  *
  * @author Dave Duchamp Copyright (c) 2004
  * @author Daniel Boudreau Copyright (c) 2007
@@ -53,6 +53,9 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
                 log.debug("system name is {}", sname);
                 Route r = tm.getBySystemName(sname);
+                if (r == null) {
+                    continue;
+                }
                 String cTurnout = r.getControlTurnout();
                 int addedDelay = r.getRouteCommandDelay();
                 boolean routeLocked = r.getLocked();
@@ -61,9 +64,11 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 Element elem = new Element("route");
                 elem.addContent(new Element("systemName").addContent(sname));
 
-                // As a work-around for backward compatibility, store systemName and username as attribute.
+                // As a work-around for backward compatibility, store systemName and userName as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                if (r.getUserName()!=null && !r.getUserName().equals("")) elem.setAttribute("userName", r.getUserName());
+                if (r.getUserName() != null && !r.getUserName().equals("")) {
+                    elem.setAttribute("userName", r.getUserName());
+                }
 
                 // store common parts
                 storeCommon(r, elem);
@@ -298,16 +303,21 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             if (cTurnout != null) {
                 r.setControlTurnout(cTurnout);
                 if (cTurnoutState != null) {
-                    if (cTurnoutState.equals("THROWN")) {
-                        r.setControlTurnoutState(Route.ONTHROWN);
-                    } else if (cTurnoutState.equals("CHANGE")) {
-                        r.setControlTurnoutState(Route.ONCHANGE);
-                    } else if (cTurnoutState.equals("VETOCLOSED")) {
-                        r.setControlTurnoutState(Route.VETOCLOSED);
-                    } else if (cTurnoutState.equals("VETOTHROWN")) {
-                        r.setControlTurnoutState(Route.VETOTHROWN);
-                    } else {
-                        r.setControlTurnoutState(Route.ONCLOSED);
+                    switch (cTurnoutState) {
+                        case "THROWN":
+                            r.setControlTurnoutState(Route.ONTHROWN);
+                            break;
+                        case "CHANGE":
+                            r.setControlTurnoutState(Route.ONCHANGE);
+                            break;
+                        case "VETOCLOSED":
+                            r.setControlTurnoutState(Route.VETOCLOSED);
+                            break;
+                        case "VETOTHROWN":
+                            r.setControlTurnoutState(Route.VETOTHROWN);
+                            break;
+                        default:
+                            r.setControlTurnoutState(Route.ONCLOSED);
                     }
                 } else {
                     log.error("cTurnoutState was null!");
@@ -321,7 +331,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 r.setLocked(true);
             }
 
-            //add lock control turout if there is one
+            // add lock control turout if there is one
             if (cLockTurnout != null) {
                 r.setLockControlTurnout(cLockTurnout);
                 if (cLockTurnoutState != null) {
@@ -458,18 +468,24 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     int mode = Route.ONACTIVE;  // default mode
                     if (routeSensorList.get(k).getAttribute("mode") != null) {
                         String sm = routeSensorList.get(k).getAttribute("mode").getValue();
-                        if (sm.equals("onActive")) {
-                            mode = Route.ONACTIVE;
-                        } else if (sm.equals("onInactive")) {
-                            mode = Route.ONINACTIVE;
-                        } else if (sm.equals("onChange")) {
-                            mode = Route.ONCHANGE;
-                        } else if (sm.equals("vetoActive")) {
-                            mode = Route.VETOACTIVE;
-                        } else if (sm.equals("vetoInactive")) {
-                            mode = Route.VETOINACTIVE;
-                        } else {
-                            log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
+                        switch (sm) {
+                            case "onActive":
+                                mode = Route.ONACTIVE;
+                                break;
+                            case "onInactive":
+                                mode = Route.ONINACTIVE;
+                                break;
+                            case "onChange":
+                                mode = Route.ONCHANGE;
+                                break;
+                            case "vetoActive":
+                                mode = Route.VETOACTIVE;
+                                break;
+                            case "vetoInactive":
+                                mode = Route.VETOINACTIVE;
+                                break;
+                            default:
+                                log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
                         }
                     }
 
@@ -478,7 +494,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                             .getAttribute("systemName").getValue(), mode);
                 }
             }
-
             // and start it working
             r.activateRoute();
         }

@@ -53,14 +53,17 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                     log.error("System name null during store");
                     break;
                 }
-                log.debug("system name is " + sname);
+                log.debug("system name is {}", sname);
                 Reporter r = tm.getBySystemName(sname);
+                if (r == null) {
+                    continue;
+                }
                 Element elem = new Element("reporter");
                 elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
                 storeCommon(r, elem);
 
-                log.debug("store Reporter " + sname);
+                log.debug("store Reporter {}", sname);
                 reporters.addContent(elem);
 
             }
@@ -89,7 +92,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         boolean result = true;
         List<Element> reporterList = reporters.getChildren("reporter");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + reporterList.size() + " reporters");
+            log.debug("Found {} reporters", reporterList.size());
         }
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
         tm.setDataListenerMute(true);
@@ -98,7 +101,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
 
             String sysName = getSystemName(reporterList.get(i));
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + reporterList.get(i) + " " + reporterList.get(i).getAttributes());
+                log.warn("unexpected null in systemName {} {}", reporterList.get(i), reporterList.get(i).getAttributes());
                 result = false;
                 break;
             }
@@ -106,7 +109,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             String userName = getUserName(reporterList.get(i));
 
             if (log.isDebugEnabled()) {
-                log.debug("create Reporter: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
+                log.debug("create Reporter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             }
             Reporter r = tm.newReporter(sysName, userName);
             loadCommon(r, reporterList.get(i));
@@ -121,4 +124,5 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class);
+
 }
