@@ -28,7 +28,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
     }
 
     /**
-     * Default implementation for storing the contents of a MemoryManager
+     * Default implementation for storing the contents of a MemoryManager.
      *
      * @param o Object to store, of type MemoryManager
      * @return Element containing the complete info
@@ -57,6 +57,9 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 }
                 log.debug("system name is " + sname);
                 Memory m = tm.getBySystemName(sname);
+                if (m == null) {
+                    continue;
+                }
                 Element elem = new Element("memory");
                 elem.addContent(new Element("systemName").addContent(sname));
 
@@ -76,9 +79,8 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                     }
                 }
 
-                log.debug("store Memory " + sname);
+                log.debug("store Memory {}", sname);
                 memories.addContent(elem);
-
             }
         }
         return memories;
@@ -120,7 +122,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
     public void loadMemories(Element memories) {
         List<Element> memoryList = memories.getChildren("memory");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + memoryList.size() + " Memory objects");
+            log.debug("Found {} Memory objects", memoryList.size());
         }
         MemoryManager tm = InstanceManager.memoryManagerInstance();
 
@@ -128,7 +130,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             String sysName = getSystemName(memoryList.get(i));
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + (memoryList.get(i)));
+                log.warn("unexpected null in systemName {}", (memoryList.get(i)));
                 break;
             }
 
@@ -136,9 +138,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             checkNameNormalization(sysName, userName, tm);
 
-            if (log.isDebugEnabled()) {
-                log.debug("create Memory: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
-            }
+            log.debug("create Memory: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Memory m = tm.newMemory(sysName, userName);
             if (memoryList.get(i).getAttribute("value") != null) {
                 loadValue(memoryList.get(i), m);
@@ -153,7 +153,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         return InstanceManager.memoryManagerInstance().getXMLOrder();
     }
 
-    void loadValue(Element memory, Memory m) {
+    private void loadValue(Element memory, Memory m) {
         String value = memory.getAttribute("value").getValue();
         if (memory.getAttribute("valueClass") != null) {
             String adapter = memory.getAttribute("valueClass").getValue();
@@ -167,4 +167,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class);
+
 }
