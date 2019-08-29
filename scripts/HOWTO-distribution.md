@@ -153,6 +153,12 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
+- Check for Nullable annotations, which should be @CheckForNull instead
+```
+        grep -r javax.annotation.Nullable java/src java/test
+        grep -r javax.@Nullable java/src java/test
+```
+
 - Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires code has been built; should only mention jmri/util/TimerUtil.class):
 ```
         grep -rl 'java.util.Timer\x01' target/

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -33,8 +33,8 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    // using @Nullable to override @Nonnull in super class
-    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale, int id) throws JsonException {
+    // using @CheckForNull to override @Nonnull in super class
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
         return doGet(type, timebase, timebase.getTime(), locale, id);
     }
@@ -48,8 +48,8 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    // using @Nullable to override @Nonnull in super class
-    public JsonNode doPost(String type, @Nullable String name, JsonNode data, Locale locale, int id) throws JsonException {
+    // using @CheckForNull to override @Nonnull in super class
+    public JsonNode doPost(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
         try {
             if (data.path(TIME).isTextual()) {

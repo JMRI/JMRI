@@ -48,21 +48,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     Socket socket;
 
-    public Vector<String> getPortNames() {
-        log.error("Unexpected call to getPortNames");
-        return null;
-    }
-
-    public String openPort(String portName, String appName) {
-        log.error("Unexpected call to openPort");
-        return null;
-    }
-
-    public String[] validBaudRates() {
-        log.error("Unexpected call to validBaudRates");
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

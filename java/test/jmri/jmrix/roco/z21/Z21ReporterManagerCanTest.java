@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -30,6 +31,36 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
        JUnitUtil.waitFor( ()-> { return zr.getReporter("ZRABCD:1") != null; },"wait for reporter creation");
        Assert.assertNotNull("Reporter Created via message",zr.getReporter("ZRABCD:1"));
    }
+
+    @Test
+    @Override
+    public void testProvideName() {
+        // create
+        Reporter t = l.provide("ZRABCD:1");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName("ZRABCD:1"));
+    }
+
+    @Test
+    public void testDefaultSystemNameLowerCase() {
+        // create
+        Reporter t = l.provideReporter("ZRabcd:1");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZRabcd:1"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZRABCD:1"));
+    }
+
+    @Test
+    public void testDefaultSystemMixedDigitx() {
+        // create
+        Reporter t = l.provideReporter("ZRa1c3:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZRa1c3:5"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZRA1C3:5"));
+    }
 
    @Before
     @Override

@@ -12,7 +12,7 @@ import java.util.jar.JarFile;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -99,7 +99,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public File getFile(@Nullable Profile profile, @Nonnull String path) throws FileNotFoundException {
+    static public File getFile(@CheckForNull Profile profile, @Nonnull String path) throws FileNotFoundException {
         return FileUtilSupport.getDefault().getFile(profile, path);
     }
 
@@ -264,7 +264,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getExternalFilename(@Nullable Profile profile, @Nonnull String pName) {
+    static public String getExternalFilename(@CheckForNull Profile profile, @Nonnull String pName) {
         return FileUtilSupport.getDefault().getExternalFilename(profile, pName);
     }
 
@@ -290,7 +290,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getAbsoluteFilename(@Nullable Profile profile, @Nonnull String path) {
+    static public String getAbsoluteFilename(@CheckForNull Profile profile, @Nonnull String path) {
         return FileUtilSupport.getDefault().getAbsoluteFilename(profile, path);
     }
 
@@ -401,7 +401,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nullable Profile profile, @Nonnull File file) {
+    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, file);
     }
 
@@ -432,7 +432,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nullable Profile profile, @Nonnull File file, boolean ignoreUserFilesPath,
+    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull File file, boolean ignoreUserFilesPath,
             boolean ignoreProfilePath) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, file, ignoreUserFilesPath, ignoreProfilePath);
     }
@@ -450,7 +450,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nullable Profile profile, @Nonnull String filename) {
+    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, filename);
     }
 
@@ -481,7 +481,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getPortableFilename(@Nullable Profile profile, @Nonnull String filename,
+    static public String getPortableFilename(@CheckForNull Profile profile, @Nonnull String filename,
             boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         return FileUtilSupport.getDefault().getPortableFilename(profile, filename, ignoreUserFilesPath, ignoreProfilePath);
     }
@@ -531,7 +531,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    static public String getUserFilesPath(@Nullable Profile profile) {
+    static public String getUserFilesPath(@CheckForNull Profile profile) {
         return FileUtilSupport.getDefault().getUserFilesPath(profile);
     }
 
@@ -542,7 +542,7 @@ public final class FileUtil {
      * @param profile The profile to use as a base
      * @param path    The path to the user's files directory
      */
-    static public void setUserFilesPath(@Nullable Profile profile, @Nonnull String path) {
+    static public void setUserFilesPath(@CheckForNull Profile profile, @Nonnull String path) {
         FileUtilSupport.getDefault().setUserFilesPath(profile, path);
     }
 
@@ -997,7 +997,7 @@ public final class FileUtil {
      */
     @Nonnull
     @CheckReturnValue
-    public static String getScriptsPath(@Nullable Profile profile) {
+    public static String getScriptsPath(@CheckForNull Profile profile) {
         return FileUtilSupport.getDefault().getScriptsPath(profile);
     }
 
@@ -1007,7 +1007,7 @@ public final class FileUtil {
      * @param profile the profile to set the path for
      * @param path    the scriptsPath to set
      */
-    public static void setScriptsPath(@Nullable Profile profile, @CheckForNull String path) {
+    public static void setScriptsPath(@CheckForNull Profile profile, @CheckForNull String path) {
         FileUtilSupport.getDefault().setScriptsPath(profile, path);
     }
 

@@ -22,6 +22,9 @@ public class EcosDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
 
         EcosTrafficController tc = new EcosInterfaceScaffold();
         tm = new EcosDccThrottleManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc));
