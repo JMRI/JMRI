@@ -29,7 +29,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
     }
 
     /**
-     * Default implementation for storing the contents of a LightManager
+     * Default implementation for storing the contents of a LightManager.
      *
      * @param o Object to store, of type LightManager
      * @return Element containing the complete info
@@ -56,14 +56,16 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                     log.error("System name null during store");
                     break;
                 }
-                log.debug("system name is " + sname);
+                log.debug("system name is {}", sname);
                 Light lgt = tm.getBySystemName(sname);
                 Element elem = new Element("light");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts
                 storeCommon(lgt, elem);
-
+                if (lgt == null) {
+                    continue;
+                }
                 // write variable intensity attributes
                 elem.setAttribute("minIntensity", "" + lgt.getMinIntensity());
                 elem.setAttribute("maxIntensity", "" + lgt.getMaxIntensity());
@@ -129,7 +131,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         boolean result = true;
         List<Element> lightList = lights.getChildren("light");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + lightList.size() + " lights");
+            log.debug("Found {} lights", lightList.size());
         }
         LightManager tm = InstanceManager.lightManagerInstance();
         tm.setDataListenerMute(true);
@@ -138,7 +140,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
             String sysName = getSystemName(lightList.get(i));
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + lightList.get(i) + " " + lightList.get(i).getAttributes());
+                log.warn("unexpected null in systemName {} {}", lightList.get(i), lightList.get(i).getAttributes());
                 result = false;
                 break;
             }
@@ -147,16 +149,13 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
             checkNameNormalization(sysName, userName, tm);
 
-            if (log.isDebugEnabled()) {
-                log.debug("create light: (" + sysName + ")("
-                        + (userName == null ? "<null>" : userName) + ")");
-            }
+            log.debug("create light: ({})({})", sysName, (userName == null ? "<null>" : userName));
             
             Light lgt = null;
             try {
                 lgt = tm.newLight(sysName, userName);
             } catch (IllegalArgumentException e) {
-                log.error("failed to create Light: " + sysName);
+                log.error("failed to create Light: {}", sysName);
                 return false;
             }
 
@@ -178,7 +177,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             if (lightList.get(i).getAttribute("controlType") != null) {
                 // this is a legacy Light - create a LightControl from the input
                 String temString = lightList.get(i).getAttribute("controlType").getValue();
-                int type = Light.NO_CONTROL;
+                int type;
                 try {
                     type = Integer.parseInt(temString);
                 } catch (NumberFormatException e) {
@@ -252,7 +251,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                     type = Integer.parseInt(tem);
                     lc.setControlType(type);
                 } catch (NumberFormatException e) {
-                    log.error("error when converting control type while loading light " + sysName);
+                    log.error("error when converting control type while loading light {}", sysName);
                     noErrors = false;
                 }
                 if (type == Light.SENSOR_CONTROL) {
@@ -261,7 +260,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                         lc.setControlSensorSense(Integer.parseInt(elem.
                                 getAttribute("sensorSense").getValue()));
                     } catch (NumberFormatException e) {
-                        log.error("error when converting control sensor sense while loading light " + sysName);
+                        log.error("error when converting control sensor sense while loading light {}", sysName);
                         noErrors = false;
                     }
                 } else if (type == Light.FAST_CLOCK_CONTROL) {
@@ -280,7 +279,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                                 getAttribute("fastClockOffMin").getValue());
                         lc.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
                     } catch (NumberFormatException e) {
-                        log.error("error when converting fast clock items while loading light " + sysName);
+                        log.error("error when converting fast clock items while loading light {}", sysName);
                         noErrors = false;
                     }
                 } else if (type == Light.TURNOUT_STATUS_CONTROL) {
@@ -289,7 +288,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                         lc.setControlTurnoutState(Integer.parseInt(elem.
                                 getAttribute("turnoutState").getValue()));
                     } catch (NumberFormatException e) {
-                        log.error("error when converting turnout state while loading light " + sysName);
+                        log.error("error when converting turnout state while loading light {}", sysName);
                         noErrors = false;
                     }
                 } else if (type == Light.TIMED_ON_CONTROL) {
@@ -298,7 +297,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                         lc.setTimedOnDuration(Integer.parseInt(elem.
                                 getAttribute("duration").getValue()));
                     } catch (NumberFormatException e) {
-                        log.error("error when converting timed sensor items while loading light " + sysName);
+                        log.error("error when converting timed sensor items while loading light {}", sysName);
                         noErrors = false;
                     }
                 } else if (type == Light.TWO_SENSOR_CONTROL) {
@@ -308,7 +307,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                         lc.setControlSensorSense(Integer.parseInt(elem.
                                 getAttribute("sensorSense").getValue()));
                     } catch (NumberFormatException e) {
-                        log.error("error when converting control sensor2 sense while loading light " + sysName);
+                        log.error("error when converting control sensor2 sense while loading light {}", sysName);
                         noErrors = false;
                     }
                 }
@@ -331,4 +330,5 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class);
+
 }
