@@ -39,7 +39,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             java.util.Iterator<String> iter
                     = tm.getSystemNameList().iterator();
 
-            // don't return an element if there are not routes to include
+            // don't return an element if there are no routes to include
             if (!iter.hasNext()) {
                 return null;
             }
@@ -140,7 +140,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
                 // add route control Sensors, if any
                 index = 0;
-                //rSensor = null;	// previous while forces rSensor to null
                 while ((rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
                             .setAttribute("systemName", rSensor);
@@ -407,33 +406,27 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
             }
             // load output sensors if there are any - new format
-            routeTurnoutList = routeList.get(i).getChildren("routeOutputSensor");
-            if (routeTurnoutList.size() > 0) {
-                // This route has turnouts
-                for (int k = 0; k < routeTurnoutList.size(); k++) {
-                    if (routeTurnoutList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName {} {}", routeTurnoutList.get(k),
-                                routeTurnoutList.get(k).getAttributes());
-                        break;
-                    }
-                    String tSysName = routeTurnoutList.get(k)
-                            .getAttribute("systemName").getValue();
-                    String rState = routeTurnoutList.get(k)
-                            .getAttribute("state").getValue();
-                    int tSetState = Sensor.INACTIVE;
-                    if (rState.equals("ACTIVE")) {
-                        tSetState = Sensor.ACTIVE;
-                    } else if (rState.equals("TOGGLE")) {
-                        tSetState = Route.TOGGLE;
-                    }
-                    // If the Turnout has already been added to the route and is the same as that loaded, 
-                    // we will not re add the turnout.                        
-                    if (r.isOutputSensorIncluded(tSysName)) {
-                        break;
-                    }
-                    // Add turnout to route
-                    r.addOutputSensor(tSysName, tSetState);
+            List<Element> routeSensorList = routeList.get(i).getChildren("routeOutputSensor");
+            for (Element sen : routeSensorList) { // this route has output sensors
+                if (sen.getAttribute("systemName") == null) {
+                    log.warn("unexpected null in systemName {} {}", sen, sen.getAttributes());
+                    break;
                 }
+                String tSysName = sen.getAttribute("systemName").getValue();
+                String rState = sen.getAttribute("state").getValue();
+                int tSetState = Sensor.INACTIVE;
+                if (rState.equals("ACTIVE")) {
+                    tSetState = Sensor.ACTIVE;
+                } else if (rState.equals("TOGGLE")) {
+                    tSetState = Route.TOGGLE;
+                }
+                // If the Turnout has already been added to the route and is the same as that loaded,
+                // we will not re add the turnout.
+                if (r.isOutputSensorIncluded(tSysName)) {
+                    break;
+                }
+                // Add turnout to route
+                r.addOutputSensor(tSysName, tSetState);
             }
             // load sound, script files if present
             Element fileElement = routeList.get(i).getChild("routeSoundFile");
@@ -456,43 +449,38 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
 
             // load route control sensors, if there are any
-            List<Element> routeSensorList = routeList.get(i).getChildren("routeSensor");
-            if (routeSensorList.size() > 0) {
-                // This route has sensors
-                for (int k = 0; k < routeSensorList.size(); k++) {
-                    if (routeSensorList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName {} {}", routeSensorList.get(k),
-                                routeSensorList.get(k).getAttributes());
-                        break;
-                    }
-                    int mode = Route.ONACTIVE;  // default mode
-                    if (routeSensorList.get(k).getAttribute("mode") != null) {
-                        String sm = routeSensorList.get(k).getAttribute("mode").getValue();
-                        switch (sm) {
-                            case "onActive":
-                                mode = Route.ONACTIVE;
-                                break;
-                            case "onInactive":
-                                mode = Route.ONINACTIVE;
-                                break;
-                            case "onChange":
-                                mode = Route.ONCHANGE;
-                                break;
-                            case "vetoActive":
-                                mode = Route.VETOACTIVE;
-                                break;
-                            case "vetoInactive":
-                                mode = Route.VETOINACTIVE;
-                                break;
-                            default:
-                                log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
-                        }
-                    }
-
-                    // Add Sensor to route
-                    r.addSensorToRoute(routeSensorList.get(k)
-                            .getAttribute("systemName").getValue(), mode);
+            routeSensorList = routeList.get(i).getChildren("routeSensor");
+            for (Element sen : routeSensorList) { // this route has sensors
+                if (sen.getAttribute("systemName") == null) {
+                    log.warn("unexpected null in systemName {} {}", sen, sen.getAttributes());
+                    break;
                 }
+                int mode = Route.ONACTIVE;  // default mode
+                if (sen.getAttribute("mode") == null) {
+                    break;
+                }
+                String sm = sen.getAttribute("mode").getValue();
+                switch (sm) {
+                    case "onActive":
+                        mode = Route.ONACTIVE;
+                        break;
+                    case "onInactive":
+                        mode = Route.ONINACTIVE;
+                        break;
+                    case "onChange":
+                        mode = Route.ONCHANGE;
+                        break;
+                    case "vetoActive":
+                        mode = Route.VETOACTIVE;
+                        break;
+                    case "vetoInactive":
+                        mode = Route.VETOINACTIVE;
+                        break;
+                    default:
+                        log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
+                }
+                // Add Sensor to route
+                r.addSensorToRoute(sen.getAttribute("systemName").getValue(), mode);
             }
             // and start it working
             r.activateRoute();

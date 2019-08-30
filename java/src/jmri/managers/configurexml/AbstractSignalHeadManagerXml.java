@@ -51,10 +51,9 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         setStoreElementClass(signalheads);
         SignalHeadManager sm = (SignalHeadManager) o;
         if (sm != null) {
-            java.util.Iterator<String> iter
-                    = sm.getSystemNameList().iterator();
+            java.util.Iterator<String> iter = sm.getSystemNameList().iterator();
 
-            // don't return an element if there are not signalheads to include
+            // don't return an element if there are no signalheads to include
             if (!iter.hasNext()) {
                 return null;
             }
@@ -130,9 +129,8 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         if (log.isDebugEnabled()) {
             log.debug("Found {} signal heads", items.size());
         }
-        for (int i = 0; i < items.size(); i++) {
+        for (Element item: items) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via {}", adapterName);
             try {

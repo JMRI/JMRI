@@ -97,22 +97,19 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
         tm.setDataListenerMute(true);
 
-        for (int i = 0; i < reporterList.size(); i++) {
-
-            String sysName = getSystemName(reporterList.get(i));
+        for (Element e: reporterList) {
+            String sysName = getSystemName(e);
             if (sysName == null) {
-                log.warn("unexpected null in systemName {} {}", reporterList.get(i), reporterList.get(i).getAttributes());
+                log.warn("unexpected null in systemName {} {}", e, e.getAttributes());
                 result = false;
                 break;
             }
 
-            String userName = getUserName(reporterList.get(i));
+            String userName = getUserName(e);
 
-            if (log.isDebugEnabled()) {
-                log.debug("create Reporter: ({})({})", sysName, (userName == null ? "<null>" : userName));
-            }
+            log.debug("create Reporter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Reporter r = tm.newReporter(sysName, userName);
-            loadCommon(r, reporterList.get(i));
+            loadCommon(r, e);
         }
         tm.setDataListenerMute(false);
         return result;

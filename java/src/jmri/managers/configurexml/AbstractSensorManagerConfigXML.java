@@ -51,7 +51,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
         java.util.Iterator<String> iter = tm.getSystemNameAddedOrderList().iterator();
 
-        // don't return an element if there are not sensors to include
+        // don't return an element if there are no sensors to include
         if (!iter.hasNext()) {
             return null;
         }
@@ -63,7 +63,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             if (s == null) {
                 continue;
             }
-            String inverted = s.getInverted() ? "true" : "false";
+            String inverted = (s.getInverted() ? "true" : "false");
 
             Element elem = new Element("sensor")
                     .setAttribute("inverted", inverted);
