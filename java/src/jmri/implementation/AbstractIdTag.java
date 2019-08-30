@@ -1,11 +1,12 @@
 package jmri.implementation;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import jmri.IdTag;
-import jmri.Reportable;
-import jmri.Reporter;
+
+import jmri.*;
+import jmri.managers.ProxyIdTagManager;
 
 /**
  * Abstract implementation of {@link jmri.IdTag} containing code common to all
@@ -19,6 +20,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     protected Reporter whereLastSeen = null;
 
     protected Date whenLastSeen = null;
+    protected String tagId = null;
 
     public AbstractIdTag(String systemName) {
         super(systemName);
@@ -31,8 +33,22 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     @Override
     @Nonnull
     public String getTagID() {
-        // this will always be 'I'nternal, so assume prefix is 2 characters.
-        return this.mSystemName.substring(2);
+        if(tagId==null) {
+            try {
+                List<Manager<IdTag>> managerList = InstanceManager.getDefault(ProxyIdTagManager.class).getManagerList();
+                for (Manager<IdTag> m : managerList) {
+                    if (m.getBeanBySystemName(mSystemName) != null) {
+                        tagId = mSystemName.substring(m.getSystemNamePrefix().length() + 1);
+                        break;
+                    }
+                }
+            } catch(NullPointerException npe){
+                // if there isn't a ProxyIDTag Manager, assume the first D in the
+                //  system name is the type letter.
+                tagId=mSystemName.substring(mSystemName.indexOf('D')+1);
+            }
+        }
+        return tagId;
     }
 
     @Override
