@@ -129,7 +129,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         if (log.isDebugEnabled()) {
             log.debug("Found {} signal heads", items.size());
         }
-        for (Element item: items) {
+        for (Element item : items) {
             // get the class, hence the adapter object to do loading
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via {}", adapterName);

@@ -83,7 +83,7 @@ public class DefaultSignalMastManagerXml
         List<Element> list = shared.getChildren("signalmast");
         boolean result = true;
 
-        for (Element e: list) {
+        for (Element e : list) {
             if (e.getAttribute("class") == null) {
                 SignalMast m;
                 String sys = getSystemName(e);

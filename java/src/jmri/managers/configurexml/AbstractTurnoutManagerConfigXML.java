@@ -52,7 +52,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
 
-            // don't return an element if there are not turnouts to include
+            // don't return an element if there are no turnouts to include
             if (!iter.hasNext()) {
                 return null;
             }

@@ -63,7 +63,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             java.util.Iterator<String> iter
                     = am.getSystemNameAddedOrderList().iterator();
 
-            // don't return an element if there are not any audios to include
+            // don't return an element if there are no any audios to include
             if (!iter.hasNext()) {
                 return null;
             }

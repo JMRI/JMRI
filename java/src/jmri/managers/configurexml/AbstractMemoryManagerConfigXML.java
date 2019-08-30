@@ -43,7 +43,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
 
-            // don't return an element if there are not memories to include
+            // don't return an element if there are no memories to include
             if (!iter.hasNext()) {
                 return null;
             }
@@ -126,25 +126,25 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         }
         MemoryManager tm = InstanceManager.memoryManagerInstance();
 
-        for (int i = 0; i < memoryList.size(); i++) {
+        for (Element el : memoryList) {
 
-            String sysName = getSystemName(memoryList.get(i));
+            String sysName = getSystemName(el);
             if (sysName == null) {
-                log.warn("unexpected null in systemName {}", (memoryList.get(i)));
+                log.warn("unexpected null in systemName {}", (el));
                 break;
             }
 
-            String userName = getUserName(memoryList.get(i));
+            String userName = getUserName(el);
 
             checkNameNormalization(sysName, userName, tm);
 
             log.debug("create Memory: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Memory m = tm.newMemory(sysName, userName);
-            if (memoryList.get(i).getAttribute("value") != null) {
-                loadValue(memoryList.get(i), m);
+            if (el.getAttribute("value") != null) {
+                loadValue(el, m);
             }
             // load common parts
-            loadCommon(m, memoryList.get(i));
+            loadCommon(m, el);
         }
     }
 

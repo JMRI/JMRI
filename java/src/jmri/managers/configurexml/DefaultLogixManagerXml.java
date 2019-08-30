@@ -36,7 +36,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             java.util.Iterator<String> iter
                     = tm.getSystemNameList().iterator();
 
-            // don't return an element if there are not Logix to include
+            // don't return an element if there are no Logix to include
             if (!iter.hasNext()) {
                 return null;
             }

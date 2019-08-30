@@ -43,7 +43,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         if (tm != null) {
             java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
 
-            // don't return an element if there are not conditionals to include
+            // don't return an element if there are no conditionals to include
             if (!iter.hasNext()) {
                 return null;
             }

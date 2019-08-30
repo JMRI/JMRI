@@ -41,7 +41,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
 
-            // don't return an element if there are not reporters to include
+            // don't return an element if there are no reporters to include
             if (!iter.hasNext()) {
                 return null;
             }
@@ -97,7 +97,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
         tm.setDataListenerMute(true);
 
-        for (Element e: reporterList) {
+        for (Element e : reporterList) {
             String sysName = getSystemName(e);
             if (sysName == null) {
                 log.warn("unexpected null in systemName {} {}", e, e.getAttributes());
