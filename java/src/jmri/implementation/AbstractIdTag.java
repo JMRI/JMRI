@@ -20,7 +20,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     protected Reporter whereLastSeen = null;
 
     protected Date whenLastSeen = null;
-    protected String tagId = null;
+    protected String prefix = null;
 
     public AbstractIdTag(String systemName) {
         super(systemName);
@@ -33,22 +33,27 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag, 
     @Override
     @Nonnull
     public String getTagID() {
-        if(tagId==null) {
+        if(prefix == null) {
             try {
-                List<Manager<IdTag>> managerList = InstanceManager.getDefault(ProxyIdTagManager.class).getManagerList();
-                for (Manager<IdTag> m : managerList) {
-                    if (m.getBeanBySystemName(mSystemName) != null) {
-                        tagId = mSystemName.substring(m.getSystemNamePrefix().length() + 1);
-                        break;
-                    }
-                }
-            } catch(NullPointerException npe){
+                prefix = findPrefix();
+            } catch ( NullPointerException | BadSystemNameException e) {
                 // if there isn't a ProxyIDTag Manager, assume the first D in the
                 //  system name is the type letter.
-                tagId=mSystemName.substring(mSystemName.indexOf('D')+1);
+                return mSystemName.substring(mSystemName.indexOf('D') + 1);
+
             }
         }
-        return tagId;
+        return mSystemName.substring(prefix.length()+1);
+    }
+
+    private String findPrefix() {
+        List<Manager<IdTag>> managerList = InstanceManager.getDefault(ProxyIdTagManager.class).getManagerList();
+        for (Manager<IdTag> m : managerList) {
+            if (m.getBeanBySystemName(mSystemName) != null) {
+                return m.getSystemPrefix();
+            }
+        }
+        throw new BadSystemNameException();
     }
 
     @Override
