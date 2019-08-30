@@ -317,7 +317,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMinIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MinIntensity", oldValue, intensity);
+            firePropertyChange("MinIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
