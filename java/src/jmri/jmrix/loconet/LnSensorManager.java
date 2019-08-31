@@ -137,9 +137,10 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             
-            // NOTE: This format is deprecated on 30Aug2019 account the format cannot be used under
-            // normal circumstances.  It is retained for the normal deprecation period in order
-            // to support any atypical usage patterns.
+            // NOTE: This format is deprecated in JMRI 4.17.4 on account the 
+            // "byte:bit" format cannot be used under normal JMRI usage 
+            // circumstances.  It is retained for the normal deprecation period 
+            // in order to support any atypical usage patterns.
             
             int board = 0;
             int channel = 0;
@@ -167,7 +168,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             } else {
                 iName = 16 * board + channel - 16;
             }
-            jmri.util.Log4JUtil.warnOnce(log, "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '{}' format is deprecated and will be removed in a future JMRI release.  Use the curAddress format '{}' instead.",
+            jmri.util.Log4JUtil.warnOnce(log, 
+                    "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '{}' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '{}' instead.",
                     curAddress, iName);
         } else {
             // Entered in using the old format
