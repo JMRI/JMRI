@@ -1,10 +1,5 @@
 package jmri.jmrix.configurexml;
 
-import org.junit.*;
-import org.jdom2.Element;
-import jmri.jmrix.ConnectionConfig;
-import javax.swing.JPanel;
-
 /**
  * Base tests for Simulator ConnectionConfigXml objects.
  * The AbstractSimulatorConnectionConfig is currently based on serial objects. 

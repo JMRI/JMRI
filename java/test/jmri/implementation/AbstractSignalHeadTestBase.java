@@ -1,6 +1,5 @@
 package jmri.implementation;
 
-import java.util.Arrays;
 import jmri.SignalHead;
 import org.junit.Assert;
 import org.junit.Test;

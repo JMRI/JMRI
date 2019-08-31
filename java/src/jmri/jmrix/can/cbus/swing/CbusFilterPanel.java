@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.swing;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import javax.swing.BorderFactory;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JComponent;

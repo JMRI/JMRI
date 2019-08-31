@@ -10,7 +10,6 @@ import javax.swing.WindowConstants;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusFilter;
-import jmri.jmrix.can.cbus.swing.CbusFilterPanel;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.util.JmriJFrame;

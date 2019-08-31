@@ -17,7 +17,6 @@ import jmri.util.NamedBeanComparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -27,7 +26,6 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
-import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

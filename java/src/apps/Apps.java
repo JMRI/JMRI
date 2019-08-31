@@ -1,7 +1,6 @@
 package apps;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
-import apps.gui3.tabbedpreferences.TabbedPreferencesFrame;
 import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -11,7 +10,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
@@ -55,7 +53,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
-import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;

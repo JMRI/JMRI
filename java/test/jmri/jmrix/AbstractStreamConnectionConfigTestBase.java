@@ -2,7 +2,6 @@ package jmri.jmrix;
 
 import jmri.util.junit.annotations.*;
 import org.junit.*;
-import javax.swing.JPanel;
 
 /**
  * Base tests for StreamConnectionConfig objects.

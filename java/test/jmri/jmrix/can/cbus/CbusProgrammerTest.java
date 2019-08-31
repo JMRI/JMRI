@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TestTrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.*;

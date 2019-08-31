@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.Manager.NameValidity;
-import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;

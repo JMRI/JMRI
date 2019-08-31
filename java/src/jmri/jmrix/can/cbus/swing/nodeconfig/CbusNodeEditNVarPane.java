@@ -2,9 +2,7 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;

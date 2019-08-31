@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

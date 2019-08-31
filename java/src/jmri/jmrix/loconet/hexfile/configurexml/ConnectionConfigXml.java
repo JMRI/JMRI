@@ -62,7 +62,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         getInstance();
         // hex file has no options in the XML
 
-        GraphicsEnvironment.getLocalGraphicsEnvironment();
         // create GUI, unless running in headless mode
         if (!GraphicsEnvironment.isHeadless()) {
             f = new jmri.jmrix.loconet.hexfile.HexFileFrame();
