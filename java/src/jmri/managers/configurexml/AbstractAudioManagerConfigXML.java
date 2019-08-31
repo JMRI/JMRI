@@ -54,49 +54,40 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element audio = new Element("audio");
         setStoreElementClass(audio);
         AudioManager am = (AudioManager) o;
         if (am != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = am.getSystemNameAddedOrderList().iterator();
-
-            // don't return an element if there are no any audios to include
-            if (!iter.hasNext()) {
+            // don't return an element if there are no audios to include
+            if (am.getSystemNameAddedOrderList().isEmpty()) {
                 return null;
             }
-
             // also, don't store if we don't have any Sources or Buffers
             // (no need to store the automatically created Listener object by itself)
             if (am.getSystemNameList(Audio.SOURCE).isEmpty()
                     && am.getSystemNameList(Audio.BUFFER).isEmpty()) {
                 return null;
             }
-
             // finally, don't store if the only Sources and Buffers are for the
             // virtual sound decoder (VSD)
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            List<String> t = am.getSystemNameAddedOrderList();
-            for (String sname : t) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Check if " + sname + " is a VSD object");
-                }
-                if (sname.length() >= 8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
+            List<String> alist = am.getSystemNameAddedOrderList();
+            for (String sName : alist) {
+                log.debug("Check if {} is a VSD object", sName);
+                if (sName.length() >= 8 && sName.substring(3, 8).equalsIgnoreCase("$VSD:")) {
                     log.debug("...yes");
                     vsdObjectCount++;
                 }
             }
 
             if (log.isDebugEnabled()) {
-                log.debug("Found " + vsdObjectCount + " VSD objects of "
-                        + am.getSystemNameList(Audio.SOURCE).size()
-                        + am.getSystemNameList(Audio.BUFFER).size()
-                        + " objects");
+                log.debug("Found {} VSD objects of {} objects", vsdObjectCount,
+                        am.getSystemNameList(Audio.SOURCE).size() + am.getSystemNameList(Audio.BUFFER).size()
+                );
             }
 
             // check if the total number of Sources and Buffers is equal to
@@ -112,24 +103,21 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     am.getActiveAudioFactory().isDistanceAttenuated() ? "yes" : "no");
 
             // store the audios
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
+            for (String sName : alist) {
+                if (sName == null) {
                     log.error("System name null during store");
                     continue;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("system name is " + sname);
+                    log.debug("system name is {}", sName);
                 }
 
-                if (sname.length() >= 8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Skipping storage of VSD object " + sname);
-                    }
+                if (sName.length() >= 8 && sName.substring(3, 8).equalsIgnoreCase("$VSD:")) {
+                    log.debug("Skipping storage of VSD object {}", sName);
                     continue;
                 }
 
-                Audio a = am.getBySystemName(sname);
+                Audio a = am.getBySystemName(sName);
 
                 // Transient objects for current element and any children
                 Element e = null;
@@ -139,8 +127,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 if (type == Audio.BUFFER) {
                     AudioBuffer ab = (AudioBuffer) a;
                     e = new Element("audiobuffer")
-                            .setAttribute("systemName", sname);
-                    e.addContent(new Element("systemName").addContent(sname));
+                            .setAttribute("systemName", sName);
+                    e.addContent(new Element("systemName").addContent(sName));
 
                     // store common part
                     storeCommon(ab, e);
@@ -162,8 +150,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 } else if (type == Audio.LISTENER) {
                     AudioListener al = (AudioListener) a;
                     e = new Element("audiolistener")
-                            .setAttribute("systemName", sname);
-                    e.addContent(new Element("systemName").addContent(sname));
+                            .setAttribute("systemName", sName);
+                    e.addContent(new Element("systemName").addContent(sName));
 
                     // store common part
                     storeCommon(al, e);
@@ -200,8 +188,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 } else if (type == Audio.SOURCE) {
                     AudioSource as = (AudioSource) a;
                     e = new Element("audiosource")
-                            .setAttribute("systemName", sname);
-                    e.addContent(new Element("systemName").addContent(sname));
+                            .setAttribute("systemName", sName);
+                    e.addContent(new Element("systemName").addContent(sName));
 
                     // store common part
                     storeCommon(as, e);
@@ -256,7 +244,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     e.addContent(ce);
                 }
 
-                log.debug("store Audio " + sname);
+                log.debug("store Audio {}", sName);
                 audio.addContent(e);
 
             }
@@ -295,7 +283,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         // Load buffers first
         List<Element> audioList = audio.getChildren("audiobuffer");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + audioList.size() + " Audio Buffer objects");
+            log.debug("Found {} Audio Buffer objects", audioList.size());
         }
 
         for (int i = 0; i < audioList.size(); i++) {
@@ -303,14 +291,14 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
             String sysName = getSystemName(e);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + (e) + " " + (e).getAttributes());
+                log.warn("unexpected null in systemName {} {}", (e), (e).getAttributes());
                 break;
             }
 
             String userName = getUserName(e);
 
             if (log.isDebugEnabled()) {
-                log.debug("create Audio: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
+                log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
             }
             try {
                 AudioBuffer ab = (AudioBuffer) am.newAudio(sysName, userName);
@@ -341,7 +329,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 }
 
             } catch (AudioException ex) {
-                log.error("Error loading AudioBuffer (" + sysName + "): " + ex);
+                log.error("Error loading AudioBuffer ({}): ", sysName, ex);
             }
         }
         loadedObjects += audioList.size();
@@ -349,7 +337,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         // Now load sources
         audioList = audio.getChildren("audiosource");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + audioList.size() + " Audio Source objects");
+            log.debug("Found {} Audio Source objects", audioList.size());
         }
 
         for (int i = 0; i < audioList.size(); i++) {
@@ -357,14 +345,14 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
             String sysName = getSystemName(e);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + (e) + " " + (e).getAttributes());
+                log.warn("unexpected null in systemName {} {}", (e), (e).getAttributes());
                 break;
             }
 
             String userName = getUserName(e);
 
             if (log.isDebugEnabled()) {
-                log.debug("create Audio: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
+                log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
             }
             try {
                 AudioSource as = (AudioSource) am.newAudio(sysName, userName);
@@ -443,7 +431,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 }
 
             } catch (AudioException ex) {
-                log.error("Error loading AudioSource (" + sysName + "): " + ex);
+                log.error("Error loading AudioSource ({}): ", sysName, ex);
             }
         }
         loadedObjects += audioList.size();
@@ -452,7 +440,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         if (loadedObjects > 0) {
             audioList = audio.getChildren("audiolistener");
             if (log.isDebugEnabled()) {
-                log.debug("Found " + audioList.size() + " Audio Listener objects");
+                log.debug("Found {} Audio Listener objects", audioList.size());
             }
 
             for (int i = 0; i < audioList.size(); i++) {
@@ -460,14 +448,14 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 String sysName = getSystemName(e);
                 if (sysName == null) {
-                    log.warn("unexpected null in systemName " + (e) + " " + (e).getAttributes());
+                    log.warn("unexpected null in systemName {} {}", (e), (e).getAttributes());
                     break;
                 }
 
                 String userName = getUserName(e);
 
                 if (log.isDebugEnabled()) {
-                    log.debug("create Audio: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
+                    log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
                 }
                 try {
                     AudioListener al = (AudioListener) am.newAudio(sysName, userName);
@@ -516,7 +504,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     }
 
                 } catch (AudioException ex) {
-                    log.error("Error loading AudioListener (" + sysName + "): " + ex);
+                    log.error("Error loading AudioListener ({}): ", sysName, ex);
                 }
             }
             Attribute a;
@@ -532,4 +520,5 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class);
+
 }

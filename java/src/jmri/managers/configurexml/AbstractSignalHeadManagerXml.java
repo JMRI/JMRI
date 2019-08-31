@@ -49,24 +49,20 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
     public Element store(Object o) {
         Element signalheads = new Element("signalheads");
         setStoreElementClass(signalheads);
-        SignalHeadManager sm = (SignalHeadManager) o;
-        if (sm != null) {
-            java.util.Iterator<String> iter = sm.getSystemNameList().iterator();
-
+        SignalHeadManager shm = (SignalHeadManager) o;
+        if (shm != null) {
             // don't return an element if there are no signalheads to include
-            if (!iter.hasNext()) {
+            if (shm.getSystemNameList().isEmpty()) {
                 return null;
             }
-
-            // store the signalheads
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
+            for (String sName : shm.getSystemNameList()) {
+                // store the signalheads
+                if (sName == null) {
                     log.error("System name null during store, skipped");
                     continue;
                 }
-                log.debug("system name is {}", sname);
-                SignalHead sub = sm.getBySystemName(sname);
+                log.debug("system name is {}", sName);
+                SignalHead sub = shm.getBySystemName(sName);
                 if (sub != null) {
                     Element e = ConfigXmlManager.elementFromObject(sub);
                     if (e != null) {

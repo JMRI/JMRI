@@ -33,71 +33,69 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         setStoreElementClass(signalMastLogic);
         SignalMastLogicManager smlm = (SignalMastLogicManager) o;
         signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
-        List<SignalMastLogic> sml = smlm.getSignalMastLogicList();
-        for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic sm = sml.get(i);
+        List<SignalMastLogic> smll = smlm.getSignalMastLogicList();
+        for (SignalMastLogic sml : smll) {
             Element source = new Element("signalmastlogic");
-            source.setAttribute("source", sm.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
-            source.addContent(new Element("sourceSignalMast").addContent(sm.getSourceMast().getDisplayName()));
-            List<SignalMast> destination = sm.getDestinationList();
+            source.setAttribute("source", sml.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
+            source.addContent(new Element("sourceSignalMast").addContent(sml.getSourceMast().getDisplayName()));
+            List<SignalMast> destination = sml.getDestinationList();
             if (destination.size() != 0) {
-                for (int k = 0; k < destination.size(); k++) {
-                    SignalMast dest = destination.get(k);
-                    if (sml.get(i).getStoreState(dest) != SignalMastLogic.STORENONE) {
+                for (SignalMast dest : destination) {
+                    if (sml.getStoreState(dest) != SignalMastLogic.STORENONE) {
                         Element elem = new Element("destinationMast");
                         elem.setAttribute("destination", dest.getDisplayName()); // added purely to make human reading of the xml easier
                         elem.addContent(new Element("destinationSignalMast").addContent(dest.getDisplayName()));
-                        elem.addContent(new Element("comment").addContent(sm.getComment(dest)));
-                        if (sm.isEnabled(dest)) {
+                        elem.addContent(new Element("comment").addContent(sml.getComment(dest)));
+                        if (sml.isEnabled(dest)) {
                             elem.addContent(new Element("enabled").addContent("yes"));
                         } else {
                             elem.addContent(new Element("enabled").addContent("no"));
                         }
 
-                        if (sm.allowAutoMaticSignalMastGeneration(dest)) {
+                        if (sml.allowAutoMaticSignalMastGeneration(dest)) {
                             elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("yes"));
                         } else {
                             elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("no"));
                         }
 
-                        if (sm.useLayoutEditor(dest)) {
+                        if (sml.useLayoutEditor(dest)) {
                             elem.addContent(new Element("useLayoutEditor").addContent("yes"));
                         } else {
                             elem.addContent(new Element("useLayoutEditor").addContent("no"));
                         }
 
-                        if (sm.useLayoutEditorTurnouts(dest)) {
+                        if (sml.useLayoutEditorTurnouts(dest)) {
                             elem.addContent(new Element("useLayoutEditorTurnouts").addContent("yes"));
                         } else {
                             elem.addContent(new Element("useLayoutEditorTurnouts").addContent("no"));
                         }
 
-                        if (sm.useLayoutEditorBlocks(dest)) {
+                        if (sml.useLayoutEditorBlocks(dest)) {
                             elem.addContent(new Element("useLayoutEditorBlocks").addContent("yes"));
                         } else {
                             elem.addContent(new Element("useLayoutEditorBlocks").addContent("no"));
                         }
 
-                        if (sm.getAssociatedSection(dest) != null) {
-                            elem.addContent(new Element("associatedSection").addContent(sm.getAssociatedSection(dest).getDisplayName()));
+                        if (sml.getAssociatedSection(dest) != null) {
+                            elem.addContent(new Element("associatedSection").addContent(sml.getAssociatedSection(dest).getDisplayName()));
                         }
-                        if (sm.isTurnoutLockAllowed(dest)) {
+                        if (sml.isTurnoutLockAllowed(dest)) {
                             elem.addContent(new Element("lockTurnouts").addContent("yes"));
                         } else {
                             elem.addContent(new Element("lockTurnouts").addContent("no"));
                         }
 
-                        if (sml.get(i).getStoreState(dest) == SignalMastLogic.STOREALL) {
-                            List<Block> blocks = sm.getBlocks(dest);
+                        if (sml.getStoreState(dest) == SignalMastLogic.STOREALL) {
+                            List<Block> blocks = sml.getBlocks(dest);
                             if (blocks.size() > 0) {
                                 Element blockElement = new Element("blocks");
-                                for (int j = 0; j < blocks.size(); j++) {
+                                for (Block bl : blocks) {
                                     Element bloc = new Element("block");
-                                    bloc.addContent(new Element("blockName").addContent(blocks.get(j).getDisplayName()));
+                                    bloc.addContent(new Element("blockName").addContent(bl.getDisplayName()));
                                     String blkState = "anyState";
-                                    if (sm.getBlockState(blocks.get(j), dest) == Block.OCCUPIED) {
+                                    if (sml.getBlockState(bl, dest) == Block.OCCUPIED) {
                                         blkState = "occupied";
-                                    } else if (sm.getBlockState(blocks.get(j), dest) == Block.UNOCCUPIED) {
+                                    } else if (sml.getBlockState(bl, dest) == Block.UNOCCUPIED) {
                                         blkState = "unoccupied";
                                     }
                                     bloc.addContent(new Element("blockState").addContent(blkState));
@@ -105,14 +103,14 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(blockElement);
                             }
-                            List<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
+                            List<NamedBeanHandle<Turnout>> turnouts = sml.getNamedTurnouts(dest);
                             if (turnouts.size() > 0) {
                                 Element turnoutElement = new Element("turnouts");
-                                for (int j = 0; j < turnouts.size(); j++) {
+                                for (NamedBeanHandle<Turnout> t : turnouts) {
                                     Element turn = new Element("turnout");
-                                    turn.addContent(new Element("turnoutName").addContent(turnouts.get(j).getName()));
+                                    turn.addContent(new Element("turnoutName").addContent(t.getName()));
                                     String turnState = "thrown";
-                                    if (sm.getTurnoutState(turnouts.get(j).getBean(), dest) == Turnout.CLOSED) {
+                                    if (sml.getTurnoutState(t.getBean(), dest) == Turnout.CLOSED) {
                                         turnState = "closed";
                                     }
                                     turn.addContent(new Element("turnoutState").addContent(turnState));
@@ -120,14 +118,14 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(turnoutElement);
                             }
-                            List<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
+                            List<NamedBeanHandle<Sensor>> sensors = sml.getNamedSensors(dest);
                             if (sensors.size() > 0) {
                                 Element sensorElement = new Element("sensors");
-                                for (int j = 0; j < sensors.size(); j++) {
+                                for (NamedBeanHandle<Sensor> s : sensors) {
                                     Element sensor = new Element("sensor");
-                                    sensor.addContent(new Element("sensorName").addContent(sensors.get(j).getName()));
+                                    sensor.addContent(new Element("sensorName").addContent(s.getName()));
                                     String sensorState = "inActive";
-                                    if (sm.getSensorState(sensors.get(j).getBean(), dest) == Sensor.ACTIVE) {
+                                    if (sml.getSensorState(s.getBean(), dest) == Sensor.ACTIVE) {
                                         sensorState = "active";
                                     }
                                     sensor.addContent(new Element("sensorState").addContent(sensorState));
@@ -135,13 +133,13 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(sensorElement);
                             }
-                            List<SignalMast> masts = sm.getSignalMasts(dest);
+                            List<SignalMast> masts = sml.getSignalMasts(dest);
                             if (masts.size() > 0) {
                                 Element mastElement = new Element("masts");
-                                for (int j = 0; j < masts.size(); j++) {
+                                for (SignalMast sm : masts) {
                                     Element mast = new Element("mast");
-                                    mast.addContent(new Element("mastName").addContent(masts.get(j).getDisplayName()));
-                                    mast.addContent(new Element("mastState").addContent(sm.getSignalMastState(masts.get(j), dest)));
+                                    mast.addContent(new Element("mastName").addContent(sm.getDisplayName()));
+                                    mast.addContent(new Element("mastState").addContent(sml.getSignalMastState(sm, dest)));
                                     mastElement.addContent(mast);
                                 }
                                 elem.addContent(mastElement);
@@ -174,7 +172,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     public boolean loadSignalMastLogic(Element signalMastLogic) {
         List<Element> logicList = signalMastLogic.getChildren("signalmastlogic");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + logicList.size() + " signal mast logics");
+            log.debug("Found {} signal mast logics", logicList.size());
         }
 
         SignalMastManager sm = InstanceManager.getDefault(jmri.SignalMastManager.class);
@@ -232,7 +230,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         try {
                             logic.useLayoutEditorDetails(useLayoutEditorTurnout, useLayoutEditorBlock, dest);
                         } catch (jmri.JmriException ex) {
-
+                            log.error("use LayoutEditor details failed");
                         }
 
                         if (s.getChild("useLayoutEditor") != null) {
@@ -339,12 +337,12 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                         }
                     } else {
-                        log.error("Destination Mast " + destination + " Not found, logic not loaded");
+                        log.error("Destination Mast {} not found, logic not loaded", destination);
                         loadOk = false;
                     }
                 }
             } else {
-                log.error("Source Mast " + source + " Not found, logic not loaded");
+                log.error("Source Mast {} Not found, logic not loaded", source);
                 loadOk = false;
             }
         }
@@ -358,4 +356,5 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class);
+
 }

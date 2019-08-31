@@ -34,41 +34,36 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element memories = new Element("memories");
         setStoreElementClass(memories);
-        MemoryManager tm = (MemoryManager) o;
-        if (tm != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
-
+        MemoryManager mm = (MemoryManager) o;
+        if (mm != null) {
             // don't return an element if there are no memories to include
-            if (!iter.hasNext()) {
+            if (mm.getSystemNameAddedOrderList().isEmpty()) {
                 return null;
             }
-
             // store the memories
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
+            for (String sName : mm.getSystemNameAddedOrderList()) {
+                if (sName == null) {
                     log.error("System name null during store");
                     break;
                 }
-                log.debug("system name is " + sname);
-                Memory m = tm.getBySystemName(sname);
+                log.debug("system name is " + sName);
+                Memory m = mm.getBySystemName(sName);
                 if (m == null) {
                     continue;
                 }
                 Element elem = new Element("memory");
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(sName));
 
                 // store common part
                 storeCommon(m, elem);
                 // store value if non-null; null values omitted
                 Object obj = m.getValue();
                 if (obj != null) {
-                    if (obj instanceof jmri.jmrit.roster.RosterEntry) {
+                    if (obj instanceof RosterEntry) {
                         String valueClass = obj.getClass().getName();
                         String value = ((RosterEntry) obj).getId();
                         elem.setAttribute("value", value);
@@ -79,7 +74,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                     }
                 }
 
-                log.debug("store Memory {}", sname);
+                log.debug("store Memory {}", sName);
                 memories.addContent(elem);
             }
         }
@@ -124,10 +119,9 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         if (log.isDebugEnabled()) {
             log.debug("Found {} Memory objects", memoryList.size());
         }
-        MemoryManager tm = InstanceManager.memoryManagerInstance();
+        MemoryManager mm = InstanceManager.memoryManagerInstance();
 
         for (Element el : memoryList) {
-
             String sysName = getSystemName(el);
             if (sysName == null) {
                 log.warn("unexpected null in systemName {}", (el));
@@ -136,10 +130,10 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             String userName = getUserName(el);
 
-            checkNameNormalization(sysName, userName, tm);
+            checkNameNormalization(sysName, userName, mm);
 
             log.debug("create Memory: ({})({})", sysName, (userName == null ? "<null>" : userName));
-            Memory m = tm.newMemory(sysName, userName);
+            Memory m = mm.newMemory(sysName, userName);
             if (el.getAttribute("value") != null) {
                 loadValue(el, m);
             }

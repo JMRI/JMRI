@@ -35,31 +35,26 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element lights = new Element("lights");
         setStoreElementClass(lights);
-        LightManager tm = (LightManager) o;
-        if (tm != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
-
+        LightManager lm = (LightManager) o;
+        if (lm != null) {
             // don't return an element if there are no lights to include
-            if (!iter.hasNext()) {
+            if (lm.getSystemNameAddedOrderList().isEmpty()) {
                 return null;
             }
-
-            // store the lights
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
+            for (String sName : lm.getSystemNameAddedOrderList()) {
+                // store the lights
+                if (sName == null) {
+                    log.error("System name null during store, skipped");
                     break;
                 }
-                log.debug("system name is {}", sname);
-                Light lgt = tm.getBySystemName(sname);
+                log.debug("system name is {}", sName);
+                Light lgt = lm.getBySystemName(sName);
                 Element elem = new Element("light");
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(sName));
 
                 // store common parts
                 storeCommon(lgt, elem);
@@ -75,11 +70,9 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
                 // save child lightcontrol entries
                 ArrayList<LightControl> lcList = lgt.getLightControlList();
-                Element lcElem = null;
-                for (int i = 0; i < lcList.size(); i++) {
-                    LightControl lc = lcList.get(i);
+                for (LightControl lc : lcList) {
                     if (lc != null) {
-                        lcElem = new Element("lightcontrol");
+                        Element lcElem = new Element("lightcontrol");
                         int type = lc.getControlType();
                         lcElem.setAttribute("controlType", "" + type);
                         if (type == Light.SENSOR_CONTROL) {
@@ -133,50 +126,49 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         if (log.isDebugEnabled()) {
             log.debug("Found {} lights", lightList.size());
         }
-        LightManager tm = InstanceManager.lightManagerInstance();
-        tm.setDataListenerMute(true);
+        LightManager lm = InstanceManager.lightManagerInstance();
+        lm.setDataListenerMute(true);
 
-        for (int i = 0; i < lightList.size(); i++) {
-
-            String sysName = getSystemName(lightList.get(i));
+        for (Element el : lightList) {
+            String sysName = getSystemName(el);
             if (sysName == null) {
-                log.warn("unexpected null in systemName {} {}", lightList.get(i), lightList.get(i).getAttributes());
+                log.warn("unexpected null in systemName {} {}", el, el.getAttributes());
                 result = false;
                 break;
             }
 
-            String userName = getUserName(lightList.get(i));
+            String userName = getUserName(el);
 
-            checkNameNormalization(sysName, userName, tm);
+            checkNameNormalization(sysName, userName, lm);
 
             log.debug("create light: ({})({})", sysName, (userName == null ? "<null>" : userName));
             
             Light lgt = null;
             try {
-                lgt = tm.newLight(sysName, userName);
+                lgt = lm.newLight(sysName, userName);
             } catch (IllegalArgumentException e) {
                 log.error("failed to create Light: {}", sysName);
                 return false;
             }
 
             // load common parts
-            loadCommon(lgt, lightList.get(i));
+            loadCommon(lgt, el);
 
             // variable intensity, transition attributes
             double value;
-            value = Double.parseDouble(lightList.get(i).getAttribute("minIntensity").getValue());
+            value = Double.parseDouble(el.getAttribute("minIntensity").getValue());
             lgt.setMinIntensity(value);
 
-            value = Double.parseDouble(lightList.get(i).getAttribute("maxIntensity").getValue());
+            value = Double.parseDouble(el.getAttribute("maxIntensity").getValue());
             lgt.setMaxIntensity(value);
 
-            value = Double.parseDouble(lightList.get(i).getAttribute("transitionTime").getValue());
+            value = Double.parseDouble(el.getAttribute("transitionTime").getValue());
             lgt.setTransitionTime(value);
 
             // provide for legacy light control - panel files written by 2.9.5 or before
-            if (lightList.get(i).getAttribute("controlType") != null) {
+            if (el.getAttribute("controlType") != null) {
                 // this is a legacy Light - create a LightControl from the input
-                String temString = lightList.get(i).getAttribute("controlType").getValue();
+                String temString = el.getAttribute("controlType").getValue();
                 int type;
                 try {
                     type = Integer.parseInt(temString);
@@ -189,10 +181,9 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                     LightControl lc = new LightControl(lgt);
                     lc.setControlType(type);
                     if (type == Light.SENSOR_CONTROL) {
-                        lc.setControlSensorName(lightList.get(i).
-                                getAttribute("controlSensor").getValue());
+                        lc.setControlSensorName(el.getAttribute("controlSensor").getValue());
                         try {
-                            lc.setControlSensorSense(Integer.parseInt(lightList.get(i).
+                            lc.setControlSensorSense(Integer.parseInt(el.
                                     getAttribute("sensorSense").getValue()));
                         } catch (NumberFormatException e) {
                             log.error("error when converting control sensor sense in legacy Light load");
@@ -203,32 +194,32 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                         int offHour = 0;
                         int offMin = 0;
                         try {
-                            onHour = Integer.parseInt(lightList.get(i).
+                            onHour = Integer.parseInt(el.
                                     getAttribute("fastClockOnHour").getValue());
-                            onMin = Integer.parseInt(lightList.get(i).
+                            onMin = Integer.parseInt(el.
                                     getAttribute("fastClockOnMin").getValue());
-                            offHour = Integer.parseInt(lightList.get(i).
+                            offHour = Integer.parseInt(el.
                                     getAttribute("fastClockOffHour").getValue());
-                            offMin = Integer.parseInt(lightList.get(i).
+                            offMin = Integer.parseInt(el.
                                     getAttribute("fastClockOffMin").getValue());
                         } catch (NumberFormatException e) {
                             log.error("error when converting fast clock items in legacy Light load");
                         }
                         lc.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
                     } else if (type == Light.TURNOUT_STATUS_CONTROL) {
-                        lc.setControlTurnout(lightList.get(i).
+                        lc.setControlTurnout(el.
                                 getAttribute("controlTurnout").getValue());
                         try {
-                            lc.setControlTurnoutState(Integer.parseInt(lightList.get(i).
+                            lc.setControlTurnoutState(Integer.parseInt(el.
                                     getAttribute("turnoutState").getValue()));
                         } catch (NumberFormatException e) {
                             log.error("error when converting turnout state in legacy Light load");
                         }
                     } else if (type == Light.TIMED_ON_CONTROL) {
-                        lc.setControlTimedOnSensorName(lightList.get(i).
+                        lc.setControlTimedOnSensorName(el.
                                 getAttribute("timedControlSensor").getValue());
                         try {
-                            lc.setTimedOnDuration(Integer.parseInt(lightList.get(i).
+                            lc.setTimedOnDuration(Integer.parseInt(el.
                                     getAttribute("duration").getValue()));
                         } catch (NumberFormatException e) {
                             log.error("error when converting timed sensor items in legacy Light load");
@@ -240,10 +231,9 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             }
 
             // load lightcontrol children, if any
-            List<Element> lightControlList = lightList.get(i).getChildren("lightcontrol");
-            for (int n = 0; n < lightControlList.size(); n++) {
+            List<Element> lightControlList = el.getChildren("lightcontrol");
+            for (Element elem : lightControlList) {
                 boolean noErrors = true;
-                Element elem = lightControlList.get(n);
                 LightControl lc = new LightControl(lgt);
                 String tem = elem.getAttribute("controlType").getValue();
                 int type = Light.NO_CONTROL;
@@ -320,7 +310,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             lgt.activateLight();
         }
 
-        tm.setDataListenerMute(false);
+        lm.setDataListenerMute(false);
         return result;
     }
 

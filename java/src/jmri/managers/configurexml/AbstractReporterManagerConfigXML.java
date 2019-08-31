@@ -32,38 +32,33 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
-        ReporterManager tm = (ReporterManager) o;
-        if (tm != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
-
+        ReporterManager rm = (ReporterManager) o;
+        if (rm != null) {
             // don't return an element if there are no reporters to include
-            if (!iter.hasNext()) {
+            if (rm.getSystemNameAddedOrderList().isEmpty()) {
                 return null;
             }
-
+            for (String sName : rm.getSystemNameAddedOrderList()) {
             // store the reporters
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
+                if (sName == null) {
                     log.error("System name null during store");
                     break;
                 }
-                log.debug("system name is {}", sname);
-                Reporter r = tm.getBySystemName(sname);
+                log.debug("system name is {}", sName);
+                Reporter r = rm.getBySystemName(sName);
                 if (r == null) {
                     continue;
                 }
                 Element elem = new Element("reporter");
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(sName));
                 // store common parts
                 storeCommon(r, elem);
 
-                log.debug("store Reporter {}", sname);
+                log.debug("store Reporter {}", sName);
                 reporters.addContent(elem);
 
             }

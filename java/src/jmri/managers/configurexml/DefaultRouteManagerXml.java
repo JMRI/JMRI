@@ -34,25 +34,20 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         Element routes = new Element("routes");
         setStoreElementClass(routes);
-        RouteManager tm = (RouteManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
-
+        RouteManager rm = (RouteManager) o;
+        if (rm != null) {
             // don't return an element if there are no routes to include
-            if (!iter.hasNext()) {
+            if (rm.getSystemNameList().isEmpty()) {
                 return null;
             }
-
+            for (String sName : rm.getSystemNameList()) {
             // store the routes
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
+                if (sName == null) {
+                    log.error("System name null during store, skipped");
                     break;
                 }
-                log.debug("system name is {}", sname);
-                Route r = tm.getBySystemName(sname);
+                log.debug("system name is {}", sName);
+                Route r = rm.getBySystemName(sName);
                 if (r == null) {
                     continue;
                 }
@@ -62,7 +57,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 String cLockTurnout = r.getLockControlTurnout();
 
                 Element elem = new Element("route");
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(sName));
 
                 // As a work-around for backward compatibility, store systemName and userName as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
@@ -195,7 +190,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     elem.addContent(rsElem);
                 }
 
-                log.debug("store route {}", sname);
+                log.debug("store route {}", sName);
                 routes.addContent(elem);
             }
         }

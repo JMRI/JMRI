@@ -31,16 +31,15 @@ public class DefaultSignalMastManagerXml
      */
     @Override
     public Element store(Object o) {
+        Element signalmasts = new Element("signalmasts");
+        signalmasts.setAttribute("class", this.getClass().getName());
         DefaultSignalMastManager m = (DefaultSignalMastManager) o;
-
-        Element element = new Element("signalmasts");
-        element.setAttribute("class", this.getClass().getName());
         if (m != null) {
             // include contents
             for (SignalMast p : m.getNamedBeanSet()) {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
                 if (e != null) {
-                    element.addContent(e);
+                    signalmasts.addContent(e);
                 }
             }
             List<SignalMastRepeater> repeaterList = m.getRepeaterList();
@@ -62,12 +61,12 @@ public class DefaultSignalMastManagerXml
                             e.addContent(new Element("update").addContent("BothWay"));
                             break;
                     }
-                    element.addContent(e);
+                    signalmasts.addContent(e);
                 }
-                //element.add(repeatElem);
+                //signalmasts.add(repeatElem);
             }
         }
-        return element;
+        return signalmasts;
     }
 
     /**
