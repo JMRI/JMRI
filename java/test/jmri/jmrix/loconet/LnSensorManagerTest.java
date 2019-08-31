@@ -102,7 +102,8 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         }
         Assert.assertEquals("no exception during createSystemName for arguments '3:5', 'L'", false, excep);
         Assert.assertEquals("check createSystemName for arguments '3:5', 'L'", "LS37", s);
-        jmri.util.JUnitAppender.assertWarnMessage("LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '3:5' format is deprecated and will be removed in a future JMRI release.  Use the curAddress format '37' instead.");
+        jmri.util.JUnitAppender.assertWarnMessage(
+                "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '3:5' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '37' instead.");
     }
 
     // The minimal setup for log4J
