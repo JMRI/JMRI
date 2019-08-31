@@ -12,7 +12,6 @@ import java.util.Set;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.server.json.JsonConnection;
 
