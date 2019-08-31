@@ -38,9 +38,9 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
             Element source = new Element("signalmastlogic");
             source.setAttribute("source", sml.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sml.getSourceMast().getDisplayName()));
-            List<SignalMast> destination = sml.getDestinationList();
-            if (destination.size() != 0) {
-                for (SignalMast dest : destination) {
+            List<SignalMast> destinations = sml.getDestinationList();
+            if (destinations.size() != 0) {
+                for (SignalMast dest : destinations) {
                     if (sml.getStoreState(dest) != SignalMastLogic.STORENONE) {
                         Element elem = new Element("destinationMast");
                         elem.setAttribute("destination", dest.getDisplayName()); // added purely to make human reading of the xml easier
@@ -176,38 +176,38 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         }
 
         SignalMastManager sm = InstanceManager.getDefault(jmri.SignalMastManager.class);
-        SignalMastLogicManager sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+        SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         try {
             String logicDelay = signalMastLogic.getChild("logicDelay").getText();
-            sml.setSignalLogicDelay(Integer.parseInt(logicDelay));
+            smlm.setSignalLogicDelay(Integer.parseInt(logicDelay));
         } catch (java.lang.NullPointerException e) {
             //Considered normal if it doesn't exists
         }
         boolean loadOk = true;
-        for (Element so : logicList) {
-            String source = so.getChild("sourceSignalMast").getText();
+        for (Element sml : logicList) {
+            String source = sml.getChild("sourceSignalMast").getText();
             SignalMast sourceMast = sm.getSignalMast(source);
             if (sourceMast != null) {
-                SignalMastLogic logic = sml.newSignalMastLogic(sourceMast);
-                List<Element> destList = so.getChildren("destinationMast");
-                for (Element s : destList) {
-                    String destination = s.getChild("destinationSignalMast").getText();
+                SignalMastLogic logic = smlm.newSignalMastLogic(sourceMast);
+                List<Element> destList = sml.getChildren("destinationMast");
+                for (Element d : destList) {
+                    String destination = d.getChild("destinationSignalMast").getText();
                     SignalMast dest = sm.getSignalMast(destination);
                     if (dest != null) {
                         logic.setDestinationMast(dest);
-                        if (s.getChild("comment") != null) {
-                            logic.setComment(s.getChild("comment").getText(), dest);
+                        if (d.getChild("comment") != null) {
+                            logic.setComment(d.getChild("comment").getText(), dest);
                         }
-                        if (s.getChild("enabled") != null) {
-                            if (s.getChild("enabled").getText().equals("yes")) {
+                        if (d.getChild("enabled") != null) {
+                            if (d.getChild("enabled").getText().equals("yes")) {
                                 logic.setEnabled(dest);
                             } else {
                                 logic.setDisabled(dest);
                             }
                         }
 
-                        if (s.getChild("allowAutoMaticSignalMastGeneration") != null) {
-                            if (s.getChild("allowAutoMaticSignalMastGeneration").getText().equals("no")) {
+                        if (d.getChild("allowAutoMaticSignalMastGeneration") != null) {
+                            if (d.getChild("allowAutoMaticSignalMastGeneration").getText().equals("no")) {
                                 logic.allowAutoMaticSignalMastGeneration(false, dest);
                             } else {
                                 logic.allowAutoMaticSignalMastGeneration(true, dest);
@@ -216,14 +216,14 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
                         boolean useLayoutEditorTurnout = true;
                         boolean useLayoutEditorBlock = true;
-                        if (s.getChild("useLayoutEditorTurnouts") != null) {
-                            if (s.getChild("useLayoutEditorTurnouts").getText().equals("no")) {
+                        if (d.getChild("useLayoutEditorTurnouts") != null) {
+                            if (d.getChild("useLayoutEditorTurnouts").getText().equals("no")) {
                                 useLayoutEditorTurnout = false;
                             }
                         }
 
-                        if (s.getChild("useLayoutEditorBlocks") != null) {
-                            if (s.getChild("useLayoutEditorBlocks").getText().equals("no")) {
+                        if (d.getChild("useLayoutEditorBlocks") != null) {
+                            if (d.getChild("useLayoutEditorBlocks").getText().equals("no")) {
                                 useLayoutEditorBlock = false;
                             }
                         }
@@ -233,9 +233,9 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             log.error("use LayoutEditor details failed");
                         }
 
-                        if (s.getChild("useLayoutEditor") != null) {
+                        if (d.getChild("useLayoutEditor") != null) {
                             try {
-                                if (s.getChild("useLayoutEditor").getText().equals("yes")) {
+                                if (d.getChild("useLayoutEditor").getText().equals("yes")) {
                                     logic.useLayoutEditor(true, dest);
                                 } else {
                                     logic.useLayoutEditor(false, dest);
@@ -245,12 +245,12 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             }
                         }
 
-                        if (s.getChild("associatedSection") != null) {
-                            Section sect = InstanceManager.getDefault(jmri.SectionManager.class).getSection(s.getChild("associatedSection").getText());
+                        if (d.getChild("associatedSection") != null) {
+                            Section sect = InstanceManager.getDefault(jmri.SectionManager.class).getSection(d.getChild("associatedSection").getText());
                             logic.setAssociatedSection(sect, dest);
                         }
 
-                        Element turnoutElem = s.getChild("turnouts");
+                        Element turnoutElem = d.getChild("turnouts");
                         if (turnoutElem != null) {
                             List<Element> turnoutList = turnoutElem.getChildren("turnout");
                             if (turnoutList.size() > 0) {
@@ -272,7 +272,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 logic.setTurnouts(list, dest);
                             }
                         }
-                        Element sensorElem = s.getChild("sensors");
+                        Element sensorElem = d.getChild("sensors");
                         if (sensorElem != null) {
                             List<Element> sensorList = sensorElem.getChildren("sensor");
                             if (sensorList.size() > 0) {
@@ -295,7 +295,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 logic.setSensors(list, dest);
                             }
                         }
-                        Element blockElem = s.getChild("blocks");
+                        Element blockElem = d.getChild("blocks");
                         if (blockElem != null) {
                             List<Element> blockList = blockElem.getChildren("block");
                             if (blockList.size() > 0) {
@@ -319,7 +319,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 logic.setBlocks(list, dest);
                             }
                         }
-                        Element mastElem = s.getChild("masts");
+                        Element mastElem = d.getChild("masts");
                         if (mastElem != null) {
                             List<Element> mastList = mastElem.getChildren("mast");
                             if (mastList.size() > 0) {
@@ -346,7 +346,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                 loadOk = false;
             }
         }
-        sml.initialise();
+        smlm.initialise();
         return loadOk;
     }
 

@@ -29,30 +29,34 @@ public class DefaultSignalGroupManagerXml
      */
     @Override
     public Element store(Object o) {
+        Element groups = new Element("signalgroups");
+        groups.setAttribute("class", this.getClass().getName());
         SignalGroupManager sgm = (SignalGroupManager) o;
-
-        Element element = new Element("signalgroups");
-        element.setAttribute("class", this.getClass().getName());
-
-        // include contents
-        for (SignalGroup sg : sgm.getNamedBeanSet()) {
-            Element e = new Element("signalgroup");
-            e.addContent(new Element("systemName").addContent(sg.getSystemName()));
-            e.addContent(new Element("userName").addContent(sg.getUserName()));
-            // storeCommon(sg, e); would store comment, now a separate element
-            storeComment(sg, e);
-            element.addContent(e);
-            for (int x = 0; x < sg.getNumSignalMastAspects(); x++) {
-                Element app = new Element("aspect").setAttribute("valid", sg.getSignalMastAspectByIndex(x));
-                e.addContent(app);
+        if (sgm != null) {
+            // don't return an element if there are no SignalGroups to include
+            if (sgm.getNamedBeanSet().isEmpty()) {
+                return null;
             }
-            e.setAttribute("signalMast", sg.getSignalMastName());
+            // include contents
+            for (SignalGroup sg : sgm.getNamedBeanSet()) {
+                Element e = new Element("signalgroup");
+                e.addContent(new Element("systemName").addContent(sg.getSystemName()));
+                e.addContent(new Element("userName").addContent(sg.getUserName()));
+                // storeCommon(sg, e); previously would store comment, now a separate element
+                storeComment(sg, e);
+                groups.addContent(e);
+                for (int x = 0; x < sg.getNumSignalMastAspects(); x++) {
+                    Element app = new Element("aspect").setAttribute("valid", sg.getSignalMastAspectByIndex(x));
+                    e.addContent(app);
+                }
+                e.setAttribute("signalMast", sg.getSignalMastName());
 
-            for (int x = 0; x < sg.getNumHeadItems(); x++) {
-                storeSignalHead(e, sg, x);
+                for (int x = 0; x < sg.getNumHeadItems(); x++) {
+                    storeSignalHead(e, sg, x);
+                }
             }
         }
-        return element;
+        return groups;
     }
 
     private void storeSignalHead(Element element, SignalGroup _group, int x) {
