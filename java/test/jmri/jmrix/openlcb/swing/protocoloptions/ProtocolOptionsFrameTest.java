@@ -8,7 +8,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
 
-import static org.junit.Assert.*;
 
 /**
  * @author Balazs Racz, (C) 2018.

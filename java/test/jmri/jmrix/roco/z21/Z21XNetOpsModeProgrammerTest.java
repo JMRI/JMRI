@@ -1,8 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import java.util.ArrayList;
-import java.util.List;
-import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

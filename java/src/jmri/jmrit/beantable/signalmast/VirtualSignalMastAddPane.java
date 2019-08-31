@@ -11,7 +11,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.*;
-import jmri.util.*;
 
 import org.openide.util.lookup.ServiceProvider;
 

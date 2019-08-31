@@ -5,13 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.Arrays;
-import javax.swing.JOptionPane;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialPortController; // no special xSimulatorController
 import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

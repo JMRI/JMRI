@@ -1,6 +1,5 @@
 package jmri.jmrit.audio;
 
-import java.util.List;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;

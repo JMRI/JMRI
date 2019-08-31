@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import java.io.DataInputStream;
-import java.io.OutputStream;
 import jmri.jmrix.loconet.streamport.LnStreamPortPacketizer;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 

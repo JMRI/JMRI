@@ -2,12 +2,9 @@ package jmri.jmrix.openlcb;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.util.ThreadingUtil;
 
 import org.openlcb.can.CanInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Does test configuration for OpenLCB communications implementations.

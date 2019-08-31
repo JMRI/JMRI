@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.bluetooth.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import jmri.jmrix.loconet.bluetooth.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java

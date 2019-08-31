@@ -1,6 +1,5 @@
 package jmri.jmrit.cabsignals;
 
-import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;

@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.swing.lzv100;
 
-import org.junit.After;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

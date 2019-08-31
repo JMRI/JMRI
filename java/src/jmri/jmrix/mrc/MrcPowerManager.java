@@ -2,7 +2,6 @@ package jmri.jmrix.mrc;
 
 import java.util.Date;
 import jmri.JmriException;
-import jmri.PowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

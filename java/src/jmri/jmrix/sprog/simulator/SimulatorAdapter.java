@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogPortController; // no special xSimulatorController

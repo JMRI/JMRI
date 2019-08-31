@@ -1,15 +1,7 @@
 package jmri.jmrix.loconet;
 
-import java.awt.GraphicsEnvironment;
-import jmri.Block;
 import jmri.BlockManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalMast;
 import jmri.SignalMastManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;

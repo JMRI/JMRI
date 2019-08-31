@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.insteon2412s;
 
-import jmri.jmrix.powerline.SerialMessage;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

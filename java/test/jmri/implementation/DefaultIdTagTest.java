@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import jmri.IdTag;
 import jmri.Reporter;
-import jmri.Reportable;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

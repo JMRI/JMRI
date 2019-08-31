@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.soundloader;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Font;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;

@@ -2,7 +2,6 @@ package jmri.jmrix.powerline;
 
 import jmri.Manager.NameValidity;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.Test;
 import org.junit.After;

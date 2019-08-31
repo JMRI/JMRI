@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.messageinterp;
 
-import jmri.jmrix.loconet.messageinterp.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

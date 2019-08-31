@@ -11,8 +11,6 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Iterator;
-import javax.annotation.Nonnull;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;

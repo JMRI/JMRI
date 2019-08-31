@@ -1,7 +1,6 @@
 package jmri.jmrit.display.switchboardEditor.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.BeanSwitch;
 import org.jdom2.Element;
 import org.slf4j.Logger;

@@ -2,7 +2,6 @@ package jmri.web;
 
 import cucumber.api.java8.En;
 import java.io.File;
-import java.util.LinkedHashSet;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.ConfigureManager;

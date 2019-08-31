@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.BoxLayout;

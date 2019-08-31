@@ -1,6 +1,5 @@
 package jmri.implementation;
 
-import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;

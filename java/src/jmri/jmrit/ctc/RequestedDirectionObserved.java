@@ -5,7 +5,6 @@ package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import jmri.jmrit.ctc.CTCConstants;
 
 /**
  * This object ONLY maintains ONE property: _mRequestedDirection.  Ergo no need

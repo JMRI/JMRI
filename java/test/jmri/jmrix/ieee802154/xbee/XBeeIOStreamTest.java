@@ -4,7 +4,6 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import org.junit.*;
-import org.junit.runner.RunWith;
 
 /**
  * Tests for XBeeIOStream.

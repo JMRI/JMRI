@@ -3,7 +3,6 @@ package jmri.jmrix.can;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.can.TrafficControllerScaffold;
 
 /**
  * Stands in for the can.TrafficController class

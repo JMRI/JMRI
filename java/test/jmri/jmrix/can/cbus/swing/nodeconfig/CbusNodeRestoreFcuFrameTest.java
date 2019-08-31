@@ -4,7 +4,6 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

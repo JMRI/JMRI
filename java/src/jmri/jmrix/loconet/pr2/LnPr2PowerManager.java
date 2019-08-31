@@ -10,7 +10,6 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
 
 /**
  * PowerManager implementation for controlling layout power via PR2.

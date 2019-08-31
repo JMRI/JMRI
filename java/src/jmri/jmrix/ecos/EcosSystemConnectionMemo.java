@@ -3,8 +3,6 @@ package jmri.jmrix.ecos;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general

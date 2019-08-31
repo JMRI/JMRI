@@ -12,8 +12,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

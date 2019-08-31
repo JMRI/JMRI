@@ -8,7 +8,6 @@ import com.jogamp.openal.ALException;
 import com.jogamp.openal.ALFactory;
 import com.jogamp.openal.util.ALut;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.List;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;

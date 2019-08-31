@@ -2,11 +2,11 @@ package jmri.jmrix.openlcb.configurexml;
 
 import org.hamcrest.core.IsCollectionContaining;
 import org.junit.After;
+
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;

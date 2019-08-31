@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
-import java.util.ResourceBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnPanel;
 import jmri.util.JmriJFrame;

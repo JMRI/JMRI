@@ -1,6 +1,5 @@
 package jmri;
 
-import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.Test;
 

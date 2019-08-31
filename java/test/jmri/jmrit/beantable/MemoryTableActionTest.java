@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
 import org.junit.*;

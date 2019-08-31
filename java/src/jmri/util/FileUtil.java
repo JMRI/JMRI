@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;

@@ -1,7 +1,6 @@
 package jmri.jmrit.audio;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.List;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
 import jmri.Audio;

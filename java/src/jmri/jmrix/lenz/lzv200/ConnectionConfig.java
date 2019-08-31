@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.lzv200;
 
-import jmri.util.SystemType;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "standard naming for ConnectionConfig objects in XpressNet")

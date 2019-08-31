@@ -1,7 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

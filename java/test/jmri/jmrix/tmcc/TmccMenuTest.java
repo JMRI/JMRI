@@ -1,7 +1,6 @@
 package jmri.jmrix.tmcc;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

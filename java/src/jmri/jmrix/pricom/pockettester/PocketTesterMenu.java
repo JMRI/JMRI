@@ -1,6 +1,5 @@
 package jmri.jmrix.pricom.pockettester;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**

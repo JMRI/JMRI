@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
-import jmri.Route;
 import jmri.RouteManager;
 import org.openide.util.lookup.ServiceProvider;
 

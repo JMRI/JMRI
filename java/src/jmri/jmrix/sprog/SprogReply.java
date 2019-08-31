@@ -1,7 +1,6 @@
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.sprog.SprogConstants.SprogState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

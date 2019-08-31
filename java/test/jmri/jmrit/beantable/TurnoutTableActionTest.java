@@ -3,7 +3,6 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.InstanceManager;

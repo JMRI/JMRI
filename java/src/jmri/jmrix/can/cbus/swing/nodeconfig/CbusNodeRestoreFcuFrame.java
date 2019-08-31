@@ -1,9 +1,7 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.event.ChangeEvent;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -39,7 +36,6 @@ import jmri.jmrix.can.cbus.node.CbusNodeFromFcuTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import jmri.util.ThreadingUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

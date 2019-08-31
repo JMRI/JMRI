@@ -1,10 +1,8 @@
 package jmri.jmrix.internal;
 
-import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
 /**

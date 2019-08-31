@@ -2,8 +2,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Like {@link SplitVariableValue}, except that the string representation is in

@@ -7,7 +7,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.IdTag;
 import jmri.LocoAddress;
-import jmri.Reporter;
 import jmri.CollectingReporter;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractIdTagReporter;

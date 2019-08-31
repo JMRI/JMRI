@@ -1,6 +1,5 @@
 package jmri.jmrit.logix.configurexml;
 
-import java.util.Iterator;
 import java.util.List;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;

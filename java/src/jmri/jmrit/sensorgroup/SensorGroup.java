@@ -1,7 +1,6 @@
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;

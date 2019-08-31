@@ -1,6 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import java.io.Serializable;
 import jmri.SpeedStepMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;

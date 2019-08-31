@@ -3,8 +3,6 @@ package jmri.jmrix.mqtt;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

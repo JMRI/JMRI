@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.ServiceLoader;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;

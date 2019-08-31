@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.eventtable;
 
 import java.util.Date;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
 
 /**

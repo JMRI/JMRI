@@ -1,6 +1,5 @@
 package jmri.jmrix.secsi.serialdriver;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;

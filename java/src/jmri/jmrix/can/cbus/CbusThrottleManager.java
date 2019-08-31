@@ -12,7 +12,6 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.ThrottleListener.DecisionType;
-import jmri.ThrottleManager;
 import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.CanListener;

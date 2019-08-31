@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.usb.UsbConfiguration;

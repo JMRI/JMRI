@@ -1,6 +1,5 @@
 package jmri.jmrix.maple.simulator;
 
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;

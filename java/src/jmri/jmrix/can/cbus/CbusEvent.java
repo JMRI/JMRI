@@ -2,8 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 
 // import org.slf4j.Logger;

@@ -1,8 +1,6 @@
 package jmri.jmrit.logix;
 
 import org.junit.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import org.netbeans.jemmy.operators.JDialogOperator;

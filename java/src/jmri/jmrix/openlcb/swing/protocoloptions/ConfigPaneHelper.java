@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import jmri.jmrix.AbstractConnectionConfig;
-import jmri.jmrix.PortAdapter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.configurexml.ConnectionConfigXml;
 

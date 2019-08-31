@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;

@@ -2,14 +2,10 @@ package jmri.jmrix.jmriclient;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import jmri.Light;
 import jmri.LightManager;
 import jmri.PowerManager;
-import jmri.Reporter;
 import jmri.ReporterManager;
-import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Turnout;
 import jmri.TurnoutManager;
 
 /**

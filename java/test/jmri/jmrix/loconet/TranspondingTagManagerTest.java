@@ -1,9 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.IdTag;
-import jmri.IdTagManager;
-import jmri.InstanceManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.managers.ProxyIdTagManager;
 import org.junit.*;

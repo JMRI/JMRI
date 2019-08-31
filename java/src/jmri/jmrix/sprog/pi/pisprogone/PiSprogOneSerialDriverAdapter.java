@@ -2,10 +2,6 @@ package jmri.jmrix.sprog.pi.pisprogone;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.update.SprogType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.

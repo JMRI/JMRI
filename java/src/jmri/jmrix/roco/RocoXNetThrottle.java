@@ -1,8 +1,6 @@
 package jmri.jmrix.roco;
 
 import jmri.LocoAddress;
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;
 import org.slf4j.Logger;

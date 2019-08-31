@@ -7,12 +7,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
-import java.lang.StringBuilder;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,8 +17,6 @@ import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -34,12 +28,11 @@ import javax.swing.tree.TreePath;
 import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.ScaleManager;
-import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
 
 import jmri.jmrit.timetable.*;
-import jmri.jmrit.timetable.configurexml.*;
+import jmri.jmrit.timetable.configurexml.TimeTableXml;
 
 /**
  * Create and maintain timetables.

@@ -6,7 +6,6 @@ import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.*;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial.sim.configurexml;
 
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
-import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

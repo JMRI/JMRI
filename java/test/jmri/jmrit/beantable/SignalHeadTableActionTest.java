@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -10,7 +9,6 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 

@@ -1,7 +1,5 @@
 package jmri.jmrix;
 
-import javax.swing.JPanel;
-
 /**
  * Interface for objects that handle configuring a layout connection.
  * <p>

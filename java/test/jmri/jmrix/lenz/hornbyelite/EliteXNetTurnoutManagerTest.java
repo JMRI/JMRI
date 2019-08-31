@@ -3,7 +3,6 @@ package jmri.jmrix.lenz.hornbyelite;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;

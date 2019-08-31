@@ -1,6 +1,5 @@
 package jmri.jmrix.pricom.downloader;
 
-import java.util.ResourceBundle;
 import jmri.util.JmriJFrame;
 
 /**

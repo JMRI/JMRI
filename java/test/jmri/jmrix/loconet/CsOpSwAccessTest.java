@@ -6,11 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import jmri.jmrix.loconet.SlotManager;
 
-import java.util.List;
 import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
 
 /**
  * Tests for LocoNet CsOpSwAccess class.

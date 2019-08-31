@@ -6,7 +6,6 @@ import jmri.BlockManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -16,7 +15,6 @@ import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
 import jmri.util.ThreadingUtil;
 import org.junit.*;
 

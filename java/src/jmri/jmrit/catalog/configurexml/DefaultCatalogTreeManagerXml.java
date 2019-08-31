@@ -3,7 +3,6 @@ package jmri.jmrit.catalog.configurexml;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.swing.tree.*;

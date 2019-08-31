@@ -1,7 +1,6 @@
 package jmri.util.swing;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;

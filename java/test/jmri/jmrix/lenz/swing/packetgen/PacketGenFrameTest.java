@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetMessage;
 import org.junit.*;
 

@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LocoNetInterface;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;

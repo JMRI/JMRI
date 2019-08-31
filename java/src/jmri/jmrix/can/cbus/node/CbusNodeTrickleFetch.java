@@ -5,7 +5,6 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
 

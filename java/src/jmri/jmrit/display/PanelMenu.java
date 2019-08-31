@@ -10,7 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.openide.util.lookup.ServiceProvider;

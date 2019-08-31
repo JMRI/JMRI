@@ -1,7 +1,5 @@
 package jmri.jmrit.timetable;
 
-import jmri.jmrit.timetable.swing.*;
-
 /**
  * Define the content of a Stop record.
  *

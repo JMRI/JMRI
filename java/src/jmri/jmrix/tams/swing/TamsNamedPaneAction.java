@@ -4,8 +4,6 @@ import javax.swing.Icon;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to create and load a JmriPanel from just its name.

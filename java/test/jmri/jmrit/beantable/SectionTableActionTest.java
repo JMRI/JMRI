@@ -3,13 +3,9 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 

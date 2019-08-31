@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.LocoAddress;
-import jmri.ThrottleManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

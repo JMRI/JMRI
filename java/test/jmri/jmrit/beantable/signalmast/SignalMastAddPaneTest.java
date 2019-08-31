@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable.signalmast;
 
-import jmri.implementation.SignalSystemTestUtil;
 import jmri.util.JUnitUtil;
 import java.util.*;
 import org.junit.After;

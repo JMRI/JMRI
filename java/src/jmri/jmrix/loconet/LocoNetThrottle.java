@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.util.EnumSet;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.CheckForNull;
 import jmri.DccLocoAddress;

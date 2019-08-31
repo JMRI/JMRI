@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.TooManyListenersException;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
@@ -16,7 +15,6 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**

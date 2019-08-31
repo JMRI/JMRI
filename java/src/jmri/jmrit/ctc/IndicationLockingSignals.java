@@ -4,7 +4,6 @@
 package jmri.jmrit.ctc;
 
 import java.util.ArrayList;
-import jmri.SignalHead;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public class IndicationLockingSignals {

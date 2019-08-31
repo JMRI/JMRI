@@ -1,7 +1,5 @@
 package jmri.jmrix.configurexml;
 
-import org.junit.*;
-
 /**
  * Base tests for UsbConnectionConfigXml objects.
  *

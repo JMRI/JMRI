@@ -2,8 +2,6 @@ package jmri.jmrix.srcp.networkdriver;
 
 import jmri.jmrix.srcp.SRCPPortController;
 import jmri.jmrix.srcp.SRCPTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.

@@ -1,7 +1,6 @@
 package jmri.jmrix.rps.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrix.rps.RpsSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

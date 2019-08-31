@@ -1,6 +1,5 @@
 package jmri.util.usb;
 
-import static java.lang.Float.NaN;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;

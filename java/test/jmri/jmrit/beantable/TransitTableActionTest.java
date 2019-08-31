@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.Block;
 import jmri.BlockManager;
@@ -11,9 +10,7 @@ import jmri.Section;
 import jmri.SectionManager;
 import jmri.Transit;
 import jmri.TransitSection;
-import jmri.TransitManager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 

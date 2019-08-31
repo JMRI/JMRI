@@ -1,7 +1,6 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

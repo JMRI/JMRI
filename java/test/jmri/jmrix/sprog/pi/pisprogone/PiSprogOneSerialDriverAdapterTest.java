@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog.pi.pisprogone;
 
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.IdTag;
-
 /**
  * Concrete implementation of the {@link jmri.IdTag} interface for the LocoNet
  * based Transponding reports.

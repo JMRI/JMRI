@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
-import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

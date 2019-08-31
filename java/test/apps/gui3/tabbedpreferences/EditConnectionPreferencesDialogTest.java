@@ -1,6 +1,5 @@
 package apps.gui3.tabbedpreferences;
 
-import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;

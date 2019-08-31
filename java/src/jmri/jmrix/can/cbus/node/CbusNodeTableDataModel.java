@@ -13,7 +13,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;

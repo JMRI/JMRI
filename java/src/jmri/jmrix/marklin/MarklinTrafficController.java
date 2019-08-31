@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;

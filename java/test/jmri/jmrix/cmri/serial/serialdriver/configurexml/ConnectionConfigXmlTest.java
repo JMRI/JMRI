@@ -1,10 +1,6 @@
 package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialTrafficControlScaffold;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
-import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

@@ -1,8 +1,6 @@
 package jmri.jmrix.zimo;
 
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Defines standard operations for Dcc command stations.

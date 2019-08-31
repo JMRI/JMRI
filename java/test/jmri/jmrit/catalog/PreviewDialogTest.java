@@ -15,7 +15,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

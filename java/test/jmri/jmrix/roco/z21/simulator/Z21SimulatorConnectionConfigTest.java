@@ -2,9 +2,7 @@ package jmri.jmrix.roco.z21.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for Z21SimulatorZ21SimulatorConnectionConfig class.

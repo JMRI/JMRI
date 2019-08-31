@@ -1,7 +1,5 @@
 package jmri.jmrix.lenz.lzv200;
 
-import jmri.jmrix.lenz.liusb.LIUSBAdapter;
-
 /**
  * Provide access to XpressNet via the built in connection
  * on the LZV200.   This connection is a copy of an LIUSB with

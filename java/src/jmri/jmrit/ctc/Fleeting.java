@@ -3,8 +3,6 @@
  */
 package jmri.jmrit.ctc;
 
-import jmri.jmrit.ctc.CTCException;
-import jmri.JmriException;
 import jmri.Sensor;
 
 public class Fleeting {

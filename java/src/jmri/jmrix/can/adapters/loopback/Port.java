@@ -2,7 +2,6 @@ package jmri.jmrix.can.adapters.loopback;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Arrays;
 
 import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.can.CanSystemConnectionMemo;

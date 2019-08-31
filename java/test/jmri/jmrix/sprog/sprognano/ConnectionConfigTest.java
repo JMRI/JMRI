@@ -3,9 +3,7 @@ package jmri.jmrix.sprog.sprognano;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for ConnectionConfig class.

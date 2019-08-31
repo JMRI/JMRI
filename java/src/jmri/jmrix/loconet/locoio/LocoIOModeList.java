@@ -2,8 +2,6 @@ package jmri.jmrix.loconet.locoio;
 
 import java.util.Vector;
 import jmri.jmrix.loconet.LnConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the set of valid modes for a particular LocoIO port,

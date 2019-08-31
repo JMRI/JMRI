@@ -1,9 +1,5 @@
 package jmri.jmrix.direct.simulator;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import jmri.jmrix.direct.DirectSystemConnectionMemo;
-
 /**
  * Handle configuring an Direct layout connection via a Simulator
  * adapter.

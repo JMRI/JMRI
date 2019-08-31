@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;

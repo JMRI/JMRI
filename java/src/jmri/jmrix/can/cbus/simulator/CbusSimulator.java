@@ -2,9 +2,6 @@ package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
-import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

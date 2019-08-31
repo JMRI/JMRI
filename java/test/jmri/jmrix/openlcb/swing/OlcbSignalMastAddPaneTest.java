@@ -11,7 +11,6 @@ import javax.swing.*;
 
 import org.junit.*;
 
-import org.netbeans.jemmy.operators.*;
 
 import org.openlcb.*;
 

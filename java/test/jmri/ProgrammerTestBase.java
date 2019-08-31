@@ -1,9 +1,5 @@
 package jmri;
 
-import java.util.List;
-import jmri.ProgListener;
-import jmri.ProgrammingMode;
-import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**

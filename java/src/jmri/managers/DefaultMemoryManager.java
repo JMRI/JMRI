@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.implementation.DefaultMemory;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

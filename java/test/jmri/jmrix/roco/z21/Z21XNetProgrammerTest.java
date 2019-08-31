@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import org.junit.*;

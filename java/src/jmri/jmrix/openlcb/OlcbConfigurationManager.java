@@ -5,14 +5,12 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.time.Clock;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.LightManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;

@@ -8,7 +8,6 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

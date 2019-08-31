@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz;
 
 import jmri.Light;
-import jmri.LightManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

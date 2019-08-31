@@ -7,7 +7,6 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.openlcb.swing.protocoloptions.ConfigPaneHelper;
 
 import org.slf4j.Logger;

@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import org.slf4j.Logger;

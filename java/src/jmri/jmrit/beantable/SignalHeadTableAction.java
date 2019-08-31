@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

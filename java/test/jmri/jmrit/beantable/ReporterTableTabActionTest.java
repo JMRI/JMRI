@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

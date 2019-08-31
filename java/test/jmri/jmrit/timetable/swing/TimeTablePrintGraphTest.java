@@ -1,9 +1,6 @@
 package jmri.jmrit.timetable.swing;
 
-import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.timetable.*;
-import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;

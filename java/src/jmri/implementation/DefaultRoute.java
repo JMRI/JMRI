@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;

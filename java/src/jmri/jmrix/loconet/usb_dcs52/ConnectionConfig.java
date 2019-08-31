@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.usb_dcs52;
 
-import jmri.util.SystemType;
-
 /**
  * Definition of objects to handle configuring a DCS52 USB layout connection via a
  * PR2Adapter object.

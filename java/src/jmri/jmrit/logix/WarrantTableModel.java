@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;

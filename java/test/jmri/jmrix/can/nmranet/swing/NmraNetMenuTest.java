@@ -2,8 +2,6 @@ package jmri.jmrix.can.nmranet.swing;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TestTrafficController;
-import jmri.jmrix.can.TrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

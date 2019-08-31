@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LnProgrammerManager;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
 
 /**
  * Extend LnProgrammerManager to disable on-the-track programming, which is not

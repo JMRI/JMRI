@@ -1,8 +1,6 @@
 package jmri.jmrix.lenz.liusbserver;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 /**
  * Handle configuring an XpressNet layout connection via a LIUSB Server.
