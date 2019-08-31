@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import java.util.Locale;
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +136,11 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
+            
+            // NOTE: This format is deprecated on 30Aug2019 account the format cannot be used under
+            // normal circumstances.  It is retained for the normal deprecation period in order
+            // to support any atypical usage patterns.
+            
             int board = 0;
             int channel = 0;
             // Address format passed is in the form of board:channel or T:turnout address
@@ -161,6 +167,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             } else {
                 iName = 16 * board + channel - 16;
             }
+            jmri.util.Log4JUtil.warnOnce(log, "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '{}' format is deprecated and will be removed in a future JMRI release.  Use the curAddress format '{}' instead.",
+                    curAddress, iName);
         } else {
             // Entered in using the old format
             try {
