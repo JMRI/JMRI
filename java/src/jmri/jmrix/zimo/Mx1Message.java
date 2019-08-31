@@ -145,7 +145,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         return CS;
     }
 
-    long timeStamp = 0l;
+    long timeStamp = 0L;
 
     protected long getTimeStamp() {
         return timeStamp;

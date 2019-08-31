@@ -1,21 +1,11 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.ContainerOperator;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 class EntryExitTestTools {
     static HashMap<String, LayoutEditor> getPanels() throws Exception {

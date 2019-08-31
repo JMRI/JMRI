@@ -995,4 +995,4 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     private boolean waitingForIplReply;
- }
+}
