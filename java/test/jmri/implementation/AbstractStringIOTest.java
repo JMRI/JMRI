@@ -27,6 +27,15 @@ public class AbstractStringIOTest {
         Assert.assertEquals("StringIO system name is correct", "IZ01", myStringIO_2.getSystemName());
         Assert.assertNotEquals("StringIOs are different", myStringIO_1, myStringIO_2);
         Assert.assertNotEquals("StringIO compareTo returns not zero", 0, myStringIO_1.compareTo(myStringIO_2));
+        
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, myStringIO_1.compareSystemNameSuffix("01", "1", myStringIO_2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, myStringIO_1.compareSystemNameSuffix("1", "1", myStringIO_2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, myStringIO_1.compareSystemNameSuffix("01", "01", myStringIO_2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, myStringIO_1.compareSystemNameSuffix("1", "01", myStringIO_2));
     }
     
     @Test
