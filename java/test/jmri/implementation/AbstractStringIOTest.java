@@ -25,6 +25,12 @@ public class AbstractStringIOTest {
         MyAbstractStringIO myStringIO_2 = new MyAbstractStringIO("IZ01");
         Assert.assertEquals("StringIO system name is correct", "IZ1", myStringIO_1.getSystemName());
         Assert.assertEquals("StringIO system name is correct", "IZ01", myStringIO_2.getSystemName());
+    }
+    
+    @Test
+    public void testCompareTo() {
+        MyAbstractStringIO myStringIO_1 = new MyAbstractStringIO("IZ1");
+        MyAbstractStringIO myStringIO_2 = new MyAbstractStringIO("IZ01");
         Assert.assertNotEquals("StringIOs are different", myStringIO_1, myStringIO_2);
         Assert.assertNotEquals("StringIO compareTo returns not zero", 0, myStringIO_1.compareTo(myStringIO_2));
     }
