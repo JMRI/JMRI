@@ -22,7 +22,8 @@ import jmri.ReporterManager;
  */
 public class Z21CanBusAddress {
 
-    public Z21CanBusAddress() {
+    private Z21CanBusAddress() {
+        // this is a class of static methods.
     }
 
     /**
@@ -33,14 +34,11 @@ public class Z21CanBusAddress {
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the system Name leader characters
-        if (!systemName.startsWith(prefix)) {
-            // here if an invalid Z21 Can Bus system name
-            log.error("invalid character in header field of Z21 Can Bus system name: {}", systemName);
+        if(!systemNameStartsWithPrefix(systemName,prefix)) {
             return (-1);
         }
         // name must be in the Ztmm:pp format (Z is user 
         // configurable)
-        int num = 0;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             if( ( systemName.charAt(prefix.length())=='R' ||
@@ -49,29 +47,53 @@ public class Z21CanBusAddress {
                   systemName.charAt(prefix.length())=='s' ) && 
                   curAddress.contains(":")) {
                //Address format passed is in the form of encoderAddress:input
-               int encoderAddress;
-               int seperator = curAddress.indexOf(":");
-               try {
-                  encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
-               } catch (NumberFormatException ex) {
-                   // didn't parse as a decimal, check to see if network ID 
-                   // was used instead.
-                   encoderAddress = Integer.parseInt(curAddress.substring(0,seperator),16);
-               }
+               int seperator = curAddress.indexOf(':');
+               int encoderAddress = parseEncoderAddress(curAddress,0,seperator);
                log.debug("found module address {}",encoderAddress);
-               int input = Integer.parseInt(curAddress.substring(seperator + 1));
-               // since we aren't supporting bit number, just return the contact
-               // since we know now the module address is valid.
-               num = input;
+                // since we aren't supporting bit number, just return the contact
+                // since we know now the module address is valid.
+               return Integer.parseInt(curAddress.substring(seperator + 1));
             } else {
                log.warn("system name {} is in the wrong format.  Should be mm:pp.",systemName);
-               return (-1);
             }
         } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: {}", systemName);
-            return (-1);
         }
-        return (num);
+        return (-1);
+    }
+
+    private static boolean systemNameStartsWithPrefix(String systemName,String prefix){
+        if (!systemName.startsWith(prefix)) {
+            // here if an invalid Z21 Can Bus system name
+            log.error("invalid character in header field of Z21 Can Bus system name: {}", systemName);
+            return false;
+        }
+        return true;
+    } 
+
+    private static int parseEncoderAddress(String addressWithoutPrefix,int start, int end) {
+       int encoderAddress = -1;
+       try {
+          encoderAddress = Integer.parseInt(addressWithoutPrefix.substring(start,end));
+       } catch (NumberFormatException ex) {
+          // didn't parse as a decimal, check to see if network ID 
+          // was used instead.
+          encoderAddress = Integer.parseInt(addressWithoutPrefix.substring(start,end),16);
+       }
+       return encoderAddress;
+    }
+
+    public static String getEncoderAddressString(String systemName, String prefix) {
+
+        // validate the system Name leader characters
+        if (!systemNameStartsWithPrefix(systemName, prefix)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", prefix),
+                    Bundle.getMessage("InvalidSystemNameInvalidPrefix", prefix));
+
+        }
+        int seperator = systemName.indexOf(':');
+        return systemName.substring(prefix.length() + 1,seperator);
     }
 
     /**
@@ -94,12 +116,7 @@ public class Z21CanBusAddress {
         }
         int num;
         try {
-            try {
-                num = Integer.parseInt(parts[0]);
-            } catch (NumberFormatException ex) {
-                // may have been base 16 instead of 10
-                num = Integer.parseInt(parts[0], 16);
-            }
+            num = parseEncoderAddress(parts[0],0,parts[0].length());
             if (num < 0 || num > 65535) {
             throw new NamedBean.BadSystemNameException(
                     Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidCanAddress", name),
@@ -180,6 +197,6 @@ public class Z21CanBusAddress {
         return ("");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21CanBusAddress.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21CanBusAddress.class);
 
 }
