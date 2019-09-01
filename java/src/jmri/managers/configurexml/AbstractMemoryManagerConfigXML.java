@@ -1,9 +1,12 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.configurexml.BlockManagerXml;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
@@ -13,6 +16,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring
  * MemoryManagers, working with AbstractMemoryManagers.
+ * <p>
+ * Also serves as base class for {@link jmri.configurexml.BlockManagerXml} persistence.
  * <p>
  * Typically, a subclass will just implement the load(Element memories) class,
  * relying on implementation here to load the individual Memory objects. Note
@@ -34,32 +39,31 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element memories = new Element("memories");
         setStoreElementClass(memories);
         MemoryManager mm = (MemoryManager) o;
         if (mm != null) {
+            SortedSet<Memory> memList = mm.getNamedBeanSet();
             // don't return an element if there are no memories to include
-            if (mm.getSystemNameAddedOrderList().isEmpty()) {
+            if (memList.isEmpty()) {
                 return null;
             }
             // store the memories
-            for (String sName : mm.getSystemNameAddedOrderList()) {
-                if (sName == null) {
-                    log.error("System name null during store");
+            for (Memory m : memList) {
+                if (m == null) {
+                    log.error("Memory null during store, skipped");
                     break;
                 }
-                log.debug("system name is " + sName);
-                Memory m = mm.getBySystemName(sName);
-                if (m == null) {
-                    continue;
-                }
+                String mName = m.getSystemName();
+                log.debug("system name is {}", mName);
+
                 Element elem = new Element("memory");
-                elem.addContent(new Element("systemName").addContent(sName));
+                elem.addContent(new Element("systemName").addContent(mName));
 
                 // store common part
                 storeCommon(m, elem);
+
                 // store value if non-null; null values omitted
                 Object obj = m.getValue();
                 if (obj != null) {
@@ -74,7 +78,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                     }
                 }
 
-                log.debug("store Memory {}", sName);
+                log.debug("store Memory {}", mName);
                 memories.addContent(elem);
             }
         }
@@ -116,9 +120,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      */
     public void loadMemories(Element memories) {
         List<Element> memoryList = memories.getChildren("memory");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} Memory objects", memoryList.size());
-        }
+        log.debug("Found {} Memory objects", memoryList.size());
         MemoryManager mm = InstanceManager.memoryManagerInstance();
 
         for (Element el : memoryList) {

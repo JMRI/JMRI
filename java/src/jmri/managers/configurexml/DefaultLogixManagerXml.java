@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Logix;
@@ -27,29 +29,31 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element logixs = new Element("logixs");
         setStoreElementClass(logixs);
         LogixManager lxm = (LogixManager) o;
         if (lxm != null) {
+            SortedSet<Logix> logixList = lxm.getNamedBeanSet();
             // don't return an element if there are no Logix to include
-            if (lxm.getSystemNameList().isEmpty()) {
+            if (logixList.isEmpty()) {
                 return null;
             }
             // store the Logix
-            for (String sName : lxm.getSystemNameList()) {
-                if (sName == null) {
-                    log.error("System name null during store");  // NOI18N
+            for (Logix x : logixList) {
+                if (x == null) {
+                    log.error("Logix null during store, skipped");  // NOI18N
+                    break;
                 }
-                log.debug("logix system name is {}", sName);  // NOI18N
-                Logix x = lxm.getBySystemName(sName);
+                String xName = x.getSystemName();
+                log.debug("Logix system name is {}", xName);  // NOI18N
                 boolean enabled = x.getEnabled();
+
                 Element elem = new Element("logix");  // NOI18N
-                elem.addContent(new Element("systemName").addContent(sName));  // NOI18N
+                elem.addContent(new Element("systemName").addContent(xName));  // NOI18N
 
                 // As a work-around for backward compatibility, store systemName and username as attribute.
-                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 String uName = x.getUserName();
                 if (uName != null && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);  // NOI18N
@@ -124,9 +128,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      */
     public void loadLogixs(Element logixs) {
         List<Element> logixList = logixs.getChildren("logix");  // NOI18N
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} Logixs", logixList.size());  // NOI18N
-        }
+        log.debug("Found {} Logixs", logixList.size());  // NOI18N
         LogixManager lxm = InstanceManager.getDefault(jmri.LogixManager.class);
 
         for (Element elem : logixList) {
@@ -137,14 +139,12 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             }
 
             String userName = getUserName(elem);
+            log.debug("create logix: ({})({})", sysName,  // NOI18N
+                    (userName == null ? "<null>" : userName));  // NOI18N
 
             String yesno = "";
             if (elem.getAttribute("enabled") != null) {  // NOI18N
                 yesno = elem.getAttribute("enabled").getValue();  // NOI18N
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("create logix: ({})({})", sysName,  // NOI18N
-                        (userName == null ? "<null>" : userName));  // NOI18N
             }
 
             Logix x = lxm.createNewLogix(sysName, userName);

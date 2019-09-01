@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -30,39 +32,38 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element routes = new Element("routes");
         setStoreElementClass(routes);
         RouteManager rm = (RouteManager) o;
         if (rm != null) {
+            SortedSet<Route> routeList = rm.getNamedBeanSet();
             // don't return an element if there are no routes to include
-            if (rm.getSystemNameList().isEmpty()) {
+            if (routeList.isEmpty()) {
                 return null;
             }
-            for (String sName : rm.getSystemNameList()) {
-            // store the routes
-                if (sName == null) {
-                    log.error("System name null during store, skipped");
+            for (Route r : routeList) {
+                // store the routes
+                if (r == null) {
+                    log.error("Route null during store, skipped");
                     break;
                 }
-                log.debug("system name is {}", sName);
-                Route r = rm.getBySystemName(sName);
-                if (r == null) {
-                    continue;
-                }
+                String rName = r.getSystemName();
+                log.debug("system name is {}", rName);
+
                 String cTurnout = r.getControlTurnout();
                 int addedDelay = r.getRouteCommandDelay();
                 boolean routeLocked = r.getLocked();
                 String cLockTurnout = r.getLockControlTurnout();
 
                 Element elem = new Element("route");
-                elem.addContent(new Element("systemName").addContent(sName));
+                elem.addContent(new Element("systemName").addContent(rName));
 
                 // As a work-around for backward compatibility, store systemName and userName as attribute.
-                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                if (r.getUserName() != null && !r.getUserName().equals("")) {
-                    elem.setAttribute("userName", r.getUserName());
+                // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                String uName = r.getUserName();
+                if (uName != null && !uName.equals("")) {
+                    elem.setAttribute("userName", uName);
                 }
 
                 // store common parts
@@ -190,7 +191,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     elem.addContent(rsElem);
                 }
 
-                log.debug("store route {}", sName);
+                log.debug("store route {}", rName);
                 routes.addContent(elem);
             }
         }

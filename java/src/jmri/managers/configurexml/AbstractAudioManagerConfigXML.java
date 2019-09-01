@@ -1,12 +1,14 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.FileUtil;
@@ -48,20 +50,20 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     }
 
     /**
-     * Default implementation for storing the contents of a AudioManager
+     * Default implementation for storing the contents of an AudioManager.
      *
      * @param o Object to store, of type AudioManager
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
-        Element audio = new Element("audio");
-        setStoreElementClass(audio);
+        Element audios = new Element("audio");
+        setStoreElementClass(audios);
         AudioManager am = (AudioManager) o;
         if (am != null) {
+            SortedSet<Audio> audioList = am.getNamedBeanSet();
             // don't return an element if there are no audios to include
-            if (am.getSystemNameAddedOrderList().isEmpty()) {
+            if (audioList.isEmpty()) {
                 return null;
             }
             // also, don't store if we don't have any Sources or Buffers
@@ -75,20 +77,18 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            List<String> alist = am.getSystemNameAddedOrderList();
-            for (String sName : alist) {
-                log.debug("Check if {} is a VSD object", sName);
-                if (sName.length() >= 8 && sName.substring(3, 8).equalsIgnoreCase("$VSD:")) {
+            for (Audio a : audioList) {
+                String aName = a.getSystemName();
+                log.debug("Check if {} is a VSD object", aName);
+                if (aName.length() >= 8 && aName.substring(3, 8).equalsIgnoreCase("$VSD:")) {
                     log.debug("...yes");
                     vsdObjectCount++;
                 }
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("Found {} VSD objects of {} objects", vsdObjectCount,
-                        am.getSystemNameList(Audio.SOURCE).size() + am.getSystemNameList(Audio.BUFFER).size()
-                );
-            }
+            log.debug("Found {} VSD objects of {} objects", vsdObjectCount,
+                    am.getSystemNameList(Audio.SOURCE).size() + am.getSystemNameList(Audio.BUFFER).size()
+            );
 
             // check if the total number of Sources and Buffers is equal to
             // the number of VSD objects - if so, exit.
@@ -99,25 +99,19 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
 
             // store global information
-            audio.setAttribute("distanceattenuated",
-                    am.getActiveAudioFactory().isDistanceAttenuated() ? "yes" : "no");
-
+            AudioFactory audioFact = am.getActiveAudioFactory();
+            if (audioFact != null) {
+                audios.setAttribute("distanceattenuated", audioFact.isDistanceAttenuated() ? "yes" : "no");
+            }
             // store the audios
-            for (String sName : alist) {
-                if (sName == null) {
-                    log.error("System name null during store");
+            for (Audio a : audioList) {
+                String aName = a.getSystemName();
+                log.debug("system name is {}", aName);
+
+                if (aName.length() >= 8 && aName.substring(3, 8).equalsIgnoreCase("$VSD:")) {
+                    log.debug("Skipping storage of VSD object {}", aName);
                     continue;
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("system name is {}", sName);
-                }
-
-                if (sName.length() >= 8 && sName.substring(3, 8).equalsIgnoreCase("$VSD:")) {
-                    log.debug("Skipping storage of VSD object {}", sName);
-                    continue;
-                }
-
-                Audio a = am.getBySystemName(sName);
 
                 // Transient objects for current element and any children
                 Element e = null;
@@ -126,9 +120,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 int type = a.getSubType();
                 if (type == Audio.BUFFER) {
                     AudioBuffer ab = (AudioBuffer) a;
-                    e = new Element("audiobuffer")
-                            .setAttribute("systemName", sName);
-                    e.addContent(new Element("systemName").addContent(sName));
+                    e = new Element("audiobuffer").setAttribute("systemName", aName);
+                    e.addContent(new Element("systemName").addContent(aName));
 
                     // store common part
                     storeCommon(ab, e);
@@ -149,9 +142,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     e.addContent(ce);
                 } else if (type == Audio.LISTENER) {
                     AudioListener al = (AudioListener) a;
-                    e = new Element("audiolistener")
-                            .setAttribute("systemName", sName);
-                    e.addContent(new Element("systemName").addContent(sName));
+                    e = new Element("audiolistener").setAttribute("systemName", aName);
+                    e.addContent(new Element("systemName").addContent(aName));
 
                     // store common part
                     storeCommon(al, e);
@@ -188,8 +180,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 } else if (type == Audio.SOURCE) {
                     AudioSource as = (AudioSource) a;
                     e = new Element("audiosource")
-                            .setAttribute("systemName", sName);
-                    e.addContent(new Element("systemName").addContent(sName));
+                            .setAttribute("systemName", aName);
+                    e.addContent(new Element("systemName").addContent(aName));
 
                     // store common part
                     storeCommon(as, e);
@@ -244,12 +236,11 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     e.addContent(ce);
                 }
 
-                log.debug("store Audio {}", sName);
-                audio.addContent(e);
-
+                log.debug("store Audio {}", aName);
+                audios.addContent(e);
             }
         }
-        return audio;
+        return audios;
     }
 
     /**
@@ -282,40 +273,35 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
         // Load buffers first
         List<Element> audioList = audio.getChildren("audiobuffer");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} Audio Buffer objects", audioList.size());
-        }
+        log.debug("Found {} Audio Buffer objects", audioList.size());
 
-        for (int i = 0; i < audioList.size(); i++) {
-            Element e = audioList.get(i);
+        for (Element au : audioList) {
 
-            String sysName = getSystemName(e);
+            String sysName = getSystemName(au);
             if (sysName == null) {
-                log.warn("unexpected null in systemName {} {}", (e), (e).getAttributes());
+                log.warn("unexpected null in systemName {} {}", (au), (au).getAttributes());
                 break;
             }
 
-            String userName = getUserName(e);
+            String userName = getUserName(au);
+            log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
 
-            if (log.isDebugEnabled()) {
-                log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
-            }
             try {
                 AudioBuffer ab = (AudioBuffer) am.newAudio(sysName, userName);
 
                 // load common parts
-                loadCommon(ab, e);
+                loadCommon(ab, au);
 
                 // load sub-type specific parts
                 // Transient objects for reading child elements
                 Element ce;
                 String value;
 
-                if ((ce = e.getChild("url")) != null) {
+                if ((ce = au.getChild("url")) != null) {
                     ab.setURL(ce.getValue());
                 }
 
-                if ((ce = e.getChild("looppoint")) != null) {
+                if ((ce = au.getChild("looppoint")) != null) {
                     if ((value = ce.getAttributeValue("start")) != null) {
                         ab.setStartLoopPoint(Integer.parseInt(value));
                     }
@@ -324,7 +310,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     }
                 }
 
-                if ((ce = e.getChild("streamed")) != null) {
+                if ((ce = au.getChild("streamed")) != null) {
                     ab.setStreamed(ce.getValue().equals("yes"));
                 }
 
@@ -336,36 +322,31 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
         // Now load sources
         audioList = audio.getChildren("audiosource");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} Audio Source objects", audioList.size());
-        }
+        log.debug("Found {} Audio Source objects", audioList.size());
 
-        for (int i = 0; i < audioList.size(); i++) {
-            Element e = audioList.get(i);
+        for (Element au : audioList) {
 
-            String sysName = getSystemName(e);
+            String sysName = getSystemName(au);
             if (sysName == null) {
-                log.warn("unexpected null in systemName {} {}", (e), (e).getAttributes());
+                log.warn("unexpected null in systemName {} {}", (au), (au).getAttributes());
                 break;
             }
 
-            String userName = getUserName(e);
+            String userName = getUserName(au);
+            log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
 
-            if (log.isDebugEnabled()) {
-                log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
-            }
             try {
                 AudioSource as = (AudioSource) am.newAudio(sysName, userName);
 
                 // load common parts
-                loadCommon(as, e);
+                loadCommon(as, au);
 
                 // load sub-type specific parts
                 // Transient objects for reading child elements
                 Element ce;
                 String value;
 
-                if ((ce = e.getChild("position")) != null) {
+                if ((ce = au.getChild("position")) != null) {
                     as.setPosition(
                             new Vector3f(
                                     Float.parseFloat(ce.getAttributeValue("x")),
@@ -373,7 +354,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                                     Float.parseFloat(ce.getAttributeValue("z"))));
                 }
 
-                if ((ce = e.getChild("velocity")) != null) {
+                if ((ce = au.getChild("velocity")) != null) {
                     as.setVelocity(
                             new Vector3f(
                                     Float.parseFloat(ce.getAttributeValue("x")),
@@ -381,21 +362,21 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                                     Float.parseFloat(ce.getAttributeValue("z"))));
                 }
 
-                if ((ce = e.getChild("assignedbuffer")) != null) {
+                if ((ce = au.getChild("assignedbuffer")) != null) {
                     if (ce.getValue().length() != 0 && !ce.getValue().equals("null")) {
                         as.setAssignedBuffer(ce.getValue());
                     }
                 }
 
-                if ((ce = e.getChild("gain")) != null && ce.getValue().length() != 0) {
+                if ((ce = au.getChild("gain")) != null && ce.getValue().length() != 0) {
                     as.setGain(Float.parseFloat(ce.getValue()));
                 }
 
-                if ((ce = e.getChild("pitch")) != null && ce.getValue().length() != 0) {
+                if ((ce = au.getChild("pitch")) != null && ce.getValue().length() != 0) {
                     as.setPitch(Float.parseFloat(ce.getValue()));
                 }
 
-                if ((ce = e.getChild("distances")) != null) {
+                if ((ce = au.getChild("distances")) != null) {
                     if ((value = ce.getAttributeValue("ref")) != null) {
                         as.setReferenceDistance(Float.parseFloat(value));
                     }
@@ -404,7 +385,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     }
                 }
 
-                if ((ce = e.getChild("loops")) != null) {
+                if ((ce = au.getChild("loops")) != null) {
                     if ((value = ce.getAttributeValue("min")) != null) {
                         as.setMinLoops(Integer.parseInt(value));
                     }
@@ -417,7 +398,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 //                        as.setMaxLoopDelay(Integer.parseInt(value));
                 }
 
-                if ((ce = e.getChild("fadetimes")) != null) {
+                if ((ce = au.getChild("fadetimes")) != null) {
                     if ((value = ce.getAttributeValue("in")) != null) {
                         as.setFadeIn(Integer.parseInt(value));
                     }
@@ -426,7 +407,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     }
                 }
 
-                if ((ce = e.getChild("positionrelative")) != null) {
+                if ((ce = au.getChild("positionrelative")) != null) {
                     as.setPositionRelative(ce.getValue().equals("yes"));
                 }
 
@@ -439,35 +420,30 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         // Finally, load Listeners if needed
         if (loadedObjects > 0) {
             audioList = audio.getChildren("audiolistener");
-            if (log.isDebugEnabled()) {
-                log.debug("Found {} Audio Listener objects", audioList.size());
-            }
+            log.debug("Found {} Audio Listener objects", audioList.size());
 
-            for (int i = 0; i < audioList.size(); i++) {
-                Element e = audioList.get(i);
+            for (Element au : audioList) {
 
-                String sysName = getSystemName(e);
+                String sysName = getSystemName(au);
                 if (sysName == null) {
-                    log.warn("unexpected null in systemName {} {}", (e), (e).getAttributes());
+                    log.warn("unexpected null in systemName {} {}", (au), (au).getAttributes());
                     break;
                 }
 
-                String userName = getUserName(e);
+                String userName = getUserName(au);
+                log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
 
-                if (log.isDebugEnabled()) {
-                    log.debug("create Audio: ({})({})", sysName, (userName == null ? "<null>" : userName));
-                }
                 try {
                     AudioListener al = (AudioListener) am.newAudio(sysName, userName);
 
                     // load common parts
-                    loadCommon(al, e);
+                    loadCommon(al, au);
 
                     // load sub-type specific parts
                     // Transient object for reading child elements
                     Element ce;
 
-                    if ((ce = e.getChild("position")) != null) {
+                    if ((ce = au.getChild("position")) != null) {
                         al.setPosition(
                                 new Vector3f(
                                         Float.parseFloat(ce.getAttributeValue("x")),
@@ -475,7 +451,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                                         Float.parseFloat(ce.getAttributeValue("z"))));
                     }
 
-                    if ((ce = e.getChild("velocity")) != null) {
+                    if ((ce = au.getChild("velocity")) != null) {
                         al.setVelocity(
                                 new Vector3f(
                                         Float.parseFloat(ce.getAttributeValue("x")),
@@ -483,7 +459,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                                         Float.parseFloat(ce.getAttributeValue("z"))));
                     }
 
-                    if ((ce = e.getChild("orientation")) != null) {
+                    if ((ce = au.getChild("orientation")) != null) {
                         al.setOrientation(
                                 new Vector3f(
                                         Float.parseFloat(ce.getAttributeValue("atX")),
@@ -495,11 +471,11 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                                         Float.parseFloat(ce.getAttributeValue("upZ"))));
                     }
 
-                    if ((ce = e.getChild("gain")) != null) {
+                    if ((ce = au.getChild("gain")) != null) {
                         al.setGain(Float.parseFloat(ce.getValue()));
                     }
 
-                    if ((ce = e.getChild("metersperunit")) != null) {
+                    if ((ce = au.getChild("metersperunit")) != null) {
                         al.setMetersPerUnit(Float.parseFloat((ce.getValue())));
                     }
 
@@ -507,9 +483,12 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     log.error("Error loading AudioListener ({}): ", sysName, ex);
                 }
             }
-            Attribute a;
-            if ((a = audio.getAttribute("distanceattenuated")) != null) {
-                am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
+            Attribute da = audio.getAttribute("distanceattenuated");
+            if (da != null) {
+                AudioFactory audioFact = am.getActiveAudioFactory();
+                if (audioFact != null) {
+                    audioFact.setDistanceAttenuated(da.getValue().equals("yes"));
+                }
             }
         }
     }

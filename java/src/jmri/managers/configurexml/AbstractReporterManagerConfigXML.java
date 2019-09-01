@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -32,35 +34,31 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
         ReporterManager rm = (ReporterManager) o;
         if (rm != null) {
+            SortedSet<Reporter> rList = rm.getNamedBeanSet();
             // don't return an element if there are no reporters to include
-            if (rm.getSystemNameAddedOrderList().isEmpty()) {
+            if (rList.isEmpty()) {
                 return null;
             }
-            for (String sName : rm.getSystemNameAddedOrderList()) {
-            // store the reporters
-                if (sName == null) {
-                    log.error("System name null during store");
+            // store the Reporters
+            for (Reporter r : rList) {
+                if (r == null) {
+                    log.error("Reporter null during store, skipped");
                     break;
                 }
-                log.debug("system name is {}", sName);
-                Reporter r = rm.getBySystemName(sName);
-                if (r == null) {
-                    continue;
-                }
+                String rName = r.getSystemName();
+                log.debug("system name is {}", rName);
                 Element elem = new Element("reporter");
-                elem.addContent(new Element("systemName").addContent(sName));
+                elem.addContent(new Element("systemName").addContent(rName));
                 // store common parts
                 storeCommon(r, elem);
 
-                log.debug("store Reporter {}", sName);
+                log.debug("store Reporter {}", r);
                 reporters.addContent(elem);
-
             }
         }
         return reporters;
@@ -86,9 +84,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     public boolean loadReporters(Element reporters) {
         boolean result = true;
         List<Element> reporterList = reporters.getChildren("reporter");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} reporters", reporterList.size());
-        }
+        log.debug("Found {} reporters", reporterList.size());
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
         tm.setDataListenerMute(true);
 

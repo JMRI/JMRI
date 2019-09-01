@@ -2,6 +2,8 @@ package jmri.managers.configurexml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -35,32 +37,30 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o) {
         Element lights = new Element("lights");
         setStoreElementClass(lights);
         LightManager lm = (LightManager) o;
         if (lm != null) {
+            SortedSet<Light> lightList = lm.getNamedBeanSet();
             // don't return an element if there are no lights to include
-            if (lm.getSystemNameAddedOrderList().isEmpty()) {
+            if (lightList.isEmpty()) {
                 return null;
             }
-            for (String sName : lm.getSystemNameAddedOrderList()) {
+            for (Light lgt : lightList) {
                 // store the lights
-                if (sName == null) {
-                    log.error("System name null during store, skipped");
+                if (lgt == null) {
+                    log.error("Light null during store, skipped");
                     break;
                 }
-                log.debug("system name is {}", sName);
-                Light lgt = lm.getBySystemName(sName);
+                String lName = lgt.getSystemName();
+                log.debug("system name is {}", lName);
                 Element elem = new Element("light");
-                elem.addContent(new Element("systemName").addContent(sName));
+                elem.addContent(new Element("systemName").addContent(lName));
 
                 // store common parts
                 storeCommon(lgt, elem);
-                if (lgt == null) {
-                    continue;
-                }
+
                 // write variable intensity attributes
                 elem.setAttribute("minIntensity", "" + lgt.getMinIntensity());
                 elem.setAttribute("maxIntensity", "" + lgt.getMaxIntensity());
@@ -123,9 +123,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
     public boolean loadLights(Element lights) {
         boolean result = true;
         List<Element> lightList = lights.getChildren("light");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} lights", lightList.size());
-        }
+        log.debug("Found {} lights", lightList.size());
         LightManager lm = InstanceManager.lightManagerInstance();
         lm.setDataListenerMute(true);
 

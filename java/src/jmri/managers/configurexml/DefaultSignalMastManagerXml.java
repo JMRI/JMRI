@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
@@ -33,18 +35,22 @@ public class DefaultSignalMastManagerXml
     public Element store(Object o) {
         Element signalmasts = new Element("signalmasts");
         signalmasts.setAttribute("class", this.getClass().getName());
-        DefaultSignalMastManager m = (DefaultSignalMastManager) o;
-        if (m != null) {
+        DefaultSignalMastManager smm = (DefaultSignalMastManager) o;
+        if (smm != null) {
+            SortedSet<SignalMast> smList = smm.getNamedBeanSet();
+            // don't return an element if there are no SignalMasts to include
+            if (smList.isEmpty()) {
+                return null;
+            }
             // include contents
-            for (SignalMast p : m.getNamedBeanSet()) {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
+            for (SignalMast sm : smList) {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sm);
                 if (e != null) {
                     signalmasts.addContent(e);
                 }
             }
-            List<SignalMastRepeater> repeaterList = m.getRepeaterList();
+            List<SignalMastRepeater> repeaterList = smm.getRepeaterList();
             if (repeaterList.size() > 0) {
-                //Element repeatElem= new Element("signalmastrepeaters");
                 for (SignalMastRepeater smr : repeaterList) {
                     Element e = new Element("signalmastrepeater");
                     e.addContent(new Element("masterMast").addContent(smr.getMasterMastName()));
@@ -63,7 +69,6 @@ public class DefaultSignalMastManagerXml
                     }
                     signalmasts.addContent(e);
                 }
-                //signalmasts.add(repeatElem);
             }
         }
         return signalmasts;

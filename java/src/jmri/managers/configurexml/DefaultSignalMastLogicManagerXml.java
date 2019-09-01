@@ -171,9 +171,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
 
     public boolean loadSignalMastLogic(Element signalMastLogic) {
         List<Element> logicList = signalMastLogic.getChildren("signalmastlogic");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} signal mast logics", logicList.size());
-        }
+        log.debug("Found {} signal mast logics", logicList.size());
 
         SignalMastManager sm = InstanceManager.getDefault(jmri.SignalMastManager.class);
         SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);

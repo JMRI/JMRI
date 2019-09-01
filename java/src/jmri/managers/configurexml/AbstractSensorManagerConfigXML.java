@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -38,37 +40,37 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return store(o, sensors);
     }
 
-    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
     public Element store(Object o, Element sensors) {
         setStoreElementClass(sensors);
-        SensorManager tm = (SensorManager) o;
-        if (tm.getDefaultSensorDebounceGoingActive() > 0 || tm.getDefaultSensorDebounceGoingInActive() > 0) {
+        SensorManager sm = (SensorManager) o;
+        if (sm.getDefaultSensorDebounceGoingActive() > 0 || sm.getDefaultSensorDebounceGoingInActive() > 0) {
             Element elem = new Element("globalDebounceTimers");
-            elem.addContent(new Element("goingActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingActive())));
-            elem.addContent(new Element("goingInActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingInActive())));
+            elem.addContent(new Element("goingActive").addContent(String.valueOf(sm.getDefaultSensorDebounceGoingActive())));
+            elem.addContent(new Element("goingInActive").addContent(String.valueOf(sm.getDefaultSensorDebounceGoingInActive())));
             sensors.addContent(elem);
         }
+        SortedSet<Sensor> sensorList = sm.getNamedBeanSet();
         // don't return an element if there are no sensors to include
-        if (tm.getSystemNameAddedOrderList().isEmpty()) {
+        if (sensorList.isEmpty()) {
             return null;
         }
         // store the sensors
-        for (String sName : tm.getSystemNameAddedOrderList()) {
-            log.debug("system name is {}", sName);
-            Sensor s = tm.getBySystemName(sName);
+        for (Sensor s : sensorList) {
             if (s == null) {
-                continue;
+                log.error("Sensor null during store, skipped");
+                break;
             }
+            String sName = s.getSystemName();
+            log.debug("system name is {}", sName);
             String inverted = (s.getInverted() ? "true" : "false");
 
-            Element elem = new Element("sensor")
-                    .setAttribute("inverted", inverted);
+            Element elem = new Element("sensor").setAttribute("inverted", inverted);
             elem.addContent(new Element("systemName").addContent(sName));
 
             // store common part
             storeCommon(s, elem);
 
-            log.debug("store sensor {}", sName);
+            log.debug("store sensor {}", s);
             if (s.getUseDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
             } else {
@@ -79,7 +81,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     elem.addContent(timer);
                 }
             }
-            if (tm.isPullResistanceConfigurable()) {
+            if (sm.isPullResistanceConfigurable()) {
                 // store the sensor's value for pull resistance.
                 elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
             }
@@ -121,9 +123,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
     public boolean loadSensors(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} sensors", sensorList.size());
-        }
+        log.debug("Found {} sensors", sensorList.size());
         SensorManager tm = InstanceManager.sensorManagerInstance();
         tm.setDataListenerMute(true);
         long goingActive = 0L;

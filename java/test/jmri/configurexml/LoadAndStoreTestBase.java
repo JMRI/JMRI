@@ -260,7 +260,7 @@ public class LoadAndStoreTestBase {
             Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         }
 
-        log.debug("Start check file " + this.file.getCanonicalPath());
+        log.debug("Start check file {}", this.file.getCanonicalPath());
 
         loadFile(this.file);
         // Panel sub-classes (with GUI) will fail if you try to load them twice.
@@ -275,7 +275,7 @@ public class LoadAndStoreTestBase {
         if (!compFile.exists()) {
             compFile = this.file;
         }
-        log.debug("   Chose comparison file " + compFile.getCanonicalPath());
+        log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);

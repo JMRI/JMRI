@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -45,29 +47,27 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element signalheads = new Element("signalheads");
         setStoreElementClass(signalheads);
         SignalHeadManager shm = (SignalHeadManager) o;
         if (shm != null) {
+            SortedSet<SignalHead> shList = shm.getNamedBeanSet();
             // don't return an element if there are no signalheads to include
-            if (shm.getSystemNameList().isEmpty()) {
+            if (shList.isEmpty()) {
                 return null;
             }
-            for (String sName : shm.getSystemNameList()) {
+            for (SignalHead sh : shList) {
                 // store the signalheads
-                if (sName == null) {
-                    log.error("System name null during store, skipped");
-                    continue;
+                if (sh == null) {
+                    log.error("SignalHead null during store, skipped");
+                    break;
                 }
-                log.debug("system name is {}", sName);
-                SignalHead sub = shm.getBySystemName(sName);
-                if (sub != null) {
-                    Element e = ConfigXmlManager.elementFromObject(sub);
-                    if (e != null) {
-                        signalheads.addContent(e);
-                    }
+                String shName = sh.getSystemName();
+                log.debug("system name is {}", shName);
+                Element e = ConfigXmlManager.elementFromObject(sh);
+                if (e != null) {
+                    signalheads.addContent(e);
                 }
             }
         }
@@ -122,9 +122,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
 
         // load the contents
         List<Element> items = shared.getChildren();
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} signal heads", items.size());
-        }
+        log.debug("Found {} signal heads", items.size());
         for (Element item : items) {
             // get the class, hence the adapter object to do loading
             String adapterName = item.getAttribute("class").getValue();

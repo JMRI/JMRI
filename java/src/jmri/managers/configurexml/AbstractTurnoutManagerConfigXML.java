@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
@@ -40,8 +42,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-
     public Element store(Object o) {
         Element turnouts = new Element("turnouts");
         setStoreElementClass(turnouts);
@@ -50,33 +50,33 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
             Element opElem = tomx.store(InstanceManager.getDefault(TurnoutOperationManager.class));
             turnouts.addContent(opElem);
+            SortedSet<Turnout> tList = tm.getNamedBeanSet();
             // don't return an element if there are no turnouts to include
-            if (tm.getSystemNameAddedOrderList().isEmpty()) {
+            if (tList.isEmpty()) {
                 return null;
             }
-            for (String sName : tm.getSystemNameAddedOrderList()) {
-                String defaultclosed = tm.getDefaultClosedSpeed();
-                String defaultthrown = tm.getDefaultThrownSpeed();
-                turnouts.addContent(new Element("defaultclosedspeed").addContent(defaultclosed));
-                turnouts.addContent(new Element("defaultthrownspeed").addContent(defaultthrown));
-
+            String defaultclosed = tm.getDefaultClosedSpeed();
+            String defaultthrown = tm.getDefaultThrownSpeed();
+            turnouts.addContent(new Element("defaultclosedspeed").addContent(defaultclosed));
+            turnouts.addContent(new Element("defaultthrownspeed").addContent(defaultthrown));
+            for (Turnout t : tList) {
                 // store the turnouts
-                log.debug("system name is {}", sName);
-                Turnout t = tm.getBySystemName(sName);
                 if (t == null) {
-                    log.error("System name null during store, skipped");
+                    log.error("Turnout null during store, skipped");
                     continue;
                 }
+                String tName = t.getSystemName();
+                log.debug("system name is {}", tName);
+
                 Element elem = new Element("turnout");
-                elem.addContent(new Element("systemName").addContent(sName));
-                log.debug("store turnout {}", sName);
+                elem.addContent(new Element("systemName").addContent(tName));
+                log.debug("store turnout {}", tName);
 
                 storeCommon(t, elem);
 
                 // include feedback info
                 elem.setAttribute("feedback", t.getFeedbackModeName());
-                NamedBeanHandle<Sensor> s;
-                s = t.getFirstNamedSensor();
+                NamedBeanHandle<Sensor> s = t.getFirstNamedSensor();
                 if (s != null) {
                     elem.setAttribute("sensor1", s.getName());
                 }
@@ -185,9 +185,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             tomx.load(operationList.get(0), null);
         }
         List<Element> turnoutList = shared.getChildren("turnout");
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} turnouts", turnoutList.size());
-        }
+        log.debug("Found {} turnouts", turnoutList.size());
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         tm.setDataListenerMute(true);
 

@@ -2,6 +2,8 @@ package jmri.managers.configurexml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalManager;
@@ -33,42 +35,40 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
-//    	long numCond = 0;
-//    	long numStateVars = 0;
+        // long numCond = 0;
+        // long numStateVars = 0;
         Element conditionals = new Element("conditionals");  // NOI18N
         setStoreElementClass(conditionals);
         ConditionalManager cm = (ConditionalManager) o;
         if (cm != null) {
+            SortedSet<Conditional> condList = cm.getNamedBeanSet();
             // don't return an element if there are no conditionals to include
-            if (cm.getSystemNameList().isEmpty()) {
+            if (condList.isEmpty()) {
                 return null;
             }
-            for (String sName : cm.getSystemNameList()) {
+            for (Conditional c : condList) {
                 // store the conditionals
-//            	numCond++;
-//            	long condTime = System.currentTimeMillis();
-                if (sName == null) {
-                    log.error("System name null during store");  // NOI18N
-                }
-                log.debug("conditional system name is {}", sName);  // NOI18N
-                Conditional c = cm.getBySystemName(sName);
+                // numCond++;
+                // long condTime = System.currentTimeMillis();
                 if (c == null) {
-                    log.error("Unable to save '{}' to the XML file", sName);  // NOI18N
-                    continue;
+                    log.error("Conditional null during store, skipped");  // NOI18N
+                    break;
                 }
+                String cName = c.getSystemName();
+                log.debug("conditional system name is {}", cName);  // NOI18N
+
                 Element elem = new Element("conditional");  // NOI18N
 
-                // As a work-around for backward compatibility, store systemName and username as attribute.
-                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                elem.setAttribute("systemName", sName);  // NOI18N
+                // As a work-around for backward compatibility, store systemName and userName as attributes.
+                // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                elem.setAttribute("systemName", cName);  // NOI18N
                 String uName = c.getUserName();
                 if (uName != null && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);  // NOI18N
                 }
 
-                elem.addContent(new Element("systemName").addContent(sName));
+                elem.addContent(new Element("systemName").addContent(cName));
 
                 // store common parts
                 storeCommon(c, elem);
@@ -85,7 +85,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // creation time goes from less than 1ms to more than 5000ms.
                 // Don't need a clone for read-only use.
 //                List <ConditionalVariable> variableList = c.getCopyOfStateVariables();
-                List<ConditionalVariable> variableList = ((jmri.implementation.DefaultConditional) c).getStateVariableList();
+                List<ConditionalVariable> variableList = ((DefaultConditional) c).getStateVariableList();
                 /*                numStateVars += variableList.size();
                  if (numCond>1190) {
                  partTime = System.currentTimeMillis() - partTime;
@@ -181,16 +181,14 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 
     /**
      * Utility method to load the individual Logix objects. If there's no
-     * additional info needed for a specific logix type, invoke this with the
+     * additional info needed for a specific Logix type, invoke this with the
      * parent of the set of Logix elements.
      *
      * @param conditionals Element containing the Logix elements to load.
      */
     public void loadConditionals(Element conditionals) {
         List<Element> conditionalList = conditionals.getChildren("conditional");  // NOI18N
-        if (log.isDebugEnabled()) {
-            log.debug("Found {} conditionals", conditionalList.size());  // NOI18N
-        }
+        log.debug("Found {} conditionals", conditionalList.size());  // NOI18N
         ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
 
         for (Element condElem : conditionalList) {

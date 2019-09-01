@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
@@ -33,14 +35,22 @@ public class DefaultSignalGroupManagerXml
         groups.setAttribute("class", this.getClass().getName());
         SignalGroupManager sgm = (SignalGroupManager) o;
         if (sgm != null) {
+            SortedSet<SignalGroup> sgList = sgm.getNamedBeanSet();
             // don't return an element if there are no SignalGroups to include
-            if (sgm.getNamedBeanSet().isEmpty()) {
+            if (sgList.isEmpty()) {
                 return null;
             }
             // include contents
-            for (SignalGroup sg : sgm.getNamedBeanSet()) {
+            for (SignalGroup sg : sgList) {
+                if (sg == null) {
+                    log.error("SignalGroup null during store, skipped");  // NOI18N
+                    break;
+                }
+                String sgName = sg.getSystemName();
+                log.debug("SignalGroup system name is {}", sgName);  // NOI18N
+
                 Element e = new Element("signalgroup");
-                e.addContent(new Element("systemName").addContent(sg.getSystemName()));
+                e.addContent(new Element("systemName").addContent(sgName));
                 e.addContent(new Element("userName").addContent(sg.getUserName()));
                 // storeCommon(sg, e); previously would store comment, now a separate element
                 storeComment(sg, e);
