@@ -145,7 +145,8 @@ public class JsonSignalHeadSocketServiceTest {
         Assert.assertEquals("One listener", 1, manager.getPropertyChangeListeners().length);
         JUnitAppender.assertWarnMessage(
                 "json error sending SignalHeads: {\"type\":\"error\",\"data\":{\"code\":499,\"message\":\"Mock Exception\"}}");
-
+        JUnitAppender.assertWarnMessage(
+                "json error sending SignalHeads: {\"type\":\"error\",\"data\":{\"code\":499,\"message\":\"Mock Exception\"}}");
         // trap IOException error
         connection.setThrowIOException(true);
         manager.deregister(s1); // an untrapped error will be thrown by the test

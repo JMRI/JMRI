@@ -23,14 +23,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author Randall Wood (C) 2016
  */
 public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHeadHttpService> {
 
     private final HashMap<String, SignalHeadListener> beanListeners = new HashMap<>();
     private SignalHeadsListener managerListener = null;
-    private final static Logger log = LoggerFactory.getLogger(JsonSignalHeadSocketService.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonSignalHeadSocketService.class);
 
     public JsonSignalHeadSocketService(JsonConnection connection) {
         this(connection, new JsonSignalHeadHttpService(connection.getObjectMapper()));
@@ -40,9 +39,10 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     public JsonSignalHeadSocketService(JsonConnection connection, JsonSignalHeadHttpService service) {
         super(connection, service);
     }
-    
+
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id)
+            throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         String name = data.path(NAME).asText();
         if (method.equals(PUT)) {
@@ -61,7 +61,8 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
+    public void onList(String type, JsonNode data, Locale locale, int id)
+            throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
         log.debug("adding SignalHeadsListener");
@@ -78,13 +79,12 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
                 beanListeners.remove(name);
             }
         }
-    }    
+    }
 
     @Override
     public void onClose() {
-        beanListeners.values().stream().forEach((listener) -> {
-            listener.signalHead.removePropertyChangeListener(listener);
-        });
+        beanListeners.values().stream()
+                .forEach(listener -> listener.signalHead.removePropertyChangeListener(listener));
         beanListeners.clear();
         InstanceManager.getDefault(SignalHeadManager.class).removePropertyChangeListener(managerListener);
         managerListener = null;
@@ -114,17 +114,19 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
             }
         }
     }
-    
+
     private class SignalHeadsListener implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in SignalHeadsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            log.debug("in SignalHeadsListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(),
+                    evt.getNewValue());
 
             try {
                 try {
-                 // send the new list
-                    connection.sendMessage(service.doGetList(SIGNAL_HEADS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
-                    //child added or removed, reset listeners
+                    // send the new list
+                    connection.sendMessage(service.doGetList(SIGNAL_HEADS, service.getObjectMapper().createObjectNode(),
+                            getLocale(), 0), 0);
+                    // child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         removeListenersFromRemovedBeans();
                     }
@@ -133,7 +135,8 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
                     connection.sendMessage(ex.getJsonMessage(), 0);
                 }
             } catch (IOException ex) {
-                // do nothing; the listeners will be removed as the connection gets closed
+                // do nothing; the listeners will be removed as the connection
+                // gets closed
             }
         }
     }
