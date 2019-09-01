@@ -631,6 +631,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         rs.setRfid(data.path(RFID).asText(rs.getRfid()));
         rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
         rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
+        rs.setTypeName(data.path(CAR_TYPE).asText(rs.getTypeName()));
         ObjectNode result = utilities.getRollingStock(rs, locale);
         if (!rs.getId().equals(name)) {
             result.put(RENAME, name);

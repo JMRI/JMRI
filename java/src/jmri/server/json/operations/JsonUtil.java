@@ -17,6 +17,7 @@ import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.operations.JsonOperations.BUILT;
 import static jmri.server.json.operations.JsonOperations.CAR;
+import static jmri.server.json.operations.JsonOperations.CAR_SUB_TYPE;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
@@ -322,10 +323,11 @@ public class JsonUtil {
         node.put(NAME, rs.getId());
         node.put(NUMBER, TrainCommon.splitString(rs.getNumber()));
         node.put(ROAD, rs.getRoadName());
-        String[] type = rs.getTypeName().split("-"); // second half of string
-        // can be anything
+        // second half of string can be anything
+        String[] type = rs.getTypeName().split("-", 2);
         node.put(RFID, rs.getRfid());
         node.put(CAR_TYPE, type[0]);
+        node.put(CAR_SUB_TYPE, type.length == 2 ? type[1] : null);
         node.put(LENGTH, rs.getLengthInteger());
         try {
             node.put(WEIGHT, Double.parseDouble(rs.getWeight()));
