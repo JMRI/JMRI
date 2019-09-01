@@ -83,8 +83,8 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
             case SIGNAL_MASTS:
                 return doSchema(type,
                         server,
-                        "jmri/server/json/signalMast/signalMast-server.json",
-                        "jmri/server/json/signalMast/signalMast-client.json",
+                        "jmri/server/json/signalmast/signalMast-server.json",
+                        "jmri/server/json/signalmast/signalMast-client.json",
                         id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
