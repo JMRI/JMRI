@@ -36,12 +36,11 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
         ObjectNode root = this.getNamedBean(idTag, name, type, locale, id); // throws JsonException if idTag == null
         ObjectNode data = root.with(JSON.DATA);
         if (idTag != null) {
-            switch (idTag.getState()) {
-                case IdTag.UNKNOWN:
-                    data.put(JSON.STATE, JSON.UNKNOWN);
-                    break;
-                default:
-                    data.put(JSON.STATE, idTag.getState());
+            int state = idTag.getState();
+            if (state == IdTag.UNKNOWN) {
+                data.put(JSON.STATE, JSON.UNKNOWN);
+            } else {
+                data.put(JSON.STATE, state);
             }
             Reporter reporter = idTag.getWhereLastSeen();
             data.put(JsonReporter.REPORTER, reporter != null ? reporter.getSystemName() : null);
@@ -61,7 +60,7 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
             if (reporter != null) {
                 idTag.setWhereLastSeen(reporter);
             } else {
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()), id);
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER, node.asText()), id);
             }
         }
         return doGet(idTag, name, type, locale, id);
@@ -74,15 +73,14 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
 
     @Override
     public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
-        switch (type) {
-            case IDTAG:
-                return doSchema(type,
-                        server,
-                        "jmri/server/json/idTag/idTag-server.json",
-                        "jmri/server/json/idTag/idTag-client.json",
-                        id);
-            default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+        if (IDTAG.equals(type)) {
+            return doSchema(type,
+                    server,
+                    "jmri/server/json/idTag/idTag-server.json",
+                    "jmri/server/json/idTag/idTag-client.json",
+                    id);
+        } else {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -92,7 +90,7 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
     }
 
     @Override
-    protected ProvidingManager<IdTag> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<IdTag> getManager() {
         return InstanceManager.getDefault(IdTagManager.class);
     }
 }

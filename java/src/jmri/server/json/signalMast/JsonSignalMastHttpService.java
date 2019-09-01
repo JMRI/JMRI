@@ -87,7 +87,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                         "jmri/server/json/signalMast/signalMast-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -97,7 +97,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    protected ProvidingManager<SignalMast> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<SignalMast> getManager() {
         return InstanceManager.getDefault(SignalMastManager.class);
     }
 }

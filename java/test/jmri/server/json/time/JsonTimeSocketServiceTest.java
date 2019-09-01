@@ -14,7 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
@@ -152,23 +151,15 @@ public class JsonTimeSocketServiceTest {
     @Test
     public void testListenerErrorHandling() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        TestJsonTimeHttpService http = new TestJsonTimeHttpService(connection.getObjectMapper());
+        JsonTimeHttpService http = new JsonTimeHttpService(connection.getObjectMapper());
         JsonTimeSocketService service = new JsonTimeSocketService(connection, http);
         Timebase manager = InstanceManager.getDefault(Timebase.class);
         manager.setRun(false); // stop for testing
         // GET method
         service.onMessage(JSON.TIME, connection.getObjectMapper().createObjectNode(), JSON.GET,
                 locale, 42);
-        // Thrown JsonException on next message
-        http.setThrowException(true);
         // We should be listening so make a change
         manager.setRate(60); // one minute per second
-        JsonNode message = connection.getMessage();
-        Assert.assertNotNull("Message is not null", message);
-        Assert.assertEquals("Message is error", JsonException.ERROR, message.path(JSON.TYPE).asText());
-        Assert.assertEquals("Error code is HTTP 499", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
-        Assert.assertEquals("Error message is mocked", "Mock Exception",
-                message.path(JSON.DATA).path(JsonException.MESSAGE).asText());
         // Thrown IOException on next message
         connection.setThrowIOException(true);
         manager.setRate(10);
@@ -184,29 +175,6 @@ public class JsonTimeSocketServiceTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
-    }
-
-    private static class TestJsonTimeHttpService extends JsonTimeHttpService {
-
-        private boolean throwException = false;
-
-        public TestJsonTimeHttpService(ObjectMapper mapper) {
-            super(mapper);
-        }
-
-        @Override
-        public JsonNode doGet(String type, Timebase timebase, Date time, Locale locale, int id) throws JsonException {
-            if (throwException) {
-                throwException = false;
-                throw new JsonException(499, "Mock Exception", id);
-            }
-            return super.doGet(type, timebase, time, locale, id);
-        }
-
-        public void setThrowException(boolean throwException) {
-            this.throwException = throwException;
-        }
-
     }
     
     private static class TimebaseTimeListener implements PropertyChangeListener {
