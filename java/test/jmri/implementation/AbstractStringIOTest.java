@@ -20,6 +20,16 @@ public class AbstractStringIOTest {
     }
     
     @Test
+    public void testSystemNames() {
+        MyAbstractStringIO myStringIO_1 = new MyAbstractStringIO("IS1");
+        MyAbstractStringIO myStringIO_2 = new MyAbstractStringIO("IS01");
+        Assert.assertEquals("StringIO system name is correct", "IS1", myStringIO_1.getSystemName());
+        Assert.assertEquals("StringIO system name is correct", "IS01", myStringIO_2.getSystemName());
+        Assert.assertNotEquals("StringIOs are different", myStringIO_1, myStringIO_2);
+        Assert.assertNotEquals("StringIO compareTo returns not zero", 0, myStringIO_1.compareTo(myStringIO_2));
+    }
+    
+    @Test
     public void testStringIO() throws JmriException {
         MyAbstractStringIO myStringIO = new MyAbstractStringIO();
         myStringIO.setCommandedStringValue("8:20. Train 21 to Vaxjo");
@@ -69,6 +79,10 @@ public class AbstractStringIOTest {
         
         MyAbstractStringIO() {
             super("MySystemName");
+        }
+
+        MyAbstractStringIO(String sysName) {
+            super(sysName);
         }
 
         MyAbstractStringIO(int maxLen, boolean cut) {
