@@ -21,10 +21,10 @@ public class AbstractStringIOTest {
     
     @Test
     public void testSystemNames() {
-        MyAbstractStringIO myStringIO_1 = new MyAbstractStringIO("IS1");
-        MyAbstractStringIO myStringIO_2 = new MyAbstractStringIO("IS01");
-        Assert.assertEquals("StringIO system name is correct", "IS1", myStringIO_1.getSystemName());
-        Assert.assertEquals("StringIO system name is correct", "IS01", myStringIO_2.getSystemName());
+        MyAbstractStringIO myStringIO_1 = new MyAbstractStringIO("IZ1");
+        MyAbstractStringIO myStringIO_2 = new MyAbstractStringIO("IZ01");
+        Assert.assertEquals("StringIO system name is correct", "IZ1", myStringIO_1.getSystemName());
+        Assert.assertEquals("StringIO system name is correct", "IZ01", myStringIO_2.getSystemName());
         Assert.assertNotEquals("StringIOs are different", myStringIO_1, myStringIO_2);
         Assert.assertNotEquals("StringIO compareTo returns not zero", 0, myStringIO_1.compareTo(myStringIO_2));
     }
@@ -56,7 +56,7 @@ public class AbstractStringIOTest {
                 "8:20. Trai".equals(myStringIO.getKnownStringValue()));
         
         Assert.assertTrue("toString() matches",
-                "jmri.implementation.AbstractStringIOTest$MyAbstractStringIO (MySystemName)".equals(myStringIO.toString()));
+                "jmri.implementation.AbstractStringIOTest$MyAbstractStringIO (IZMySystemName)".equals(myStringIO.toString()));
         
         Assert.assertTrue("getBeanType() matches", "String I/O".equals(myStringIO.getBeanType()));
     }
@@ -78,7 +78,7 @@ public class AbstractStringIOTest {
         private boolean _cut = false;
         
         MyAbstractStringIO() {
-            super("MySystemName");
+            super("IZMySystemName");
         }
 
         MyAbstractStringIO(String sysName) {
@@ -86,7 +86,7 @@ public class AbstractStringIOTest {
         }
 
         MyAbstractStringIO(int maxLen, boolean cut) {
-            super("MySystemName");
+            super("IZMySystemName");
             _maxLen = maxLen;
             _cut = cut;
         }
