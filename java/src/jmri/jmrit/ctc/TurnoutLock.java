@@ -54,7 +54,7 @@ public class TurnoutLock {
     private NBHSensor _mDispatcherSensorUnlockedIndicator;
     private boolean _mNoDispatcherControlOfSwitch = false;
     private int _m_ndcos_WhenLockedSwitchState = 0;
-    
+
     public TurnoutLock( String userIdentifier,
                         String dispatcherSensorLockToggle,          // Toggle switch that indicates lock/unlock on the panel.  If None, then PERMANENTLY locked by the Dispatcher!
                         String actualTurnout,                       // The turnout being locked: LTxx a real turnout, like LT69.
@@ -82,7 +82,9 @@ public class TurnoutLock {
         updateDispatcherSensorIndicator(turnoutLocksEnabledAtStartup);
         _mTurnoutsMonitoredPropertyChangeListener = (PropertyChangeEvent e) -> { handleTurnoutChange(e); };
         for (NBHTurnout tempTurnout : _mTurnoutsMonitored) {
-            tempTurnout.setCommandedState(_mCommandedState);    // MUST be done before "addPropertyChangeListener":
+            if (tempTurnout.getKnownState() == Turnout.UNKNOWN) {
+                tempTurnout.setCommandedState(_mCommandedState);    // MUST be done before "addPropertyChangeListener":
+            }
             tempTurnout.addPropertyChangeListener(_mTurnoutsMonitoredPropertyChangeListener);
         }
     }
@@ -92,9 +94,9 @@ public class TurnoutLock {
             tempTurnout.removePropertyChangeListener(_mTurnoutsMonitoredPropertyChangeListener);
         }
     }
-    
+
     public NBHSensor getDispatcherSensorLockToggle() { return _mDispatcherSensorLockToggle; }
-    
+
     private void addTurnoutMonitored(String userIdentifier, String parameter, String actualTurnout, boolean FeedbackDifferent, boolean required) {
         boolean actualTurnoutPresent = !ProjectsCommonSubs.isNullOrEmptyString(actualTurnout);
         if (required && !actualTurnoutPresent) {
@@ -106,7 +108,7 @@ public class TurnoutLock {
             if (tempTurnout.valid()) _mTurnoutsMonitored.add(tempTurnout);
         }
     }
-    
+
 //  Was propertyChange:
     private void handleTurnoutChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) { // NOI18N
@@ -126,7 +128,7 @@ public class TurnoutLock {
             }
         }
     }
-    
+
 /*
 External software calls this from initialization code in order to lock the turnout.  When this code starts
 up the lock status is UNLOCKED so that initialization code can do whatever to the turnout.
@@ -136,14 +138,14 @@ This routine DOES NOT modify the state of the switch, ONLY the lock!
         _mDispatcherSensorLockToggle.setKnownState(Sensor.INACTIVE);
         updateDispatcherSensorIndicator(true);
     }
-    
-//  Ditto above routine, except opposite:    
+
+//  Ditto above routine, except opposite:
     public void externalUnlockTurnout() {
         _mDispatcherSensorLockToggle.setKnownState(Sensor.ACTIVE);
         updateDispatcherSensorIndicator(false);
     }
-    
-//  External software calls this (from CodeButtonHandler typically) to inform us of a valid code button push:    
+
+//  External software calls this (from CodeButtonHandler typically) to inform us of a valid code button push:
     public void codeButtonPressed() {
         boolean newLockedState = getNewLockedState();
         if (newLockedState == _mLocked) return; // Nothing changed
@@ -154,25 +156,25 @@ This routine DOES NOT modify the state of the switch, ONLY the lock!
         }
         updateDispatcherSensorIndicator(newLockedState);
     }
-    
-// External software calls this (from CodeButtonHandler typically) to tell us of the new state of the turnout:    
+
+// External software calls this (from CodeButtonHandler typically) to tell us of the new state of the turnout:
     public void dispatcherCommandedState(int commandedState) {
         if (commandedState == CTCConstants.SWITCHNORMAL) _mCommandedState = Turnout.CLOSED; else _mCommandedState = Turnout.THROWN;
     }
-    
+
     public boolean turnoutPresentlyLocked() { return _mLocked; }
-    
+
     public boolean getNewLockedState() {
         return _mDispatcherSensorLockToggle.getKnownState() == Sensor.INACTIVE;
     }
-    
+
     public boolean tryingToChangeLockStatus() { return getNewLockedState() != _mLocked; }
-    
+
     private void turnoutSetCommandedState(NBHTurnout turnout, int state) {
         _mCommandedState = state;
         turnout.setCommandedState(state);
     }
-    
+
     private void updateDispatcherSensorIndicator(boolean newLockedState) {
         _mLocked = newLockedState;
         _mDispatcherSensorUnlockedIndicator.setKnownState(_mLocked ? Sensor.INACTIVE : Sensor.ACTIVE);
