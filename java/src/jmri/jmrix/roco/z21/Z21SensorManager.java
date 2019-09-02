@@ -2,6 +2,7 @@ package jmri.jmrix.roco.z21;
 
 import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -202,8 +203,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
         String tmpSName = "";
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"),
                             Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
@@ -237,8 +238,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
           // normalize the hex characters in the system name to upper case.
           String curAddress = sName.substring(getSystemPrefix().length() +1);
           try {
-             return super.getBySystemName(createSystemName(curAddress, getSystemPrefix()));
-          } catch (JmriException je) {
+             return super.getBySystemName(makeSystemName(curAddress));
+          } catch (NamedBean.BadSystemNameException je) {
              // format isn't correct, but s already equals null, so just return
              // that.
           }

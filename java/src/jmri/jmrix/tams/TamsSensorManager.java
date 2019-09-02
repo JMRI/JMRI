@@ -3,6 +3,7 @@ package jmri.jmrix.tams;
 import java.util.Hashtable;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -157,8 +158,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         String tmpSName;
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"),
                     Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
@@ -171,8 +172,8 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             port++;
             while (port < 17) {
                 try {
-                    tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (JmriException e) {
+                    tmpSName = makeSystemName(board + ":" + port);
+                } catch (NamedBean.BadSystemNameException e) {
                     log.error("Error creating system name for {}:{}", board, port);
                 }
                 s = getBySystemName(tmpSName);

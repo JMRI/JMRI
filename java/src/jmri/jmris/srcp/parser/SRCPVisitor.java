@@ -1,6 +1,7 @@
 package jmri.jmris.srcp.parser;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -273,8 +274,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                     if (devicegroup.equals("FB") && isSupported(bus, devicegroup)) {
                         jmri.SensorManager mgr = memo.get(jmri.SensorManager.class);
                         try {
-                            String searchName = mgr.createSystemName(address,
-                                    memo.getSystemPrefix());
+                            String searchName = mgr.makeSystemName(address);
                             if (mgr.getBySystemName(searchName) != null) {
                                 // add the initialization parameter list.
                                 // we don't expect parameters, so just return
@@ -284,14 +284,14 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                                 // the device wasn't found.
                                 outputString = "412 ERROR wrong value";
                             }
-                        } catch (jmri.JmriException je) {
+                        } catch (NamedBean.BadSystemNameException je) {
                             // the device wasn't found.
                             outputString = "412 ERROR wrong value";
                         }
                     } else if (devicegroup.equals("GA") && isSupported(bus, devicegroup)) {
                         jmri.TurnoutManager mgr = memo.get(jmri.TurnoutManager.class);
                         try {
-                            String searchName = mgr.createSystemName(address, memo.getSystemPrefix());
+                            String searchName = mgr.makeSystemName(address);
                             if (mgr.getBySystemName(searchName) != null) {
                                 // add the initialization parameter list.
                                 // the only other required parameter is
@@ -307,7 +307,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                                 // the device wasn't found.
                                 outputString = "412 ERROR wrong value";
                             }
-                        } catch (jmri.JmriException je) {
+                        } catch (NamedBean.BadSystemNameException je) {
                             // the device wasn't found.
                             outputString = "412 ERROR wrong value";
                         }

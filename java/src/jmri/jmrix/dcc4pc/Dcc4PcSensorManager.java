@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -139,8 +140,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         String tmpSName = "";
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"),
                             Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);

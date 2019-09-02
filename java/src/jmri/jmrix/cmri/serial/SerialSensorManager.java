@@ -2,6 +2,7 @@ package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
@@ -218,8 +219,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
         String tmpSName = "";
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"),

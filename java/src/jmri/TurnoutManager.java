@@ -253,7 +253,9 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      * @throws jmri.JmriException if unable to create a system name for the
      *                            given address, possibly due to invalid address
      *                            format
+     * @deprecated since 4.17.5; use {@link #makeSystemName(java.lang.String)} instead
      */
+    @Deprecated
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     public void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException;

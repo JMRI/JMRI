@@ -2,6 +2,7 @@ package jmri.jmrix.grapevine;
 
 import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -111,9 +112,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         String tmpSName = "";
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            throw ex;
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
+            throw new JmriException(ex);
         }
 
         // If the hardware address passed does not already exist then this can

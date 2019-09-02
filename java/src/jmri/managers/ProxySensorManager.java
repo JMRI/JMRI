@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import javax.annotation.Nonnull;
+import jmri.NamedBean;
 
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -125,10 +126,10 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
             if (prefix.equals(
                     ((SensorManager) getMgr(i)).getSystemPrefix())) {
                 try {
-                    return ((SensorManager) getMgr(i)).createSystemName(curAddress, prefix);
-                } catch (jmri.JmriException ex) {
-                    log.error(ex.toString());
-                    throw ex;
+                    return ((SensorManager) getMgr(i)).makeSystemName(curAddress);
+                } catch (NamedBean.BadSystemNameException ex) {
+                    log.error(ex.getMessage());
+                    throw new jmri.JmriException(ex);
                 }
             }
         }

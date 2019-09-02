@@ -226,9 +226,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
             if (prefix.equals(
                     ((TurnoutManager) getMgr(i)).getSystemPrefix())) {
                 try {
-                    return ((TurnoutManager) getMgr(i)).createSystemName(curAddress, prefix);
-                } catch (jmri.JmriException ex) {
-                    throw ex;
+                    return ((TurnoutManager) getMgr(i)).makeSystemName(curAddress);
+                } catch (NamedBean.BadSystemNameException ex) {
+                    throw new jmri.JmriException(ex);
                 }
             }
         }

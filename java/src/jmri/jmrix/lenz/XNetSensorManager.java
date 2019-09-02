@@ -217,8 +217,8 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         String tmpSName = "";
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"),
                             Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);

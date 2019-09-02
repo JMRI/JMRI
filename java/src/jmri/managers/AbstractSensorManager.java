@@ -1,8 +1,10 @@
 package jmri.managers;
 
 import java.util.Enumeration;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrix.SystemConnectionMemo;
@@ -162,12 +164,11 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
-            Integer.parseInt(curAddress);
-        } catch (java.lang.NumberFormatException ex) {
+            return makeSystemName(prefix + typeLetter() + curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             log.warn("Hardware Address passed should be a number, was {}", curAddress);
             throw new JmriException("Hardware Address passed should be a number");
         }
-        return prefix + typeLetter() + curAddress;
     }
 
     /** {@inheritDoc} */
@@ -178,8 +179,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         String tmpSName;
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
             return null;

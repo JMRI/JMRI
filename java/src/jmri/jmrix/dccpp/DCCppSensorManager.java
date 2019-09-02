@@ -5,6 +5,7 @@ import static jmri.jmrix.dccpp.DCCppConstants.MAX_SENSOR_ID;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,8 +182,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         String tmpSName;
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;

@@ -3,6 +3,7 @@ package jmri.jmrix.cmri.serial;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
@@ -299,9 +300,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            throw ex;
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
+            throw new JmriException(ex);
         }
 
         //If the hardware address part does not already exist then this can

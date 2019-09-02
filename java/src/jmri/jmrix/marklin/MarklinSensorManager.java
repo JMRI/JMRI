@@ -3,6 +3,7 @@ package jmri.jmrix.marklin;
 import java.util.Hashtable;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,8 +126,8 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         String tmpSName;
 
         try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
+            tmpSName = makeSystemName(curAddress);
+        } catch (NamedBean.BadSystemNameException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
@@ -139,8 +140,8 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             port++;
             while (port < 17) {
                 try {
-                    tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (JmriException e) {
+                    tmpSName = makeSystemName(board + ":" + port);
+                } catch (NamedBean.BadSystemNameException e) {
                     log.error("Error creating system name for " + board + ":" + port);
                     JOptionPane.showMessageDialog(null, (Bundle.getMessage("ErrorCreateSystemName") +  " " + board + ":" + port),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
