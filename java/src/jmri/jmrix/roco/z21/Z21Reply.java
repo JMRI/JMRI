@@ -17,6 +17,8 @@ import jmri.DccLocoAddress;
  */
 public class Z21Reply extends AbstractMRReply {
 
+    private static final String WRONG_REPLY_TYPE = "Wrong Reply Type";
+
     /**
      *  Create a new one.
      */
@@ -101,6 +103,8 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
+           case 0x0051:
+                return Bundle.getMessage("Z21ReplyBroadcastFlags",interpretBroadcastFlags());
            case 0x0080:
                int groupIndex = getElement(4) & 0xff;
                int offset = (groupIndex * 10) + 1;
@@ -226,6 +230,12 @@ public class Z21Reply extends AbstractMRReply {
         return toString();
     }
 
+    private String interpretBroadcastFlags(){
+        int flags = getElement(4 ) + (getElement(5) << 8)
+                + (getElement(6) << 16) + (getElement(7) << 24);
+        return "" + flags;
+    }
+
     // handle XpressNet replies tunneled in Z21 messages
     boolean isXPressNetTunnelMessage() {
         return (getOpCode() == 0x0040);
@@ -267,7 +277,7 @@ public class Z21Reply extends AbstractMRReply {
         // if this is a RailCom message, the length field is
         // then the entries are n=(len-4)/13, per the Z21 protocol 
         // manual, section 8.1.  Also, 0<=n<=19
-        return (((getLength() - 4)/13));
+        return ((getLength() - 4)/13);
     } 
 
     /**
@@ -368,7 +378,7 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getSystemDataMainCurrent(){
          if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException("Wrong Reply Type");
+            throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 4; //skip the headers
          int current = ((0xff&getElement(offset+1))<<8) +
@@ -384,7 +394,7 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getSystemDataProgCurrent(){
          if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException("Wrong Reply Type");
+             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 6; //skip the headers
          int current = ((0xff&getElement(offset+1))<<8) +
@@ -400,12 +410,11 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getSystemDataFilteredMainCurrent(){
          if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException("Wrong Reply Type");
+             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 8; //skip the headers
-         int current = ((0xff&getElement(offset+1))<<8) +
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return current;
     }
 
     /**
@@ -416,12 +425,11 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getSystemDataTemperature(){
          if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException("Wrong Reply Type");
+             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 10; //skip the headers
-         int current = ((0xff&getElement(offset+1))<<8) +
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return current;
     }
 
     /**
@@ -432,12 +440,11 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getSystemDataSupplyVoltage(){
          if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException("Wrong Reply Type");
+             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 12; //skip the headers
-         int current = ((0xff&getElement(offset+1))<<8) +
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return current;
     }
 
     /**
@@ -448,12 +455,11 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getSystemDataVCCVoltage(){
          if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException("Wrong Reply Type");
+             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 14; //skip the headers
-         int current = ((0xff&getElement(offset+1))<<8) +
+         return = ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return current;
     }
 
     // handle LocoNet replies tunneled in Z21 messages
