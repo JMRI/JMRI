@@ -11,4 +11,9 @@ class Z21MessageUtils {
         int flags = elements[4] + (elements[5] << 8) + (elements[6] << 16) + (elements[7] << 24);
         return Integer.toString(flags);
     }
+
+    static int integer16BitFromOffeset(int[] elements,int offset){
+        return ((0xff&elements[offset+1])<<8) +
+                       (0xff&(elements[offset]));
+    }
 }

@@ -281,7 +281,7 @@ public class Z21Reply extends AbstractMRReply {
      */
     DccLocoAddress getRailComLocoAddress(int n){
          int offset = 4+(n*13);  // +4 to get past header
-         int address = ((0xff&getElement(offset+1))<<8)+(0xff&(getElement(offset)));
+         int address = Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
          return new DccLocoAddress(address,address>=100);
     }
 
@@ -307,8 +307,7 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComErrCount(int n){
          int offset = 10+(n*13); // +10 to get past header, address,and rcv count.
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     /**
@@ -376,8 +375,7 @@ public class Z21Reply extends AbstractMRReply {
     int getSystemDataMainCurrent(){
          checkSystemDataChangeReply();
          int offset = 4; //skip the headers
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     /**
@@ -389,8 +387,7 @@ public class Z21Reply extends AbstractMRReply {
     int getSystemDataProgCurrent(){
          checkSystemDataChangeReply();
          int offset = 6; //skip the headers
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     /**
@@ -402,8 +399,7 @@ public class Z21Reply extends AbstractMRReply {
     int getSystemDataFilteredMainCurrent(){
          checkSystemDataChangeReply();
          int offset = 8; //skip the headers
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     /**
@@ -415,8 +411,7 @@ public class Z21Reply extends AbstractMRReply {
     int getSystemDataTemperature(){
          checkSystemDataChangeReply();
          int offset = 10; //skip the headers
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     /**
@@ -428,8 +423,7 @@ public class Z21Reply extends AbstractMRReply {
     int getSystemDataSupplyVoltage(){
          checkSystemDataChangeReply();
          int offset = 12; //skip the headers
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     /**
@@ -441,8 +435,7 @@ public class Z21Reply extends AbstractMRReply {
     int getSystemDataVCCVoltage(){
          checkSystemDataChangeReply();
          int offset = 14; //skip the headers
-         return ((0xff&getElement(offset+1))<<8) +
-                       (0xff&(getElement(offset)));
+         return Z21MessageUtils.integer16BitFromOffeset(_dataChars,offset);
     }
 
     // handle LocoNet replies tunneled in Z21 messages
