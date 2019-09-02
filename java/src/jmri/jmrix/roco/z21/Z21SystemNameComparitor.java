@@ -29,10 +29,9 @@ public class Z21SystemNameComparitor implements Comparator<String> {
                 o2.charAt(prefix.length()) == typeLetter ){
             if(o1.contains(":")){
                 return compareNodePinFormat(o1,o2);
-            } else {
-                return o1.substring(prefix.length()+1).
-                        compareTo(o2.substring(prefix.length()+1));
             }
+            return o1.substring(prefix.length()+1).
+                    compareTo(o2.substring(prefix.length()+1));
         }
         return -1;
     }
