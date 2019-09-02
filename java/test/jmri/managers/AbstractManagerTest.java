@@ -47,6 +47,26 @@ public class AbstractManagerTest {
         JUnitAppender.assertErrorMessage("systemName is already registered. Current system name: IT02. New system name: IT2");
     }
 
+    @Test
+    public void testGetBeanBySystemName() {
+        MyBean a1 = new MyBean("IT1");
+        MyManager m = new MyManager();
+        a1.setUserName("UserName");
+        m.register(a1);
+        Assert.assertEquals(a1, m.getBeanBySystemName("IT1"));
+        Assert.assertNull(m.getBeanBySystemName("IT2"));
+    }
+
+    @Test
+    public void testGetBeanByUserName() {
+        MyBean a1 = new MyBean("IT1");
+        MyManager m = new MyManager();
+        a1.setUserName("UserName");
+        m.register(a1);
+        Assert.assertEquals(a1, m.getBeanByUserName("UserName"));
+        Assert.assertNull(m.getBeanByUserName("NotAUserName"));
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

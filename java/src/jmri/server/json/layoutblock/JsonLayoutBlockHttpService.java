@@ -52,7 +52,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     @Override
     public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), name, type, locale, id);
+        return doGet(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), name, type, locale, id);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        return doPost(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), data, name, type, locale, id);
+        return doPost(InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name), data, name, type, locale, id);
 
     }
 
@@ -124,7 +124,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         if (!data.path(MEMORY).isMissingNode()) {
             string = !data.path(MEMORY).isNull() ? data.path(MEMORY).asText() : null;
             if (string != null) {
-                Memory memory = InstanceManager.getDefault(MemoryManager.class).getBeanBySystemName(string);
+                Memory memory = InstanceManager.getDefault(MemoryManager.class).getBySystemName(string);
                 if (memory == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", MEMORY, string), id);
                 }
@@ -136,7 +136,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         if (!data.path(OCCUPANCY_SENSOR).isMissingNode()) {
             string = !data.path(OCCUPANCY_SENSOR).isNull() ? data.path(OCCUPANCY_SENSOR).asText() : null;
             if (string != null) {
-                Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBeanBySystemName(string);
+                Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(string);
                 if (sensor == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", SENSOR, string), id);
                 }
@@ -179,7 +179,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     @Override
     public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name);
+        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(name);
         if (layoutBlock == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
         }

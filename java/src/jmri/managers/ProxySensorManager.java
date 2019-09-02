@@ -52,28 +52,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Sensor getBySystemName(String sName) {
-        return super.getBeanBySystemName(sName);
-    }
-
-    /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Sensor getByUserName(String userName) {
-        return super.getBeanByUserName(userName);
-    }
-
-    /**
      * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and

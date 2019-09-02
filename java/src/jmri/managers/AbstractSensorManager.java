@@ -66,12 +66,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             return numberMatcher.reset(s).matches();
         }
     }
-
-    /** {@inheritDoc} */
-    @Override
-    public Sensor getBeanBySystemName(String key) {
-        return this.getBySystemName(key);
-    }
     
     /** {@inheritDoc} */
     @Override
