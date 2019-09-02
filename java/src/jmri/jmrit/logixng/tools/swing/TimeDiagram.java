@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -80,7 +81,11 @@ public class TimeDiagram extends JmriJFrame {
     }
     
     @SuppressFBWarnings(value="DMI_HARDCODED_ABSOLUTE_FILENAME", justification="Only temporary for testing. Must be removed later.")
-    public void testLoadExpression() throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+    public void testLoadExpression()
+            throws MalformedURLException, ClassNotFoundException,
+            InstantiationException, IllegalAccessException, IOException,
+            NoSuchMethodException, IllegalArgumentException,
+            InvocationTargetException {
         
         String jarFileName = "F:\\Projekt\\Java\\GitHub\\JMRI_LogixNGPlugins\\dist\\JMRI_LogixNGPlugins.jar";
         
@@ -117,7 +122,7 @@ public class TimeDiagram extends JmriJFrame {
         
         for (String c : classList) {
             // Load the class se.bergqvist.jmri_logixng_plugin.ExpressionXor
-            Class cls = cl.loadClass(c);
+            Class<?> cls = cl.loadClass(c);
 /*            
             if (cls.newInstance() instanceof DigitalExpressionBean) {
                 System.out.format("AAA: Class %s is an Expression%n", cls.getName());
@@ -129,11 +134,11 @@ public class TimeDiagram extends JmriJFrame {
                 System.out.format("Class %s is an unknown class%n", cls.getName());
             }
 */
-            cls.newInstance();
+            cls.getConstructor().newInstance();
         }
         
         // Load the class se.bergqvist.jmri_logixng_plugin.ExpressionXor
-        Class cls = cl.loadClass("se.bergqvist.jmri_logixng_plugin.ExpressionXor");
+        Class<?> cls = cl.loadClass("se.bergqvist.jmri_logixng_plugin.ExpressionXor");
         
         // Print the location from where this class was loaded
 //        ProtectionDomain pDomain = cls.getProtectionDomain();
@@ -141,7 +146,7 @@ public class TimeDiagram extends JmriJFrame {
 //        URL urlfrom = cSource.getLocation();
 //        System.out.format("Class from: %s%n", urlfrom.getFile());
         
-        cls.newInstance();
+        cls.getConstructor().newInstance();
         
         cl.close();
     }
