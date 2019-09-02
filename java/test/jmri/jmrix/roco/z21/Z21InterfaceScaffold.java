@@ -30,9 +30,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
 
     @Override
     public void sendz21Message(Z21Message m, Z21Listener replyTo) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendZ21Message [" + m + "]");
-        }
+        log.debug("sendZ21Message [{}]", m);
         // save a copy
         outbound.addElement(m);
     }
@@ -44,9 +42,7 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
      */
     public void sendTestMessage(Z21Reply m) {
         // forward a test message to Z21Listeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
-        }
+        log.debug("sendTestMessage [{}]", m);
         notifyReply(m, null);
     }
 
@@ -66,6 +62,8 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
 
     /**
      * Avoid error message, normal in parent
+     * 
+     * {@inheritDoc}
      */
     @Override
     protected void portWarn(Exception e) {
@@ -77,10 +75,12 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
 
     /**
      * This is normal, don't log at ERROR level
+     * 
+     * {@inheritDoc}
      */
     @Override 
     protected void reportReceiveLoopException(Exception e) {
-        log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
+        log.debug("run: Exception: {} in {} (considered normal in testing)", e, this.getClass(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof jmri.jmrix.AbstractNetworkPortController) {
             portWarnTCP(e);

@@ -318,7 +318,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         return name;
     }
 
-
     /**
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
