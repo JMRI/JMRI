@@ -14,7 +14,7 @@ public class Z21SystemNameComparitor implements Comparator<String> {
     private String prefix;
     private char typeLetter;
 
-    public Z21SystemNameComparitor(String prefix, char typeLetter){
+    Z21SystemNameComparitor(String prefix, char typeLetter){
         this.prefix= prefix;
         this.typeLetter = typeLetter;
     }
@@ -28,15 +28,7 @@ public class Z21SystemNameComparitor implements Comparator<String> {
                 o1.charAt(prefix.length()) == typeLetter &&
                 o2.charAt(prefix.length()) == typeLetter ){
             if(o1.contains(":")){
-                if (o1.indexOf(':') == o2.indexOf(':')) {
-                    int startIndex = prefix.length() + 1;
-                    int stopIndex = o1.indexOf(':');
-                    if (0 == o1.substring(startIndex, stopIndex).
-                            compareToIgnoreCase(o2.substring(startIndex, stopIndex))) {
-                        return o1.substring(stopIndex).
-                                compareToIgnoreCase(o2.substring(stopIndex));
-                    }
-                }
+                return compareNodePinFormat(o1,o2);
             } else {
                 return o1.substring(prefix.length()+1).
                         compareTo(o2.substring(prefix.length()+1));
@@ -45,18 +37,30 @@ public class Z21SystemNameComparitor implements Comparator<String> {
         return -1;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == null){
-            return false;
-        }
-        if(obj.getClass().equals(this.getClass())){
-            Z21SystemNameComparitor o = (Z21SystemNameComparitor)obj;
-            if(this.prefix.equals(o.prefix) && this.typeLetter==o.typeLetter){
-                return true;
+
+    private int compareNodePinFormat(String o1,String o2){
+        if (o1.indexOf(':') == o2.indexOf(':')) {
+            int startIndex = prefix.length() + 1;
+            int stopIndex = o1.indexOf(':');
+            if (0 == o1.substring(startIndex, stopIndex).
+                    compareToIgnoreCase(o2.substring(startIndex, stopIndex))) {
+                return o1.substring(stopIndex).
+                        compareToIgnoreCase(o2.substring(stopIndex));
             }
         }
-        return false;
+        return -1;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Z21SystemNameComparitor)){
+            return false;
+        }
+        Z21SystemNameComparitor o = (Z21SystemNameComparitor)obj;
+        return this.prefix.equals(o.prefix) && this.typeLetter==o.typeLetter;
     }
 
     @Override
