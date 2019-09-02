@@ -10,6 +10,7 @@ import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
+import jmri.JmriException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -32,6 +33,13 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     public String getSystemName(int i) {
         return "AS2:" + i;
+    }
+
+    @Test
+    @Override
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName(getSystemName(getNumToTest1())),
+                l.createSystemName("2:" + getNumToTest1(), l.getSystemPrefix()));
     }
 
     @Test
