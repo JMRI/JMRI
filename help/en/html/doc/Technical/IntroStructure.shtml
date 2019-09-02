@@ -176,8 +176,16 @@
       long run it makes it much harder for JMRI to be maintained and 
       improved by a large group of people.  We just can't allow lots of 
       tiny little special cases to make the code impossible to understand.
-      The <code>scripts/checkdepends.csh</code> script can do a 
+      The <code>java/checkdepends.csh</code> script can do a 
       quick check of this, although it's far from perfect.
+      We're also developing more-inclusive 
+      <a href="https://www.archunit.org">ArchUnit</a>
+      tests for this which can be
+      run via <code>./runtest.csh jmri.ArchitectureCheck</code>
+      as part of
+      <a href="JUnit.shtml">developer unit testing</a>
+      or eventually as part of our
+      <a href="ContinuousIntegration.shtml">CI tests</a>.
       
       <p>
       Similarly, we have conventions for where to locate

@@ -344,6 +344,12 @@
                             <artifactId>surefire-junit47</artifactId>
                             <version>${surefire.version}</version>
                         </dependency>
+                        <dependency>
+                            <groupId>com.tngtech.archunit</groupId>
+                            <artifactId>archunit-junit4</artifactId>
+                            <version>0.11.0</version>
+                            <scope>test</scope>
+                        </dependency>
                     </dependencies>
                 </configuration>
             </plugin>
