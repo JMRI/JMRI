@@ -33,12 +33,16 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         setStoreElementClass(logixs);
         LogixManager lm = (LogixManager) o;
         if (lm != null) {
-            for (Logix x : lm.getNamedBeanSet()) {
-                String sname = x.getSystemName();
-                log.debug("logix system name is " + sname);  // NOI18N
+            for (String sName : lm.getSystemNameList()) {
+                Logix x = lm.getBySystemName(sName);
+                if (x == null) {
+                    log.error("Unable to save '{}' to the XML file", sName);  // NOI18N
+                    continue;
+                }
+                log.debug("logix system name is " + sName);  // NOI18N
                 boolean enabled = x.getEnabled();
                 Element elem = new Element("logix");  // NOI18N
-                elem.addContent(new Element("systemName").addContent(sname));  // NOI18N
+                elem.addContent(new Element("systemName").addContent(sName));  // NOI18N
 
                 // As a work-around for backward compatibility, store systemName and username as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files

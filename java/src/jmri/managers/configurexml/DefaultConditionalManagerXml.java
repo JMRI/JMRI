@@ -41,20 +41,24 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         setStoreElementClass(conditionals);
         ConditionalManager cm = (ConditionalManager) o;
         if (cm != null) {
-            for (Conditional c : cm.getNamedBeanSet()) {
-                String sname = c.getSystemName();
-                log.debug("conditional system name is " + sname);  // NOI18N
+            for (String sName : cm.getSystemNameList()) {
+                Conditional c = cm.getBySystemName(sName);
+                if (c == null) {
+                    log.error("Unable to save '{}' to the XML file", sName);  // NOI18N
+                    continue;
+                }
+                log.debug("conditional system name is " + sName);  // NOI18N
                 Element elem = new Element("conditional");  // NOI18N
 
                 // As a work-around for backward compatibility, store systemName and username as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
-                elem.setAttribute("systemName", sname);  // NOI18N
+                elem.setAttribute("systemName", sName);  // NOI18N
                 String uName = c.getUserName();
                 if (uName != null && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);  // NOI18N
                 }
 
-                elem.addContent(new Element("systemName").addContent(sname));
+                elem.addContent(new Element("systemName").addContent(sName));
 
                 // store common parts
                 storeCommon(c, elem);
