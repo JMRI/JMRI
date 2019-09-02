@@ -141,14 +141,6 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         return getBySystemName(name);
     }
 
-    public Section getBySystemName(String key) {
-        return _tsys.get(key);
-    }
-
-    public Section getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Validates all Sections.
      *

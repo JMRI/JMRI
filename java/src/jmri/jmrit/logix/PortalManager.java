@@ -125,20 +125,6 @@ public class PortalManager extends AbstractManager<Portal>
         return null;
     }
 
-    public Portal getBySystemName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            return null;
-        }
-        return _tsys.get(name);
-    }
-
-    public Portal getByUserName(String key) {
-        if (key == null || key.trim().length() == 0) {
-            return null;
-        }
-        return _tuser.get(key);
-    }
-
     public Portal providePortal(String name) {
         if (name == null || name.trim().length() == 0) {
             return null;
