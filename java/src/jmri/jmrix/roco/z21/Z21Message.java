@@ -257,7 +257,7 @@ public class Z21Message extends AbstractMRMessage {
            case 0x0040:
                return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
            case 0x0050:
-               return Bundle.getMessage("Z21MessageSetBroadcastFlags",interpretBroadcastFlags());
+               return Bundle.getMessage("Z21MessageSetBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(_dataChars));
            case 0x0051:
                return Bundle.getMessage("Z21MessageRequestBroadcastFlags");
            case 0x00A2:
@@ -274,12 +274,6 @@ public class Z21Message extends AbstractMRMessage {
            default:
         }
         return toString();
-    }
-
-    private String interpretBroadcastFlags(){
-        int flags = getElement(4 ) + (getElement(5) << 8)
-                + (getElement(6) << 16) + (getElement(7) << 24);
-        return Integer.toString(flags);
     }
 
     // handle LocoNet messages tunneled in Z21 messages

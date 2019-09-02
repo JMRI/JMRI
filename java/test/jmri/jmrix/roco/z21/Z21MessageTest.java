@@ -115,7 +115,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void toMonitorStringGetBroadCastFlagsRequest(){
         msg = Z21Message.getLanGetBroadcastFlagsRequestMessage();
-        Assert.assertEquals("Monitor String","Reqeust Z21 Broadcast flags",msg.toMonitorString());
+        Assert.assertEquals("Monitor String","Request Z21 Broadcast flags",msg.toMonitorString());
     }
 
     @Test

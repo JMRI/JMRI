@@ -104,7 +104,7 @@ public class Z21Reply extends AbstractMRReply {
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
            case 0x0051:
-                return Bundle.getMessage("Z21ReplyBroadcastFlags",interpretBroadcastFlags());
+                return Bundle.getMessage("Z21ReplyBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(_dataChars));
            case 0x0080:
                int groupIndex = getElement(4) & 0xff;
                int offset = (groupIndex * 10) + 1;
@@ -227,12 +227,6 @@ public class Z21Reply extends AbstractMRReply {
         }
 
         return toString();
-    }
-
-    private String interpretBroadcastFlags(){
-        int flags = getElement(4 ) + (getElement(5) << 8)
-                + (getElement(6) << 16) + (getElement(7) << 24);
-        return Integer.toString(flags);
     }
 
     // handle XpressNet replies tunneled in Z21 messages
@@ -367,6 +361,12 @@ public class Z21Reply extends AbstractMRReply {
         return (getOpCode() == 0x0084);
     }
 
+    private void checkSystemDataChangeReply(){
+        if(!isSystemDataChangedReply()){
+            throw new IllegalArgumentException(WRONG_REPLY_TYPE);
+        }
+    }
+
     /**
      * Get the Main Track Current from the SystemStateDataChanged 
      * message.
@@ -374,9 +374,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the current in mA.
      */
     int getSystemDataMainCurrent(){
-         if(!isSystemDataChangedReply()){
-            throw new IllegalArgumentException(WRONG_REPLY_TYPE);
-         }
+         checkSystemDataChangeReply();
          int offset = 4; //skip the headers
          return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
@@ -389,9 +387,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the current in mA.
      */
     int getSystemDataProgCurrent(){
-         if(!isSystemDataChangedReply()){
-             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
-         }
+         checkSystemDataChangeReply();
          int offset = 6; //skip the headers
          return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
@@ -404,9 +400,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the current in mA.
      */
     int getSystemDataFilteredMainCurrent(){
-         if(!isSystemDataChangedReply()){
-             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
-         }
+         checkSystemDataChangeReply();
          int offset = 8; //skip the headers
          return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
@@ -419,9 +413,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the current in degrees C.
      */
     int getSystemDataTemperature(){
-         if(!isSystemDataChangedReply()){
-             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
-         }
+         checkSystemDataChangeReply();
          int offset = 10; //skip the headers
          return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
@@ -434,9 +426,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the current in mV.
      */
     int getSystemDataSupplyVoltage(){
-         if(!isSystemDataChangedReply()){
-             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
-         }
+         checkSystemDataChangeReply();
          int offset = 12; //skip the headers
          return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
@@ -449,9 +439,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the current in mV.
      */
     int getSystemDataVCCVoltage(){
-         if(!isSystemDataChangedReply()){
-             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
-         }
+         checkSystemDataChangeReply();
          int offset = 14; //skip the headers
          return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
