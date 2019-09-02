@@ -108,7 +108,7 @@ public class Z21Reply extends AbstractMRReply {
            case 0x0080:
                int groupIndex = getElement(4) & 0xff;
                int offset = (groupIndex * 10) + 1;
-               String moduleStatus[]= new String[10];
+               String[] moduleStatus = new String[10];
                for(int i=0;i<10;i++){
                   moduleStatus[i]= Bundle.getMessage("RMModuleFeedbackStatus",offset + i,
                       Bundle.getMessage("RMModuleContactStatus",1, ((getElement(i+5)&0x01)==0x01)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
@@ -146,7 +146,7 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21LocoNetLanReply", getLocoNetMessage().toMonitorString());
            case 0x0088:
                int entries = getNumRailComDataEntries();
-               StringBuffer datastring = new StringBuffer();
+               StringBuilder datastring = new StringBuilder();
                for(int i = 0; i < entries ; i++) {
                    DccLocoAddress address = getRailComLocoAddress(i);
                    int rcvCount = getRailComRcvCount(i);
@@ -192,7 +192,6 @@ public class Z21Reply extends AbstractMRReply {
                                 break;
                            case 0x1203:
                                 value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_OVERLOAD_3");
-                                value1String = "Busy, Overload 3";
                                 break;
                            default:
                                 value1String = "<unknown>";
@@ -233,7 +232,7 @@ public class Z21Reply extends AbstractMRReply {
     private String interpretBroadcastFlags(){
         int flags = getElement(4 ) + (getElement(5) << 8)
                 + (getElement(6) << 16) + (getElement(7) << 24);
-        return "" + flags;
+        return Integer.toString(flags);
     }
 
     // handle XpressNet replies tunneled in Z21 messages
@@ -300,11 +299,10 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComRcvCount(int n){
          int offset = 6+(n*13); // +6 to get header and address.
-         int rcvcount = ((0xff&getElement(offset+3))<<24) +
+         return ((0xff&getElement(offset+3))<<24) +
                        ((0xff&(getElement(offset+2))<<16) + 
                        ((0xff&getElement(offset+1))<<8) + 
                        (0xff&(getElement(offset))));
-         return rcvcount;
     }
 
     /**
@@ -315,9 +313,8 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComErrCount(int n){
          int offset = 10+(n*13); // +10 to get past header, address,and rcv count.
-         int errorcount = ((0xff&getElement(offset+1))<<8) + 
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return errorcount;
     }
 
     /**
@@ -381,9 +378,8 @@ public class Z21Reply extends AbstractMRReply {
             throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 4; //skip the headers
-         int current = ((0xff&getElement(offset+1))<<8) +
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return current;
     }
 
     /**
@@ -397,9 +393,8 @@ public class Z21Reply extends AbstractMRReply {
              throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 6; //skip the headers
-         int current = ((0xff&getElement(offset+1))<<8) +
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
-         return current;
     }
 
     /**
@@ -458,7 +453,7 @@ public class Z21Reply extends AbstractMRReply {
              throw new IllegalArgumentException(WRONG_REPLY_TYPE);
          }
          int offset = 14; //skip the headers
-         return = ((0xff&getElement(offset+1))<<8) +
+         return ((0xff&getElement(offset+1))<<8) +
                        (0xff&(getElement(offset)));
     }
 

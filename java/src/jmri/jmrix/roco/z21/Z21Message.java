@@ -279,7 +279,7 @@ public class Z21Message extends AbstractMRMessage {
     private String interpretBroadcastFlags(){
         int flags = getElement(4 ) + (getElement(5) << 8)
                 + (getElement(6) << 16) + (getElement(7) << 24);
-        return "" + flags;
+        return Integer.toString(flags);
     }
 
     // handle LocoNet messages tunneled in Z21 messages
