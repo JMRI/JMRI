@@ -171,12 +171,6 @@ public class DefaultAnalogActionManagerXmlTest {
 
     @After
     public void tearDown() {
-        // Clear AnalogActionManager from InstanceManager since otherwise some
-        // other test may try to save jmri.jmrit.logixng.analog.implementation.DefaultAnalogActionManagerXmlTest$MyManager
-        // to a file by trying to find the class
-        // jmri.jmrit.logixng.analog.implementation.configurexml.configurexml.DefaultAnalogActionManagerXmlTest$MyManagerXml
-        InstanceManager.reset(AnalogActionManager.class);
-        
         JUnitUtil.tearDown();
     }
     
