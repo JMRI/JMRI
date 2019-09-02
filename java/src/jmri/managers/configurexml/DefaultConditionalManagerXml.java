@@ -39,29 +39,11 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 //    	long numStateVars = 0;
         Element conditionals = new Element("conditionals");  // NOI18N
         setStoreElementClass(conditionals);
-        ConditionalManager tm = (ConditionalManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
-
-            // don't return an element if there are not conditionals to include
-            if (!iter.hasNext()) {
-                return null;
-            }
-
-            // store the conditionals
-            while (iter.hasNext()) {
-//            	numCond++;
-//            	long condTime = System.currentTimeMillis();
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");  // NOI18N
-                }
+        ConditionalManager cm = (ConditionalManager) o;
+        if (cm != null) {
+            for (Conditional c : cm.getNamedBeanSet()) {
+                String sname = c.getSystemName();
                 log.debug("conditional system name is " + sname);  // NOI18N
-                Conditional c = tm.getBySystemName(sname);
-                if (c == null) {
-                    log.error("Unable to save '{}' to the XML file", sname);  // NOI18N
-                    continue;
-                }
                 Element elem = new Element("conditional");  // NOI18N
 
                 // As a work-around for backward compatibility, store systemName and username as attribute.
@@ -88,13 +70,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // Creating StateVariables gets very slow when more than c10,000 exist.
                 // creation time goes from less than 1ms to more than 5000ms.
                 // Don't need a clone for read-only use.
-//                List <ConditionalVariable> variableList = c.getCopyOfStateVariables();
                 List<ConditionalVariable> variableList = ((jmri.implementation.DefaultConditional) c).getStateVariableList();
-                /*                numStateVars += variableList.size();
-                 if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfStateVariables "+partTime+"ms. total stateVariable= "+numStateVars);
-                 }*/
                 for (int k = 0; k < variableList.size(); k++) {
                     ConditionalVariable variable = variableList.get(k);
                     Element vElem = new Element("conditionalStateVariable");  // NOI18N
@@ -119,10 +95,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 // save action information
                 List<ConditionalAction> actionList = c.getCopyOfActions();
-                /*               	if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
-                 }*/
                 for (int k = 0; k < actionList.size(); k++) {
                     ConditionalAction action = actionList.get(k);
                     Element aElem = new Element("conditionalAction");  // NOI18N
@@ -142,13 +114,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(aElem);
                 }
                 conditionals.addContent(elem);
-                /*				condTime = System.currentTimeMillis() - condTime;
-                 if (condTime>1) {
-                 System.out.println(numCond+"th Conditional \""+sname+"\" took "+condTime+"ms to store.");
-                 }*/
             }
         }
-//        System.out.println("Elapsed time to store "+numCond+" Conditional "+(System.currentTimeMillis()-time)+"ms.");
         return (conditionals);
     }
 
@@ -274,7 +241,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             // list of state variables, we can't just append when re-reading a conditional;
             // we have to drop any existing ConditionalStateVariables and create a clean, new list.
 
-            if (conditionalVarList.size() == 0) {
+            if (conditionalVarList.isEmpty()) {
                 log.warn("No state variables found for conditional " + sysName);  // NOI18N
             }
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();

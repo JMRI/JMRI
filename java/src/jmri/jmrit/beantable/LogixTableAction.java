@@ -1228,7 +1228,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param sName system name of Logix to be edited
      */
     void editPressed(String sName) {
-        _curLogix = _logixManager.getBySystemName(sName);
+        Logix logix = _logixManager.getBySystemName(sName);
+        _curLogix = logix;
         if (!checkFlags(sName)) {
             return;
         }
@@ -1249,7 +1250,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             _treeEdit.addLogixEventListener(new ConditionalEditBase.LogixEventListener() {
                 @Override
                 public void logixEventOccurred() {
-                    String lgxName = sName;
                     _treeEdit.logixData.forEach((key, value) -> {
                         if (key.equals("Finish")) {                  // NOI18N
                             _treeEdit = null;
@@ -1259,8 +1259,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         } else if (key.equals("Delete")) {           // NOI18N
                             deletePressed(value);
                         } else if (key.equals("chgUname")) {         // NOI18N
-                            Logix x = _logixManager.getBySystemName(lgxName);
-                            x.setUserName(value);
+                            logix.setUserName(value);
                             m.fireTableDataChanged();
                         }
                     });
@@ -1272,7 +1271,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             _listEdit.addLogixEventListener(new ConditionalEditBase.LogixEventListener() {
                 @Override
                 public void logixEventOccurred() {
-                    String lgxName = sName;
                     _listEdit.logixData.forEach((key, value) -> {
                         if (key.equals("Finish")) {                  // NOI18N
                             _listEdit = null;
@@ -1282,8 +1280,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         } else if (key.equals("Delete")) {           // NOI18N
                             deletePressed(value);
                         } else if (key.equals("chgUname")) {         // NOI18N
-                            Logix x = _logixManager.getBySystemName(lgxName);
-                            x.setUserName(value);
+                            logix.setUserName(value);
                             m.fireTableDataChanged();
                         }
                     });

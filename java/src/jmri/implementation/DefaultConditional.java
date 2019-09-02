@@ -660,22 +660,9 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case CANCEL_TURNOUT_TIMERS:
-                        ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
-                        java.util.Iterator<String> iter = cmg.getSystemNameList().iterator();
-                        while (iter.hasNext()) {
-                            String sname = iter.next();
-                            if (sname == null) {
-                                errorList.add("Conditional system name null during cancel turnout timers for "  // NOI18N
-                                        + action.getDeviceName());
-                            }
-                            Conditional c = cmg.getBySystemName(sname);
-                            if (c == null) {
-                                errorList.add("Conditional null during cancel turnout timers for "  // NOI18N
-                                        + action.getDeviceName());
-                            } else {
-                                c.cancelTurnoutTimer(devName);
-                                actionCount++;
-                            }
+                        for (Conditional c : InstanceManager.getDefault(ConditionalManager.class).getNamedBeanSet()) {
+                            c.cancelTurnoutTimer(devName);
+                            actionCount++;
                         }
                         break;
                     case LOCK_TURNOUT:
@@ -802,22 +789,9 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case CANCEL_SENSOR_TIMERS:
-                        ConditionalManager cm = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
-                        java.util.Iterator<String> itr = cm.getSystemNameList().iterator();
-                        while (itr.hasNext()) {
-                            String sname = itr.next();
-                            if (sname == null) {
-                                errorList.add("Conditional system name null during cancel sensor timers for "  // NOI18N
-                                        + action.getDeviceName());
-                            }
-                            Conditional c = cm.getBySystemName(sname);
-                            if (c == null) {
-                                errorList.add("Conditional null during cancel sensor timers for "  // NOI18N
-                                        + action.getDeviceName());
-                            } else {
-                                c.cancelSensorTimer(devName);
-                                actionCount++;
-                            }
+                        for (Conditional c : InstanceManager.getDefault(ConditionalManager.class).getNamedBeanSet()) {
+                            c.cancelSensorTimer(devName);
+                            actionCount++;
                         }
                         break;
                     case SET_LIGHT:

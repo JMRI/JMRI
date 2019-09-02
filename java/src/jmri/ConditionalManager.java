@@ -67,11 +67,7 @@ public interface ConditionalManager extends Manager<Conditional> {
 
     public Conditional getConditional(String name);
 
-    public Conditional getByUserName(String s);
-
     public Conditional getByUserName(Logix x, String s);
-
-    public Conditional getBySystemName(String s);
 
     /**
      * Get a list of all Conditional system names with the specified Logix

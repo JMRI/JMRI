@@ -31,24 +31,11 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         Element logixs = new Element("logixs");
         setStoreElementClass(logixs);
-        LogixManager tm = (LogixManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
-
-            // don't return an element if there are not Logix to include
-            if (!iter.hasNext()) {
-                return null;
-            }
-
-            // store the Logix
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");  // NOI18N
-                }
+        LogixManager lm = (LogixManager) o;
+        if (lm != null) {
+            for (Logix x : lm.getNamedBeanSet()) {
+                String sname = x.getSystemName();
                 log.debug("logix system name is " + sname);  // NOI18N
-                Logix x = tm.getBySystemName(sname);
                 boolean enabled = x.getEnabled();
                 Element elem = new Element("logix");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(sname));  // NOI18N
@@ -71,11 +58,9 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 // save child Conditionals
                 int numConditionals = x.getNumConditionals();
                 if (numConditionals > 0) {
-                    String cSysName = "";
-                    Element cElem = null;
                     for (int k = 0; k < numConditionals; k++) {
-                        cSysName = x.getConditionalByNumberOrder(k);
-                        cElem = new Element("logixConditional");  // NOI18N
+                        String cSysName = x.getConditionalByNumberOrder(k);
+                        Element cElem = new Element("logixConditional");  // NOI18N
                         cElem.setAttribute("systemName", cSysName);  // NOI18N
                         cElem.setAttribute("order", Integer.toString(k));  // NOI18N
                         elem.addContent(cElem);
