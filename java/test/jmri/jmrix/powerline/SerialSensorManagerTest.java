@@ -7,6 +7,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 
 import java.beans.PropertyVetoException;
+import jmri.JmriException;
 
 import org.junit.*;
 
@@ -37,6 +38,12 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     protected int getNumToTest2() {
         return 9;
+    }
+
+    @Override
+    @Test
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName("PSA3"), l.createSystemName("A3", l.getSystemPrefix()));
     }
 
     @Test

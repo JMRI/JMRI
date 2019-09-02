@@ -4,6 +4,7 @@ import jmri.Sensor;
 import jmri.util.JUnitUtil;
 
 import java.beans.PropertyVetoException;
+import jmri.JmriException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -26,6 +27,13 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", l);
+    }
+
+    @Override
+    @Test
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName("(0,0,0);(1,0,0);(1,1,0);(0,1,0)"),
+                l.createSystemName("(0,0,0);(1,0,0);(1,1,0);(0,1,0)", l.getSystemPrefix()));
     }
 
     @Test

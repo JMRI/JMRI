@@ -36,6 +36,13 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("createsSensor", l.provideSensor(memo.getSystemPrefix() + "SX0A;+N15E6"));
     }
 
+    @Override
+    @Test
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName("+" + getNumToTest1()),
+                l.createSystemName(Integer.toString(getNumToTest1()), l.getSystemPrefix()));
+    }
+
     @Test
     @Override
     public void testDefaultSystemName() {

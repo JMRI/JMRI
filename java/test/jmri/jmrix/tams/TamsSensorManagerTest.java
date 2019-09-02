@@ -1,5 +1,6 @@
 package jmri.jmrix.tams;
 
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,6 +16,19 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Override
     public String getSystemName(int i){
        return "TS" + i;
+    }
+
+    @Test
+    @Override
+    public void testMakeSystemName() {
+        Assert.assertEquals("TS10:10", l.makeSystemName("10:10"));
+    }
+
+    @Override
+    @Test
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName("10:10"),
+                l.createSystemName("10:10", l.getSystemPrefix()));
     }
 
     @Test

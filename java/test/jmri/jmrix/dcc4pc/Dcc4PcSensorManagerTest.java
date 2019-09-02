@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc;
 
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -14,6 +15,13 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     public String getSystemName(int i){
         return "DS0:" + i;
+    }
+
+    @Override
+    @Test
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName(getSystemName(getNumToTest1())),
+                l.createSystemName("0:" + getNumToTest1(), l.getSystemPrefix()));
     }
 
     @Override
