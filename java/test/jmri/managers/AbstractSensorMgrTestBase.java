@@ -6,6 +6,7 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
 import org.junit.Assert;
@@ -17,8 +18,8 @@ import org.junit.Test;
  * is not itself a test class, e.g. should not be added to a suite. Instead,
  * this forms the base for test classes, including providing some common tests
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2016
- * @author      Paul Bender Copyright(C) 2016
+ * @author Bob Jacobsen 2003, 2006, 2008, 2016
+ * @author Paul Bender Copyright(C) 2016
  */
 public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManagerTestBase<SensorManager, Sensor> {
 
@@ -32,6 +33,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     static protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
+
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
@@ -42,7 +44,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
-       Assert.assertNotNull("Sensor Manager Exists",l);
+        Assert.assertNotNull("Sensor Manager Exists", l);
     }
 
     @Test
@@ -74,16 +76,17 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     public void testDelete() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
-        
+
         // two-pass delete, details not really tested
-        
         try {
             l.deleteBean(t, "CanDelete");
-        } catch (java.beans.PropertyVetoException e) {}
+        } catch (java.beans.PropertyVetoException e) {
+        }
         try {
             l.deleteBean(t, "DoDelete");
-        } catch (java.beans.PropertyVetoException e) {}
-        
+        } catch (java.beans.PropertyVetoException e) {
+        }
+
         // check for bean
         Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
         // check for lengths
@@ -96,7 +99,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals(0, l.getObjectCount());
     }
 
-
     @Test
     public void testDefaultSystemName() {
         // create
@@ -106,7 +108,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testProvideFailure() {
         try {
             l.provideSensor("");
@@ -163,10 +165,10 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     public void testUpperLower() {  // this is part of testing of (default) normalization
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
-        
-        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
-        String lowerName = name.substring(0, prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
-        
+
+        int prefixLength = l.getSystemPrefix().length() + 1;     // 1 for type letter
+        String lowerName = name.substring(0, prefixLength) + name.substring(prefixLength, name.length()).toLowerCase();
+
         Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
@@ -182,13 +184,25 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     }
 
     @Test
-    public void testPullResistanceConfigurable(){
-       Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
+    public void testPullResistanceConfigurable() {
+        Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
+    }
+
+    /**
+     * Test the deprecated (and otherwise unused method) create system names
+     * correctly.
+     * @throws jmri.JmriException if unable to create a system name
+     */
+    @Test
+    public void testCreateSystemName() throws JmriException {
+        Assert.assertEquals(l.makeSystemName(Integer.toString(getNumToTest1())),
+                l.createSystemName(Integer.toString(getNumToTest1()), l.getSystemPrefix()));
     }
 
     /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
+     *
      * @return the number to test
      */
     protected int getNumToTest1() {
