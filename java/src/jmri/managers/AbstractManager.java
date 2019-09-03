@@ -6,16 +6,10 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+
 import jmri.util.NamedBeanComparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -156,6 +150,23 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     public E getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
+    }
+
+    /**
+     * Protected method used by subclasses to over-ride the default behavior of
+     * getBeanBySystemName when a simple string lookup is not sufficient
+     *
+     * @param systemName the system name to check.
+     * @param comparator a Comparator encapsulating the system specific comparison behavior.
+     * @return A named bean of the appropriate type, or null if not found.
+     */
+    protected E getBySystemName(String systemName,Comparator<String> comparator){
+        for(Map.Entry<String,E> e:_tsys.entrySet()){
+            if(0==comparator.compare(e.getKey(),systemName)){
+                return e.getValue();
+            }
+        }
+        return null;
     }
 
     /** {@inheritDoc} */
