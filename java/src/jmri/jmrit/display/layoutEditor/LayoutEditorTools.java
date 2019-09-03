@@ -2641,7 +2641,7 @@ public class LayoutEditorTools {
     private SignalHead d2Head = null;
 
     private int xoverType = LayoutTurnout.DOUBLE_XOVER;	 // changes to RH_XOVER or LH_XOVER as required
-    private int xoverCurr = layoutTurnout.UNKNOWN;          // Controls creating the frame
+    private int xoverCurr = LayoutTurnout.UNKNOWN;          // Controls creating the frame
     private String xoverTurnoutName = "";
     private final JLabel xoverTurnoutNameLabel = new JLabel("");
 
