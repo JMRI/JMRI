@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -42,7 +41,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         _memo = memo;
         _memo.getTrafficController().addz21Listener(this);
         //Address format passed is in the form of moduleAddress:pin 
-        int seperator = systemName.indexOf(":");
+        int seperator = systemName.indexOf(':');
         int start = _memo.getSystemPrefix().length() + 1;
         try {
            try{
@@ -54,10 +53,10 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
            }
            port = (Integer.parseInt(systemName.substring(seperator + 1)));
         } catch (NumberFormatException ex) {
-           log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+           log.debug("Unable to convert {} into the cab and input format of nn:xx",systemName);
            throw new IllegalArgumentException("requires mm:pp format address.");
         }
-        idTags = new ArrayList<RailCom>();
+        idTags = new ArrayList<>();
         // request an update from the layout
         //if(networkID!=0){
         //leave commented out for now, causing loop that needs investigation.
@@ -117,7 +116,6 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                }
             } else if( type == 0x01 ) {
                 // status message, not a railcom value, so no report.
-                return;
              }
          }
     }
@@ -155,11 +153,6 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     @Override
     public void message(Z21Message msg){
          // we don't need to handle outgoing messages, so just ignore them.
-    }
-
-    @Override
-    public void dispose(){
-        super.dispose();
     }
 
     // the CollectingReporter interface.
