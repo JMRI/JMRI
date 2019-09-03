@@ -145,9 +145,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         List<String> orderedList = l.getSystemNameAddedOrderList();
         List<String> sortedList = l.getSystemNameList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-        String[] sortedArray = l.getSystemNameArray();  // deprecated, but we test until removed
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
-        
+
         Assert.assertEquals("ordered list length", 2, orderedList.size());
         Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
         Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
@@ -161,10 +159,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 1st", s2, iter.next());
         Assert.assertEquals("bean set 2nd", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // add and test (non) liveness
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
@@ -186,16 +180,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // update and test update
         orderedList = l.getSystemNameAddedOrderList();
         sortedList = l.getSystemNameList();
         beanSet = l.getNamedBeanSet();
-        sortedArray = l.getSystemNameArray();
-        
+
         Assert.assertEquals("ordered list length", 4, orderedList.size());
         Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
         Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
@@ -214,12 +203,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 2nd", s2, iter.next());
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
-
-        Assert.assertEquals("sorted array length", 4, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS1", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS2", sortedArray[1]);
-        Assert.assertEquals("sorted array 3rd", "IS3", sortedArray[2]);
-        Assert.assertEquals("sorted array 4th", "IS4", sortedArray[3]);
 
     }
 

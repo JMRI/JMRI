@@ -274,25 +274,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return getNamedBeanList().size(); // not efficient
     }
 
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a sorted array of NX names
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        List<String> nxList = getEntryExitList();
-        String[] arr = new String[nxList.size()];
-        int i = 0;
-        for (String nxRow : nxList) {
-            arr[i] = nxRow;
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
-    }
-
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -945,7 +926,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutTrackEditors#hasNxSensorPairs}.
+     *
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.

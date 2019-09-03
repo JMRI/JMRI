@@ -214,12 +214,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
