@@ -6,8 +6,6 @@ import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
 /**
  * Z21ReporterManager implements the Reporter Manager interface for Roco Z21
  * systems.

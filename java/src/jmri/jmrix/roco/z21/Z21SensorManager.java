@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.Locale;
-import java.util.Map;
 
 import jmri.JmriException;
 import jmri.Sensor;
