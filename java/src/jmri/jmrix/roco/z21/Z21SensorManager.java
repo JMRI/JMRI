@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.Locale;
+import java.util.Map;
+
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -68,7 +70,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
             if (bitNum != -1) {
                 return new Z21CanSensor(systemName, userName, getMemo());
             } else {
-                log.warn("Invalid Sensor name: {} " + systemName);
+                log.warn("Invalid Sensor name: {} ",systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         } else {
@@ -79,7 +81,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 return new Z21RMBusSensor(systemName, userName,
                         getMemo().getTrafficController(), getSystemPrefix());
             } else {
-                log.warn("Invalid Sensor name: {} " + systemName);
+                log.warn("Invalid Sensor name: {} ", systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         }
@@ -127,6 +129,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     public void message(Z21Message l) {
+        // no processing of outgoing messages.
     }
 
     /**
@@ -158,13 +161,13 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public synchronized String createSystemName(String curAddress, String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
         if (curAddress.contains(":")) {
             // Address format passed is in the form of encoderAddress:input or T:turnout address
-            int seperator = curAddress.indexOf(":");
+            int seperator = curAddress.indexOf(':');
             try {
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                 input = Integer.parseInt(curAddress.substring(seperator + 1));
@@ -198,7 +201,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    public synchronized String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
 
@@ -233,26 +236,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     public Sensor getBySystemName(String sName) {
-        Sensor s = super.getBySystemName(sName);
-        if (s == null && sName.contains(":")) {
-            // normalize the hex characters in the system name to upper case.
-            String address = sName.substring(getSystemNamePrefix().length()).toUpperCase(Locale.ENGLISH);
-            try {
-                s = super.getBySystemName(makeSystemName(getSystemNamePrefix() + address));
-            } catch (NamedBean.BadSystemNameException je) {
-                // format isn't correct, but s already equals null, so ignore
-            }
-            if (s == null) {
-                // normalize the hex characters in the system name to lower case.
-                address = sName.substring(getSystemNamePrefix().length()).toLowerCase(Locale.ENGLISH);
-                try {
-                    s = super.getBySystemName(makeSystemName(getSystemNamePrefix() + address));
-                } catch (NamedBean.BadSystemNameException je) {
-                    // format isn't correct, but s already equals null, so ignore
-                }
-            }
-        }
-        return s;
+        Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(), typeLetter());
+        return getBySystemName(sName, comparator);
     }
 
     /**
@@ -263,6 +248,6 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21SensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21SensorManager.class);
 
 }
