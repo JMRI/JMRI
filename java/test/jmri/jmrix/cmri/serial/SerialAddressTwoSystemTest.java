@@ -95,7 +95,7 @@ public class SerialAddressTwoSystemTest {
     }
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", NameValidity.VALID == memo1.validSystemNameFormat("CL2", 'L'));
         Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo1.validSystemNameFormat("CL0B2", 'L'));
 
@@ -113,10 +113,10 @@ public class SerialAddressTwoSystemTest {
         Assert.assertTrue("valid format - CS2B5", NameValidity.VALID == memo1.validSystemNameFormat("CS2B5", 'S'));
 
         Assert.assertTrue("invalid format - CY2005", NameValidity.VALID != memo1.validSystemNameFormat("CY2005", 'L'));
-        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
+//        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2005");
 
         Assert.assertTrue("invalid format - CY2B5", NameValidity.VALID != memo1.validSystemNameFormat("CY2B5", 'L'));
-        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
+//        JUnitAppender.assertErrorMessage("invalid type character in CMRI system name: CY2B5");
 
         Assert.assertTrue("valid format - CL22001", NameValidity.VALID == memo1.validSystemNameFormat("CL22001", 'L'));
         Assert.assertTrue("valid format - CL22B1", NameValidity.VALID == memo1.validSystemNameFormat("CL22B1", 'L'));

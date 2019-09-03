@@ -48,7 +48,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     public void actionPerformed(ActionEvent e) {
 
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // make sure instance loaded
         Roster.getDefault();
@@ -164,7 +164,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
                         // turn file into backup
                         LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                        df.makeBackupFile(LocoFile.getFileLocation() + currentEntry.getFileName());
+                        df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + currentEntry.getFileName());
 
                         // delete entry
                         Roster.getDefault().removeEntry(currentEntry);

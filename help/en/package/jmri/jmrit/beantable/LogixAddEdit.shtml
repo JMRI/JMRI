@@ -34,9 +34,7 @@
       <p>The system name is required. The system name for a Logix always must
       begin with the two letters <strong>IX</strong>, usually followed by a
       number selected by the user. For example, valid Logix system names
-      include: IX1, IX34, and IX100. All letters in a system name must be in
-      upper case. If the user enters lower case letters, JMRI will
-      automatically convert them to upper case. Also, as a convenience to the
+      include: IX1, IX34, and IX100. As a convenience to the
       user, if the entered system name does not begin with IX, the program
       will add IX in front of what is entered. For example, to enter a system
       name of IX32, simply enter 32 in the system name field, and the program

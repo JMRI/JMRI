@@ -11,14 +11,15 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
 
     // ctor has to register for LocoNet events
     public Dcc4PcReporterManager(Dcc4PcTrafficController tc, Dcc4PcSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
     }
 
-    Dcc4PcSystemConnectionMemo memo;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public Dcc4PcSystemConnectionMemo getMemo() {
+        return (Dcc4PcSystemConnectionMemo) memo;
     }
 
     @Override

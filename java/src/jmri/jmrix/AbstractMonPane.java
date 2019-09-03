@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -27,6 +28,7 @@ import javax.swing.text.DocumentFilter;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.TextAreaFIFO;
 import org.slf4j.Logger;
@@ -101,14 +103,14 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * By default, creates just one place (one data pane) to put trace data
+     * By default, create just one place (one data pane) to put trace data.
      */
     protected void createDataPanes() {
         configureDataPane(monTextPane);
     }
 
     /**
-     * Do default configuration of a data pane
+     * Do default configuration of a data pane.
      *
      * @param textPane a TextAreaFIFO into which the data pane will be placed
      */
@@ -119,7 +121,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * Provide initial preferred line length. Used to size the initial GUI
+     * Provide initial preferred line length. Used to size the initial GUI.
      *
      * @return preferred initial number of columns
      */
@@ -128,7 +130,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * Provide initial number of lines to display Used to size the initial GUI
+     * Provide initial number of lines to display Used to size the initial GUI.
      *
      * @return preferred initial number of rows
      */
@@ -137,7 +139,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * Put data pane(s) in the GUI
+     * Put data pane(s) in the GUI.
      */
     protected void addDataPanes() {
 
@@ -241,8 +243,9 @@ public abstract class AbstractMonPane extends JmriPanel {
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setSelected(pm.getSimplePreferenceState(alwaysOnTopCheck));
-        if (getTopLevelAncestor() != null) {
-            ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+        Component ancestor = getTopLevelAncestor();
+        if (ancestor instanceof JmriJFrame) {
+            ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         } else {
             // this pane isn't yet part of a frame,
             // which can be normal, but
@@ -251,9 +254,9 @@ public abstract class AbstractMonPane extends JmriPanel {
                 log.debug("Cannot set Always On Top from preferences due to no Top Level Ancestor");
                 timerCount = 0;
                 timer = new javax.swing.Timer(20, (java.awt.event.ActionEvent evt) -> {
-                    if (getTopLevelAncestor() != null && timerCount > 3) {
+                    if ((getTopLevelAncestor() != null) && (timerCount > 3) && (getTopLevelAncestor() instanceof JmriJFrame)) {
                         timer.stop();
-                        ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                        ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
                         log.debug("set Always On Top");
                     } else {
                         log.debug("Have to repeat attempt to set Always on Top");
@@ -332,8 +335,8 @@ public abstract class AbstractMonPane extends JmriPanel {
         });
 
         alwaysOnTopCheckBox.addActionListener((java.awt.event.ActionEvent e) -> {
-            if (getTopLevelAncestor() != null) {
-                ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+            if ((getTopLevelAncestor() != null) && (getTopLevelAncestor() instanceof JmriJFrame)) {
+                ((JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
             }
         });
 
@@ -353,7 +356,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     private javax.swing.Timer timer;
 
     /**
-     * Sets the display window to fixed width font, so that e.g. columns line up
+     * Set the display window to fixed width font, so that e.g. columns line up.
      */
     public void setFixedWidthFont() {
         monTextPane.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, monTextPane.getFont().getSize()));
@@ -506,7 +509,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     /**
-     * Get hex opcode for filtering
+     * Get hex opcode for filtering.
      * <p>
      * Reports the "opcode" byte from the string containing the ASCII string
      * representation of the message. Assumes that there is a generic header on
@@ -519,7 +522,7 @@ public abstract class AbstractMonPane extends JmriPanel {
      *         the opcode from the raw message.
      */
     protected String getOpCodeForFilter(String raw) {
-        //note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        // note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
         if (raw != null && raw.length() >= 7) {
             return raw.substring(5, 7);
         } else {
@@ -527,7 +530,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
     }
 
-    String newline = System.getProperty("line.separator"); // NOI18N
+    private static final String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
@@ -538,15 +541,21 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     public String getFilePathAndName() {
-        String returnString;
+        String returnString = "";
         java.nio.file.Path p = logFileChooser.getSelectedFile().toPath();
         if (p.getParent() == null) {
             // This case is a file path with a "parent" of "null"
             //
             // Should instead use the profile directory, as "null" can default to
             // the JMRI program directory, which might not be user-writable.
-            returnString = FileUtil.getUserFilesPath() + p.getFileName().toString();
-            log.warn("File selection dialog box did not provide a path to the specified file.  Log will be saved to {}", returnString);
+            java.nio.file.Path fileName = p.getFileName();
+            if (fileName != null) { // getUserFilesPath() never null
+                returnString = FileUtil.getUserFilesPath() + fileName.toString();
+            } else {
+                log.error("User Files File Path not valid");
+            }
+            log.warn("File selection dialog box did not provide a path to the specified file. Log will be saved to {}",
+                    returnString);
         } else {
             returnString = p.toString();
         }
@@ -555,11 +564,13 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
-        if (logStream == null) {  // successive clicks don't restart the file
+        if (logStream == null) {  // successive clicks won't restart the file once running
             // start logging
             String filePathAndName = getFilePathAndName();
-            log.warn("startLogButtonActionPerformed: getSelectedFile() returns {} {}", logFileChooser.getSelectedFile().getPath(), logFileChooser.getSelectedFile().getName());
-            log.warn("startLogButtonActionPerformed: is attempting to use returned file path and file name {}", filePathAndName);
+            log.warn("startLogButtonActionPerformed: getSelectedFile() returns {} {}",
+                    logFileChooser.getSelectedFile().getPath(), logFileChooser.getSelectedFile().getName());
+            log.warn("startLogButtonActionPerformed: is attempting to use returned file path and file name {}",
+                    filePathAndName);
             File logFile = new File(filePathAndName);
             try {
                 logStream = new PrintStream(new FileOutputStream(logFile));
@@ -637,4 +648,5 @@ public abstract class AbstractMonPane extends JmriPanel {
     private static final int MAX_LINES = 500;
 
     private static final Logger log = LoggerFactory.getLogger(AbstractMonPane.class);
+
 }

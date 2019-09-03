@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="3" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Jeff Schmaltz escopetas@comcast.net" version="2.1" lastUpdated="20080127"/>
   <version author="Bob Jacobsen" version="2" lastUpdated="20071028"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20070214"/>
@@ -135,22 +136,16 @@
         <comment>Range 0/1-100/176-255</comment>
         <comment xml:lang="it">Valori 0/1-100/176-255</comment>
       </variable>
-      <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="fr">Addresse UM</label>
-        <label xml:lang="de">Verbundadresse</label>
-        <comment>Allows permanent storage of consist address. Range 0-127</comment>
-        <comment xml:lang="it">Valori ammessi 0-127</comment>
-      </variable>
+ 
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1">
-<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
         <label xml:lang="it">Luci (in avanti) controlla uscita 1</label>
       </variable>

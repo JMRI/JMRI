@@ -13,21 +13,17 @@ import jmri.Sensor;
 public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManager {
 
     // ctor has to register for RaspberryPi events
-    public RaspberryPiSensorManager(String prefix) {
-        super();
-        this.prefix = prefix;
+    public RaspberryPiSensorManager(RaspberryPiSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * Provides access to the system prefix string.
-     * This was previously called the "System letter"
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix(){
-        return prefix;
+    public RaspberryPiSystemConnectionMemo getMemo() {
+        return (RaspberryPiSystemConnectionMemo) memo;
     }
-
-    private String prefix = null;
 
     // to free resources when no longer used
     @Override

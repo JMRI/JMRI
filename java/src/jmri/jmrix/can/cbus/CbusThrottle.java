@@ -1,8 +1,8 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.Throttle;
@@ -95,7 +95,7 @@ public class CbusThrottle extends AbstractThrottle {
 //            case CbusConstants.DEC_MODE_14: this.speedIncrement = 8; break;
 //        }
         // Only 128 speed step supported at the moment
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
+        this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
         // start periodically sending keep alives, to keep this
         // attached
@@ -127,15 +127,15 @@ public class CbusThrottle extends AbstractThrottle {
      *              speed step mode in most cases
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         int mode;
         speedStepMode = Mode;
         super.setSpeedStepMode(speedStepMode);
         switch (speedStepMode) {
-            case DccThrottle.SpeedStepMode28:
+            case NMRA_DCC_28:
                 mode = CbusConstants.CBUS_SS_28;
                 break;
-            case DccThrottle.SpeedStepMode14:
+            case NMRA_DCC_14:
                 mode = CbusConstants.CBUS_SS_14;
                 break;
             default:
@@ -505,25 +505,26 @@ public class CbusThrottle extends AbstractThrottle {
         }
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-            
-            int new_spd = intSpeed(speed);
-            if (this.isForward) {
-                new_spd = new_spd | 0x80;
-            }
-            log.debug("Sending speed/dir for speed: {}",new_spd);
-            // reset timeout
-            mRefreshTimer.stop();
-            mRefreshTimer.setRepeats(true);
-            mRefreshTimer.start();
-            if (cs != null ) {
-                cs.setSpeedDir(_handle, new_spd);
-            }    
-            
+            sendToLayout();
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
-            
         }
-        
+    }
+    
+    // following a speed or direction change, sends to layout
+    private void sendToLayout(){
+        int new_spd = intSpeed(this.speedSetting);
+        if (this.isForward) {
+            new_spd = new_spd | 0x80;
+        }
+        log.debug("Sending speed/dir for speed: {}",new_spd);
+        // reset timeout
+        mRefreshTimer.stop();
+        mRefreshTimer.setRepeats(true);
+        mRefreshTimer.start();
+        if (cs != null ) {
+            cs.setSpeedDir(_handle, new_spd);
+        }
     }
 
     /**
@@ -551,14 +552,9 @@ public class CbusThrottle extends AbstractThrottle {
             setDispatchActive(true);
         }
 
-        // int new_spd = speed;
-        // if (this.isForward) {
-        //     new_spd = new_spd | 0x80;
-        // }
-        // log.debug("Updated speed/dir for speed: " + new_spd);
-
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            record(this.speedSetting); // float
         }
     }
 
@@ -568,10 +564,10 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public void setIsForward(boolean forward) {
-        boolean old = isForward;
-        isForward = forward;
-        setSpeedSetting(speedSetting);
-        if (old != isForward) {
+        boolean old = this.isForward;
+        this.isForward = forward;
+        if (old != this.isForward) {
+            sendToLayout();
             notifyPropertyChangeListener("IsForward", old, isForward);
         }
     }

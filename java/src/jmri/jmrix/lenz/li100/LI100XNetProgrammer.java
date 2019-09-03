@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina Copyright (c) 2007
  */
-public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
+public class LI100XNetProgrammer extends XNetProgrammer {
 
     static private final int RETURNSENT = 3;
 

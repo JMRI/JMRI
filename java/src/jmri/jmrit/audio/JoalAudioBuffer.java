@@ -88,9 +88,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      */
     public JoalAudioBuffer(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioBuffer: " + systemName);
-        }
+        log.debug("New JoalAudioBuffer: {}", systemName);
         initialised = init();
     }
 
@@ -102,9 +100,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      */
     public JoalAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) {
-            log.debug("New JoalAudioBuffer: " + userName + " (" + systemName + ")");
-        }
+        log.debug("New JoalAudioBuffer: {} ({})", userName, systemName);
         initialised = init();
     }
 
@@ -117,13 +113,12 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         // Try to create an empty buffer that will hold the actual sound data
         al.alGenBuffers(1, dataStorageBuffer, 0);
         if (JoalAudioFactory.checkALError()) {
-            log.warn("Error creating JoalAudioBuffer (" + this.getSystemName() + ")");
+            log.warn("Error creating JoalAudioBuffer ({})", this.getSystemName());
             return false;
         }
 
         this.setState(STATE_EMPTY);
         return true;
-
     }
 
     /**
@@ -289,7 +284,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     protected boolean generateStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) {
-            log.debug("Method generateStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
+            log.debug("Method generateStreamingBuffers() called for JoalAudioBuffer {}", this.getSystemName());
         }
         return true;
     }
@@ -298,24 +293,24 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     protected void removeStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled()) {
-            log.debug("Method removeStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
+            log.debug("Method removeStreamingBuffers() called for JoalAudioBuffer {}", this.getSystemName());
         }
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
-            justification = "TODO fill out the actions in these clauses")
+//    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW",
+//            justification = "TODO fill out the actions in these clauses")
     protected void generateLoopBuffers(int which) {
-        if ((which == LOOP_POINT_START) || (which == LOOP_POINT_BOTH)) {
-            // Create start loop buffer
-            // TODO: Actually write this bit
-        }
-        if ((which == LOOP_POINT_END) || (which == LOOP_POINT_BOTH)) {
-            // Create end loop buffer
-            // TODO: Actually write this bit
-        }
+//        if ((which == LOOP_POINT_START) || (which == LOOP_POINT_BOTH)) {
+//            // Create start loop buffer
+//            // TODO: Actually write this bit
+//        }
+//        if ((which == LOOP_POINT_END) || (which == LOOP_POINT_BOTH)) {
+//            // Create end loop buffer
+//            // TODO: Actually write this bit
+//        }
         if (log.isDebugEnabled()) {
-            log.debug("Method generateLoopBuffers() called for JoalAudioBuffer " + this.getSystemName());
+            log.debug("Method generateLoopBuffers() called for JoalAudioBuffer {}", this.getSystemName());
         }
     }
 
@@ -383,7 +378,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             al.alDeleteBuffers(1, dataStorageBuffer, 0);
         }
         if (log.isDebugEnabled()) {
-            log.debug("Cleanup JoalAudioBuffer (" + this.getSystemName() + ")");
+            log.debug("Cleanup JoalAudioBuffer ({})", this.getSystemName());
         }
         this.dispose();
     }

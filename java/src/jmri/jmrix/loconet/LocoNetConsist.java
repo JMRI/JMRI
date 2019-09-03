@@ -64,12 +64,6 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         throttleManager.requestThrottle(consistAddress, this, false);
     }
 
-    // Clean Up local storage
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
     // Set the Consist Type
     @Override
     public void setConsistType(int consist_type) {
@@ -281,6 +275,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
+        //set the value in the roster entry for CV19
+        setRosterEntryCVValue(LocoAddress);        
         consistRequestState = LINKSTAGEONESTATE;
         throttleManager.requestThrottle(LocoAddress, this, false);
     }
@@ -297,6 +293,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " from advanced consist " // NOI18N
                     + consistAddress.toString());
         }
+        //reset the value in the roster entry for CV19
+        resetRosterEntryCVValue(LocoAddress);
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
         consistRequestState = UNLINKSTAGEONESTATE;
     }

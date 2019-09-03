@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Powerline devices via a serial comm port.
+ * Provide access to Powerline devices via a serial com port.
  * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
@@ -24,7 +24,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SpecificDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -125,9 +125,20 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     // base class methods for the SerialPortController interface
@@ -168,7 +179,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 4800;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = currentBaudNumber(mBaudRate);
 
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -180,7 +191,11 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{4800};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class);
 

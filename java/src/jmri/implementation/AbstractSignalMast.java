@@ -2,9 +2,7 @@ package jmri.implementation;
 
 import java.util.*;
 import java.util.List;
-
 import javax.annotation.*;
-
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
@@ -32,7 +30,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
         this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
@@ -105,7 +103,6 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             // notify listeners, if any
             firePropertyChange("Lit", oldLit, newLit);
         }
-
     }
 
     /**
@@ -155,6 +152,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     ArrayList<String> disabledAspects = new ArrayList<>(1);
 
     @Override
+    @Nonnull
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         // copy List to Vector
@@ -171,7 +169,9 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     /**
      * {@inheritDoc }
      */
+    @Override
     public String getMastType() { return mastType; }
+    @Override
     public void setMastType(@Nonnull String type) { 
         Objects.requireNonNull(type, "MastType cannot be null");
         mastType = type;

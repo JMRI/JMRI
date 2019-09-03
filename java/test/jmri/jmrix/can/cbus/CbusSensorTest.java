@@ -120,7 +120,6 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
             new CbusSensor("MS",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 

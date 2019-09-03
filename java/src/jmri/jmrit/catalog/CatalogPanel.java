@@ -763,15 +763,13 @@ public class CatalogPanel extends JPanel {
         if (dx == 0) {
             return sb.toString();
         }
-        if (decimalPlaces > 0) {
-            sb.append('.');
+        sb.append('.');
+        num /= 10;
+        while (num > dx) {
+            sb.append('0');
             num /= 10;
-            while (num > dx) {
-                sb.append('0');
-                num /= 10;
-            }
-            sb.append(dx);
         }
+        sb.append(dx);
         return sb.toString();
     }
 

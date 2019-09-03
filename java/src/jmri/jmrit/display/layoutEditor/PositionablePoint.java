@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -191,15 +191,6 @@ public class PositionablePoint extends LayoutTrack {
 
     private PositionablePoint linkedPoint;
 
-    /**
-     * @return the name of the linked editor
-     * @deprecated since 4.9.4 use @link{getLinkedEditorName()} instead.
-     */
-    @Deprecated
-    public String getLinkEditorName() {
-        return getLinkedEditorName();
-    }
-
     public String getLinkedEditorName() {
         if (getLinkedEditor() != null) {
             return getLinkedEditor().getLayoutName();
@@ -222,7 +213,7 @@ public class PositionablePoint extends LayoutTrack {
         if (p == linkedPoint) {
             return;
         }
-        if (linkedPoint != null && linkedPoint != p) {
+        if (linkedPoint != null) {
             PositionablePoint oldLinkedPoint = linkedPoint;
             linkedPoint = null;
             if (oldLinkedPoint.getLinkedPoint() != null) {
@@ -670,7 +661,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@Nullable TrackSegment oldTrack, @Nullable TrackSegment newTrack) {
+    public boolean replaceTrackConnection(@CheckForNull TrackSegment oldTrack, @CheckForNull TrackSegment newTrack) {
         boolean result = false; // assume failure (pessimist!)
         // trying to replace old track with null?
         if (newTrack == null) {
@@ -2024,7 +2015,7 @@ public class PositionablePoint extends LayoutTrack {
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
-            if (blk1 != null) {
+            if (!blk1.isEmpty()) {
                 TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
                 if (TrackNameSets != null) { // (#1)
                     for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -2056,7 +2047,7 @@ public class PositionablePoint extends LayoutTrack {
             // this should never be null... but just in case...
             if (ts2 != null) {
                 String blk2 = ts2.getBlockName();
-                if (blk2 != null) {
+                if (!blk2.isEmpty()) {
                     TrackNameSet = null;    // assume not found (pessimist!)
                     TrackNameSets = blockNamesToTrackNameSetsMap.get(blk2);
                     if (TrackNameSets != null) { // (#1)
@@ -2139,6 +2130,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(PositionablePoint.class);
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }

@@ -1,5 +1,7 @@
 package jmri.jmrit.audio;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -22,7 +24,7 @@ public class AudioCommandTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.AudioManager am = new DefaultAudioManager();
+        jmri.AudioManager am = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
         am.init();
         jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");

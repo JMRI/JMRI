@@ -5,6 +5,7 @@ import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.EDGE_CONNECTOR;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.END_BUMPER;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -25,7 +26,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -90,8 +91,8 @@ public class TrackSegment extends LayoutTrack {
     private ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
 
     public TrackSegment(@Nonnull String id,
-            @Nullable LayoutTrack c1, int t1,
-            @Nullable LayoutTrack c2, int t2,
+            @CheckForNull LayoutTrack c1, int t1,
+            @CheckForNull LayoutTrack c2, int t2,
             boolean dash, boolean main,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -127,8 +128,8 @@ public class TrackSegment extends LayoutTrack {
 
     // alternate constructor for loading layout editor panels
     public TrackSegment(@Nonnull String id,
-            @Nullable String c1Name, int t1,
-            @Nullable String c2Name, int t2,
+            @CheckForNull String c1Name, int t1,
+            @CheckForNull String c2Name, int t2,
             boolean dash, boolean main, boolean hide,
             @Nonnull LayoutEditor layoutEditor) {
         super(id, MathUtil.zeroPoint2D, layoutEditor);
@@ -192,7 +193,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectTrack    the track we want to connect to
      * @param connectionType  where on that track we want to be connected
      */
-    protected void setNewConnect1(@Nullable LayoutTrack connectTrack, int connectionType) {
+    protected void setNewConnect1(@CheckForNull LayoutTrack connectTrack, int connectionType) {
         connect1 = connectTrack;
         type1 = connectionType;
     }
@@ -203,7 +204,7 @@ public class TrackSegment extends LayoutTrack {
      * @param connectTrack    the track we want to connect to
      * @param connectionType  where on that track we want to be connected
      */
-    protected void setNewConnect2(@Nullable LayoutTrack connectTrack, int connectionType) {
+    protected void setNewConnect2(@CheckForNull LayoutTrack connectTrack, int connectionType) {
         connect2 = connectTrack;
         type2 = connectionType;
     }
@@ -215,7 +216,7 @@ public class TrackSegment extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@Nullable LayoutTrack oldTrack, @Nullable LayoutTrack newTrack, int newType) {
+    public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, int newType) {
         boolean result = false; // assume failure (pessimist!)
         // trying to replace old track with null?
         if (newTrack == null) {
@@ -257,15 +258,6 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * @return true if track segment should be drawn dashed
-     * @deprecated since 4.9.4; use {@link #isDashed()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isDashed()"
-    public boolean getDashed() {
-        return dashed;
-    }
-
-    /**
-     * @return true if track segment should be drawn dashed
      */
     public boolean isDashed() {
         return dashed;
@@ -277,15 +269,6 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
-
-    /**
-     * @return true if track segment is a main line
-     * @deprecated since 4.9.4; use {@link #isMainline()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isMainline()"
-    public boolean getMainline() {
-        return mainline;
     }
 
     /**
@@ -302,15 +285,6 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
-
-    /**
-     * @return true if track segment is an arc
-     * @deprecated since 4.9.4; use {@link #isArc()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isArc()"
-    public boolean getArc() {
-        return arc;
     }
 
     /**
@@ -333,15 +307,6 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * @return true if track segment is circle
-     * @deprecated since 4.9.4; use {@link #isCircle()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isCircle()"
-    public boolean getCircle() {
-        return circle;
-    }
-
-    /**
-     * @return true if track segment is circle
      */
     public boolean isCircle() {
         return circle;
@@ -360,15 +325,6 @@ public class TrackSegment extends LayoutTrack {
 
     /**
      * @return true if track segment circle or arc should be drawn flipped
-     * @deprecated since 4.9.4; use {@link #isFlip()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isFlip()"
-    public boolean getFlip() {
-        return flip;
-    }
-
-    /**
-     * @return true if track segment circle or arc should be drawn flipped
      */
     public boolean isFlip() {
         return flip;
@@ -382,15 +338,6 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
-    }
-
-    /**
-     * @return true if track segment is a bezier curve
-     * @deprecated since 4.9.4; use {@link #isBezier()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isBezier()"
-    public boolean getBezier() {
-        return bezier;
     }
 
     /**
@@ -422,7 +369,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * get the direction from end point 1 to 2
+     * Get the direction from end point 1 to 2
      * <p>
      * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
      * (PI*3/2), etc.
@@ -441,7 +388,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * get the direction from end point 1 to 2
+     * Get the direction from end point 1 to 2
      * <p>
      * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
      * etc.
@@ -476,7 +423,7 @@ public class TrackSegment extends LayoutTrack {
         return getConnectName(connect2, type2);
     }
 
-    private String getConnectName(@Nullable LayoutTrack layoutTrack, int type) {
+    private String getConnectName(@CheckForNull LayoutTrack layoutTrack, int type) {
         return (layoutTrack == null) ? null : layoutTrack.getName();
     }
 
@@ -501,7 +448,7 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
     @Override
-    public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
     }
 
@@ -520,7 +467,7 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-    public void setBezierControlPoint(@Nullable Point2D p, int index) {
+    public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
         if (index < 0) {
             index += bezierControlPoints.size();
         }
@@ -534,9 +481,10 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Set Up a Layout Block for a Track Segment.
+     * Set up a Layout Block for a Track Segment.
      */
-    public void setLayoutBlock(@Nullable LayoutBlock newLayoutBlock) {
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != newLayoutBlock) {
             // block has changed, if old block exists, decrement use
@@ -551,7 +499,8 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    public void setLayoutBlockByName(@Nullable String name) {
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
             LayoutBlock b = layoutEditor.provideLayoutBlock(name);
             namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
@@ -563,8 +512,9 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
+
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * Scale this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
@@ -581,7 +531,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * Translate (2D Move) this LayoutTrack's coordinates by the x and y factors
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -624,6 +574,7 @@ public class TrackSegment extends LayoutTrack {
     //NOTE: findObjectByTypeAndName is @Deprecated;
     // we're using it here for backwards compatibility until it can be removed
     @Override
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null check performed before using return value")
     public void setObjects(LayoutEditor p) {
 
         LayoutBlock lb;
@@ -633,7 +584,7 @@ public class TrackSegment extends LayoutTrack {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
-                log.error("bad blockname '" + tLayoutBlockName + "' in tracksegment " + getName());
+                log.error("bad blockname '{}' in tracksegment {}", tLayoutBlockName, getName());
                 namedLayoutBlock = null;
             }
             tLayoutBlockName = null; //release this memory
@@ -643,12 +594,12 @@ public class TrackSegment extends LayoutTrack {
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
         connect1 = p.getFinder().findObjectByName(tConnect1Name);
         if (null == connect1) { // findObjectByName failed... try findObjectByTypeAndName
-            log.warn("Unknown connect1 object prefix: '" + tConnect1Name + "' of type " + type1 + ".");
+            log.warn("Unknown connect1 object prefix: '{}' of type {}.", tConnect1Name, type1);
             connect1 = p.getFinder().findObjectByTypeAndName(type1, tConnect1Name);
         }
         connect2 = p.getFinder().findObjectByName(tConnect2Name);
         if (null == connect2) { // findObjectByName failed; try findObjectByTypeAndName
-            log.warn("Unknown connect2 object prefix: '" + tConnect2Name + "' of type " + type2 + ".");
+            log.warn("Unknown connect2 object prefix: '{}' of type {}.", tConnect2Name, type2);
             connect2 = p.getFinder().findObjectByTypeAndName(type2, tConnect2Name);
         }
     }
@@ -821,7 +772,7 @@ public class TrackSegment extends LayoutTrack {
             @Nonnull String titleKey, @Nonnull String toolTipKey,
             @Nonnull Supplier<Integer> val,
             @Nonnull Consumer<Integer> set,
-            @Nullable Predicate<Integer> predicate) {
+            @CheckForNull Predicate<Integer> predicate) {
         int oldVal = val.get();
         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                 Bundle.getMessage(titleKey)) + oldVal));
@@ -3031,7 +2982,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * get decorations
+     * Get decorations.
      *
      * @return decorations to set
      */
@@ -3155,7 +3106,7 @@ public class TrackSegment extends LayoutTrack {
     } // getDecorations
 
     /**
-     * set decorations
+     * Set decorations.
      *
      * @param decorations to set
      */
@@ -3165,7 +3116,7 @@ public class TrackSegment extends LayoutTrack {
         super.setDecorations(decorations);
         if (decorations != null) {
             for (Map.Entry<String, String> entry : decorations.entrySet()) {
-                log.debug("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                log.debug("Key = {}, Value = {}", entry.getKey(), entry.getValue());
                 String key = entry.getKey();
                 //
                 // arrow decorations
@@ -3213,7 +3164,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             gap = Integer.parseInt(valueString);
                         } else {
-                            log.debug("arrow value ignored: " + value);
+                            log.debug("arrow value ignored: {}", value);
                         }
                     }
                     hasIn |= !hasOut;   // if hasOut is false make hasIn true
@@ -3270,7 +3221,7 @@ public class TrackSegment extends LayoutTrack {
                             String valueString = value.substring(value.lastIndexOf("=") + 1);
                             deckWidth = Integer.parseInt(valueString);
                         } else {
-                            log.debug("bridge value ignored: " + value);
+                            log.debug("bridge value ignored: {}", value);
                         }
                     }
                     // these both can't be false
@@ -4047,7 +3998,7 @@ public class TrackSegment extends LayoutTrack {
         List<Set<String>> TrackNameSets = null;
         Set<String> TrackNameSet = null;    // assume not found (pessimist!)
         String blockName = getBlockName();
-        if (blockName != null) {
+        if (!blockName.isEmpty()) {
             TrackNameSets = blockNamesToTrackNameSetsMap.get(blockName);
             if (TrackNameSets != null) { // (#1)
                 for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -4076,7 +4027,7 @@ public class TrackSegment extends LayoutTrack {
                 connect2.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
             }
         }
-    }   // collectContiguousTracksNamesInBlockNamed
+    }
 
     /**
      * {@inheritDoc}
@@ -4111,6 +4062,6 @@ public class TrackSegment extends LayoutTrack {
         setLayoutBlock(layoutBlock);
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(TrackSegment.class);
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
+
 }

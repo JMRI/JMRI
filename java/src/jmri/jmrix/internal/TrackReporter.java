@@ -17,12 +17,12 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     private Deque collection = null;
 
     public TrackReporter(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         collection = new ArrayDeque<Object>();
     }
 
     public TrackReporter(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         collection = new ArrayDeque<Object>();
     }
 
@@ -61,6 +61,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     /**
      * @return the collection of elements associated with this reporter.
      */
+    @Override
     public java.util.Collection getCollection(){
        return(collection);
     }

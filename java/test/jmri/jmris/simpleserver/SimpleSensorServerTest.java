@@ -135,6 +135,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkErrorStatusSent(){
          Assert.assertEquals("sendErrorStatus check","SENSOR ERROR\n",sb.toString());
     }
@@ -142,6 +143,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorActiveSent(){
          Assert.assertEquals("sendStatus check","SENSOR IS1 ACTIVE\n",sb.toString());
     }
@@ -149,6 +151,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorInActiveSent(){
          Assert.assertEquals("sendStatus check","SENSOR IS1 INACTIVE\n",sb.toString());
     }
@@ -156,6 +159,7 @@ public class SimpleSensorServerTest extends jmri.jmris.AbstractSensorServerTestB
     /**
      * {@inhertDoc} 
      */
+    @Override
     public void checkSensorUnknownSent(){
          Assert.assertEquals("sendStatus check","SENSOR IS1 UNKNOWN\n",sb.toString());
     }

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -51,7 +51,7 @@ class JsonDeleteTokenManager {
      * @param token the token to test
      * @return true if the token was accepted; false otherwise
      */
-    boolean acceptToken(@Nonnull String type, @Nonnull String name, @Nullable String token) {
+    boolean acceptToken(@Nonnull String type, @Nonnull String name, @CheckForNull String token) {
         // generate a random token so that a fixed string cannot be discovered and used to
         // bypass this check
         String value = tokens.getOrDefault(getKey(type, name), UUID.randomUUID().toString());

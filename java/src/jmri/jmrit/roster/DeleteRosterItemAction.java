@@ -69,13 +69,13 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
             }
         } else {
             entries = selectRosterEntry(rosterGroup);
-            if (entries != null) {
+            if (entries.length > 0 ) {
                 log.debug("selectRosterEntry(rosterGroup) found {} entries", entries.length);
             } else {
-                log.debug("selectRosterEntry(rosterGroup) left entries null");
+                log.debug("selectRosterEntry(rosterGroup) found no entries");
             }
         }
-        if (entries == null) {
+        if (entries == null || entries.length == 0) {
             return;
         }
         // get parent object if there is one
@@ -85,7 +85,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         // find the file for the selected entry
         for (RosterEntry re : entries) {
             String filename = roster.fileFromTitle(re.titleString());
-            String fullFilename = LocoFile.getFileLocation() + filename;
+            String fullFilename = Roster.getDefault().getRosterFilesLocation() + filename;
             log.debug("resolves to [{}], [{}]", filename, fullFilename);
 
             // prompt for one last chance
@@ -108,11 +108,11 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
             if (rosterGroup == null) {
                 try {
                     // ensure preferences will be found
-                    FileUtil.createDirectory(LocoFile.getFileLocation());
+                    FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
                     // move original file to backup
                     LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                    df.makeBackupFile(LocoFile.getFileLocation() + filename);
+                    df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + filename);
 
                 } catch (Exception ex) {
                     log.error("error during locomotive file output: " + ex);
@@ -123,6 +123,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     }
 
     protected RosterEntry[] selectRosterEntry(String rosterGroup) {
+        RosterEntry[] entries = new RosterEntry[1];
         // create a dialog to select the roster entry
         JComboBox<?> selections = new RosterEntryComboBox(rosterGroup);
         int retval = JOptionPane.showOptionDialog(_who,
@@ -132,9 +133,8 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":"
                 + selections.getSelectedItem()); // TODO I18N
         if (retval != 1) {
-            return null;
+            return entries; // empty
         }
-        RosterEntry[] entries = new RosterEntry[1];
         entries[0] = (RosterEntry) selections.getSelectedItem();
         return entries;
     }

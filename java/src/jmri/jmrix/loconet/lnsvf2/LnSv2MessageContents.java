@@ -166,7 +166,7 @@ public class LnSv2MessageContents {
      */
     public static boolean isSupportedSv2Message(LocoNetMessage m) {
         // must be OPC_PEER_XFER opcode
-        if (m.getElement(0) != LnConstants.OPC_PEER_XFER) { 
+        if (m.getOpCode() != LnConstants.OPC_PEER_XFER) { 
             log.debug ("cannot be SV2 message because not OPC_PEER_XFER");  // NOI18N
             return false;
         }
@@ -221,7 +221,7 @@ public class LnSv2MessageContents {
      */
     public static boolean isLnMessageASpecificSv2Command(LocoNetMessage m, Sv2Command svCmd) {
         // must be OPC_PEER_XFER opcode
-        if (m.getElement(0) != LnConstants.OPC_PEER_XFER) { 
+        if (m.getOpCode() != LnConstants.OPC_PEER_XFER) { 
             log.debug ("cannot be SV2 message because not OPC_PEER_XFER");  // NOI18N
             return false;
         }

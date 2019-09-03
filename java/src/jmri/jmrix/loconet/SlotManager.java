@@ -394,7 +394,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * else returns -1
      */
     int getDirectFunctionAddress(LocoNetMessage m) {
-        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
+        if (m.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -433,7 +433,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return an integer containing the bytes of the DCC packet, except the address bytes.
      */
     int getDirectDccPacket(LocoNetMessage m) {
-        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
+        if (m.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -812,8 +812,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
-        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         ret.add(ProgrammingMode.ADDRESSMODE);
         ret.add(csOpSwProgrammingMode);

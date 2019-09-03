@@ -151,22 +151,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     /**
-     * Validate system name format. Locate a system specfic SensorManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((SensorManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -204,8 +188,8 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSensor");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
     }
 
     /**

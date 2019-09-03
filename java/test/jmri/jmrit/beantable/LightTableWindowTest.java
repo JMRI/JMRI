@@ -4,6 +4,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
+import jmri.LightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
@@ -62,7 +65,8 @@ public class LightTableWindowTest {
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
-        Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem()); // this connection type is always available
+        LightManager internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class).getLightManager();
+        Assert.assertEquals("Selected system item", internal, prefixBox.getSelectedItem()); // this connection type is always available
 
         // Find and click the Add Create button to add turnout
         JUnitUtil.pressButton(fa, Bundle.getMessage("ButtonCreate"));

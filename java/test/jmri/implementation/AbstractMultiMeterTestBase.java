@@ -68,7 +68,7 @@ public abstract class AbstractMultiMeterTestBase {
     @Test
     public void testAddListener() {
         Listen ln = new Listen();
-        mm.addDataUpdateListener(ln);
+        mm.addPropertyChangeListener(ln);
         mm.setCurrent(0.5f);
         jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } );
         Assert.assertTrue("listener invoked by setCurrent", ln.eventSeen());
@@ -77,8 +77,8 @@ public abstract class AbstractMultiMeterTestBase {
     @Test
     public void testRemoveListener() {
         Listen ln = new Listen();
-        mm.addDataUpdateListener(ln);
-        mm.removeDataUpdateListener(ln);
+        mm.addPropertyChangeListener(ln);
+        mm.removePropertyChangeListener(ln);
         mm.setCurrent(0.5f);
         // this should just timeout;
         Assert.assertFalse(jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } ));

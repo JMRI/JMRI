@@ -129,11 +129,11 @@ public final class FileLocationPane extends JPanel implements PreferencesPanel {
     @Override
     public void savePreferences() {
         if (!FileUtil.getUserFilesPath().equals(this.userLocation.getText())) {
-            FileUtil.setUserFilesPath(this.userLocation.getText());
+            FileUtil.setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), this.userLocation.getText());
             this.restartRequired = true;
         }
         if (!FileUtil.getScriptsPath().equals(this.scriptLocation.getText())) {
-            FileUtil.setScriptsPath(this.scriptLocation.getText());
+            FileUtil.setScriptsPath(ProfileManager.getDefault().getActiveProfile(), this.scriptLocation.getText());
             this.restartRequired = true;
         }
         Profile profile = ProfileManager.getDefault().getActiveProfile();

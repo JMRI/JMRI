@@ -10,20 +10,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.NamedBean;
+import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.swing.NamedBeanComboBox;
 
 /**
  * Provides an edit panel for a turnout object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class TurnoutEditAction extends BeanEditAction {
+public class TurnoutEditAction extends BeanEditAction<Turnout> {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutAddEdit";
@@ -31,8 +32,8 @@ public class TurnoutEditAction extends BeanEditAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        oldAutomationSelection = ((Turnout) bean).getTurnoutOperation();
-        oldModeSelection = ((Turnout) bean).getFeedbackModeName();
+        oldAutomationSelection = bean.getTurnoutOperation();
+        oldModeSelection = bean.getFeedbackModeName();
         super.actionPerformed(e);
     }
 
@@ -50,7 +51,7 @@ public class TurnoutEditAction extends BeanEditAction {
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
+    public Turnout getByUserName(String name) {
         return InstanceManager.turnoutManagerInstance().getByUserName(name);
     }
 
@@ -67,22 +68,22 @@ public class TurnoutEditAction extends BeanEditAction {
     @Override
     protected void saveBasicItems(ActionEvent e) {
         super.saveBasicItems(e);
-        Turnout turn = (Turnout) bean;
+        Turnout turn = bean;
         turn.setInverted(inverted.isSelected());
     }
 
     @Override
     protected void resetBasicItems(ActionEvent e) {
         super.resetBasicItems(e);
-        Turnout turn = (Turnout) bean;
+        Turnout turn = bean;
         if (turn.canInvert()) {
             inverted.setSelected(turn.getInverted());
         }
         inverted.setEnabled(turn.canInvert());
     }
 
-    private JmriBeanComboBox sensorFeedBack1ComboBox;
-    private JmriBeanComboBox sensorFeedBack2ComboBox;
+    private NamedBeanComboBox<Sensor> sensorFeedBack1ComboBox;
+    private NamedBeanComboBox<Sensor> sensorFeedBack2ComboBox;
     private JComboBox<String> modeBox;
     private JComboBox<String> automationBox;
     private String useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
@@ -94,9 +95,9 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback = new BeanItemPanel();
         feedback.setName(Bundle.getMessage("Feedback"));
 
-        modeBox = new JComboBox<String>(((Turnout) bean).getValidFeedbackNames());
+        modeBox = new JComboBox<String>(bean.getValidFeedbackNames());
         modeBox.setMaximumRowCount(modeBox.getItemCount());
-        oldModeSelection = ((Turnout) bean).getFeedbackModeName();
+        oldModeSelection = bean.getFeedbackModeName();
         modeBox.setSelectedItem(oldModeSelection);
         modeBox.addActionListener(new ActionListener() {
             @Override
@@ -109,20 +110,20 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.addItem(new BeanEditItem(modeBox, Bundle.getMessage("FeedbackMode"),
                 Bundle.getMessage("FeedbackModeToolTip")));
 
-        sensorFeedBack1ComboBox = new JmriBeanComboBox(
+        sensorFeedBack1ComboBox = new NamedBeanComboBox<>(
                 InstanceManager.sensorManagerInstance(),
-                ((Turnout) bean).getFirstSensor(),
-                JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        sensorFeedBack1ComboBox.setFirstItemBlank(true);
+                bean.getFirstSensor(),
+                DisplayOptions.DISPLAYNAME);
+        sensorFeedBack1ComboBox.setAllowNull(true);
         feedback.addItem(new BeanEditItem(sensorFeedBack1ComboBox,
                 Bundle.getMessage("FeedbackSensor1"),
                 Bundle.getMessage("FeedbackSensorToolTip")));
 
-        sensorFeedBack2ComboBox = new JmriBeanComboBox(
+        sensorFeedBack2ComboBox = new NamedBeanComboBox<>(
                 InstanceManager.sensorManagerInstance(),
-                ((Turnout) bean).getSecondSensor(),
-                JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-        sensorFeedBack2ComboBox.setFirstItemBlank(true);
+                bean.getSecondSensor(),
+                DisplayOptions.DISPLAYNAME);
+        sensorFeedBack2ComboBox.setAllowNull(true);
         feedback.addItem(new BeanEditItem(sensorFeedBack2ComboBox,
                 Bundle.getMessage("FeedbackSensor2"),
                 Bundle.getMessage("FeedbackSensorToolTip")));
@@ -133,7 +134,7 @@ public class TurnoutEditAction extends BeanEditAction {
                 Bundle.getMessage("TurnoutAutomation"),
                 Bundle.getMessage("TurnoutAutomationToolTip")));
 
-        oldAutomationSelection = ((Turnout) bean).getTurnoutOperation();
+        oldAutomationSelection = bean.getTurnoutOperation();
         if (oldAutomationSelection != null) {
             config = TurnoutOperationConfig.getConfigPanel(oldAutomationSelection);
         } else {
@@ -155,9 +156,10 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Turnout t = (Turnout) bean;
                 String modeName = (String) modeBox.getSelectedItem();
-                t.setFeedbackMode(modeName);
+                if (modeName != null) {
+                    bean.setFeedbackMode(modeName);
+                }
                 String newName = operationsName.getText();
                 if ((currentOperation != null) && (newName != null) && !newName.isEmpty()) {
                     if (!currentOperation.rename(newName)) {
@@ -169,39 +171,39 @@ public class TurnoutEditAction extends BeanEditAction {
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
                     }
-                    t.setTurnoutOperation(null);
-                    t.setTurnoutOperation(currentOperation);
+                    bean.setTurnoutOperation(null);
+                    bean.setTurnoutOperation(currentOperation);
                 }
                 config.endConfigure();
                 switch (automationBox.getSelectedIndex()) {
                     case 0:   // Off
-                        t.setInhibitOperation(true);
-                        t.setTurnoutOperation(null);
+                        bean.setInhibitOperation(true);
+                        bean.setTurnoutOperation(null);
                         break;
                     case 1:   // Default
-                        t.setInhibitOperation(false);
-                        t.setTurnoutOperation(null);
+                        bean.setInhibitOperation(false);
+                        bean.setTurnoutOperation(null);
                         break;
                     default:  // named operation
-                        t.setInhibitOperation(false);
-                        t.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
-                                getOperation(((String) automationBox.getSelectedItem())));
+                        bean.setInhibitOperation(false);
+                        String autoMode = (String) automationBox.getSelectedItem();
+                        if (autoMode != null) {
+                            bean.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
+                                    getOperation((autoMode)));
+                        }
                         break;
                 }
-                oldAutomationSelection = ((Turnout) bean).getTurnoutOperation();
-                oldModeSelection = ((Turnout) bean).getFeedbackModeName();
+                oldAutomationSelection = bean.getTurnoutOperation();
+                oldModeSelection = bean.getFeedbackModeName();
                 try {
-                    t.provideFirstFeedbackSensor(sensorFeedBack1ComboBox.getSelectedDisplayName());
+                    bean.provideFirstFeedbackSensor(sensorFeedBack1ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
                 try {
-                    t.provideSecondFeedbackSensor(sensorFeedBack2ComboBox.getSelectedDisplayName());
+                    bean.provideSecondFeedbackSensor(sensorFeedBack2ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
-                }
-                if (config.isEnabled()) {
-                    // shouldn't there be some code here?
                 }
             }
         });
@@ -209,15 +211,14 @@ public class TurnoutEditAction extends BeanEditAction {
         feedback.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Turnout t = (Turnout) bean;
-                sensorFeedBack1ComboBox.setSelectedBean(t.getFirstSensor());
-                sensorFeedBack2ComboBox.setSelectedBean(t.getSecondSensor());
+                sensorFeedBack1ComboBox.setSelectedItem(bean.getFirstSensor());
+                sensorFeedBack2ComboBox.setSelectedItem(bean.getSecondSensor());
 
                 automationBox.removeActionListener(automationSelectionListener);
-                jmri.jmrit.beantable.TurnoutTableAction.updateAutomationBox(t, automationBox);
+                jmri.jmrit.beantable.TurnoutTableAction.updateAutomationBox(bean, automationBox);
                 automationBox.addActionListener(automationSelectionListener);
 
-                t.setFeedbackMode(oldModeSelection);
+                bean.setFeedbackMode(oldModeSelection);
                 updateFeedbackOptions();
             }
         });
@@ -238,19 +239,22 @@ public class TurnoutEditAction extends BeanEditAction {
     };
 
     private void updateFeedbackOptions() {
-        Turnout t = (Turnout) bean;
         sensorFeedBack1ComboBox.setEnabled(false);
         sensorFeedBack2ComboBox.setEnabled(false);
 
-        if (modeBox.getSelectedItem().equals("ONESENSOR")) {
-            sensorFeedBack1ComboBox.setEnabled(true);
-        } else if (modeBox.getSelectedItem().equals("TWOSENSOR")) {
-            sensorFeedBack1ComboBox.setEnabled(true);
-            sensorFeedBack2ComboBox.setEnabled(true);
+        String mode = (String) modeBox.getSelectedItem();
+        if (mode != null) {
+            if (mode.equals("ONESENSOR")) {
+                sensorFeedBack1ComboBox.setEnabled(true);
+            } else if (mode.equals("TWOSENSOR")) {
+                sensorFeedBack1ComboBox.setEnabled(true);
+                sensorFeedBack2ComboBox.setEnabled(true);
+            }
+            bean.setFeedbackMode(mode);
         }
 
-        t.setFeedbackMode((String) modeBox.getSelectedItem());
-        jmri.jmrit.beantable.TurnoutTableAction.updateAutomationBox(t, automationBox);
+        bean.setFeedbackMode((String) modeBox.getSelectedItem());
+        jmri.jmrit.beantable.TurnoutTableAction.updateAutomationBox(bean, automationBox);
     }
 
     private void updateAutomationOptions() {
@@ -258,14 +262,17 @@ public class TurnoutEditAction extends BeanEditAction {
         currentOperation = null;
         automationBox.removeActionListener(automationSelectionListener);
         if (automationBox.getSelectedIndex() > 1) {
-            currentOperation = InstanceManager.getDefault(TurnoutOperationManager.class).
-                    getOperation(((String) automationBox.getSelectedItem()));
+            String autoMode = (String) automationBox.getSelectedItem();
+            if (autoMode != null) {
+                currentOperation = InstanceManager.getDefault(TurnoutOperationManager.class).
+                        getOperation((autoMode));
+            }
         }
 
         if (currentOperation != null) {
             turnoutOperation.remove(config);
             if (!currentOperation.isNonce()) {
-                currentOperation = currentOperation.makeNonce((Turnout) bean);
+                currentOperation = currentOperation.makeNonce(bean);
             }
             config = TurnoutOperationConfig.getConfigPanel(currentOperation);
             operationsName.setEnabled(true);
@@ -285,30 +292,28 @@ public class TurnoutEditAction extends BeanEditAction {
 
     @Override
     protected void cancelButtonAction(ActionEvent e) {
-        Turnout t = (Turnout) bean;
-        t.setFeedbackMode(oldModeSelection);
-        t.setTurnoutOperation(oldAutomationSelection);
+        bean.setFeedbackMode(oldModeSelection);
+        bean.setTurnoutOperation(oldAutomationSelection);
         super.cancelButtonAction(e);
     }
 
-    private final static String bothText = "Both";
+    private final static String bothText = "Both"; // TODO I18N using bundle. Note: check how this property is stored/loaded
     private final static String cabOnlyText = "Cab only";
     private final static String pushbutText = "Pushbutton only";
     private final static String noneText = "None";
 
     private JComboBox<String> lockBox;
     protected BeanItemPanel lock() {
-        Turnout t = (Turnout) bean;
         BeanItemPanel lock = new BeanItemPanel();
         lock.setName(Bundle.getMessage("Lock"));
 
-        if (t.getPossibleLockModes() != 0) {
+        if (bean.getPossibleLockModes() != 0) {
             // lock operations are available, configure pane for them
             lock.addItem(new BeanEditItem(null, null, Bundle.getMessage("LockToolTip")));
 
             // Vector is a JComboBox ctor; List is not
             java.util.Vector<String> lockOperations = new java.util.Vector<>();
-            int modes = t.getPossibleLockModes();
+            int modes = bean.getPossibleLockModes();
             if (((modes & Turnout.CABLOCKOUT) != 0)
                     && ((modes & Turnout.PUSHBUTTONLOCKOUT) != 0)) {
                 lockOperations.add(bothText);
@@ -329,57 +334,62 @@ public class TurnoutEditAction extends BeanEditAction {
             lockOperationBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (lockOperationBox.getSelectedItem().equals(noneText)) {
-                        lockBox.setEnabled(false);
-                    } else {
-                        lockBox.setEnabled(true);
+                    String lockOp = (String) lockOperationBox.getSelectedItem();
+                    if (lockOp != null) {
+                        if (lockOp.equals(noneText)) {
+                            lockBox.setEnabled(false);
+                        } else {
+                            lockBox.setEnabled(true);
+                        }
                     }
                 }
             });
 
-            if ((t.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) != 0) {
-                lockBox = new JComboBox<String>(t.getValidDecoderNames());
+            if ((bean.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) != 0) {
+                lockBox = new JComboBox<String>(bean.getValidDecoderNames());
             } else {
-                lockBox = new JComboBox<String>(new String[]{t.getDecoderName()});
+                lockBox = new JComboBox<String>(new String[]{bean.getDecoderName()});
             }
             lock.addItem(new BeanEditItem(lockBox,
                     Bundle.getMessage("LockModeDecoder"),
                     Bundle.getMessage("LockModeDecoderToolTip")));
 
-          lock.setSaveItem(new AbstractAction() {
+            lock.setSaveItem(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Turnout t = (Turnout) bean;
                     String lockOpName = (String) lockOperationBox.getSelectedItem();
-                    if (lockOpName.equals(bothText)) {
-                        t.enableLockOperation(Turnout.CABLOCKOUT
-                                + Turnout.PUSHBUTTONLOCKOUT, true);
-                    }
-                    if (lockOpName.equals(cabOnlyText)) {
-                        t.enableLockOperation(Turnout.CABLOCKOUT, true);
-                        t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
-                    }
-                    if (lockOpName.equals(pushbutText)) {
-                        t.enableLockOperation(Turnout.CABLOCKOUT, false);
-                        t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
+                    if (lockOpName != null) {
+                        if (lockOpName.equals(bothText)) {
+                            bean.enableLockOperation(Turnout.CABLOCKOUT
+                                    + Turnout.PUSHBUTTONLOCKOUT, true);
+                        }
+                        if (lockOpName.equals(cabOnlyText)) {
+                            bean.enableLockOperation(Turnout.CABLOCKOUT, true);
+                            bean.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
+                        }
+                        if (lockOpName.equals(pushbutText)) {
+                            bean.enableLockOperation(Turnout.CABLOCKOUT, false);
+                            bean.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
+                        }
                     }
                     String decoderName = (String) lockBox.getSelectedItem();
-                    t.setDecoderName(decoderName);
+                    if (decoderName != null) {
+                        bean.setDecoderName(decoderName);
+                    }
                 }
             });
 
             lock.setResetItem(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Turnout t = (Turnout) bean;
-                    lockBox.setSelectedItem(t.getDecoderName());
+                    lockBox.setSelectedItem(bean.getDecoderName());
                     lockBox.setEnabled(true);
-                    if (t.canLock(Turnout.CABLOCKOUT)
-                            && t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+                    if (bean.canLock(Turnout.CABLOCKOUT)
+                            && bean.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                         lockOperationBox.setSelectedItem(bothText);
-                    } else if (t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+                    } else if (bean.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                         lockOperationBox.setSelectedItem(pushbutText);
-                    } else if (t.canLock(Turnout.CABLOCKOUT)) {
+                    } else if (bean.canLock(Turnout.CABLOCKOUT)) {
                         lockOperationBox.setSelectedItem(cabOnlyText);
                     } else {
                         lockOperationBox.setSelectedItem(noneText);
@@ -450,28 +460,27 @@ public class TurnoutEditAction extends BeanEditAction {
       speed.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Turnout t = (Turnout) bean;
                 String speed = (String) closedSpeedBox.getSelectedItem();
-                try {
-                    t.setStraightSpeed(speed);
-                    if ((!speedListClosed.contains(speed))
-                            && !speed.contains("Global")) {
-                        speedListClosed.add(speed);
+                if (speed != null) {
+                    try {
+                        bean.setStraightSpeed(speed);
+                        if ((!speedListClosed.contains(speed)) && !speed.contains("Global")) {
+                            speedListClosed.add(speed);
+                        }
+                    } catch (jmri.JmriException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                     }
-                } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage()
-                            + "\n" + speed);
                 }
                 speed = (String) thrownSpeedBox.getSelectedItem();
-                try {
-                    t.setDivergingSpeed(speed);
-                    if ((!speedListThrown.contains(speed))
-                            && !speed.contains("Global")) {
-                        speedListThrown.add(speed);
+                if (speed != null) {
+                    try {
+                        bean.setDivergingSpeed(speed);
+                        if ((!speedListThrown.contains(speed)) && !speed.contains("Global")) {
+                            speedListThrown.add(speed);
+                        }
+                    } catch (jmri.JmriException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                     }
-                } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null,
-                            ex.getMessage() + "\n" + speed);
                 }
             }
         });
@@ -479,8 +488,7 @@ public class TurnoutEditAction extends BeanEditAction {
         speed.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Turnout t = (Turnout) bean;
-                String speed = t.getDivergingSpeed();
+                String speed = bean.getDivergingSpeed();
                 speedListThrown.remove(defaultThrownSpeedText);
                 defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global")
                         + " " + InstanceManager.turnoutManagerInstance().getDefaultThrownSpeed());
@@ -490,7 +498,7 @@ public class TurnoutEditAction extends BeanEditAction {
                     thrownSpeedBox.addItem(speed);
                 }
                 thrownSpeedBox.setSelectedItem(speed);
-                speed = t.getStraightSpeed();
+                speed = bean.getStraightSpeed();
                 speedListClosed.remove(defaultClosedSpeedText);
                 defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global")
                         + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
@@ -506,4 +514,5 @@ public class TurnoutEditAction extends BeanEditAction {
         bei.add(speed);
         return speed;
     }
+
 } 

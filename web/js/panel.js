@@ -174,8 +174,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                 // icon names based on states returned from JSON server,
                 $widget['state'] = UNKNOWN; //initial state is unknown
                 $widget.jsonType = ""; //default to no JSON type (avoid undefined)
-                if (typeof $widget["id"] !== "undefined") {
-                    $widget.systemName = $widget["id"];
+                
+                if ((typeof $widget["systemName"] == "undefined") &&  //set systemName from id if missing 
+                	  (typeof $widget["id"] !== "undefined")) {  
+                	$widget.systemName = $widget["id"];
                 }
                 $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
                 $widget['widgetFamily'] = $getWidgetFamily($widget, this);
@@ -405,6 +407,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
                                     $widget['state'] = item.attributes['value'].value; //use value for initial state
                                 });
+                                $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
@@ -548,8 +551,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 break;
                         }
-                        $widget['safeName'] = $safeName($widget.name);
-                        $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                        $widget['safeName'] = $safeName($widget.name);                                            
+                        switch ($widget['orientation']) { //use orientation instead of degrees if populated
+                        	case "vertical_up"   : $widget.degrees = 270;
+                        	case "vertical_down" : $widget.degrees = 90;
+                        }
+                        $gWidgets[$widget.id] = $widget; //store widget in persistent array                        
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
                         $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
@@ -576,10 +583,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['state'] = UNKNOWN;  //add a state member for this block
                                 $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                                 //store these blocks in a persistent var
-                                //by both username and systemname since references may be by either
-                                $gBlks[$widget.username] = $widget
-                                $gBlks[$widget.systemname] = $widget;
-                                jmri.getLayoutBlock($widget.systemname);
+                                $gBlks[$widget.systemName] = $widget;
+                                jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name
@@ -1235,8 +1240,8 @@ function $drawTurnout($widget) {
 //    } else {
 //       jmri.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
     }
-    var cenx = $widget.xcen;
-    var ceny = $widget.ycen
+    var cenx = $widget.xcen * 1.0;
+    var ceny = $widget.ycen * 1.0;
     var ax = $gPts[$widget.ident + PT_A].x;
     var ay = $gPts[$widget.ident + PT_A].y;
     var bx = $gPts[$widget.ident + PT_B].x;
@@ -1246,10 +1251,10 @@ function $drawTurnout($widget) {
     var abx = (ax * 1) + ((bx - ax) * 0.5); // midpoint AB
     var aby = (ay * 1) + ((by - ay) * 0.5);
     if ($gPanel.turnoutdrawunselectedleg == 'yes') { //only calculate midpoints if needed
-        var cenbx = (cenx * 1) + ((bx - cenx) * 0.5); // midpoint cenB
-        var cenby = (ceny * 1) + ((by - ceny) * 0.5);
-        var cencx = (cenx * 1) + ((cx - cenx) * 0.5); // midpoint cenC
-        var cency = (ceny * 1) + ((cy - ceny) * 0.5);
+    	var cenbx = (cenx * 1) + ((bx - cenx) * 0.5); // midpoint cenB
+    	var cenby = (ceny * 1) + ((by - ceny) * 0.5);
+    	var cencx = (cenx * 1) + ((cx - cenx) * 0.5); // midpoint cenC
+    	var cency = (ceny * 1) + ((cy - ceny) * 0.5);
     }
     var dx, dy, dcx, dcy;
     if (typeof $gPts[$widget.ident + PT_D] !== "undefined") {
@@ -1303,6 +1308,11 @@ function $drawTurnout($widget) {
             if ($widget.state == $widget.continuing) {
                 $drawLine(ax, ay, bx, by, $color, $width); //A to B
                 $drawLine(dx, dy, cx, cy, $color, $width); //D to C
+                if ($widget.type == DOUBLE_XOVER) {
+                	//TODO: draw this
+                } else if ($widget.type == RH_XOVER || $widget.type == LH_XOVER) {
+                    $drawLine((abx+cenx)*0.5, (aby+ceny)*0.5, (dcx+cenx)*0.5, (dcy+ceny)*0.5, $color, $width);//center of midAB to midDC
+                }
             } else {
                 if ($widget.type == DOUBLE_XOVER) {
                     $drawLine(ax, ay, cx, cy, $color, $width); //A to C

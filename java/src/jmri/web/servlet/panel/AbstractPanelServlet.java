@@ -334,13 +334,15 @@ public abstract class AbstractPanelServlet extends HttpServlet {
                 default:
                     // nothing to do
             }
-            try {
-                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-            } catch (NullPointerException ex) {
-                if (sub.getNamedBean() == null) {
-                    log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                } else {
-                    log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+            if (sub.getNamedBean() != null) {
+                try {
+                    e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+                } catch (NullPointerException ex) {
+                    if (sub.getNamedBean() == null) {
+                        log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
+                    } else {
+                        log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+                    }
                 }
             }
             parsePortableURIs(e);

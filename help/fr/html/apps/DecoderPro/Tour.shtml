@@ -156,7 +156,7 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		exige la configuration de deux ensembles de bits en un seul CV.
 		Un autre exemple est la configuration du mapping d'un d&#233;codeur de Soundtraxx entre 
 		les fonctions et les sons. Il s'agit de bits et de valeurs r&#233;parties sur une douzaine de CV 
-		diff&#233;rents, mais Decoder Pro transforme ce travail de configuration par de simples cochage de cases.</p>
+		diff&#233;rents, mais DecoderPro transforme ce travail de configuration par de simples cochage de cases.</p>
 		<p>
 		Chaque zone de s&#233;lection, case &#224; cocher ou bouton radio est mapp&#233; dans un bit(s) 
 		sp&#233;cifique(s) dans les CV du d&#233;codeur. Le programmateur g&#232;re la lecture et l'&#233;criture 

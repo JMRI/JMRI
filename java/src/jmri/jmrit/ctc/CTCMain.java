@@ -5,17 +5,12 @@
 
 package jmri.jmrit.ctc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
@@ -236,7 +231,7 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
 
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
-            trafficLocking.fileReadComplete(_mCBHashMap, _mSIDIHashMap, _mSWDIHashMap);
+            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
         }
 
 /*  As a final item, if the developer wants us to lock all of the lockable

@@ -69,7 +69,7 @@ public class FrmSWDI extends javax.swing.JFrame {
         CommonSubs.setMillisecondsEdit(_mSWDI_CodingTimeInMilliseconds);
         _mSWDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_NormalInternalSensor);
         _mSWDI_ReversedInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_ReversedInternalSensor);
-        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout, false);
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout, true);
         _mSWDI_CodingTimeInMilliseconds.setText(Integer.toString(_mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds));
         _mSWDI_FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mSWDI_FeedbackDifferent);
         _mSWDI_GUITurnoutLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUITurnoutLeftHand);

@@ -90,12 +90,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 ta.restoreEventsFromXmlTablestart();
         }
         
-        if (jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-            ShutDownTask shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
-        } else {
-            log.info("No ShutDownManager to Save Events on close");
-        }
+        ShutDownTask shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask");
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
         
     }
 
@@ -727,28 +723,26 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     public static class CbusEventTableShutdownTask extends AbstractShutDownTask {
 
-    /**
-     * Constructor specifies the warning message and action to take
-     *
-     * @param name the name of the task (used in logs)
-     */
-    public CbusEventTableShutdownTask(String name) {
-        super(name);
-    }
-
-    /**
-     * Take the necessary action.
-     *
-     * @return true if the shutdown should continue, false to abort.
-     */
-    @Override
-    public boolean execute() {
-        if ( jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class) != null ){
-            jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class).dispose();
+        /**
+        * Constructor specifies the warning message and action to take
+        *
+        * @param name the name of the task (used in logs)
+        */
+        public CbusEventTableShutdownTask(String name) {
+            super(name);
         }
-        return true;
+    
+        /**
+        * Checks preferences, saving Table contents if necessary
+        *
+        * @return true as the shutdown should continue
+        */
+        @Override
+        public boolean execute() {
+            jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class).dispose();
+            return true;
+        }
     }
-}
     
     private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);
 }

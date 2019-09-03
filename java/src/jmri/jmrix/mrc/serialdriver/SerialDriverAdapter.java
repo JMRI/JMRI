@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends MrcPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -47,7 +47,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD);
             } catch (UnsupportedCommOperationException e) {
@@ -142,19 +142,24 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"38,400 bps"};//IN18N
+        return new String[]{"38,400 bps"}; //IN18N
     }
 
     /**
-     * Return array of valid baud rates as integers.
+     * {@inheritDoc}
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{38400};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // private control members

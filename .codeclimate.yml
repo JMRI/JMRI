@@ -1,0 +1,32 @@
+version: "2" # CodeClimate API version is a string, not a number
+checks:
+  argument-count:
+    config:
+      threshold: 4 # CodeClimate default
+  complex-logic:
+    config:
+      threshold: 4 # CodeClimate default
+  file-lines:
+    config:
+      threshold: 250 # CodeClimate default
+  method-complexity:
+    config:
+      threshold: 5 # CodeClimate default
+  method-count:
+    config:
+      threshold: 20 # CodeClimate default
+  method-lines:
+    config:
+      threshold: 25 # CodeClimate default
+  nested-control-flow:
+    config:
+      threshold: 4 # CodeClimate default
+  return-statements:
+    config:
+      threshold: 4 # CodeClimate default
+  similar-code:
+    config:
+      threshold: # language-specific defaults. an override will affect all languages.
+  identical-code:
+    config:
+      threshold: # language-specific defaults. an override will affect all languages.

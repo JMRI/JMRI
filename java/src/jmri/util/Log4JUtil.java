@@ -130,7 +130,7 @@ public class Log4JUtil {
      * <p>
      * Primary functions:
      * <ul>
-     * <li>Initialize the JMRI system console
+     * <li>Initialize the JMRI System Console
      * <li>Set up the slf4j j.u.logging to log4J bridge
      * <li>Start log4j
      * <li>Initialize some default exception handlers (to feed the logs?)

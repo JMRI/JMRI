@@ -3,10 +3,11 @@ package jmri.managers;
 import java.text.DecimalFormat;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,15 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
+
+    /**
+     * Create a new MemoryManager instance.
+     * 
+     * @param memo the system connection
+     */
+    public AbstractMemoryManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -69,7 +79,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public @Nonnull Memory newMemory(@Nonnull String systemName, @Nullable String userName) {
+    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
         Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
 
@@ -145,13 +155,13 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
      * @return a new Memory
      */
     @Nonnull
-    abstract protected Memory createNewMemory(@Nonnull String systemName, @Nullable String userName);
+    abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName);
 
     /** {@inheritDoc} */
     @Override
     @Nonnull 
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameMemory");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
     }
 
     @Override

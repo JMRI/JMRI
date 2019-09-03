@@ -154,7 +154,12 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return _status;
     }
 
-    /* currently Portals do not have an instance manager - !!!todo? */
+    @Override
+    public void remove() {
+        ((ControlPanelEditor)_editor).getCircuitBuilder().deletePortalIcon(this);
+        super.remove();
+    }
+
     @Override
     public NamedBean getNamedBean() {
         return getPortal();
@@ -215,8 +220,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());
-                ((ControlPanelEditor) getEditor()).getCircuitBuilder().changePortalName(
-                        (String) e.getOldValue(), (String) e.getNewValue());
             }
         }
     }

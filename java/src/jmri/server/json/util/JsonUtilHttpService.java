@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -35,12 +35,12 @@ import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
@@ -58,8 +58,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    // use @Nullable to override @Nonnull specified in superclass
-    public JsonNode doGet(String type, @Nullable String name, JsonNode data, Locale locale, int id) throws JsonException {
+    // use @CheckForNull to override @Nonnull specified in superclass
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
         switch (type) {
             case JSON.HELLO:
                 return this.getHello(locale, InstanceManager.getDefault(JsonServerPreferences.class).getHeartbeatInterval(), id);
@@ -113,8 +113,8 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     @Override
-    // Use @Nullable to override non-null requirement of superclass
-    public JsonNode doPost(String type, @Nullable String name,
+    // Use @CheckForNull to override non-null requirement of superclass
+    public JsonNode doPost(String type, @CheckForNull String name,
             JsonNode data, Locale locale, int id) throws JsonException {
         return this.doGet(type, name, data, locale, id);
     }
@@ -135,7 +135,8 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.HEARTBEAT, Math.round(heartbeat * 0.9f));
         data.put(JSON.RAILROAD, InstanceManager.getDefault(WebServerPreferences.class).getRailroadName());
         data.put(JSON.NODE, NodeIdentity.networkIdentity());
-        data.put(JSON.ACTIVE_PROFILE, ProfileManager.getDefault().getActiveProfileName());
+        Profile activeProfile = ProfileManager.getDefault().getActiveProfile();
+        data.put(JSON.ACTIVE_PROFILE, activeProfile != null ? activeProfile.getName() : null);
         return message(JSON.HELLO, data, id);
     }
 
@@ -350,11 +351,11 @@ public class JsonUtilHttpService extends JsonHttpService {
         // Following is required because despite there being a SystemConnectionMemo
         // for the default internal connection, it is not used for the default internal
         // connection. This allows a client to map the server's internal objects.
-        String prefix = "I";
-        if (!prefixes.contains(prefix)) {
+        SystemConnectionMemo internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        if (!prefixes.contains(internal.getSystemPrefix())) {
             ObjectNode data = mapper.createObjectNode();
-            data.put(JSON.NAME, ConnectionNameFromSystemName.getConnectionName(prefix));
-            data.put(JSON.PREFIX, prefix);
+            data.put(JSON.NAME, internal.getUserName());
+            data.put(JSON.PREFIX, internal.getSystemPrefix());
             data.putNull(JSON.MFG);
             data.putNull(JSON.DESCRIPTION);
             root.add(message(JSON.SYSTEM_CONNECTION, data, id));

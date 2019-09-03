@@ -23,6 +23,7 @@ public class OlcbLight extends AbstractLight {
             (~BitProducerConsumer.LISTEN_INVALID_STATE);
     static final boolean DEFAULT_IS_AUTHORITATIVE = true;
     static final boolean DEFAULT_LISTEN = true;
+    private boolean _finishedLoad = false;
     
     OlcbAddress addrOn;    // go to On state
     OlcbAddress addrOff;  // go to Off state
@@ -91,8 +92,19 @@ public class OlcbLight extends AbstractLight {
             lc.activateLightControl();
         });
         mActive = true; // set flag for control listeners
+        _finishedLoad = true;
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public void setState(int newState) {
+        if (_finishedLoad){
+            super.setState(newState);
+        }
+        else {
+            log.debug("Light {} status being set while still Activating",this);
+        }
+    }
     
     /**
      * Set the current state of this Light This routine requests the hardware to
@@ -118,6 +130,7 @@ public class OlcbLight extends AbstractLight {
         }
     }
     
+    /** {@inheritDoc} */
     @Override
     public void setProperty(String key, Object value) {
         Object old = getProperty(key);
@@ -127,15 +140,13 @@ public class OlcbLight extends AbstractLight {
         finishLoad();
     }
     
+    /** {@inheritDoc} */
     @Override
     public void dispose() {
         if (lightListener != null) lightListener.release();
         if (pc != null) pc.release();
         super.dispose();
     }
-
-    
-    
     
     private final static Logger log = LoggerFactory.getLogger(OlcbLight.class);
 

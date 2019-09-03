@@ -25,11 +25,8 @@ public class ConditionalTest {
 
         // state variable definitions
         Assert.assertEquals(Conditional.OPERATOR_AND, 1);
-        Assert.assertEquals(Conditional.OPERATOR_NOT, 2);
-        Assert.assertEquals(Conditional.OPERATOR_AND_NOT, 3);
         Assert.assertEquals(Conditional.OPERATOR_NONE, 4);
         Assert.assertEquals(Conditional.OPERATOR_OR, 5);
-        Assert.assertEquals(Conditional.OPERATOR_OR_NOT, 6);
         // state variable types
         Assert.assertEquals(Conditional.TYPE_NONE, 0);
         Assert.assertEquals(Conditional.TYPE_SENSOR_ACTIVE, 1);

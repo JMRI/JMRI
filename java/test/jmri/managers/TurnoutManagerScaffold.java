@@ -4,9 +4,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Dummy implementation of TurnoutManager for testing purposes.
@@ -112,11 +113,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Override
     public String makeSystemName(String s) {
         return null;
-    }
-
-    @Override
-    public String normalizeSystemName(String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
     }
 
     @Override
@@ -256,17 +252,24 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return "Turnout";
+    public String getBeanTypeHandled(boolean plural) {
+        return plural ? "Turnouts" : "Turnout";
     }
 
     @Override
     public String getEntryToolTip() { return "No Help"; }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {}
+    @Override
+    public void addDataListener(ManagerDataListener<Turnout> e) {}
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {}
+    @Override
+    public void removeDataListener(ManagerDataListener<Turnout> e) {}
+
+    @Override
+    public SystemConnectionMemo getMemo() {
+        return new InternalSystemConnectionMemo("J", "Juliet");
+    }
 
 }

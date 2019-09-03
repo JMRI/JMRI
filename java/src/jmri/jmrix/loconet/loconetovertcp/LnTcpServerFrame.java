@@ -104,16 +104,6 @@ public class LnTcpServerFrame extends JmriJFrame {
     }
 
     /**
-     *
-     * @return the default server frame instance
-     * @deprecated since 4.7.5; use {@link #getDefault() } instead
-     */
-    @Deprecated
-    static public LnTcpServerFrame getInstance() {
-        return getDefault();
-    }
-
-    /**
      * Get the server status window for the default LocoNet over TCP server.
      *
      * @return the default server frame instance, creating it if needed
