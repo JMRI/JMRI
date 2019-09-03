@@ -126,7 +126,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     public void message(Z21Message l) {
-        // no processing of outgoing messaeges.
+        // no processing of outgoing messages.
     }
 
     /**
@@ -234,9 +234,9 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     public Sensor getBySystemName(String sName){
         Z21SystemNameComparitor comparitor = new Z21SystemNameComparitor(getSystemPrefix(),typeLetter());
-        for(Sensor e: _tsys.values()){
-            if(0==comparitor.compare(e.getSystemName(),sName)){
-                return e;
+        for(String s: _tsys.keySet()){
+            if(0==comparitor.compare(s,sName)){
+                return _tsys.get(s);
             }
         }
         return null;

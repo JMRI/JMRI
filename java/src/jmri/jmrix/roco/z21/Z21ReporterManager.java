@@ -154,9 +154,9 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     @Override
     public Reporter getBySystemName(String sName){
         Z21SystemNameComparitor comparitor = new Z21SystemNameComparitor(getSystemPrefix(),typeLetter());
-        for(Reporter e: _tsys.values()){
-            if(0==comparitor.compare(e.getSystemName(),sName)){
-                return e;
+        for(String s: _tsys.keySet()){
+            if(0==comparitor.compare(s,sName)){
+                return _tsys.get(s);
             }
         }
         return null;
