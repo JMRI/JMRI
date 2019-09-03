@@ -35,13 +35,19 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
     @Override
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
-//    	long numCond = 0;
-//    	long numStateVars = 0;
         Element conditionals = new Element("conditionals");  // NOI18N
         setStoreElementClass(conditionals);
         ConditionalManager cm = (ConditionalManager) o;
         if (cm != null) {
-            for (String sName : cm.getSystemNameList()) {
+            List<String> names = cm.getSystemNameList();
+
+            // don't return an element if there are not conditionals to include
+            if (names.isEmpty()) {
+                return null;
+            }
+
+            // store the conditionals
+            for (String sName : names) {
                 Conditional c = cm.getBySystemName(sName);
                 if (c == null) {
                     log.error("Unable to save '{}' to the XML file", sName);  // NOI18N
