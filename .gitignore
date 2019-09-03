@@ -57,6 +57,7 @@ local.properties
 .metadata
 RemoteSystemsTempFiles
 .idea/libraries/**
+.idea/sonarlint/issuestore
 
 # user-installed components
 /web/TrainCrew
