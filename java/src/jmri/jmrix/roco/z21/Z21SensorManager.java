@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.Locale;
+import java.util.Map;
+
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -234,9 +236,9 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     public Sensor getBySystemName(String sName){
         Z21SystemNameComparitor comparitor = new Z21SystemNameComparitor(getSystemPrefix(),typeLetter());
-        for(String s: _tsys.keySet()){
-            if(0==comparitor.compare(s,sName)){
-                return _tsys.get(s);
+        for(Map.Entry<String,Sensor> e:_tsys.entrySet()){
+            if(0==comparitor.compare(e.getKey(),sName)){
+                return e.getValue();
             }
         }
         return null;

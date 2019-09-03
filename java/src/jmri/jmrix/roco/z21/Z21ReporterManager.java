@@ -6,6 +6,8 @@ import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * Z21ReporterManager implements the Reporter Manager interface for Roco Z21
  * systems.
@@ -154,9 +156,9 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     @Override
     public Reporter getBySystemName(String sName){
         Z21SystemNameComparitor comparitor = new Z21SystemNameComparitor(getSystemPrefix(),typeLetter());
-        for(String s: _tsys.keySet()){
-            if(0==comparitor.compare(s,sName)){
-                return _tsys.get(s);
+        for(Map.Entry<String,Reporter> e:_tsys.entrySet()){
+            if(0==comparitor.compare(e.getKey(),sName)){
+                return e.getValue();
             }
         }
         return null;
