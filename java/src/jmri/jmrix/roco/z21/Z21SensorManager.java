@@ -235,13 +235,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      */
     @Override
     public Sensor getBySystemName(String sName){
-        Z21SystemNameComparitor comparitor = new Z21SystemNameComparitor(getSystemPrefix(),typeLetter());
-        for(Map.Entry<String,Sensor> e:_tsys.entrySet()){
-            if(0==comparitor.compare(e.getKey(),sName)){
-                return e.getValue();
-            }
-        }
-        return null;
+        Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
+        return getBySystemName(sName,comparator);
     }
 
     /**

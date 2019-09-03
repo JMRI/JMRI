@@ -155,13 +155,8 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      */
     @Override
     public Reporter getBySystemName(String sName){
-        Z21SystemNameComparitor comparitor = new Z21SystemNameComparitor(getSystemPrefix(),typeLetter());
-        for(Map.Entry<String,Reporter> e:_tsys.entrySet()){
-            if(0==comparitor.compare(e.getKey(),sName)){
-                return e.getValue();
-            }
-        }
-        return null;
+        Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
+        return getBySystemName(sName,comparator);
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);

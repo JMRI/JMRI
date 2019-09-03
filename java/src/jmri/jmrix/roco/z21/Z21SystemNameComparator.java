@@ -9,12 +9,12 @@ import java.util.Objects;
  *
  * @author Paul Bender Copyright (C) 2019
  */
-public class Z21SystemNameComparitor implements Comparator<String> {
+public class Z21SystemNameComparator implements Comparator<String> {
 
     private String prefix;
     private char typeLetter;
 
-    Z21SystemNameComparitor(String prefix, char typeLetter){
+    Z21SystemNameComparator(String prefix, char typeLetter){
         this.prefix= prefix;
         this.typeLetter = typeLetter;
     }
@@ -55,10 +55,10 @@ public class Z21SystemNameComparitor implements Comparator<String> {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Z21SystemNameComparitor)){
+        if (!(obj instanceof Z21SystemNameComparator)){
             return false;
         }
-        Z21SystemNameComparitor o = (Z21SystemNameComparitor)obj;
+        Z21SystemNameComparator o = (Z21SystemNameComparator)obj;
         return this.prefix.equals(o.prefix) && this.typeLetter==o.typeLetter;
     }
 
