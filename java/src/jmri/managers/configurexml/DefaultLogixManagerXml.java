@@ -33,7 +33,15 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         setStoreElementClass(logixs);
         LogixManager lm = (LogixManager) o;
         if (lm != null) {
-            for (String sName : lm.getSystemNameList()) {
+            List<String> names = lm.getSystemNameList();
+
+            // don't return an element if there are not Logix to include
+            if (names.isEmpty()) {
+                return null;
+            }
+
+            // store the Logix
+            for (String sName : names) {
                 Logix x = lm.getBySystemName(sName);
                 if (x == null) {
                     log.error("Unable to save '{}' to the XML file", sName);  // NOI18N
