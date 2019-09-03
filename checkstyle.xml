@@ -15,7 +15,9 @@
     <property name="fileNamePattern" value=".*(gif|png)$"/>
   </module>
   <module name="TreeWalker">
-    <module name="RedundantImport"/>
+    <module name="RedundantImport">
+      <property name="severity" value="error"/>
+    </module>
     <module name="UnusedImports"/>
     <module name="PackageDeclaration">
       <property name="severity" value="error"/>
