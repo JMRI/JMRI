@@ -2641,6 +2641,7 @@ public class LayoutEditorTools {
     private SignalHead d2Head = null;
 
     private int xoverType = LayoutTurnout.DOUBLE_XOVER;	 // changes to RH_XOVER or LH_XOVER as required
+    private int xoverCurr = layoutTurnout.UNKNOWN;          // Controls creating the frame
     private String xoverTurnoutName = "";
     private final JLabel xoverTurnoutNameLabel = new JLabel("");
 
@@ -2695,8 +2696,9 @@ public class LayoutEditorTools {
             return;
         }
 
-        // Initialize if needed
-        if (setSignalsAtXoverTurnoutFrame == null) {
+        // Initialize if needed which can be the first time or the crossover type has changed.
+        if (setSignalsAtXoverTurnoutFrame == null || xoverCurr != xoverType) {
+            xoverCurr = xoverType;
             setSignalsAtXoverTurnoutOpenFlag = false;
             setSignalsAtXoverTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAtXoverTurnout"), false, true);
             oneFrameToRuleThemAll(setSignalsAtXoverTurnoutFrame);
