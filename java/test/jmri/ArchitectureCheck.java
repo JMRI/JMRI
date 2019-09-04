@@ -124,6 +124,19 @@ public class ArchitectureCheck {
         thisRule.check(importedAllClasses);      
     }
 
+    /**
+     * (Try to) confine JDOM to configurexml packages.
+     * (Is this working right? Seems to not flag anything)
+     */
+    @Test
+    public void checkJdomOutsideConfigurexml() {
+        ArchRule thisRule = classes()
+            .that().resideInAPackage("org.jdom2..")
+            .should().onlyBeAccessed().byAnyPackage("..configurexml..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
     JavaClasses importedAllClasses; // inclusive contents of all packages compiled from jmri/src
     
     @Before
