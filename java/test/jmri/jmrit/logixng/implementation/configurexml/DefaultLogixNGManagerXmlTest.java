@@ -12,6 +12,7 @@ import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -192,6 +193,7 @@ public class DefaultLogixNGManagerXmlTest {
                 InstanceManager.getDefault(LogixNG_Manager.class));
     }
     
+    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
         
