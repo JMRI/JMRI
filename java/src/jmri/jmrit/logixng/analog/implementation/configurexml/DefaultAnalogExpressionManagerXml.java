@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring ExpressionManagers
@@ -167,14 +168,16 @@ public class DefaultAnalogExpressionManagerXml extends jmri.managers.configurexm
 
         }
 
-        // register new one with InstanceManager
-        DefaultAnalogExpressionManager pManager = DefaultAnalogExpressionManager.instance();
-        InstanceManager.store(pManager, AnalogExpressionManager.class);
-        // register new one for configuration
-        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.ANALOG_EXPRESSIONS);
-        }
+        ThreadingUtil.runOnGUI(() -> {
+            // register new one with InstanceManager
+            DefaultAnalogExpressionManager pManager = DefaultAnalogExpressionManager.instance();
+            InstanceManager.store(pManager, AnalogExpressionManager.class);
+            // register new one for configuration
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.registerConfig(pManager, jmri.Manager.ANALOG_EXPRESSIONS);
+            }
+        });
     }
 
     @Override

@@ -16,6 +16,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.DigitalActionBean;
+import jmri.util.ThreadingUtil;
+import jmri.util.ThreadingUtil.ThreadAction;
 
 /**
  * Provides the functionality for configuring ActionManagers
@@ -167,14 +169,16 @@ public class DefaultDigitalActionManagerXml extends jmri.managers.configurexml.A
 
         }
 
-        // register new one with InstanceManager
-        DefaultDigitalActionManager pManager = DefaultDigitalActionManager.instance();
-        InstanceManager.store(pManager, DigitalActionManager.class);
-        // register new one for configuration
-        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.DIGITAL_ACTIONS);
-        }
+        ThreadingUtil.runOnGUI(() -> {
+            // register new one with InstanceManager
+            DefaultDigitalActionManager pManager = DefaultDigitalActionManager.instance();
+            InstanceManager.store(pManager, DigitalActionManager.class);
+            // register new one for configuration
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.registerConfig(pManager, jmri.Manager.DIGITAL_ACTIONS);
+            }
+        });
     }
 
     @Override

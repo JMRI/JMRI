@@ -16,6 +16,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.DigitalExpressionBean;
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring ExpressionManagers
@@ -169,14 +170,17 @@ public class DefaultDigitalExpressionManagerXml extends jmri.managers.configurex
 
         }
 
-        // register new one with InstanceManager
-        DefaultDigitalExpressionManager pManager = DefaultDigitalExpressionManager.instance();
-        InstanceManager.store(pManager, DigitalExpressionManager.class);
-        // register new one for configuration
-        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.DIGITAL_EXPRESSIONS);
-        }
+
+        ThreadingUtil.runOnGUI(() -> {
+            // register new one with InstanceManager
+            DefaultDigitalExpressionManager pManager = DefaultDigitalExpressionManager.instance();
+            InstanceManager.store(pManager, DigitalExpressionManager.class);
+            // register new one for configuration
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.registerConfig(pManager, jmri.Manager.DIGITAL_EXPRESSIONS);
+            }
+        });
     }
 
     @Override

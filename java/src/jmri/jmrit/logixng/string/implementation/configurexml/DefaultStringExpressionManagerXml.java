@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.StringExpressionBean;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring ExpressionManagers
@@ -167,14 +168,17 @@ public class DefaultStringExpressionManagerXml extends jmri.managers.configurexm
 
         }
 
-        // register new one with InstanceManager
-        DefaultStringExpressionManager pManager = DefaultStringExpressionManager.instance();
-        InstanceManager.store(pManager, StringExpressionManager.class);
-        // register new one for configuration
-        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.STRING_EXPRESSIONS);
-        }
+
+        ThreadingUtil.runOnGUI(() -> {
+            // register new one with InstanceManager
+            DefaultStringExpressionManager pManager = DefaultStringExpressionManager.instance();
+            InstanceManager.store(pManager, StringExpressionManager.class);
+            // register new one for configuration
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.registerConfig(pManager, jmri.Manager.STRING_EXPRESSIONS);
+            }
+        });
     }
 
     @Override

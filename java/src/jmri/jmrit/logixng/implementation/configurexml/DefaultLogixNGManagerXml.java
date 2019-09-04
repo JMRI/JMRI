@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring LogixNGManagers
@@ -182,14 +183,16 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
 
         }
 
-        // register new one with InstanceManager
-        DefaultLogixNGManager pManager = DefaultLogixNGManager.instance();
-        InstanceManager.store(pManager, LogixNG_Manager.class);
-        // register new one for configuration
-        ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.LOGIXNGS);
-        }
+        ThreadingUtil.runOnGUI(() -> {
+            // register new one with InstanceManager
+            DefaultLogixNGManager pManager = DefaultLogixNGManager.instance();
+            InstanceManager.store(pManager, LogixNG_Manager.class);
+            // register new one for configuration
+            ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+            if (cmOD != null) {
+                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNGS);
+            }
+        });
     }
 
     @Override
