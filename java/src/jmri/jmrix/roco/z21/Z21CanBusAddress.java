@@ -193,6 +193,14 @@ public class Z21CanBusAddress {
         return ("");
     }
 
+    public static String buildDecimalSystemNameFromParts(String prefix, char typeLetter, int userAddress,int pin){
+        return String.format("%s%c%d:%d",prefix,typeLetter, userAddress,pin);
+    }
+
+    public static String buildHexSystemNameFromParts(String prefix, char typeLetter,int globalCANaddress,int pin){
+            return String.format("%s%c%4X:%d",prefix,typeLetter, globalCANaddress,pin);
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21CanBusAddress.class);
 
 }

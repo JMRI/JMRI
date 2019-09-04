@@ -101,11 +101,11 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = getSystemPrefix() + typeLetter() + address + ":" + msgPort;
+                String sysName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
                 Z21CanSensor r = (Z21CanSensor) getBySystemName(sysName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = getSystemPrefix() + typeLetter() + String.format("%4x", netID) + ":" + msgPort;
+                    sysName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID, msgPort);
                     r = (Z21CanSensor) getBySystemName(sysName);
                     if (null == r) {
                         log.debug("Creating reporter {}", sysName);
@@ -165,33 +165,33 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
         int input = 0;
 
         if (curAddress.contains(":")) {
-            // Address format passed is in the form of encoderAddress:input or T:turnout address
+            // This is a CAN Bus sensor address passed in the form of encoderAddress:input
             int seperator = curAddress.indexOf(':');
             try {
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                 input = Integer.parseInt(curAddress.substring(seperator + 1));
+                return Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),encoderAddress,input);
             } catch (NumberFormatException ex) {
                 // system name may include hex values for CAN sensors.
                 try {
                     encoderAddress = Integer.parseInt(curAddress.substring(0, seperator), 16);
                     input = Integer.parseInt(curAddress.substring(seperator + 1));
-                    return getSystemPrefix() + typeLetter() + String.format("%4x", encoderAddress) + ":" + input;
+                    return Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),encoderAddress,input);
                 } catch (NumberFormatException ex1) {
                     log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                     throw new JmriException("Hardware Address passed should be a number");
                 }
             }
-            iName = ((encoderAddress - 1) * 8) + input;
         } else {
-            // Entered in using the old format
+            // This is an RMBus Sensor address.
             try {
                 iName = Integer.parseInt(curAddress);
+                return getSystemPrefix() + typeLetter() + iName;
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
-        return getSystemPrefix() + typeLetter() + iName;
     }
 
     int iName; // must synchronize to avoid race conditions.
