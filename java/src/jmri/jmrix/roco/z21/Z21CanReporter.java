@@ -114,8 +114,6 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                       log.debug("{}: {}",i++,id);
                   }
                }
-            } else if( type == 0x01 ) {
-                // status message, not a railcom value, so no report.
              }
          }
     }
