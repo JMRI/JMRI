@@ -35,19 +35,18 @@ public class Z21CanSensor extends jmri.implementation.AbstractSensor implements 
         // register for messages
         _memo.getTrafficController().addz21Listener(this);
         //Address format passed is in the form of moduleAddress:pin 
-        int seperator = systemName.indexOf(":");
-        int start = _memo.getSystemPrefix().length() + 1;
-           try {
-              try{
-                 moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
-              } catch (NumberFormatException ex) {
-                 // didn't parse as a decimal, check to see if network ID 
-                 // was used instead.
-                 networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
-              }
-              port = (Integer.parseInt(systemName.substring(seperator + 1)));
+        String moduleAddressText = Z21CanBusAddress.getEncoderAddressString(systemName,_memo.getSystemPrefix());
+        try {
+            try{
+                moduleAddress = Integer.parseInt(moduleAddressText);
+            } catch (NumberFormatException ex) {
+                // didn't parse as a decimal, check to see if network ID
+                // was used instead.
+                networkID = Integer.parseInt(moduleAddressText,16);
+            }
+            port = Z21CanBusAddress.getBitFromSystemName(systemName,_memo.getSystemPrefix());
            } catch (NumberFormatException ex) {
-              log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+              log.debug("Unable to convert {} into the cab and input format of nn:xx",systemName);
               throw new IllegalArgumentException("requires mm:pp format address.");
            }
     }
