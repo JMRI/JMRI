@@ -32,7 +32,6 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
         jmri.jmrix.lenz.XNetTrafficController packets = this.getSystemConnectionMemo().getXNetTrafficController();
         this.getSystemConnectionMemo().dispose();
         packets.terminateThreads();
-        packets = null;
         super.dispose();
     }
 
