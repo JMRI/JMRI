@@ -69,6 +69,6 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }
