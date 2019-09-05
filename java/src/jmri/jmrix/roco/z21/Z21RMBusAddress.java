@@ -26,7 +26,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21RMBusAddress {
 
-    public Z21RMBusAddress() {
+    private Z21RMBusAddress() {
+        // class of static functions
     }
 
     static final int MINSENSORADDRESS = 1;
