@@ -1,8 +1,11 @@
 # Sample script to set all turnouts in Unknown state to Closed
 #
-# Note that some "Turnouts" may actually drive other things on the layout,
-# such as signal heads. This script should be run _before_ anything that
-# sets those.  
+# After this script is turn, there should be no Turnouts in the
+# UNKNOWN state; any that were at the start should have been set to CLOSED.
+#
+# By skipping over Turnouts that have already been set, this minimizes
+# the chance of disturbing e.g. Turnouts driving signals that have already been set 
+# by signal logic.
 #
 # Part of the JMRI distribution
 
