@@ -59,9 +59,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(audio);
         AudioManager am = (AudioManager) o;
         if (am != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
             java.util.Iterator<String> iter
-                    = am.getSystemNameAddedOrderList().iterator();
+                    = am.getSystemNameList().iterator();
 
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) {
@@ -80,8 +79,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            List<String> t = am.getSystemNameAddedOrderList();
+            List<String> t = am.getSystemNameList();
             for (String sname : t) {
                 if (log.isDebugEnabled()) {
                     log.debug("Check if " + sname + " is a VSD object");

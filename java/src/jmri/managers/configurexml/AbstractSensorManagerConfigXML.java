@@ -48,8 +48,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             sensors.addContent(elem);
         }
 
-        @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-        java.util.Iterator<String> iter = tm.getSystemNameAddedOrderList().iterator();
+        java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {

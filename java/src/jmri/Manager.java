@@ -450,28 +450,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     /**
      * This provides an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
-     * system names.
-     * <p>
-     * Note: this is ordered by the original add order, used for ConfigureXML
-     * <p>
-     * Note: Access via {@link #getNamedBeanSet()} is faster.
-     * <p>
-     * Note: This is a live list, it will be updated as beans are added and
-     * removed.
-     *
-     * @return Unmodifiable access to a list of system names
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public default List<String> getSystemNameAddedOrderList() {
-        return getSystemNameList();
-    }
-
-    /**
-     * This provides an
-     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * NamedBeans in system-name order.
      * <p>
      * Note: Access via {@link #getNamedBeanSet()} is faster.
