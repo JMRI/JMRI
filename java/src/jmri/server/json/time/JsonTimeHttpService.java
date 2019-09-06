@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -23,7 +24,6 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
 /**
- *
  * @author Randall Wood
  */
 public class JsonTimeHttpService extends JsonHttpService {
@@ -34,12 +34,13 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @CheckForNull to override @Nonnull in super class
-    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, Locale locale, int id)
+            throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
-        return doGet(type, timebase, timebase.getTime(), locale, id);
+        return doGet(timebase, timebase.getTime(), id);
     }
 
-    public JsonNode doGet(String type, Timebase timebase, Date date, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(@Nonnull Timebase timebase, @Nonnull Date date, int id) {
         ObjectNode data = this.mapper.createObjectNode();
         data.put(TIME, new StdDateFormat().format(date));
         data.put(RATE, timebase.getRate());
@@ -49,7 +50,8 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @CheckForNull to override @Nonnull in super class
-    public JsonNode doPost(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPost(String type, @CheckForNull String name, JsonNode data, Locale locale, int id)
+            throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
         try {
             if (data.path(TIME).isTextual()) {
@@ -59,7 +61,8 @@ public class JsonTimeHttpService extends JsonHttpService {
                 timebase.userSetRate(data.path(RATE).asDouble());
             }
             int state = data.findPath(STATE).asInt(0);
-            if (state == ON || state == OFF) { // passing the state UNKNOWN (0) will not trigger change
+            // passing the state UNKNOWN (0) will not trigger change
+            if (state == ON || state == OFF) {
                 timebase.setRun(state == ON);
             }
         } catch (ParseException ex) {
@@ -79,15 +82,15 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
-        switch (type) {
-            case TIME:
-                return doSchema(type,
-                        server,
-                        "jmri/server/json/time/time-server.json",
-                        "jmri/server/json/time/time-client.json",
-                        id);
-            default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+        if (TIME.equals(type)) {
+            return doSchema(type,
+                    server,
+                    "jmri/server/json/time/time-server.json",
+                    "jmri/server/json/time/time-client.json",
+                    id);
+        } else {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 }
