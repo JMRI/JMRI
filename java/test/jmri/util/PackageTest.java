@@ -90,7 +90,7 @@ import org.junit.runners.Suite;
         UnzipFileClassTest.class,
         AbstractFrameActionTest.class,
         ValidatingInputPaneTest.class,
-
+        SoundToneTest.class,
         // deliberately at end
         jmri.util.Log4JErrorIsErrorTest.class,
 })
