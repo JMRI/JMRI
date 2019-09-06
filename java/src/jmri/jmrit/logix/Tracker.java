@@ -27,8 +27,6 @@ import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
-//import jmri.jmrit.logix.TrackerTableAction.ChooseTracker.TrackerListModel;
-import jmri.util.SoundTone;
 
 /**
  * Track an occupied block to adjacent blocks becoming occupied.
@@ -69,7 +67,7 @@ public class Tracker {
         addtoOccupies(block, true);
         _startTime = System.currentTimeMillis();
         block._entryTime = _startTime;
-        List<OBlock> occupy = initialRange(true, _parent);
+        List<OBlock> occupy = initialRange(_parent);
         if (occupy.size() > 1) {
             new ChooseStartBlock(block, occupy, this, _parent);
         } else {
@@ -80,22 +78,13 @@ public class Tracker {
         }
     }
 
-    private List<OBlock> initialRange(boolean firstTime, TrackerTableAction parent) {
+    private List<OBlock> initialRange(TrackerTableAction parent) {
         makeRange();
         ArrayList<OBlock> occupy = new ArrayList<>();
-        if (firstTime) {
-            for (OBlock b : _headRange) {
-                if (!b.equals(getHeadBlock())
-                        && (b.getState() & OBlock.OCCUPIED) != 0 && parent.checkBlock(b)) {
-                    occupy.add(b); // make additional block the tail
-                }
-            }
-        } else {
-            for (OBlock b : _tailRange) {
-                if (!b.equals(getTailBlock())
-                        && (b.getState() & OBlock.OCCUPIED) != 0 && parent.checkBlock(b)) {
-                    occupy.add(b); // make additional block the tail
-                }
+        for (OBlock b : _tailRange) {
+            if (!b.equals(getTailBlock())
+                    && (b.getState() & OBlock.OCCUPIED) != 0 && parent.checkBlock(b)) {
+                occupy.add(b); // make additional block the tail
             }
         }
         return occupy;
@@ -606,12 +595,7 @@ public class Tracker {
                     block.getDisplayName()) + "\n" + Bundle.getMessage("TrackingStopped"));
             return;
         }
-        try {   // Get user's attention
-            //SoundTone.tone(1760, 100);
-            SoundTone.tone(880, 400, .7);
-        } catch (javax.sound.sampled.LineUnavailableException lue) {
-            java.awt.Toolkit.getDefaultToolkit().beep();
-        }                        
+        java.awt.Toolkit.getDefaultToolkit().beep();
         new ChooseRecoverBlock(block, lostRange, this, parent);
     }
 
@@ -749,7 +733,7 @@ public class Tracker {
                 addtoOccupies(b, false); // make additional block the tail
                 b._entryTime = System.currentTimeMillis();
                 _jList.removeListSelectionListener(this);
-                List<OBlock> list = initialRange(false, parent);
+                List<OBlock> list = initialRange(parent);
                 if (list.isEmpty()) {
                     doAction();
                     dispose();

@@ -41,7 +41,6 @@ import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 import jmri.util.JmriJFrame;
-import jmri.util.SoundTone;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -336,13 +335,6 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                     if (_trackerChooser != null) {
                         _trackerChooser.dispose();
                     }
-                    try {
-                        // Get user's attention
-                        //SoundTone.tone(1760, 100);
-                        SoundTone.tone(880, 400, 0.7);
-                    } catch (javax.sound.sampled.LineUnavailableException lue) {
-                        java.awt.Toolkit.getDefaultToolkit().beep();
-                    }                        
                     java.awt.Toolkit.getDefaultToolkit().beep();
                     _trackerChooser = new ChooseTracker(block, trackers, state);
                     return;
