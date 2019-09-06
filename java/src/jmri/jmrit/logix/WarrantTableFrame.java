@@ -445,6 +445,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         if (msg == null) {
             msg = _model.checkAddressInUse(w);
         }
+        if (msg == null) {
+            msg = w.checkforTrackers();
+        }
 
         if (msg == null) {
             msg = w.setRoute(false, null);

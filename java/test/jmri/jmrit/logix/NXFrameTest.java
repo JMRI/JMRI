@@ -209,7 +209,7 @@ public class NXFrameTest {
 
         final OBlock testblock = block;
         JUnitUtil.waitFor(() -> {
-            return testblock.getState() == (OBlock.ALLOCATED | OBlock.OCCUPIED | OBlock.RUNNING);
+            return ((testblock.getState() & (OBlock.ALLOCATED | OBlock.OCCUPIED)) != 0);
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
@@ -387,8 +387,13 @@ public class NXFrameTest {
             OBlock blk = block;
             JUnitUtil.waitFor(() -> {
                 int state = blk.getState();
-                return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
-                        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
+                return ((state & (OBlock.ALLOCATED | OBlock.OCCUPIED)) != 0 ||
+                        (state & (OBlock.ALLOCATED | OBlock.UNDETECTED)) != 0);
+                // If this thread gets the sensor (and block) going active before 
+                // the thread running the Warrrant does, OBlock.RUNNING has not been set yet. 
+                // The above allows it to be either.
+                //return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
+                //        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" ("+blk.getDisplayName()+") of "+route.length);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 

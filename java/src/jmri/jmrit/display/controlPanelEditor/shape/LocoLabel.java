@@ -2,24 +2,34 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+
+import javax.swing.JPopupMenu;
+
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.IndicatorTrackPaths;
 import jmri.jmrit.logix.OBlock;
 
 public class LocoLabel extends PositionableRoundRect {
 
-    OBlock _block;
+    private IndicatorTrackPaths _pathUtil;
+    private OBlock _block;
 
     public LocoLabel(Editor editor) {
         super(editor);
+        setEditable(false);
     }
 
-    public void setBlock(OBlock b) {
+    public void setBlock(OBlock b, IndicatorTrackPaths pu) {
         _block = b;
+        _pathUtil = pu;
         invalidateShape();
     }
 
-    public OBlock getBlock() {
-        return _block;
+    public boolean showPopUp(JPopupMenu popup) {
+        setRotateMenu(popup);
+        getEditor().setRemoveMenu(this, popup);
+        return true;
     }
 
     @Override
@@ -46,6 +56,25 @@ public class LocoLabel extends PositionableRoundRect {
     }
 
     @Override
+    protected void paintHandles(Graphics2D g2d) {
+    }
+
+    @Override
+    public void remove() {
+        IndicatorTrackPaths temp = _pathUtil;
+        _pathUtil = null;
+        if (temp != null) {
+            temp.removeLocoIcon();
+        }
+        if (_block != null) {
+            _block.setValue(null);
+            _block.setState(_block.getState() & ~OBlock.RUNNING);
+        }
+        _block = null;
+        super.remove();
+    }
+
+        @Override
     public boolean storeItem() {
         return false;
     }

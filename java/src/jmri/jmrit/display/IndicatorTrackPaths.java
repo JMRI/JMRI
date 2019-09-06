@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
-class IndicatorTrackPaths {
+public class IndicatorTrackPaths {
 
     protected ArrayList<String> _paths;      // list of paths that this icon displays
     private boolean _showTrain;         // this track icon should display _loco when occupied
@@ -108,7 +108,7 @@ class IndicatorTrackPaths {
         return status;
     }
 
-    private void removeLocoIcon() {
+    public void removeLocoIcon() {
         if (_loco != null) {
             _loco.remove();
             _loco = null;
@@ -139,7 +139,7 @@ class IndicatorTrackPaths {
         _loco.setLineWidth(1);
         _loco.setLineColor(Color.BLACK);
         _loco.setFillColor(block.getMarkerBackground());
-        _loco.setBlock(block);
+        _loco.setBlock(block, this);
         _loco.setWidth(width + height / 2);
         _loco.setHeight(height + 2);
         _loco.setCornerRadius(height);

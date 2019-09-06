@@ -276,7 +276,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause for to start next leg
+        new org.netbeans.jemmy.QueueTool().waitEmpty(200);  // pause for to start next leg
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");

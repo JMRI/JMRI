@@ -714,7 +714,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         InstanceManager.getDefault(TrackerTableAction.class).markNewTracker(getCurrentBlockOrder().getBlock(),
-                _trainName);
+                _trainName, null);
     }
 
     synchronized public void stopWarrant(boolean abort) {
@@ -1418,13 +1418,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             msg = "BlockDark";
         } else if ((state & OBlock.OCCUPIED) == 0) {
             msg = "warnStart";
-        } else {
-            // check if tracker is on this train
-            InstanceManager.getDefault(TrackerTableAction.class).stopTrackerIn(block);
         }
         return msg;
     }
 
+    protected String checkforTrackers() {
+        BlockOrder bo = _orders.get(0);
+        OBlock block = bo.getBlock();
+        Tracker t = InstanceManager.getDefault(TrackerTableAction.class).findTrackerIn(block);
+        if (t != null) {
+            return Bundle.getMessage("blockInUse", t.getTrainName(), block.getDisplayName());
+        }
+        return null;
+    }
+    
     /**
      * Report any occupied blocks in the route
      *
