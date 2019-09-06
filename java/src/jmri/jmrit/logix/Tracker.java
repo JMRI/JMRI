@@ -123,7 +123,10 @@ public class Tracker {
 
     /**
      * Check if there is a path set between blkA and blkB with at most
-     * one dark block between them.
+     * one dark block between them.  If there is both a path set to exit blkA
+     * and a path set to enter blkB, the path is PathSet.SET. If there an exit
+     * or entry path set, but not both, the path is PathSet.PARTIAL.  If there
+     * is neither an exit path not an entry path set, the path is PathSet.NO.
      * blkA is the current Head or Tail block
      * blkB is a block from the headRange or tailRange, where entry may be possible
      */
