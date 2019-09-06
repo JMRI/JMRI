@@ -105,7 +105,7 @@ public class BlockManagerTest {
         Assert.assertEquals("provide user name by system name", "UserName5", bprovide2.getUserName());
 
         // auto create with prefixed systemname and no username
-        Block bprovide3 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("SystemName6");
+        Block bprovide3 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IBSystemName6");
         Assert.assertEquals("provide system name by user name", "IBSystemName6", bprovide3.getSystemName());
         Assert.assertEquals("provide user name by user name", null, bprovide3.getUserName());
 
