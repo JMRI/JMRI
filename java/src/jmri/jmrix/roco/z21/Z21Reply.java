@@ -507,7 +507,7 @@ public class Z21Reply extends AbstractMRReply {
    }
 
     // address value is the 16 bits of the two bytes containing the
-    // address.  The most significan two bits represent the direction.
+    // address.  The most significant two bits represent the direction.
     DccLocoAddress getCanDetectorLocoAddress(int addressValue) {
         if(!isCanDetectorMessage()) {
            return null;
@@ -519,5 +519,30 @@ public class Z21Reply extends AbstractMRReply {
            return new DccLocoAddress(locoAddress,locoAddress>=100);
         }
    }
+
+    /**
+     * @return the can Detector Message type or -1 if not a can detector message.
+     */
+   public int canDetectorMessageType() {
+        if(isCanDetectorMessage()){
+            return getElement(9) & 0xFF;
+        }
+        return -1;
+   }
+
+    /**
+      * @return true if the reply is for a CAN detector and the type is 0x01
+     */
+   public boolean isCanSensorMessage(){
+        return isCanDetectorMessage() && canDetectorMessageType() == 0x01;
+   }
+
+    /**
+     * @return true if the reply is for a CAN detector and the type is 0x01
+     */
+    public boolean isCanReporterMessage(){
+        int type = canDetectorMessageType();
+        return isCanDetectorMessage() && type >= 0x11 && type<= 0x1f;
+    }
 
 }
