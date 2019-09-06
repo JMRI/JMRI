@@ -28,7 +28,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class LinkedWarrantTest {
 
     @Rule
-    public RetryRule retryRule = new RetryRule(1);  // allow 3 retries
+    public RetryRule retryRule = new RetryRule(2);  // allow 3 retries
 
     private OBlockManager _OBlockMgr;
     private SensorManager _sensorMgr;
@@ -276,7 +276,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(200);  // pause for to start next leg
+        new org.netbeans.jemmy.QueueTool().waitEmpty(200);  // pause to start next leg
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");

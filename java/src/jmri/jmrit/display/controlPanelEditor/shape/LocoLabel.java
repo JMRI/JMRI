@@ -26,6 +26,7 @@ public class LocoLabel extends PositionableRoundRect {
         invalidateShape();
     }
 
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         setRotateMenu(popup);
         getEditor().setRemoveMenu(this, popup);

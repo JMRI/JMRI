@@ -50,11 +50,9 @@ public class Tracker {
     private Color _markerBackground;
     private Font _markerFont;
     private OBlock _darkBlock = null;
-    enum PathSet {NO, PARTIAL, SET};
+    enum PathSet {NO, PARTIAL, SET}
 
     /**
-     * Must call setupCheck() after creating Tracker to check environment of
-     * train.
      *
      * @param block the starting block to track
      * @param name  the name of the train being tracked
@@ -261,8 +259,10 @@ public class Tracker {
         List<OPath> setPaths = new ArrayList<>();
         for (OPath path : paths) {
             if (path.checkPathSet()) {
-                log.debug("Train {}. Path {} in block {} is set to portal {}",
-                        _trainName, path.getName(), block.getDisplayName(), portal.getDisplayName());
+                if (log.isDebugEnabled()) {
+                    log.debug("Train {}. Path {} in block {} is set to portal {}",
+                            _trainName, path.getName(), block.getDisplayName(), portal.getDisplayName());
+                }
                 setPaths.add(path);
             } else {
                 if (log.isDebugEnabled()) {
@@ -621,6 +621,7 @@ public class Tracker {
             super(b, l, t, tta);
         }
 
+        @Override
         JPanel makeBlurb() {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -628,6 +629,7 @@ public class Tracker {
             return panel;
         }
 
+        @Override
         JPanel makeButtonPanel() {
             JPanel panel = new JPanel();
             JButton startButton = new JButton(Bundle.getMessage("ButtonStart"));
@@ -639,6 +641,7 @@ public class Tracker {
             return panel;
         }
 
+        @Override
         void doAction() {
             parent.addTracker(tracker);
         }
@@ -650,6 +653,7 @@ public class Tracker {
             super(b, l, t, tta);
         }
 
+        @Override
         JPanel makeBlurb() {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -658,6 +662,7 @@ public class Tracker {
             return panel;
         }
 
+        @Override
         JPanel makeButtonPanel() {
             JPanel panel = new JPanel();
             JButton recoverButton = new JButton(Bundle.getMessage("ButtonRecover"));
@@ -683,6 +688,7 @@ public class Tracker {
             return panel;
         }        
 
+        @Override
         void doAction() {
             parent.addBlockListeners(tracker);
             parent.setStatus(Bundle.getMessage("restartTracker",

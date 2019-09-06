@@ -20,8 +20,6 @@ import org.junit.Test;
  */
 public class TrackerTest {
 
-    private Tracker tracker = null;
-
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -53,7 +51,6 @@ public class TrackerTest {
 
     @After
     public void tearDown() {
-        tracker = null;
         JUnitUtil.tearDown();
     }
 
