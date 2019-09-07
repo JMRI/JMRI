@@ -40,8 +40,8 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(lights);
         LightManager tm = (LightManager) o;
         if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+            java.util.Iterator<Light> iter
+                    = tm.getNamedBeanSet().iterator();
 
             // don't return an element if there are not lights to include
             if (!iter.hasNext()) {
@@ -50,13 +50,10 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
             // store the lights
             while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    break;
-                }
+                Light lgt = iter.next();
+                String sname = lgt.getSystemName();
+            
                 log.debug("system name is " + sname);
-                Light lgt = tm.getBySystemName(sname);
                 Element elem = new Element("light");
                 elem.addContent(new Element("systemName").addContent(sname));
 
