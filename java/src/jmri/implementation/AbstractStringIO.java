@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.StringIO;
@@ -113,6 +114,17 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameStringIO");
+    }
+
+    /**
+     * {@inheritDoc} 
+     * 
+     * Do a string comparison.
+     */
+    @CheckReturnValue
+    @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        return suffix1.compareTo(suffix2);
     }
 
 }

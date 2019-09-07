@@ -6,16 +6,10 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+
 import jmri.util.NamedBeanComparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import javax.annotation.CheckReturnValue;
@@ -25,6 +19,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.NmraPacket;
@@ -160,6 +155,23 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         return _tsys.get(systemName);
     }
 
+    /**
+     * Protected method used by subclasses to over-ride the default behavior of
+     * getBeanBySystemName when a simple string lookup is not sufficient
+     *
+     * @param systemName the system name to check.
+     * @param comparator a Comparator encapsulating the system specific comparison behavior.
+     * @return A named bean of the appropriate type, or null if not found.
+     */
+    protected E getBySystemName(String systemName,Comparator<String> comparator){
+        for(Map.Entry<String,E> e:_tsys.entrySet()){
+            if(0==comparator.compare(e.getKey(),systemName)){
+                return e.getValue();
+            }
+        }
+        return null;
+    }
+
     /** {@inheritDoc} */
     @Override
     public E getBeanByUserName(String userName) {
@@ -207,7 +219,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 log.debug("the named bean is registered twice: {}", systemName);
             } else {
                 log.error("systemName is already registered: {}", systemName);
-                throw new IllegalArgumentException("systemName is already registered: " + systemName);
+                throw new DuplicateSystemNameException("systemName is already registered: " + systemName);
             }
         } else {
             // Check if the manager already has a bean with a system name that is
@@ -225,7 +237,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                     String msg = String.format("systemName is already registered. Current system name: %s. New system name: %s",
                             oldSysName, systemName);
                     log.error(msg);
-                    throw new IllegalArgumentException(msg);
+                    throw new DuplicateSystemNameException(msg);
                 }
             }
         }

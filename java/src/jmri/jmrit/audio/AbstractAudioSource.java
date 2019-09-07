@@ -3,6 +3,7 @@ package jmri.jmrit.audio;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -842,6 +843,21 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     protected int getFading() {
         return this.fading;
+    }
+
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
+    @Override
+    @Nonnull
+    public String toString() {
+        return "Pos: " + this.getPosition().toString()
+                + ", bound to: " + this.getAssignedBufferName()
+                + ", loops: "
+                + ((this.getMinLoops() == LOOP_CONTINUOUS) ? "infinite"
+                        : ((!this.isLooped()) ? "none"
+                                : "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class);

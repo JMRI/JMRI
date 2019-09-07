@@ -71,7 +71,14 @@
     <label>
       <text> </text>
     </label>
-    <display item="User Id #1" tooltip="Sets first custom user ID or number">
+	<display item="User Id #3" tooltip="Sets an extra user ID or number (if used)">
+      <tooltip xml:lang="ca">adicional númeromero usuari</tooltip>
+      <tooltip xml:lang="cs">Nastaví hodnoty přizpůsobení pro uživatele ID nebo číslo</tooltip>
+	  <tooltip xml:lang="de">Benutzerspezifischen Wert einstellen</tooltip>
+      <tooltip xml:lang="fr">Régle le supplément ID - ou numéro - utilisateur</tooltip>	  
+	  <tooltip xml:lang="it">Imposta un ID extra o un Codice</tooltip>
+    </display>
+	<display item="User Id #1" tooltip="Sets first custom user ID or number">
       <tooltip xml:lang="ca">1r númeromero usuari</tooltip>
       <tooltip xml:lang="cs">Nastaví hodnoty přizpůsobení pro uživatele ID nebo číslo</tooltip>
       <tooltip xml:lang="de">1. benutzerspezifischen Wert einstellen</tooltip>
@@ -80,7 +87,7 @@
       <tooltip xml:lang="nl">Legt 1e gebruikers-ID of -nummer vast</tooltip>
     </display>
     <display item="User Id #2" tooltip="Sets second custom user ID or number">
-      <tooltip xml:lang="ca">2n númeromero usuari</tooltip>
+      <tooltip xml:lang="ca">2r númeromero usuari</tooltip>
       <tooltip xml:lang="cs">Nastaví hodnoty přizpůsobení pro uživatele ID nebo číslo</tooltip>
       <tooltip xml:lang="de">2. benutzerspezifischen Wert einstellen</tooltip>
       <tooltip xml:lang="fr">Régle le deuxième ID - ou numéro - utilisateur</tooltip>

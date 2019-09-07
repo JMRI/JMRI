@@ -360,7 +360,7 @@ public class JmriJFrameServlet extends HttpServlet {
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
             for (JmriJFrame frame : JmriJFrame.getFrameList()) {
                 if (usePanels && frame instanceof Editor) {
-                    ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML, 0);
+                    ObjectNode node = service.getPanel((Editor) frame, JSON.XML, 0);
                     if (node != null) {
                         root.add(node);
                         frames.add(((Editor) frame).getTargetFrame());
