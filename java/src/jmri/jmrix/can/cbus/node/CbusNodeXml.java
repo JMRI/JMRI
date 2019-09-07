@@ -47,7 +47,7 @@ public class CbusNodeXml {
         _node = node;
         _backupInfos = new ArrayList<CbusNodeFromBackup>();
         preferences = jmri.InstanceManager.getNullableDefault(CbusPreferences.class);
-        doBasicLoad();
+        doLoad();
         
     }
     
@@ -59,15 +59,53 @@ public class CbusNodeXml {
         return _backupInfos;
     }
     
+    public int getNumCompleteBackups() {
+        int i=0;
+        for (int j = 0; j <_backupInfos.size() ; j++) {
+            if (_backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
+                i++;
+            }
+        }
+        return i;
+    }
+    
+    /**
+     * Get the time of first full backup for the Node.
+     *
+     * @return value else null if unknown
+     */
+    public java.util.Date getFirstBackupTime() {
+        for (int j = _backupInfos.size()-1; j >-1 ; j--) {
+            if ( _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
+                return _backupInfos.get(j).getBackupTimeStamp();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Get the time of last full backup for the Node.
+     *
+     * @return value else null if unknown
+     */
+    public java.util.Date getLastBackupTime() {
+        for (int j = 0; j <_backupInfos.size(); j++) {
+            if ( _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
+                return _backupInfos.get(j).getBackupTimeStamp();
+            }
+        }
+        return null;
+    }
+    
     /**
      * Get number of backups in arraylist that are complete, do no have a comment
      * and could potentially be deleted.
      */
     private int numAutoBackups(){
         int i=0;
-        for (int j = _backupInfos.size()-1; j >0 ; j--) {
-            if (_backupInfos.get(i).getBackupComment().isEmpty()
-                && _backupInfos.get(i).getBackupResult() == BackupType.COMPLETE ){
+        for (int j = _backupInfos.size()-1; j >-1 ; j--) {
+            if (_backupInfos.get(j).getBackupComment().isEmpty()
+                && _backupInfos.get(j).getBackupResult() == BackupType.COMPLETE ){
                 i++;
             }
         }
@@ -84,8 +122,8 @@ public class CbusNodeXml {
         }
         
         // note size-2 means we never delete the oldest one
-        for (int i = _backupInfos.size()-2; i >0 ; i--) {
-            if ( numAutoBackups()<preferences.getMinimumNumBackupsToKeep()){
+        for (int i = _backupInfos.size()-2; i >-1 ; i--) {
+            if ( numAutoBackups()<=preferences.getMinimumNumBackupsToKeep()){
                 return;
             }
             if ( _backupInfos.get(i).getBackupComment().isEmpty()){
@@ -98,17 +136,17 @@ public class CbusNodeXml {
     /**
      * Full xml load
      */
-    private void doBasicLoad(){
+    protected void doLoad(){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         File file = x.getFile(_node.getNodeNumber(),true);
-        
-        // Find root
-        Element root;
         
         if (file == null) {
             log.debug("No backup file to load");
             return;
         }
+        boolean _sortOnLoad = true;
+        // Find root
+        Element root;
         
         try {
             root = x.rootFromFile(file);
@@ -144,37 +182,44 @@ public class CbusNodeXml {
             }
             else {
                 for (Element info : BackupStatus.getChildren("BackupInfo")) {  // NOI18N
-                
-                    CbusNodeFromBackup newinfo = new CbusNodeFromBackup(null,_nodeNum);
+                    boolean _backupInfoError = false;
+                    CbusNodeFromBackup nodeBackup = new CbusNodeFromBackup(null,_nodeNum);
                     
                     if ( info.getAttributeValue("dateTimeStamp") !=null ) { // NOI18N
                         try {
                             Date newDate = xmlDateStyle.parse(info.getAttributeValue("dateTimeStamp")); // NOI18N
-                            newinfo.setBackupTimeStamp( newDate ); // temp
+                            nodeBackup.setBackupTimeStamp( newDate ); // temp
                         } catch (java.text.ParseException e) { 
-                            log.warn("Unable to parse date {}",info.getAttributeValue("dateTimeStamp")); // NOI18N
+                            log.error("Unable to parse date {}",info.getAttributeValue("dateTimeStamp")); // NOI18N
+                            _sortOnLoad = false;
+                            _backupInfoError = true;
                         }
                     } else {
                         log.error("NO datetimestamp in a backup log entry");
+                        _sortOnLoad = false;
+                        _backupInfoError = true;
                     }
                     if ( info.getAttributeValue("result") !=null &&  // NOI18N
                         CbusNodeConstants.lookupByName(info.getAttributeValue("result"))!=null ) { // NOI18N
-                        newinfo.setBackupResult(CbusNodeConstants.lookupByName(info.getAttributeValue("result")) );
+                        nodeBackup.setBackupResult(CbusNodeConstants.lookupByName(info.getAttributeValue("result")) );
                     } else {
-                        log.warn("NO result in a backup log entry");
-                        newinfo.setBackupResult(BackupType.INCOMPLETE);
+                        log.error("NO result in a backup log entry");
+                        _backupInfoError = true;
+                        nodeBackup.setBackupResult(BackupType.INCOMPLETE);
                     }
                     Element params = info.getChild("Parameters");  // NOI18N
-                    if ( params !=null ) {
-                        newinfo.setParameters(StringUtil.intBytesWithTotalFromNonSpacedHexString(params.getValue(),true));
+                    if ( params !=null && !params.getValue().isEmpty()) {
+                        nodeBackup.setParameters(StringUtil.intBytesWithTotalFromNonSpacedHexString(params.getValue(),true));
+                    } else {
+                        _backupInfoError = true;
                     }
                     Element nvs = info.getChild("NodeVariables");  // NOI18N
                     if ( nvs !=null ) {
-                        newinfo.setNVs(StringUtil.intBytesWithTotalFromNonSpacedHexString(nvs.getValue(),true));
+                        nodeBackup.setNVs(StringUtil.intBytesWithTotalFromNonSpacedHexString(nvs.getValue(),true));
                     }
                     Element comment = info.getChild("Comment");  // NOI18N
                     if ( comment !=null ) {
-                        newinfo.setBackupComment(comment.getValue());
+                        nodeBackup.setBackupComment(comment.getValue());
                     }
                     Element events = info.getChild("NodeEvents");  // NOI18N
                     if ( events !=null ) {
@@ -184,33 +229,51 @@ public class CbusNodeXml {
                                 xmlEvent.getAttributeValue("EvVars") !=null ) {  // NOI18N
                                 
                                 // check event variable length matches expected length in parameters
-                                if (newinfo.getParameter(5)!=(xmlEvent.getAttributeValue("EvVars").length()/2) &&
-                                    ( newinfo.getBackupResult()!=BackupType.COMPLETEDWITHERROR &&
-                                        newinfo.getBackupResult()!=BackupType.INCOMPLETE  )) {
-                                        newinfo.setBackupResult(BackupType.COMPLETEDWITHERROR);
-                                    }
-                                
-                                newinfo.addBupEvent(
-                                    Integer.parseInt(xmlEvent.getAttributeValue("NodeNum")),
-                                    Integer.parseInt(xmlEvent.getAttributeValue("EventNum")),
-                                    xmlEvent.getAttributeValue("EvVars"));
+                                if (nodeBackup.getParameter(5)!=(xmlEvent.getAttributeValue("EvVars").length()/2)) {
+                                    log.error("Incorrect Event Variable Length in Backup");
+                                    _backupInfoError = true;
+                                }
+                                try {
+                                    nodeBackup.addBupEvent(
+                                        Integer.parseInt(xmlEvent.getAttributeValue("NodeNum")),
+                                        Integer.parseInt(xmlEvent.getAttributeValue("EventNum")),
+                                        xmlEvent.getAttributeValue("EvVars"));
+                                } catch (java.lang.NumberFormatException ex) {
+                                    log.error("Incorrect Node / Event Number in Backup");
+                                    _backupInfoError = true;
+                                }
+                            }
+                            else {
+                                log.error("Node / Event Number Missing in Backup");
+                                _backupInfoError = true;
                             }
                         }
                     }
-                    _backupInfos.add(newinfo);
+                    
+                    
+                    if (_backupInfoError && nodeBackup.getBackupResult()==BackupType.COMPLETE ){
+                        nodeBackup.setBackupResult(BackupType.INCOMPLETE);
+                    }
+                    
+                    _backupInfos.add(nodeBackup);
                 }
             }
+            
+            
             
         } catch (JDOMException ex) {
             log.error("File invalid: " + ex);  // NOI18N
             return;
         } catch (IOException ex) {
             // file might not yet exist as 1st time Node on Network
-            log.debug("Possible Error reading file: " + ex);  // NOI18N
+            log.debug("Possible Error reading file: {}", ex);  // NOI18N
             return;
         }
-        // make sure ArrayList ismost recent at start, oldest at end
-        java.util.Collections.sort(_backupInfos, java.util.Collections.reverseOrder());
+        // make sure ArrayList is most recent at start array index 0, oldest at end
+        
+        if (_sortOnLoad) {
+            java.util.Collections.sort(_backupInfos, java.util.Collections.reverseOrder());
+        }
         _node.notifyNodeBackupTable();
         
     }
@@ -219,35 +282,29 @@ public class CbusNodeXml {
      * Save the xml to user profile
      * trims backup list as per user pref.
      * @param createNew if true, creates a new backup then saves, false just saves
+     * @param seenErrors if true sets backup completed with errors, else logs as backup complete
      * @return true if all ok, else false if error ocurred
      */
-    public boolean doStore( boolean createNew) {
+    public boolean doStore( boolean createNew, boolean seenErrors) {
         
-        _node.setBackupStarted();
+        _node.setBackupStarted(true);
       
         Date thisBackupDate = new Date();
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         File file = x.getFile(_node.getNodeNumber(),true);
         
         if (file == null) {
-            log.error("233: Unable to get backup file prior to save");  // NOI18N
+            log.error("Unable to get backup file prior to save");  // NOI18N
             return false;
         }
         
-        try {
-            Element roots = x.rootFromFile(file);
-            log.debug("File exists {}",roots);
-            FileUtil.rotate(file, 4, "bup");  // NOI18N
-        } catch (IOException ex) {
-            // the file might not exist
-            log.debug("Backup Rotate failed {}",file);  // NOI18N
-        } catch (JDOMException ex) {
-            // file might not exist
-            log.debug("File invalid: " + ex);  // NOI18N
-        }
+        doRotate();
         
         if ( createNew ) {
             _backupInfos.add(0,new CbusNodeFromBackup(_node,thisBackupDate));
+            if (seenErrors){
+                _backupInfos.get(0).setBackupResult(BackupType.COMPLETEDWITHERROR);
+            }
         }
         
         // now we trim the number of backups in the list
@@ -275,24 +332,24 @@ public class CbusNodeXml {
         Element values;
         
         root.addContent(values = new Element("Backups"));  // NOI18N
-        for (CbusNodeFromBackup info : _backupInfos ) {
+        for (CbusNodeFromBackup node : _backupInfos ) {
             Element e = new Element("BackupInfo");  // NOI18N
-            e.setAttribute("dateTimeStamp",xmlDateStyle.format( info.getBackupTimeStamp() ));  // NOI18N
-            e.setAttribute("result","" + info.getBackupResult());  // NOI18N
-            if (!info.getBackupComment().isEmpty()) {
-                e.addContent(new Element("Comment").addContent("" + info.getBackupComment() ));  // NOI18N
+            e.setAttribute("dateTimeStamp",xmlDateStyle.format( node.getBackupTimeStamp() ));  // NOI18N
+            e.setAttribute("result","" + node.getBackupResult());  // NOI18N
+            if (!node.getBackupComment().isEmpty()) {
+                e.addContent(new Element("Comment").addContent("" + node.getBackupComment() ));  // NOI18N
             }
-            if (!info.getParameterHexString().isEmpty()) {
-                e.addContent(new Element("Parameters").addContent("" + info.getParameterHexString() ));  // NOI18N
+            if (!node.getParameterHexString().isEmpty()) {
+                e.addContent(new Element("Parameters").addContent("" + node.getParameterHexString() ));  // NOI18N
             }
-            if (!info.getNvHexString().isEmpty()) {
-                e.addContent(new Element("NodeVariables").addContent("" + info.getNvHexString() ));  // NOI18N
+            if (!node.getNvHexString().isEmpty()) {
+                e.addContent(new Element("NodeVariables").addContent("" + node.getNvHexString() ));  // NOI18N
             }
             
-            if (info.getTotalNodeEvents()>0) {
+            if (node.getTotalNodeEvents()>0) {
                 // log.info("events on backup node");
                 Element bupev = new Element("NodeEvents"); // NOI18N
-                info.getEventArray().forEach((bupndev) -> {
+                node.getEventArray().forEach((bupndev) -> {
                     Element ndev = new Element("NodeEvent"); // NOI18N
                     ndev.setAttribute("NodeNum","" + bupndev.getNn());  // NOI18N
                     ndev.setAttribute("EventNum","" + bupndev.getEn());  // NOI18N
@@ -325,36 +382,68 @@ public class CbusNodeXml {
         CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
         newBup.setBackupResult(BackupType.NOTONNETWORK);
         _backupInfos.add(0,newBup);
-        doStore(false);
+        doStore(false, false);
+    }
+    
+    /**
+     * Add an xml entry advising Node in SLiM Mode
+     */
+    protected void nodeInSLiM(){
+        CbusNodeFromBackup newBup = new CbusNodeFromBackup(_node,new Date());
+        newBup.setBackupResult(BackupType.SLIM);
+        _backupInfos.add(0,newBup);
+        doStore(false, false);
     }
 
     /**
-     * Add an xml entry advising Node Not on Network
+     * Remove Node XML File
      * @param rotate if true, creates and rotates .bup files before delete, false just deletes the core node file
      */
     protected boolean removeNode( boolean rotate){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
-        File file = x.getFile(_node.getNodeNumber(),false);
-        
         if (rotate) {
-            try {
-                Element roots = x.rootFromFile(file);
-                log.debug("File exists {}",roots);
-                FileUtil.rotate(file, 5, "bup");  // NOI18N
-            } catch (IOException ex) {
-                // the file might not exist
-                log.debug("Backup Rotate failed {}",file);  // NOI18N
-            } catch (JDOMException ex) {
-                // file might not exist
-                log.debug("File invalid: " + ex);  // NOI18N
-            }
+            doRotate();
         }
-        
         if ( !x.deleteFile(_node.getNodeNumber())){
             log.error("Unable to delete node xml file");
             return false;
         }
         return true;
+    }
+    
+    private void doRotate(){
+        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        File file = x.getFile(_node.getNodeNumber(),false);
+        try {
+            Element roots = x.rootFromFile(file);
+            log.debug("File exists {}",roots);
+            FileUtil.rotate(file, 5, "bup");  // NOI18N
+        } catch (IOException ex) {
+            // the file might not exist
+            log.debug("Backup Rotate failed {}",file);  // NOI18N
+        } catch (JDOMException ex) {
+            // file might not exist
+            log.debug("File invalid: {}", ex);  // NOI18N
+        } catch (NullPointerException ex){
+            // file might not exist
+            log.debug("File invalid: {}", ex);  // NOI18N
+        }
+    }
+    
+    /**
+     * Get the xml File Location
+     * @return Location of the file, creating new if required
+     */
+    protected File getFileLocation() {
+        CbusNodeBackupFile x = new CbusNodeBackupFile();
+        return x.getFile(_node.getNodeNumber(),true);
+    }
+    
+    /**
+     * Reset the backup array for testing
+     */
+    protected void resetBupArray() {
+        _backupInfos = new ArrayList<CbusNodeFromBackup>();
     }
 
     public static class CbusNodeBackupFile extends XmlFile {
