@@ -5,9 +5,7 @@ import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
- * ConnectionConfigXmlTest.java
- * <p>
- * Description: tests for the RaspberryPiConnectionConfigXml class
+ * Tests for the RaspberryPiConnectionConfigXml class.
  *
  * @author Paul Bender Copyright (C) 2016
  */
