@@ -66,7 +66,12 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             throw e;
         }
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
-        _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
+        if (turnout != null) {
+            _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
+        } else {
+            log.error("turnout {} is not found", turnoutName);
+            _turnoutHandle = null;
+        }
     }
     
     public void setTurnout(NamedBeanHandle<Turnout> handle) {

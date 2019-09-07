@@ -66,7 +66,12 @@ public class ExpressionLight extends AbstractDigitalExpression
             throw e;
         }
         Light light = InstanceManager.getDefault(LightManager.class).getLight(lightName);
-        _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(lightName, light);
+        if (light != null) {
+            _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(lightName, light);
+        } else {
+            log.error("light {} is not found", lightName);
+            _lightHandle = null;
+        }
     }
     
     public void setLight(NamedBeanHandle<Light> handle) {

@@ -66,7 +66,12 @@ public class ExpressionSensor extends AbstractDigitalExpression
             throw e;
         }
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
-        _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        if (sensor != null) {
+            _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+        } else {
+            log.error("light {} is not found", sensorName);
+            _sensorHandle = null;
+        }
     }
     
     public void setSensor(NamedBeanHandle<Sensor> handle) {
