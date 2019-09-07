@@ -47,7 +47,7 @@ public class TrackerTableActionTest {
         Sensor sMiddle = _sensorMgr.getSensor("IS24");
         Assert.assertNotNull("Senor sMiddle not found", sMiddle);
         sMiddle.setState(Sensor.ACTIVE);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(200);  //pause for block to get occupied
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for block to get occupied
 
         tta.markNewTracker(Middle, "Tkr1", null);
         Tracker Tkr1 = tta.findTrackerIn(Middle);

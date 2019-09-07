@@ -234,12 +234,12 @@ public class NXFrameTest {
         // runtimes() in next line runs the train, then checks location
         Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.ABORT);
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -268,7 +268,7 @@ public class NXFrameTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -288,7 +288,7 @@ public class NXFrameTest {
         // runtimes() in next line runs the train, then checks location
         Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -306,7 +306,7 @@ public class NXFrameTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
@@ -318,7 +318,7 @@ public class NXFrameTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -348,7 +348,7 @@ public class NXFrameTest {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
         }, "Train Halted");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
 
         warrant.controlRunTrain(Warrant.RESUME);
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -380,7 +380,7 @@ public class NXFrameTest {
      * @throws Exception exception thrown
      */
     protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
         for (int i = 1; i < route.length; i++) {
@@ -395,7 +395,7 @@ public class NXFrameTest {
                 //return  state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.OCCUPIED) ||
                 //        state == (OBlock.ALLOCATED | OBlock.RUNNING | OBlock.UNDETECTED);
             }, "Train occupies block "+i+" ("+blk.getDisplayName()+") of "+route.length);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+//            new org.netbeanol().waitEmpty(100);
 
             block = mgr.getOBlock(route[i]);
             Sensor nextSensor;
@@ -409,7 +409,7 @@ public class NXFrameTest {
                         Assert.fail("Set "+nextSensor.getDisplayName()+" ACTIVE Exception: " + e);
                     }
                 });
-                new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
+//                new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
             } else {
                 nextSensor = null;
             }

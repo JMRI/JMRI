@@ -58,7 +58,7 @@ public class LinkedWarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -138,7 +138,7 @@ public class LinkedWarrantTest {
                 Assert.fail("Set "+sensor12.getDisplayName()+" ACTIVE Exception: " + e);
             }
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -191,7 +191,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let thinds settle
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let thinds settle
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
@@ -224,7 +224,7 @@ public class LinkedWarrantTest {
                 Assert.fail("Set "+sensor1.getDisplayName()+" ACTIVE Exception: " + e);
             }
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -276,7 +276,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(200);  // pause to start next leg
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to start next leg
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return m.startsWith("Warrant");
@@ -320,7 +320,7 @@ public class LinkedWarrantTest {
                 Assert.fail("Set "+sensor0.getDisplayName()+" ACTIVE Exception: " + e);
             }
         });
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -399,7 +399,7 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Chance after third leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName());
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let things settle
+ //       new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let things settle
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();

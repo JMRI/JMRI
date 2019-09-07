@@ -115,7 +115,13 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         new Tracker(block, name, marker, this);
         return true;
     }
-    
+
+    @Deprecated
+    public Tracker addTracker(OBlock block, String name) {
+        markNewTracker(block, name, null);
+        return findTrackerIn(block);
+    }
+
     protected void addTracker(Tracker t) {
         _trackerList.add(t);
         addBlockListeners(t);
