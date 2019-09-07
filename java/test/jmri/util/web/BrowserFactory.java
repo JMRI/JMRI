@@ -69,12 +69,11 @@ public class BrowserFactory {
     }
 
     /**
-     * close all currently open web browsers and quit the associated webdriver.
+     * close all currently open web browsers.
      */
     public static void CloseAllDriver() {
         for (String key : drivers.keySet()) {
             drivers.get(key).close();
-            drivers.get(key).quit();
         }
     }
 
