@@ -12,20 +12,32 @@ import org.junit.Test;
  */
 public class TrackerTest {
 
+    private Tracker tracker = null;
+
     @Test
     public void testCTor() {
-        Tracker t = new Tracker(new OBlock("OB1", "Test"), "Test");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",tracker);
+    }
+
+    @Test
+    public void testSetupCheck(){
+        tracker.setupCheck();
+        Assert.assertEquals("trainname","Test",tracker.getTrainName());
+        Assert.assertNotNull("range",tracker.getRange());
+        Assert.assertNotNull("headblock",tracker.getHeadBlock());
+        Assert.assertNotNull("tailblock",tracker.getTailBlock());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tracker = new Tracker(new OBlock("OB1", "Test"), "Test");
     }
 
     @After
     public void tearDown() {
+        tracker = null;
         JUnitUtil.tearDown();
     }
 

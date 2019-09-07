@@ -59,7 +59,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 elem.setAttribute("systemName", tstName);
                 String uname = transit.getUserName();
-                if ((uname != null) && !uname.equals("")) {
+                if ((uname != null) && !uName.isEmpty()) {
                     elem.setAttribute("userName", uname);
                 }
 

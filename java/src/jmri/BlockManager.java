@@ -144,11 +144,13 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      *
      * @param name the system name or the user name for the block
      * @return a new or existing Block
-     * @throws IllegalArgumentException if cannot create block; never returns
-     *                                  null
+     * @throws IllegalArgumentException if cannot create block or no name supplied; never returns null
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Could not create block, no name supplied");
+        }
         Block b = getBlock(name);
         if (b != null) {
             return b;
@@ -156,7 +158,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             b = createNewBlock(name, null);
         } else {
-            b = createNewBlock(makeSystemName(name), null);
+            b = createNewBlock(name);
         }
         if (b == null) {
             throw new IllegalArgumentException("Could not create block \"" + name + "\"");

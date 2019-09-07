@@ -27,7 +27,6 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
     @After
     @Override
     public void tearDown() throws Exception {
-        service = null;
         bean = null;
         super.tearDown();
     }

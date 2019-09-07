@@ -2,10 +2,11 @@ package jmri.jmrix.roco.z21;
 
 import jmri.InstanceManager;
 import jmri.RailComManager;
-import jmri.JmriException;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * Z21ReporterManager implements the Reporter Manager interface for Roco Z21
@@ -109,12 +110,12 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = getSystemPrefix() + typeLetter() + address + ":" + msgPort;
+                String sysName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
                 log.debug("asking for reporter {}", sysName);
                 Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = getSystemPrefix() + typeLetter() + String.format("%4X", netID) + ":" + msgPort;
+                    sysName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID,msgPort);
                     log.debug("not found; asking for reporter {}", sysName);
                     r = (Z21CanReporter) getBySystemName(sysName);
                     if (null == r) {
@@ -149,52 +150,13 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         autoCreateInternalReporter = true;
     }
 
-    private String createSystemName(String curAddress) throws JmriException {
-        int encoderAddress = 0;
-        try {
-           if (curAddress.contains(":")) {
-               // Address format passed is in the form of encoderAddress:input or T:turnout address
-               int seperator = curAddress.indexOf(':');
-               try {
-                   encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
-                   return getSystemPrefix() + typeLetter() + encoderAddress
-                           + ":" +Integer.parseInt(curAddress.substring(seperator + 1));
-               } catch (NumberFormatException ex) {
-                   // system name may include hex values for CAN sensors.
-                   encoderAddress = Integer.parseInt(curAddress.substring(0, seperator), 16);
-                   return getSystemPrefix() + typeLetter() + String.format("%4x", encoderAddress)
-                           + ":" +Integer.parseInt(curAddress.substring(seperator + 1));
-               }
-           } else {
-               // Entered in using the old format
-               int iName = Integer.parseInt(curAddress);
-               return getSystemPrefix() + typeLetter() + iName;
-            }
-        } catch (NumberFormatException ex1) {
-            log.error("Unable to convert {} into the a reporter address", curAddress);
-            throw new JmriException("Hardware Address passed should be a number");
-        }
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public Reporter getBySystemName(String sName){
-       Reporter r = super.getBySystemName(sName);
-       if(r == null && sName.contains(":")) {
-         r = getBySystemNameWithNormalizedHexModuleAddress(sName);
-       }
-       return r;
-    }
-
-    private Reporter getBySystemNameWithNormalizedHexModuleAddress(String sName) {
-        try {
-            String curAddress = sName.substring(getSystemPrefix().length() + 1);
-            return super.getBySystemName(createSystemName(curAddress));
-        } catch (JmriException je) {
-            return null;
-        }
+        Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
+        return getBySystemName(sName,comparator);
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);

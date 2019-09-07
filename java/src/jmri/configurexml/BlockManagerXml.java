@@ -100,7 +100,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
                         // the following null check is to catch a null pointer exception that sometimes was found to happen
                         String uName = b.getUserName();
-                        if ((uName != null) && (!uName.equals(""))) {
+                        if ((uName != null) && (!uName.isEmpty())) {
                             elem.addContent(new Element("userName").addContent(uName));
                         }
                         log.debug("initial store Block {}", bName);

@@ -10,6 +10,7 @@ import org.junit.Test;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.server.json.JsonMockConnection;
+import jmri.util.JUnitAppender;
 
 /**
  *
@@ -22,6 +23,7 @@ public class JsonThrottleManagerTest {
     public void testGetDefault() {
         Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class),
                 JsonThrottleManager.getDefault());
+        JUnitAppender.assertWarnMessage("getDefault is deprecated, please remove references to it");
     }
 
     /**
