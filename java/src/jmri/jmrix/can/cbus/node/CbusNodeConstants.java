@@ -50,9 +50,14 @@ public class CbusNodeConstants {
             if ( node.getParameter(3) == 29 ) { // CANPAN
                 node.setsendsWRACKonNVSET(false);
             }
-            if ( node.getParameter(3) == 10 ) { // CANCMD
-                if ( node.getParameter(7) == 4 ) // v4 Firmware
-                node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+            if ( node.getParameter(3) == 10 // CANCMD
+                || node.getParameter(3) ==  55 // or CANCSB 
+                || node.getParameter(3) == 12 // or CANBC
+            ) { 
+                if ( node.getParameter(7) == 4 ) { // v4 Firmware
+                    node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                    node.setStatResponseFlagsAccurate(false);
+                }
             }
         }
     }
@@ -693,6 +698,7 @@ public class CbusNodeConstants {
         displayPhraseIndex.put(BackupType.COMPLETEDWITHERROR, Bundle.getMessage("BackupCompleteError"));
         displayPhraseIndex.put(BackupType.NOTONNETWORK, Bundle.getMessage("BackupNotOnNetwork"));
         displayPhraseIndex.put(BackupType.OUTSTANDING, Bundle.getMessage("BackupOutstanding"));
+        displayPhraseIndex.put(BackupType.SLIM, Bundle.getMessage("NodeInSlim"));
     }
     
     /*
@@ -730,7 +736,8 @@ public class CbusNodeConstants {
         COMPLETE(1),
         COMPLETEDWITHERROR(2),
         NOTONNETWORK(3),
-        OUTSTANDING(4);
+        OUTSTANDING(4),
+        SLIM(5);
         
         private final int v;
 
