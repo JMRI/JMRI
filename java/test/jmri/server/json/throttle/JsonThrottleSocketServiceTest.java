@@ -67,7 +67,7 @@ public class JsonThrottleSocketServiceTest {
         JsonNode message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals("Address", 42, message.path(JSON.DATA).path(JSON.ADDRESS).asInt());
-        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertTrue("Forward", message.path(JSON.DATA).path(JSON.FORWARD).asBoolean());
         Assert.assertEquals("Speed Steps", 126, message.path(JSON.DATA).path(JsonThrottle.SPEED_STEPS).asInt());
         Assert.assertEquals("Clients", 1, message.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
@@ -77,7 +77,7 @@ public class JsonThrottleSocketServiceTest {
         connection.sendMessage((JsonNode) null, 42); // clear messages
         // set a speed of 50% in reverse
         data = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "42");
-        data.put(JsonThrottle.SPEED, 0.5);
+        data.put(JSON.SPEED, 0.5);
         data.put(JSON.FORWARD, false);
         Assert.assertTrue("No address", data.path(JSON.ADDRESS).isMissingNode());
         service.onMessage(JsonThrottle.THROTTLE, data, JSON.POST, locale, 42);
@@ -85,7 +85,7 @@ public class JsonThrottleSocketServiceTest {
         Assert.assertNotNull(message);
         Assert.assertTrue(message.isArray());
         Assert.assertEquals("Two messages", 2, message.size());
-        Assert.assertEquals("Speed", 0.5, message.path(0).path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", 0.5, message.path(0).path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Throttle", "42", message.path(0).path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         Assert.assertEquals("Throttle change has two elements", 2, message.path(0).size());
         Assert.assertFalse("Forward", message.path(1).path(JSON.DATA).path(JSON.FORWARD).asBoolean());
@@ -99,7 +99,7 @@ public class JsonThrottleSocketServiceTest {
         message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals("Address", 42, message.path(JSON.DATA).path(JSON.ADDRESS).asInt());
-        Assert.assertEquals("Speed", 0.5, message.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", 0.5, message.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertFalse("Forward", message.path(JSON.DATA).path(JSON.FORWARD).asBoolean());
         Assert.assertEquals("Speed Steps", 126, message.path(JSON.DATA).path(JsonThrottle.SPEED_STEPS).asInt());
         Assert.assertEquals("Clients", 1, message.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
@@ -112,7 +112,7 @@ public class JsonThrottleSocketServiceTest {
         service.onMessage(JsonThrottle.THROTTLE, data, JSON.POST, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull(message);
-        Assert.assertEquals("Speed", -1.0, message.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", -1.0, message.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         Assert.assertEquals("Throttle change has two elements", 2, message.size());
@@ -122,7 +122,7 @@ public class JsonThrottleSocketServiceTest {
         service.onMessage(JsonThrottle.THROTTLE, data, JSON.POST, locale, 42);
         message = connection.getMessage();
         Assert.assertNotNull(message);
-        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         Assert.assertEquals("Throttle change has two elements", 2, message.size());
@@ -177,7 +177,7 @@ public class JsonThrottleSocketServiceTest {
         JsonNode message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals("Address", 3, message.path(JSON.DATA).path(JSON.ADDRESS).asInt());
-        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertTrue("Forward", message.path(JSON.DATA).path(JSON.FORWARD).asBoolean());
         Assert.assertEquals("Speed Steps", 126, message.path(JSON.DATA).path(JsonThrottle.SPEED_STEPS).asInt());
         Assert.assertEquals("Clients", 1, message.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
@@ -214,7 +214,7 @@ public class JsonThrottleSocketServiceTest {
         message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals("Address", 3, message.path(JSON.DATA).path(JSON.ADDRESS).asInt());
-        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("Speed", 0.0, message.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertTrue("Forward", message.path(JSON.DATA).path(JSON.FORWARD).asBoolean());
         Assert.assertEquals("Speed Steps", 126, message.path(JSON.DATA).path(JsonThrottle.SPEED_STEPS).asInt());
         Assert.assertEquals("Clients", 1, message.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
@@ -265,14 +265,14 @@ public class JsonThrottleSocketServiceTest {
         Assert.assertEquals("Two clients", 2, message2.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt());
         Assert.assertEquals("Client 2", "client2", message2.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         data1 = connection1.getObjectMapper().createObjectNode().put(JsonThrottle.THROTTLE, "client1");
-        service1.onMessage(JsonThrottle.THROTTLE, data1.put(JsonThrottle.SPEED, 0.5), JSON.POST, locale, 42);
+        service1.onMessage(JsonThrottle.THROTTLE, data1.put(JSON.SPEED, 0.5), JSON.POST, locale, 42);
         message1 = connection1.getMessage();
         Assert.assertNotNull(message1);
-        Assert.assertEquals("50% Speed", 0.5, message1.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("50% Speed", 0.5, message1.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Client 1", "client1", message1.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         message2 = connection2.getMessage();
         Assert.assertNotNull(message2);
-        Assert.assertEquals("50% Speed", 0.5, message2.path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+        Assert.assertEquals("50% Speed", 0.5, message2.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Client 2", "client2", message2.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         connection1.setThrowIOException(true);
         connection2.sendMessage((JsonNode) null, 42);
@@ -288,7 +288,7 @@ public class JsonThrottleSocketServiceTest {
         Assert.assertEquals("Client 2", "client2",
                 message2.path(0).path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         Assert.assertEquals("Emergency Stop", -1.0,
-                message2.path(1).path(JSON.DATA).path(JsonThrottle.SPEED).asDouble(), 0.0);
+                message2.path(1).path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Client 2", "client2",
                 message2.path(1).path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         JUnitAppender.assertWarnMessage("Unable to send message, closing connection: null");
@@ -332,6 +332,7 @@ public class JsonThrottleSocketServiceTest {
             Assert.assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());
             Assert.assertEquals("Error message", "Throttles must be assigned a client ID.", ex.getMessage());
         }
+        JUnitAppender.assertWarnMessage("JSON throttle \"\" requested using \"throttle\" instead of \"name\"");
     }
 
     @Before

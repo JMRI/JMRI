@@ -514,16 +514,18 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return _curvature;
     }
 
-    /*
-     * Set length.  length must be in millimeters.
-     * Paths will inherit this length, if their length is not
-     * specifically set.  This length is the maximum length of
-     * any Path in the block. Path lengths will be modified to
-     * not exceed this length.
+    /**
+     * Set length in millimeters.
+     * <p>
+     * Paths will inherit this length, if their length is not specifically set.
+     * This length is the maximum length of any Path in the block. Path lengths
+     * exceeding this will be set to the default length.
+     * 
+     * @param l length in millimeters
      */
     public void setLength(float l) {
         _length = l;
-        getPaths().stream().forEach((p) -> {
+        getPaths().stream().forEach(p -> {
             if (p.getLength() > l) {
                 p.setLength(0); // set to default
             }
