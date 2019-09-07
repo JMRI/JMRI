@@ -7,6 +7,7 @@ import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.FileUtil;
@@ -103,9 +104,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
 
             // store global information
-            audio.setAttribute("distanceattenuated",
-                    am.getActiveAudioFactory().isDistanceAttenuated() ? "yes" : "no");
-
+            AudioFactory audioFact = am.getActiveAudioFactory();
+            if (audioFact != null) {
+                audio.setAttribute("distanceattenuated", audioFact.isDistanceAttenuated() ? "yes" : "no");
+            }
             // store the audios
             while (iter.hasNext()) {
                 Audio a = iter.next();
@@ -507,7 +509,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
             Attribute a;
             if ((a = audio.getAttribute("distanceattenuated")) != null) {
-                am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
+                AudioFactory audioFact = am.getActiveAudioFactory();
+                if (audioFact != null) {
+                    audioFact.setDistanceAttenuated(a.getValue().equals("yes"));
+                }
             }
         }
     }
@@ -518,4 +523,5 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class);
+
 }

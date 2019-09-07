@@ -81,7 +81,14 @@
         },
         "carType": {
             "type": "string",
-            "description": "The engine type"
+            "description": "The engine type as displayed in manifests and switch lists"
+        },
+        "carSubType": {
+            "type": [
+            	"string",
+            	"null"
+        	],
+            "description": "The engine sub type; not displayed in manifests and switch lists"
         },
         "weight": {
             "type": "number",
