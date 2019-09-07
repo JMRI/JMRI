@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.function.Predicate;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.Timer;
@@ -118,10 +119,8 @@ public class LightControl {
                 if (that._controlSensorSense != this._controlSensorSense) return false;
                 return true;
             case Light.FAST_CLOCK_CONTROL : 
-                if (that._fastClockOnHour != this._fastClockOnHour) return false;
-                if (that._fastClockOnMin != this._fastClockOnMin) return false;
-                if (that._fastClockOffHour != this._fastClockOffHour) return false;
-                if (that._fastClockOffMin != this._fastClockOffMin) return false;
+                if (that.getFastClockOffCombined() != this.getFastClockOffCombined()) return false;
+                if (that.getFastClockOnCombined() != this.getFastClockOnCombined()) return false;
                 return true;
             case Light.TURNOUT_STATUS_CONTROL : 
                 if (! that._controlTurnoutName.equals(this._controlTurnoutName)) return false;
@@ -235,6 +234,15 @@ public class LightControl {
     }
 
     /*
+     * Get the Fast Clock On Hours and Minutes Combined
+     * Convenience method of separate getFastClockOnHour() and getFastClockOnMin()
+     * @return  Total combined Minute value
+     */
+    protected int getFastClockOnCombined() {
+        return _fastClockOnHour*60+_fastClockOnMin;
+    }
+
+    /*
      * Get the Fast Clock Off Hour.
      *
      * @return  Off Hour value
@@ -250,6 +258,15 @@ public class LightControl {
      */
     public int getFastClockOffMin() {
         return _fastClockOffMin;
+    }
+    
+    /*
+     * Get the Fast Clock Off Hours and Minutes Combined
+     * Convenience method of separate getFastClockOnHour() and getFastClockOnMin()
+     * @return  Total combined Minute value
+     */
+    protected int getFastClockOffCombined() {
+        return _fastClockOffHour*60+_fastClockOffMin;
     }
 
     /*
@@ -397,8 +414,6 @@ public class LightControl {
     private PropertyChangeListener _sensor2Listener = null;
     private PropertyChangeListener _timebaseListener = null;
     private Timebase _clock = null;
-    private int _timeOn = 0;
-    private int _timeOff = 0;
     private Turnout _controlTurnout = null;
     private PropertyChangeListener _turnoutListener = null;
     private NamedBeanHandle<Sensor> _namedTimedControlSensor = null;
@@ -474,18 +489,19 @@ public class LightControl {
                         _active = true;
                     } else {
                         // control sensor does not exist
-                        log.error("Light " + _parentLight.getSystemName()
-                                + " is linked to a Sensor that does not exist: " + _controlSensorName);
+                        log.error("Light {} is linked to a Sensor that does not exist: {}",
+                            _parentLight.getSystemName(), _controlSensorName);
                         return;
                     }
                     break;
                 case Light.FAST_CLOCK_CONTROL:
+                    if (areFollowerTimesFaulty(_parentLight.getLightControlList())){
+                        log.error("Light has multiple actions for the same time in {}",
+                            getDescriptionText(_parentLight.getDisplayName()));
+                    }
                     if (_clock == null) {
                         _clock = InstanceManager.getDefault(jmri.Timebase.class);
                     }
-                    // set up time as minutes in a day
-                    _timeOn = _fastClockOnHour * 60 + _fastClockOnMin;
-                    _timeOff = _fastClockOffHour * 60 + _fastClockOffMin;
                     // initialize light based on current fast time
                     updateClockControlLightFollower();
                     // set up to listen for time changes on a minute basis
@@ -709,18 +725,18 @@ public class LightControl {
         _parentLight.getLightControlList().forEach((otherLc) -> {
             if (otherLc!=this && otherLc.getControlType()==Light.FAST_CLOCK_CONTROL) {
                 // by adding 1440 mins to the today times, we can check yesterday in the same list.
-                otherControlTimes.add( otherLc.getFastClockOnHour()*60+otherLc.getFastClockOnMin() ); // yesterdayOnTime
-                otherControlTimes.add( otherLc.getFastClockOffHour()*60+otherLc.getFastClockOffMin() ); // yesterdayOffTime
-                otherControlTimes.add( otherLc.getFastClockOnHour()*60+otherLc.getFastClockOnMin()+1440 ); // todayOnTime
-                otherControlTimes.add( otherLc.getFastClockOffHour()*60+otherLc.getFastClockOffMin()+1440 ); // todayOffTime
+                otherControlTimes.add( otherLc.getFastClockOnCombined() ); // yesterdayOnTime
+                otherControlTimes.add( otherLc.getFastClockOffCombined() ); // yesterdayOffTime
+                otherControlTimes.add( otherLc.getFastClockOnCombined()+1440 ); // todayOnTime
+                otherControlTimes.add( otherLc.getFastClockOffCombined()+1440 ); // todayOffTime
             }
         });
         log.debug("{} other control times in list {}",otherControlTimes.size(),otherControlTimes);
         
-        thisControlTimes.add( _timeOn ); // yesterdayOnTime
-        thisControlTimes.add( _timeOff ); // yesterdayOffTime
-        thisControlTimes.add( _timeOn+1440 ); // todayOnTime
-        thisControlTimes.add( _timeOff+1440 ); // todayOffTime
+        thisControlTimes.add( getFastClockOnCombined() ); // yesterdayOnTime
+        thisControlTimes.add( getFastClockOffCombined() ); // yesterdayOffTime
+        thisControlTimes.add( getFastClockOnCombined()+1440 ); // todayOnTime
+        thisControlTimes.add( getFastClockOffCombined()+1440 ); // todayOffTime
         
         otherControlTimes.removeIf( e -> ( e > ( _timeNow +1440 ) )); // remove future times
         thisControlTimes.removeIf( e -> ( e > ( _timeNow +1440 ) )); // remove future times
@@ -732,6 +748,41 @@ public class LightControl {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Check to see if we have the FastClock Follower has unique times for a single Light Control.
+     * <p>
+     * Hour / Minute combination must be unique for each Light to avoid flicker.
+     * 
+     * @return true if the clock on time equals the off time, otherwise false.
+     */
+    public boolean onOffTimesFaulty() {
+        return (getFastClockOnCombined()==getFastClockOffCombined());
+    }
+    
+    /**
+     * @param time Combined hours / mins to check against.
+     */
+    private Predicate<LightControl> isFastClockEqual(int time) {
+        return p -> ( !(p==this) && (
+            p.getFastClockOnCombined() == time || p.getFastClockOffCombined() == time ) );
+    }
+    
+    /**
+     * Check to see if we have the FastClock Follower has unique times for a single Light.
+     * <p>
+     * Hour / Minute combination must be unique for each Light to avoid flicker.
+     * 
+     * @param compareList the ArrayList of other Light Controls to compare against
+     * @return true if there are multiple exact same times
+     */
+    public boolean areFollowerTimesFaulty( ArrayList<LightControl> compareList ) {
+        if (onOffTimesFaulty()){
+            return true;
+        }
+        return (compareList.stream().anyMatch(isFastClockEqual(getFastClockOnCombined())) || 
+            compareList.stream().anyMatch(isFastClockEqual(getFastClockOffCombined())));
     }
     
     /**
@@ -758,9 +809,9 @@ public class LightControl {
                 return;
             }
             int state = _parentLight.getState();
-            if (_timeOn <= _timeOff) {
+            if (getFastClockOnCombined() <= getFastClockOffCombined()) {
                 // on and off the same day
-                if ((_timeNow < _timeOn) || (_timeNow >= _timeOff)) {
+                if ((_timeNow < getFastClockOnCombined()) || (_timeNow >= getFastClockOffCombined())) {
                     // Light should be OFF
                     if (state == Light.ON) {
                         _parentLight.setState(Light.OFF);
@@ -773,7 +824,7 @@ public class LightControl {
                 }
             } else {
                 // on and off - different days
-                if ((_timeNow >= _timeOn) || (_timeNow < _timeOff)) {
+                if ((_timeNow >= getFastClockOnCombined()) || (_timeNow < getFastClockOffCombined())) {
                     // Light should be ON
                     if (state == Light.OFF) {
                         _parentLight.setState(Light.ON);
