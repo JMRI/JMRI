@@ -682,365 +682,57 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:42:42 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
+      <date>Sat Sep 07 07:17:18 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
       <filehistory>
         <operation>
           <type>Load OK</type>
-          <date>Thu Aug 10 17:44:17 PDT 2017</date>
-          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:07 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:17 PDT 2016</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>UserPrefsDecoderProConfig2.xml</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:46 EST 2012</date>
-                  <filename>aaaae12.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>UserPrefsDecoderProConfig2.xml</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:34 EST 2012</date>
-                      <filename>aaaae10.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>Store</type>
-                          <date>Sun Jan 22 13:33:02 EST 2012</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Sun Jan 22 14:36:43 EST 2012</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Sun Jan 22 14:59:13 EST 2012</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Jun 17 22:26:25 PDT 2016</date>
-              <filename />
-            </operation>
-          </filehistory>
+          <date>Thu Aug 10 17:26:25 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
+          <filehistory />
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Aug 10 17:44:18 PDT 2017</date>
-          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:07 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:17 PDT 2016</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>UserPrefsDecoderProConfig2.xml</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:46 EST 2012</date>
-                  <filename>aaaae12.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>UserPrefsDecoderProConfig2.xml</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:34 EST 2012</date>
-                      <filename>aaaae10.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>Store</type>
-                          <date>Sun Jan 22 13:33:02 EST 2012</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Sun Jan 22 14:36:43 EST 2012</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Sun Jan 22 14:59:13 EST 2012</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Jun 17 22:26:25 PDT 2016</date>
-              <filename />
-            </operation>
-          </filehistory>
+          <date>Thu Aug 10 17:26:25 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
+          <filehistory />
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Aug 10 17:44:18 PDT 2017</date>
+          <date>Thu Aug 10 17:26:25 PDT 2017</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:42:42 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
+      <date>Sat Sep 07 07:17:18 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
       <filehistory>
         <operation>
           <type>Load OK</type>
-          <date>Thu Aug 10 17:44:17 PDT 2017</date>
-          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:07 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:17 PDT 2016</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>UserPrefsDecoderProConfig2.xml</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:46 EST 2012</date>
-                  <filename>aaaae12.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>UserPrefsDecoderProConfig2.xml</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:34 EST 2012</date>
-                      <filename>aaaae10.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>Store</type>
-                          <date>Sun Jan 22 13:33:02 EST 2012</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Sun Jan 22 14:36:43 EST 2012</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Sun Jan 22 14:59:13 EST 2012</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Jun 17 22:26:25 PDT 2016</date>
-              <filename />
-            </operation>
-          </filehistory>
+          <date>Thu Aug 10 17:26:25 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
+          <filehistory />
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Aug 10 17:44:18 PDT 2017</date>
-          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:05 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:07 PDT 2016</date>
-              <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Jun 17 22:26:17 PDT 2016</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/BlockManagerXmlTest.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>DecoderPro version 20120122-1945-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:45:24 EST 2012</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:24 EST 2012</date>
-                  <filename>UserPrefsDecoderProConfig2.xml</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sun Jan 22 14:45:46 EST 2012</date>
-                  <filename>aaaae12.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>DecoderPro version 20120122-1933-Bob starts under Java 1.6.0_22 at Sun Jan 22 14:34:10 EST 2012</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:10 EST 2012</date>
-                      <filename>UserPrefsDecoderProConfig2.xml</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Sun Jan 22 14:34:34 EST 2012</date>
-                      <filename>aaaae10.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>Store</type>
-                          <date>Sun Jan 22 13:33:02 EST 2012</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Sun Jan 22 14:36:43 EST 2012</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Sun Jan 22 14:59:13 EST 2012</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Jun 17 22:26:25 PDT 2016</date>
-              <filename />
-            </operation>
-          </filehistory>
+          <date>Thu Aug 10 17:26:25 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
+          <filehistory />
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Aug 10 17:44:18 PDT 2017</date>
+          <date>Thu Aug 10 17:26:25 PDT 2017</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Sep 06 22:42:42 PDT 2019</date>
+      <date>Sat Sep 07 07:17:18 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+jake+20190906T1723Z+R38a2975465 on Fri Sep 06 22:42:42 PDT 2019-->
+  <!--Written by JMRI version 4.17.4ish+jake+20190907T0616Z+R38a2975465 on Sat Sep 07 07:17:18 PDT 2019-->
 </layout-config>
