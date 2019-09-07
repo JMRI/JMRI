@@ -105,6 +105,8 @@ public class PdiFile {
      * @return byte buffer, starting with address info and containing data, but
      *         not CRC
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by Pricom docs")
     public byte[] getNext(int n) {
         byte[] buffer = new byte[n + 3 + 2]; // 3 at front, 2 at back for CRC
         int rd;

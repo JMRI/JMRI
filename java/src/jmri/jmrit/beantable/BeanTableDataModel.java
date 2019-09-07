@@ -20,7 +20,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -626,7 +626,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return the table
      * @throws NullPointerException if name or model is null
      */
-    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
         return this.configureJTable(name, new JTable(model), sorter);
@@ -642,7 +642,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return the table
      * @throws NullPointerException if table or the table name is null
      */
-    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table, @Nullable RowSorter<? extends TableModel> sorter) {
+    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(table, "the table must be nonnull");
         Objects.requireNonNull(name, "the table name must be nonnull");
         table.setRowSorter(sorter);

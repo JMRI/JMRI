@@ -3,7 +3,7 @@ package jmri.server.web.spi;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  *
@@ -32,7 +32,7 @@ public final class AngularRoute {
      *                                  template, controller, and redirection
      *                                  must be non-null are violated
      */
-    public AngularRoute(@Nonnull String when, @Nullable String template, @Nullable String controller, @Nullable String redirection) {
+    public AngularRoute(@Nonnull String when, @CheckForNull String template, @CheckForNull String controller, @CheckForNull String redirection) {
         Objects.requireNonNull(when, "Unable to create AngularRoute with null when property.");
         if ((template == null && controller != null) || (template != null && controller == null)) {
             throw new IllegalArgumentException("template and controller must both be non-null or null");

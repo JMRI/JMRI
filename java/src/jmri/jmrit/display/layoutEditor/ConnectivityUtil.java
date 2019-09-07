@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -86,9 +86,9 @@ public class ConnectivityUtil {
      */
     @Nonnull
     public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(
-            @Nullable Block currBlock,
-            @Nullable Block prevBlock,
-            @Nullable Block nextBlock) {
+            @CheckForNull Block currBlock,
+            @CheckForNull Block prevBlock,
+            @CheckForNull Block nextBlock) {
         return getTurnoutList(currBlock, prevBlock, nextBlock, false);
     }
 
@@ -112,9 +112,9 @@ public class ConnectivityUtil {
      */
     @Nonnull
     public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(
-            @Nullable Block currBlock,
-            @Nullable Block prevBlock,
-            @Nullable Block nextBlock,
+            @CheckForNull Block currBlock,
+            @CheckForNull Block prevBlock,
+            @CheckForNull Block nextBlock,
             boolean suppress) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
 
@@ -736,9 +736,9 @@ public class ConnectivityUtil {
      *         of facing; may be null
      */
     @CheckReturnValue
-    @Nullable
-    public SignalHead getSignalHeadAtAnchor(@Nullable PositionablePoint p,
-            @Nullable Block block, boolean facing) {
+    @CheckForNull
+    public SignalHead getSignalHeadAtAnchor(@CheckForNull PositionablePoint p,
+            @CheckForNull Block block, boolean facing) {
         if ((p == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtAnchor");
             return null;
@@ -780,9 +780,9 @@ public class ConnectivityUtil {
      *         of facing; may be null
      */
     @CheckReturnValue
-    @Nullable
-    public SignalMast getSignalMastAtAnchor(@Nullable PositionablePoint p,
-            @Nullable Block block, boolean facing) {
+    @CheckForNull
+    public SignalMast getSignalMastAtAnchor(@CheckForNull PositionablePoint p,
+            @CheckForNull Block block, boolean facing) {
         if ((p == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtAnchor");
             return null;
@@ -843,9 +843,9 @@ public class ConnectivityUtil {
      *         of facing; may be null
      */
     @CheckReturnValue
-    @Nullable
-    public SignalHead getSignalHeadAtLevelXing(@Nullable LevelXing x,
-            @Nullable Block block, boolean facing) {
+    @CheckForNull
+    public SignalHead getSignalHeadAtLevelXing(@CheckForNull LevelXing x,
+            @CheckForNull Block block, boolean facing) {
         if ((x == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtLevelXing");
             return null;
@@ -900,8 +900,8 @@ public class ConnectivityUtil {
      *         contains a connecting track segment
      */
     public boolean blockInternalToLevelXing(
-            @Nullable LevelXing x,
-            @Nullable Block block) {
+            @CheckForNull LevelXing x,
+            @CheckForNull Block block) {
         if ((x == null) || (block == null)) {
             return false;
         }
@@ -1056,8 +1056,8 @@ public class ConnectivityUtil {
      *         added successfully; 'false' and logs an error if not.
      */
     public boolean addSensorToSignalHeadLogic(
-            @Nullable String name,
-            @Nullable SignalHead sh,
+            @CheckForNull String name,
+            @CheckForNull SignalHead sh,
             int where) {
         if (sh == null) {
             log.error("Null signal head on entry to addSensorToSignalHeadLogic");
@@ -1165,7 +1165,7 @@ public class ConnectivityUtil {
      * @return true if successful; false otherwise
      */
     public boolean removeSensorsFromSignalHeadLogic(
-            @Nullable List<String> names, @Nullable SignalHead sh) {
+            @CheckForNull List<String> names, @CheckForNull SignalHead sh) {
         if (sh == null) {
             log.error("Null signal head on entry to removeSensorsFromSignalHeadLogic");
             return false;
@@ -1228,8 +1228,8 @@ public class ConnectivityUtil {
      *         unable to follow the track
      */
     @CheckReturnValue
-    @Nullable
-    public TrackNode getNextNode(@Nullable TrackNode cNode, int cNodeState) {
+    @CheckForNull
+    public TrackNode getNextNode(@CheckForNull TrackNode cNode, int cNodeState) {
         if (cNode == null) {
             log.error("getNextNode called with a null Track Node");
             return null;
@@ -1277,11 +1277,11 @@ public class ConnectivityUtil {
     //TODO: cTrack parameter isn't used in this method; is this a bug?
     //TODO: pType local variable is set but never used; dead-code strip?
     @CheckReturnValue
-    @Nullable
+    @CheckForNull
     public TrackNode getTrackNode(
             @Nonnull LayoutTrack cNode,
             int cNodeType,
-            @Nullable TrackSegment cTrack,
+            @CheckForNull TrackSegment cTrack,
             int cNodeState) {
         // initialize
         LayoutTrack node = null;
@@ -1725,10 +1725,10 @@ public class ConnectivityUtil {
      * @return the exit block for node or null if none exists
      */
     @CheckReturnValue
-    @Nullable
+    @CheckForNull
     public Block getExitBlockForTrackNode(
-            @Nullable TrackNode node,
-            @Nullable Block excludedBlock) {
+            @CheckForNull TrackNode node,
+            @CheckForNull Block excludedBlock) {
         if ((node == null) || node.reachedEndOfTrack()) {
             return null;
         }
@@ -2371,7 +2371,7 @@ public class ConnectivityUtil {
      * @return 'true' if designated Block is connected; 'false' if not
      */
     private boolean trackSegmentLeadsTo(
-            @Nullable TrackSegment tsg, @Nullable LayoutTrack ob) {
+            @CheckForNull TrackSegment tsg, @CheckForNull LayoutTrack ob) {
         if ((tsg == null) || (ob == null)) {
             log.error("Null argument on entry to trackSegmentLeadsTo");
             return false;

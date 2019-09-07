@@ -15,7 +15,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.Box;
@@ -746,7 +746,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
 
             @Override
-            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @Nullable RowSorter<? extends TableModel> sorter) {
+            public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
                 return this.configureJTable(name, this.makeJTable(model), sorter);
             }
 

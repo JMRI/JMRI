@@ -69,13 +69,13 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
             }
         } else {
             entries = selectRosterEntry(rosterGroup);
-            if (entries != null) {
+            if (entries.length > 0 ) {
                 log.debug("selectRosterEntry(rosterGroup) found {} entries", entries.length);
             } else {
-                log.debug("selectRosterEntry(rosterGroup) left entries null");
+                log.debug("selectRosterEntry(rosterGroup) found no entries");
             }
         }
-        if (entries == null) {
+        if (entries == null || entries.length == 0) {
             return;
         }
         // get parent object if there is one
@@ -123,6 +123,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     }
 
     protected RosterEntry[] selectRosterEntry(String rosterGroup) {
+        RosterEntry[] entries = new RosterEntry[1];
         // create a dialog to select the roster entry
         JComboBox<?> selections = new RosterEntryComboBox(rosterGroup);
         int retval = JOptionPane.showOptionDialog(_who,
@@ -132,9 +133,8 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         log.debug("Dialog value " + retval + " selected " + selections.getSelectedIndex() + ":"
                 + selections.getSelectedItem()); // TODO I18N
         if (retval != 1) {
-            return null;
+            return entries; // empty
         }
-        RosterEntry[] entries = new RosterEntry[1];
         entries[0] = (RosterEntry) selections.getSelectedItem();
         return entries;
     }

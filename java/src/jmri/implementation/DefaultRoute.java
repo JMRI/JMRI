@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -668,7 +668,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
     /** {@inheritDoc} */
     @Override
-    public void setLockControlTurnout(@Nullable String turnoutName) throws IllegalArgumentException {
+    public void setLockControlTurnout(@CheckForNull String turnoutName) throws IllegalArgumentException {
         mLockControlTurnout = turnoutName;
         if (mLockControlTurnout == null || mLockControlTurnout.isEmpty()) {
             mLockControlNamedTurnout = null;

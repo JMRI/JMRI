@@ -1543,6 +1543,11 @@ public class Track {
             int available = getLength() -
                     (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
                             getReserved());
+            // could be less
+            int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
+            if (available3 < available) {
+                available = available3;
+            }
             // could be less based on track length
             int available2 = getLength() - getReservedLengthDrops();
             if (available2 < available) {
