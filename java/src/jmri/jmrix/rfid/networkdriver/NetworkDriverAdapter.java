@@ -57,6 +57,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 // create a Generic Stand-alone port controller
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
                         new StandaloneSensorManager(this.getSystemConnectionMemo()),
                         new StandaloneReporterManager(this.getSystemConnectionMemo()));
@@ -65,6 +66,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 // create a MERG Concentrator port controller
                 log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
                         new ConcentratorSensorManager(this.getSystemConnectionMemo()),
                         new ConcentratorReporterManager(this.getSystemConnectionMemo()));
@@ -74,6 +76,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone"); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
                         new StandaloneSensorManager(this.getSystemConnectionMemo()),
                         new StandaloneReporterManager(this.getSystemConnectionMemo()));
