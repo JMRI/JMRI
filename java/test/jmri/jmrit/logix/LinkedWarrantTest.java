@@ -58,7 +58,10 @@ public class LinkedWarrantTest {
                 Assert.fail("Unexpected Exception: " + e);
             }
         });
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+        jmri.util.JUnitUtil.waitFor(() -> {
+            OBlock block = _OBlockMgr.getBySystemName("OB12");
+            return (block.getState() & OBlock.OCCUPIED) != 0;
+        }, "block OB12 occupied");
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -88,8 +91,9 @@ public class LinkedWarrantTest {
             return m.startsWith("Warrant");
         }, "LoopDeLoop finished first leg");
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+X        jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
+            System.out.println(m);
             return m.endsWith("Cmd #8.");
         }, "Loopy 2 starts to move at 8th command");
 
@@ -138,7 +142,10 @@ public class LinkedWarrantTest {
                 Assert.fail("Set "+sensor12.getDisplayName()+" ACTIVE Exception: " + e);
             }
         });
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+        jmri.util.JUnitUtil.waitFor(() -> {
+            OBlock block = _OBlockMgr.getBySystemName("OB12");
+            return (block.getState() & OBlock.OCCUPIED) != 0;
+        }, "block OB12 occupied");
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -191,7 +198,6 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
 
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let thinds settle
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
@@ -224,7 +230,10 @@ public class LinkedWarrantTest {
                 Assert.fail("Set "+sensor1.getDisplayName()+" ACTIVE Exception: " + e);
             }
         });
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+        jmri.util.JUnitUtil.waitFor(() -> {
+            OBlock block = _OBlockMgr.getBySystemName("OB1");
+            return (block.getState() & OBlock.OCCUPIED) != 0;
+        }, "block OB1 occupied");
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -276,9 +285,9 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
 
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to start next leg
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
+            System.out.println(m);
             return m.startsWith("Warrant");
         }, "WestToEastLink finished third leg");
 
@@ -320,7 +329,10 @@ public class LinkedWarrantTest {
                 Assert.fail("Set "+sensor0.getDisplayName()+" ACTIVE Exception: " + e);
             }
         });
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+        jmri.util.JUnitUtil.waitFor(() -> {
+            OBlock block = _OBlockMgr.getBySystemName("OB0");
+            return (block.getState() & OBlock.OCCUPIED) != 0;
+        }, "block OB0 occupied");
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -399,7 +411,6 @@ public class LinkedWarrantTest {
 
         Assert.assertEquals("Chance after third leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName());
 
- //       new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // pause to let things settle
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
