@@ -363,7 +363,7 @@
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
         <exclude name="jmri/server/json/reporter/JsonReporter.class" />
         <exclude name="jmri/server/json/roster/JsonRoster.class" />
-        <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
+        <exclude name="jmri/server/json/signalmast/JsonSignalMast.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
         <!-- Exclude files meant to check SpotBugs. -->

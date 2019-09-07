@@ -261,12 +261,14 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>TSU2 Genesis add SD70ACe model</li>
+                <li>ECO Athearn RTR add new SD40 models</li>
             </ul>
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>WestAust55 -Motor Pane Restructured plus CV182 for Special BEMF and Keep-Alive added</li>
+                <li>WestAust55 -CV104 added for third Private User ID purposes</li>
             </ul>
 	    
 	    <h4>Team Digital</h4>
@@ -388,7 +390,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added a new SetUnknownTurnoutsClosed script that does what it says on the tin</li>
+            <li>Added script tests for SetUnknownTurnoutsClosed and SetAllTurnoutsClosed
         </ul>
 
     <h3>Signals</h3>

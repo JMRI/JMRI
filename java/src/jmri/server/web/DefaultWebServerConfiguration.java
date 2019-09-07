@@ -22,26 +22,20 @@ public final class DefaultWebServerConfiguration extends AbstractWebServerConfig
 
     private final HashMap<String, String> redirections = new HashMap<>();
     private final HashMap<String, String> files = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(DefaultWebServerConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultWebServerConfiguration.class);
 
     public DefaultWebServerConfiguration() {
-        try (InputStream in = this.getClass().getResourceAsStream("FilePaths.properties")) { // NOI18N
+        try (InputStream in = getClass().getResourceAsStream("FilePaths.properties")) { // NOI18N
             Properties properties = new Properties();
             properties.load(in);
-            in.close();
-            properties.stringPropertyNames().forEach((path) -> {
-                this.files.put(path, properties.getProperty(path));
-            });
+            properties.stringPropertyNames().forEach(path -> files.put(path, properties.getProperty(path)));
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }
-        try (InputStream in = this.getClass().getResourceAsStream("Redirections.properties")) { // NOI18N
+        try (InputStream in = getClass().getResourceAsStream("Redirections.properties")) { // NOI18N
             Properties properties = new Properties();
             properties.load(in);
-            in.close();
-            properties.stringPropertyNames().forEach((path) -> {
-                this.redirections.put(path, properties.getProperty(path));
-            });
+            properties.stringPropertyNames().forEach(path -> redirections.put(path, properties.getProperty(path)));
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }

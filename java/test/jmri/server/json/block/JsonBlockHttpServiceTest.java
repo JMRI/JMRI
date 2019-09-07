@@ -206,7 +206,6 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             service.doPut(JsonBlock.BLOCK, "", message, locale, 0); // use an empty name to trigger exception
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
-            JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Block");
             assertEquals(400, ex.getCode());
         }
     }

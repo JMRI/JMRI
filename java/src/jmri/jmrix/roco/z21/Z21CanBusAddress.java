@@ -28,7 +28,7 @@ public class Z21CanBusAddress {
 
     /**
      * Public static method to parse a Z21CanBus system name.
-     * Note: Bits are numbered from 1.
+     * Note: Bits are numbered from 0.
      *
      * @return the hardware address number, return -1 if an error is found
      */
@@ -123,7 +123,7 @@ public class Z21CanBusAddress {
         }
         try {
             num = Integer.parseInt(parts[1]);
-            if (num < 1 || num > 8) {
+            if (num < 0 || num > 7) {
                 throw newBadSystemNameException(name,"SystemNameInvalidPin",locale);
             }
         } catch (NumberFormatException ex) {
@@ -151,7 +151,7 @@ public class Z21CanBusAddress {
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
-        if (getBitFromSystemName(systemName, prefix) > 0) {
+        if (getBitFromSystemName(systemName, prefix) >= 0) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;

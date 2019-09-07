@@ -71,12 +71,10 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
 /**
- *
  * @author Randall Wood (C) 2016, 2018, 2019
  */
 public class JsonOperationsHttpService extends JsonHttpService {
 
-    // private final static Logger log = LoggerFactory.getLogger(JsonOperationsHttpService.class);
     private final JsonUtil utilities;
 
     public JsonOperationsHttpService(ObjectMapper mapper) {
@@ -97,7 +95,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 Kernel kernel = carManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
                 }
                 return getKernel(kernel, locale, id);
             case LOCATION:
@@ -155,16 +153,17 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     @Override
     // Nullable overrides super class'es non-null requirement for name
-    public JsonNode doPut(String type, @CheckForNull String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPut(String type, @CheckForNull String name, JsonNode data, Locale locale, int id)
+            throws JsonException {
         switch (type) {
             case CAR:
                 if (data.path(ROAD).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", ROAD, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, ROAD, type), id); // NOI18N
                 }
                 if (data.path(NUMBER).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NUMBER, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NUMBER, type), id); // NOI18N
                 }
                 String road = data.path(ROAD).asText();
                 String number = data.path(NUMBER).asText();
@@ -177,18 +176,18 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case CAR_TYPE:
                 if (name == null) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NAME, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
                 InstanceManager.getDefault(CarTypes.class).addName(name);
                 return getCarType(name, locale, id);
             case ENGINE:
                 if (data.path(ROAD).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", ROAD, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, ROAD, type), id); // NOI18N
                 }
                 if (data.path(NUMBER).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NUMBER, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NUMBER, type), id); // NOI18N
                 }
                 road = data.path(ROAD).asText();
                 number = data.path(NUMBER).asText();
@@ -201,14 +200,14 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case KERNEL:
                 if (name == null) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NAME, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
                 Kernel kernel = carManager().newKernel(name);
                 return getKernel(kernel, locale, id);
             case LOCATION:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", USERNAME, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, USERNAME, type), id); // NOI18N
                 }
                 String userName = data.path(USERNAME).asText();
                 if (name != null && locationManager().getLocationById(name) != null) {
@@ -224,23 +223,23 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case TRACK:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", USERNAME, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, USERNAME, type), id); // NOI18N
                 }
                 userName = data.path(USERNAME).asText();
                 if (data.path(TYPE).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", TYPE, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, TYPE, type), id); // NOI18N
                 }
                 String trackType = data.path(TYPE).asText();
                 if (data.path(LOCATION).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", LOCATION, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, LOCATION, type), id); // NOI18N
                 }
                 String locationName = data.path(LOCATION).asText();
                 location = locationManager().getLocationById(locationName);
                 if (location == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", LOCATION, locationName), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, LOCATION, locationName), id); // NOI18N
                 }
                 if (name != null && location.getTrackById(name) != null) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
@@ -255,7 +254,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             default:
                 if (name == null) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "ErrorMissingPropertyPut", NAME, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
                 return super.doPut(type, name, data, locale, id);
         }
@@ -294,7 +293,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         switch (type) {
             case CAR:
                 // TODO: do not remove an in use car
-                deleteCar(name, data, locale, id);
+                deleteCar(name, locale, id);
                 break;
             case CAR_TYPE:
                 List<Car> cars = carManager().getByTypeList(name);
@@ -304,7 +303,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         locations.add(location);
                     }
                 }
-                if ((cars.size() != 0 || locations.size() != 0) && !acceptForceDeleteToken(type, name, token)) {
+                if ((!cars.isEmpty() || !locations.isEmpty()) && !acceptForceDeleteToken(type, name, token)) {
                     ArrayNode conflicts = mapper.createArrayNode();
                     for (Car car : cars) {
                         conflicts.add(message(CAR, utilities.getCar(car, locale), 0));
@@ -318,13 +317,13 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 break;
             case ENGINE:
                 // TODO: do not remove an in use engine
-                deleteEngine(name, data, locale, id);
+                deleteEngine(name, locale, id);
                 break;
             case KERNEL:
                 Kernel kernel = carManager().getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
                 }
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
                     throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), locale, id);
@@ -333,7 +332,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 break;
             case LOCATION:
                 // TODO: do not remove an in use location
-                deleteLocation(name, data, locale, id);
+                deleteLocation(name, locale, id);
                 break;
             case TRACK:
                 // TODO: do not remove an in use track
@@ -348,20 +347,16 @@ public class JsonOperationsHttpService extends JsonHttpService {
         CarTypes manager = InstanceManager.getDefault(CarTypes.class);
         if (!manager.containsName(name)) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", CAR_TYPE, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, CAR_TYPE, name), id);
         }
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, name);
         ArrayNode cars = data.putArray(CARS);
-        carManager().getByTypeList(name).forEach((car) -> {
-            cars.add(utilities.getCar(car, locale));
-        });
+        carManager().getByTypeList(name).forEach(car -> cars.add(utilities.getCar(car, locale)));
         ArrayNode locations = data.putArray(LOCATIONS);
-        locationManager().getList().stream().filter((location) -> {
-            return location.acceptsTypeName(name);
-        }).forEach((location) -> {
-            locations.add(utilities.getLocation(location, locale));
-        });
+        locationManager().getList().stream()
+                .filter(location -> location.acceptsTypeName(name))
+                .forEach(location -> locations.add(utilities.getLocation(location, locale)));
         return message(CAR_TYPE, data, id);
     }
 
@@ -390,7 +385,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     private ArrayNode getKernelCars(Kernel kernel, boolean asMessage, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
-        kernel.getCars().forEach((car) -> {
+        kernel.getCars().forEach(car -> {
             if (asMessage) {
                 array.add(message(CAR, utilities.getCar(car, locale), 0));
             } else {
@@ -402,35 +397,32 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
     private JsonNode getKernels(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        carManager().getKernelNameList().forEach((kernel) -> {
-            // individual kernels should not have id in array, but same method is used to get
-            // single kernels as requested, so pass additive inverse of id to allow errors
-            array.add(getKernel(carManager().getKernelByName(kernel), locale, id * -1));
-        });
+        carManager().getKernelNameList()
+                // individual kernels should not have id in array, but same
+                // method is used to get single kernels as requested, so pass
+                // additive inverse of id to allow errors
+                .forEach(kernel -> array.add(getKernel(carManager().getKernelByName(kernel), locale, id * -1)));
         return message(array, id);
     }
 
     public ArrayNode getCars(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        carManager().getByIdList().forEach((car) -> {
-            array.add(message(CAR, utilities.getCar(car, locale), id));
-        });
+        carManager().getByIdList()
+                .forEach(car -> array.add(message(CAR, utilities.getCar(car, locale), id)));
         return array;
     }
 
     public ArrayNode getEngines(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        engineManager().getByIdList().forEach((engine) -> {
-            array.add(message(ENGINE, utilities.getEngine(engine, locale), id));
-        });
+        engineManager().getByIdList()
+                .forEach(engine -> array.add(message(ENGINE, utilities.getEngine(engine, locale), id)));
         return array;
     }
 
-    public JsonNode getLocations(Locale locale, int id) throws JsonException {
+    public JsonNode getLocations(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
-        locationManager().getLocationsByIdList().forEach((location) -> {
-            array.add(message(LOCATION, utilities.getLocation(location, locale), id));
-        });
+        locationManager().getLocationsByIdList()
+                .forEach(location -> array.add(message(LOCATION, utilities.getLocation(location, locale), id)));
         return message(array, id);
     }
 
@@ -446,7 +438,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * @param locale locale to throw exceptions in
      * @param id     message id set by client
      * @throws jmri.server.json.JsonException if the train cannot move to the
-     *                                            location in data.
+     *                                        location in data.
      */
     public void setTrain(String name, JsonNode data, Locale locale, int id) throws JsonException {
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(name);
@@ -473,7 +465,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
             if (reporter != null) {
                 location.setReporter(reporter);
             } else {
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", REPORTER, name), id);
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                        Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, REPORTER, name), id);
             }
         }
         location.setName(data.path(USERNAME).asText(location.getName()));
@@ -493,7 +486,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
             if (reporter != null) {
                 track.setReporter(reporter);
             } else {
-                throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", REPORTER, name), id);
+                throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                        Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, REPORTER, name), id);
             }
         }
         track.setName(data.path(USERNAME).asText(track.getName()));
@@ -505,7 +499,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
     /**
      * Set the properties in the data parameter for the given car.
      * <p>
-     * <strong>Note</strong> returns the modified car because changing the road or number of a car changes its name in the JSON representation.
+     * <strong>Note</strong> returns the modified car because changing the road
+     * or number of a car changes its name in the JSON representation.
      *
      * @param name   the operations id of the car to change
      * @param data   car data to change
@@ -521,7 +516,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
     /**
      * Set the properties in the data parameter for the given car.
      * <p>
-     * <strong>Note</strong> returns the modified car because changing the road or number of a car changes its name in the JSON representation.
+     * <strong>Note</strong> returns the modified car because changing the road
+     * or number of a car changes its name in the JSON representation.
      *
      * @param car    the car to change
      * @param data   car data to change
@@ -539,7 +535,6 @@ public class JsonOperationsHttpService extends JsonHttpService {
         car.setUtility(data.path(UTILITY).asBoolean(car.isUtility()));
         return utilities.getCar(car, result, locale);
     }
-
 
     /**
      * Set the properties in the data parameter for the given engine.
@@ -581,7 +576,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
     /**
      * Set the properties in the data parameter for the given rolling stock.
      * <p>
-     * <strong>Note</strong> returns the modified rolling stock because changing the road or number of a rolling stock changes its name in the JSON representation.
+     * <strong>Note</strong> returns the modified rolling stock because changing
+     * the road or number of a rolling stock changes its name in the JSON
+     * representation.
      *
      * @param rs     the rolling stock to change
      * @param data   rolling stock data to change
@@ -590,7 +587,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * @return the JSON representation of the rolling stock
      * @throws JsonException if unable to set location
      */
-    public ObjectNode postRollingStock(@Nonnull RollingStock rs, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode postRollingStock(@Nonnull RollingStock rs, JsonNode data, Locale locale, int id)
+            throws JsonException {
         String name = rs.getId();
         // make changes that can throw an exception first
         JsonNode node = data.path(LOCATION);
@@ -633,6 +631,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         rs.setRfid(data.path(RFID).asText(rs.getRfid()));
         rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
         rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
+        rs.setTypeName(data.path(CAR_TYPE).asText(rs.getTypeName()));
         ObjectNode result = utilities.getRollingStock(rs, locale);
         if (!rs.getId().equals(name)) {
             result.put(RENAME, name);
@@ -640,17 +639,17 @@ public class JsonOperationsHttpService extends JsonHttpService {
         return result;
     }
 
-    public void deleteCar(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
+    public void deleteCar(@Nonnull String name, @Nonnull Locale locale, int id)
             throws JsonException {
         carManager().deregister(getCarByName(name, locale, id));
     }
 
-    public void deleteEngine(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
+    public void deleteEngine(@Nonnull String name, @Nonnull Locale locale, int id)
             throws JsonException {
         engineManager().deregister(getEngineByName(name, locale, id));
     }
 
-    public void deleteLocation(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id)
+    public void deleteLocation(@Nonnull String name, @Nonnull Locale locale, int id)
             throws JsonException {
         locationManager().deregister(getLocationByName(name, locale, id));
     }
@@ -665,30 +664,33 @@ public class JsonOperationsHttpService extends JsonHttpService {
         Car car = carManager().getById(name);
         if (car == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", CAR, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, CAR, name), id);
         }
         return car;
     }
 
-    protected @Nonnull Engine getEngineByName(@Nonnull String name, @Nonnull Locale locale, int id) throws JsonException {
+    protected @Nonnull Engine getEngineByName(@Nonnull String name, @Nonnull Locale locale, int id)
+            throws JsonException {
         Engine engine = engineManager().getById(name);
         if (engine == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", ENGINE, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, ENGINE, name), id);
         }
         return engine;
     }
 
-    protected @Nonnull Location getLocationByName(@Nonnull String name, @Nonnull Locale locale, int id) throws JsonException {
+    protected @Nonnull Location getLocationByName(@Nonnull String name, @Nonnull Locale locale, int id)
+            throws JsonException {
         Location location = locationManager().getLocationById(name);
         if (location == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", LOCATION, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, LOCATION, name), id);
         }
         return location;
     }
 
-    protected @Nonnull Track getTrackByName(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale, int id) throws JsonException {
+    protected @Nonnull Track getTrackByName(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
+            int id) throws JsonException {
         if (data.path(LOCATION).isMissingNode()) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                     Bundle.getMessage(locale, "ErrorMissingAttribute", LOCATION, TRACK), id);
@@ -697,7 +699,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         Track track = location.getTrackById(name);
         if (track == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", TRACK, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, TRACK, name), id);
         }
         return track;
     }
@@ -769,7 +771,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                        Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
