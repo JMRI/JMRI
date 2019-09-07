@@ -58,7 +58,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/jogamp/joal/joal/2.3.2/joal-2.3.2-natives-windows-amd64.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/jogamp/joal/joal/2.3.2/joal-2.3.2-natives-windows-i586.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/jdesktop/beansbinding/1.2.1/beansbinding-1.2.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/pi4j/pi4j-core/1.1/pi4j-core-1.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/pi4j/pi4j-core/1.2/pi4j-core-1.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/sf/bluecove/bluecove/2.1.0/bluecove-2.1.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/java/dev/jna/jna-platform/4.4.0/jna-platform-4.4.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/java/jinput/jinput/2.0.6/jinput-2.0.6.jar" enabled="true" runInBatchMode="false"/>

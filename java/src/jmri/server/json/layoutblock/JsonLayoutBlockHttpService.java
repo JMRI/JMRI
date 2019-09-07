@@ -87,7 +87,6 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         return doPost(InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name), data, name, type, locale, id);
-
     }
 
     public JsonNode doPost(LayoutBlock layoutBlock, JsonNode data, String name, String type, Locale locale, int id) throws JsonException {
@@ -101,7 +100,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                 layoutBlock.setBlockTrackColor(color);
             }
         } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorBadPropertyValue", string, TRACK_COLOR, type), id);
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, TRACK_COLOR, type), id);
         }
         try {
             string = data.path(OCCUPIED_COLOR).asText();
@@ -110,7 +109,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                 layoutBlock.setBlockTrackColor(color);
             }
         } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorBadPropertyValue", string, OCCUPIED_COLOR, type), id);
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, OCCUPIED_COLOR, type), id);
         }
         try {
             string = data.path(EXTRA_COLOR).asText();
@@ -119,14 +118,14 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                 layoutBlock.setBlockTrackColor(color);
             }
         } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorBadPropertyValue", string, EXTRA_COLOR, type), id);
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, EXTRA_COLOR, type), id);
         }
         if (!data.path(MEMORY).isMissingNode()) {
             string = !data.path(MEMORY).isNull() ? data.path(MEMORY).asText() : null;
             if (string != null) {
                 Memory memory = InstanceManager.getDefault(MemoryManager.class).getBeanBySystemName(string);
                 if (memory == null) {
-                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", MEMORY, string), id);
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, MEMORY, string), id);
                 }
                 layoutBlock.setMemoryName(memory.getUserName());
             } else {
@@ -138,7 +137,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             if (string != null) {
                 Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBeanBySystemName(string);
                 if (sensor == null) {
-                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", SENSOR, string), id);
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, SENSOR, string), id);
                 }
                 layoutBlock.setOccupancySensorName(sensor.getUserName());
             } else {
@@ -181,14 +180,12 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
         LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(name);
         if (layoutBlock == null) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
         }
         List<String> listeners = layoutBlock.getListenerRefs();
-        if (listeners.size() > 0 && !acceptForceDeleteToken(type, name, data.path(JSON.FORCE_DELETE).asText())) {
+        if (!listeners.isEmpty() && !acceptForceDeleteToken(type, name, data.path(JSON.FORCE_DELETE).asText())) {
             ArrayNode conflicts = mapper.createArrayNode();
-            listeners.forEach((listener) -> {
-                conflicts.add(listener);
-            });
+            listeners.forEach(conflicts::add);
             throwDeleteConflictException(type, name, conflicts, locale, id);
         } else {
             InstanceManager.getDefault(LayoutBlockManager.class).deregister(layoutBlock);
@@ -211,7 +208,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                         "jmri/server/json/layoutblock/layoutBlock-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 }

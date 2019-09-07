@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = HttpServlet.class)
 public class JsonServlet extends WebSocketServlet {
 
-    private transient ObjectMapper mapper;
+    private final transient ObjectMapper mapper = new ObjectMapper();
     private final transient HashMap<String, HashSet<JsonHttpService>> services = new HashMap<>();
     private final transient JsonServerPreferences preferences = InstanceManager.getDefault(JsonServerPreferences.class);
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
@@ -66,7 +66,6 @@ public class JsonServlet extends WebSocketServlet {
     @Override
     public void init() throws ServletException {
         this.superInit();
-        this.mapper = new ObjectMapper();
         for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
             JsonHttpService service = factory.getHttpService(this.mapper);
             for (String type : factory.getTypes()) {

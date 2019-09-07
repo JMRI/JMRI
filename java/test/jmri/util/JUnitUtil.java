@@ -53,6 +53,9 @@ import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.JmriConfigurationManager;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.EditorFrameOperator;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -991,7 +994,7 @@ public class JUnitUtil {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         if (sm == null) return;
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && list.size() > 0) {
+        while (!list.isEmpty()) {
             sm.deregister(list.get(0));
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
@@ -1377,16 +1380,17 @@ public class JUnitUtil {
 
     /* Global Panel operations */
     /**
-     * Close all panels associated with the jmri.jmrit.display.EditorManager instance.
+     * Close all panels associated with the {@link EditorManager} default
+     * instance.
      */
-    public static void closeAllPanels(){
-        List<jmri.jmrit.display.Editor> l = (InstanceManager.getNullableDefault(jmri.jmrit.display.EditorManager.class)).getEditorsList();
-        for( jmri.jmrit.display.Editor e : l ){
-           jmri.jmrit.display.EditorFrameOperator efo = new jmri.jmrit.display.EditorFrameOperator(e);
-           efo.closeFrameWithConfirmations(); 
+    public static void closeAllPanels() {
+        EditorManager manager = InstanceManager.getNullableDefault(EditorManager.class);
+        if (manager != null) {
+            for (Editor e : manager.getEditorsList()) {
+                new EditorFrameOperator(e).closeFrameWithConfirmations();
+            }
         }
     }
-
 
     /* GraphicsEnvironment utility methods */
 

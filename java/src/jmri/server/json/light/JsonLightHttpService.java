@@ -85,7 +85,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
                         "jmri/server/json/light/light-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -95,7 +95,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    protected ProvidingManager<Light> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Light> getManager() {
         return InstanceManager.getDefault(LightManager.class);
     }
 }

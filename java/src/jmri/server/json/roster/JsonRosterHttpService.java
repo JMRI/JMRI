@@ -68,7 +68,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_GROUPS:
                 return this.getRosterGroups(locale, id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -84,7 +84,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_GROUPS:
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PostNotAllowed", type), id);
     }
@@ -99,7 +99,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_GROUPS:
                 return this.getRosterGroups(locale, id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -140,7 +140,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         try {
             return this.getRosterEntry(locale, Roster.getDefault().getEntryForId(name), id);
         } catch (NullPointerException ex) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_ENTRY, name), id);
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
         }
     }
 
@@ -161,7 +161,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     public JsonNode getRosterEntry(Locale locale, @Nonnull RosterEntry entry, int id) throws JsonException {
         String entryPath;
         try {
-            entryPath = "/" + JsonRoster.ROSTER + "/" + URLEncoder.encode(entry.getId(), StandardCharsets.UTF_8.toString()) + "/";
+            entryPath = String.format("/%s/%s/", JsonRoster.ROSTER, URLEncoder.encode(entry.getId(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException ex) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnencodeable", JsonRoster.ROSTER_ENTRY, entry.getId(), NAME), id);
         }
@@ -203,16 +203,14 @@ public class JsonRosterHttpService extends JsonHttpService {
             labels.add(label);
         }
         ArrayNode attributes = data.putArray(JsonRoster.ATTRIBUTES);
-        entry.getAttributes().stream().forEach((name) -> {
+        entry.getAttributes().stream().forEach(name -> {
             ObjectNode attribute = mapper.createObjectNode();
             attribute.put(NAME, name);
             attribute.put(VALUE, entry.getAttribute(name));
             attributes.add(attribute);
         });
         ArrayNode rga = data.putArray(JsonRoster.ROSTER_GROUPS);
-        entry.getGroups().stream().forEach((group) -> {
-            rga.add(group.getName());
-        });
+        entry.getGroups().stream().forEach(group -> rga.add(group.getName()));
         return message(JsonRoster.ROSTER_ENTRY, data, id);
     }
 
@@ -233,7 +231,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             data.put(LENGTH, size);
             return message(JsonRoster.ROSTER_GROUP, data, id);
         } else {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_GROUP, name), id);
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_GROUP, name), id);
         }
     }
 
@@ -255,7 +253,7 @@ public class JsonRosterHttpService extends JsonHttpService {
                         "jmri/server/json/roster/rosterGroup-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -275,12 +273,12 @@ public class JsonRosterHttpService extends JsonHttpService {
         try {
             entry = Roster.getDefault().getEntryForId(name);
         } catch (NullPointerException ex) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_ENTRY, name), id);
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
         }
         if (data.path(JsonRoster.ATTRIBUTES).isArray()) {
             List<String> toKeep = new ArrayList<>();
             List<String> toRemove = new ArrayList<>();
-            data.path(JsonRoster.ATTRIBUTES).forEach((attribute) -> {
+            data.path(JsonRoster.ATTRIBUTES).forEach(attribute -> {
                 String key = attribute.path(NAME).asText();
                 String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
                 toKeep.add(key);
@@ -288,18 +286,14 @@ public class JsonRosterHttpService extends JsonHttpService {
             });
             entry.getAttributes()
                     .stream()
-                    .filter((key) -> (!toKeep.contains(key) && !key.startsWith(Roster.ROSTER_GROUP_PREFIX)))
-                    .forEachOrdered((key) -> {
-                        toRemove.add(key);
-                    });
-            toRemove.forEach((key) -> {
-                entry.deleteAttribute(key);
-            });
+                    .filter(key -> (!toKeep.contains(key) && !key.startsWith(Roster.ROSTER_GROUP_PREFIX)))
+                    .forEachOrdered(toRemove::add);
+            toRemove.forEach(entry::deleteAttribute);
         }
         if (data.path(JsonRoster.ROSTER_GROUPS).isArray()) {
             List<String> toKeep = new ArrayList<>();
             List<String> toRemove = new ArrayList<>();
-            data.path(JsonRoster.ROSTER_GROUPS).forEach((attribute) -> {
+            data.path(JsonRoster.ROSTER_GROUPS).forEach(attribute -> {
                 String key = attribute.asText();
                 String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
                 toKeep.add(key);
@@ -307,16 +301,12 @@ public class JsonRosterHttpService extends JsonHttpService {
             });
             entry.getGroups()
                     .stream()
-                    .filter((key) -> (!toKeep.contains(Roster.ROSTER_GROUP_PREFIX + key)))
-                    .forEachOrdered((key) -> {
-                        toRemove.add(Roster.ROSTER_GROUP_PREFIX + key);
-                    });
-            toRemove.forEach((key) -> {
-                entry.deleteAttribute(key);
-            });
+                    .filter(key -> (!toKeep.contains(Roster.ROSTER_GROUP_PREFIX + key)))
+                    .forEachOrdered(key -> toRemove.add(Roster.ROSTER_GROUP_PREFIX + key));
+            toRemove.forEach(entry::deleteAttribute);
         }
         if (data.path(FUNCTION_KEYS).isArray()) {
-            data.path(FUNCTION_KEYS).forEach((functionKey) -> {
+            data.path(FUNCTION_KEYS).forEach(functionKey -> {
                 int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length() - 1));
                 entry.setFunctionLabel(function, functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
                 entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());

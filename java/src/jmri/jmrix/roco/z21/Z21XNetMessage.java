@@ -1,6 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import java.io.Serializable;
 import jmri.SpeedStepMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
@@ -16,8 +15,6 @@ import jmri.jmrix.lenz.XNetMessage;
  * @author	Paul Bender Copyright (C) 2003-2010
  */
 public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
-
-//    static private int _nRetries = 5;
 
     /**
      * Constructor, just pass on to the supperclass.
