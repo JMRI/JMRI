@@ -74,7 +74,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
         RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
         //RaspberryPiLightManager sm = new RaspberryPiLightManager(m.getSystemPrefix());
         //m.setTurnoutManager(sm);
-        //Assert.assertSame("Light Manager",sm,m.getLightManager());
+        //Assert.assertSame("Light Manager", sm, m.getLightManager());
         Assert.assertNull("Light Manager", m.getLightManager());
     }
 

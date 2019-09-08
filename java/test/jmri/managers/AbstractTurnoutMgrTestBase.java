@@ -137,7 +137,6 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
          Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
     }
 
-
     /**
      * Number of turnout to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
@@ -149,4 +148,5 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     protected int getNumToTest2() {
         return 7;
     }
+
 }

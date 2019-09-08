@@ -60,9 +60,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(audio);
         AudioManager am = (AudioManager) o;
         if (am != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = am.getSystemNameAddedOrderList().iterator();
+            java.util.Iterator<Audio> iter
+                    = am.getNamedBeanSet().iterator();
 
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) {
@@ -81,12 +80,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            List<String> t = am.getSystemNameAddedOrderList();
-            for (String sname : t) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Check if " + sname + " is a VSD object");
-                }
+            for (Audio aud : am.getNamedBeanSet()) {
+                String sname = aud.getSystemName();
                 if (sname.length() >= 8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
                     log.debug("...yes");
                     vsdObjectCount++;
@@ -115,24 +110,12 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
             // store the audios
             while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    continue;
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("system name is " + sname);
-                }
+                Audio a = iter.next();
+                String sname = a.getSystemName();
+                log.debug("system name is {}", sname);
 
                 if (sname.length() >= 8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Skipping storage of VSD object " + sname);
-                    }
-                    continue;
-                }
-
-                Audio a = am.getBySystemName(sname);
-                if (a == null) {
+                    log.debug("Skipping storage of VSD object {}", sname);
                     continue;
                 }
 
