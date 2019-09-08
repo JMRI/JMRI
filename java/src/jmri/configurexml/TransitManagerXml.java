@@ -58,9 +58,9 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 // As a work-around for backward compatibility, store systemName and username as attribute.
                 // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 elem.setAttribute("systemName", tstName);
-                String uname = transit.getUserName();
-                if ((uname != null) && !uName.isEmpty()) {
-                    elem.setAttribute("userName", uname);
+                String uName = transit.getUserName();
+                if ((uName != null) && !uName.isEmpty()) {
+                    elem.setAttribute("userName", uName);
                 }
 
                 // store common part
