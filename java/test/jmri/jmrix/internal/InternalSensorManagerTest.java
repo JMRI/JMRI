@@ -51,11 +51,9 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
         Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
         Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
 
         t = l.provideSensor("IS:XYZ");
         Assert.assertEquals(1, l.getObjectCount());
-        Assert.assertEquals(1, l.getSystemNameAddedOrderList().size());
     }
 
     @Test
@@ -142,13 +140,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
         
-        List<String> orderedList = l.getSystemNameAddedOrderList();
         List<String> sortedList = l.getSystemNameList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-
-        Assert.assertEquals("ordered list length", 2, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
 
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -163,12 +156,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
 
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
-
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
         Assert.assertEquals("sorted list 2nd", "IS4", sortedList.get(1));
@@ -181,15 +168,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("bean set 4th", s4, iter.next());
 
         // update and test update
-        orderedList = l.getSystemNameAddedOrderList();
         sortedList = l.getSystemNameList();
         beanSet = l.getNamedBeanSet();
-
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
 
         Assert.assertEquals("sorted list length", 4, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
