@@ -1,4 +1,8 @@
 
     <!-- contains new warnings for the release under development -->
 
-    <li>None yet</li>
+    <li>Panel file NamedBean items such as Turnouts, Sensors, etc are now written to panel
+        files in order by their Manager system prefix and system name.
+        Previously, they had (roughly) been written in the order they'd be 
+        read from the earlier file(s). This will result in a big change to the order
+        the first time a file is re-written, but after that it should be much more stable.</li>

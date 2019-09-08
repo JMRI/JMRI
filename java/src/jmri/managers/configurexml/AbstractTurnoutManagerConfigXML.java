@@ -48,9 +48,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
             Element opElem = tomx.store(InstanceManager.getDefault(TurnoutOperationManager.class));
             turnouts.addContent(opElem);
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
+            java.util.Iterator<Turnout> iter
+                    = tm.getNamedBeanSet().iterator();
 
             // don't return an element if there are not turnouts to include
             if (!iter.hasNext()) {
@@ -64,9 +63,9 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
             // store the turnouts
             while (iter.hasNext()) {
-                String sname = iter.next();
+                Turnout t = iter.next();
+                String sname = t.getSystemName();
                 log.debug("system name is " + sname);
-                Turnout t = tm.getBySystemName(sname);
                 Element elem = new Element("turnout");
                 elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store turnout " + sname);

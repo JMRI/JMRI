@@ -37,9 +37,8 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         setStoreElementClass(reporters);
         ReporterManager tm = (ReporterManager) o;
         if (tm != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
+            java.util.Iterator<Reporter> iter
+                    = tm.getNamedBeanSet().iterator();
 
             // don't return an element if there are not reporters to include
             if (!iter.hasNext()) {
@@ -48,13 +47,9 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
 
             // store the reporters
             while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    break;
-                }
+                Reporter r = iter.next();
+                String sname = r.getSystemName();
                 log.debug("system name is " + sname);
-                Reporter r = tm.getBySystemName(sname);
                 Element elem = new Element("reporter");
                 elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
