@@ -137,6 +137,40 @@ public class ArchitectureCheck {
         thisRule.check(importedAllClasses);      
     }
 
+    /**
+     * Check that *Bundle classes inherit from their parent.
+     * (not done yet, not sure how to do it)
+     */
+    @Test
+    public void checkBundleInheritance() {
+        ArchRule thisRule = classes()
+            .that().areAssignableTo(jmri.Bundle.class)
+            .should().haveSimpleNameEndingWith("Bundle");
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Check that *Bundle classes are named Bundle
+     */
+    @Test
+    public void checkBundleNames() {
+        ArchRule thisRule = classes()
+            .that().areAssignableTo(jmri.Bundle.class)
+            .should().haveSimpleName("Bundle");
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Check that classes named *Bundle are Bundles
+     */
+    @Test
+    public void checkBundleNamesOnlyOnBundleClass() {
+        ArchRule thisRule = classes()
+            .that().haveSimpleNameEndingWith("Bundle")
+            .should().beAssignableTo(jmri.Bundle.class);
+        thisRule.check(importedAllClasses);      
+    }
+
     JavaClasses importedAllClasses; // inclusive contents of all packages compiled from jmri/src
     
     @Before
