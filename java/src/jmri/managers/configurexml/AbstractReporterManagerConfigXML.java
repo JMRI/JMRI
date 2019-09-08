@@ -2,7 +2,6 @@ package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
-
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -57,7 +56,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 // store common parts
                 storeCommon(r, elem);
 
-                log.debug("store Reporter {}", r);
+                log.debug("store Reporter {}", rName);
                 reporters.addContent(elem);
             }
         }

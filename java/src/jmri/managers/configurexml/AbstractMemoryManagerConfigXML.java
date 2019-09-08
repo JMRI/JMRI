@@ -2,11 +2,9 @@ package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
-
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.configurexml.BlockManagerXml;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;

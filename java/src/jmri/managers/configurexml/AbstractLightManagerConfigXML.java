@@ -3,7 +3,6 @@ package jmri.managers.configurexml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
-
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;

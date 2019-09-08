@@ -63,12 +63,6 @@
     <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT101</systemName>
       <comment>Input for IR1, don't change</comment>
-      <properties>
-        <property>
-          <key>test</key>
-          <value class="java.lang.Integer">12</value>
-        </property>
-      </properties>
     </turnout>
   </turnouts>
   <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
@@ -121,19 +115,11 @@
       <systemName>IB1</systemName>
       <userName>Block 1</userName>
     </block>
-    <block systemName="IB2">
-      <systemName>IB2</systemName>
-    </block>
     <block systemName="IB1" length="25.4" curve="0">
       <systemName>IB1</systemName>
       <userName>Block 1</userName>
       <comment>Length 1</comment>
       <permissive>no</permissive>
-    </block>
-    <block systemName="IB2" length="15.8" curve="0">
-      <systemName>IB2</systemName>
-      <comment>Length 900</comment>
-      <permissive>yes</permissive>
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
@@ -173,19 +159,53 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:43:47 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest.xml</filename>
+      <date>Sat Sep 07 07:17:16 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 22:01:23 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 22:01:23 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Mar 18 22:01:23 PDT 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:43:47 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest.xml</filename>
+      <date>Sat Sep 07 07:17:16 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 22:01:23 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 22:01:23 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Mar 18 22:01:23 PDT 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Sep 06 22:43:47 PDT 2019</date>
+      <date>Sat Sep 07 07:17:16 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+jake+20190906T1723Z+R38a2975465 on Fri Sep 06 22:43:47 PDT 2019-->
+  <!--Written by JMRI version 4.17.4ish+jake+20190907T0616Z+R38a2975465 on Sat Sep 07 07:17:16 PDT 2019-->
 </layout-config>

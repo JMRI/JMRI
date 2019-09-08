@@ -191,7 +191,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     elem.addContent(rsElem);
                 }
 
-                log.debug("store route {}", rName);
+                log.debug("store Route {}", rName);
                 routes.addContent(elem);
             }
         }

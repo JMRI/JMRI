@@ -2,7 +2,6 @@ package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
-
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
@@ -70,7 +69,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
                 Element elem = new Element("turnout");
                 elem.addContent(new Element("systemName").addContent(tName));
-                log.debug("store turnout {}", tName);
+                log.debug("store Turnout {}", tName);
 
                 storeCommon(t, elem);
 

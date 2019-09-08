@@ -2,7 +2,6 @@ package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
-
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -70,7 +69,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             // store common part
             storeCommon(s, elem);
 
-            log.debug("store sensor {}", s);
+            log.debug("store Sensor {}", sName);
             if (s.getUseDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
             } else {

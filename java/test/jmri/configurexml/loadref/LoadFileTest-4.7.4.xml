@@ -173,19 +173,53 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:43:47 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest.xml</filename>
+      <date>Fri Sep 06 22:34:00 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 20:20:20 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 20:20:20 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Mar 18 20:20:20 PDT 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Fri Sep 06 22:43:47 PDT 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest.xml</filename>
+      <date>Fri Sep 06 22:34:00 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 20:20:20 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 20:20:20 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadFileTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Mar 18 20:20:20 PDT 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Sep 06 22:43:47 PDT 2019</date>
+      <date>Fri Sep 06 22:34:00 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+jake+20190906T1723Z+R38a2975465 on Fri Sep 06 22:43:47 PDT 2019-->
+  <!--Written by JMRI version 4.17.4ish+jake+20190906T1723Z+R38a2975465 on Fri Sep 06 22:34:00 PDT 2019-->
 </layout-config>
