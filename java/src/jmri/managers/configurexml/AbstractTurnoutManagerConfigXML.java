@@ -225,7 +225,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             Turnout t = tm.getBySystemName(sysName);
             if (t == null) {
                 t = tm.newTurnout(sysName, userName);
-                //Nothing is logged in the console window as the newTurnoutFunction already does this.
+                // nothing is logged in the console window as the newTurnoutFunction already does this.
             } else if (userName != null) {
                 t.setUserName(userName);
             }

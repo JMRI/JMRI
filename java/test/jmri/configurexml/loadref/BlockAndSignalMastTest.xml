@@ -459,7 +459,6 @@
       <path todir="64" fromdir="128" block="IB11" />
     </block>
   </blocks>
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml" blockrouting="yes">
     <layoutblock systemName="ILB1" userName="AUTOBLK:1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white">
       <systemName>ILB1</systemName>
@@ -570,7 +569,6 @@
       <userName>AUTOBLK:9</userName>
     </layoutblock>
   </layoutblocks>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
     <signalmastlogic source="Mast full 5">

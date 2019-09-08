@@ -104,8 +104,8 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                         }
                         elem.addContent(tsElem);
                     }
-                    transits.addContent(elem);
                 }
+                transits.addContent(elem);
             }
         }
         return (transits);

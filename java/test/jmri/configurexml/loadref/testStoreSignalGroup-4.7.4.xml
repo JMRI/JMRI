@@ -3,7 +3,7 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>7</minor>
+    <minor>17</minor>
     <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
@@ -14,7 +14,7 @@
     </sensor>
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="8:43 AM">
+    <memory value="11:27 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -39,7 +39,24 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Mar 13 00:40:48 PDT 2017" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
-  <filehistory/>
-  <!--Written by JMRI version 4.7.4ish+jake+20170508T0603Z+R3cb853fe70 on Sun May 07 23:03:34 PDT 2017 $Id$-->
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Mar 13 08:40:48 CET 2017" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Sep 08 23:26:49 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Sep 08 23:27:20 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/testStoreSignalGroup-4.7.4.xml</filename>
+      <filehistory />
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Sep 08 23:27:29 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T2126Z+R59b5cbdf37 on Sun Sep 08 23:27:29 CEST 2019-->
 </layout-config>

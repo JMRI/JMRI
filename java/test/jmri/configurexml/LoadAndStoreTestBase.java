@@ -180,7 +180,7 @@ public class LoadAndStoreTestBase {
             }
 
             if (!match) {
-                // if ether line contains a fontname attribute
+                // if either line contains a fontname attribute
                 String fontname_regexe = "( fontname=\"[^\"]*\")";
                 String[] splits1 = line1.split(fontname_regexe);
                 if (splits1.length == 2) {  // (yes) remove it
