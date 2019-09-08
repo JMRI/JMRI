@@ -336,7 +336,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
      * Save a new backup with rotation
      */
     private void saveBackup() {
-        if (!nodeOfInterest.getNodeBackupFile().doStore(true)){
+        if (!nodeOfInterest.getNodeBackupFile().doStore(true, nodeOfInterest.hasLoadErrors())){
             log.error("Issue saving Backup File");
         }
         cbusNodeBackupTableModel.fireTableDataChanged();
@@ -349,7 +349,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
     private void deleteBackup(int bup){
         log.debug("Manually deleting {}",nodeOfInterest.getNodeBackupFile().getBackups().get(bup));
         nodeOfInterest.getNodeBackupFile().getBackups().remove(bup);
-        if (!nodeOfInterest.getNodeBackupFile().doStore(false)){
+        if (!nodeOfInterest.getNodeBackupFile().doStore(false, nodeOfInterest.hasLoadErrors())){
             log.error("Issue saving Backup File following remove single entry");
         }
         cbusNodeBackupTableModel.fireTableDataChanged();
@@ -559,7 +559,7 @@ public class CbusNodeBackupsPane extends JPanel implements TableModelListener {
         public void setValueAt(Object value, int row, int col) {
             if (col == COMMENT_COLUMN) {
                 nodeOfInterest.getNodeBackupFile().getBackups().get(row).setBackupComment(String.valueOf(value));
-                if(!nodeOfInterest.getNodeBackupFile().doStore(false)){
+                if(!nodeOfInterest.getNodeBackupFile().doStore(false, nodeOfInterest.hasLoadErrors())){
                     log.error("Unable to save Backup User Comment to File");
                 }
             }
