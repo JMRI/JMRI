@@ -67,6 +67,8 @@ import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
+import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
+import jmri.jmrit.logixng.digital.actions.ActionThrottle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.FileUtil;
@@ -586,12 +588,26 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     socketTurnout2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
                     socketSecondMany.getChild(index++).connect(socketTurnout2);
                     
+                    AnalogExpressionConstant locoConstant = new AnalogExpressionConstant(getSystemNamePrefix()+"AE:00001");
+                    locoConstant.setValue(10);
+                    MaleSocket socketLocoConstant = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(locoConstant);
+                    
+                    AnalogExpressionConstant speedConstant = new AnalogExpressionConstant(getSystemNamePrefix()+"AE:00002");
+                    speedConstant.setValue(0.5);
+                    MaleSocket socketSpeedConstant = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(speedConstant);
+                    
+                    ActionThrottle actionThrottle = new ActionThrottle(getSystemNamePrefix()+"DA:10023", "My turnout action");
+                    actionThrottle.getChild(0).connect(socketLocoConstant);
+                    actionThrottle.getChild(1).connect(socketSpeedConstant);
+                    MaleSocket socketThrottle = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle);
+                    socketSecondMany.getChild(index++).connect(socketThrottle);
+                    
                     Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
                     Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
                     Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
                     Memory memory4 = InstanceManager.getDefault(MemoryManager.class).provide("IM4");
                     
-                    AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory(getSystemNamePrefix()+"AE:00001");
+                    AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory(getSystemNamePrefix()+"AE:00003");
                     analogExpressionMemory.setMemory(memory1);
                     MaleSocket socketAnalogExpressionMemory = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
 
@@ -605,7 +621,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
                     socketSecondMany.getChild(index++).connect(socket);
                     
-                    analogExpressionMemory = new AnalogExpressionMemory(getSystemNamePrefix()+"AE:00002", "My expression");
+                    analogExpressionMemory = new AnalogExpressionMemory(getSystemNamePrefix()+"AE:00004", "My expression");
                     socketAnalogExpressionMemory = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
 
                     analogActionMemory = new AnalogActionMemory(getSystemNamePrefix()+"AA:00002", "My action");

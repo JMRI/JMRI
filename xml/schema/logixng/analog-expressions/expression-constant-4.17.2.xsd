@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!-- This file contains definitions for LogixNG AnalogExpressions.          -->
+<!-- This file contains definitions for LogixNG                             -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,29 +25,27 @@
             "
         >
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-constant-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-memory-4.17.2.xsd"/>
-
-    <xs:complexType name="LogixNG_AnalogExpressionManagerType">
+    <xs:complexType name="LogixNG_AnalogExpression_ConstantType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a AnalogExpressionManager implementation.
+          Define the XML stucture for storing the contents of a AnalogExpressionMemory class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogExpressionManagerXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.analog.expressions.configurexml.ExpressionConstantXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
         
-        <!-- Permit any of these tags in any order in any number -->
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:sequence>
 
-            <xs:element name="analog-expression-constant"  type="LogixNG_AnalogExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="analog-expression-memory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="value" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
 
-          </xs:choice>
-      </xs:sequence>
-      <xs:attribute name="class" type="classType" use="required"/>
+            </xs:sequence>
+            
+			<xs:attribute name="class" type="classType" use="required"/>
+        
     </xs:complexType>
 
 </xs:schema>

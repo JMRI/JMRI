@@ -58,9 +58,6 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
             h.setValue(Double.parseDouble(valueName.getTextTrim()));
         }
 
-        // this.checkedNamedBeanReference()
-        // <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
-
         InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(h);
         return true;
     }

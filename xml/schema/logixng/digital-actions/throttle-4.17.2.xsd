@@ -25,7 +25,7 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_IfThenType">
+    <xs:complexType name="LogixNG_DigitalAction_ThrottleType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of a ActionHoldAnything class.
@@ -39,7 +39,7 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="ifSocket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="locoAddressSocket" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -47,7 +47,15 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="thenSocket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="locoSpeedSocket" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="locoDirectionSocket" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -56,14 +64,6 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="type" use="required">
-              <xs:simpleType>
-                <xs:restriction base="xs:token">
-                  <xs:enumeration value="TRIGGER_ACTION"/>
-                  <xs:enumeration value="CONTINOUS_ACTION"/>
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:attribute>
             <xs:attribute name="enabled" type="yesNoType" />
             <xs:attribute name="class" type="classType" use="required"/>
         

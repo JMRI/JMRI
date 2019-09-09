@@ -62,7 +62,7 @@
     <memory>
       <systemName>IM4</systemName>
     </memory>
-    <memory value="2:59 fm">
+    <memory value="8:42 fm">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -130,7 +130,7 @@
     <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
       <systemName>IQDA:0002</systemName>
     </hold-anything>
-    <if-then class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+    <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:0003</systemName>
       <ifSocket>
         <socketName>E</socketName>
@@ -138,7 +138,10 @@
       <thenSocket>
         <socketName>A1</socketName>
       </thenSocket>
-    </if-then>
+      <elseSocket>
+        <socketName>A1</socketName>
+      </elseSocket>
+    </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
       <systemName>IQDA:0004</systemName>
       <actions>
@@ -158,7 +161,7 @@
     <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
       <systemName>IQDA:0005</systemName>
     </hold-anything>
-    <if-then class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+    <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:0006</systemName>
       <ifSocket>
         <socketName>E</socketName>
@@ -166,7 +169,10 @@
       <thenSocket>
         <socketName>A1</socketName>
       </thenSocket>
-    </if-then>
+      <elseSocket>
+        <socketName>A1</socketName>
+      </elseSocket>
+    </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
       <systemName>IQDA:0007</systemName>
       <actions>
@@ -186,7 +192,7 @@
     <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
       <systemName>IQDA:0008</systemName>
     </hold-anything>
-    <if-then class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+    <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:0009</systemName>
       <ifSocket>
         <socketName>E</socketName>
@@ -196,7 +202,10 @@
         <socketName>A1</socketName>
         <systemName>IQDA:00010</systemName>
       </thenSocket>
-    </if-then>
+      <elseSocket>
+        <socketName>A1</socketName>
+      </elseSocket>
+    </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
       <systemName>IQDA:00010</systemName>
       <actions>
@@ -254,22 +263,26 @@
         </socket>
         <socket>
           <socketName>A14</socketName>
-          <systemName>IQDA:00101</systemName>
+          <systemName>IQDA:10023</systemName>
         </socket>
         <socket>
           <socketName>A15</socketName>
-          <systemName>IQDA:00102</systemName>
+          <systemName>IQDA:00101</systemName>
         </socket>
         <socket>
           <socketName>A16</socketName>
-          <systemName>IQDA:00103</systemName>
+          <systemName>IQDA:00102</systemName>
         </socket>
         <socket>
           <socketName>A17</socketName>
-          <systemName>IQDA:00104</systemName>
+          <systemName>IQDA:00103</systemName>
         </socket>
         <socket>
           <socketName>A18</socketName>
+          <systemName>IQDA:00104</systemName>
+        </socket>
+        <socket>
+          <socketName>A19</socketName>
         </socket>
       </actions>
     </many>
@@ -277,7 +290,7 @@
       <systemName>IQDA:00011</systemName>
       <userName>My hold anything</userName>
     </hold-anything>
-    <if-then class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+    <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:00012</systemName>
       <userName>My if then</userName>
       <ifSocket>
@@ -286,7 +299,10 @@
       <thenSocket>
         <socketName>A1</socketName>
       </thenSocket>
-    </if-then>
+      <elseSocket>
+        <socketName>A1</socketName>
+      </elseSocket>
+    </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
       <systemName>IQDA:00013</systemName>
       <userName>My many</userName>
@@ -329,19 +345,18 @@
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:00023</systemName>
-      <userName>My turnout action</userName>
       <turnout>IT2_Daniel</turnout>
       <turnoutState>THROWN</turnoutState>
     </action-turnout>
     <do-analog-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoAnalogActionXml">
       <systemName>IQDA:00101</systemName>
       <userName>My do analog action</userName>
-      <expressionSystemName>IQAE:00001</expressionSystemName>
+      <expressionSystemName>IQAE:00003</expressionSystemName>
       <actionSystemName>IQAA:00001</actionSystemName>
     </do-analog-action>
     <do-analog-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoAnalogActionXml">
       <systemName>IQDA:00102</systemName>
-      <expressionSystemName>IQAE:00002</expressionSystemName>
+      <expressionSystemName>IQAE:00004</expressionSystemName>
       <actionSystemName>IQAA:00002</actionSystemName>
     </do-analog-action>
     <do-string-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoStringActionXml">
@@ -361,6 +376,21 @@
       <light>IL2_Daniel</light>
       <lightState>ON</lightState>
     </action-light>
+    <throttle class="jmri.jmrit.logixng.digital.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:10023</systemName>
+      <userName>My turnout action</userName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:00001</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:00002</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+      </locoDirectionSocket>
+    </throttle>
   </logixngDigitalActions>
   <logixngDigitalExpressions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalExpressionManagerXml">
     <or class="jmri.jmrit.logixng.digital.expressions.configurexml.OrXml">
@@ -684,12 +714,20 @@
     </expression-turnout>
   </logixngDigitalExpressions>
   <logixngAnalogExpressions class="jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogExpressionManagerXml">
-    <analog-expression-memory class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionMemoryXml">
+    <analog-expression-constant class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionConstantXml">
       <systemName>IQAE:00001</systemName>
+      <value>10.0</value>
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:00002</systemName>
+      <value>0.5</value>
+    </analog-expression-constant>
+    <analog-expression-memory class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:00003</systemName>
       <memory>IM1</memory>
     </analog-expression-memory>
     <analog-expression-memory class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionMemoryXml">
-      <systemName>IQAE:00002</systemName>
+      <systemName>IQAE:00004</systemName>
       <userName>My expression</userName>
     </analog-expression-memory>
   </logixngAnalogExpressions>
@@ -723,13 +761,13 @@
       <userName>My action</userName>
     </string-action-memory>
   </logixngStringActions>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Sep 08 02:59:26 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Sep 09 08:42:33 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sun Sep 08 02:59:26 CEST 2019</date>
+      <date>Mon Sep 09 08:42:33 CEST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+daniel+20190908T0057Z on Sun Sep 08 02:59:26 CEST 2019-->
+  <!--Written by JMRI version 4.17.4ish+daniel+20190909T0642Z on Mon Sep 09 08:42:33 CEST 2019-->
 </layout-config>

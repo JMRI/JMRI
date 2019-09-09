@@ -230,6 +230,12 @@ public class ActionThrottle extends AbstractDigitalAction
             case 0:
                 return _locoAddressSocket;
                 
+            case 1:
+                return _locoSpeedSocket;
+                
+            case 2:
+                return _locoDirectionSocket;
+                
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -277,16 +283,40 @@ public class ActionThrottle extends AbstractDigitalAction
         return Bundle.getMessage(locale, "Throttle_Long", _locoAddressSocket.getName(), _delay);
     }
 
-    public FemaleAnalogExpressionSocket getThenActionSocket() {
+    public FemaleAnalogExpressionSocket getLocoAddressSocket() {
         return _locoAddressSocket;
     }
 
-    public String getTimerActionSocketSystemName() {
+    public String getLocoAddressSocketSystemName() {
         return _locoAddressSocketSystemName;
     }
 
-    public void setTimerActionSocketSystemName(String systemName) {
+    public void setLocoAddressSocketSystemName(String systemName) {
         _locoAddressSocketSystemName = systemName;
+    }
+
+    public FemaleAnalogExpressionSocket getLocoSpeedSocket() {
+        return _locoSpeedSocket;
+    }
+
+    public String getLocoSpeedSocketSystemName() {
+        return _locoSpeedSocketSystemName;
+    }
+
+    public void setLocoSpeedSocketSystemName(String systemName) {
+        _locoSpeedSocketSystemName = systemName;
+    }
+
+    public FemaleDigitalExpressionSocket getLocoDirectionSocket() {
+        return _locoDirectionSocket;
+    }
+
+    public String getLocoDirectionSocketSystemName() {
+        return _locoDirectionSocketSystemName;
+    }
+
+    public void setLocoDirectionSocketSystemName(String systemName) {
+        _locoDirectionSocketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
@@ -301,7 +331,7 @@ public class ActionThrottle extends AbstractDigitalAction
                 _locoAddressSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
+                            InstanceManager.getDefault(AnalogExpressionManager.class)
                                     .getBeanBySystemName(socketSystemName);
                     _locoAddressSocket.disconnect();
                     if (maleSocket != null) {
@@ -323,7 +353,7 @@ public class ActionThrottle extends AbstractDigitalAction
                 _locoSpeedSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
+                            InstanceManager.getDefault(AnalogExpressionManager.class)
                                     .getBeanBySystemName(socketSystemName);
                     _locoSpeedSocket.disconnect();
                     if (maleSocket != null) {
@@ -345,7 +375,7 @@ public class ActionThrottle extends AbstractDigitalAction
                 _locoDirectionSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
                                     .getBeanBySystemName(socketSystemName);
                     _locoDirectionSocket.disconnect();
                     if (maleSocket != null) {
@@ -379,8 +409,10 @@ public class ActionThrottle extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        InstanceManager.getDefault(ThrottleManager.class)
-                .releaseThrottle(_throttle, _throttleListener);
+        if (_throttle != null) {
+            InstanceManager.getDefault(ThrottleManager.class)
+                    .releaseThrottle(_throttle, _throttleListener);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(ActionThrottle.class);
