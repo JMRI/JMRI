@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.analog.implementation;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -90,12 +91,12 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public String getShortDescription() {
+        public String getShortDescription(Locale locale) {
             return "My short description";
         }
 
         @Override
-        public String getLongDescription() {
+        public String getLongDescription(Locale locale) {
             return "My long description";
         }
 

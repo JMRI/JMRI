@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -8,7 +9,6 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
@@ -57,14 +57,14 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DefaultFemaleDigitalExpressionSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalExpressionSocket_Short");
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DefaultFemaleDigitalExpressionSocket_Long", getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalExpressionSocket_Long", getName());
     }
 
     /** {@inheritDoc} */

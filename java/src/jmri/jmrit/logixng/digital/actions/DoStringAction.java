@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -132,13 +133,13 @@ public class DoStringAction
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DoStringAction_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DoStringAction_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DoStringAction_Long", _stringExpressionSocket.getName(), _stringActionSocket.getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DoStringAction_Long", _stringExpressionSocket.getName(), _stringActionSocket.getName());
     }
 
     public FemaleStringActionSocket getStringActionSocket() {

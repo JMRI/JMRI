@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -56,13 +57,13 @@ public final class DefaultFemaleDigitalActionSocket
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DefaultFemaleDigitalActionSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalActionSocket_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DefaultFemaleDigitalActionSocket_Long", getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalActionSocket_Long", getName());
     }
 
     /** {@inheritDoc} */

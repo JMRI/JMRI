@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -174,19 +175,19 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Turnout_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Turnout_Short");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         String turnoutName;
         if (_turnoutHandle != null) {
             turnoutName = _turnoutHandle.getBean().getDisplayName();
         } else {
-            turnoutName = Bundle.getMessage("BeanNotSelected");
+            turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage("Turnout_Long", turnoutName, _is_IsNot.toString(), _turnoutState._text);
+        return Bundle.getMessage(locale, "Turnout_Long", turnoutName, _is_IsNot.toString(), _turnoutState._text);
     }
     
     /** {@inheritDoc} */

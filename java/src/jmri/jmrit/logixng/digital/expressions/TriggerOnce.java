@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -136,13 +137,13 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("TriggerOnce_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "TriggerOnce_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("TriggerOnce_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "TriggerOnce_Long");
     }
 
     public String getChildSocketSystemName() {

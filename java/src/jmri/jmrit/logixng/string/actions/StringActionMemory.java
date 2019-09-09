@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.string.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -127,18 +128,18 @@ public class StringActionMemory extends AbstractStringAction
 
     /** {@inheritDoc} */
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
-            return Bundle.getMessage("StringActionMemory1", _memoryHandle.getBean().getDisplayName());
+            return Bundle.getMessage(locale, "StringActionMemory1", _memoryHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage("StringActionMemory1", "none");
+            return Bundle.getMessage(locale, "StringActionMemory1", "none");
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription() {
-        return getShortDescription();
+    public String getLongDescription(Locale locale) {
+        return getShortDescription(locale);
     }
 
     /** {@inheritDoc} */

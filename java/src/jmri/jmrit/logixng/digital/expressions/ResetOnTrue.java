@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -145,13 +146,13 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("ResetOnTrue_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ResetOnTrue_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("ResetOnTrue_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ResetOnTrue_Long");
     }
 
     @Override

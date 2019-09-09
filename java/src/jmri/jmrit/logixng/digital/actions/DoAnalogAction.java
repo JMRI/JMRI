@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
@@ -132,13 +133,13 @@ public class DoAnalogAction
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DoAnalogAction_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DoAnalogAction_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DoAnalogAction_Long", _analogExpressionSocket.getName(), _analogActionSocket.getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DoAnalogAction_Long", _analogExpressionSocket.getName(), _analogActionSocket.getName());
     }
 
     public FemaleAnalogActionSocket getAnalogActionSocket() {

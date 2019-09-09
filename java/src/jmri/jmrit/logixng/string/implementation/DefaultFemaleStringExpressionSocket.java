@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.string.implementation;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -55,14 +56,14 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DefaultFemaleStringExpressionSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleStringExpressionSocket_Short");
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DefaultFemaleStringExpressionSocket_Long", getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleStringExpressionSocket_Long", getName());
     }
 
     /** {@inheritDoc} */

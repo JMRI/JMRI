@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng;
 
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
@@ -117,12 +118,12 @@ public abstract class AbstractBaseTestBase {
         }
 
         @Override
-        public String getShortDescription() {
+        public String getShortDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public String getLongDescription() {
+        public String getLongDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

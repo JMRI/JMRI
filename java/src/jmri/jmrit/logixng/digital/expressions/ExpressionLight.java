@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -174,19 +175,19 @@ public class ExpressionLight extends AbstractDigitalExpression
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Light_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Light_Short");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         String lightName;
         if (_lightHandle != null) {
             lightName = _lightHandle.getBean().getDisplayName();
         } else {
-            lightName = Bundle.getMessage("BeanNotSelected");
+            lightName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage("Light_Long", lightName, _is_IsNot.toString(), _lightState._text);
+        return Bundle.getMessage(locale, "Light_Long", lightName, _is_IsNot.toString(), _lightState._text);
     }
     
     /** {@inheritDoc} */

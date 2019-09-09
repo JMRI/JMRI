@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import jmri.JmriException;
 import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
@@ -140,12 +141,12 @@ public class DefaultLogixNG extends AbstractNamedBean
     }
 */
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         return "LogixNG";
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         return "LogixNG: "+getDisplayName();
     }
 

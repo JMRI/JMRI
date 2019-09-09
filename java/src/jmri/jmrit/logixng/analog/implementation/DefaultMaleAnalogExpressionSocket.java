@@ -1,23 +1,24 @@
 package jmri.jmrit.logixng.analog.implementation;
 
-import jmri.jmrit.logixng.Category;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleAnalogExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.AnalogExpressionBean;
+import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.AnalogExpressionBean;
-import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 
 /**
  * Every AnalogExpressionBean has an DefaultMaleAnalogExpressionSocket as its parent.
@@ -158,13 +159,13 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     }
 
     @Override
-    public String getShortDescription() {
-        return _expression.getShortDescription();
+    public String getShortDescription(Locale locale) {
+        return _expression.getShortDescription(locale);
     }
 
     @Override
-    public String getLongDescription() {
-        return _expression.getLongDescription();
+    public String getLongDescription(Locale locale) {
+        return _expression.getLongDescription(locale);
     }
 
     @Override

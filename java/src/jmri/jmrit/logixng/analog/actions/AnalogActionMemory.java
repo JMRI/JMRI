@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.analog.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -127,18 +128,18 @@ public class AnalogActionMemory extends AbstractAnalogAction
 
     /** {@inheritDoc} */
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
-            return Bundle.getMessage("AnalogActionMemory1", _memoryHandle.getBean().getDisplayName());
+            return Bundle.getMessage(locale, "AnalogActionMemory1", _memoryHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage("AnalogActionMemory1", "none");
+            return Bundle.getMessage(locale, "AnalogActionMemory1", "none");
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription() {
-        return getShortDescription();
+    public String getLongDescription(Locale locale) {
+        return getShortDescription(locale);
     }
 
     /** {@inheritDoc} */

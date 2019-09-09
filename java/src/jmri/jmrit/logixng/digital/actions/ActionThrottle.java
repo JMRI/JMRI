@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -267,13 +268,13 @@ public class ActionThrottle extends AbstractDigitalAction
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Throttle_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Throttle_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("Throttle_Long", _locoAddressSocket.getName(), _delay);
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Throttle_Long", _locoAddressSocket.getName(), _delay);
     }
 
     public FemaleAnalogExpressionSocket getThenActionSocket() {

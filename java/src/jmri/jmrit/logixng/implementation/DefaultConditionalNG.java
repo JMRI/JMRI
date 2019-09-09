@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import static jmri.NamedBean.UNKNOWN;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
@@ -12,7 +13,6 @@ import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.MaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import org.slf4j.Logger;
@@ -177,12 +177,12 @@ public final class DefaultConditionalNG extends AbstractBase
     }
 
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         return "ConditionalNG";
     }
 

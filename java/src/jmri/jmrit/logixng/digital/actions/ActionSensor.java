@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -13,8 +14,6 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This action sets the state of a sensor.
@@ -156,19 +155,19 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Sensor_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Sensor_Short");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         String sensorName;
         if (_sensorHandle != null) {
             sensorName = _sensorHandle.getBean().getDisplayName();
         } else {
-            sensorName = Bundle.getMessage("BeanNotSelected");
+            sensorName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage("Sensor_Long", sensorName, _sensorState._text);
+        return Bundle.getMessage(locale, "Sensor_Long", sensorName, _sensorState._text);
     }
     
     /** {@inheritDoc} */

@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -13,8 +14,6 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This action sets the state of a light.
@@ -154,19 +153,19 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Light_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Light_Short");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         String lightName;
         if (_lightHandle != null) {
             lightName = _lightHandle.getBean().getDisplayName();
         } else {
-            lightName = Bundle.getMessage("BeanNotSelected");
+            lightName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage("Light_Long", lightName, _lightState._text);
+        return Bundle.getMessage(locale, "Light_Long", lightName, _lightState._text);
     }
     
     /** {@inheritDoc} */

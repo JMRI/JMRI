@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -90,13 +91,13 @@ public class False extends AbstractDigitalExpression {
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("False_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "False_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("False_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "False_Long");
     }
 
     /** {@inheritDoc} */

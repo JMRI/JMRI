@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -154,17 +155,17 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     }
 
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
-            return Bundle.getMessage("AnalogExpressionMemory1", _memoryHandle.getBean().getDisplayName());
+            return Bundle.getMessage(locale, "AnalogExpressionMemory1", _memoryHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage("AnalogExpressionMemory1", "none");
+            return Bundle.getMessage(locale, "AnalogExpressionMemory1", "none");
         }
     }
 
     @Override
-    public String getLongDescription() {
-        return getShortDescription();
+    public String getLongDescription(Locale locale) {
+        return getShortDescription(locale);
     }
 
     /** {@inheritDoc} */

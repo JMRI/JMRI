@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
@@ -302,14 +301,14 @@ public class DefaultFemaleGenericExpressionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DefaultFemaleGenericExpressionSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleGenericExpressionSocket_Short");
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DefaultFemaleGenericExpressionSocket_Long", getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleGenericExpressionSocket_Long", getName());
     }
 
     /** {@inheritDoc} */

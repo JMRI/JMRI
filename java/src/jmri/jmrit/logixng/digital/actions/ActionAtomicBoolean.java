@@ -1,10 +1,10 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 
@@ -108,13 +108,13 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("ActionAtomicBoolean_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ActionAtomicBoolean_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("ActionAtomicBoolean_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ActionAtomicBoolean_Long");
     }
     
     /** {@inheritDoc} */

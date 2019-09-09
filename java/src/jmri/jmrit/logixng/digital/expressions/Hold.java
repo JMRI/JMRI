@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -152,13 +153,13 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Hold_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Hold_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("Hold_Long",
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Hold_Long",
                 _holdExpressionSocket.getName(),
                 _triggerExpressionSocket.getName());
     }

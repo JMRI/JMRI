@@ -7,6 +7,7 @@ import static jmri.Conditional.OPERATOR_OR;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -164,16 +165,16 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Antecedent_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Antecedent_Short");
     }
     
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         if (_antecedent.isEmpty()) {
-            return Bundle.getMessage("Antecedent_Long_Empty");
+            return Bundle.getMessage(locale, "Antecedent_Long_Empty");
         } else {
-            return Bundle.getMessage("Antecedent_Long", _antecedent);
+            return Bundle.getMessage(locale, "Antecedent_Long", _antecedent);
         }
     }
 

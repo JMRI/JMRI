@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
@@ -118,13 +119,13 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("And_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "And_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("And_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "And_Long");
     }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {

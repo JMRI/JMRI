@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import jmri.InstanceManager;
@@ -138,13 +139,13 @@ public class ActionTimer extends AbstractDigitalAction
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Timer_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Timer_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("Timer_Long", _actionSocket.getName(), _delay);
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Timer_Long", _actionSocket.getName(), _delay);
     }
 
     public FemaleDigitalActionSocket getThenActionSocket() {

@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -154,17 +155,17 @@ public class StringExpressionMemory extends AbstractStringExpression
     }
 
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
-            return Bundle.getMessage("StringExpressionMemory1", _memoryHandle.getBean().getDisplayName());
+            return Bundle.getMessage(locale, "StringExpressionMemory1", _memoryHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage("StringExpressionMemory1", "none");
+            return Bundle.getMessage(locale, "StringExpressionMemory1", "none");
         }
     }
 
     @Override
-    public String getLongDescription() {
-        return getShortDescription();
+    public String getLongDescription(Locale locale) {
+        return getShortDescription(locale);
     }
 
     /** {@inheritDoc} */

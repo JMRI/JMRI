@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.implementation;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -93,12 +94,12 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public String getShortDescription() {
+        public String getShortDescription(Locale locale) {
             return "My short description";
         }
 
         @Override
-        public String getLongDescription() {
+        public String getLongDescription(Locale locale) {
             return "My long description";
         }
 

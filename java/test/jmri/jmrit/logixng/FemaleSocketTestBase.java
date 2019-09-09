@@ -2,6 +2,7 @@ package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -398,12 +399,12 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public String getShortDescription() {
+        public String getShortDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
-        public String getLongDescription() {
+        public String getLongDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

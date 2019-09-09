@@ -2,12 +2,11 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -118,13 +117,13 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Or_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Or_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("Or_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Or_Long");
     }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {

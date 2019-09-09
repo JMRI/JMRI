@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.List;
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -88,13 +89,13 @@ public class True extends AbstractDigitalExpression {
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("True_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "True_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("True_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "True_Long");
     }
 
     /** {@inheritDoc} */

@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
@@ -126,13 +127,13 @@ public class HoldAnything extends AbstractDigitalAction
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("HoldAnything_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "HoldAnything_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("HoldAnything_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "HoldAnything_Long");
     }
 
     public void setInitialSystemNames(String factoryClass, List<String> systemNames) {
@@ -245,12 +246,12 @@ public class HoldAnything extends AbstractDigitalAction
         }
 
         @Override
-        public String getShortDescription() {
+        public String getShortDescription(Locale locale) {
             return "Multiple sockets for " + _femaleSocketFactory.getClass().getName();
         }
 
         @Override
-        public String getLongDescription() {
+        public String getLongDescription(Locale locale) {
             return "Multiple sockets for " + _femaleSocketFactory.getClass().getName();
         }
 

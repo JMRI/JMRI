@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -190,13 +191,13 @@ public class Many extends AbstractDigitalAction
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Many_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Many_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("Many_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Many_Long");
     }
 
     private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {

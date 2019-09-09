@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.NamedBean;
 
@@ -129,13 +130,31 @@ public interface Base {
      * Get a short description of this item.
      * @return a short description
      */
-    public String getShortDescription();
+    default public String getShortDescription() {
+        return getShortDescription(Locale.getDefault());
+    }
     
     /**
      * Get a long description of this item.
      * @return a long description
      */
-    public String getLongDescription();
+    default public String getLongDescription() {
+        return getShortDescription(Locale.getDefault());
+    }
+    
+    /**
+     * Get a short description of this item.
+     * @param locale The locale to be used
+     * @return a short description
+     */
+    public String getShortDescription(Locale locale);
+    
+    /**
+     * Get a long description of this item.
+     * @param locale The locale to be used
+     * @return a long description
+     */
+    public String getLongDescription(Locale locale);
     
     /**
      * Returns a new object which is using this object as a template.

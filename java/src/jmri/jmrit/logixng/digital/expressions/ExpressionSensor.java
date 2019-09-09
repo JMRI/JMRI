@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -174,19 +175,19 @@ public class ExpressionSensor extends AbstractDigitalExpression
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Sensor_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Sensor_Short");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         String sensorName;
         if (_sensorHandle != null) {
             sensorName = _sensorHandle.getBean().getDisplayName();
         } else {
-            sensorName = Bundle.getMessage("BeanNotSelected");
+            sensorName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage("Sensor_Long", sensorName, _is_IsNot.toString(), _sensorState._text);
+        return Bundle.getMessage(locale, "Sensor_Long", sensorName, _is_IsNot.toString(), _sensorState._text);
     }
     
     /** {@inheritDoc} */

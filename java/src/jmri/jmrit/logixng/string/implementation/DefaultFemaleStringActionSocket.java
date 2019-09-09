@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.string.implementation;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -44,13 +45,13 @@ public final class DefaultFemaleStringActionSocket
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DefaultFemaleStringActionSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleStringActionSocket_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DefaultFemaleStringActionSocket_Long", getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleStringActionSocket_Long", getName());
     }
 
     /** {@inheritDoc} */

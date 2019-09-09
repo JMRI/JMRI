@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.analog.implementation;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -52,14 +53,14 @@ public final class DefaultFemaleAnalogActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("DefaultFemaleAnalogActionSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleAnalogActionSocket_Short");
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("DefaultFemaleAnalogActionSocket_Long", getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "DefaultFemaleAnalogActionSocket_Long", getName());
     }
 
     /** {@inheritDoc} */

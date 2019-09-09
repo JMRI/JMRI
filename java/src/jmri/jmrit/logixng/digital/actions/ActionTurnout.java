@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.Locale;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -154,19 +155,19 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Turnout_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Turnout_Short");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         String turnoutName;
         if (_turnoutHandle != null) {
             turnoutName = _turnoutHandle.getBean().getDisplayName();
         } else {
-            turnoutName = Bundle.getMessage("BeanNotSelected");
+            turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage("Turnout_Long", turnoutName, _turnoutState._text);
+        return Bundle.getMessage(locale, "Turnout_Long", turnoutName, _turnoutState._text);
     }
     
     /** {@inheritDoc} */

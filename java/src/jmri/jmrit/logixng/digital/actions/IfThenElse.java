@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -260,13 +261,13 @@ public class IfThenElse extends AbstractDigitalAction
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("IfThenElse_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "IfThenElse_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("IfThenElse_Long",
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "IfThenElse_Long",
                 _ifExpressionSocket.getName(),
                 _thenActionSocket.getName(),
                 _elseActionSocket.getName());

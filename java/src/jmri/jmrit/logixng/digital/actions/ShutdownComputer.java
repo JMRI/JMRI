@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import apps.AppsBase;
 import java.io.IOException;
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrit.logixng.Base;
@@ -105,13 +106,13 @@ public class ShutdownComputer extends AbstractDigitalAction {
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("ShutdownComputer_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ShutdownComputer_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("ShutdownComputer_Long", _seconds);
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ShutdownComputer_Long", _seconds);
     }
     
     /** {@inheritDoc} */

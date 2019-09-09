@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
@@ -112,13 +113,13 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     }
 
     @Override
-    public String getShortDescription() {
-        return _expression.getShortDescription();
+    public String getShortDescription(Locale locale) {
+        return _expression.getShortDescription(locale);
     }
 
     @Override
-    public String getLongDescription() {
-        return _expression.getLongDescription();
+    public String getLongDescription(Locale locale) {
+        return _expression.getLongDescription(locale);
     }
 
     @Override

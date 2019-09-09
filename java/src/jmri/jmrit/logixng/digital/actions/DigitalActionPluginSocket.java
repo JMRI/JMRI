@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import jmri.jmrit.logixng.Base;
@@ -68,14 +69,14 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
     }
     
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("ActionPluginSocket_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ActionPluginSocket_Short");
     }
 
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("ActionPluginSocket_Long");
-//        return Bundle.getMessage("ActionPluginSocket_Long", _analogExpressionSocket.getName(), _analogActionSocket.getName());
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "ActionPluginSocket_Long");
+//        return Bundle.getMessage(locale, "ActionPluginSocket_Long", _analogExpressionSocket.getName(), _analogActionSocket.getName());
     }
 
     /** {@inheritDoc} */

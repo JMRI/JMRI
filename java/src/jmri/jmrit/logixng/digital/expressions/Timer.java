@@ -1,10 +1,9 @@
 package jmri.jmrit.logixng.digital.expressions;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 
@@ -74,13 +73,13 @@ public class Timer extends AbstractDigitalExpression {
     }
 
     @Override
-    public String getShortDescription() {
-        return Bundle.getMessage("Timer_Short");
+    public String getShortDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Timer_Short");
     }
     
     @Override
-    public String getLongDescription() {
-        return Bundle.getMessage("Timer_Long");
+    public String getLongDescription(Locale locale) {
+        return Bundle.getMessage(locale, "Timer_Long");
     }
 
     /** {@inheritDoc} */

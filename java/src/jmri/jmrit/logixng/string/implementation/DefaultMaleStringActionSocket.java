@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -91,13 +92,13 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
     }
 
     @Override
-    public String getShortDescription() {
-        return _action.getShortDescription();
+    public String getShortDescription(Locale locale) {
+        return _action.getShortDescription(locale);
     }
 
     @Override
-    public String getLongDescription() {
-        return _action.getLongDescription();
+    public String getLongDescription(Locale locale) {
+        return _action.getLongDescription(locale);
     }
 
     @Override

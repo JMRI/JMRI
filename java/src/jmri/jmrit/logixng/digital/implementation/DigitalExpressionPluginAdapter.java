@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.digital.implementation;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Locale;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpression;
@@ -67,12 +67,12 @@ public class DigitalExpressionPluginAdapter extends AbstractDigitalExpression {
     }
 
     @Override
-    public String getShortDescription() {
+    public String getShortDescription(Locale locale) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public String getLongDescription() {
+    public String getLongDescription(Locale locale) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
