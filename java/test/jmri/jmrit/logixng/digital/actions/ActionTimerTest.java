@@ -10,6 +10,7 @@ import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -24,6 +25,11 @@ import org.junit.Test;
  */
 public class ActionTimerTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         ActionTimer t = new ActionTimer("IQDA321");

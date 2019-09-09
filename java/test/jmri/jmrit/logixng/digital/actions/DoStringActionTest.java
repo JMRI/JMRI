@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,6 +14,11 @@ import org.junit.Test;
  */
 public class DoStringActionTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DoStringAction("IQDA321"));

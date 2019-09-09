@@ -13,7 +13,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 /**
  * Base class for classes that tests DigitalAction
  */
-public class AbstractDigitalActionTestBase extends AbstractBaseTestBase {
+public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase {
 
     @Test
     public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {

@@ -36,6 +36,11 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
 
     protected Memory _memory;
     
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

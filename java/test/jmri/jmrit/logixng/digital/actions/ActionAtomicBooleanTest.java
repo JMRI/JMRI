@@ -23,6 +23,11 @@ import jmri.jmrit.logixng.DigitalActionBean;
  */
 public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         DigitalActionBean t = new ActionAtomicBoolean("IQDA321", null);

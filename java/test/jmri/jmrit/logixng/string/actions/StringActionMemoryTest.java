@@ -8,6 +8,7 @@ import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -24,6 +25,11 @@ import org.junit.Test;
 public class StringActionMemoryTest extends AbstractStringActionTestBase {
 
     protected Memory _memory;
+    
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
     
     @Test
     public void testCtor() {

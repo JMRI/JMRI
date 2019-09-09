@@ -26,6 +26,11 @@ import org.junit.Test;
  */
 public class ActionLightTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         ActionLight t = new ActionLight("IQDA321", null);

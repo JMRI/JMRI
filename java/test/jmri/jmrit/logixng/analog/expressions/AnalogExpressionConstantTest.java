@@ -30,6 +30,11 @@ import org.junit.Test;
  */
 public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

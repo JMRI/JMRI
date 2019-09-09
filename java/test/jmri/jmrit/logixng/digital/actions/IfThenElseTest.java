@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
 /**
@@ -17,6 +18,11 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
  */
 public class IfThenElseTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         DigitalActionBean t = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);

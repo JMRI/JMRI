@@ -13,7 +13,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class AbstractAnalogActionTestBase extends AbstractBaseTestBase {
+public abstract class AbstractAnalogActionTestBase extends AbstractBaseTestBase {
 
     @Test
     public void testBundle() {

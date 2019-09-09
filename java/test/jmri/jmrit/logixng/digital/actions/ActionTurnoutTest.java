@@ -26,6 +26,11 @@ import org.junit.Test;
  */
 public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         ActionTurnout t = new ActionTurnout("IQDA321", null);

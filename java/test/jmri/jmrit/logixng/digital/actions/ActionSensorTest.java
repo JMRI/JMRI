@@ -26,6 +26,11 @@ import org.junit.Test;
  */
 public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         ActionSensor t = new ActionSensor("IQDA321", null);

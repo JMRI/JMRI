@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -16,6 +17,11 @@ import org.junit.Test;
  */
 public class HoldAnythingTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new HoldAnything("IQDA321"));

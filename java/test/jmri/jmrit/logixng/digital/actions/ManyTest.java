@@ -5,6 +5,7 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
@@ -21,6 +22,11 @@ import org.junit.Test;
  */
 public class ManyTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new Many("IQDA321"));

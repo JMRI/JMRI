@@ -44,7 +44,7 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
             return (LogixNG) this;
         } else {
             Base parent = getParent();
-            while (! (parent instanceof LogixNG)) {
+            while ((parent != null) && (!(parent instanceof LogixNG))) {
                 parent = parent.getParent();
             }
             return (LogixNG) parent;

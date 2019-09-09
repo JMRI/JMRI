@@ -15,6 +15,17 @@ public abstract class AbstractBaseTestBase {
 
     protected Base _base;
     
+    /**
+     * Returns the LogixNG for _base.
+     * @return the LogixNG for _base or null if _base doesn't have any LogixNG
+     */
+    public abstract LogixNG getLogixNG();
+    
+    @Test
+    public void testGetLogixNG() {
+        Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
+    }
+    
     @Test
     public void testLock() {
         _base.setLock(Base.Lock.NONE);

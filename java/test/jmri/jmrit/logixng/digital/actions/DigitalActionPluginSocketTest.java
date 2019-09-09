@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Map;
 import jmri.jmrit.logixng.DigitalActionPlugin;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,6 +16,11 @@ import org.junit.Test;
  */
 public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public LogixNG getLogixNG() {
+        return null;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DigitalActionPluginSocket("IQDA1", new MyDigitalActionPlugin("IQDA2")));
