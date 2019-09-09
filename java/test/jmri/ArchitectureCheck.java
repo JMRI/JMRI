@@ -89,6 +89,108 @@ public class ArchitectureCheck {
     }
 
     /**
+     * Jmri.jmris should not reference jmri.jmrit
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrit outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @Test
+    public void checkJmrisPackageJmrit() {
+        ArchRule thisRule = noClasses()
+        .that().resideInAPackage("jmri.jmris")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Jmri.jmris should not reference jmri.jmrix
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrix outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @Test
+    public void checkJmrisPackageJmrix() {
+        ArchRule thisRule = noClasses()
+        .that().resideInAPackage("jmri.jmris")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Jmri.server should not reference jmri.jmrit
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrit outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @Test
+    public void checkServerPackageJmrit() {
+        ArchRule thisRule = noClasses()
+        .that().resideInAPackage("jmri.jmris")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Jmri.server should not reference jmri.jmrix
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrix outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @Test
+    public void checkServerPackageJmrix() {
+        ArchRule thisRule = noClasses()
+        .that().resideInAPackage("jmri.jmris")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Jmri.web should not reference jmri.jmrit
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrit outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @Test
+    public void checkWebPackageJmrit() {
+        ArchRule thisRule = noClasses()
+        .that().resideInAPackage("jmri.web")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
+     * Jmri.web should not reference jmri.jmrix
+     * <p>
+     * Intentionally redundant with the check for references to
+     * jmri.jmrix outside itself; fix these first!
+     * <p>
+     * 
+     */
+    @Test
+    public void checkWebPackageJmrix() {
+        ArchRule thisRule = noClasses()
+        .that().resideInAPackage("jmri.web")
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+    /**
      * No AWT in basic interfaces.
      */
     @Test // Initially 8 flags in JMRI 4.17.3
