@@ -37,7 +37,14 @@ public class ManyTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Many%n" +
-                "  ! A1%n");
+                "   ! A1%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "Many%n" +
+                "   ! A1%n");
     }
     
     @Test

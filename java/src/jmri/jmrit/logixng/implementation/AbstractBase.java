@@ -54,6 +54,18 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
     
     /** {@inheritDoc} */
     @Override
+    public final Base getRoot() {
+        Base current = this;
+        Base parent = getParent();
+        while (parent != null) {
+            current = parent;
+            parent = parent.getParent();
+        }
+        return current;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public final void setParentForAllChildren() {
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
@@ -106,7 +118,6 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
         return isEnabled() && ((getParent() == null) || getParent().isEnabled());
     }
     
-    /** {@inheritDoc} */
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));

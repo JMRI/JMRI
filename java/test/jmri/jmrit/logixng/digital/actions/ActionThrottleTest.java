@@ -29,7 +29,14 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Throttle%n" +
-                "  ?~ E1%n");
+                "   ?~ E1%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "Throttle%n" +
+                "   ?~ E1%n");
     }
     
     @Test

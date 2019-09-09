@@ -26,19 +26,34 @@ import org.junit.Test;
  */
 public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ActionSensor actionSensor;
+    private Sensor sensor;
+    
+    
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set sensor '' to Active%n");
+        return String.format("Set sensor IS1 to Active%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Set sensor IS1 to Active%n");
     }
     
     @Test
@@ -49,17 +64,6 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IT1");
-        sensor.setCommandedState(Sensor.INACTIVE);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
-        logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setEnabled(true);
-        ActionSensor actionSensor = new ActionSensor();
-        actionSensor.setSensor(sensor);
-        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
-        conditionalNG.getChild(0).connect(socket);
         // The action is not yet executed so the sensor should be closed
         Assert.assertTrue("sensor is closed",sensor.getCommandedState() == Sensor.INACTIVE);
         // Execute the conditional
@@ -134,12 +138,25 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
-        _base = new ActionSensor("IQDA321", null);
+        
+        sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        sensor.setCommandedState(Sensor.INACTIVE);
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setEnabled(true);
+        actionSensor = new ActionSensor();
+        actionSensor.setSensor(sensor);
+        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
+        conditionalNG.getChild(0).connect(socket);
+        
+        _base = actionSensor;
     }
 
     @After

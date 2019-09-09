@@ -32,7 +32,14 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Hold anything%n" +
-                "  ! A1%n");
+                "   ! A1%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "Hold anything%n" +
+                "   ! A1%n");
     }
     
     @Test

@@ -424,6 +424,11 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
+        public LogixNG getRoot() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public Base getParent() {
             throw new UnsupportedOperationException("Not supported.");
         }

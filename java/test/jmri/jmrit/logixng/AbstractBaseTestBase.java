@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractBaseTestBase {
 
-    public final String TREE_INDENT = "  ";
+    public final String TREE_INDENT = "   ";
     protected Base _base;
     
     /**
@@ -28,9 +28,9 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetConditionalNG() {
-        if (getConditionalNG() == null) {
-            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
-        }
+//        if (getConditionalNG() == null) {
+//            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
+//        }
         Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
     }
     
@@ -42,9 +42,9 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetLogixNG() {
-        if (getLogixNG() == null) {
-            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
-        }
+//        if (getLogixNG() == null) {
+//            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
+//        }
         Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
     }
     
@@ -60,6 +60,20 @@ public abstract class AbstractBaseTestBase {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _base.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+    }
+    
+    /**
+     * Returns the expected result of _base.getRoot().printTree(writer, TREE_INDENT)
+     * @return the expected printed tree
+     */
+    public abstract String getExpectedPrintedTreeFromRoot();
+    
+    @Test
+    public void testGetPrintTreeFromRoot() {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
     }
     
     @Test

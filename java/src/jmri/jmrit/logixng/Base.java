@@ -182,6 +182,12 @@ public interface Base {
     public LogixNG getLogixNG();
     
     /**
+     * Get the root of the tree that this item belongs to.
+     * @return the top most item in the tree
+     */
+    public Base getRoot();
+    
+    /**
      * Get the LogixNG_InstanceManager.
      * 
      * This method will ask the parent about the instance manager, and if no
@@ -199,7 +205,7 @@ public interface Base {
     }
     
     /**
-     * Set the parent.
+     * Get the parent.
      * <P>
      * The following rules apply
      * <ul>

@@ -30,19 +30,38 @@ import org.junit.Test;
  */
 public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private AnalogExpressionConstant expressionConstant;
+    private Memory _memoryOut;
+    private AnalogActionMemory actionMemory;
+    
+    
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
     public String getExpectedPrintedTree() {
         return String.format("Get constant value 10.2%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Read analog E1 and set analog A1%n" +
+                "            ?~ E1%n" +
+                "            !~ A1%n" +
+                "               Set memory IM2%n");
     }
     
     @Test
@@ -112,67 +131,24 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     @Test
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         
-        AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
-        
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
-        
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        DigitalActionBean actionDoAnalog = new DoAnalogAction();
-        MaleSocket socketDoAnalog = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
-        conditionalNG.getChild(0).connect(socketDoAnalog);
-        
-        MaleSocket socketExpression = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(expression);
-        socketDoAnalog.getChild(0).connect(socketExpression);
-        
-        Memory _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
-        _memoryOut.setValue(0.0);
-        AnalogActionMemory actionMemory = new AnalogActionMemory("IQAA1");
-        actionMemory.setMemory(_memoryOut);
-        MaleSocket socketAction = InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
-        socketDoAnalog.getChild(1).connect(socketAction);
-/*        
         // The action is not yet executed so the double should be 0.0
         Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
-        // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue(1.0);
+        // Execute the logixNG
+        conditionalNG.setEnabled(true);
+        logixNG.calculateConditionalNGs();
+        conditionalNG.setEnabled(false);
+        // The action is not yet executed so the double should be 0.0
+        Assert.assertTrue("memory is 10.2", 10.2 == (Double)_memoryOut.getValue());
+        
+        // Set the value of the constant.
+        expressionConstant.setValue(1.0);
+        // Execute the logixNG
+        conditionalNG.setEnabled(true);
+        logixNG.calculateConditionalNGs();
+        conditionalNG.setEnabled(false);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the memory should be 0.0
-        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
-        // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue(2.0);
-        // Enable the conditionalNG and all its children.
-        conditionalNG.setEnabled(true);
-        // The action is not yet executed so the memory should be 0.0
-        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
-        // Set the value of the memory. This should execute the conditional.
-        _memory.setValue(3.0);
-        // The action should now be executed so the memory should be 3.0
-        Assert.assertTrue("memory is 3.0", 3.0 == (Double)_memoryOut.getValue());
-        // Disable the conditionalNG and all its children.
-        conditionalNG.setEnabled(false);
-        // The action is not yet executed so the memory should be 0.0
-        Assert.assertTrue("memory is 0.0", 3.0 == (Double)_memoryOut.getValue());
-        // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue(4.0);
-        // The action should not be executed so the memory should still be 3.0
-        Assert.assertTrue("memory is 3.0", 3.0 == (Double)_memoryOut.getValue());
-        // Unregister listeners. This should do nothing since the listeners are
-        // already unregistered.
-        expression.unregisterListeners();
-        // The memory should be 3.0
-        Assert.assertTrue("memory is 0.0", 3.0 == (Double)_memoryOut.getValue());
-        // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue(5.0);
-        // The action should not be executed so the memory should still be 3.0
-        Assert.assertTrue("memory is 3.0", 3.0 == (Double)_memoryOut.getValue());
-        
-        // Test register listeners when there is no memory.
-        expression.setMemory((Memory)null);
-        expression.registerListeners();
-*/
+        Assert.assertTrue("memory is 1.0", 1.0 == (Double)_memoryOut.getValue());
     }
     
     @Test
@@ -210,14 +186,37 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
-        _base = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
-        ((AnalogExpressionConstant)_base).setValue(10.2);
+        
+        expressionConstant = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
+        expressionConstant.setValue(10.2);
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        
+        logixNG.addConditionalNG(conditionalNG);
+        logixNG.activateLogixNG();
+        
+        DigitalActionBean actionDoAnalog = new DoAnalogAction();
+        MaleSocket socketDoAnalog = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
+        conditionalNG.getChild(0).connect(socketDoAnalog);
+        
+        MaleSocket socketExpression = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(expressionConstant);
+        socketDoAnalog.getChild(0).connect(socketExpression);
+        
+        _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        _memoryOut.setValue(0.0);
+        actionMemory = new AnalogActionMemory("IQAA1");
+        actionMemory.setMemory(_memoryOut);
+        MaleSocket socketAction = InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
+        socketDoAnalog.getChild(1).connect(socketAction);
+        
+        _base = expressionConstant;
     }
 
     @After

@@ -23,19 +23,34 @@ import jmri.jmrit.logixng.DigitalActionBean;
  */
 public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private AtomicBoolean atomicBoolean;
+    private ActionAtomicBoolean actionAtomicBoolean;
+    
+    
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set the atomic boolean to false%n");
+        return String.format("Set the atomic boolean to true%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Set the atomic boolean to true%n");
     }
     
     @Test
@@ -46,14 +61,6 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException {
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
-        logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setEnabled(true);
-        DigitalActionBean action = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        conditionalNG.getChild(0).connect(socket);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Execute the conditional
@@ -64,12 +71,22 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new ActionAtomicBoolean("IQDA321", null);
+        
+        atomicBoolean = new AtomicBoolean(false);
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setEnabled(true);
+        actionAtomicBoolean = new ActionAtomicBoolean("IQDA321", null, atomicBoolean, true);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        conditionalNG.getChild(0).connect(socket);
+        
+        _base = actionAtomicBoolean;
     }
 
     @After

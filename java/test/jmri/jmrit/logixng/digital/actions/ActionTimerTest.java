@@ -43,6 +43,11 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 "  ! A%n");
     }
     
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format("Set memory IM1%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionTimer t = new ActionTimer("IQDA321");

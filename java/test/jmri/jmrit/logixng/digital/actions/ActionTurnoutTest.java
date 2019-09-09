@@ -26,19 +26,34 @@ import org.junit.Test;
  */
 public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ActionTurnout actionTurnout;
+    private Turnout turnout;
+    
+    
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set turnout '' to Thrown%n");
+        return String.format("Set turnout IT1 to Thrown%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Set turnout IT1 to Thrown%n");
     }
     
     @Test
@@ -49,17 +64,6 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        turnout.setCommandedState(Turnout.CLOSED);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
-        logixNG.addConditionalNG(conditionalNG);
-        conditionalNG.setEnabled(true);
-        ActionTurnout actionTurnout = new ActionTurnout();
-        actionTurnout.setTurnout(turnout);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
-        conditionalNG.getChild(0).connect(socket);
         // The action is not yet executed so the turnout should be closed
         Assert.assertTrue("turnout is closed",turnout.getCommandedState() == Turnout.CLOSED);
         // Execute the conditional
@@ -134,12 +138,25 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new ActionTurnout("IQDA321", null);
+        
+        turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        turnout.setCommandedState(Turnout.CLOSED);
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setEnabled(true);
+        actionTurnout = new ActionTurnout();
+        actionTurnout.setTurnout(turnout);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
+        conditionalNG.getChild(0).connect(socket);
+        
+        _base = actionTurnout;
     }
 
     @After

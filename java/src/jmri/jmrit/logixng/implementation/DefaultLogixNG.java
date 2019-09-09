@@ -391,6 +391,18 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    public final Base getRoot() {
+        Base current = this;
+        Base parent = getParent();
+        while (parent != null) {
+            current = parent;
+            parent = parent.getParent();
+        }
+        return current;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void setParentForAllChildren() {
         for (ConditionalNG c : _conditionalNG_List) {
             c.setParent(this);
@@ -414,7 +426,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
     
-    /** {@inheritDoc} */
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));

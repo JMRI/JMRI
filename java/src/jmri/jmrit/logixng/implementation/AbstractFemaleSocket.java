@@ -272,6 +272,17 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     }
     
     /** {@inheritDoc} */
+    @Override
+    public final Base getRoot() {
+        Base current = this;
+        Base parent = getParent();
+        while (parent != null) {
+            current = parent;
+            parent = parent.getParent();
+        }
+        return current;
+    }
+    
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));

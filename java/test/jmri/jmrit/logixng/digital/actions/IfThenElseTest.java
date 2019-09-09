@@ -33,9 +33,18 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "If E then A1 else A2%n" +
-                "  ? E%n" +
-                "  ! A1%n" +
-                "  ! A2%n");
+                "   ? E%n" +
+                "   ! A1%n" +
+                "   ! A2%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "If E then A1 else A2%n" +
+                "   ? E%n" +
+                "   ! A1%n" +
+                "   ! A2%n");
     }
     
     @Test

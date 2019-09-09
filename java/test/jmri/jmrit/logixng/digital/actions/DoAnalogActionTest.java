@@ -29,8 +29,16 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Read analog E1 and set analog A1%n" +
-                "  ?~ E1%n" +
-                "  !~ A1%n");
+                "   ?~ E1%n" +
+                "   !~ A1%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "Read analog E1 and set analog A1%n" +
+                "   ?~ E1%n" +
+                "   !~ A1%n");
     }
     
     @Test

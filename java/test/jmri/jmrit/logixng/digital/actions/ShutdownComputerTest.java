@@ -30,6 +30,11 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         return String.format("Shutdown computer after 0 seconds%n");
     }
     
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format("Shutdown computer after 0 seconds%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new ShutdownComputer("IQDA321", null, 0));

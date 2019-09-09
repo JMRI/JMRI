@@ -47,6 +47,15 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         return String.format("Set light IL1 to On%n");
     }
     
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Set light IL1 to On%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionLight t = new ActionLight("IQDA321", null);
