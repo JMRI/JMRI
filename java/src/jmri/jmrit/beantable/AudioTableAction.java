@@ -174,7 +174,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
         MenuElement[] subElements;
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
@@ -192,7 +191,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
             MenuElement[] popsubElements = subElement.getSubElements();
             for (MenuElement popsubElement : popsubElements) {
                 if (popsubElement instanceof JMenuItem) {
-                    if (((JMenuItem) popsubElement).getText().equals(rbapps.getString("PrintTable"))) {
+                    if (((JMenuItem) popsubElement).getText().equals(Bundle.getMessage("PrintTable"))) {
                         JMenuItem printMenu = (JMenuItem) popsubElement;
                         fileMenu.remove(printMenu);
                         break;
