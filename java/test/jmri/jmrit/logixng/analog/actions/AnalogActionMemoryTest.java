@@ -8,6 +8,7 @@ import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitAppender;
@@ -25,6 +26,11 @@ import org.junit.Test;
 public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
 
     protected Memory _memory;
+    
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
     
     @Override
     public LogixNG getLogixNG() {

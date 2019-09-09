@@ -24,6 +24,11 @@ import jmri.jmrit.logixng.DigitalActionBean;
 public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
 
     @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
+    @Override
     public LogixNG getLogixNG() {
         return null;
     }

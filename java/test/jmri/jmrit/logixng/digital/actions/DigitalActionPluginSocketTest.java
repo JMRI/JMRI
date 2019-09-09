@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Map;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionPlugin;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JUnitUtil;
@@ -16,6 +17,11 @@ import org.junit.Test;
  */
 public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
     @Override
     public LogixNG getLogixNG() {
         return null;

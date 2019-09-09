@@ -27,6 +27,11 @@ import org.junit.Test;
 public class ActionSensorTest extends AbstractDigitalActionTestBase {
 
     @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
+    @Override
     public LogixNG getLogixNG() {
         return null;
     }

@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
@@ -25,6 +26,11 @@ import org.junit.Test;
  */
 public class ActionTimerTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
     @Override
     public LogixNG getLogixNG() {
         return null;

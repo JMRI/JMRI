@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -18,6 +19,11 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
  */
 public class IfThenElseTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
     @Override
     public LogixNG getLogixNG() {
         return null;

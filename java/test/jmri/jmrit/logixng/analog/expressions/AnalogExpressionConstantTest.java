@@ -31,6 +31,11 @@ import org.junit.Test;
 public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBase {
 
     @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
+    @Override
     public LogixNG getLogixNG() {
         return null;
     }

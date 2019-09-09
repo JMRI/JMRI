@@ -31,7 +31,7 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
             return (ConditionalNG) this;
         } else {
             Base parent = getParent();
-            while (! (parent instanceof ConditionalNG)) {
+            while ((parent != null) && (!(parent instanceof ConditionalNG))) {
                 parent = parent.getParent();
             }
             return (ConditionalNG) parent;

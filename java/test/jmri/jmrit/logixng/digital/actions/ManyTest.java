@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -22,6 +23,11 @@ import org.junit.Test;
  */
 public class ManyTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
     @Override
     public LogixNG getLogixNG() {
         return null;

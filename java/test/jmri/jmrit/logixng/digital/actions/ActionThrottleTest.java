@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -14,6 +15,11 @@ import org.junit.Test;
  */
 public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
     @Override
     public LogixNG getLogixNG() {
         return null;

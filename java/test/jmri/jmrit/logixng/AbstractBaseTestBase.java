@@ -24,6 +24,20 @@ public abstract class AbstractBaseTestBase {
      * Returns the LogixNG for _base.
      * @return the LogixNG for _base or null if _base doesn't have any LogixNG
      */
+    public abstract ConditionalNG getConditionalNG();
+    
+    @Test
+    public void testGetConditionalNG() {
+        if (getConditionalNG() == null) {
+            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
+        }
+        Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
+    }
+    
+    /**
+     * Returns the LogixNG for _base.
+     * @return the LogixNG for _base or null if _base doesn't have any LogixNG
+     */
     public abstract LogixNG getLogixNG();
     
     @Test

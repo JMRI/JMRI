@@ -37,6 +37,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     protected Memory _memory;
     
     @Override
+    public ConditionalNG getConditionalNG() {
+        return null;
+    }
+    
+    @Override
     public LogixNG getLogixNG() {
         return null;
     }
