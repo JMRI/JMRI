@@ -22,6 +22,13 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Hold anything%n" +
+                "  ! A1%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new HoldAnything("IQDA321"));

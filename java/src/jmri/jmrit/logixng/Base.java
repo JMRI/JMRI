@@ -366,11 +366,21 @@ public interface Base {
      /**
      * Print the tree to a stream.
      * 
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(Locale locale, PrintWriter writer, String indent);
+    
+     /**
+     * Print the tree to a stream.
+     * 
+     * @param locale The locale to be used
      * @param writer the stream to print the tree to
      * @param indent the indentation of each level
      * @param currentIndent the current indentation
      */
-    public void printTree(PrintWriter writer, String indent, String currentIndent);
+    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent);
     
     
     

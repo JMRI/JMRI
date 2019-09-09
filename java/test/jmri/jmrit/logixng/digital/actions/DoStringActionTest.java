@@ -19,6 +19,14 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Read string E1 and set string A1%n" +
+                "  ?s E1%n" +
+                "  !s A1%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DoStringAction("IQDA321"));

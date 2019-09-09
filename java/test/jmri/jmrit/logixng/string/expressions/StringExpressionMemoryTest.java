@@ -41,6 +41,11 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Get memory IM1%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

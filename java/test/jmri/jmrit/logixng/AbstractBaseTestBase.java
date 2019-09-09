@@ -1,10 +1,14 @@
 package jmri.jmrit.logixng;
 
+import java.io.StringWriter;
+import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test AbstractAnalogExpression
@@ -13,6 +17,7 @@ import org.junit.Test;
  */
 public abstract class AbstractBaseTestBase {
 
+    public final String TREE_INDENT = "  ";
     protected Base _base;
     
     /**
@@ -23,7 +28,24 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetLogixNG() {
+        if (getLogixNG() == null) {
+            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
+        }
         Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
+    }
+    
+    /**
+     * Returns the expected result of _base.printTree(writer, TREE_INDENT)
+     * @return the expected printed tree
+     */
+    public abstract String getExpectedPrintedTree();
+    
+    @Test
+    public void testGetPrintTree() {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        _base.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
     @Test
@@ -189,5 +211,7 @@ public abstract class AbstractBaseTestBase {
         }
         
     }
-    
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
+
 }

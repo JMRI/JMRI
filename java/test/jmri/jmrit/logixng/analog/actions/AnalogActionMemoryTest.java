@@ -31,6 +31,11 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Set memory IM1%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

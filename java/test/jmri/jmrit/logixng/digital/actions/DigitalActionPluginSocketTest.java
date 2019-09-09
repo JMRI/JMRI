@@ -21,6 +21,11 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Set turnout '' to Thrown%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DigitalActionPluginSocket("IQDA1", new MyDigitalActionPlugin("IQDA2")));

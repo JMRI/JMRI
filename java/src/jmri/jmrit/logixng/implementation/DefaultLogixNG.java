@@ -377,16 +377,19 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNG() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public LogixNG getLogixNG() {
         return this;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setParentForAllChildren() {
         for (ConditionalNG c : _conditionalNG_List) {
@@ -395,6 +398,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void registerListeners() {
         for (ConditionalNG c : _conditionalNG_List) {
@@ -402,6 +406,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void unregisterListeners() {
         for (ConditionalNG c : _conditionalNG_List) {
@@ -409,32 +414,32 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
     
-    /**
-     * Print the tree to a stream.
-     * This method is the implementation of printTree(PrintStream, String)
-     * 
-     * @param writer the stream to print the tree to
-     * @param currentIndent the current indentation
-     */
-    protected void printTreeRow(PrintWriter writer, String currentIndent) {
+    /** {@inheritDoc} */
+    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
-        writer.append(getLongDescription());
+        writer.append(getLongDescription(locale));
         writer.println();
     }
     
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {
-        printTree(writer, indent, "");
+        printTree(Locale.getDefault(), writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(writer, currentIndent);
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        printTree(locale, writer, indent, "");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        printTreeRow(locale, writer, currentIndent);
 
         for (int i=0; i < this.getNumConditionalNGs(); i++) {
-            getConditionalNG(i).printTree(writer, indent, currentIndent+indent);
+            getConditionalNG(i).printTree(locale, writer, indent, currentIndent+indent);
         }
     }
     

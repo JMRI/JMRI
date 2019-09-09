@@ -114,7 +114,7 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionAtomicBoolean_Long");
+        return Bundle.getMessage(locale, "ActionAtomicBoolean_Long", _newValue);
     }
     
     /** {@inheritDoc} */

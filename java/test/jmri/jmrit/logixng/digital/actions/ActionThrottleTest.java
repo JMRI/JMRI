@@ -19,6 +19,13 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Throttle%n" +
+                "  ?~ E1%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionThrottle t = new ActionThrottle("IQDA321");
@@ -43,7 +50,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new ActionTimer("IQDA321");
+        _base = new ActionThrottle("IQDA321");
     }
 
     @After

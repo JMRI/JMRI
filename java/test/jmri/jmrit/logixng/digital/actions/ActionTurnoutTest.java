@@ -31,6 +31,11 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Set turnout '' to Thrown%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionTurnout t = new ActionTurnout("IQDA321", null);

@@ -31,6 +31,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Set sensor '' to Active%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionSensor t = new ActionSensor("IQDA321", null);

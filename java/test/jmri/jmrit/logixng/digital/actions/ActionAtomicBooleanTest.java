@@ -28,6 +28,11 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Set the atomic boolean to false%n");
+    }
+    
     @Test
     public void testCtor() {
         DigitalActionBean t = new ActionAtomicBoolean("IQDA321", null);

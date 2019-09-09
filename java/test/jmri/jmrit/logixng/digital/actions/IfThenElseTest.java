@@ -23,6 +23,15 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "If E then A1 else A2%n" +
+                "  ? E%n" +
+                "  ! A1%n" +
+                "  ! A2%n");
+    }
+    
     @Test
     public void testCtor() {
         DigitalActionBean t = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);

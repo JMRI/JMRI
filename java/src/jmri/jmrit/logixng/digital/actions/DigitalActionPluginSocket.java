@@ -70,13 +70,12 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
     
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionPluginSocket_Short");
+        return _actionPlugin.getShortDescription(locale);
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionPluginSocket_Long");
-//        return Bundle.getMessage(locale, "ActionPluginSocket_Long", _analogExpressionSocket.getName(), _analogActionSocket.getName());
+        return _actionPlugin.getLongDescription(locale);
     }
 
     /** {@inheritDoc} */

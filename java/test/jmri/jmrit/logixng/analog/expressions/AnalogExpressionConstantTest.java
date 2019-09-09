@@ -35,6 +35,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Get constant value 10.2%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

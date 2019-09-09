@@ -27,6 +27,13 @@ public class ManyTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Many%n" +
+                "  ! A1%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new Many("IQDA321"));

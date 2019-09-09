@@ -31,6 +31,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Set light '' to On%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionLight t = new ActionLight("IQDA321", null);

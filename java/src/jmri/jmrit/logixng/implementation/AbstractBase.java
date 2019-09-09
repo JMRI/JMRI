@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
+import java.util.Locale;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -105,51 +106,36 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
         return isEnabled() && ((getParent() == null) || getParent().isEnabled());
     }
     
-    /**
-     * Print the tree to a stream.
-     * This method is the implementation of printTree(PrintStream, String)
-     * 
-     * @param writer the stream to print the tree to
-     * @param currentIndent the current indentation
-     */
-    protected void printTreeRow(PrintWriter writer, String currentIndent) {
+    /** {@inheritDoc} */
+    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
-        writer.append(getLongDescription());
+        writer.append(getLongDescription(locale));
         writer.println();
     }
     
-    /**
-     * Print the tree to a stream.
-     * 
-     * @param writer the stream to print the tree to
-     * @param indent the indentation of each level
-     */
+    /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {
-        printTree(writer, indent, "");
+        printTree(Locale.getDefault(), writer, indent, "");
     }
     
-    /**
-     * Print the tree to a stream.
-     * This method is the implementation of printTree(PrintStream, String)
-     * 
-     * @param writer the stream to print the tree to
-     * @param indent the indentation of each level
-     * @param currentIndent the current indentation
-     */
+    /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(writer, currentIndent);
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        printTree(locale, writer, indent, "");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        printTreeRow(locale, writer, currentIndent);
         
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).printTree(writer, indent, currentIndent+indent);
+            getChild(i).printTree(locale, writer, indent, currentIndent+indent);
         }
     }
     
-    /**
-     * Disposes this object.
-     * This must remove _all_ connections!
-     */
+    /** {@inheritDoc} */
     abstract protected void disposeMe();
     
     /** {@inheritDoc} */

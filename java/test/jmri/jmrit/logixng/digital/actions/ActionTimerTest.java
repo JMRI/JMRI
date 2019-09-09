@@ -30,6 +30,13 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Execute A after 0 milliseconds%n" +
+                "  ! A%n");
+    }
+    
     @Test
     public void testCtor() {
         ActionTimer t = new ActionTimer("IQDA321");

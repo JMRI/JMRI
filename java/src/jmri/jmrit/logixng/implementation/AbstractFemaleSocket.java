@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Locale;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -270,32 +271,32 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         return (LogixNG) parent;
     }
     
-    /**
-     * Print the tree to a stream.
-     * This method is the implementation of printTree(PrintStream, String)
-     * 
-     * @param writer the stream to print the tree to
-     * @param currentIndent the current indentation
-     */
-    protected void printTreeRow(PrintWriter writer, String currentIndent) {
+    /** {@inheritDoc} */
+    protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
-        writer.append(getLongDescription());
+        writer.append(getLongDescription(locale));
         writer.println();
     }
     
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {
-        printTree(writer, indent, "");
+        printTree(Locale.getDefault(), writer, indent, "");
     }
     
     /** {@inheritDoc} */
     @Override
-    public void printTree(PrintWriter writer, String indent, String currentIndent) {
-        printTreeRow(writer, currentIndent);
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        printTree(locale, writer, indent, "");
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
+        printTreeRow(locale, writer, currentIndent);
 
         if (_socket != null) {
-            _socket.printTree(writer, indent, currentIndent+indent);
+            _socket.printTree(locale, writer, indent, currentIndent+indent);
         }
     }
     

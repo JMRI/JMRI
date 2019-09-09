@@ -19,6 +19,14 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         return null;
     }
     
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format(
+                "Read analog E1 and set analog A1%n" +
+                "  ?~ E1%n" +
+                "  !~ A1%n");
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DoAnalogAction("IQDA321"));
