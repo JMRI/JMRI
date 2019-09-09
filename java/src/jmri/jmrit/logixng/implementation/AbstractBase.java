@@ -146,7 +146,6 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
         }
     }
     
-    /** {@inheritDoc} */
     abstract protected void disposeMe();
     
     /** {@inheritDoc} */
