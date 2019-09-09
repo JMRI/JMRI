@@ -1,13 +1,9 @@
 package jmri.jmrit.logixng.analog.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
@@ -21,7 +17,6 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -35,12 +30,6 @@ import org.junit.Test;
  */
 public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBase {
 
-    @Test
-    public void testBundleLocale() {
-        Assert.assertEquals("strings are equal", "About 10,2", Bundle.getMessage(Locale.ENGLISH, "TitleAbout", 10.2));
-        Assert.assertEquals("strings are equal", "About 10,2", Bundle.getMessage(Locale.forLanguageTag("sv"), "TitleAbout", 10.2));
-    }
-    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

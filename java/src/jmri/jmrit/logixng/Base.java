@@ -139,7 +139,7 @@ public interface Base {
      * @return a long description
      */
     default public String getLongDescription() {
-        return getShortDescription(Locale.getDefault());
+        return getLongDescription(Locale.getDefault());
     }
     
     /**
