@@ -40,12 +40,14 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Execute A after 0 milliseconds%n" +
-                "  ! A%n");
+                "   ! A%n");
     }
     
     @Override
     public String getExpectedPrintedTreeFromRoot() {
-        return String.format("Set memory IM1%n");
+        return String.format(
+                "Execute A after 0 milliseconds%n" +
+                "   ! A%n");
     }
     
     @Test

@@ -18,6 +18,7 @@ import org.junit.runners.Suite;
     SocketTest.class,
     ActionLightTest.class,
     ActionSensorTest.class,
+    ActionTimerTest.class,
     ActionTurnoutTest.class,
     ActionThrottleTest.class,
 })
