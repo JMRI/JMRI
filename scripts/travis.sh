@@ -14,14 +14,14 @@ export MAVEN_OPTS=-Xmx1536m
 if [[ "${HEADLESS}" == "true" ]] ; then
     if [[ "${STATIC}" == "true" ]] ; then
         # compile with ECJ for warnings or errors
-        mvn antrun:run -Danttarget=tests-warnings-check
+        mvn clean compile -P travis-tests-warnings-check
         # run SpotBugs only on headless, failing build if bugs are found
         # SpotBugs configuration is in pom.xml
         mvn clean test -U -P travis-spotbugs --batch-mode
         # run Javadoc
         mvn javadoc:javadoc -U --batch-mode
         # check html
-        mvn antrun:run -Danttarget=scanhelp
+        mvn exec:exec -P travis-scanhelp
     else
         # run headless tests
         mvn test -U -P travis-headless --batch-mode \
