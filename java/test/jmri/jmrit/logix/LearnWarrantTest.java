@@ -33,7 +33,7 @@ import org.netbeans.jemmy.operators.WindowOperator;
 public class LearnWarrantTest {
 
     @Rule
-    public RetryRule retryRule = new RetryRule(0);  // allow retry
+    public RetryRule retryRule = new RetryRule(1);  // allow retry
 
     private OBlockManager _OBlockMgr;
 
@@ -144,7 +144,7 @@ public class LearnWarrantTest {
 
         // wait for done
         final String name =  w.getDisplayName();
-        warrant.getRunModeMessage(); //throw away one read to help waitFor
+//        warrant.getRunModeMessage(); //throw away one read to help waitFor
         jmri.util.JUnitUtil.waitFor(()->{
             return w.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));
         }, "warrant not done");
