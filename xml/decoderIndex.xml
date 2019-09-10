@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.3ish+jake+20190801T1250Z+R6f115271af on Thu Aug 01 07:50:33 CDT 2019-->
-  <decoderIndex version="972">
+  <!--Written by JMRI version 4.17.4ish+jake+20190909T0548Z+R3eac499165 on Sun Sep 08 22:49:13 PDT 2019-->
+  <decoderIndex version="974">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -16296,7 +16296,9 @@
         </model>
         <model model="ECO-RTR SD38 w/strobe" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="780" comment="Model E0101.004B" />
         <model model="ECO-RTR SD38 w/strobe 2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="851" comment="Model E0101.002B" />
-        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E????.???" />
+        <model model="ECO-RTR SD40" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="862" comment="Model E0102.001" />
+        <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="975" comment="Model E0102.011" />
+        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E0102.005" />
         <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B" />
         <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???" />
         <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B" />
@@ -18477,6 +18479,7 @@
         <model model="TSU-GN2200 SD60M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="805" comment="Model T0302.004B" />
         <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="791" comment="Model T0303.001B" />
         <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="836" comment="Model T0303.001" />
+        <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="907" comment="Model T0303.005" />
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />

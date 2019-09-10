@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrix.can.cbus.Bundle {
+public class Bundle extends jmri.jmrix.can.cbus.swing.Bundle {
 
     @CheckForNull
     private static final String name = null; // NOI18N
