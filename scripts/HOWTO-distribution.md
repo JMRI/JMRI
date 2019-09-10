@@ -490,7 +490,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.17.5". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.16 cycle. It's intended to be created around (July 12) from the `HEAD` of the `master` branch.
+This is the next release in the 4.17 cycle. It's intended to be created around (July 12) from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v4.17.4 for release 4.17.4) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.17.4) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -547,7 +547,7 @@ git push github
     
 Test version 4.17.4 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2019.
+This is the next in a series of test releases that will culminate in a production release, hopefully in early December 2019.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
