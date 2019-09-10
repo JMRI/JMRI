@@ -220,7 +220,7 @@ git push github
      bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.17.4.shtml
      
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft=warnings.shtml ../website/releasenotes/jmri4.17.4.shtml
+     bbedit help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.17.4.shtml
      
 - Clean out the unneeded sections from the release note
 
@@ -437,10 +437,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.4+R12d2ded.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+R12d2ded.dmg) | cafed6ba6c104edbc9ab2cbb61e3d5ffae8d18f2fd1a786130510a602025fcd6
-[JMRI.4.17.4+R12d2ded.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+R12d2ded.exe) | 7786d7b6e86ca84aaf53f975ee16a083fee908d1de26957a0653d7c644636a1f
-[JMRI.4.17.4+R12d2ded.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+R12d2ded.tgz) | 60e6643df875ff2a1fc553059adbd112e813c1a1390411bc502b32978a751518
-
+[JMRI.4.17.4+Rbf0d1af.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+Rbf0d1af.dmg) | 39ed7fa9e2b4753c415f5e1399c750eb048fc7bc52284f054d9f7bdeaf41c924
+[JMRI.4.17.4+Rbf0d1af.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+Rbf0d1af.exe) | b053fcd1b8019afc122b47d39031ce38c3a6805b54c16cbb43df9a2cf1e2e04a
+[JMRI.4.17.4+Rbf0d1af.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+Rbf0d1af.tgz) | c4a7f34191987f0c5ad8294b3c0b0cc0f407fd40960366af5b3fd9d6faf2810f
 
 
 ```
