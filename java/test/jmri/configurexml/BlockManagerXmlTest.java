@@ -37,7 +37,7 @@ public class BlockManagerXmlTest {
         JUnitUtil.initLayoutBlockManager();
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTestBu.xml"));
+                .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
 
         // check existence of blocks
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
