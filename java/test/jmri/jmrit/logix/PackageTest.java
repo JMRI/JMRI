@@ -14,8 +14,8 @@ import org.junit.runners.Suite;
         WarrantTest.class,
         LogixActionTest.class,
         BundleTest.class,
-        jmri.jmrit.logix.configurexml.PackageTest.class,
-        NXFrameTest.class, //formerly NXWarrantTest        
+       jmri.jmrit.logix.configurexml.PackageTest.class,
+        NXFrameTest.class, //formerly NXWarrantTest    
         LearnWarrantTest.class,
         LinkedWarrantTest.class,
         PortalManagerTest.class,

@@ -51,17 +51,7 @@ public class LinkedWarrantTest {
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor1);
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor1.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        jmri.util.JUnitUtil.waitFor(() -> {
-            OBlock block = _OBlockMgr.getBySystemName("OB12");
-            return (block.getState() & OBlock.OCCUPIED) != 0;
-        }, "block OB12 occupied");
+        NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -91,9 +81,8 @@ public class LinkedWarrantTest {
             return m.startsWith("Warrant");
         }, "LoopDeLoop finished first leg");
 
-X        jmri.util.JUnitUtil.waitFor(() -> {
+        jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            System.out.println(m);
             return m.endsWith("Cmd #8.");
         }, "Loopy 2 starts to move at 8th command");
 
@@ -135,17 +124,7 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
         final Sensor sensor12 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor12);
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor12.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Set "+sensor12.getDisplayName()+" ACTIVE Exception: " + e);
-            }
-        });
-        jmri.util.JUnitUtil.waitFor(() -> {
-            OBlock block = _OBlockMgr.getBySystemName("OB12");
-            return (block.getState() & OBlock.OCCUPIED) != 0;
-        }, "block OB12 occupied");
+        NXFrameTest.setAndConfirmSensorAction(sensor12, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -173,13 +152,8 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor1.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Set "+sensor1.getDisplayName()+" ACTIVE Exception: " + e);
-            }
-        });
+        NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
+
         warrant = _warrantMgr.getWarrant("WestToEast");
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -223,17 +197,7 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
         final Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor1.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Set "+sensor1.getDisplayName()+" ACTIVE Exception: " + e);
-            }
-        });
-        jmri.util.JUnitUtil.waitFor(() -> {
-            OBlock block = _OBlockMgr.getBySystemName("OB1");
-            return (block.getState() & OBlock.OCCUPIED) != 0;
-        }, "block OB1 occupied");
+        NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -287,7 +251,6 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
-            System.out.println(m);
             return m.startsWith("Warrant");
         }, "WestToEastLink finished third leg");
 
@@ -322,17 +285,7 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor0.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Set "+sensor0.getDisplayName()+" ACTIVE Exception: " + e);
-            }
-        });
-        jmri.util.JUnitUtil.waitFor(() -> {
-            OBlock block = _OBlockMgr.getBySystemName("OB0");
-            return (block.getState() & OBlock.OCCUPIED) != 0;
-        }, "block OB0 occupied");
+        NXFrameTest.setAndConfirmSensorAction(sensor0, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB0"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
@@ -360,13 +313,8 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
 
         Sensor sensor7 = _sensorMgr.getBySystemName("IS7");
         Assert.assertNotNull("Senor IS7 not found", sensor7);
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor7.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Set "+sensor7.getDisplayName()+" ACTIVE Exception: " + e);
-            }
-        });
+        NXFrameTest.setAndConfirmSensorAction(sensor7, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB7"));
+
         warrant = _warrantMgr.getWarrant("Evers");
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -387,13 +335,8 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
 
         Sensor sensor6 = _sensorMgr.getBySystemName("IS6");
         Assert.assertNotNull("Senor IS6 not found", sensor6);
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sensor6.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Set "+sensor6.getDisplayName()+" ACTIVE Exception: " + e);
-            }
-        });
+        NXFrameTest.setAndConfirmSensorAction(sensor6, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB6"));
+
         Warrant www = _warrantMgr.getWarrant("Chance");
 
         jmri.util.JUnitUtil.waitFor(() -> {

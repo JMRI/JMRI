@@ -1292,7 +1292,11 @@ public class WarrantFrame extends WarrantRoute {
         long endTime = System.currentTimeMillis();
         long time = endTime - _startTime;
         _startTime = endTime;
-        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName, _speed));
+        ThrottleSetting ts = new ThrottleSetting(time, cmd, value, bName, _speed);
+        if (log.isDebugEnabled()) {
+            log.debug("setThrottleCommand= {}", ts.toString());
+        }
+        _throttleCommands.add(ts);
         _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());

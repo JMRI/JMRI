@@ -33,7 +33,7 @@ import org.netbeans.jemmy.operators.WindowOperator;
 public class LearnWarrantTest {
 
     @Rule
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+    public RetryRule retryRule = new RetryRule(0);  // allow retry
 
     private OBlockManager _OBlockMgr;
 
@@ -55,12 +55,11 @@ public class LearnWarrantTest {
          * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
         */
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-//        ControlPanelEditor panel = (ControlPanelEditor)null;
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         InstanceManager.getDefault(SensorManager.class);
 
-        Warrant w = new Warrant("IW00", "Learning");
-        WarrantFrame frame = new WarrantFrame(w, true);
+        Warrant warrant = new Warrant("IW00", "Learning");
+        WarrantFrame frame = new WarrantFrame(warrant, true);
 
         frame._origin.blockBox.setText("OB1");
         frame._destination.blockBox.setText("OB5");
@@ -92,12 +91,11 @@ public class LearnWarrantTest {
 
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
-        sensor.setState(Sensor.ACTIVE);
-        
         OBlock blk = _OBlockMgr.getOBlock(route[0]);
+        NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, blk);
+        
         JUnitUtil.waitFor(() -> {
-            int state = blk.getState();
-            return  state == (OBlock.ALLOCATED | OBlock.OCCUPIED);
+            return  (blk.getState() & OBlock.ALLOCATED | OBlock.OCCUPIED) != 0;
         }, "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
@@ -106,10 +104,17 @@ public class LearnWarrantTest {
         }, "Found throttle");
         Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
 
-        sensor = recordtimes(route, frame._learnThrottle.getThrottle());
+        Sensor lastSensor = recordtimes(route, frame._learnThrottle.getThrottle());
 
         pressButton(jfo, Bundle.getMessage("Stop"));
+        JUnitUtil.waitFor(() -> {
+            return  (blk.getState() & OBlock.ALLOCATED) == 0;
+        }, "Warrant deallocated");
+        // warrant has been recorded using engine 99
+        // now playback using engine 111
 
+        NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE, 
+                _OBlockMgr.getOBlock(route[route.length-1]));
         // change address and run
         frame._speedUtil.setDccAddress("111");
         frame.setTrainInfo("111");
@@ -119,21 +124,18 @@ public class LearnWarrantTest {
         address = frame._speedUtil.getDccAddress();
         Assert.assertEquals("address=111", 111, address.getNumber());
 
-        sensor.setState(Sensor.INACTIVE);
-
-        OBlock block = _OBlockMgr.getBySystemName(route[0]);
-        sensor = block.getSensor();
-        sensor.setState(Sensor.ACTIVE);
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return (block.getState() & OBlock.OCCUPIED) != 0;
-        }, "route[0 occupied");
+        NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, blk);
+        JUnitUtil.waitFor(() -> {
+            return  (blk.getState() & OBlock.ALLOCATED | OBlock.OCCUPIED) != 0;
+        }, "Train 111 occupies block ");
         
         pressButton(jfo, Bundle.getMessage("ARun"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        List<ThrottleSetting> list = warrant.getThrottleCommands();
+        Assert.assertTrue("No Throttle Commands", list != null && !list.isEmpty());
 
-        final Warrant warrant = w;
-X        jmri.util.JUnitUtil.waitFor(() -> {
-            String m =  warrant.getRunningMessage();
+        final Warrant w = warrant;
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  w.getRunningMessage();
             return m.endsWith("Cmd #3.");
         }, "Train starts to move at 3rd command");
 
@@ -144,17 +146,14 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
         final String name =  w.getDisplayName();
         warrant.getRunModeMessage(); //throw away one read to help waitFor
         jmri.util.JUnitUtil.waitFor(()->{
-            return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));
+            return w.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));
         }, "warrant not done");
          
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
-        w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
+        warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
         Assert.assertEquals("12 ThrottleCommands", 12, commands.size());
-        /*
-        for (ThrottleSetting ts: commands) {
-            System.out.println(ts.toString());
-        }*/
+
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
 //        WarrantTableFrame tableFrame = (WarrantTableFrame)jmri.util.JmriJFrame.getFrame(Bundle.getMessage("WarrantTable"));
         Assert.assertNotNull("Warrant Table save", tableFrame);
@@ -189,12 +188,14 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         float speed = 0.1f;
         if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");
         }
         throttle.setSpeedSetting(speed);
-        Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
+        OBlock block = _OBlockMgr.getBySystemName(route[0]);
+        Sensor sensor = block.getSensor();
         for (int i=1; i<route.length; i++) {
             if (i<3) {
                 speed += 0.1f;
@@ -203,14 +204,12 @@ X        jmri.util.JUnitUtil.waitFor(() -> {
             }
             throttle.setSpeedSetting(speed);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            OBlock block = _OBlockMgr.getBySystemName(route[i]);
-            Sensor sensorNext = block.getSensor();
-            sensorNext.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return (block.getState() & OBlock.OCCUPIED) != 0;
-            }, "route[i] occupied");
-            sensor.setState(Sensor.INACTIVE);
+            OBlock blockNext = _OBlockMgr.getBySystemName(route[i]);
+            Sensor sensorNext = blockNext.getSensor();
+            NXFrameTest.setAndConfirmSensorAction(sensorNext, Sensor.ACTIVE, blockNext);
+            NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             sensor = sensorNext;
+            block = blockNext;
         }
         // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
         throttle.setSpeedSetting(0.0f);

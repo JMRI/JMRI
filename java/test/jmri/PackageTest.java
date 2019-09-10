@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-/*    AnalogIOTest.class,
+    AnalogIOTest.class,
     BeanSettingTest.class,
     BundleTest.class,
     NamedBeanHandleManagerTest.class,
@@ -42,9 +42,9 @@ import org.junit.runners.Suite;
     jmri.configurexml.PackageTest.class,
     jmri.implementation.PackageTest.class,
     jmri.managers.PackageTest.class,
-    jmri.jmrix.PackageTest.class,*/
+    jmri.jmrix.PackageTest.class,
     jmri.jmrit.PackageTest.class,
-/*    jmri.swing.PackageTest.class,
+    jmri.swing.PackageTest.class,
     jmri.util.PackageTest.class,
     jmri.web.PackageTest.class,
     jmri.jmris.PackageTest.class,
@@ -72,7 +72,7 @@ import org.junit.runners.Suite;
     EntryPointTest.class,
     NamedBeanPropertyDescriptorTest.class,
     BooleanPropertyDescriptorTest.class,
-    RunCucumberTest.class,*/})
+    RunCucumberTest.class,})
 
 /**
  * Invoke complete set of tests for the Jmri package

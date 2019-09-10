@@ -49,7 +49,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This singleton class displays a table of the occupancy detection trackers
+ * This singleton class displays a table of the occupancy detection trackers. It does
+ * the listening of block sensors for all the Trackers and chooses the tracker most
+ * likely to have entered a block becoming active or leaving a block when it 
+ * becomes inactive.
  *
  * @author Peter Cressman
  *
@@ -84,9 +87,19 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         return false;
     }
 
+    /**
+     * Create and register a new Tracker.
+     * @param block starting head block of the Tracker
+     * @param name name of the Tracker
+     * @param marker LocoIcon dropped on the block (optional)
+     * @return true if successfully created.
+     */
     public boolean markNewTracker(OBlock block, String name, LocoIcon marker) {
         if (_frame == null) {
             _frame = new TableFrame();
+        }
+        if (name == null && marker != null) {
+            name = marker.getUnRotatedText();
         }
         return makeTracker(block, name, marker);
     }
@@ -116,6 +129,12 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         return true;
     }
 
+    /**
+     * Deprecated - use markNewTracker instead.
+     * @param block starting head block of the Tracker
+     * @param name name of the Tracker
+     * @return the new Tracker
+     */
     @Deprecated
     public Tracker addTracker(OBlock block, String name) {
         markNewTracker(block, name, null);
