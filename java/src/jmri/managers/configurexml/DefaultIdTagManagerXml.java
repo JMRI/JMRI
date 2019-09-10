@@ -35,6 +35,17 @@ public class DefaultIdTagManagerXml extends XmlFile {
          IDTAG_BASE_FILENAME = baseFileName;
     }
 
+    public void store() throws java.io.IOException {
+        log.debug("Storing...");
+        log.debug("Using file: {}", getDefaultIdTagFileName());
+        createFile(getDefaultIdTagFileName(), true);
+        try {
+            writeFile(getDefaultIdTagFileName());
+        } catch (FileNotFoundException ex) {
+            log.error("File not found while writing IdTag file, may not be complete: {}", (Object) ex);
+        }
+    }
+
     public void load() {
         log.debug("Loading...");
         try {
@@ -42,17 +53,6 @@ public class DefaultIdTagManagerXml extends XmlFile {
         } catch (JDOMException | IOException ex) {
             log.error("Exception during IdTag file reading: {}", (Object) ex);
         }
-    }
-
-    public void store() throws java.io.IOException {
-            log.debug("Storing...");
-            log.debug("Using file: {}", getDefaultIdTagFileName());
-            createFile(getDefaultIdTagFileName(), true);
-            try {
-                writeFile(getDefaultIdTagFileName());
-            } catch (FileNotFoundException ex) {
-                log.error("File not found while writing IdTag file, may not be complete: {}", (Object) ex);
-            }
     }
 
     private File createFile(String fileName, boolean backup) {

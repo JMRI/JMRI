@@ -45,10 +45,6 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             }
             // store the Reporters
             for (Reporter r : rList) {
-                if (r == null) {
-                    log.error("Reporter null during store, skipped");
-                    break;
-                }
                 String rName = r.getSystemName();
                 log.debug("system name is {}", rName);
                 Element elem = new Element("reporter");

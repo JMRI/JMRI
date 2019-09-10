@@ -59,10 +59,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             }
             for (SignalHead sh : shList) {
                 // store the signalheads
-                if (sh == null) {
-                    log.error("SignalHead null during store, skipped");
-                    break;
-                }
                 String shName = sh.getSystemName();
                 log.debug("system name is {}", shName);
                 Element e = ConfigXmlManager.elementFromObject(sh);

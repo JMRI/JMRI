@@ -49,10 +49,6 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
             }
             // store the memories
             for (Memory m : memList) {
-                if (m == null) {
-                    log.error("Memory null during store, skipped");
-                    break;
-                }
                 String mName = m.getSystemName();
                 log.debug("system name is {}", mName);
 

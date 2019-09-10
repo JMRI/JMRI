@@ -51,10 +51,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // store the conditionals
                 // numCond++;
                 // long condTime = System.currentTimeMillis();
-                if (c == null) {
-                    log.error("Conditional null during store, skipped");  // NOI18N
-                    break;
-                }
                 String cName = c.getSystemName();
                 log.debug("conditional system name is {}", cName);  // NOI18N
 

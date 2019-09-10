@@ -55,10 +55,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         }
         // store the sensors
         for (Sensor s : sensorList) {
-            if (s == null) {
-                log.error("Sensor null during store, skipped");
-                break;
-            }
             String sName = s.getSystemName();
             log.debug("system name is {}", sName);
             String inverted = (s.getInverted() ? "true" : "false");

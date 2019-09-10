@@ -41,10 +41,6 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             }
             // store the Logix
             for (Logix x : logixList) {
-                if (x == null) {
-                    log.error("Logix null during store, skipped");  // NOI18N
-                    break;
-                }
                 String xName = x.getSystemName();
                 log.debug("Logix system name is {}", xName);  // NOI18N
                 boolean enabled = x.getEnabled();

@@ -85,10 +85,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             if (true) {
                 // write out first set of blocks without contents
                 for (Block b : blkList) {
-                    if (b == null) {
-                        log.error("Block null during store1, skipped");
-                        break;
-                    }
                     try {
                         String bName = b.getSystemName();
                         Element elem = new Element("block");
@@ -115,10 +111,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
             // write out with contents
             for (Block b : blkList) {
-                if (b == null) {
-                    log.error("Block null during store2, skipped");
-                    break;
-                }
                 String bName = b.getSystemName();
                 String uName = b.getUserName();
                 if (uName == null) {
@@ -183,7 +175,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         return blocks;
     }
 
-    void addPath(Element e, Path p) {
+    private void addPath(Element e, Path p) {
         // for now, persist two directions and a bean setting
         Element pe = new Element("path");
         pe.setAttribute("todir", "" + p.getToBlockDirection());
@@ -193,14 +185,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         }
         List<BeanSetting> l = p.getSettings();
         if (l != null) {
-            for (int i = 0; i < l.size(); i++) {
-                addBeanSetting(pe, l.get(i));
+            for (BeanSetting bSet : l) {
+                addBeanSetting(pe, bSet);
             }
         }
         e.addContent(pe);
     }
 
-    void addBeanSetting(Element e, BeanSetting bs) {
+    private void addBeanSetting(Element e, BeanSetting bs) {
         // persist bean name, type and value
         Element bse = new Element("beansetting");
         // for now, assume turnout

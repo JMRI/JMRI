@@ -60,10 +60,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             turnouts.addContent(new Element("defaultthrownspeed").addContent(defaultthrown));
             for (Turnout t : tList) {
                 // store the turnouts
-                if (t == null) {
-                    log.error("Turnout null during store, skipped");
-                    continue;
-                }
                 String tName = t.getSystemName();
                 log.debug("system name is {}", tName);
 

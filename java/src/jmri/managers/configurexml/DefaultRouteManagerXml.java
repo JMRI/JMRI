@@ -44,10 +44,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
             for (Route r : routeList) {
                 // store the routes
-                if (r == null) {
-                    log.error("Route null during store, skipped");
-                    break;
-                }
                 String rName = r.getSystemName();
                 log.debug("system name is {}", rName);
 

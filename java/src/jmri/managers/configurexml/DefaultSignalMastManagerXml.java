@@ -164,7 +164,6 @@ public class DefaultSignalMastManagerXml
             }
             m.initialiseRepeaters();
         }
-
         return result;
     }
 

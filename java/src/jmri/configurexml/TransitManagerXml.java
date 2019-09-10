@@ -31,7 +31,6 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element transits = new Element("transits");
         setStoreElementClass(transits);
@@ -45,10 +44,6 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 
             // store the Transit
             for (Transit transit : tstList) {
-                if (transit == null) {
-                    log.error("Transit null during store, skipped");
-                    break;
-                }
                 String tstName = transit.getSystemName();
                 log.debug("Transit system name is {}", tstName);
 

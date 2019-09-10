@@ -48,10 +48,6 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             }
             for (Light lgt : lightList) {
                 // store the lights
-                if (lgt == null) {
-                    log.error("Light null during store, skipped");
-                    break;
-                }
                 String lName = lgt.getSystemName();
                 log.debug("system name is {}", lName);
                 Element elem = new Element("light");
