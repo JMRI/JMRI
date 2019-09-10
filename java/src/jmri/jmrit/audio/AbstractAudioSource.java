@@ -3,6 +3,7 @@ package jmri.jmrit.audio;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -849,6 +850,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     // which means things like tables and persistance 
     // might not behave properly.
     @Override
+    @Nonnull
     public String toString() {
         return "Pos: " + this.getPosition().toString()
                 + ", bound to: " + this.getAssignedBufferName()

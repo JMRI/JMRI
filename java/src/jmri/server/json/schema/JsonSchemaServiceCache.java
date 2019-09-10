@@ -216,11 +216,10 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         }
         if (errors != null && !errors.isEmpty()) {
             log.warn("Errors validating {}", node);
-            errors.forEach((error) -> {
+            errors.forEach(error -> 
                 log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(), error.getMessage(),
-                        error.getPath(), error.getType());
-            });
-            throw new JsonException(server ? 500 : 400, Bundle.getMessage(locale, "LoggedError"), id);
+                        error.getPath(), error.getType()));
+            throw new JsonException(server ? 500 : 400, Bundle.getMessage(locale, JsonException.LOGGED_ERROR), id);
         }
     }
 
@@ -230,30 +229,18 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
             for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
                 JsonHttpService service = factory.getHttpService(this.mapper);
                 for (String type : factory.getTypes()) {
-                    Set<JsonHttpService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
+                    Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
                     this.clientTypes.add(type);
                     this.serverTypes.add(type);
                     set.add(service);
                 }
                 for (String type : factory.getSentTypes()) {
-                    Set<JsonHttpService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
+                    Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
                     this.serverTypes.add(type);
                     set.add(service);
                 }
                 for (String type : factory.getReceivedTypes()) {
-                    Set<JsonHttpService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
+                    Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
                     this.clientTypes.add(type);
                     set.add(service);
                 }

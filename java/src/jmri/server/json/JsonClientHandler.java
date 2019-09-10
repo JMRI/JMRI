@@ -37,7 +37,7 @@ public class JsonClientHandler {
      * cause a {@value jmri.server.json.JSON#HELLO} message to be sent to the
      * client.
      */
-    public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
+    public static final String HELLO_MSG = "{\"" + TYPE + "\":\"" + HELLO + "\"}";
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
     private final JsonServerPreferences preferences = InstanceManager.getDefault(JsonServerPreferences.class);
@@ -46,7 +46,7 @@ public class JsonClientHandler {
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        ServiceLoader.load(JsonServiceFactory.class).forEach((factory) -> {
+        ServiceLoader.load(JsonServiceFactory.class).forEach(factory -> {
             JsonSocketService<?> service = factory.getSocketService(connection);
             for (String type : factory.getTypes()) {
                 HashSet<JsonSocketService<?>> set = this.services.get(type);
@@ -68,11 +68,8 @@ public class JsonClientHandler {
     }
 
     public void onClose() {
-        services.values().stream().forEach((set) -> {
-            set.stream().forEach((service) -> {
-                service.onClose();
-            });
-        });
+        services.values().stream().forEach(set -> set.stream()
+                .forEach(service -> service.onClose()));
         services.clear();
     }
 
@@ -86,8 +83,9 @@ public class JsonClientHandler {
      * @see #onMessage(JsonNode)
      */
     public void onMessage(String string) throws IOException {
-        if (string.equals("{\"type\":\"ping\"}")) { //turn down the noise when debugging
-            log.trace("Received from client: '{}'", string);            
+        if (string.equals("{\"type\":\"ping\"}")) {
+            // turn down the noise when debugging
+            log.trace("Received from client: '{}'", string);
         } else {
             log.debug("Received from client: '{}'", string);
         }
@@ -95,7 +93,8 @@ public class JsonClientHandler {
             this.onMessage(this.connection.getObjectMapper().readTree(string));
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"{}\"\n{}", string, pe.getMessage());
-            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()), 0);
+            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()), 0);
         }
     }
 
@@ -117,33 +116,32 @@ public class JsonClientHandler {
             if (preferences.getValidateClientMessages()) {
                 this.schemas.validateMessage(root, false, this.connection.getLocale(), id);
             }
-            if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
-                    && root.path(LIST).isValueNode()) {
+            if ((root.path(TYPE).isMissingNode() || type.equals(LIST)) && root.path(LIST).isValueNode()) {
                 type = root.path(LIST).asText();
                 method = LIST;
             }
             if (data.isMissingNode()) {
-                if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
-                        || (method.equals(LIST) || method.equals(GET))) {
+                if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE)) ||
+                        (method.equals(LIST) || method.equals(GET))) {
                     // these messages are not required to have a data payload,
                     // so create one if the message did not contain one to avoid
                     // special casing later
                     data = this.connection.getObjectMapper().createObjectNode();
                 } else {
-                    this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"), id);
+                    this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST,
+                            Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"), id);
                     return;
                 }
             }
-            if (root.path(METHOD).isMissingNode()) { // method not explicitly set
-                if (data.path(METHOD).isValueNode()) {
-                    // at one point, we used method within data, so check there also
-                    method = data.path(METHOD).asText(JSON.GET);
-                }
+            // method not explicitly set in root, but set in data
+            if (root.path(METHOD).isMissingNode() && data.path(METHOD).isValueNode()) {
+                // at one point, we used method within data, so check there also
+                method = data.path(METHOD).asText(JSON.GET);
             }
-            if (type.equals(PING)) { //turn down the noise a bit
+            if (type.equals(PING)) { // turn down the noise a bit
                 log.trace("Processing '{}' with '{}'", type, data);
             } else {
-                log.debug("Processing '{}' with '{}'", type, data);                
+                log.debug("Processing '{}' with '{}'", type, data);
             }
             if (method.equals(LIST)) {
                 if (this.services.get(type) != null) {
@@ -153,7 +151,8 @@ public class JsonClientHandler {
                     return;
                 } else {
                     log.warn("Requested list type '{}' unknown.", type);
-                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type), id);
+                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(this.connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
                     return;
                 }
             } else if (!data.isMissingNode()) {
@@ -169,17 +168,20 @@ public class JsonClientHandler {
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);
-                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type), id);
+                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND,
+                            Bundle.getMessage(this.connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
                 }
             } else {
-                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"), id);
+                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST,
+                        Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"), id);
             }
             if (type.equals(GOODBYE)) {
                 // close the connection if GOODBYE is received.
                 this.connection.close();
             }
         } catch (JmriException je) {
-            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()), id);
+            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(
+                    this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()), id);
         } catch (JsonException je) {
             this.sendErrorMessage(je);
         }

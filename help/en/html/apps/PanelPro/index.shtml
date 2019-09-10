@@ -94,7 +94,7 @@
             "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
             In addition, the Layout description of your railway can be
             used by scripts such as the included
-            <a href="../..//tools/scripting/Examples.shtml">AutoDispatcher2</a>
+            <a href="../../tools/scripting/Examples.shtml">AutoDispatcher2</a>
             to automatically control your trains. There are many other
             tools within JMRI which require a description of your
             railroad and the description comes from the Layout built in

@@ -183,7 +183,7 @@ public abstract class JsonHttpService {
      * @throws JsonException if an error occurs preparing schema; if type is is
      *                           not a type handled by this service, this must
      *                           be thrown with an error code of 500 and the
-     *                           localized message "ErrorUnknownType"
+     *                           localized message ERROR_UNKNOWN_TYPE
      */
     @Nonnull
     public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, int id)

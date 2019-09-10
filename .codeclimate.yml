@@ -27,6 +27,10 @@ checks:
   similar-code:
     config:
       threshold: # language-specific defaults. an override will affect all languages.
+      exclude_patterns:
+      - "**/Bundle.java"
   identical-code:
     config:
       threshold: # language-specific defaults. an override will affect all languages.
+      exclude_patterns:
+      - "**/Bundle.java"
