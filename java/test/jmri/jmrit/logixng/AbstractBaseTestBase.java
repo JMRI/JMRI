@@ -240,6 +240,6 @@ public abstract class AbstractBaseTestBase {
         
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
+//    private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }
