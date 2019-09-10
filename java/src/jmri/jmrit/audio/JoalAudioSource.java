@@ -519,7 +519,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     @Override
     protected void cleanup() {
         log.debug("Cleanup JoalAudioSource ({})", this.getSystemName());
-        if (_initialised && isAudioAlive() && (isBound() || isQueued())) {
+        if (_initialised) {
             al.alSourceStop(_source[0]);
             al.alDeleteSources(1, _source, 0);
             this._source = null;
