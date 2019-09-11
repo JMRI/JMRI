@@ -39,9 +39,8 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         setStoreElementClass(memories);
         MemoryManager tm = (MemoryManager) o;
         if (tm != null) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
+            java.util.Iterator<Memory> iter
+                    = tm.getNamedBeanSet().iterator();
 
             // don't return an element if there are not memories to include
             if (!iter.hasNext()) {
@@ -50,13 +49,10 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             // store the memories
             while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    break;
-                }
+                Memory m = iter.next();
+                String sname = m.getSystemName();
                 log.debug("system name is " + sname);
-                Memory m = tm.getBySystemName(sname);
+
                 Element elem = new Element("memory");
                 elem.addContent(new Element("systemName").addContent(sname));
 

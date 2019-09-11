@@ -2,12 +2,10 @@
  * The JMRI JSON Services provide access to JMRI via JSON data objects via a
  * RESTful interface over HTTP or via JSON messages via a socket interface over
  * TCP or WebSockets.
- * 
- * <h2 id="schema">Schema</h2>
- * 
- * The JMRI JSON protocol has two sets of schema, one for messages from clients
- * to a JMRI server, and one for messages from a JMRI server to clients. The
- * core schema for socket interfaces are the <a href=
+ * <h2 id="schema">Schema</h2> The JMRI JSON protocol has two sets of schema,
+ * one for messages from clients to a JMRI server, and one for messages from a
+ * JMRI server to clients. The core schema for socket interfaces are the
+ * <a href=
  * "https://raw.githubusercontent.com/JMRI/JMRI/master/java/src/jmri/server/json/schema/json-client.json">client
  * schema</a> and <a href=
  * "https://raw.githubusercontent.com/JMRI/JMRI/master/java/src/jmri/server/json/schema/json-server.json">server
@@ -20,14 +18,11 @@
  * "http://localhost:12080/json/type">http://my-jmri-server:12080/json/type</a>
  * and individual schema for each data object type at <a href=
  * "http://localhost:12080/json/schema/type">http://my-jmri-server:12080/json/schema/<em>type</em></a>
- * 
- * <h2 id="methods">Methods</h2>
- * 
- * The JMRI JSON services accept four methods, all of which directly correspond
- * to HTTP 1.1 methods. The socket services accept one non-HTTP 1.1 method
- * <code>{@value jmri.server.json.JSON#LIST}</code> to allow the listing of
- * objects (in the HTTP service, this is an HTTP GET). In the socket
- * implementations, the method is specified using the
+ * <h2 id="methods">Methods</h2> The JMRI JSON services accept four methods, all
+ * of which directly correspond to HTTP 1.1 methods. The socket services accept
+ * one non-HTTP 1.1 method <code>{@value jmri.server.json.JSON#LIST}</code> to
+ * allow the listing of objects (in the HTTP service, this is an HTTP GET). In
+ * the socket implementations, the method is specified using the
  * <code>{@value jmri.server.json.JSON#METHOD}</code> name in the message object
  * with one of the following values:
  * <dl>
@@ -51,7 +46,6 @@
  * <code>type</code>. The equivalent form in the RESTful interface is a
  * <code>GET</code> request to <code>/json/&lt;type&gt;</code>.</dd>
  * </dl>
- *
  * <h2 id="messages">Messages</h2>
  * <p>
  * Fundamentally, the JSON server passes messages as JSON Objects between a JMRI
@@ -80,7 +74,6 @@
  * <em>POST</em> and <em>PUT</em> requests may contain a JSON object that
  * corresponds to the <code>data</code> object in the socket interfaces.
  * </p>
- * 
  * <h3 id="exceptions">Exceptions</h3>
  * <p>
  * Exceptions to the above form for the socket interfaces are:
@@ -130,7 +123,6 @@
  * NamedBean supports creating a NamedBean without a system name. It is
  * generally safer to always use system names.
  * </p>
- *
  * <h2 id="history">Version History</h2>
  * <p>
  * Changes to the major number represent a backwards incompatible change in the
@@ -147,6 +139,14 @@
  * Starting with 5.0.0, the JSON protocol version follows semantic version
  * rules, prior to that the version is just a major.minor version.
  * <dl>
+ * <dt>5.1.0 (JMRI 4.17.4)</dt>
+ * <dd>
+ * <ul>
+ * <li>Fixes setting the car type for operations rolling stock</li>
+ * <li>Adds the settable property "carSubType" to include car type information
+ * that is not shown on manifests or switch lists</li>
+ * </ul>
+ * </dd>
  * <dt>5.0.0 (JMRI 4.15.4 with further changes in 4.15.6)</dt>
  * <dd>
  * <ul>
@@ -156,9 +156,9 @@
  * <li>Adds a framework for allowing a client to delete objects and handle
  * conflicts (mostly object is in use elsewhere types) when deleting
  * objects</li>
- * <li>Adds schemas that define valid JSON message for all types except consists; <a
- * href="https://github.com/JMRI/JMRI/issues/5002">#5002</a> is being used to track
- * progress on allowing schema validation at all times.</li>
+ * <li>Adds schemas that define valid JSON message for all types except
+ * consists; <a href="https://github.com/JMRI/JMRI/issues/5002">#5002</a> is
+ * being used to track progress on allowing schema validation at all times.</li>
  * </ul>
  * <p>
  * Introduces backwards-incompatible changes of:
@@ -199,7 +199,6 @@
  * <dt>1.0 (JMRI 3.4)</dt>
  * <dd>Initial release of JMRI JSON Protocol.</dd>
  * </dl>
- * 
  * <h2 id="notes">Notes</h2>
  * <p>
  * The JMRI JSON services are defined using {@link jmri.spi.JsonServiceFactory}

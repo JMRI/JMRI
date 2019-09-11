@@ -110,7 +110,6 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
-    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName() {
         return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
@@ -120,7 +119,6 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
-    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName(boolean userNameFirst) {
         return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }

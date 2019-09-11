@@ -27,13 +27,6 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         if (log.isDebugEnabled()) {
             log.debug("Init called");
         }
-        /*        float CSSoftwareVersion = systemMemo.getXNetTrafficController()
-                .getCommandStation()
-                .getCommandStationSoftwareVersion();*
-        int CSType = systemMemo.getXNetTrafficController()
-                .getCommandStation()
-                .getCommandStationType();*/
-
         InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new Z21XNetProgrammerManager(new Z21XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
@@ -55,6 +48,6 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetInitializationManager.class);
 
 }
