@@ -64,7 +64,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
         
-        expression2 = new StringExpressionMemory("IQSE11");
+        expression2 = new StringExpressionMemory("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
         Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
@@ -74,7 +74,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
         Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
         
-        expression2 = new StringExpressionMemory("IQSE11");
+        expression2 = new StringExpressionMemory("IQSE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
@@ -96,7 +96,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         boolean thrown = false;
         try {
             // Illegal system name
-            new StringExpressionMemory("IQA55:12:XY11");
+            new StringExpressionMemory("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }

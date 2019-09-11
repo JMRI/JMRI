@@ -21,16 +21,6 @@ public abstract class AbstractStringExpression extends AbstractBase
     private int _state = StringExpressionBean.UNKNOWN;
 
 
-    public AbstractStringExpression(String sys) throws BadSystemNameException {
-        super(sys);
-        
-        // Do this test here to ensure all the tests are using correct system names
-        Manager.NameValidity isNameValid = InstanceManager.getDefault(StringExpressionManager.class).validSystemNameFormat(mSystemName);
-        if (isNameValid != Manager.NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
-        }
-    }
-
     public AbstractStringExpression(String sys, String user) throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         

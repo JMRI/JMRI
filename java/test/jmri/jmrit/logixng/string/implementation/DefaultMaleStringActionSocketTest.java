@@ -66,7 +66,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
     private class MyAnalogAction extends AbstractStringAction {
         
         MyAnalogAction(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override

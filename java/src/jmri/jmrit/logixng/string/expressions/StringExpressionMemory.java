@@ -30,12 +30,6 @@ public class StringExpressionMemory extends AbstractStringExpression
     private NamedBeanHandle<Memory> _memoryHandle;
     private boolean _listenersAreRegistered = false;
     
-    public StringExpressionMemory(String sys) throws BadUserNameException,
-            BadSystemNameException {
-        
-        super(sys);
-    }
-
     public StringExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         

@@ -79,11 +79,7 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         StringExpressionMemory h;
-        if (uname == null) {
-            h = new StringExpressionMemory(sys);
-        } else {
-            h = new StringExpressionMemory(sys, uname);
-        }
+        h = new StringExpressionMemory(sys, uname);
 
         loadCommon(h, shared);
 

@@ -31,7 +31,7 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testCtor() {
-        StringExpressionBean expression = new StringExpressionMemory("IQSE321");
+        StringExpressionBean expression = new StringExpressionMemory("IQSE321", null);
         Assert.assertNotNull("exists", new DefaultMaleStringExpressionSocket(expression));
     }
     
@@ -44,7 +44,7 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        StringExpressionBean actionA = new StringExpressionMemory("IQSE321");
+        StringExpressionBean actionA = new StringExpressionMemory("IQSE321", null);
         Assert.assertNotNull("exists", actionA);
         StringExpressionBean actionB = new MyStringExpression("IQSE322");
         Assert.assertNotNull("exists", actionA);
@@ -73,7 +73,7 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
     private class MyStringExpression extends AbstractStringExpression {
         
         MyStringExpression(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override

@@ -127,7 +127,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _expression = new MyStringExpressionMemory("IQSE321");
         _expression.setMemory(_memory);
-        StringExpressionMemory otherExpression = new StringExpressionMemory("IQSE322");
+        StringExpressionMemory otherExpression = new StringExpressionMemory("IQSE322", null);
         maleSocket = new DefaultMaleStringExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleStringExpressionSocket(otherExpression);
         femaleSocket = new DefaultFemaleStringExpressionSocket(null, new FemaleSocketListener() {
@@ -155,7 +155,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         private boolean _hasBeenSetup = false;
         
         public MyStringExpressionMemory(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

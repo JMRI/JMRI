@@ -180,7 +180,7 @@ public class DefaultStringExpressionManagerXmlTest {
     private class MyStringExpression extends StringExpressionMemory {
         
         MyStringExpression() {
-            super("IQSE9999");
+            super("IQSE9999", null);
         }
         
     }

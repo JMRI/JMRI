@@ -638,7 +638,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
                     socketSecondMany.getChild(index++).connect(socket);
                     
-                    StringExpressionMemory stringExpressionMemory = new StringExpressionMemory(getSystemNamePrefix()+"SE:00001");
+                    StringExpressionMemory stringExpressionMemory = new StringExpressionMemory(getSystemNamePrefix()+"SE:00001", null);
                     stringExpressionMemory.setMemory(memory3);
                     MaleSocket socketStringExpressionMemory = InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpressionMemory);
 
