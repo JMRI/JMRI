@@ -7,8 +7,8 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Test AbstractAnalogExpression
@@ -65,6 +65,15 @@ public abstract class AbstractBaseTestBase {
     @Test
     public void testIsActive() {
         Assert.assertTrue(_base.isActive());
+        if (_base instanceof MaleSocket) {
+            ((MaleSocket)_base).setEnabled(false);
+            Assert.assertFalse(_base.isActive());
+            ((MaleSocket)_base).setEnabled(true);
+        } else if (_base.getParent() instanceof MaleSocket) {
+            ((MaleSocket)_base.getParent()).setEnabled(false);
+            Assert.assertFalse(_base.isActive());
+            ((MaleSocket)_base.getParent()).setEnabled(true);
+        }
     }
     
     /**
