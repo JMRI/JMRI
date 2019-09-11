@@ -30,28 +30,10 @@ public class Many extends AbstractDigitalAction
     private boolean _enableExecution;
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
     
-    /**
-     * Create a new instance of ActionMany and generate a new system name.
-     */
-    public Many() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        init();
-    }
-
-    public Many(String sys) throws BadSystemNameException {
-        super(sys);
-        init();
-    }
-
     public Many(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         init();
-    }
-
-    public Many(String sys, List<Map.Entry<String, String>> actionSystemNames) throws BadSystemNameException {
-        super(sys);
-        setActionSystemNames(actionSystemNames);
     }
 
     public Many(String sys, String user, List<Map.Entry<String, String>> actionSystemNames)
@@ -60,8 +42,8 @@ public class Many extends AbstractDigitalAction
         setActionSystemNames(actionSystemNames);
     }
     
-    private Many(Many template, String sys) {
-        super(sys);
+    private Many(Many template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
@@ -74,8 +56,8 @@ public class Many extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new Many(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new Many(this);
     }
 
     /** {@inheritDoc} */

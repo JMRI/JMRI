@@ -26,22 +26,10 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         _newValue = newValue;
     }
 
-    public ActionAtomicBoolean(String sys)
-            throws BadUserNameException {
-        super(sys);
-//        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-    }
-
-    public ActionAtomicBoolean(String sys, AtomicBoolean atomicBoolean, boolean newValue)
-            throws BadUserNameException {
-        super(sys);
-        _atomicBoolean = atomicBoolean;
-        _newValue = newValue;
-    }
-
     public ActionAtomicBoolean(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        _atomicBoolean = new AtomicBoolean();
     }
     
     public ActionAtomicBoolean(String sys, String user, AtomicBoolean atomicBoolean, boolean newValue)
@@ -51,16 +39,16 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         _newValue = newValue;
     }
     
-    private ActionAtomicBoolean(ActionAtomicBoolean template, String sys) {
-        super(sys);
+    private ActionAtomicBoolean(ActionAtomicBoolean template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ActionAtomicBoolean(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ActionAtomicBoolean(this);
     }
     
     public void setAtomicBoolean(AtomicBoolean atomicBoolean) {

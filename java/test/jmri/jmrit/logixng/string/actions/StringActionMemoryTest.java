@@ -55,7 +55,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
         
-        action2 = new StringActionMemory("IQSA11");
+        action2 = new StringActionMemory("IQSA11", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
         Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
@@ -65,7 +65,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
         Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
         
-        action2 = new StringActionMemory("IQSA11");
+        action2 = new StringActionMemory("IQSA11", null);
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
@@ -78,7 +78,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
         // Test template
-        action2 = (StringActionMemory)_base.getNewObjectBasedOnTemplate("IQSA12");
+        action2 = (StringActionMemory)_base.getNewObjectBasedOnTemplate();
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username is null", action2.getUserName());
         Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
@@ -86,7 +86,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         boolean thrown = false;
         try {
             // Illegal system name
-            new StringActionMemory("IQA55:12:XY11");
+            new StringActionMemory("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }

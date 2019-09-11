@@ -46,7 +46,7 @@ public class LogixNGTest {
         
         StringWriter writer = new StringWriter();
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
         logixNG.printTree(new PrintWriter(writer), "...");
@@ -82,7 +82,7 @@ public class LogixNGTest {
     public void testManagers() throws SocketAlreadyConnectedException {
         String systemName;
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
         MaleSocket many = conditionalNG.getChild(0).getConnectedSocket();
@@ -119,7 +119,7 @@ public class LogixNGTest {
     public void testSetup() throws SocketAlreadyConnectedException {
         
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         
         String systemName = InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName();
@@ -147,8 +147,8 @@ public class LogixNGTest {
     @Test
     public void testBundle() {
         Assert.assertTrue("bean type is correct", "LogixNG".equals(new DefaultLogixNG("IQA55").getBeanType()));
-        Assert.assertTrue("bean type is correct", "Digital action".equals(new IfThenElse("IQDA321", IfThenElse.Type.TRIGGER_ACTION).getBeanType()));
-        Assert.assertTrue("bean type is correct", "Digital expression".equals(new And("IQDE321").getBeanType()));
+        Assert.assertTrue("bean type is correct", "Digital action".equals(new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION).getBeanType()));
+        Assert.assertTrue("bean type is correct", "Digital expression".equals(new And("IQDE321", null).getBeanType()));
     }
     
     // The minimal setup for log4J

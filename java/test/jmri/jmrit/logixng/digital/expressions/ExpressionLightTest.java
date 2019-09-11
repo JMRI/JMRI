@@ -41,7 +41,7 @@ public class ExpressionLightTest {
     
     @Test
     public void testDescription() {
-        ExpressionLight expressionLight = new ExpressionLight("IQDE321");
+        ExpressionLight expressionLight = new ExpressionLight("IQDE321", null);
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light Not selected is On".equals(expressionLight.getLongDescription()));
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
@@ -60,16 +60,28 @@ public class ExpressionLightTest {
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        LogixNG logixNG =
+                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        ConditionalNG conditionalNG =
+                new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
-        IfThenElse actionIfThen = new IfThenElse(IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
+        IfThenElse actionIfThen =
+                new IfThenElse(InstanceManager.getDefault(
+                        DigitalActionManager.class).getNewSystemName(), null,
+                        IfThenElse.Type.TRIGGER_ACTION);
+        
+        MaleSocket socketIfThen =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(actionIfThen);
+        
         conditionalNG.getChild(0).connect(socketIfThen);
         
-        ExpressionLight expressionLight = new ExpressionLight();
+        ExpressionLight expressionLight =
+                new ExpressionLight(InstanceManager.getDefault(
+                        DigitalExpressionManager.class).getNewSystemName(), null);
+        
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionLight.setLightState(ExpressionLight.LightState.ON);
@@ -104,7 +116,10 @@ public class ExpressionLightTest {
         // Test setLight() when listeners are registered
         Light turnout = InstanceManager.getDefault(LightManager.class).provide("IT1");
         Assert.assertNotNull("Light is not null", turnout);
-        ExpressionLight expression = new ExpressionLight();
+        ExpressionLight expression =
+                new ExpressionLight(
+                        InstanceManager.getDefault(
+                                DigitalExpressionManager.class).getNewSystemName(), null);
         expression.setLight(turnout);
         
         Assert.assertNotNull("Light is not null", expression.getLight());
@@ -142,7 +157,10 @@ public class ExpressionLightTest {
         // Get the expression and set the light
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
-        ExpressionLight expression = new ExpressionLight();
+        ExpressionLight expression =
+                new ExpressionLight(
+                        InstanceManager.getDefault(
+                                DigitalExpressionManager.class).getNewSystemName(), null);
         expression.setLight(light);
         
         // Get some other light for later use

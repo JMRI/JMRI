@@ -45,15 +45,8 @@ public class TrueSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        True expression = new True(systemName);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
-        True expression = new True(systemName);
+        True expression = new True(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     

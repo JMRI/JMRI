@@ -89,12 +89,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        IfThenElse h;
-        if (uname == null) {
-            h = new IfThenElse(sys, type);
-        } else {
-            h = new IfThenElse(sys, uname, type);
-        }
+        IfThenElse h = new IfThenElse(sys, uname, type);
 
         loadCommon(h, shared);
         

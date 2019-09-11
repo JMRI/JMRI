@@ -17,7 +17,7 @@ public class DigitalExpressionPluginAdapterTest {
 
     @Test
     public void testCtor() {
-        DigitalExpressionBean expression = new And("IQDE321");
+        DigitalExpressionBean expression = new And("IQDE321", null);
         Assert.assertNotNull("exists", new DigitalExpressionPluginAdapter("IQDE1", expression));
     }
     

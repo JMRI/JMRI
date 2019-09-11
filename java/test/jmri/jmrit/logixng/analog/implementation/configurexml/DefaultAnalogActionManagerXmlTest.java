@@ -181,7 +181,7 @@ public class DefaultAnalogActionManagerXmlTest {
     private class MyAnalogAction extends AnalogActionMemory {
         
         MyAnalogAction() {
-            super("IQAA9999");
+            super("IQAA9999", null);
         }
         
     }

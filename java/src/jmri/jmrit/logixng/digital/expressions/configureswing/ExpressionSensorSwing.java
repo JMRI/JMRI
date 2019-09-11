@@ -91,26 +91,6 @@ public class ExpressionSensorSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ExpressionSensor expression = new ExpressionSensor(systemName);
-        try {
-            Sensor turnout = sensorBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Sensor> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                expression.setSensor(handle);
-            }
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
-            expression.setSensorState((SensorState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for turnout", ex);
-        }
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ExpressionSensor expression = new ExpressionSensor(systemName, userName);
         try {

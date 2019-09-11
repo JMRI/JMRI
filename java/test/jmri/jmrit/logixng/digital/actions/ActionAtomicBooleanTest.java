@@ -79,7 +79,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         
         atomicBoolean = new AtomicBoolean(false);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
         actionAtomicBoolean = new ActionAtomicBoolean("IQDA321", null, atomicBoolean, true);

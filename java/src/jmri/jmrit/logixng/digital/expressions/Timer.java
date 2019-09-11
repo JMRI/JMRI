@@ -16,24 +16,20 @@ public class Timer extends AbstractDigitalExpression {
 
     private Timer _template;
     
-    public Timer() {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-    }
-
     public Timer(String sys, String user) {
         super(sys, user);
     }
 
-    private Timer(Timer template, String sys) {
-        super(sys);
+    private Timer(Timer template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new Timer(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new Timer(this);
     }
     
     /** {@inheritDoc} */

@@ -180,7 +180,7 @@ public class DefaultDigitalActionManagerXmlTest {
     private class MyDigitalAction extends ActionTurnout {
         
         MyDigitalAction() {
-            super("IQDA9999");
+            super("IQDA9999", null);
         }
         
     }

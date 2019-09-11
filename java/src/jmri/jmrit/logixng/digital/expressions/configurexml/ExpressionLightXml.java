@@ -53,12 +53,7 @@ public class ExpressionLightXml extends jmri.managers.configurexml.AbstractNamed
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ExpressionLight h;
-        if (uname == null) {
-            h = new ExpressionLight(sys);
-        } else {
-            h = new ExpressionLight(sys, uname);
-        }
+        ExpressionLight h = new ExpressionLight(sys, uname);
 
         loadCommon(h, shared);
 

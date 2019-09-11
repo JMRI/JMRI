@@ -183,7 +183,7 @@ public class DefaultStringActionManagerXmlTest {
     private class MyStringAction extends StringActionMemory {
         
         MyStringAction() {
-            super("IQSA9999");
+            super("IQSA9999", null);
         }
         
     }

@@ -180,7 +180,7 @@ public class DefaultDigitalExpressionManagerXmlTest {
     private class MyDigitalExpression extends ExpressionTurnout {
         
         MyDigitalExpression() {
-            super("IQDE9999");
+            super("IQDE9999", null);
         }
         
     }

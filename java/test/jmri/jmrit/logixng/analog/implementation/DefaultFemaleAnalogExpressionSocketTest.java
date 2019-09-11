@@ -112,7 +112,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate(null);
+        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J
@@ -129,7 +129,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _expression = new MyAnalogExpressionMemory("IQAE321");
         _expression.setMemory(_memory);
-        AnalogExpressionBean otherExpression = new AnalogExpressionMemory("IQAE322");
+        AnalogExpressionBean otherExpression = new AnalogExpressionMemory("IQAE322", null);
         maleSocket = new DefaultMaleAnalogExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleAnalogExpressionSocket(otherExpression);
         femaleSocket = new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
@@ -157,7 +157,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         private boolean _hasBeenSetup = false;
         
         public MyAnalogExpressionMemory(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

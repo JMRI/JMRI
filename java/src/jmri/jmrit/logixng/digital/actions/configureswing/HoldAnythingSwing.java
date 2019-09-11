@@ -45,13 +45,6 @@ public class HoldAnythingSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        HoldAnything action = new HoldAnything(systemName);
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         HoldAnything action = new HoldAnything(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);

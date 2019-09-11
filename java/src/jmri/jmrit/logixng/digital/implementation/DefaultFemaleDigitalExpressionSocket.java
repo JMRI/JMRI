@@ -25,7 +25,7 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
+    public Base getNewObjectBasedOnTemplate() {
         // Female sockets have special handling
         throw new UnsupportedOperationException();
     }

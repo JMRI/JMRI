@@ -175,7 +175,7 @@ public class NullSignalHead extends AbstractNullNamedBean implements SignalHead 
     }
 
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
+    public Base getNewObjectBasedOnTemplate() {
         throw new UnsupportedOperationException("Not supported.");
     }
     

@@ -66,12 +66,7 @@ public class DoStringActionXml extends jmri.managers.configurexml.AbstractNamedB
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DoStringAction h;
-        if (uname == null) {
-            h = new DoStringAction(sys);
-        } else {
-            h = new DoStringAction(sys, uname);
-        }
+        DoStringAction h = new DoStringAction(sys, uname);
 
         loadCommon(h, shared);
 

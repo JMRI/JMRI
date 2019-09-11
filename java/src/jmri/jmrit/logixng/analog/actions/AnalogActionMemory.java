@@ -10,6 +10,7 @@ import jmri.MemoryManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -27,24 +28,20 @@ public class AnalogActionMemory extends AbstractAnalogAction
     private AnalogActionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     
-    public AnalogActionMemory(String sys) {
-        super(sys);
-    }
-    
     public AnalogActionMemory(String sys, String user) {
         super(sys, user);
     }
     
-    private AnalogActionMemory(AnalogActionMemory template, String sys) {
-        super(sys);
+    private AnalogActionMemory(AnalogActionMemory template) {
+        super(InstanceManager.getDefault(AnalogActionManager.class).getNewSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new AnalogActionMemory(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new AnalogActionMemory(this);
     }
     
     public void setMemory(String memoryName) {

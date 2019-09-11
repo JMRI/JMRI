@@ -91,12 +91,7 @@ public class ManyXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalActionBean h;
-        if (uname == null) {
-            h = new Many(sys, actionSystemNames);
-        } else {
-            h = new Many(sys, uname, actionSystemNames);
-        }
+        DigitalActionBean h = new Many(sys, uname, actionSystemNames);
 
         loadCommon(h, shared);
 

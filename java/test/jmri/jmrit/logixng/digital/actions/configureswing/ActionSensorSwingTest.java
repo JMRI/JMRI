@@ -31,7 +31,7 @@ public class ActionSensorSwingTest {
         Assert.assertTrue("panel is not null",
             null != new ActionSensorSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new ActionSensorSwing().getConfigPanel(new ActionSensor("IQDA1")));
+            null != new ActionSensorSwing().getConfigPanel(new ActionSensor("IQDA1", null)));
     }
     
     // The minimal setup for log4J

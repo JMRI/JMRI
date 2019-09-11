@@ -45,13 +45,6 @@ public class DoStringActionSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        DoStringAction action = new DoStringAction(systemName);
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         DoStringAction action = new DoStringAction(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);

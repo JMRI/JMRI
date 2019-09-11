@@ -33,31 +33,21 @@ public class ExpressionSensor extends AbstractDigitalExpression
     private SensorState _sensorState = SensorState.ACTIVE;
     private boolean _listenersAreRegistered = false;
 
-    public ExpressionSensor()
-            throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-    }
-
-    public ExpressionSensor(String sys)
-            throws BadUserNameException, BadSystemNameException {
-        super(sys);
-    }
-
     public ExpressionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ExpressionSensor(ExpressionSensor template, String sys) {
-        super(sys);
+    private ExpressionSensor(ExpressionSensor template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ExpressionSensor(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ExpressionSensor(this);
     }
     
     public void setSensor(String sensorName) {

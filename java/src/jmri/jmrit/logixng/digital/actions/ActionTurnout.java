@@ -26,31 +26,21 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     private NamedBeanHandle<Turnout> _turnoutHandle;
     private TurnoutState _turnoutState = TurnoutState.THROWN;
     
-    public ActionTurnout()
-            throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-    }
-
-    public ActionTurnout(String sys)
-            throws BadUserNameException {
-        super(sys);
-    }
-
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ActionTurnout(ActionTurnout template, String sys) {
-        super(sys);
+    private ActionTurnout(ActionTurnout template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ActionTurnout(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ActionTurnout(this);
     }
     
     public void setTurnoutName(String turnoutName) {

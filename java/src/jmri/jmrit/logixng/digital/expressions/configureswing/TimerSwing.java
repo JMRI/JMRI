@@ -48,13 +48,6 @@ public class TimerSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        Timer expression = new Timer(systemName, null);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         Timer expression = new Timer(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);

@@ -49,16 +49,6 @@ public interface SwingConfiguratorInterface {
      * This method must also register the object in its manager.
      * 
      * @param systemName system name
-     * @return a male socket for the new object
-     */
-    public MaleSocket createNewObject(@Nonnull String systemName)
-            throws BadUserNameException, BadSystemNameException;
-    
-    /**
-     * Create a new object with the data entered.
-     * This method must also register the object in its manager.
-     * 
-     * @param systemName system name
      * @param userName user name
      * @return a male socket for the new object
      */

@@ -50,12 +50,7 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ActionSensor h;
-        if (uname == null) {
-            h = new ActionSensor(sys);
-        } else {
-            h = new ActionSensor(sys, uname);
-        }
+        ActionSensor h = new ActionSensor(sys, uname);
 
         loadCommon(h, shared);
 

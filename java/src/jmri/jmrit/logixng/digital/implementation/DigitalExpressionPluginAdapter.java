@@ -28,8 +28,8 @@ public class DigitalExpressionPluginAdapter extends AbstractDigitalExpression {
 
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return _pluginExpression.getNewObjectBasedOnTemplate(sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return _pluginExpression.getNewObjectBasedOnTemplate();
     }
     
     /** {@inheritDoc} */

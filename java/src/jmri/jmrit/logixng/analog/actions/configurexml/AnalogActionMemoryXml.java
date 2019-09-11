@@ -50,11 +50,7 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         AnalogActionMemory h;
-        if (uname == null) {
-            h = new AnalogActionMemory(sys);
-        } else {
-            h = new AnalogActionMemory(sys, uname);
-        }
+        h = new AnalogActionMemory(sys, uname);
 
         loadCommon(h, shared);
 

@@ -51,7 +51,7 @@ public class ImportConditional {
 //        _logix = logix;
         _conditional = conditional;
 //        _logixNG = logixNG;
-        _conditionalNG = new DefaultConditionalNG(conditionalNG_SysName);
+        _conditionalNG = new DefaultConditionalNG(conditionalNG_SysName, null);
 //        _conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
 //                .createConditionalNG("Logix: "+_logix.getDisplayName(), false);
         
@@ -74,10 +74,10 @@ public class ImportConditional {
         DigitalExpressionBean expression;
         switch (ao) {
             case ALL_AND:
-                expression = new And();
+                expression = new And(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
                 break;
             case ALL_OR:
-                expression = new Or();
+                expression = new Or(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
                 break;
             case MIXED:
                 // This will fail, but fix it later.
@@ -88,7 +88,7 @@ public class ImportConditional {
         }
         buildExpression(expression, conditionalVariables);
         
-        DigitalActionBean action = new Many();
+        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         buildAction(action, conditionalActions);
         
         MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);

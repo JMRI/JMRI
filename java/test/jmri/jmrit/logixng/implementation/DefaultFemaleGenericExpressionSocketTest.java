@@ -104,7 +104,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
-        ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322");
+        ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322", null);
         maleSocket = new DefaultMaleDigitalExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleDigitalExpressionSocket(otherExpression);
         femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, new FemaleSocketListener() {
@@ -133,7 +133,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         private boolean _hasBeenSetup = false;
         
         public MyExpressionTurnout(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

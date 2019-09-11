@@ -163,11 +163,10 @@ public interface Base {
      * return null. If this method returns null, the caller must handle this
      * object as if it never existed.
      * 
-     * @param sys the system name
      * @return the new object or null if this object is not valid as a template
      */
     @CheckForNull
-    public Base getNewObjectBasedOnTemplate(String sys);
+    public Base getNewObjectBasedOnTemplate();
     
     /**
      * Get the ConditionalNG of this item.

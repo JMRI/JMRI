@@ -42,12 +42,7 @@ public class TrueXml extends jmri.managers.configurexml.AbstractNamedBeanManager
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalExpressionBean h;
-        if (uname == null) {
-            h = new True(sys);
-        } else {
-            h = new True(sys, uname);
-        }
+        DigitalExpressionBean h = new True(sys, uname);
 
         loadCommon(h, shared);
 

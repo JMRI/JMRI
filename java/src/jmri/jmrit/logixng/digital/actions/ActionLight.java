@@ -26,31 +26,21 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     private NamedBeanHandle<Light> _lightHandle;
     private LightState _lightState = LightState.ON;
     
-    public ActionLight()
-            throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-    }
-
-    public ActionLight(String sys)
-            throws BadUserNameException {
-        super(sys);
-    }
-
     public ActionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ActionLight(ActionLight template, String sys) {
-        super(sys);
+    private ActionLight(ActionLight template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ActionLight(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ActionLight(this);
     }
     
     public void setLightName(String lightName) {

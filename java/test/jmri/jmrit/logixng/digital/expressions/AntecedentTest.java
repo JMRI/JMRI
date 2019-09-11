@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.digital.expressions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -114,7 +113,10 @@ public class AntecedentTest implements FemaleSocketListener {
         DigitalExpressionBean[] conditionalVariables_Empty = { };
         List<DigitalExpressionBean> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
-        DigitalExpressionBean trueExpression = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(new True());
+        DigitalExpressionBean trueExpression =
+                InstanceManager.getDefault(
+                        DigitalExpressionManager.class).registerExpression(
+                                new True(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null));
 //        DigitalExpressionBean falseExpression = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(new False(conditionalNG));
         
         DigitalExpressionBean[] conditionalVariables_True
@@ -169,8 +171,14 @@ public class AntecedentTest implements FemaleSocketListener {
         DigitalExpressionBean[] conditionalVariables_Empty = { };
         List<DigitalExpressionBean> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
-        DigitalExpressionBean trueExpression = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(new True());
-        DigitalExpressionBean falseExpression = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(new False());
+        DigitalExpressionBean trueExpression =
+                InstanceManager.getDefault(
+                        DigitalExpressionManager.class).registerExpression(
+                                new True(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null));
+        DigitalExpressionBean falseExpression =
+                InstanceManager.getDefault(
+                        DigitalExpressionManager.class).registerExpression(
+                                new False(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null));
         
         DigitalExpressionBean[] conditionalVariables_True
                 = { trueExpression };
@@ -292,7 +300,7 @@ public class AntecedentTest implements FemaleSocketListener {
         JUnitUtil.initInternalTurnoutManager();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A LogixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
     }
 

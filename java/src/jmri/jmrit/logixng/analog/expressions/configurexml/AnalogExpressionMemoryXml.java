@@ -50,11 +50,7 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         AnalogExpressionMemory h;
-        if (uname == null) {
-            h = new AnalogExpressionMemory(sys);
-        } else {
-            h = new AnalogExpressionMemory(sys, uname);
-        }
+        h = new AnalogExpressionMemory(sys, uname);
 
         loadCommon(h, shared);
 

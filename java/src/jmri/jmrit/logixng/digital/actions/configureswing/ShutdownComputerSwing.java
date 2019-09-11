@@ -46,13 +46,6 @@ public class ShutdownComputerSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ShutdownComputer action = new ShutdownComputer(systemName, seconds);
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ShutdownComputer action = new ShutdownComputer(systemName, userName, seconds);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);

@@ -29,21 +29,6 @@ public class HoldAnything extends AbstractDigitalAction
     private boolean _enableExecution;
     private final List<MultipleSockets> _multipleSockets = new ArrayList<>();
     
-    /**
-     * Create a new instance of ActionMany and generate a new system name.
-     */
-    public HoldAnything() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        init();
-    }
-
-    public HoldAnything(String sys)
-            throws NamedBean.BadSystemNameException {
-        
-        super(sys);
-        init();
-    }
-
     public HoldAnything(String sys, String user)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
         
@@ -61,7 +46,7 @@ public class HoldAnything extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
+    public Base getNewObjectBasedOnTemplate() {
         return null;
     }
 
@@ -201,7 +186,7 @@ public class HoldAnything extends AbstractDigitalAction
         
         /** {@inheritDoc} */
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             return null;
         }
         

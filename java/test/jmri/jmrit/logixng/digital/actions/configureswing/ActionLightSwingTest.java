@@ -31,7 +31,7 @@ public class ActionLightSwingTest {
         Assert.assertTrue("panel is not null",
             null != new ActionLightSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new ActionLightSwing().getConfigPanel(new ActionLight("IQDA1")));
+            null != new ActionLightSwing().getConfigPanel(new ActionLight("IQDA1", null)));
     }
     
     // The minimal setup for log4J

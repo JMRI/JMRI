@@ -31,7 +31,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testCtor() {
-        AnalogActionBean action = new AnalogActionMemory("IQAA321");
+        AnalogActionBean action = new AnalogActionMemory("IQAA321", null);
         Assert.assertNotNull("object exists", new DefaultMaleAnalogActionSocket(action));
     }
     
@@ -43,7 +43,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        AnalogActionBean actionA = new AnalogActionMemory("IQAA321");
+        AnalogActionBean actionA = new AnalogActionMemory("IQAA321", null);
         Assert.assertNotNull("exists", actionA);
         AnalogActionBean actionB = new MyAnalogAction("IQAA322");
         Assert.assertNotNull("exists", actionA);
@@ -72,7 +72,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     private class MyAnalogAction extends AbstractAnalogAction {
         
         MyAnalogAction(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override
@@ -101,7 +101,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

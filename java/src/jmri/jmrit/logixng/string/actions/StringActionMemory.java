@@ -13,6 +13,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.StringActionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,24 +28,20 @@ public class StringActionMemory extends AbstractStringAction
     private StringActionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     
-    public StringActionMemory(String sys) {
-        super(sys);
-    }
-    
     public StringActionMemory(String sys, String user) {
         super(sys, user);
     }
     
-    private StringActionMemory(StringActionMemory template, String sys) {
-        super(sys);
+    private StringActionMemory(StringActionMemory template) {
+        super(InstanceManager.getDefault(StringActionManager.class).getNewSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new StringActionMemory(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new StringActionMemory(this);
     }
     
     public void setMemory(String memoryName) {

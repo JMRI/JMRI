@@ -32,7 +32,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     
     @Test
     public void testCtor() {
-        DigitalActionBean action = new Many("IQDA321");
+        DigitalActionBean action = new Many("IQDA321", null);
         Assert.assertNotNull("exists", new DefaultMaleDigitalActionSocket(action));
     }
     
@@ -44,7 +44,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        DigitalActionBean actionA = new ActionTurnout("IQDA321");
+        DigitalActionBean actionA = new ActionTurnout("IQDA321", null);
         Assert.assertNotNull("exists", actionA);
         DigitalActionBean actionB = new MyDigitalAction("IQDA322");
         Assert.assertNotNull("exists", actionA);
@@ -102,7 +102,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

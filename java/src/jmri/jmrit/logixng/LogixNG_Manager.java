@@ -56,6 +56,12 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public LogixNG getBySystemName(String name);
     
     /**
+     * Create a new system name for a LogixNG.
+     * @return a new system name
+     */
+    public String getNewSystemName();
+    
+    /**
      * Resolve all the LogixNG trees.
      * <P>
      * This method ensures that everything in the LogixNG tree has a pointer

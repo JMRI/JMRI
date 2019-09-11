@@ -31,22 +31,6 @@ public class DoStringAction
     private final FemaleStringExpressionSocket _stringExpressionSocket;
     private final FemaleStringActionSocket _stringActionSocket;
     
-    public DoStringAction() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _stringActionSocket = InstanceManager.getDefault(StringActionManager.class)
-                .createFemaleSocket(this, this, "A1");
-    }
-    
-    public DoStringAction(String sys) {
-        super(sys);
-        _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _stringActionSocket = InstanceManager.getDefault(StringActionManager.class)
-                .createFemaleSocket(this, this, "A1");
-    }
-    
     public DoStringAction(String sys, String user) {
         super(sys, user);
         _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
@@ -55,8 +39,8 @@ public class DoStringAction
                 .createFemaleSocket(this, this, "A1");
     }
     
-    private DoStringAction(DoStringAction template, String sys) {
-        super(sys);
+    private DoStringAction(DoStringAction template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
                 .createFemaleSocket(this, this, _template._stringExpressionSocket.getName());
@@ -66,8 +50,8 @@ public class DoStringAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new DoStringAction(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new DoStringAction(this);
     }
     
     /** {@inheritDoc} */

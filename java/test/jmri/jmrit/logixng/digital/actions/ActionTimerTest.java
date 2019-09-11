@@ -52,7 +52,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        ActionTimer t = new ActionTimer("IQDA321");
+        ActionTimer t = new ActionTimer("IQDA321", null);
         Assert.assertNotNull("exists",t);
         t = new ActionTimer("IQDA321", null);
         Assert.assertNotNull("exists",t);
@@ -68,7 +68,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testTimer() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, JmriException {
-        ActionTimer t = new ActionTimer("IQDA1");
+        ActionTimer t = new ActionTimer("IQDA1", null);
         Assert.assertNotNull("exists",t);
         
         // Set field t._timer to accessible and remove "final" modifier
@@ -84,7 +84,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         turnout.setState(Turnout.CLOSED);
-        ActionTurnout actionTurnout = new ActionTurnout("IQDA2");
+        ActionTurnout actionTurnout = new ActionTurnout("IQDA2", null);
         actionTurnout.setTurnout(turnout);
         actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
         MaleSocket actionTurnoutSocket =
@@ -106,7 +106,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new ActionTimer("IQDA321");
+        _base = new ActionTimer("IQDA321", null);
     }
 
     @After

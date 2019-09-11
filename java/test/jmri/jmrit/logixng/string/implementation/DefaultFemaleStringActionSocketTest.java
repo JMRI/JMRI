@@ -99,7 +99,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate(null);
+        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J
@@ -116,7 +116,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _action = new MyStringActionMemory("IQSA321");
         _action.setMemory(_memory);
-        StringActionMemory otherAction = new StringActionMemory("IQSA322");
+        StringActionMemory otherAction = new StringActionMemory("IQSA322", null);
         maleSocket = new DefaultMaleStringActionSocket(_action);
         otherMaleSocket = new DefaultMaleStringActionSocket(otherAction);
         femaleSocket = new DefaultFemaleStringActionSocket(null, new FemaleSocketListener() {
@@ -144,7 +144,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         private boolean _hasBeenSetup = false;
         
         public MyStringActionMemory(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

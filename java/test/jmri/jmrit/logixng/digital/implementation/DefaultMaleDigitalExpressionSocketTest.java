@@ -33,7 +33,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testCtor() {
-        DigitalExpressionBean expression = new And("IQDE321");
+        DigitalExpressionBean expression = new And("IQDE321", null);
         Assert.assertNotNull("exists", new DefaultMaleDigitalExpressionSocket(expression));
     }
     
@@ -46,7 +46,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        DigitalExpressionBean expressionA = new ExpressionTurnout("IQDE321");
+        DigitalExpressionBean expressionA = new ExpressionTurnout("IQDE321", null);
         Assert.assertNotNull("exists", expressionA);
         DigitalExpressionBean expressionB = new MyDigitalExpression("IQDE322");
         Assert.assertNotNull("exists", expressionA);
@@ -104,7 +104,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

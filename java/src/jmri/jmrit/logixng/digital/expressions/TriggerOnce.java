@@ -31,14 +31,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     private final FemaleDigitalExpressionSocket _childExpression;
     private boolean _childLastState = false;
     
-    public TriggerOnce() {
-        
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-        
-        _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-    }
-    
     public TriggerOnce(String sys, String user) {
         
         super(sys, user);
@@ -61,8 +53,8 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         }
     }
     
-    private TriggerOnce(TriggerOnce template, String sys) {
-        super(sys);
+    private TriggerOnce(TriggerOnce template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._childExpression.getName());
@@ -70,8 +62,8 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new TriggerOnce(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new TriggerOnce(this);
     }
     
     /** {@inheritDoc} */

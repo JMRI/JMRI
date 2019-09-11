@@ -33,31 +33,21 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     private TurnoutState _turnoutState = TurnoutState.THROWN;
     private boolean _listenersAreRegistered = false;
 
-    public ExpressionTurnout()
-            throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-    }
-
-    public ExpressionTurnout(String sys)
-            throws BadUserNameException, BadSystemNameException {
-        super(sys);
-    }
-
     public ExpressionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ExpressionTurnout(ExpressionTurnout template, String sys) {
-        super(sys);
+    private ExpressionTurnout(ExpressionTurnout template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ExpressionTurnout(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ExpressionTurnout(this);
     }
     
     public void setTurnout(String turnoutName) {

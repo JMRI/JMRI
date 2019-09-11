@@ -66,12 +66,7 @@ public class DoAnalogActionXml extends jmri.managers.configurexml.AbstractNamedB
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DoAnalogAction h;
-        if (uname == null) {
-            h = new DoAnalogAction(sys);
-        } else {
-            h = new DoAnalogAction(sys, uname);
-        }
+        DoAnalogAction h = new DoAnalogAction(sys, uname);
 
         loadCommon(h, shared);
 

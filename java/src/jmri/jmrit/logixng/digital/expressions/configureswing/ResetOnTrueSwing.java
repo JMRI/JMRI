@@ -45,14 +45,6 @@ public class ResetOnTrueSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName)
-            throws BadUserNameException, BadSystemNameException {
-        ResetOnTrue expression = new ResetOnTrue(systemName, null);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName)
             throws BadUserNameException, BadSystemNameException {
         ResetOnTrue expression = new ResetOnTrue(systemName, userName);

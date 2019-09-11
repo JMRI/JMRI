@@ -79,12 +79,7 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalExpressionBean h;
-        if (uname == null) {
-            h = new And(sys, expressionSystemNames);
-        } else {
-            h = new And(sys, uname, expressionSystemNames);
-        }
+        DigitalExpressionBean h = new And(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);
 

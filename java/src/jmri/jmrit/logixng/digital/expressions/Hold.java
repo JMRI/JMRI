@@ -6,7 +6,6 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
@@ -33,27 +32,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     private final FemaleDigitalExpressionSocket _triggerExpressionSocket;
     private boolean _isActive = false;
     
-    public Hold()
-            throws BadUserNameException, BadSystemNameException, SocketAlreadyConnectedException {
-        
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-        
-        _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _triggerExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
-    }
-
-    public Hold(String sys) throws BadUserNameException, BadSystemNameException {
-        
-        super(sys);
-        
-        _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _triggerExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
-    }
-
     public Hold(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         
@@ -65,8 +43,8 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                 .createFemaleSocket(this, this, "E2");
     }
     
-    private Hold(Hold template, String sys) {
-        super(sys);
+    private Hold(Hold template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._holdExpressionSocket.getName());
@@ -76,8 +54,8 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new Hold(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new Hold(this);
     }
     
     /** {@inheritDoc} */

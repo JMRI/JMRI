@@ -42,12 +42,7 @@ public class FalseXml extends jmri.managers.configurexml.AbstractNamedBeanManage
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalExpressionBean h;
-        if (uname == null) {
-            h = new False(sys);
-        } else {
-            h = new False(sys, uname);
-        }
+        DigitalExpressionBean h = new False(sys, uname);
 
         loadCommon(h, shared);
 

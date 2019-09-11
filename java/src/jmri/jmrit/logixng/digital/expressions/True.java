@@ -17,41 +17,26 @@ public class True extends AbstractDigitalExpression {
 
     private True _template;
     
-    /**
-     * Create a new instance of ActionIfThen and generate a new system name.
-     */
-    public True() {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-    }
-    
-    public True(String sys) throws BadSystemNameException {
-        super(sys);
-    }
-
     public True(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    public True(String sys, List<String> childrenSystemNames) throws BadSystemNameException {
-        super(sys);
-    }
-
     public True(String sys, String user, List<String> childrenSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
 
-    private True(True template, String sys) {
-        super(sys);
+    private True(True template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new True(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new True(this);
     }
     
     /** {@inheritDoc} */

@@ -50,12 +50,7 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ExpressionSensor h;
-        if (uname == null) {
-            h = new ExpressionSensor(sys);
-        } else {
-            h = new ExpressionSensor(sys, uname);
-        }
+        ExpressionSensor h = new ExpressionSensor(sys, uname);
 
         loadCommon(h, shared);
 

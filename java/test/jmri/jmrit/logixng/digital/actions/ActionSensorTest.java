@@ -98,7 +98,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         // Get the action and set the sensor
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Assert.assertNotNull("Sensor is not null", sensor);
-        ActionSensor action = new ActionSensor();
+        ActionSensor action = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         action.setSensor(sensor);
         
         // Get some other sensor for later use
@@ -147,10 +147,10 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor.setCommandedState(Sensor.INACTIVE);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
-        actionSensor = new ActionSensor();
+        actionSensor = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         actionSensor.setSensor(sensor);
         actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);

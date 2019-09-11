@@ -39,7 +39,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
     
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new DigitalActionPluginSocket("IQDA1", new MyDigitalActionPlugin("IQDA2")));
+        Assert.assertNotNull("exists", new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2")));
     }
     
     // The minimal setup for log4J
@@ -49,7 +49,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new DigitalActionPluginSocket("IQDA1", new MyDigitalActionPlugin("IQDA2"));
+        _base = new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2"));
     }
 
     @After
@@ -62,7 +62,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
     private class MyDigitalActionPlugin extends ActionTurnout implements DigitalActionPlugin {
 
         public MyDigitalActionPlugin(String sys) throws BadUserNameException {
-            super(sys);
+            super(sys, null);
         }
 
         @Override

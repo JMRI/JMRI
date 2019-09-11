@@ -40,8 +40,8 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return _action.getNewObjectBasedOnTemplate(sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return _action.getNewObjectBasedOnTemplate();
     }
     
     @Override

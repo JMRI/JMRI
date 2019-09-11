@@ -51,12 +51,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ActionTurnout h;
-        if (uname == null) {
-            h = new ActionTurnout(sys);
-        } else {
-            h = new ActionTurnout(sys, uname);
-        }
+        ActionTurnout h = new ActionTurnout(sys, uname);
 
         loadCommon(h, shared);
 

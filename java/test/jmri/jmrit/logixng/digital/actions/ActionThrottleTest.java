@@ -41,7 +41,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        ActionThrottle t = new ActionThrottle("IQDA321");
+        ActionThrottle t = new ActionThrottle("IQDA321", null);
         Assert.assertNotNull("exists",t);
         t = new ActionThrottle("IQDA321", null);
         Assert.assertNotNull("exists",t);
@@ -63,7 +63,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new ActionThrottle("IQDA321");
+        _base = new ActionThrottle("IQDA321", null);
     }
 
     @After

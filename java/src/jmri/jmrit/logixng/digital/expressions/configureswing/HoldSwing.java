@@ -43,15 +43,8 @@ public class HoldSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        Hold expression = new Hold(systemName);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
-        Hold expression = new Hold(systemName);
+        Hold expression = new Hold(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     

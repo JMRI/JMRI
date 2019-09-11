@@ -5,7 +5,6 @@ import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Turnout;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -42,7 +41,7 @@ public class ExpressionTurnoutTest {
     
     @Test
     public void testDescription() {
-        ExpressionTurnout expressionTurnout = new ExpressionTurnout("IQDE321");
+        ExpressionTurnout expressionTurnout = new ExpressionTurnout("IQDE321", null);
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout Not selected is Thrown".equals(expressionTurnout.getLongDescription()));
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
@@ -62,15 +61,22 @@ public class ExpressionTurnoutTest {
         turnout.setCommandedState(Turnout.CLOSED);
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
-        IfThenElse actionIfThen = new IfThenElse(IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse actionIfThen =
+                new IfThenElse(
+                        InstanceManager.getDefault(
+                                DigitalActionManager.class).getNewSystemName(), null,
+                                IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
         conditionalNG.getChild(0).connect(socketIfThen);
         
-        ExpressionTurnout expressionTurnout = new ExpressionTurnout();
+        ExpressionTurnout expressionTurnout =
+                new ExpressionTurnout(
+                        InstanceManager.getDefault(DigitalExpressionManager.class)
+                                .getNewSystemName(), null);
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
@@ -105,7 +111,10 @@ public class ExpressionTurnoutTest {
         // Test setTurnout() when listeners are registered
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
-        ExpressionTurnout expression = new ExpressionTurnout();
+        ExpressionTurnout expression =
+                new ExpressionTurnout(
+                        InstanceManager.getDefault(DigitalExpressionManager.class)
+                                .getNewSystemName(), null);
         expression.setTurnout(turnout);
         
         Assert.assertNotNull("Turnout is not null", expression.getTurnout());
@@ -143,7 +152,10 @@ public class ExpressionTurnoutTest {
         // Get the expression and set the turnout
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
-        ExpressionTurnout expression = new ExpressionTurnout();
+        ExpressionTurnout expression =
+                new ExpressionTurnout(
+                        InstanceManager.getDefault(DigitalExpressionManager.class)
+                                .getNewSystemName(), null);
         expression.setTurnout(turnout);
         
         // Get some other turnout for later use

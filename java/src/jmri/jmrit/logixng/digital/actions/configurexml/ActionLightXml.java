@@ -50,12 +50,7 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ActionLight h;
-        if (uname == null) {
-            h = new ActionLight(sys);
-        } else {
-            h = new ActionLight(sys, uname);
-        }
+        ActionLight h = new ActionLight(sys, uname);
 
         loadCommon(h, shared);
 

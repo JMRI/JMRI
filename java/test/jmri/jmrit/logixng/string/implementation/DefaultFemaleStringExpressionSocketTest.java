@@ -110,7 +110,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate(null);
+        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J

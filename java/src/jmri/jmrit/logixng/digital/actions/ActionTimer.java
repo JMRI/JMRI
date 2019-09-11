@@ -30,29 +30,14 @@ public class ActionTimer extends AbstractDigitalAction
     long _delay = 0;
     boolean _isActive = false;
     
-    /**
-     * Create a new instance of ActionIfThen and generate a new system name.
-     */
-    public ActionTimer() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A");
-    }
-    
-    public ActionTimer(String sys) {
-        super(sys);
-        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A");
-    }
-    
     public ActionTimer(String sys, String user) {
         super(sys, user);
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
     }
     
-    private ActionTimer(ActionTimer template, String sys) {
-        super(sys);
+    private ActionTimer(ActionTimer template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, _template._actionSocket.getName());
@@ -60,8 +45,8 @@ public class ActionTimer extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ActionTimer(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ActionTimer(this);
     }
     
     /** {@inheritDoc} */

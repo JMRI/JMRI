@@ -100,7 +100,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate(null);
+        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J
@@ -117,7 +117,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _action = new MyAnalogActionMemory("IQAA321");
         _action.setMemory(_memory);
-        AnalogActionBean otherAction = new AnalogActionMemory("IQAA322");
+        AnalogActionBean otherAction = new AnalogActionMemory("IQAA322", null);
         maleSocket = new DefaultMaleAnalogActionSocket(_action);
         otherMaleSocket = new DefaultMaleAnalogActionSocket(otherAction);
         femaleSocket = new DefaultFemaleAnalogActionSocket(null, new FemaleSocketListener() {
@@ -145,7 +145,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         private boolean _hasBeenSetup = false;
         
         public MyAnalogActionMemory(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

@@ -189,7 +189,7 @@ public abstract class AbstractBaseTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

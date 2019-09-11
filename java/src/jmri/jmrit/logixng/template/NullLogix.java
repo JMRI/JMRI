@@ -179,7 +179,7 @@ public class NullLogix extends AbstractNullNamedBean implements Logix {
     }
 
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
+    public Base getNewObjectBasedOnTemplate() {
         throw new UnsupportedOperationException("Not supported.");
     }
 

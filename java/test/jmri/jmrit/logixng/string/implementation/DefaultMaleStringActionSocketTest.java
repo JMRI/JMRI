@@ -37,7 +37,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        StringActionBean actionA = new StringActionMemory("IQSA321");
+        StringActionBean actionA = new StringActionMemory("IQSA321", null);
         Assert.assertNotNull("exists", actionA);
         StringActionBean actionB = new MyAnalogAction("IQSA322");
         Assert.assertNotNull("exists", actionA);
@@ -95,7 +95,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

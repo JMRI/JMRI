@@ -45,15 +45,8 @@ public class OrSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        Or expression = new Or(systemName);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
-        Or expression = new Or(systemName);
+        Or expression = new Or(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     

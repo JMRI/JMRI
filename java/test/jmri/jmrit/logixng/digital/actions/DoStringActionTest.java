@@ -43,7 +43,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new DoStringAction("IQDA321"));
+        Assert.assertNotNull("exists", new DoStringAction("IQDA321", null));
     }
     
     // The minimal setup for log4J
@@ -58,7 +58,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initDigitalActionManager();
         JUnitUtil.initStringExpressionManager();
         JUnitUtil.initStringActionManager();
-        _base = new DoStringAction("IQDA321");
+        _base = new DoStringAction("IQDA321", null);
     }
 
     @After

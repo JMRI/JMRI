@@ -75,12 +75,7 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        StringActionMemory h;
-        if (uname == null) {
-            h = new StringActionMemory(sys);
-        } else {
-            h = new StringActionMemory(sys, uname);
-        }
+        StringActionMemory h = new StringActionMemory(sys, uname);
 
         loadCommon(h, shared);
 

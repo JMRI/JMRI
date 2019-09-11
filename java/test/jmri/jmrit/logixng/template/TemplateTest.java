@@ -193,7 +193,7 @@ public class TemplateTest {
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getEnabled(); }));
         Assert.assertEquals("Same enum", Base.Lock.NONE, b.getLock());
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getLongDescription(); }));
-        Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getNewObjectBasedOnTemplate(""); }));
+        Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getNewObjectBasedOnTemplate(); }));
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getNumConditionals(); }));
         Assert.assertEquals("Same value", null, b.getParent());
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getShortDescription(); }));
@@ -247,7 +247,7 @@ public class TemplateTest {
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getLit(); }));
         Assert.assertEquals("Same enum", Base.Lock.NONE, b.getLock());
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getLongDescription(); }));
-        Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getNewObjectBasedOnTemplate(""); }));
+        Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getNewObjectBasedOnTemplate(); }));
         Assert.assertEquals("Same value", null, b.getParent());
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getShortDescription(); }));
         Assert.assertTrue("Exception thrown", hasThrownException(() -> { b.getValidStateNames(); }));

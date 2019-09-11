@@ -11,6 +11,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -29,28 +30,22 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     private NamedBeanHandle<Memory> _memoryHandle;
     private boolean _listenersAreRegistered = false;
     
-    public AnalogExpressionMemory(String sys) throws BadUserNameException,
-            BadSystemNameException {
-        
-        super(sys);
-    }
-
     public AnalogExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
     }
 
-    private AnalogExpressionMemory(AnalogExpressionMemory template, String sys) {
-        super(sys);
+    private AnalogExpressionMemory(AnalogExpressionMemory template) {
+        super(InstanceManager.getDefault(AnalogExpressionManager.class).getNewSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new AnalogExpressionMemory(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new AnalogExpressionMemory(this);
     }
     
     @Override

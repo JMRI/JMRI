@@ -26,31 +26,21 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     private NamedBeanHandle<Sensor> _sensorHandle;
     private SensorState _sensorState = SensorState.ACTIVE;
     
-    public ActionSensor()
-            throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-    }
-
-    public ActionSensor(String sys)
-            throws BadUserNameException {
-        super(sys);
-    }
-
     public ActionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ActionSensor(ActionSensor template, String sys) {
-        super(sys);
+    private ActionSensor(ActionSensor template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ActionSensor(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ActionSensor(this);
     }
     
     public void setSensorName(String sensorName) {

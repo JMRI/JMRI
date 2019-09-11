@@ -31,22 +31,6 @@ public class DoAnalogAction
     private final FemaleAnalogExpressionSocket _analogExpressionSocket;
     private final FemaleAnalogActionSocket _analogActionSocket;
     
-    public DoAnalogAction() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _analogActionSocket = InstanceManager.getDefault(AnalogActionManager.class)
-                .createFemaleAnalogActionSocket(this, this, "A1");
-    }
-    
-    public DoAnalogAction(String sys) {
-        super(sys);
-        _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _analogActionSocket = InstanceManager.getDefault(AnalogActionManager.class)
-                .createFemaleAnalogActionSocket(this, this, "A1");
-    }
-    
     public DoAnalogAction(String sys, String user) {
         super(sys, user);
         _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
@@ -55,8 +39,8 @@ public class DoAnalogAction
                 .createFemaleAnalogActionSocket(this, this, "A1");
     }
     
-    private DoAnalogAction(DoAnalogAction template, String sys) {
-        super(sys);
+    private DoAnalogAction(DoAnalogAction template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
                 .createFemaleSocket(this, this, _template._analogExpressionSocket.getName());
@@ -66,8 +50,8 @@ public class DoAnalogAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new DoAnalogAction(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new DoAnalogAction(this);
     }
     
     /** {@inheritDoc} */

@@ -448,7 +448,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
                 }
                 MaleSocket socket;
                 if (_addUserName.getText().isEmpty()) {
-                    socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText());
+                    socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), null);
                 } else {
                     socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
                 }

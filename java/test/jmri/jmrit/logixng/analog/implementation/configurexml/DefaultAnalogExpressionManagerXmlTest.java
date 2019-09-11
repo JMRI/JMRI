@@ -180,7 +180,7 @@ public class DefaultAnalogExpressionManagerXmlTest {
     private class MyAnalogExpression extends AnalogExpressionMemory {
         
         MyAnalogExpression() {
-            super("IQAE9999");
+            super("IQAE9999", null);
         }
         
     }

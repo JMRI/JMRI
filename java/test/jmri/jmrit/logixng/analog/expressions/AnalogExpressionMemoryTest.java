@@ -79,7 +79,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
         
-        expression2 = new AnalogExpressionMemory("IQAE11");
+        expression2 = new AnalogExpressionMemory("IQAE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
         Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
@@ -89,7 +89,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
         Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
         
-        expression2 = new AnalogExpressionMemory("IQAE11");
+        expression2 = new AnalogExpressionMemory("IQAE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
@@ -102,7 +102,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
         
         // Test template
-        expression2 = (AnalogExpressionMemory)_base.getNewObjectBasedOnTemplate("IQAE12");
+        expression2 = (AnalogExpressionMemory)_base.getNewObjectBasedOnTemplate();
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username is null", expression2.getUserName());
 //        Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
@@ -111,7 +111,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         boolean thrown = false;
         try {
             // Illegal system name
-            new AnalogExpressionMemory("IQA55:12:XY11");
+            new AnalogExpressionMemory("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -332,12 +332,12 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         expressionMemory.setMemory(_memory);
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
-        DigitalActionBean actionDoAnalog = new DoAnalogAction();
+        DigitalActionBean actionDoAnalog = new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         MaleSocket socketDoAnalog = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
         conditionalNG.getChild(0).connect(socketDoAnalog);
         
@@ -346,7 +346,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         
         _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         _memoryOut.setValue(0.0);
-        actionMemory = new AnalogActionMemory("IQAA1");
+        actionMemory = new AnalogActionMemory("IQAA1", null);
         actionMemory.setMemory(_memoryOut);
         MaleSocket socketAction = InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
         socketDoAnalog.getChild(1).connect(socketAction);

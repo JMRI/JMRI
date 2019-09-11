@@ -102,7 +102,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate(null);
+        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J
@@ -144,7 +144,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         private boolean _hasBeenSetup = false;
         
         public MyActionTurnout(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

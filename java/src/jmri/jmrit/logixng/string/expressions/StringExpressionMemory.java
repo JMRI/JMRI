@@ -14,6 +14,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.StringExpressionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,16 +42,16 @@ public class StringExpressionMemory extends AbstractStringExpression
         super(sys, user);
     }
 
-    private StringExpressionMemory(StringExpressionMemory template, String sys) {
-        super(sys);
+    private StringExpressionMemory(StringExpressionMemory template) {
+        super(InstanceManager.getDefault(StringExpressionManager.class).getNewSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new StringExpressionMemory(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new StringExpressionMemory(this);
     }
     
     @Override

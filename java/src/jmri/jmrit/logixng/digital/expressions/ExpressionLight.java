@@ -33,31 +33,21 @@ public class ExpressionLight extends AbstractDigitalExpression
     private LightState _lightState = LightState.ON;
     private boolean _listenersAreRegistered = false;
 
-    public ExpressionLight()
-            throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-    }
-
-    public ExpressionLight(String sys)
-            throws BadUserNameException, BadSystemNameException {
-        super(sys);
-    }
-
     public ExpressionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ExpressionLight(ExpressionLight template, String sys) {
-        super(sys);
+    private ExpressionLight(ExpressionLight template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ExpressionLight(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ExpressionLight(this);
     }
     
     public void setLight(String lightName) {

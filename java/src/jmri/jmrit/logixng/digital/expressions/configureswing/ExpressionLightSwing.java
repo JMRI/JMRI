@@ -92,26 +92,6 @@ public class ExpressionLightSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ExpressionLight expression = new ExpressionLight(systemName);
-        try {
-            Light turnout = lightBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Light> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                expression.setLight(handle);
-            }
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
-            expression.setLightState((LightState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for turnout", ex);
-        }
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ExpressionLight expression = new ExpressionLight(systemName, userName);
         try {

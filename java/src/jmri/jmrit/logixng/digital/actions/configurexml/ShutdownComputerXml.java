@@ -53,12 +53,7 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
             log.error("seconds attribute is not an integer", ex);
         }
         
-        DigitalActionBean h;
-        if (uname == null) {
-            h = new ShutdownComputer(sys, seconds);
-        } else {
-            h = new ShutdownComputer(sys, uname, seconds);
-        }
+        DigitalActionBean h = new ShutdownComputer(sys, uname, seconds);
 
         loadCommon(h, shared);
 

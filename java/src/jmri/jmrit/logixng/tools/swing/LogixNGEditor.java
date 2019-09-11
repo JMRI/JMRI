@@ -441,7 +441,7 @@ public final class LogixNGEditor {
         while (_curConditionalNG == null) {
             cName = _curLogixNG.getSystemName() + ":" + Integer.toString(num);
             if (_curLogixNG.getConditionalNG(cName) == null) {
-                _curConditionalNG = new DefaultConditionalNG(cName);
+                _curConditionalNG = new DefaultConditionalNG(cName, null);
                 InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(_curConditionalNG);
             }
             num++;

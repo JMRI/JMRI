@@ -44,7 +44,7 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new HoldAnything("IQDA321"));
+        Assert.assertNotNull("exists", new HoldAnything("IQDA321", null));
     }
     
     @Test
@@ -63,7 +63,7 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new HoldAnything("IQDA321");
+        _base = new HoldAnything("IQDA321", null);
     }
 
     @After

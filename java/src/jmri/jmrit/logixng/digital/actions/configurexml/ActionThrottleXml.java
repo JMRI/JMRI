@@ -84,12 +84,7 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ActionThrottle h;
-        if (uname == null) {
-            h = new ActionThrottle(sys);
-        } else {
-            h = new ActionThrottle(sys, uname);
-        }
+        ActionThrottle h = new ActionThrottle(sys, uname);
 
         loadCommon(h, shared);
         

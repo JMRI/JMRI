@@ -69,12 +69,7 @@ public class HoldXml extends jmri.managers.configurexml.AbstractNamedBeanManager
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        Hold h;
-        if (uname == null) {
-            h = new Hold(sys);
-        } else {
-            h = new Hold(sys, uname);
-        }
+        Hold h = new Hold(sys, uname);
 
         loadCommon(h, shared);
 

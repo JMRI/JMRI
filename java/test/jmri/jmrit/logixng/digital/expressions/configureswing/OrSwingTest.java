@@ -41,7 +41,7 @@ public class OrSwingTest {
         Assert.assertTrue("panel is not null",
             null != new OrSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new OrSwing().getConfigPanel(new Or("IQDE1")));
+            null != new OrSwing().getConfigPanel(new Or("IQDE1", null)));
     }
     
     // The minimal setup for log4J

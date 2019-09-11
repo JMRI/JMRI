@@ -2,6 +2,8 @@ package jmri.jmrit.logixng.analog.expressions;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -20,28 +22,22 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
     private double _value;
     private boolean _listenersAreRegistered = false;
     
-    public AnalogExpressionConstant(String sys) throws BadUserNameException,
-            BadSystemNameException {
-        
-        super(sys);
-    }
-
     public AnalogExpressionConstant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
     }
 
-    private AnalogExpressionConstant(AnalogExpressionConstant template, String sys) {
-        super(sys);
+    private AnalogExpressionConstant(AnalogExpressionConstant template) {
+        super(InstanceManager.getDefault(AnalogExpressionManager.class).getNewSystemName(), null);
         _template = template;
         _value = _template._value;
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new AnalogExpressionConstant(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new AnalogExpressionConstant(this);
     }
     
     /** {@inheritDoc} */

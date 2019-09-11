@@ -63,31 +63,6 @@ public class IfThenElse extends AbstractDigitalAction
     private final FemaleDigitalActionSocket _thenActionSocket;
     private final FemaleDigitalActionSocket _elseActionSocket;
     
-    /**
-     * Create a new instance of ActionIfThen and generate a new system name.
-     */
-    public IfThenElse(Type type) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        _type = type;
-        _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E");
-        _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A1");
-        _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A2");
-    }
-    
-    public IfThenElse(String sys, Type type) {
-        super(sys);
-        _type = type;
-        _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E");
-        _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A1");
-        _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A2");
-    }
-    
     public IfThenElse(String sys, String user, Type type) {
         super(sys, user);
         _type = type;
@@ -99,8 +74,8 @@ public class IfThenElse extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "A2");
     }
     
-    private IfThenElse(IfThenElse template, String sys) {
-        super(sys);
+    private IfThenElse(IfThenElse template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._ifExpressionSocket.getName());
@@ -112,8 +87,8 @@ public class IfThenElse extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new IfThenElse(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new IfThenElse(this);
     }
     
     /** {@inheritDoc} */

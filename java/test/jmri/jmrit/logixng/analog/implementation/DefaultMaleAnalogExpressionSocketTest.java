@@ -31,7 +31,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testCtor() {
-        AnalogExpressionBean expression = new AnalogExpressionMemory("IQAE321");
+        AnalogExpressionBean expression = new AnalogExpressionMemory("IQAE321", null);
         Assert.assertNotNull("object exists", new DefaultMaleAnalogExpressionSocket(expression));
     }
     
@@ -44,7 +44,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE321");
+        AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE321", null);
         Assert.assertNotNull("exists", expressionA);
         AnalogExpressionBean expressionB = new MyAnalogExpression("IQAE322");
         Assert.assertNotNull("exists", expressionA);
@@ -73,7 +73,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     private class MyAnalogExpression extends AbstractAnalogExpression {
         
         MyAnalogExpression(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override
@@ -102,7 +102,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate(String sys) {
+        public Base getNewObjectBasedOnTemplate() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

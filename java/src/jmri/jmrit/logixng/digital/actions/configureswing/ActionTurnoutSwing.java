@@ -79,25 +79,6 @@ public class ActionTurnoutSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ActionTurnout action = new ActionTurnout(systemName);
-        try {
-            Turnout turnout = turnoutBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Turnout> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                action.setTurnout(handle);
-            }
-            action.setTurnoutState((TurnoutState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for turnout", ex);
-        }
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ActionTurnout action = new ActionTurnout(systemName, userName);
         try {

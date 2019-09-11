@@ -79,12 +79,7 @@ public class OrXml extends jmri.managers.configurexml.AbstractNamedBeanManagerCo
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalExpressionBean h;
-        if (uname == null) {
-            h = new Or(sys, expressionSystemNames);
-        } else {
-            h = new Or(sys, uname, expressionSystemNames);
-        }
+        DigitalExpressionBean h = new Or(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);
 

@@ -148,10 +148,10 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
-        actionLight = new ActionLight();
+        actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         actionLight.setLight(light);
         actionLight.setLightState(ActionLight.LightState.ON);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);

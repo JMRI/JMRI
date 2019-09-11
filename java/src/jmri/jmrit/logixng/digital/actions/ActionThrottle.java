@@ -51,29 +51,6 @@ public class ActionThrottle extends AbstractDigitalAction
     long _delay = 0;
     boolean _isActive = false;
     
-    /**
-     * Create a new instance of ActionIfThen and generate a new system name.
-     */
-    public ActionThrottle() {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName());
-        _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _locoSpeedSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
-        _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E3");
-    }
-    
-    public ActionThrottle(String sys) {
-        super(sys);
-        _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _locoSpeedSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
-        _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E3");
-    }
-    
     public ActionThrottle(String sys, String user) {
         super(sys, user);
         _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
@@ -84,8 +61,8 @@ public class ActionThrottle extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "E3");
     }
     
-    private ActionThrottle(ActionThrottle template, String sys) {
-        super(sys);
+    private ActionThrottle(ActionThrottle template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
         _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
                 .createFemaleSocket(this, this, _template._locoAddressSocket.getName());
@@ -97,8 +74,8 @@ public class ActionThrottle extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ActionThrottle(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ActionThrottle(this);
     }
     
     /** {@inheritDoc} */

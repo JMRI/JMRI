@@ -45,15 +45,8 @@ public class AndSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        And expression = new And(systemName);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
-        And expression = new And(systemName);
+        And expression = new And(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     

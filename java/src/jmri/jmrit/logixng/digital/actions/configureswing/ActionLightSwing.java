@@ -79,25 +79,6 @@ public class ActionLightSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ActionLight action = new ActionLight(systemName);
-        try {
-            Light light = lightBeanPanel.getNamedBean();
-            if (light != null) {
-                NamedBeanHandle<Light> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(light.getDisplayName(), light);
-                action.setLight(handle);
-            }
-            action.setLightState((LightState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for light", ex);
-        }
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ActionLight action = new ActionLight(systemName, userName);
         try {

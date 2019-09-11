@@ -119,9 +119,10 @@ public class DefaultFemaleGenericExpressionSocket
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
+    public Base getNewObjectBasedOnTemplate() {
         // Female sockets have special handling
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException(
+                InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
     }
     
     /** {@inheritDoc} */

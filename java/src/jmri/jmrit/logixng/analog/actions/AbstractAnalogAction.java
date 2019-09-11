@@ -23,16 +23,6 @@ public abstract class AbstractAnalogAction extends AbstractBase
     private int _state = AnalogActionBean.UNKNOWN;
 
 
-    public AbstractAnalogAction(String sys) throws BadSystemNameException {
-        super(sys);
-        
-        // Do this test here to ensure all the tests are using correct system names
-        Manager.NameValidity isNameValid = InstanceManager.getDefault(AnalogActionManager.class).validSystemNameFormat(mSystemName);
-        if (isNameValid != Manager.NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
-        }
-    }
-
     public AbstractAnalogAction(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);

@@ -41,7 +41,7 @@ public class TrueSwingTest {
         Assert.assertTrue("panel is not null",
             null != new TrueSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new TrueSwing().getConfigPanel(new True("IQDE1")));
+            null != new TrueSwing().getConfigPanel(new True("IQDE1", null)));
     }
     
     // The minimal setup for log4J

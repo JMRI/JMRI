@@ -28,46 +28,28 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     private And _template;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
-    /**
-     * Create a new instance of ActionIfThen and generate a new system name.
-     */
-    public And() {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-        init();
-    }
-    
-    public And(String sys) throws BadSystemNameException {
-        super(sys);
-        init();
-    }
-
     public And(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         init();
     }
     
-    public And(String sys, List<Map.Entry<String, String>> expressionSystemNames) throws BadSystemNameException {
-        super(sys);
-        setExpressionSystemNames(expressionSystemNames);
-    }
-
     public And(String sys, String user, List<Map.Entry<String, String>> expressionSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
 
-    private And(And template, String sys) {
-        super(sys);
+    private And(And template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new And(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new And(this);
     }
     
     private void init() {

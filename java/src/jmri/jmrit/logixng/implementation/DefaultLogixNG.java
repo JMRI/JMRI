@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
@@ -15,6 +16,7 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleDigitalActionSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +57,8 @@ public class DefaultLogixNG extends AbstractNamedBean
 //        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleActionSocket(this, this, "", action);
     }
     
-    private DefaultLogixNG(DefaultLogixNG template, String sys) {
-        super(sys);
+    private DefaultLogixNG(DefaultLogixNG template) {
+        super(InstanceManager.getDefault(LogixNG_Manager.class).getNewSystemName(), null);
 //        _template = template;
 //        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
 //                .createFemaleSocket(this, this, _template._femaleActionSocket.getName());
@@ -64,8 +66,8 @@ public class DefaultLogixNG extends AbstractNamedBean
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new DefaultLogixNG(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new DefaultLogixNG(this);
     }
     
     /** {@inheritDoc} */

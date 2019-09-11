@@ -87,7 +87,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
         
         // Test template
-        expression2 = (StringExpressionMemory)_base.getNewObjectBasedOnTemplate("IQSE12");
+        expression2 = (StringExpressionMemory)_base.getNewObjectBasedOnTemplate();
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username is null", expression2.getUserName());
 //        Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
@@ -130,12 +130,16 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         StringExpressionMemory expression = (StringExpressionMemory)_base;
         
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
-        DigitalActionBean actionDoString = new DoStringAction();
+        DigitalActionBean actionDoString =
+                new DoStringAction(
+                        InstanceManager.getDefault(DigitalActionManager.class)
+                                .getNewSystemName()
+                        , null);
         MaleSocket socketDoString = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoString);
         conditionalNG.getChild(0).connect(socketDoString);
         
@@ -144,7 +148,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         
         Memory _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         _memoryOut.setValue("");
-        StringActionMemory actionMemory = new StringActionMemory("IQSA1");
+        StringActionMemory actionMemory = new StringActionMemory("IQSA1", null);
         actionMemory.setMemory(_memoryOut);
         MaleSocket socketAction = InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
         socketDoString.getChild(1).connect(socketAction);

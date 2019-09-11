@@ -115,7 +115,7 @@ public class DefaultLogixNGManagerTest {
         LogixNG logixNG = manager.createLogixNG("IQ1", "Some name");
         Assert.assertNotNull("exists", logixNG);
         
-        ConditionalNG conditionalNG = new DefaultConditionalNG("IQ1:1");
+        ConditionalNG conditionalNG = new DefaultConditionalNG("IQ1:1", null);
         Assert.assertNotNull("exists", conditionalNG);
         logixNG.addConditionalNG(conditionalNG);
         manager.setupInitialConditionalNGTree(conditionalNG);

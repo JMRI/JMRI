@@ -79,25 +79,6 @@ public class ActionSensorSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ActionSensor action = new ActionSensor(systemName);
-        try {
-            Sensor sensor = sensorBeanPanel.getNamedBean();
-            if (sensor != null) {
-                NamedBeanHandle<Sensor> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-                action.setSensor(handle);
-            }
-            action.setSensorState((SensorState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for sensor", ex);
-        }
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ActionSensor action = new ActionSensor(systemName, userName);
         try {

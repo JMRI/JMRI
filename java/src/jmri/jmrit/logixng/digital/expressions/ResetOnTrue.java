@@ -40,20 +40,8 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     private final FemaleDigitalExpressionSocket _secondaryExpressionSocket;
     private boolean _lastMainResult = false;
     
-    public ResetOnTrue() {
-        
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName());
-        
-        _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _secondaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
-    }
-    
     public ResetOnTrue(String sys, String user) {
-        
         super(sys, user);
-        
         _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E1");
         _secondaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
@@ -79,8 +67,8 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
         }
     }
     
-    private ResetOnTrue(ResetOnTrue template, String sys) {
-        super(sys);
+    private ResetOnTrue(ResetOnTrue template) {
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
         _template = template;
         _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._primaryExpressionSocket.getName());
@@ -90,8 +78,8 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return new ResetOnTrue(this, sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return new ResetOnTrue(this);
     }
     
     /** {@inheritDoc} */

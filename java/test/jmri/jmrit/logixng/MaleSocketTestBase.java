@@ -26,7 +26,7 @@ public abstract class MaleSocketTestBase {
         Assert.assertNotEquals("not equals", maleSocketA, maleSocketB);
         
         Assert.assertNotNull("get object based on template is not null",
-                maleSocketA.getNewObjectBasedOnTemplate(getNewSystemName()));
+                maleSocketA.getNewObjectBasedOnTemplate());
         
         maleSocketA.setLock(Base.Lock.NONE);
         Assert.assertTrue("lock is correct",

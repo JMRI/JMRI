@@ -21,16 +21,6 @@ public abstract class AbstractAnalogExpression extends AbstractBase
     private int _state = AnalogExpressionBean.UNKNOWN;
 
 
-    public AbstractAnalogExpression(String sys) throws BadSystemNameException {
-        super(sys);
-        
-        // Do this test here to ensure all the tests are using correct system names
-        Manager.NameValidity isNameValid = InstanceManager.getDefault(AnalogExpressionManager.class).validSystemNameFormat(mSystemName);
-        if (isNameValid != Manager.NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
-        }
-    }
-
     public AbstractAnalogExpression(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);

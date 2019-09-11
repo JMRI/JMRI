@@ -45,13 +45,6 @@ public class ManySwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        Many action = new Many(systemName);
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         Many action = new Many(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);

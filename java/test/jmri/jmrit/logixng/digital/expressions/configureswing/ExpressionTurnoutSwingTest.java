@@ -41,7 +41,7 @@ public class ExpressionTurnoutSwingTest {
         Assert.assertTrue("panel is not null",
             null != new ExpressionTurnoutSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new ExpressionTurnoutSwing().getConfigPanel(new ExpressionTurnout("IQDE1")));
+            null != new ExpressionTurnoutSwing().getConfigPanel(new ExpressionTurnout("IQDE1", null)));
     }
     
     // The minimal setup for log4J

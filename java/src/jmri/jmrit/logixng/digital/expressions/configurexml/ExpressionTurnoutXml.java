@@ -52,12 +52,7 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        ExpressionTurnout h;
-        if (uname == null) {
-            h = new ExpressionTurnout(sys);
-        } else {
-            h = new ExpressionTurnout(sys, uname);
-        }
+        ExpressionTurnout h = new ExpressionTurnout(sys, uname);
 
         loadCommon(h, shared);
 

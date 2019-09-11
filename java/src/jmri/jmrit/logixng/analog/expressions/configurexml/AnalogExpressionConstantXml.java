@@ -45,11 +45,7 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         AnalogExpressionConstant h;
-        if (uname == null) {
-            h = new AnalogExpressionConstant(sys);
-        } else {
-            h = new AnalogExpressionConstant(sys, uname);
-        }
+        h = new AnalogExpressionConstant(sys, uname);
 
         loadCommon(h, shared);
 

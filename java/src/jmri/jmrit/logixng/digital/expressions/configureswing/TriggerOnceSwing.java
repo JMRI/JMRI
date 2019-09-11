@@ -43,14 +43,7 @@ public class TriggerOnceSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        TriggerOnce expression = new TriggerOnce(systemName, null);
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, String userName) {
         TriggerOnce expression = new TriggerOnce(systemName, null);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }

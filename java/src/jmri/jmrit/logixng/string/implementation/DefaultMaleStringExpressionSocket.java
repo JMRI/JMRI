@@ -36,8 +36,8 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
 
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return _expression.getNewObjectBasedOnTemplate(sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return _expression.getNewObjectBasedOnTemplate();
     }
     
     @Override

@@ -91,26 +91,6 @@ public class ExpressionTurnoutSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        ExpressionTurnout expression = new ExpressionTurnout(systemName);
-        try {
-            Turnout turnout = turnoutBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Turnout> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                expression.setTurnout(handle);
-            }
-            expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
-            expression.setTurnoutState((TurnoutState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for turnout", ex);
-        }
-        return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         ExpressionTurnout expression = new ExpressionTurnout(systemName, userName);
         try {

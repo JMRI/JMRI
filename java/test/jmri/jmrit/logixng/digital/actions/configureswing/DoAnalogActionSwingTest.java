@@ -31,7 +31,7 @@ public class DoAnalogActionSwingTest {
         Assert.assertTrue("panel is not null",
             null != new DoAnalogActionSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new DoAnalogActionSwing().getConfigPanel(new DoAnalogAction("IQDA1")));
+            null != new DoAnalogActionSwing().getConfigPanel(new DoAnalogAction("IQDA1", null)));
     }
     
     // The minimal setup for log4J

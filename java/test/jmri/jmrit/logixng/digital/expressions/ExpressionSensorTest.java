@@ -41,7 +41,7 @@ public class ExpressionSensorTest {
     
     @Test
     public void testDescription() {
-        ExpressionSensor expressionSensor = new ExpressionSensor("IQDE321");
+        ExpressionSensor expressionSensor = new ExpressionSensor("IQDE321", null);
         Assert.assertTrue("Get sensor".equals(expressionSensor.getShortDescription()));
         Assert.assertTrue("Sensor Not selected is Active".equals(expressionSensor.getLongDescription()));
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
@@ -61,23 +61,36 @@ public class ExpressionSensorTest {
         sensor.setCommandedState(Sensor.INACTIVE);
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1");
+        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
-        IfThenElse actionIfThen = new IfThenElse(IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
+        IfThenElse actionIfThen =
+                new IfThenElse(
+                        InstanceManager.getDefault(
+                                DigitalActionManager.class).getNewSystemName(), null,
+                                IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket socketIfThen =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(actionIfThen);
         conditionalNG.getChild(0).connect(socketIfThen);
         
-        ExpressionSensor expressionSensor = new ExpressionSensor();
+        ExpressionSensor expressionSensor =
+                new ExpressionSensor(
+                        InstanceManager.getDefault(DigitalExpressionManager.class)
+                                .getNewSystemName(), null);
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        MaleSocket socketSensor = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
+        MaleSocket socketSensor =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(expressionSensor);
         socketIfThen.getChild(0).connect(socketSensor);
         
         ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        MaleSocket socketAtomicBoolean =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(actionAtomicBoolean);
         socketIfThen.getChild(1).connect(socketAtomicBoolean);
         
         // The action is not yet executed so the atomic boolean should be false
@@ -104,7 +117,10 @@ public class ExpressionSensorTest {
         // Test setSensor() when listeners are registered
         Sensor turnout = InstanceManager.getDefault(SensorManager.class).provide("IT1");
         Assert.assertNotNull("Sensor is not null", turnout);
-        ExpressionSensor expression = new ExpressionSensor();
+        ExpressionSensor expression =
+                new ExpressionSensor(
+                        InstanceManager.getDefault(DigitalExpressionManager.class)
+                                .getNewSystemName(), null);
         expression.setSensor(turnout);
         
         Assert.assertNotNull("Sensor is not null", expression.getSensor());
@@ -142,7 +158,10 @@ public class ExpressionSensorTest {
         // Get the expression and set the sensor
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Assert.assertNotNull("Sensor is not null", sensor);
-        ExpressionSensor expression = new ExpressionSensor();
+        ExpressionSensor expression =
+                new ExpressionSensor(
+                        InstanceManager.getDefault(DigitalExpressionManager.class)
+                                .getNewSystemName(), null);
         expression.setSensor(sensor);
         
         // Get some other sensor for later use

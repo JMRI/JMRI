@@ -123,7 +123,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate(null);
+        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J
@@ -137,7 +137,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
-        ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322");
+        ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322", null);
         maleSocket = new DefaultMaleDigitalExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleDigitalExpressionSocket(otherExpression);
         femaleSocket = new DefaultFemaleDigitalExpressionSocket(null, new FemaleSocketListener() {
@@ -165,7 +165,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         private boolean _hasBeenSetup = false;
         
         public MyExpressionTurnout(String systemName) {
-            super(systemName);
+            super(systemName, null);
         }
         
         /** {@inheritDoc} */

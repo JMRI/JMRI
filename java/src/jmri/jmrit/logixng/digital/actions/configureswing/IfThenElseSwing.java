@@ -46,13 +46,6 @@ public class IfThenElseSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName) {
-        IfThenElse action = new IfThenElse(systemName, type);
-        return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
         IfThenElse action = new IfThenElse(systemName, userName, type);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);

@@ -37,8 +37,8 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
 
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate(String sys) {
-        return _expression.getNewObjectBasedOnTemplate(sys);
+    public Base getNewObjectBasedOnTemplate() {
+        return _expression.getNewObjectBasedOnTemplate();
     }
     
     @Override
