@@ -27,41 +27,31 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
     /** {@inheritDoc} */
     @Override
     public final ConditionalNG getConditionalNG() {
-        if (this instanceof ConditionalNG) {
-            return (ConditionalNG) this;
-        } else {
-            Base parent = getParent();
-            while ((parent != null) && (!(parent instanceof ConditionalNG))) {
-                parent = parent.getParent();
-            }
-            return (ConditionalNG) parent;
+        Base item = this;
+        while ((item != null) && !(item instanceof ConditionalNG)) {
+            item = item.getParent();
         }
+        return (ConditionalNG)item;
     }
     
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
-        if (this instanceof LogixNG) {
-            return (LogixNG) this;
-        } else {
-            Base parent = getParent();
-            while ((parent != null) && (!(parent instanceof LogixNG))) {
-                parent = parent.getParent();
-            }
-            return (LogixNG) parent;
+        Base item = this;
+        while ((item != null) && !(item instanceof LogixNG)) {
+            item = item.getParent();
         }
+        return (LogixNG)item;
     }
     
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
-        Base current = this;
-        Base parent = getParent();
-        while (parent != null) {
-            current = parent;
-            parent = parent.getParent();
+        Base item = this;
+        while (item.getParent() != null) {
+            item = item.getParent();
         }
-        return current;
+        return item;
     }
     
     /** {@inheritDoc} */
