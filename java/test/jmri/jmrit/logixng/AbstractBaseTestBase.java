@@ -63,6 +63,14 @@ public abstract class AbstractBaseTestBase {
     }
     
     @Test
+    public void testGetPrintTreeWithStandardLocale() {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        _base.printTree(printWriter, TREE_INDENT);
+        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+    }
+    
+    @Test
     public void testIsActive() {
         Assert.assertTrue(_base.isActive());
         if (_base instanceof MaleSocket) {
