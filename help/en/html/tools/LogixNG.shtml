@@ -57,6 +57,7 @@
       instructions. Return here to read about what you did.</p>
 
       <ul>
+        <li><a href="#intro">Introduction to LogixNG</a></li>
         <li><a href="#intro">Introduction to LogixNG and
         ConditionalNGs</a></li>
 
@@ -91,7 +92,43 @@
         <li><a href="../../package/jmri/jmrit/conditional/ConditionalNGTreeEditor.shtml">ConditionalNG Tree Editor</a></li>
       </ul>
 
-      <h2>Introduction to LogixNG and ConditionalNGs</h2>
+      <h2>Introduction to LogixNG</h2>
+
+      <p>LogixNG is built of four building blocks:</p>
+	  <ul>
+        <li>LogixNG - a container of one or several ConditionalNGs</li>
+	    <li>ConditionalNG - a tree structure consisting of Actions and Expressions</li>
+		<li>Actions - an action does something</li>
+		<li>Expressions - an expression asks a question</li>
+      </ul>
+
+	  <p>The main building blocks of LogixNG is Actions and Expressions.
+	  Unlike Logix, the actions and expressions in LogixNG is
+	  structured in a tree which gives a lot more flexibility.
+	  For example, an IfThenElse action has an child expression
+	  which in turn can have multiple child expressions.</p>
+
+	  <p>Each action and expression does one particular task, like
+	  throwing a switch or asking the state of a sensor. Some actions
+	  and expressions combines other actions and/or expressions, for
+	  example the IfThenElse action that asks a question and then
+	  acts upon the answer. And the Or expression answers true if all
+	  its child expressions answers true.</p>
+
+	  <p>A ConditionalNG is the container of a tree of actions and
+	  expressions. A LogixNG is a container of one or several
+	  ConditionalNGs.</p>
+
+	  <p>For people used with Logix, LogixNG and ConditionalNG follows
+	  the structure of Logix, there LogixNG is equivalent to Logix and
+	  there ConditionalNG is equivalent to Conditional. Actions and
+	  Expressions of LogixNG follows the same idea as in Logix, but
+	  are implemented in a true tree structure.</p>
+
+
+
+
+
 
       <p>A LogixNG is a small group of ConditionalNGs focused on a
       single task on the layout. Each <a href=
