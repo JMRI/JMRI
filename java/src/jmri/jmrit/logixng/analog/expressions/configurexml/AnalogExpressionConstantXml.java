@@ -49,9 +49,9 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
 
         loadCommon(h, shared);
 
-        Element valueName = shared.getChild("value");
-        if (valueName != null) {
-            h.setValue(Double.parseDouble(valueName.getTextTrim()));
+        Element valueElement = shared.getChild("value");
+        if (valueElement != null) {
+            h.setValue(Double.parseDouble(valueElement.getTextTrim()));
         }
 
         InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(h);
