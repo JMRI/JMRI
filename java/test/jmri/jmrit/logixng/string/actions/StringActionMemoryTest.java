@@ -9,8 +9,14 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.digital.actions.DoStringAction;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -25,16 +31,18 @@ import org.junit.Test;
  */
 public class StringActionMemoryTest extends AbstractStringActionTestBase {
 
+    LogixNG logixNG;
+    ConditionalNG conditionalNG;
     protected Memory _memory;
     
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
@@ -44,7 +52,14 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Override
     public String getExpectedPrintedTreeFromRoot() {
-        return String.format("Set memory IM1%n");
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Read string E1 and set string A1%n" +
+                "            ?s E1%n" +
+                "            !s A1%n" +
+                "               Set memory IM1%n");
     }
     
     @Test
@@ -220,15 +235,27 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG.addConditionalNG(conditionalNG);
+        DoStringAction doStringAction = new DoStringAction("IQDA321", null);
+        MaleSocket maleSocketDoStringAction =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
+        conditionalNG.getChild(0).connect(maleSocketDoStringAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        _base = new StringActionMemory("IQSA321", "StringIO_Memory");
-        ((StringActionMemory)_base).setMemory(_memory);
+        StringActionMemory stringActionMemory = new StringActionMemory("IQSA321", "StringIO_Memory");
+        MaleSocket maleSocketStringActionMemory =
+                InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
+        doStringAction.getChild(1).connect(maleSocketStringActionMemory);
+        stringActionMemory.setMemory(_memory);
+        _base = stringActionMemory;
     }
 
     @After

@@ -34,16 +34,20 @@ import org.junit.Test;
  */
 public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase {
 
+    LogixNG logixNG;
+    ConditionalNG conditionalNG;
+    StringExpressionMemory stringExpressionMemory;
     protected Memory _memory;
+    protected Memory _memoryOut;
     
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
@@ -53,7 +57,14 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Override
     public String getExpectedPrintedTreeFromRoot() {
-        return String.format("Get memory IM1%n");
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Read string E1 and set string A1%n" +
+                "            ?s E1%n" +
+                "            !s A1%n" +
+                "               Set memory IM2%n");
     }
     
     @Test
@@ -127,32 +138,6 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     @Test
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         
-        StringExpressionMemory expression = (StringExpressionMemory)_base;
-        
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-        
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        DigitalActionBean actionDoString =
-                new DoStringAction(
-                        InstanceManager.getDefault(DigitalActionManager.class)
-                                .getNewSystemName()
-                        , null);
-        MaleSocket socketDoString = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoString);
-        conditionalNG.getChild(0).connect(socketDoString);
-        
-        MaleSocket socketExpression = InstanceManager.getDefault(StringExpressionManager.class).registerExpression(expression);
-        socketDoString.getChild(0).connect(socketExpression);
-        
-        Memory _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
-        _memoryOut.setValue("");
-        StringActionMemory actionMemory = new StringActionMemory("IQSA1", null);
-        actionMemory.setMemory(_memoryOut);
-        MaleSocket socketAction = InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
-        socketDoString.getChild(1).connect(socketAction);
-        
         // The action is not yet executed so the double should be 0.0
         Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
@@ -162,6 +147,8 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
         _memory.setValue("Other test");
+        // Enable the logixNG and all its children.
+        logixNG.setEnabled(true);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the memory should be 0.0
@@ -180,7 +167,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
         // Unregister listeners. This should do nothing since the listeners are
         // already unregistered.
-        expression.unregisterListeners();
+        stringExpressionMemory.unregisterListeners();
         // The action is not yet executed so the memory should be 0.0
         Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
@@ -189,8 +176,8 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
         
         // Test register listeners when there is no memory.
-        expression.setMemory((Memory)null);
-        expression.registerListeners();
+        stringExpressionMemory.setMemory((Memory)null);
+        stringExpressionMemory.registerListeners();
     }
     
     @Test
@@ -259,7 +246,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertNotNull("Memory is not null", otherMemory);
         Assert.assertNotEquals("Memory is not equal", _memory, otherMemory);
         
-        // Get the expression and set the memory
+        // Get the stringExpressionMemory and set the memory
         StringExpressionMemory expression = (StringExpressionMemory)_base;
         expression.setMemory(_memory);
         Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
@@ -329,17 +316,38 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG.addConditionalNG(conditionalNG);
+        DoStringAction doStringAction = new DoStringAction("IQDA321", null);
+        MaleSocket maleSocketDoStringAction =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
+        conditionalNG.getChild(0).connect(maleSocketDoStringAction);
+        _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        stringExpressionMemory = new StringExpressionMemory("IQSE321", "StringIO_Memory");
+        MaleSocket maleSocketStringExpressionMemory =
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpressionMemory);
+        doStringAction.getChild(0).connect(maleSocketStringExpressionMemory);
+        stringExpressionMemory.setMemory(_memory);
+        _base = stringExpressionMemory;
+        
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
-        _base = new StringExpressionMemory("IQSE321", "StringIO_Memory");
-        ((StringExpressionMemory)_base).setMemory(_memory);
+        
+        _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        _memoryOut.setValue("");
+        StringActionMemory actionMemory = new StringActionMemory("IQSA1", null);
+        actionMemory.setMemory(_memoryOut);
+        MaleSocket socketAction = InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
+        maleSocketDoStringAction.getChild(1).connect(socketAction);
     }
 
     @After

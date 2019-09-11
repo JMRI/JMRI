@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.util.JUnitUtil;
@@ -8,9 +9,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrit.logixng.DigitalActionBean;
+import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 
 /**
  * Test IfThenElse
@@ -19,14 +24,17 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
  */
 public class IfThenElseTest extends AbstractDigitalActionTestBase {
 
+    LogixNG logixNG;
+    ConditionalNG conditionalNG;
+    
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
@@ -41,10 +49,13 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
-                "If E then A1 else A2%n" +
-                "   ? E%n" +
-                "   ! A1%n" +
-                "   ! A2%n");
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         If E then A1 else A2%n" +
+                "            ? E%n" +
+                "            ! A1%n" +
+                "            ! A2%n");
     }
     
     @Test
@@ -74,13 +85,21 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG.addConditionalNG(conditionalNG);
+        IfThenElse action = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+        conditionalNG.getChild(0).connect(maleSocket);
+        _base = action;
     }
 
     @After

@@ -7,10 +7,16 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -25,16 +31,18 @@ import org.junit.Test;
  */
 public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
 
+    LogixNG logixNG;
+    ConditionalNG conditionalNG;
     protected Memory _memory;
     
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
@@ -44,7 +52,14 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Override
     public String getExpectedPrintedTreeFromRoot() {
-        return String.format("Set memory IM1%n");
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Read analog E1 and set analog A1%n" +
+                "            ?~ E1%n" +
+                "            !~ A1%n" +
+                "               Set memory IM1%n");
     }
     
     @Test
@@ -221,15 +236,27 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG.addConditionalNG(conditionalNG);
+        DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA321", null);
+        MaleSocket maleSocketDoAnalogAction =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
+        conditionalNG.getChild(0).connect(maleSocketDoAnalogAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        _base = new AnalogActionMemory("IQAA321", "AnalogIO_Memory");
-        ((AnalogActionMemory)_base).setMemory(_memory);
+        AnalogActionMemory analogActionMemory = new AnalogActionMemory("IQAA321", "AnalogIO_Memory");
+        MaleSocket maleSocketAnalogActionMemory =
+                InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
+        doAnalogAction.getChild(1).connect(maleSocketAnalogActionMemory);
+        analogActionMemory.setMemory(_memory);
+        _base = analogActionMemory;
     }
 
     @After

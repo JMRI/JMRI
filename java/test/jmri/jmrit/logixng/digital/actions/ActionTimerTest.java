@@ -12,7 +12,10 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -26,14 +29,17 @@ import org.junit.Test;
  */
 public class ActionTimerTest extends AbstractDigitalActionTestBase {
 
+    LogixNG logixNG;
+    ConditionalNG conditionalNG;
+    
     @Override
     public ConditionalNG getConditionalNG() {
-        return null;
+        return conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return null;
+        return logixNG;
     }
     
     @Override
@@ -46,8 +52,11 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
-                "Execute A after 0 milliseconds%n" +
-                "   ! A%n");
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG%n" +
+                "      ! %n" +
+                "         Execute A after 0 milliseconds%n" +
+                "            ! A%n");
     }
     
     @Test
@@ -100,13 +109,21 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        _base = new ActionTimer("IQDA321", null);
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG.addConditionalNG(conditionalNG);
+        ActionTimer action = new ActionTimer("IQDA321", null);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+        conditionalNG.getChild(0).connect(maleSocket);
+        _base = action;
     }
 
     @After

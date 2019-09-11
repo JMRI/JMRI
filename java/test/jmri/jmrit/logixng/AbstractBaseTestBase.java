@@ -7,8 +7,8 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
 import org.junit.Test;
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test AbstractAnalogExpression
@@ -81,6 +81,26 @@ public abstract class AbstractBaseTestBase {
             ((MaleSocket)_base.getParent()).setEnabled(false);
             Assert.assertFalse(_base.isActive());
             ((MaleSocket)_base.getParent()).setEnabled(true);
+        }
+        
+        Assert.assertTrue(_base.isActive());
+        ConditionalNG conditionalNG = _base.getConditionalNG();
+        if (conditionalNG != null) {
+            conditionalNG.setEnabled(false);
+            Assert.assertTrue(_base.isActive());
+            conditionalNG.setEnabled(true);
+        } else {
+            log.error("_base has no ConditionalNG as ancestor");
+        }
+        
+        Assert.assertTrue(_base.isActive());
+        LogixNG logixNG = _base.getLogixNG();
+        if (logixNG != null) {
+            logixNG.setEnabled(false);
+            Assert.assertTrue(_base.isActive());
+            logixNG.setEnabled(true);
+        } else {
+            log.error("_base has no LogixNG as ancestor");
         }
     }
     
@@ -262,6 +282,6 @@ public abstract class AbstractBaseTestBase {
         
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
+    private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }
