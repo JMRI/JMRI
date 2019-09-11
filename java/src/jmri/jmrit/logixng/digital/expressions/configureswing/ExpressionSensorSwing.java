@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -91,7 +92,7 @@ public class ExpressionSensorSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionSensor expression = new ExpressionSensor(systemName, userName);
         try {
             Sensor turnout = sensorBeanPanel.getNamedBean();

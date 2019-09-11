@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -11,7 +12,6 @@ import jmri.NamedBeanHandleManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.DigitalExpression;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
@@ -92,7 +92,7 @@ public class ExpressionLightSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionLight expression = new ExpressionLight(systemName, userName);
         try {
             Light turnout = lightBeanPanel.getNamedBean();

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -48,7 +49,7 @@ public class TimerSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         Timer expression = new Timer(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }

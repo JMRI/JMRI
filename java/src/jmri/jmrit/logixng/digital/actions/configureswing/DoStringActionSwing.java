@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -8,8 +9,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -45,7 +44,7 @@ public class DoStringActionSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         DoStringAction action = new DoStringAction(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }

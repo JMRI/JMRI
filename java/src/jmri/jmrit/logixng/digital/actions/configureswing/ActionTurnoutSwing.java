@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -79,7 +80,7 @@ public class ActionTurnoutSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ActionTurnout action = new ActionTurnout(systemName, userName);
         try {
             Turnout turnout = turnoutBeanPanel.getNamedBean();

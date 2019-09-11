@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -45,7 +46,7 @@ public class HoldAnythingSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName) {
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         HoldAnything action = new HoldAnything(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }

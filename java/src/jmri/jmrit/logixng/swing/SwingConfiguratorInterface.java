@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.swing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import jmri.NamedBean.BadUserNameException;
@@ -52,7 +53,7 @@ public interface SwingConfiguratorInterface {
      * @param userName user name
      * @return a male socket for the new object
      */
-    public MaleSocket createNewObject(@Nonnull String systemName, @Nonnull String userName)
+    public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName)
             throws BadUserNameException, BadSystemNameException;
     
     /**
