@@ -6,6 +6,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionBean;
@@ -17,6 +18,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -116,6 +118,20 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
+    }
+    
+    @Test
+    public void testSetValueWithListenersRegistered() {
+        boolean exceptionThrown = false;
+        try {
+            AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
+            expression.registerListeners();
+            expression.setValue(1.2);
+        } catch (RuntimeException e) {
+            exceptionThrown = true;
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        JUnitAppender.assertErrorMessage("setValue must not be called when listeners are registered");
     }
     
     @Test

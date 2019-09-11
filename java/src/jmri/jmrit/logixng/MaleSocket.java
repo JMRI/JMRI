@@ -29,6 +29,7 @@ public interface MaleSocket extends Debugable {
      * 
      * @return true if the male socket is enabled, false otherwise
      */
+    @Override
     public boolean isEnabled();
     
     /**

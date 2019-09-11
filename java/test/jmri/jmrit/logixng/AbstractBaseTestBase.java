@@ -62,6 +62,11 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
+    @Test
+    public void testIsActive() {
+        Assert.assertTrue(_base.isActive());
+    }
+    
     /**
      * Returns the expected result of _base.getRoot().printTree(writer, TREE_INDENT)
      * @return the expected printed tree
