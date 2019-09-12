@@ -121,6 +121,14 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
+    @Test
+    public void testMaleSocketGetPrintTreeWithStandardLocale() {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        _baseMaleSocket.printTree(printWriter, TREE_INDENT);
+        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+    }
+    
     /**
      * Returns the expected result of _base.getRoot().printTree(writer, TREE_INDENT)
      * @return the expected printed tree
