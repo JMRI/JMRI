@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 
 /**
@@ -14,36 +12,6 @@ import jmri.jmrit.logixng.MaleSocket;
  */
 public abstract class AbstractMaleSocket implements Base {
 
-    /** {@inheritDoc} */
-    @Override
-    public final ConditionalNG getConditionalNG() {
-        Base item = this;
-        while ((item != null) && !(item instanceof ConditionalNG)) {
-            item = item.getParent();
-        }
-        return (ConditionalNG)item;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final LogixNG getLogixNG() {
-        Base item = this;
-        while ((item != null) && !(item instanceof LogixNG)) {
-            item = item.getParent();
-        }
-        return (LogixNG)item;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public final Base getRoot() {
-        Base item = this;
-        while (item.getParent() != null) {
-            item = item.getParent();
-        }
-        return item;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public final void setParentForAllChildren() {

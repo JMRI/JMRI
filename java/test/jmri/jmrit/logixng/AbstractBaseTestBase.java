@@ -55,6 +55,41 @@ public abstract class AbstractBaseTestBase {
         Assert.assertNull("LogixNG is null", _base.getLogixNG());
     }
     
+    @Test
+    public void testMaleSocketGetConditionalNG() {
+        Assert.assertTrue("conditionalNG is equal",
+                _base.getConditionalNG() == _baseMaleSocket.getConditionalNG());
+        _base.setParent(null);
+        Assert.assertTrue("conditionalNG is equal",
+                _base.getConditionalNG() == _baseMaleSocket.getConditionalNG());
+    }
+    
+    @Test
+    public void testMaleSocketGetLogixNG() {
+        Assert.assertTrue("logixNG is equal",
+                _base.getLogixNG() == _baseMaleSocket.getLogixNG());
+        _base.setParent(null);
+        Assert.assertTrue("logixNG is equal",
+                _base.getLogixNG() == _baseMaleSocket.getLogixNG());
+    }
+    
+    @Test
+    public void testMaleSocketGetRoot() {
+        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+        _base.setParent(null);
+        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+    }
+    
+    @Test
+    public void testGetParent() {
+        if (_base.getParent() != _baseMaleSocket.getParent()) {
+            log.error("Invalid parent for objects: {}, {}", _base, _baseMaleSocket);
+        }
+        Assert.assertTrue("parent is equal", _base.getParent() == _baseMaleSocket.getParent());
+        _base.setParent(null);
+        Assert.assertTrue("parent is equal", _base.getParent() == _baseMaleSocket.getParent());
+    }
+    
     /**
      * Returns the expected result of _base.printTree(writer, TREE_INDENT)
      * @return the expected printed tree
@@ -98,11 +133,6 @@ public abstract class AbstractBaseTestBase {
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
-    }
-    
-    @Test
-    public void testMaleSocketGetRoot() {
-        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
     }
     
     @Test

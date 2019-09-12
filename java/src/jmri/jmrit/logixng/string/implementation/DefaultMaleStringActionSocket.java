@@ -11,7 +11,9 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
 import javax.annotation.Nonnull;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.MaleStringActionSocket;
 import jmri.jmrit.logixng.StringActionBean;
@@ -24,7 +26,6 @@ import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
  */
 public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements MaleStringActionSocket {
 
-    private Base _parent = null;
     private final StringActionBean _action;
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
@@ -40,14 +41,32 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         return _action.getNewObjectBasedOnTemplate();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public final ConditionalNG getConditionalNG() {
+        return _action.getConditionalNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final LogixNG getLogixNG() {
+        return _action.getLogixNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Base getRoot() {
+        return _action.getRoot();
+    }
+    
     @Override
     public Base getParent() {
-        return _parent;
+        return _action.getParent();
     }
     
     @Override
     public void setParent(Base parent) {
-        _parent = parent;
+        _action.setParent(parent);
     }
     
     /** {@inheritDoc} */

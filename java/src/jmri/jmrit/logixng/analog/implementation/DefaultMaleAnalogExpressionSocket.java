@@ -15,6 +15,8 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleAnalogExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.AnalogExpressionBean;
+import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
@@ -27,7 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implements MaleAnalogExpressionSocket {
 
-    private Base _parent = null;
     private final AnalogExpressionBean _expression;
     private DebugConfig _debugConfig = null;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
@@ -44,14 +45,32 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         return _expression.getNewObjectBasedOnTemplate();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public final ConditionalNG getConditionalNG() {
+        return _expression.getConditionalNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final LogixNG getLogixNG() {
+        return _expression.getLogixNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Base getRoot() {
+        return _expression.getRoot();
+    }
+    
     @Override
     public Base getParent() {
-        return _parent;
+        return _expression.getParent();
     }
 
     @Override
     public void setParent(Base parent) {
-        _parent = parent;
+        _expression.setParent(parent);
     }
 
     /** {@inheritDoc} */

@@ -7,12 +7,13 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 
@@ -188,6 +189,24 @@ public class HoldAnything extends AbstractDigitalAction
         @Override
         public Base getNewObjectBasedOnTemplate() {
             return null;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public final ConditionalNG getConditionalNG() {
+            throw new RuntimeException("This method should never be called");
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public final LogixNG getLogixNG() {
+            throw new RuntimeException("This method should never be called");
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public final Base getRoot() {
+            throw new RuntimeException("This method should never be called");
         }
         
         @Override

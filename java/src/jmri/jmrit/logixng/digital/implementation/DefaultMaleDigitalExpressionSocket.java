@@ -11,10 +11,12 @@ import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.DigitalExpressionBean;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 
 /**
@@ -24,7 +26,6 @@ import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
  */
 public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket implements MaleDigitalExpressionSocket {
 
-    private Base _parent = null;
     private final DigitalExpressionBean _expression;
     private boolean lastEvaluationResult = false;
     private DebugConfig _debugConfig = null;
@@ -41,14 +42,32 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         return _expression.getNewObjectBasedOnTemplate();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public final ConditionalNG getConditionalNG() {
+        return _expression.getConditionalNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final LogixNG getLogixNG() {
+        return _expression.getLogixNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Base getRoot() {
+        return _expression.getRoot();
+    }
+    
     @Override
     public Base getParent() {
-        return _parent;
+        return _expression.getParent();
     }
 
     @Override
     public void setParent(Base parent) {
-        _parent = parent;
+        _expression.setParent(parent);
     }
 
     /** {@inheritDoc} */

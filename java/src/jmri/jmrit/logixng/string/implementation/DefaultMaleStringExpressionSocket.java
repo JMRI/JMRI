@@ -11,7 +11,9 @@ import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.MaleStringExpressionSocket;
 import jmri.jmrit.logixng.StringExpressionBean;
@@ -24,7 +26,6 @@ import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
  */
 public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implements MaleStringExpressionSocket {
 
-    private Base _parent = null;
     private final StringExpressionBean _expression;
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
@@ -40,14 +41,32 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
         return _expression.getNewObjectBasedOnTemplate();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public final ConditionalNG getConditionalNG() {
+        return _expression.getConditionalNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final LogixNG getLogixNG() {
+        return _expression.getLogixNG();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public final Base getRoot() {
+        return _expression.getRoot();
+    }
+    
     @Override
     public Base getParent() {
-        return _parent;
+        return _expression.getParent();
     }
 
     @Override
     public void setParent(Base parent) {
-        _parent = parent;
+        _expression.setParent(parent);
     }
 
     /** {@inheritDoc} */
