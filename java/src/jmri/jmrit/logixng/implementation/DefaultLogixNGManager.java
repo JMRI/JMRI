@@ -325,23 +325,23 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             int load = 1;
             try {
                 if (store == 1) {
-                    Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1_Daniel");
+                    Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
                     light1.setCommandedState(Light.OFF);
-                    Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2_Daniel");
+                    Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
                     light2.setCommandedState(Light.OFF);
-                    Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1_Daniel");
+                    Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
                     sensor1.setCommandedState(Sensor.INACTIVE);
-                    Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2_Daniel");
+                    Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
                     sensor2.setCommandedState(Sensor.INACTIVE);
-                    Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1_Daniel");
+                    Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
                     turnout1.setCommandedState(Turnout.CLOSED);
-                    Turnout turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2_Daniel");
+                    Turnout turnout2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
                     turnout2.setCommandedState(Turnout.CLOSED);
-                    Turnout turnout3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT3_Daniel");
+                    Turnout turnout3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT3");
                     turnout3.setCommandedState(Turnout.CLOSED);
-                    Turnout turnout4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT4_Daniel");
+                    Turnout turnout4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT4");
                     turnout4.setCommandedState(Turnout.CLOSED);
-                    Turnout turnout5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT5_Daniel");
+                    Turnout turnout5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT5");
                     turnout5.setCommandedState(Turnout.CLOSED);
                     
     //                AtomicBoolean atomicBoolean = new AtomicBoolean(false);
@@ -601,9 +601,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     speedConstant.setValue(0.5);
                     MaleSocket socketSpeedConstant = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(speedConstant);
                     
+                    Sensor sensorDirection = InstanceManager.getDefault(SensorManager.class).provide("IS100");
+                    sensorDirection.setCommandedState(Sensor.ACTIVE);
+                    ExpressionSensor directionSensor = new ExpressionSensor(getSystemNamePrefix()+"DE:10028", null);
+                    expressionSensor.setSensor(sensorDirection);
+                    expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
+                    expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+                    MaleSocket socketDirectionSensor = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(directionSensor);
+                    
                     ActionThrottle actionThrottle = new ActionThrottle(getSystemNamePrefix()+"DA:10023", "My turnout action");
                     actionThrottle.getChild(0).connect(socketLocoConstant);
                     actionThrottle.getChild(1).connect(socketSpeedConstant);
+                    actionThrottle.getChild(2).connect(socketDirectionSensor);
                     MaleSocket socketThrottle = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle);
                     socketSecondMany.getChild(index++).connect(socketThrottle);
                     

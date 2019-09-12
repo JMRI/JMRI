@@ -28,13 +28,10 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetConditionalNG() {
-//        if (getConditionalNG() == null) {
-//            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
-//        }
+        if (getConditionalNG() == null) {
+            log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
+        }
         Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
-        
-        _base.setParent(null);
-        Assert.assertNull("ConditionalNG is null", getConditionalNG() == _base.getConditionalNG());
     }
     
     /**
@@ -45,13 +42,10 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetLogixNG() {
-//        if (getLogixNG() == null) {
-//            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
-//        }
+        if (getLogixNG() == null) {
+            log.warn("Method getLogixNG() returns null for class {}", this.getClass().getName());
+        }
         Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
-        
-        _base.setParent(null);
-        Assert.assertNull("LogixNG is null", getLogixNG() == _base.getLogixNG());
     }
     
     /**
