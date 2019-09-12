@@ -41,7 +41,6 @@ public class Tracker {
     private ArrayList<OBlock> _tailRange; // blocks reachable from tail block
     private ArrayList<OBlock> _lostRange = new ArrayList<OBlock>(); // blocks that lost detection
     private LinkedList<OBlock> _occupies = new LinkedList<>();     // blocks occupied by train
-    private ArrayList<OBlock> _range;    // total range of train  
     long _startTime;
     String _statusMessage;
     private Color _markerForeground;
@@ -127,6 +126,9 @@ public class Tracker {
      * and a path set to enter blkB, the path is PathSet.SET. If there an exit
      * or entry path set, but not both, the path is PathSet.PARTIAL.  If there
      * is neither an exit path not an entry path set, the path is PathSet.NO.
+     * When NOT PathSet.SET between blkA and blkB, then any dark blocks between 
+     * blkA and blkB are examined. All are examined for the most likely path
+     * through the dark block connecting blkA and blkB.
      * blkA is the current Head or Tail block
      * blkB is a block from the headRange or tailRange, where entry may be possible
      */
@@ -151,6 +153,7 @@ public class Tracker {
                darkBlock = block;
            }
        }
+       // not PathSet.SET so continue by looking at dark blocks
        if (darkBlock != null) {
            for (Portal portal : blkA.getPortals()) {
                OBlock block = portal.getOpposingBlock(blkA);
@@ -315,17 +318,12 @@ public class Tracker {
             }
         }
     }
-    /*
-     * Note: Caller will modify List
-     */
-    protected List<OBlock> getRange() {
-        return _range;
-    }
-
+    
     /**
      * Build array of blocks reachable from head and tail portals
+     * @return range of reachable blocks
      */
-    private void makeRange() {
+     protected List<OBlock> makeRange() {
         _headRange = new ArrayList<OBlock>();
         _tailRange = new ArrayList<OBlock>();
         OBlock headBlock = getHeadBlock();
@@ -374,18 +372,18 @@ public class Tracker {
             log.debug("   _occupies.size()= " + _occupies.size());
         }
 
-        buildRange();
+        return buildRange();
     }
-    private void buildRange() {
+    private List<OBlock> buildRange() {
         // make new list since tracker table is holding the old list
-        _range = new ArrayList<OBlock>();
+        ArrayList<OBlock> range = new ArrayList<OBlock>();    // total range of train  
         if (_occupies.size() == 0) {
             log.warn("{} does not occupy any blocks!", _trainName);
         }
         Iterator<OBlock> it = _occupies.iterator();
         while (it.hasNext()) {
             OBlock b = it.next();
-            _range.add(b);
+            range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} occupies \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
             }
@@ -393,7 +391,7 @@ public class Tracker {
         it = _headRange.iterator();
         while (it.hasNext()) {
             OBlock b = it.next();
-            _range.add(b);
+            range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} head range from {} includes \"{}\" value= {}",
                         _trainName, getHeadBlock().getDisplayName(), b.getDisplayName(), b.getValue());
@@ -402,7 +400,7 @@ public class Tracker {
         it = _tailRange.iterator();
         while (it.hasNext()) {
             OBlock b = it.next();
-            _range.add(b);
+            range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} tail range from {} includes \"{}\" value= {}",
                         _trainName, getTailBlock().getDisplayName(), b.getDisplayName(), b.getValue());
@@ -411,11 +409,12 @@ public class Tracker {
         it = _lostRange.iterator();
         while (it.hasNext()) {
             OBlock b = it.next();
-            _range.add(b);
+            range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} lost range contains \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
             }
         }
+        return range;
     }
 
     protected List<OBlock> getBlocksOccupied() { 

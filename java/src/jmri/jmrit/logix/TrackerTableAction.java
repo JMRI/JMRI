@@ -204,7 +204,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * <p>
      */
     protected void addBlockListeners(Tracker tracker) {
-        List<OBlock> range = tracker.getRange();
+        List<OBlock> range = tracker.makeRange();
         if (log.isDebugEnabled()) {
             log.debug("addBlockListeners for tracker= \"" + tracker.getTrainName()
                     + "\" has range of " + range.size() + " blocks.");
@@ -409,13 +409,13 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         if (log.isDebugEnabled()) {
             log.debug("processTrackerStateChange for block= " + block.getDisplayName() + " state= " + state + " TrackerName= " + tracker.getTrainName());
         }
-        List<OBlock> oldRange = tracker.getRange();// total range in effect when state change was detected
+        List<OBlock> oldRange = tracker.makeRange();// total range in effect when state change was detected
         if (tracker.move(block, state)) {   // new total range has been made after move was done.
             block._entryTime = System.currentTimeMillis();
             if (tracker._statusMessage != null) {
                 _frame.setStatus(tracker._statusMessage);
             } else {
-                adjustBlockListeners(oldRange, tracker.getRange(), tracker);
+                adjustBlockListeners(oldRange, tracker.makeRange(), tracker);
                 _frame.setStatus(Bundle.getMessage("TrackerBlockEnter",
                         tracker.getTrainName(), block.getDisplayName()));
             }
@@ -423,7 +423,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             if (tracker._statusMessage != null) {
                 _frame.setStatus(tracker._statusMessage);
             } else if (_trackerList.contains(tracker)) {
-                adjustBlockListeners(oldRange, tracker.getRange(), tracker);
+                adjustBlockListeners(oldRange, tracker.makeRange(), tracker);
                 long et = (System.currentTimeMillis() - block._entryTime) / 1000;
                 _frame.setStatus(Bundle.getMessage("TrackerBlockLeave", tracker.getTrainName(),
                         block.getDisplayName(), et / 60, et % 60));
