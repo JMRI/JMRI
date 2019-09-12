@@ -28,33 +28,18 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
-//        implements LogixNG, FemaleSocketListener {
     
 //    private DefaultLogixNG _template;
     private Base _parent = null;
-//    private String _socketSystemName = null;
-//    private final FemaleDigitalActionSocket _femaleActionSocket;
     private boolean _enabled = false;
 //    private boolean _userEnabled = false;
     
-    public DefaultLogixNG(String sys) throws BadUserNameException, BadSystemNameException  {
-        super(sys);
-//        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
-    }
-    
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
-//        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
-    }
-    
-    public DefaultLogixNG(String sys, MaleDigitalActionSocket action) throws BadUserNameException, BadSystemNameException  {
-        super(sys);
-//        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleActionSocket(this, this, "", action);
     }
     
     public DefaultLogixNG(String sys, String user, MaleDigitalActionSocket action) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
-//        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleActionSocket(this, this, "", action);
     }
     
     private DefaultLogixNG(DefaultLogixNG template) {
