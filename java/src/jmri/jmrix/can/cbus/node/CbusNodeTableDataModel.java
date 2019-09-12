@@ -208,7 +208,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             case NUMBER_BACKUPS_COLUMN:
                 return("Num. Backups");
             case LAST_BACKUP_COLUMN:
-                return("Last Backup xml update");
+                return("Last Backup");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -983,7 +983,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         for (int i = 0; i < getRowCount(); i++) {
             _mainArray.get(i).dispose();
         }
-        _mainArray = null;
+        // _mainArray = null;
         
     }
 
