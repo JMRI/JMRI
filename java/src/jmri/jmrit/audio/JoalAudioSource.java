@@ -521,7 +521,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         log.debug("Cleanup JoalAudioSource ({})", this.getSystemName());
         int[] source_type = new int[1];
         al.alGetSourcei(_source[0], AL.AL_SOURCE_TYPE, source_type, 0);
-        if (_initialised && (isBound() || isQueued() || source_type[0] == AL.AL_UNDETERMINED)) {
+        if (_initialised && (isBound() || isQueued() || source_type[0] == AL.AL_UNDETERMINED) || source_type[0] == AL.AL_STREAMING) {
             al.alSourceStop(_source[0]);
             al.alDeleteSources(1, _source, 0);
             this._source = null;
