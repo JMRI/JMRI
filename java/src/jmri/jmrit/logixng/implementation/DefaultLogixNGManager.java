@@ -8,7 +8,6 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.JmriException;
@@ -25,7 +24,6 @@ import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketFactory;
@@ -523,9 +521,15 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     
                     
                     
+                    // If then
                     Many expressionMany = new Many(getSystemNamePrefix()+"DA:00010", null);
                     MaleSocket socketSecondMany = InstanceManager.getDefault(DigitalActionManager.class).registerAction(expressionMany);
                     socketIfThen.getChild(1).connect(socketSecondMany);
+                    
+                    // If else
+                    Many expressionMany2 = new Many(getSystemNamePrefix()+"DA:10010", null);
+                    MaleSocket socketSecondMany2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(expressionMany2);
+                    socketIfThen.getChild(2).connect(socketSecondMany2);
                     
                     index = 0;
                     
@@ -609,11 +613,15 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
                     MaleSocket socketDirectionSensor = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(directionSensor);
                     
-                    ActionThrottle actionThrottle = new ActionThrottle(getSystemNamePrefix()+"DA:10023", "My turnout action");
+                    ActionThrottle actionThrottle = new ActionThrottle(getSystemNamePrefix()+"DA:10023", "My throttle action");
                     actionThrottle.getChild(0).connect(socketLocoConstant);
                     actionThrottle.getChild(1).connect(socketSpeedConstant);
                     actionThrottle.getChild(2).connect(socketDirectionSensor);
                     MaleSocket socketThrottle = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle);
+                    socketSecondMany.getChild(index++).connect(socketThrottle);
+                    
+                    actionThrottle = new ActionThrottle(getSystemNamePrefix()+"DA:10024", "My other throttle action");
+                    socketThrottle = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle);
                     socketSecondMany.getChild(index++).connect(socketThrottle);
                     
                     Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");

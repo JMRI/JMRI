@@ -1,13 +1,9 @@
 package jmri.jmrit.logixng.digital.actions.configurexml;
 
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,6 +27,11 @@ public class DigitalActionsXmlTest {
         JUnitAppender.assertMessage("Invalid method called");
         
         b = new ActionSensorXml();
+        Assert.assertNotNull("exists", b);
+        b.load((Element) null, (Object) null);
+        JUnitAppender.assertMessage("Invalid method called");
+        
+        b = new ActionThrottleXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
