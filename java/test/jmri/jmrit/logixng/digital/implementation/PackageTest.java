@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.jmrit.logixng.digital.implementation.configurexml.PackageTest.class,
+    BundleTest.class,
     DefaultFemaleDigitalActionSocketFactoryTest.class,
     DefaultFemaleDigitalActionSocketTest.class,
     DefaultFemaleDigitalExpressionSocketFactoryTest.class,
