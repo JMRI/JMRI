@@ -17,33 +17,31 @@ public abstract class AbstractMaleSocket implements Base {
     /** {@inheritDoc} */
     @Override
     public final ConditionalNG getConditionalNG() {
-        Base parent = getParent();
-        while ((parent != null) && !(parent instanceof ConditionalNG)) {
-            parent = parent.getParent();
+        Base item = this;
+        while ((item != null) && !(item instanceof ConditionalNG)) {
+            item = item.getParent();
         }
-        return (ConditionalNG) parent;
+        return (ConditionalNG)item;
     }
     
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
-        Base parent = getParent();
-        while ((parent != null) && !(parent instanceof LogixNG)) {
-            parent = parent.getParent();
+        Base item = this;
+        while ((item != null) && !(item instanceof LogixNG)) {
+            item = item.getParent();
         }
-        return (LogixNG) parent;
+        return (LogixNG)item;
     }
     
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
-        Base current = this;
-        Base parent = getParent();
-        while (parent != null) {
-            current = parent;
-            parent = parent.getParent();
+        Base item = this;
+        while (item.getParent() != null) {
+            item = item.getParent();
         }
-        return current;
+        return item;
     }
     
     /** {@inheritDoc} */

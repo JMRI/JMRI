@@ -157,6 +157,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.getChild(0).connect(socket);
         
         _base = actionTurnout;
+        _baseMaleSocket = socket;
     }
 
     @After

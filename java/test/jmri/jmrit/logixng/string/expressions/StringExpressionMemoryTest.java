@@ -9,7 +9,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -337,6 +336,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         doStringAction.getChild(0).connect(maleSocketStringExpressionMemory);
         stringExpressionMemory.setMemory(_memory);
         _base = stringExpressionMemory;
+        _baseMaleSocket = maleSocketStringExpressionMemory;
         
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNotNull("memory is not null", _memory);

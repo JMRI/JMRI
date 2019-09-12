@@ -239,6 +239,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         socketDoAnalog.getChild(1).connect(socketAction);
         
         _base = expressionConstant;
+        _baseMaleSocket = socketExpression;
     }
 
     @After

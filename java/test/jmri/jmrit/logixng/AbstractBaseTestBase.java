@@ -19,6 +19,7 @@ public abstract class AbstractBaseTestBase {
 
     public final String TREE_INDENT = "   ";
     protected Base _base;
+    protected MaleSocket _baseMaleSocket;
     
     /**
      * Returns the LogixNG for _base.
@@ -69,11 +70,39 @@ public abstract class AbstractBaseTestBase {
     }
     
     @Test
+    public void testMaleSocketGetPrintTree() {
+        /// Test that the male socket of the item prints the same tree
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+    }
+    
+    @Test
     public void testGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _base.printTree(printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+    }
+    
+    /**
+     * Returns the expected result of _base.getRoot().printTree(writer, TREE_INDENT)
+     * @return the expected printed tree
+     */
+    public abstract String getExpectedPrintedTreeFromRoot();
+    
+    @Test
+    public void testGetPrintTreeFromRoot() {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
+    }
+    
+    @Test
+    public void testMaleSocketGetRoot() {
+        Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
     }
     
     @Test
@@ -114,18 +143,42 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue(_base.isActive());
     }
     
-    /**
-     * Returns the expected result of _base.getRoot().printTree(writer, TREE_INDENT)
-     * @return the expected printed tree
-     */
-    public abstract String getExpectedPrintedTreeFromRoot();
-    
     @Test
-    public void testGetPrintTreeFromRoot() {
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
-        Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
+    public void testMaleSocketIsActive() {
+        Assert.assertTrue(_baseMaleSocket.isActive());
+        if (_baseMaleSocket instanceof MaleSocket) {
+            ((MaleSocket)_baseMaleSocket).setEnabled(false);
+            Assert.assertFalse(_baseMaleSocket.isActive());
+            ((MaleSocket)_baseMaleSocket).setEnabled(true);
+        } else if (_baseMaleSocket.getParent() instanceof MaleSocket) {
+            ((MaleSocket)_baseMaleSocket.getParent()).setEnabled(false);
+            Assert.assertFalse(_baseMaleSocket.isActive());
+            ((MaleSocket)_baseMaleSocket.getParent()).setEnabled(true);
+        }
+        
+        Assert.assertTrue(_baseMaleSocket.isActive());
+        ConditionalNG conditionalNG = _baseMaleSocket.getConditionalNG();
+        if (conditionalNG != null) {
+            conditionalNG.setEnabled(false);
+            Assert.assertTrue(_baseMaleSocket.isActive());
+            conditionalNG.setEnabled(true);
+        } else {
+            log.error("_base has no ConditionalNG as ancestor");
+        }
+        
+        Assert.assertTrue(_baseMaleSocket.isActive());
+        LogixNG logixNG = _baseMaleSocket.getLogixNG();
+        if (logixNG != null) {
+            logixNG.setEnabled(false);
+            Assert.assertTrue(_baseMaleSocket.isActive());
+            logixNG.setEnabled(true);
+        } else {
+            log.error("_base has no LogixNG as ancestor");
+        }
+        
+        Assert.assertTrue(_baseMaleSocket.isActive());
+        _baseMaleSocket.setParent(null);
+        Assert.assertTrue(_baseMaleSocket.isActive());
     }
     
     @Test

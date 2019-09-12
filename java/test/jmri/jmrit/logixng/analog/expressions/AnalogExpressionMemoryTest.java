@@ -352,6 +352,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         socketDoAnalog.getChild(1).connect(socketAction);
         
         _base = expressionMemory;
+        _baseMaleSocket = socketExpression;
     }
 
     @After

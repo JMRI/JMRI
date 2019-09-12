@@ -124,6 +124,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         conditionalNG.getChild(0).connect(maleSocket);
         _base = action;
+        _baseMaleSocket = maleSocket;
     }
 
     @After

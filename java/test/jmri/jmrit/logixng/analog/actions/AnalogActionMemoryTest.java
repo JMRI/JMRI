@@ -257,6 +257,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         doAnalogAction.getChild(1).connect(maleSocketAnalogActionMemory);
         analogActionMemory.setMemory(_memory);
         _base = analogActionMemory;
+        _baseMaleSocket = maleSocketAnalogActionMemory;
     }
 
     @After

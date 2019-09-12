@@ -157,6 +157,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         conditionalNG.getChild(0).connect(socket);
         
         _base = actionSensor;
+        _baseMaleSocket = socket;
     }
 
     @After

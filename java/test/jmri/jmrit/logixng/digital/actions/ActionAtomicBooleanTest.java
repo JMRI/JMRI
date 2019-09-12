@@ -87,6 +87,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         conditionalNG.getChild(0).connect(socket);
         
         _base = actionAtomicBoolean;
+        _baseMaleSocket = socket;
     }
 
     @After

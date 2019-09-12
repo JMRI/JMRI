@@ -256,6 +256,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         doStringAction.getChild(1).connect(maleSocketStringActionMemory);
         stringActionMemory.setMemory(_memory);
         _base = stringActionMemory;
+        _baseMaleSocket = maleSocketStringActionMemory;
     }
 
     @After
