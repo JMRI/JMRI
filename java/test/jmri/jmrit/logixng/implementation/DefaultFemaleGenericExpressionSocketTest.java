@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.InstanceManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.FemaleSocketTestBase;
@@ -66,6 +65,19 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
     public void testGetDescription() {
         Assert.assertTrue("String matches", "?".equals(femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "? E1".equals(femaleSocket.getLongDescription()));
+    }
+    
+    @Override
+    protected FemaleSocket getFemaleSocket(String name) {
+        return new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, new FemaleSocketListener() {
+            @Override
+            public void connected(FemaleSocket socket) {
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+            }
+        }, name);
     }
     
     @Override

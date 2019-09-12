@@ -51,6 +51,19 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     }
     
     @Override
+    protected FemaleSocket getFemaleSocket(String name) {
+        return new DefaultFemaleDigitalActionSocket(null, new FemaleSocketListener() {
+            @Override
+            public void connected(FemaleSocket socket) {
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+            }
+        }, name);
+    }
+    
+    @Override
     protected boolean hasSocketBeenSetup() {
         return _action._hasBeenSetup;
     }

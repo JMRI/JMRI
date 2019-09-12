@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.NamedBean;
@@ -12,6 +11,8 @@ import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract female socket.
@@ -206,7 +207,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
-        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
@@ -254,33 +255,19 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final ConditionalNG getConditionalNG() {
-        Base parent = getParent();
-        while ((parent != null) && !(parent instanceof ConditionalNG)) {
-            parent = parent.getParent();
-        }
-        return (ConditionalNG) parent;
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
     @Override
     public final LogixNG getLogixNG() {
-        Base parent = getParent();
-        while ((parent != null) && !(parent instanceof LogixNG)) {
-            parent = parent.getParent();
-        }
-        return (LogixNG) parent;
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
-        Base current = this;
-        Base parent = getParent();
-        while (parent != null) {
-            current = parent;
-            parent = parent.getParent();
-        }
-        return current;
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
@@ -292,13 +279,13 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {
-        printTree(Locale.getDefault(), writer, indent, "");
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
     @Override
     public void printTree(Locale locale, PrintWriter writer, String indent) {
-        printTree(locale, writer, indent, "");
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     /** {@inheritDoc} */
@@ -310,5 +297,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             _socket.printTree(locale, writer, indent, currentIndent+indent);
         }
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(AbstractFemaleSocket.class);
     
 }

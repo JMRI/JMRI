@@ -21,7 +21,6 @@ import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -48,6 +47,19 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     public void testGetDescription() {
         Assert.assertTrue("String matches", "?~".equals(femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "?~ E1".equals(femaleSocket.getLongDescription()));
+    }
+    
+    @Override
+    protected FemaleSocket getFemaleSocket(String name) {
+        return new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
+            @Override
+            public void connected(FemaleSocket socket) {
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+            }
+        }, name);
     }
     
     @Override

@@ -108,6 +108,26 @@ public abstract class FemaleSocketTestBase {
         return true;
     }
     
+    /**
+     * Returns a new FemaleSocket with the specified name.
+     * The method is used to test that the constructor throws an exception if
+     * invalid name.
+     * @param name the name of the socket
+     * @return the new female socket
+     */
+    protected abstract FemaleSocket getFemaleSocket(String name);
+    
+    @Test
+    public void testBadSocketName() {
+        boolean hasThrown = false;
+        try {
+            getFemaleSocket("----");
+        } catch (IllegalArgumentException e) {
+            hasThrown = true;
+        }
+        Assert.assertTrue("exception thrown", hasThrown);
+    }
+    
     abstract protected boolean hasSocketBeenSetup();
     
     @Test
@@ -263,17 +283,39 @@ public abstract class FemaleSocketTestBase {
         Assert.assertTrue("exception is thrown", setName_verifyException("A12{3", "the name is not valid: A12{3"));
         Assert.assertTrue("exception is thrown", setName_verifyException("A12}3", "the name is not valid: A12}3"));
     }
-/*    
+    
     @Test
-    public void testLock() {
+    public void testLock() throws SocketAlreadyConnectedException {
+        femaleSocket.connect(maleSocket);
+        Assert.assertTrue("socket is connected", femaleSocket.isConnected());
+        
         femaleSocket.setLock(Base.Lock.NONE);
         Assert.assertEquals("lock matches", Base.Lock.NONE, femaleSocket.getLock());
         femaleSocket.setLock(Base.Lock.USER_LOCK);
         Assert.assertEquals("lock matches", Base.Lock.USER_LOCK, femaleSocket.getLock());
         femaleSocket.setLock(Base.Lock.HARD_LOCK);
         Assert.assertEquals("lock matches", Base.Lock.HARD_LOCK, femaleSocket.getLock());
+        
+        femaleSocket.disconnect();
+        boolean hasThrown = false;
+        try {
+            femaleSocket.setLock(Base.Lock.NONE);
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+        }
+        Assert.assertTrue("exception thrown", hasThrown);
+//        JUnitAppender.assertErrorMessage("the name is not valid: ----");
+        
+        hasThrown = false;
+        try {
+            femaleSocket.getLock();
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+        }
+        Assert.assertTrue("exception thrown", hasThrown);
+//        JUnitAppender.assertErrorMessage("the name is not valid: ----");
     }
-*/    
+    
     @Test
     public void testDisposeWithoutChild() {
         femaleSocket.dispose();
@@ -293,7 +335,55 @@ public abstract class FemaleSocketTestBase {
     public void testMethodsThatAreNotSupported() {
         errorFlag.set(false);
         try {
+            femaleSocket.printTree((PrintWriter)null, "");
+        } catch (UnsupportedOperationException ex) {
+            errorFlag.set(true);
+        }
+        Assert.assertTrue("method not supported", errorFlag.get());
+        
+        errorFlag.set(false);
+        try {
+            femaleSocket.printTree((Locale)null, (PrintWriter)null, "");
+        } catch (UnsupportedOperationException ex) {
+            errorFlag.set(true);
+        }
+        Assert.assertTrue("method not supported", errorFlag.get());
+        
+        errorFlag.set(false);
+        try {
+            femaleSocket.getConditionalNG();
+        } catch (UnsupportedOperationException ex) {
+            errorFlag.set(true);
+        }
+        Assert.assertTrue("method not supported", errorFlag.get());
+        
+        errorFlag.set(false);
+        try {
+            femaleSocket.getLogixNG();
+        } catch (UnsupportedOperationException ex) {
+            errorFlag.set(true);
+        }
+        Assert.assertTrue("method not supported", errorFlag.get());
+        
+        errorFlag.set(false);
+        try {
+            femaleSocket.getRoot();
+        } catch (UnsupportedOperationException ex) {
+            errorFlag.set(true);
+        }
+        Assert.assertTrue("method not supported", errorFlag.get());
+        
+        errorFlag.set(false);
+        try {
             femaleSocket.getCategory();
+        } catch (UnsupportedOperationException ex) {
+            errorFlag.set(true);
+        }
+        Assert.assertTrue("method not supported", errorFlag.get());
+        
+        errorFlag.set(false);
+        try {
+            femaleSocket.isActive();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }

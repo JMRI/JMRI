@@ -56,6 +56,19 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     }
     
     @Override
+    protected FemaleSocket getFemaleSocket(String name) {
+        return new DefaultFemaleStringActionSocket(null, new FemaleSocketListener() {
+            @Override
+            public void connected(FemaleSocket socket) {
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+            }
+        }, name);
+    }
+    
+    @Override
     protected boolean hasSocketBeenSetup() {
         return _action._hasBeenSetup;
     }

@@ -49,6 +49,19 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     }
     
     @Override
+    protected FemaleSocket getFemaleSocket(String name) {
+        return new DefaultFemaleStringExpressionSocket(null, new FemaleSocketListener() {
+            @Override
+            public void connected(FemaleSocket socket) {
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+            }
+        }, name);
+    }
+    
+    @Override
     protected boolean hasSocketBeenSetup() {
         return _expression._hasBeenSetup;
     }

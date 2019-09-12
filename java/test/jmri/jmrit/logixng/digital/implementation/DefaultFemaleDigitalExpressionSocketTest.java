@@ -48,6 +48,19 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     }
     
     @Override
+    protected FemaleSocket getFemaleSocket(String name) {
+        return new DefaultFemaleDigitalExpressionSocket(null, new FemaleSocketListener() {
+            @Override
+            public void connected(FemaleSocket socket) {
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+            }
+        }, name);
+    }
+    
+    @Override
     protected boolean hasSocketBeenSetup() {
         return _expression._hasBeenSetup;
     }
