@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
@@ -306,6 +307,58 @@ public class LogixNGTest {
     }
     
     @Test
+    public void testActivateLogixNG() {
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        MyConditionalNG conditionalNG_1 = new MyConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG.addConditionalNG(conditionalNG_1);
+        conditionalNG_1.setEnabled(false);
+        MyConditionalNG conditionalNG_2 = new MyConditionalNG(logixNG.getSystemName()+":2", null);
+        logixNG.addConditionalNG(conditionalNG_2);
+        conditionalNG_1.setEnabled(true);
+        MyConditionalNG conditionalNG_3 = new MyConditionalNG(logixNG.getSystemName()+":3", null);
+        logixNG.addConditionalNG(conditionalNG_3);
+        conditionalNG_1.setEnabled(false);
+        
+        Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
+        
+        logixNG.activateLogixNG();
+        Assert.assertTrue("listeners for conditionalNG_1 are registered", conditionalNG_1.listenersAreRegistered);
+        Assert.assertTrue("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
+        Assert.assertTrue("listeners for conditionalNG_3 are registered", conditionalNG_3.listenersAreRegistered);
+        
+        logixNG.deActivateLogixNG();
+        Assert.assertFalse("listeners for conditionalNG_1 are registered", conditionalNG_1.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_3 are registered", conditionalNG_3.listenersAreRegistered);
+    }
+    
+    @Test
+    public void testGetConditionalNG_WithoutParameters() {
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        boolean hasThrown = false;
+        try {
+            logixNG.getConditionalNG();
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+        }
+        Assert.assertTrue("exception thrown", hasThrown);
+    }
+    
+    @Test
+    public void testGetLogixNG() {
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        Assert.assertTrue("logixNG is correct", logixNG == logixNG.getLogixNG());
+    }
+    
+    @Test
+    public void testGetRoot() {
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        Assert.assertTrue("root is correct", logixNG == logixNG.getRoot());
+    }
+    
+    @Test
     public void testPrintTree() {
         final String newLine = System.lineSeparator();
         StringBuilder expectedResult = new StringBuilder();
@@ -448,6 +501,28 @@ public class LogixNGTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+    }
+    
+    
+    private class MyConditionalNG extends DefaultConditionalNG {
+
+        private boolean listenersAreRegistered;
+        
+        public MyConditionalNG(String sys, String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+            super(sys, user);
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public void registerListenersForThisClass() {
+            listenersAreRegistered = true;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public void unregisterListenersForThisClass() {
+            listenersAreRegistered = false;
+        }
     }
     
 }

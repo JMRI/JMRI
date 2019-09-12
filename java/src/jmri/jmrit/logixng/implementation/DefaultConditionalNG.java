@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public final class DefaultConditionalNG extends AbstractBase
+public class DefaultConditionalNG extends AbstractBase
         implements ConditionalNG, FemaleSocketListener {
     
     private DefaultConditionalNG _template;
