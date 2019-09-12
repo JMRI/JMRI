@@ -359,13 +359,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public final Base getRoot() {
-        Base current = this;
-        Base parent = getParent();
-        while (parent != null) {
-            current = parent;
-            parent = parent.getParent();
-        }
-        return current;
+        return this;
     }
 
     /** {@inheritDoc} */
