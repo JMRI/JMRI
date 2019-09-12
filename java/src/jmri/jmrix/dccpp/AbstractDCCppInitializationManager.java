@@ -13,18 +13,12 @@ import org.slf4j.LoggerFactory;
   *
  * Based on AbstractXNetInitializationManager
  */
-abstract public class AbstractDCCppInitializationManager {
+public abstract class AbstractDCCppInitializationManager {
 
     protected Thread initThread = null;
 
     protected DCCppSystemConnectionMemo systemMemo = null;
-
-    /**
-     * Define timeout used during initialization
-     */
-    protected int getInitTimeout() {
-        return 30000;
-    }
+    protected static final int INITIALTIMEOUT = 30000;
 
     public AbstractDCCppInitializationManager(DCCppSystemConnectionMemo memo) {
         /* spawn a thread to request version information and wait for the 
@@ -33,28 +27,10 @@ abstract public class AbstractDCCppInitializationManager {
             log.debug("Starting DCC++ Initialization Process");
         }
         systemMemo = memo;
-        /* the JMRI DCC++ code doesn't currently initialize based on version,
-	 * so there is no need to start the initThread or the ensuing wait */
-	/*initThread = new Thread(new DCCppInitializer(this));
-        
-        // Since we can't currently reconfigure the user interface after  
-        // initilization, We need to wait for the initilization thread 
-        // to finish before we can continue.  The wait  can be removed IF 
-        // we revisit the GUI initilization process.
-        synchronized (this) {
-            if (log.isDebugEnabled()) {
-                log.debug("start wait");
-            }
-            new jmri.util.WaitHandler(this);
-            if (log.isDebugEnabled()) {
-                log.debug("end wait");
-            }
-        }*/
-        
         init();
     }
     
-    abstract protected void init();
+    protected abstract void init();
     
     /* Interal class to configure the DCC++ implementation */
     protected class DCCppInitializer implements Runnable, DCCppListener {
@@ -84,27 +60,24 @@ abstract public class AbstractDCCppInitializationManager {
         
         protected javax.swing.Timer setupInitTimer() {
             // Initialize and start initilization timeout timer.
-            javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
-                                                             new java.awt.event.ActionListener() {
-                                                                 @Override
-                                                                 public void actionPerformed(
-                                                                                             java.awt.event.ActionEvent e) {
-                                                                     /* If the timer times out, notify any 
-                                                                        waiting objects, and dispose of
-                                                                        this thread */
-                                                                     if (log.isDebugEnabled()) {
-                                                                         log.debug("Timeout waiting for Command Station Response");
-                                                                     }
-                                                                     finish();
-                                                                 }
-                                                             });
-            retVal.setInitialDelay(getInitTimeout());
+            javax.swing.Timer retVal = new javax.swing.Timer(INITIALTIMEOUT,
+                (java.awt.event.ActionEvent e) -> {
+                    /* If the timer times out, notify any
+                       waiting objects, and dispose of
+                       this thread */
+                    if (log.isDebugEnabled()) {
+                       log.debug("Timeout waiting for Command Station Response");
+                    }
+                finish();
+            });
+            retVal.setInitialDelay(INITIALTIMEOUT);
             retVal.start();
             return retVal;
         }
         
         @Override
         public void run() {
+            // we may not need a thread here...
         }
         
         private void finish() {
@@ -112,10 +85,10 @@ abstract public class AbstractDCCppInitializationManager {
             // Notify the parent
             try {
                 synchronized (parent) {
-                    parent.notify();
+                    parent.notifyAll();
                 }
             } catch (Exception e) {
-                log.error("Exception " + e + "while notifying initilization thread.");
+                log.error("Exception {} while notifying initilization thread.",e);
             }
             if (log.isDebugEnabled()) {
                 log.debug("Notification Sent");
@@ -131,7 +104,7 @@ abstract public class AbstractDCCppInitializationManager {
             // Version Info
             if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
                 // This is the Command Station Software Version Response
-                log.debug("Version Info Received: {}", l.toString());
+                log.debug("Version Info Received: {}", l);
                 systemMemo.getDCCppTrafficController()
                     .getCommandStation()
                     .setCommandStationInfo(l);
@@ -139,16 +112,16 @@ abstract public class AbstractDCCppInitializationManager {
             }
         }
         
-        // listen for the messages to the LI100/LI101
         @Override
         public void message(DCCppMessage l) {
+            // no need to process outgoing messages
         }
         
         // Handle a timeout notification
         @Override
         public void notifyTimeout(DCCppMessage msg) {
             if (log.isDebugEnabled()) {
-                log.debug("Notified of timeout on message" + msg.toString());
+                log.debug("Notified of timeout on message {}",msg);
             }
         }
         
@@ -157,6 +130,6 @@ abstract public class AbstractDCCppInitializationManager {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractDCCppInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractDCCppInitializationManager.class);
     
 }
