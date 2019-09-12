@@ -90,7 +90,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                         "jmri/server/json/turnout/turnout-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -100,7 +100,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    protected ProvidingManager<Turnout> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Turnout> getManager() {
         return InstanceManager.getDefault(TurnoutManager.class);
     }
 }

@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
-import java.util.ResourceBundle;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -438,7 +437,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         List<JMenu> menuList = new ArrayList<JMenu>();
         Frame mFrame = new Frame();
 
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenu printMenu = new JMenu(("Print"));
         JMenu displayMenu = new JMenu(Bundle.getMessage("Display"));
@@ -454,7 +452,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             }
         });
         
-        JMenuItem saveAsItem = new JMenuItem(rb.getString("MenuItemSaveAs")+ " csv");
+        JMenuItem saveAsItem = new JMenuItem(Bundle.getMessage("MenuItemSaveAs","csv"));
         saveAsItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -463,7 +461,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         });
 
         // add print menu items
-        JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         printItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -479,7 +477,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             }
         });
         
-        JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
+        JMenuItem previewItem = new JMenuItem(Bundle.getMessage("PreviewTable"));
 
         previewItem.addActionListener(new ActionListener() {
             @Override

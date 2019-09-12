@@ -18,6 +18,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
@@ -48,9 +49,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     // * The manager also maintains synchronized maps from SystemName -> NamedBean (_tsys) and UserName -> NamedBean (_tuser)
     //      These are not made available: get access through the manager calls
     //      These use regular HashMaps instead of some sorted form for efficiency
-    // * An unmodifiable ArrayList<String> in the original add order, _originalOrderList, remains available 
-    //      for the deprecated getSystemNameAddedOrderList
-    //      This is present so that ConfigureXML can still store in the original order
     // * Caches for the String[] getSystemNameArray(), List<String> getSystemNameList() and List<E> getNamedBeanList() calls
             
     public AbstractManager(SystemConnectionMemo memo) {
@@ -111,8 +109,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
-    // Storage for getSystemNameOriginalList
-    protected ArrayList<String> _originalOrderList = new ArrayList<>();
+
     // caches
     private String[] cachedSystemNameArray = null;
     private ArrayList<String> cachedSystemNameList = null;
@@ -216,7 +213,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 log.debug("the named bean is registered twice: {}", systemName);
             } else {
                 log.error("systemName is already registered: {}", systemName);
-                throw new IllegalArgumentException("systemName is already registered: " + systemName);
+                throw new DuplicateSystemNameException("systemName is already registered: " + systemName);
             }
         } else {
             // Check if the manager already has a bean with a system name that is
@@ -234,7 +231,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                     String msg = String.format("systemName is already registered. Current system name: %s. New system name: %s",
                             oldSysName, systemName);
                     log.error(msg);
-                    throw new IllegalArgumentException(msg);
+                    throw new DuplicateSystemNameException(msg);
                 }
             }
         }
@@ -247,7 +244,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
-        _originalOrderList.add(systemName);
         registerUserName(s);
 
         // notifications
@@ -328,7 +324,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (userName != null) {
             _tuser.remove(userName);
         }
-        _originalOrderList.remove(systemName);
         
         // notifications
         fireDataListenersRemoved(position, position, s);
@@ -414,14 +409,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             }
         }
         return Collections.unmodifiableList(cachedSystemNameList);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameAddedOrderList() {
-        //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
-        return Collections.unmodifiableList(_originalOrderList);
     }
 
     /** {@inheritDoc} */

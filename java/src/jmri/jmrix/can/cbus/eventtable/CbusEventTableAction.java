@@ -50,6 +50,7 @@ public class CbusEventTableAction {
     public File _saveFile = null;
     private String _saveFileName = null;
     protected boolean sessionConfirmDeleteRow=true; // display confirm popup
+    protected SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
     
     private void updatejmricell(int row, Boolean ison, String name){
         String bb;
@@ -426,40 +427,45 @@ public class CbusEventTableAction {
         Element root;
         try {
             root = x.rootFromFile(file);
-            if (root == null) {
-                log.error("File could not be read");  // NOI18N
-                return;
-            }
-            
             for (Element xmlEvent : root.getChildren("Event")) {  // NOI18N
             
-                if (xmlEvent.getAttribute("NodeNum") == null || xmlEvent.getAttribute("EventNum") == null ) {
-                    log.warn("unexpected null in item {} {}", xmlEvent, xmlEvent.getAttributes() );
-                    break;
-                }
+                if (xmlEvent.getAttribute("NodeNum") == null || xmlEvent.getAttribute("EventNum") == null ) { // NOI18N
+                    log.error("Node or event number missing in event {}", xmlEvent.getAttributes() );
+                } else try {
                 
-                int nn = Integer.parseInt( xmlEvent.getAttribute("NodeNum").getValue() );
-                int en = Integer.parseInt( xmlEvent.getAttribute("EventNum").getValue() );
-                // log.info("event found nn {} en {}",nn,en);
-                CbusTableEvent tabEv = _model.provideEvent(nn,en);
-                
-                if (xmlEvent.getChild("Name") != null ) {
-                    tabEv.setName( xmlEvent.getChild("Name").getValue() );
-                }
-                if (xmlEvent.getChild("Comment") != null ) {
-                    tabEv.setComment( xmlEvent.getChild("Comment").getValue() );
-                }
-                if (xmlEvent.getChild("On") != null ) {
-                    tabEv.setTotalOn( Integer.parseInt( xmlEvent.getChild("On").getValue() ) );
-                }
-                if (xmlEvent.getChild("Off") != null ) {
-                    tabEv.setTotalOff( Integer.parseInt( xmlEvent.getChild("Off").getValue() ) );
-                }
-                if (xmlEvent.getChild("In") != null ) {
-                    tabEv.setTotalIn( Integer.parseInt( xmlEvent.getChild("In").getValue() ) );
-                }
-                if (xmlEvent.getChild("Out") != null ) {
-                    tabEv.setTotalOut( Integer.parseInt( xmlEvent.getChild("Out").getValue() ) );
+                    int nn = Integer.parseInt( xmlEvent.getAttribute("NodeNum").getValue() ); // NOI18N
+                    int en = Integer.parseInt( xmlEvent.getAttribute("EventNum").getValue() ); // NOI18N
+                    // log.info("event found nn {} en {}",nn,en);
+                    CbusTableEvent tabEv = _model.provideEvent(nn,en);
+                    
+                    if (xmlEvent.getChild("Name") != null ) { // NOI18N
+                        tabEv.setName( xmlEvent.getChild("Name").getValue() ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("Comment") != null ) { // NOI18N
+                        tabEv.setComment( xmlEvent.getChild("Comment").getValue() ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("LastHeard") != null ) { // NOI18N
+                        try {
+                            Date newDate = xmlDateStyle.parse(xmlEvent.getChild("LastHeard").getValue()); // NOI18N
+                            tabEv.setDate( newDate );
+                        } catch (java.text.ParseException e) { 
+                            log.error("Unable to parse date {}", xmlEvent.getAttributes()); // NOI18N
+                        }
+                    }
+                    if (xmlEvent.getChild("On") != null ) { // NOI18N
+                        tabEv.setTotalOn( Integer.parseInt( xmlEvent.getChild("On").getValue() ) ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("Off") != null ) { // NOI18N
+                        tabEv.setTotalOff( Integer.parseInt( xmlEvent.getChild("Off").getValue() ) ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("In") != null ) { // NOI18N
+                        tabEv.setTotalIn( Integer.parseInt( xmlEvent.getChild("In").getValue() ) ); // NOI18N
+                    }
+                    if (xmlEvent.getChild("Out") != null ) { // NOI18N
+                        tabEv.setTotalOut( Integer.parseInt( xmlEvent.getChild("Out").getValue() ) ); // NOI18N
+                    }
+                } catch (java.lang.NumberFormatException ex) {
+                    log.error("Incorrect off / on / in / out value in event {}", xmlEvent.getAttributes());
                 }
             }
             _model.fireTableDataChanged();
@@ -495,8 +501,6 @@ public class CbusEventTableAction {
             org.jdom2.Namespace.getNamespace("xsi",
             "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
-        
-        SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
         
         for (CbusTableEvent event : _model.getEvents() ) {
             Element values;

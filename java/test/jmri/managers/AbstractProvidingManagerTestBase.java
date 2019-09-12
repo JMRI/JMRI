@@ -62,8 +62,10 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
             e2 = m.provide(s2);
         } catch (
                 IllegalArgumentException |
+                com.pi4j.io.gpio.exception.GpioPinExistsException |
                 NullPointerException |
                 ArrayIndexOutOfBoundsException ex) {
+            // jmri.jmrix.pi.RaspberryPiTurnout(Providing)ManagerTest gives a GpioPinExistsException here.
             // jmri.jmrix.openlcb.OlcbLightProvidingManagerTest gives a NullPointerException here.
             // jmri.jmrix.openlcb.OlcbSensorProvidingManagerTest gives a ArrayIndexOutOfBoundsException here.
             // Some other tests give an IllegalArgumentException here.
@@ -99,10 +101,10 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         String expectedMessage = "systemName is already registered: " + e1.getSystemName();
         try {
             // Register different bean with existing systemName.
-            // This should fail with an IllegalArgumentException.
+            // This should fail with an DuplicateSystemNameException.
             l.register(e2);
             Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
+        } catch (NamedBean.DuplicateSystemNameException ex) {
             Assert.assertEquals("exception message is correct", expectedMessage, ex.getMessage());
             JUnitAppender.assertErrorMessage(expectedMessage);
         }

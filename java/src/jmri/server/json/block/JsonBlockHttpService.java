@@ -57,9 +57,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         data.put(JsonBlock.PERMISSIVE, block.getPermissiveWorking());
         data.put(JsonBlock.SPEED_LIMIT, block.getSpeedLimit());
         ArrayNode array = data.putArray(JsonBlock.DENIED);
-        block.getDeniedBlocks().forEach((denied) -> {
-            array.add(denied);
-        });
+        block.getDeniedBlocks().forEach(array::add);
         return root;
     }
 
@@ -97,7 +95,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                     block.setSensor(sensor.getSystemName());
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()), id);
+                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonSensor.SENSOR, node.asText()), id);
                 }
             }
         }
@@ -111,7 +109,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                     block.setReporter(reporter);
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()), id);
+                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER, node.asText()), id);
                 }
             }
         }
@@ -119,11 +117,13 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         try {
             block.setBlockSpeed(text);
         } catch (JmriException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorBadPropertyValue", text, JSON.SPEED, type), id);
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, JsonException.ERROR_BAD_PROPERTY_VALUE, text, JSON.SPEED, type), id);
         }
         block.setCurvature(data.path(JsonBlock.CURVATURE).asInt(block.getCurvature()));
         block.setDirection(data.path(JSON.DIRECTION).asInt(block.getDirection()));
-        block.setLength(Double.valueOf(data.path(JSON.LENGTH).asDouble(block.getLengthMm())).floatValue());
+        if (data.path(JSON.LENGTH).isNumber()) {
+            block.setLength(data.path(JSON.LENGTH).floatValue());
+        }
         block.setPermissiveWorking(data.path(JsonBlock.PERMISSIVE).asBoolean(block.getPermissiveWorking()));
         return this.doGet(block, name, type, locale, id);
     }
@@ -145,7 +145,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                         "jmri/server/json/block/block-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -155,7 +155,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     }
 
     @Override
-    protected ProvidingManager<Block> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Block> getManager() {
         return InstanceManager.getDefault(BlockManager.class);
     }
 }

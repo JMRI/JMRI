@@ -108,12 +108,12 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = getSystemPrefix() + typeLetter() + address + ":" + msgPort;
+                String sysName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
                 log.debug("asking for reporter {}", sysName);
                 Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = getSystemPrefix() + typeLetter() + String.format("%4X", netID) + ":" + msgPort;
+                    sysName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID,msgPort);
                     log.debug("not found; asking for reporter {}", sysName);
                     r = (Z21CanReporter) getBySystemName(sysName);
                     if (null == r) {

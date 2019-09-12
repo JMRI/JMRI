@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.17.4-SNAPSHOT</version>
+    <version>4.17.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -580,7 +580,7 @@
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
                                 <File>jmri/server/json/roster/JsonRoster.class</File>
                                 <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
+                                <File>jmri/server/json/signalmast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -1042,6 +1042,20 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time, 
+                                           may be used at runtime. -->
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-gpio-extension</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time,
+                                           may be used at runtime. -->
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>

@@ -16,8 +16,6 @@ import jmri.jmrix.lenz.XNetMessage;
  */
 public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
-//    static private int _nRetries = 5;
-
     /**
      * Constructor, just pass on to the supperclass.
      */

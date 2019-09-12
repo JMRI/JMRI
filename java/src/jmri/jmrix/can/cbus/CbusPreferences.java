@@ -19,7 +19,7 @@ public class CbusPreferences extends PreferencesBean {
     // defaults
     private boolean _addCommandStations = false;
     private boolean _addNodes = false;
-    private boolean _allocateNnListener = false;
+    private boolean _allocateNnListener = true;
     private long _nodeBackgroundFetchDelay = 100L; // needs to match an option in NodeConfigToolPane
     private boolean _startupSearchForCs = false;
     private boolean _startupSearchForNodes = false;

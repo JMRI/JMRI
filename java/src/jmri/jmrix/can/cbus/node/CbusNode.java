@@ -241,7 +241,7 @@ public class CbusNode implements CanListener {
     public void setUserName( String newName ) {
         _nodeUserName = newName;
         if (backupStarted) {
-            if (!thisNodeBackupFile.doStore(false) ) {
+            if (!thisNodeBackupFile.doStore(false,hasLoadErrors()) ) {
                 log.error("Unable to save Node Name to Node Backup File");
             }
         }
@@ -303,8 +303,40 @@ public class CbusNode implements CanListener {
         return _canId;
     }
     
+    /**
+     * Set the Node Flags
+     * <p>
+     * Bit 0: Consumer
+     * Bit 1: Producer
+     * Bit 2: FLiM Mode
+     * Bit 3: The module supports bootloading
+     * Bit 4: The module can consume its own produced events
+     * Bit 5: Module is in learn mode - CBUS Spec 6c
+     *
+     * @param flags the int value of the flags.
+     */
     public void setNodeFlags(int flags) {
         _flags = flags;
+        // if ( ( ( _flags >> 0 ) & 1 ) == 1 ){
+        //     log.debug("Consumer node");
+        // }
+        
+        if ( ( ( _flags >> 2 ) & 1 ) == 0 ){
+            setNodeInSlim();
+        }
+        
+        if ( ( ( _flags >> 5 ) & 1 ) == 1 ){
+            log.debug("Node in learn mode");
+            setNodeInLearnMode(true);
+        }
+    }
+    
+    private void setNodeInSlim(){
+        log.warn("Node in SLiM mode");
+        if (!backupStarted) { // 1st time in this session
+            startLoadFromXml();
+            getNodeBackupFile().nodeInSLiM();
+        }
     }
     
     /**
@@ -558,7 +590,7 @@ public class CbusNode implements CanListener {
     protected void checkNodeFinishedLoad(){
         
         if ((!backupStarted) && totalRemainingNodeBytes() == 0) {
-            if (!thisNodeBackupFile.doStore(true) ) {
+            if (!thisNodeBackupFile.doStore(true,hasLoadErrors()) ) {
                 log.error("Unable to save Finished Load to Node Backup File");
             }
         }
@@ -1201,6 +1233,13 @@ public class CbusNode implements CanListener {
         notifyInfoPane();
     }
     
+    public boolean hasLoadErrors() {
+        if  (numEvTimeoutCount + paramRequestTimeoutCount + allEvTimeoutCount > 0 ){
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * Returns total number of node events,
      * including those with outstanding event variables.
@@ -1626,7 +1665,9 @@ public class CbusNode implements CanListener {
             
             // if not already set as not on network, set that now
             if ( !(getSessionBackupStatus() == BackupType.NOTONNETWORK )) {
-                thisNodeBackupFile.nodeNotOnNetwork();
+                if (thisNodeBackupFile!=null) {
+                    thisNodeBackupFile.nodeNotOnNetwork();
+                }
             }
             notifyNodeBackupTable();
         }
@@ -2005,7 +2046,7 @@ public class CbusNode implements CanListener {
     public void setUserComment(String comment) {
         _userComment = comment;
         if (backupStarted) {
-            if (!thisNodeBackupFile.doStore(false) ) {
+            if (!thisNodeBackupFile.doStore(false,hasLoadErrors()) ) {
                 log.error("Unable to save User Comment to Node Backup File");
             }
         }
@@ -2447,8 +2488,8 @@ public class CbusNode implements CanListener {
      * Set internal flag for backup started.
      * Triggered within the backup script which is called from various places
      */
-    protected void setBackupStarted() {
-        backupStarted = true;
+    protected void setBackupStarted( boolean started) {
+        backupStarted = started;
     }
     
     /**
@@ -2466,36 +2507,28 @@ public class CbusNode implements CanListener {
     }
     
     /**
-     * Get the current number of backups for the Node.
+     * Get the current number of Complete backups for the Node.
+     * Does not include Completed with Error etc.
      *
      * @return value else -1 if unknown
      */
     public int getNumBackups() {
-        int num = -1;
         if (getNodeBackupFile() != null ) {
-            num = 0;
-            for (int i = 0; i < getNodeBackupFile().getBackups().size()-1; i++) {
-                if (getNodeBackupFile().getBackups().get(i).getBackupResult() != BackupType.NOTONNETWORK) {
-                    num++;
-                }
-            }
+            return getNodeBackupFile().getNumCompleteBackups();
         }
-        return num;
+        return -1;
     }
 
     /**
-     * Get the time of first backup for the Node.
+     * Get the time of first full backup for the Node.
      *
      * @return value else null if unknown
      */
     public java.util.Date getFirstBackupTime() {
-        if ( getNodeBackupFile() != null 
-            && getNodeBackupFile().getBackups() !=null
-            && getNodeBackupFile().getBackups().get(0) != null ) {
-            return getNodeBackupFile().getBackups().get(getNodeBackupFile().getBackups().size()-1).getBackupTimeStamp();
-        } else {
-            return null;
+        if ( getNodeBackupFile() != null ) {
+            return getNodeBackupFile().getFirstBackupTime();
         }
+        return null;
     }
     
     
@@ -2505,13 +2538,10 @@ public class CbusNode implements CanListener {
      * @return value else null if unknown
      */
     public java.util.Date getLastBackupTime() {
-        if ( getNodeBackupFile() != null 
-            && getNodeBackupFile().getBackups() !=null
-            && getNodeBackupFile().getBackups().get(0) != null ) {
-            return getNodeBackupFile().getBackups().get(0).getBackupTimeStamp();
-        } else {
-            return null;
+        if ( getNodeBackupFile() != null ) {
+            return getNodeBackupFile().getLastBackupTime();
         }
+        return null;
     }
     
     // stop any timers running

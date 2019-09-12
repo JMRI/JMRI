@@ -36,8 +36,8 @@ public final class AngularRoute {
         if ((template == null && controller != null) || (template != null && controller == null)) {
             throw new IllegalArgumentException("template and controller must both be non-null or null");
         }
-        if ((redirection != null && (template != null || controller != null))
-                || (redirection == null && (template == null || controller == null))) {
+        if ((redirection != null && template != null)
+                || (redirection == null && template == null)) {
             throw new IllegalArgumentException("redirection must be null if template or controller is non-null");
         }
         this.when = when;

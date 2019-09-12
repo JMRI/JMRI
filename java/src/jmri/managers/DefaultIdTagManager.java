@@ -94,6 +94,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
      */
     @Override
     protected void registerSelf() {
+        // override to do nothing
     }
 
     @Override
@@ -170,9 +171,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     protected IdTag createNewIdTag(String systemName, String userName) {
         // Names start with the system prefix followed by D.
         // Add the prefix if not present.
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter() )) // NOI18N
-        {
-            systemName = getSystemPrefix() + typeLetter() + systemName; // NOI18N
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
+            systemName = getSystemPrefix() + typeLetter() + systemName;
         }
         return new DefaultIdTag(systemName, userName);
     }
