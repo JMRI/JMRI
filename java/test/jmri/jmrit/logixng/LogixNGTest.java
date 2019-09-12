@@ -146,7 +146,7 @@ public class LogixNGTest {
     
     @Test
     public void testBundle() {
-        Assert.assertTrue("bean type is correct", "LogixNG".equals(new DefaultLogixNG("IQA55").getBeanType()));
+        Assert.assertTrue("bean type is correct", "LogixNG".equals(new DefaultLogixNG("IQA55", null).getBeanType()));
         Assert.assertTrue("bean type is correct", "Digital action".equals(new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION).getBeanType()));
         Assert.assertTrue("bean type is correct", "Digital expression".equals(new And("IQDE321", null).getBeanType()));
     }

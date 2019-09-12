@@ -9,7 +9,6 @@ import org.junit.runners.Suite;
     JMRI_NativeNamespaceTest.class,
     DefaultFemaleGenericExpressionSocketTest.class,
     DefaultLogixNGManagerTest.class,
-    DefaultLogixNGTest.class,
     DefaultLogixNG_InstanceManagerTest.class,
     JMRI_NativeNamespaceTest.class,
     VirtualNamespaceTest.class,

@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.analog.implementation;
 
-import jmri.jmrit.logixng.implementation.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -11,7 +10,6 @@ import org.junit.runners.Suite;
     DefaultFemaleAnalogExpressionSocketTest.class,
     DefaultMaleAnalogActionSocketTest.class,
     DefaultMaleAnalogExpressionSocketTest.class,
-    DefaultLogixNGTest.class,
 })
 
 /**
