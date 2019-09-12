@@ -201,7 +201,6 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * Adds listeners to all blocks in the range of a Tracker. Called when a
      * new tracker is created.
      * @param tracker Tracker to start
-     * <p>
      */
     protected void addBlockListeners(Tracker tracker) {
         List<OBlock> range = tracker.makeRange();
