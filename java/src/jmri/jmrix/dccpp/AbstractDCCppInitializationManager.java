@@ -18,7 +18,12 @@ public abstract class AbstractDCCppInitializationManager {
     protected Thread initThread = null;
 
     protected DCCppSystemConnectionMemo systemMemo = null;
-    protected static final int INITIALTIMEOUT = 30000;
+    protected static int INITIALTIMEOUT = 30000;
+
+
+    protected int getInitTimeout() {
+        return INITIALTIMEOUT;  // this method is overriden for tests.
+    }
 
     public AbstractDCCppInitializationManager(DCCppSystemConnectionMemo memo) {
         /* spawn a thread to request version information and wait for the 
