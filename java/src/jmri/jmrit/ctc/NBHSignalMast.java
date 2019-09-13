@@ -45,11 +45,15 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
             SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal);
             if (signalMast != null) {
                 _mNamedBeanHandleSignalMast = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalMast);
-                _mDangerAppearance = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+//  Do this to get around a "bug" in the compiler.  When I used "_mDangerAppearance" instead of "temp",
+//  it "wrongly" complained: "variable _mDangerAppearance might already have been assigned".
+                String temp = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                if (temp == null) temp = "Stop"; // Safety
+                _mDangerAppearance = temp;
                 return;
             }
         }
-        _mDangerAppearance = "";                // Never used, just required for "final"
+        _mDangerAppearance = "Stop";            // Never used, just required for "final"
         _mNamedBeanHandleSignalMast = null;
     }
 
@@ -78,9 +82,14 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     @Override
     public void setAppearance(int newAppearance) {}
 
+//  "getAspect()" can return "null" if (for instance) the signal has no rules (i.e. no "Discover" done yet,
+//  or the signal is shown on the screen as a big red "X".
+//  In that case, we default to "_mDangerAppearance".
     public String getAspect() {
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getAspect();
+        String returnAspect = _mNamedBeanHandleSignalMast.getBean().getAspect();
+        if (returnAspect == null) return _mDangerAppearance;    // Safety
+        return returnAspect;
     }
 
     public SignalAppearanceMap getAppearanceMap() {

@@ -611,9 +611,6 @@ public class LayoutTrackEditors {
         editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(
                 layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox, currentTurnouts));
 
-        editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
-                layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout2ndTurnoutComboBox, currentTurnouts));
-
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         editLayoutTurnoutBlockNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockName()));
         editLayoutTurnoutBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlock()));
