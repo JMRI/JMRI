@@ -249,6 +249,8 @@ public class LogixNGTest {
                 conditionalNG_3 == logixNG.getConditionalNGByUserName("Ghi"));
         Assert.assertTrue("ConditionalNG is correct",
                 conditionalNG_4 == logixNG.getConditionalNGByUserName("Jkl"));
+        Assert.assertTrue("ConditionalNG is correct",
+                null == logixNG.getConditionalNGByUserName("Non existing bean"));
     }
     
     @Test
@@ -304,6 +306,9 @@ public class LogixNGTest {
         
         logixNG.deleteConditionalNG(conditionalNG_5);
         Assert.assertTrue("LogixNG has no more conditionalNGs", 0 == logixNG.getNumConditionalNGs());
+        
+        logixNG.deleteConditionalNG(conditionalNG_5);
+        JUnitAppender.assertErrorMessage("attempt to delete ConditionalNG not in LogixNG: IQ:0001:5");
     }
     
     @Test
@@ -328,10 +333,22 @@ public class LogixNGTest {
         Assert.assertTrue("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
         Assert.assertTrue("listeners for conditionalNG_3 are registered", conditionalNG_3.listenersAreRegistered);
         
+        // Activate LogixNG multiple times should not be a problem
+        logixNG.activateLogixNG();
+        Assert.assertTrue("listeners for conditionalNG_1 are registered", conditionalNG_1.listenersAreRegistered);
+        Assert.assertTrue("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
+        Assert.assertTrue("listeners for conditionalNG_3 are registered", conditionalNG_3.listenersAreRegistered);
+        
         logixNG.deActivateLogixNG();
-        Assert.assertFalse("listeners for conditionalNG_1 are registered", conditionalNG_1.listenersAreRegistered);
-        Assert.assertFalse("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
-        Assert.assertFalse("listeners for conditionalNG_3 are registered", conditionalNG_3.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
+        
+        // DeActivate LogixNG multiple times should not be a problem
+        logixNG.deActivateLogixNG();
+        Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
+        Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
     }
     
     @Test

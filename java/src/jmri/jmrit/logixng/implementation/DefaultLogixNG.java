@@ -273,6 +273,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public void deleteConditionalNG(ConditionalNG conditionalNG) {
         if (_conditionalNG_List.size() <= 0) {
+            log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
             return;
         }
 
