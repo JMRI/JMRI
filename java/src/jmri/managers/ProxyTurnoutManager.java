@@ -241,8 +241,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
-            if (prefix.equals(
-                    ((TurnoutManager) getMgr(i)).getSystemPrefix())) {
+            if (prefix.equals((getMgr(i)).getSystemPrefix())) {
                 try {
                     return ((TurnoutManager) getMgr(i)).getNextValidAddress(curAddress, prefix);
                 } catch (jmri.JmriException ex) {
@@ -266,7 +265,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public void setDefaultThrownSpeed(String speed) throws jmri.JmriException {
+    public void setDefaultThrownSpeed(@Nonnull String speed) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
             try {
                 ((TurnoutManager) getMgr(i)).setDefaultThrownSpeed(speed);
@@ -307,23 +306,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         log.warn("setOutputInterval called in ProxyTurnoutManager");
     }
 
-    private LocalTime waitUntil = LocalTime.now();
-
-    /**
-     * Get end time of latest OutputInterval, calculated from the current time.
-     *
-     * @return current time
+    /** {@inheritDoc}
+     * outputInterval is always 0 in ProxyTurnoutManager
      */
     @Nonnull
+    @Override
     public LocalTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in ProxyTurnoutManager");
-        int turnoutInterval = getOutputInterval(); // provide actual Interval from TurnoutManager
-        if (waitUntil.isAfter(LocalTime.now())) {
-            waitUntil = waitUntil.plus(turnoutInterval, ChronoUnit.MILLIS);
-        } else {
-            waitUntil = LocalTime.now().plus(turnoutInterval, ChronoUnit.MILLIS); // fixed interval = 250 Ms
-        }
-        return waitUntil;
+        return LocalTime.now();
     }
 
     @Override
@@ -332,6 +322,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }

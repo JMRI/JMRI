@@ -40,7 +40,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
         storeCommon(e, adapter);
 
-        if (adapter.getMdnsConfigure() == true) {
+        if (adapter.getMdnsConfigure()) {
             // if we are using mDNS for configuration, only save
             // the hostname if it was specified.
             if (adapter.getHostName() != null && !adapter.getHostName().equals("")) {
@@ -73,11 +73,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             }
         }
 
-        if (adapter.getSystemConnectionMemo().getOutputInterval() > 0) {
-            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getOutputInterval()));
-        } else {
-            e.setAttribute("turnoutInterval", "0");
-        }
+        setOutputInterval(adapter, e);
 
         e.setAttribute("class", this.getClass().getName());
 

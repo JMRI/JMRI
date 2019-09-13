@@ -412,12 +412,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     private int turnoutInterval = memo.getOutputInterval();
     private LocalTime waitUntil = LocalTime.now();
 
-    /**
-     * Get end time of latest OutputInterval, calculated from the current time.
-     *
-     * @return end time in Milliseconds or current time if no interval was set or timer has completed
-     */
+    /** {@inheritDoc} */
     @Nonnull
+    @Override
     public LocalTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in AbstractTurnoutManager");
         if (waitUntil.isAfter(LocalTime.now())) {

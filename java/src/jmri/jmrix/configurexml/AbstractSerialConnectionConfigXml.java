@@ -56,11 +56,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
             e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
 
-        if (adapter.getSystemConnectionMemo().getOutputInterval() > 0) {
-            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getOutputInterval()));
-        } else {
-            e.setAttribute("turnoutInterval", "0");
-        }
+        setOutputInterval(adapter, e);
 
         e.setAttribute("class", this.getClass().getName());
 

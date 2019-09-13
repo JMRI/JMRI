@@ -266,7 +266,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public String getDefaultClosedSpeed();
 
     /**
-     * Get the Interval (in ms) to wait between commands.
+     * Get the Interval (in ms) to wait between output commands.
      * Configured in AdapterConfig, stored in memo.
      *
      * @return the (Turnout) Output Interval in Milliseconds
@@ -274,7 +274,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public int getOutputInterval();
 
     /**
-     * Set the Interval (in ms) to wait between commands.
+     * Set the Interval (in ms) to wait between output commands.
      *
      * @param newInterval the new Output Interval in Milliseconds
      */
@@ -283,7 +283,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     /**
      * Get end time of latest OutputInterval, calculated from the current time.
      *
-     * @return end time in Milliseconds or null if no interval was set or timer has completed
+     * @return end time in Milliseconds or current time if no interval was set or timer has completed
      */
     @Nonnull
     public LocalTime outputIntervalEnds();
