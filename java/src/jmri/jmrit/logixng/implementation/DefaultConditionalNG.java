@@ -37,8 +37,8 @@ public class DefaultConditionalNG extends AbstractBase
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
     }
     
-    private DefaultConditionalNG(DefaultConditionalNG template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+    public DefaultConditionalNG(String sys, String user, DefaultConditionalNG template) {
+        super(sys, user);
         _template = template;
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, _template._femaleActionSocket.getName());
     }
@@ -46,7 +46,7 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public Base getNewObjectBasedOnTemplate() {
-        return new DefaultConditionalNG(this);
+        throw new UnsupportedOperationException("Not supported");
     }
     
     @Override
@@ -113,17 +113,17 @@ public class DefaultConditionalNG extends AbstractBase
 
     @Override
     public String getBeanType() {
-        return Bundle.getMessage("BeanNameLogixNG");
+        return Bundle.getMessage("BeanNameConditionalNG");
     }
 
     @Override
     public void setState(int s) throws JmriException {
-        log.warn("Unexpected call to setState in DefaultLogixNG.");  // NOI18N
+        log.warn("Unexpected call to setState in DefaultConditionalNG.");  // NOI18N
     }
 
     @Override
     public int getState() {
-        log.warn("Unexpected call to getState in DefaultLogixNG.");  // NOI18N
+        log.warn("Unexpected call to getState in DefaultConditionalNG.");  // NOI18N
         return UNKNOWN;
     }
 
@@ -217,6 +217,9 @@ public class DefaultConditionalNG extends AbstractBase
     }
 
     public void setSocketSystemName(String systemName) {
+        if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
+            _femaleActionSocket.disconnect();
+        }
         _socketSystemName = systemName;
     }
 
