@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -113,11 +112,20 @@ public class Tracker {
     }
 
     protected String getStatus() {
-        if (getHeadBlock() == null) {
+        long et = 0;
+        OBlock block = null;
+        for (OBlock b : _occupies) {
+            long t = System.currentTimeMillis() - b._entryTime;
+            if (t >= et)  {
+                et = t;
+                block = b;
+            }
+        }
+        if (block == null) {
             return Bundle.getMessage("TrackerLocationLost", _trainName);
         }
-        long et = (System.currentTimeMillis() - getHeadBlock()._entryTime) / 1000;
-        return Bundle.getMessage("TrackerStatus", _trainName, getHeadBlock().getDisplayName(), et / 60, et % 60);
+        et /= 1000;
+        return Bundle.getMessage("TrackerStatus", _trainName, block.getDisplayName(), et / 60, et % 60);
     }
 
     /**
@@ -374,46 +382,39 @@ public class Tracker {
 
         return buildRange();
     }
-    private List<OBlock> buildRange() {
+
+     private List<OBlock> buildRange() {
         // make new list since tracker table is holding the old list
         ArrayList<OBlock> range = new ArrayList<OBlock>();    // total range of train  
         if (_occupies.size() == 0) {
             log.warn("{} does not occupy any blocks!", _trainName);
         }
-        Iterator<OBlock> it = _occupies.iterator();
-        while (it.hasNext()) {
-            OBlock b = it.next();
+        for (OBlock b : _occupies) {
             range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} occupies \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
             }
         }
-        it = _headRange.iterator();
-        while (it.hasNext()) {
-            OBlock b = it.next();
+        for (OBlock b : _headRange) {
             range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} head range from {} includes \"{}\" value= {}",
                         _trainName, getHeadBlock().getDisplayName(), b.getDisplayName(), b.getValue());
             }
         }
-        it = _tailRange.iterator();
-        while (it.hasNext()) {
-            OBlock b = it.next();
+        for (OBlock b : _tailRange) {
             range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} tail range from {} includes \"{}\" value= {}",
                         _trainName, getTailBlock().getDisplayName(), b.getDisplayName(), b.getValue());
             }
         }
-        it = _lostRange.iterator();
-        while (it.hasNext()) {
-            OBlock b = it.next();
+        /*for (OBlock b : _lostRange) {
             range.add(b);
             if (log.isDebugEnabled()) {
                 log.debug("   {} lost range contains \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
             }
-        }
+        }*/
         return range;
     }
 
@@ -465,14 +466,13 @@ public class Tracker {
                break;
         }
         removeFromOccupies(block);
-        List<Portal> list = block.getPortals();
-        Iterator<Portal> iter = list.iterator();
-        while (iter.hasNext()) {    // remove associated dark blocks
-            OBlock b = iter.next().getOpposingBlock(block);
+        for (Portal p : block.getPortals()) {
+            OBlock b = p.getOpposingBlock(block);
             if ((b.getState() & OBlock.UNDETECTED) != 0) {
                 removeFromOccupies(b);
                 removeName(b);
             }
+            
         }
         removeName(block);
         // consider doing _lostRange.add(block); for above unexpected cases that may be temporary lost of detection.
@@ -583,7 +583,7 @@ public class Tracker {
             if ((b.getState() & (OBlock.UNDETECTED | OBlock.OCCUPIED)) != 0) {
                 lostRange.add(b);
                 if (log.isDebugEnabled()) {
-                    log.debug("  lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
+                    log.debug("  lostRange.add \"{}\" value= {}", b.getDisplayName(), b.getValue());
                 }
             }
         }

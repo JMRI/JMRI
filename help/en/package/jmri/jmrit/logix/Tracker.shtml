@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Using Trackers</title>
+  <meta name="author" content="Pete Cressman">
+  <meta name="keywords" content="JMRI help Using Tracker">
+  <!-- Style -->
+  <meta http-equiv="content-type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+    	<p>
+    	A Tracker is a means to to see the movement of trains on your layout panel. A marker 
+    	identifying a train will move around your panel's layout diagram wherever an operator
+    	drives his train.  The position of each tracked train is displayed in a window and log
+    	is kept of their progress.
+    	</p>
+      <h1>What's Needed to Have a Tracker</h1>
+      	<p>
+      	Trackers function on the same foundation as do Warrants. That is, track occupation
+      	detection by <b>OBlocks, Portals and Paths</b>. For detailed information about what 
+      	these objects are and how to make
+      	them see <a href="../display/CircuitBuilder.shtml">Circuit Builder</a>
+      	or <a href="../OBlockTable.shtml">Occupancy Block Tables</a>. 
+      	</p><p>
+      	Next, your panel
+      	layout diagram must done with Indicator Track icons. If your diagram has already 
+      	been created using regular track icons, they can easily be converted to Indicator
+      	Track icons with <b>Circuit Builder</b>. 
+      	<a href="../display/ItemPalette.shtml">The Item Palette</a> has more information
+      	about Indicator Track icons. all the track of your layout should be represented
+      	with OBlocks, even the sections with no sensors. Although Tracker cannot detect
+      	when a "dark block" is entered, it is smart enough to know when a train has
+      	passed through one. So it is beneficial to configure them when there is a path
+      	through them connecting one Occupancy block with another. 
+      	</p><p>
+      	The last requirement
+      	is at least one Indicator Track icon must have its "<i>Display Train Name when 
+      	occupied</i>" checkbox selected. This checkbox is displayed on the <i>edit</i> item
+      	is selected from icon's popup menu when editing with <b>Control Panel Editor</b>.
+      	</p>
+      <h1>How to Make a Tracker</h1>
+      	<p>
+      	The <b>Warrants</b> menu has a <i>Train Trackers</i> item that opens the 
+      	<b>Tracker Table</b> window. The table has a <b>New Tracker</b> button that
+      	displays a Create Tracker dialog. Enter the name of the train and the block 
+      	that it occupies to make a tracker for the train. The name will appear on
+      	the track icon selected for display in every block the train occupies.
+      	</p><p>
+      	An much easier way to make a Tracker is simply to drag and drop a <b>Marker</b>
+      	icon onto the block the train occupies. This opens the <b>Tracker Table</b> window
+      	automatically and creates a Tracker with the text and color of the marker.
+      	When a tracker is made this way, the marker will return to its docking position.
+      	A marker's docking position can be set from it's popup menu.
+      	</p><
+       <h1>The Tracker Table</h1>
+      	<p>
+      	 The table consists of a list of the active trackers with their current status.
+      	 This names the block and time where the train occupied the longest.
+      	 A <b>Stop</b> button on each row will terminate the tracker.  Below the list
+      	 is the <b>Last Event</b> status window. The events recorded are trains entering
+      	 a block, leaving a block or any error or warning messages.  The time a 
+      	 block has been occupied is also recorded. A mouse click on the window drops
+      	 down a record of the last 20 events.  Below the status window are three buttons;
+      	 the <b>New tracker</b> button which was mentioned above, the 
+      	 <b>Refresh Tracker Info</b> button that will update the status of the active 
+      	 trackers and the <b>OBlock Pick List</b> button that opens a list of the track
+      	 circuits.
+      	 </p>
+       <h1>When Trackers Are Active</h1>
+      	<p>
+      	A tracker displays the blocks a train occupies by posting an identifying label
+      	on the Indicator Track icon configured to display names when occupied. 
+      	As blocks adjacent to the head or tail of its train becomes occupied or
+      	unoccupied, the tracker updates the labels that are posted. When two or
+      	more trackers have adjacent blocks in common and a common block becomes
+      	occupied, a dialog is displayed for the 
+      	panel user to determine which tracked train occupies the block.    
+      	</p>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
