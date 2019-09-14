@@ -337,11 +337,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         synchronized (this) {
             v = (Vector<SlotListener>) slotListeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size() // NOI18N
-                    + " SlotListeners about slot " // NOI18N
-                    + s.getSlot());
-        }
+        log.debug("notify {} SlotListeners about slot {}", // NOI18N
+                v.size(), s.getSlot());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -745,6 +742,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (i >= _slots.length || i < 0) {
             log.error("Received slot number {} is greater than array length {} Message was {}", // NOI18N
                     i, _slots.length, m.toString()); // NOI18N
+            return; // prevents array index out-of-bounds when referencing _slots[i]
         }
         try {
             _slots[i].setSlot(m);
@@ -1053,7 +1051,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         } else {
             // regular CV case
             int CV = Integer.parseInt(cvNum);
-            
+
             lopsa = 0;
             hopsa = 0;
             mServiceMode = true;
@@ -1070,7 +1068,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 throw new jmri.ProgrammerException("mode not supported"); // NOI18N
             }
 
-            doWrite(CV, val, p, pcmd);   
+            doWrite(CV, val, p, pcmd);
         }
     }
 
