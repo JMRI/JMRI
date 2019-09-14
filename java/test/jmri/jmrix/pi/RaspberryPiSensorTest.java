@@ -2,7 +2,6 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;

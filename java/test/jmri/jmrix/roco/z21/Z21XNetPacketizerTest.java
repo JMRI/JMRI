@@ -1,6 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
