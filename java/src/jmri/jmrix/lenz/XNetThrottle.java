@@ -35,7 +35,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected static final int THROTTLEHIGHSTATSENT = 16;  // Sent Status request for F13-F28
     protected static final int THROTTLEHIGHMOMSTATSENT = 32;  // Sent Momentary Status request for F13-F28
 
-    public int requestState = THROTTLEIDLE;
+    protected int requestState = THROTTLEIDLE;
 
     protected int address;
 
@@ -45,7 +45,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     public XNetThrottle(XNetSystemConnectionMemo memo, XNetTrafficController controller) {
         super(memo);
         tc = controller;
-        requestList = new LinkedBlockingQueue<RequestMessage>();
+        requestList = new LinkedBlockingQueue<>();
         log.debug("XNetThrottle constructor");
     }
 
@@ -57,10 +57,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         this.tc = controller;
         this.setDccAddress(address.getNumber());
         this.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
-        //       this.isForward=true;
         setIsAvailable(false);
 
-        requestList = new LinkedBlockingQueue<RequestMessage>();
+        requestList = new LinkedBlockingQueue<>();
         sendStatusInformationRequest();
         log.debug("XNetThrottle constructor called for address {}",address);
     }
@@ -107,21 +106,27 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         queueMessage(msg, THROTTLEFUNCSENT);
     }
 
+    protected boolean csVersionSupportsHighFunctions(){
+        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
+            log.info("Functions F13-F28 unavailable in CS software version {}",
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Send the XpressNet message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20.
      */
     @Override
     protected void sendFunctionGroup4() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version "
-                    + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
+        if (csVersionSupportsHighFunctions()) {
+            XNetMessage msg = XNetMessage.getFunctionGroup4OpsMsg(this.getDccAddress(),
+                    f13, f14, f15, f16, f17, f18, f19, f20);
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup4OpsMsg(this.getDccAddress(),
-                f13, f14, f15, f16, f17, f18, f19, f20);
-        // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
     }
 
     /**
@@ -130,15 +135,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendFunctionGroup5() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version "
-                    + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
+        if (csVersionSupportsHighFunctions()) {
+            XNetMessage msg = XNetMessage.getFunctionGroup5OpsMsg(this.getDccAddress(),
+                    f21, f22, f23, f24, f25, f26, f27, f28);
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup5OpsMsg(this.getDccAddress(),
-                f21, f22, f23, f24, f25, f26, f27, f28);
-        // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
     }
 
     /**
@@ -183,16 +185,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup4() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version "
-                    + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
+        if (csVersionSupportsHighFunctions()) {
+            XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(), f13Momentary, f14Momentary,
+                    f15Momentary, f16Momentary, f17Momentary, f18Momentary, f19Momentary, f20Momentary);
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup4SetMomMsg(this.getDccAddress(),
-                f13Momentary, f14Momentary, f15Momentary, f16Momentary,
-                f17Momentary, f18Momentary, f19Momentary, f20Momentary);
-        // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
     }
 
     /**
@@ -201,23 +199,19 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     @Override
     protected void sendMomentaryFunctionGroup5() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version "
-                    + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
+        if (csVersionSupportsHighFunctions()) {
+            XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(), f21Momentary, f22Momentary,
+                    f23Momentary, f24Momentary, f25Momentary, f26Momentary, f27Momentary, f28Momentary);
+            // now, queue the message for sending to the command station
+            queueMessage(msg, THROTTLEFUNCSENT);
         }
-        XNetMessage msg = XNetMessage.getFunctionGroup5SetMomMsg(this.getDccAddress(),
-                f21Momentary, f22Momentary, f23Momentary, f24Momentary,
-                f25Momentary, f26Momentary, f27Momentary, f28Momentary);
-        // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
     }
 
     /**
      * Notify listeners and send the new speed to the command station.
      */
     @Override
-    synchronized public void setSpeedSetting(float speed) {
+    public synchronized void setSpeedSetting(float speed) {
         log.debug("set Speed to: {} Current step mode is: {}",speed,this.speedStepMode);
         super.setSpeedSetting(speed);
         if (speed < 0) {
@@ -306,60 +300,50 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Send a request to get the speed, direction and function status
      * from the command station.
      */
-    synchronized protected void sendStatusInformationRequest() {
+    protected synchronized void sendStatusInformationRequest() {
         /* Send the request for status */
         XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(this.address);
         msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
         // traffic controller to do this for us.
         // now, we queue the message for sending to the command station
         queueMessage(msg, THROTTLESTATSENT);
-        return;
     }
 
     /**
      * Send a request to get the status of functions from the command station.
      */
-    synchronized protected void sendFunctionStatusInformationRequest() {
+    protected synchronized void sendFunctionStatusInformationRequest() {
         log.debug("Throttle {} sending request for function momentary status.",address);
         /* Send the request for Function status */
         XNetMessage msg = XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
         queueMessage(msg, ( THROTTLEMOMSTATSENT | THROTTLESTATSENT) );
-        return;
     }
 
     /**
      * Send a request to get the on/off status of functions 13-28 from
      * the command station.
      */
-    synchronized protected void sendFunctionHighInformationRequest() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version "
-                    + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
+    protected synchronized void sendFunctionHighInformationRequest() {
+        if (csVersionSupportsHighFunctions()) {
+            log.debug("Throttle {} sending request for high function momentary status.", address);
+            /* Send the request for Function status */
+            XNetMessage msg = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
+            // now, we send the message to the command station
+            queueMessage(msg, THROTTLEHIGHSTATSENT | THROTTLESTATSENT);
         }
-        log.debug("Throttle {} sending request for function momentary status.",address);
-        /* Send the request for Function status */
-        XNetMessage msg = XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
-        // now, we send the message to the command station
-        queueMessage(msg, THROTTLEHIGHSTATSENT | THROTTLESTATSENT );
-        return;
     }
 
     /**
      * Send a request to get the status of functions from the command station.
      */
-    synchronized protected void sendFunctionHighMomentaryStatusRequest() {
-        if (tc.getCommandStation().getCommandStationSoftwareVersionBCD() < 0x36) {
-            log.info("Functions F13-F28 unavailable in CS software version "
-                    + tc.getCommandStation().getCommandStationSoftwareVersion());
-            return;
+    protected synchronized void sendFunctionHighMomentaryStatusRequest() {
+        if (csVersionSupportsHighFunctions()) {
+            log.debug("Throttle {} sending request for function momentary status.", address);
+            /* Send the request for Function status */
+            XNetMessage msg = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);
+            // now, we send the message to the command station
+            queueMessage(msg, (THROTTLEHIGHMOMSTATSENT | THROTTLESTATSENT));
         }
-        log.debug("Throttle {} sending request for function momentary status.",address);
-        /* Send the request for Function status */
-        XNetMessage msg = XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);
-        // now, we send the message to the command station
-        queueMessage(msg, (THROTTLEHIGHMOMSTATSENT | THROTTLESTATSENT) );
-        return;
     }
 
     // Handle incoming messages for This throttle.
@@ -367,7 +351,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     public void message(XNetReply l) {
         // First, we want to see if this throttle is waiting for a message 
         //or not.
-        log.debug("Throttle {} - received message {}",getDccAddress(),l.toString() );
+        log.debug("Throttle {} - received message {}",getDccAddress(),l );
         if (requestState == THROTTLEIDLE) {
             log.trace("Current throttle status is THROTTLEIDLE");
             // We haven't sent anything, but we might be told someone else 
@@ -377,11 +361,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
-                        if (isAvailable) {
-                            //Set the Is available flag to Throttle.False
-                            log.info("Loco " + getDccAddress() + " In use by another device");
-                            setIsAvailable(false);
-                        }
+                        locoInUse();
                     }
                 }
             }
@@ -399,7 +379,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.trace("Communications error occurred - message received was: " + l);
+                log.trace("Communications error occurred - message received was: {}", l);
             } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
@@ -409,7 +389,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.trace("Received unhandled response: {}" + l.toString());
+                log.trace("Received unhandled response: {}", l);
             }
         } else if ( ( requestState & THROTTLESTATSENT ) == THROTTLESTATSENT) {
             log.trace("Current throttle status is THROTTLESTATSENT");
@@ -443,7 +423,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                     sendQueuedMessage();
                     // And then we want to request the Function Momentary Status
                     sendFunctionStatusInformationRequest();
-                    return;
                 }
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
                 log.trace("Throttle - message is LOCO_INFO_MUED_UNIT ");
@@ -467,7 +446,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
-                return;
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
                 log.trace("Throttle - message is LOCO_INFO_DH_UNIT ");
                 /* there is no address sent with this information */
@@ -496,7 +474,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
-                return;
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
                 log.trace("Throttle - message is LOCO_INFO_MU ADDRESS ");
                 /* there is no address sent with this information */
@@ -511,15 +488,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendQueuedMessage();
                 // And then we want to request the Function Momentary Status
                 sendFunctionStatusInformationRequest();
-                return;
             } else if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                 log.trace("Throttle - message is LOCO_INFO_RESPONSE ");
                 if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
-                        //Set the Is available flag to Throttle.False
-                        log.info("Loco " + getDccAddress() + " In use by another device");
-                        setIsAvailable(false);
+                        locoInUse();
                     }
                     // We've processed this request, so set the status to Idle.
                     requestState = THROTTLEIDLE;
@@ -549,7 +523,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 }
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
-                log.trace("Communications error occurred - message received was: {}",l.toString());
+                log.trace("Communications error occurred - message received was: {}",l);
             } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
@@ -566,27 +540,34 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 /* this is an unknown error */
                 requestState = THROTTLEIDLE;
                 sendQueuedMessage();
-                log.trace("Received unhandled response: {}",l.toString());
+                log.trace("Received unhandled response: {}",l);
             }
         }
-        //requestState=THROTTLEIDLE;
-        //sendQueuedMessage();
+    }
+
+    private void locoInUse(){
+        if (isAvailable) {
+            //Set the Is available flag to Throttle.False
+            log.info("Loco {} In use by another device",getDccAddress());
+            setIsAvailable(false);
+        }
     }
 
     /**
-     * Listen for the messages to the LI100/LI101.
+     * {@inheritDoc}
      */
     @Override
     public void message(XNetMessage l) {
+        // no need to handle outgoing messages.
     }
 
     /**
-     * Handle a timeout notification.
+     * {@inheritDoc}
      */
     @Override
     public void notifyTimeout(XNetMessage msg) {
         log.debug("Notified of timeout on message {} , {} retries available.",
-                  msg.toString(),msg.getRetries());
+                  msg,msg.getRetries());
         if (msg.getRetries() > 0) {
             // If the message still has retries available, send it back to 
             // the traffic controller.
@@ -608,8 +589,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
          if the locomotive is being controlled by another throttle */
 
         if ((b1 & 0x08) == 0x08 && this.isAvailable) {
-            log.info("Loco " + getDccAddress() + " In use by another device");
-            setIsAvailable(false);
+            locoInUse();
         } else if ((b1 & 0x08) == 0x00 && !this.isAvailable) {
             log.trace("Loco Is Available");
             setIsAvailable(true);
@@ -617,28 +597,28 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if ((b1 & 0x01) == 0x01) {
             log.trace("Speed Step setting 27");
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_27) {
-                notifyPropertyChangeListener("SpeedSteps",
+                notifyPropertyChangeListener(SPEEDSTEPS,
                         this.speedStepMode,
                         this.speedStepMode = SpeedStepMode.NMRA_DCC_27);
             }
         } else if ((b1 & 0x02) == 0x02) {
             log.trace("Speed Step setting 28");
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_28) {
-                notifyPropertyChangeListener("SpeedSteps",
+                notifyPropertyChangeListener(SPEEDSTEPS,
                         this.speedStepMode,
                         this.speedStepMode = SpeedStepMode.NMRA_DCC_28);
             }
         } else if ((b1 & 0x04) == 0x04) {
             log.trace("Speed Step setting 128");
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_128) {
-                notifyPropertyChangeListener("SpeedSteps",
+                notifyPropertyChangeListener(SPEEDSTEPS,
                         this.speedStepMode,
                         this.speedStepMode = SpeedStepMode.NMRA_DCC_128);
             }
         } else {
             log.trace("Speed Step setting 14");
             if (this.speedStepMode != SpeedStepMode.NMRA_DCC_14) {
-                notifyPropertyChangeListener("SpeedSteps",
+                notifyPropertyChangeListener(SPEEDSTEPS,
                         this.speedStepMode,
                         this.speedStepMode = SpeedStepMode.NMRA_DCC_14);
             }
@@ -651,20 +631,20 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void parseSpeedAndDirection(int b2) {
         /* the second byte indicates the speed and direction setting */
 
-        if ((b2 & 0x80) == 0x80 && this.isForward == false) {
+        if ((b2 & 0x80) == 0x80 && !this.isForward) {
             log.trace("Throttle - Direction Forward Locomotive: {}",address);
-            notifyPropertyChangeListener("IsForward",
+            notifyPropertyChangeListener(ISFORWARD,
                     Boolean.valueOf(this.isForward),
                     Boolean.valueOf(this.isForward = true));
-            if (this.isForward == true) {
+            if (this.isForward) {
                 log.trace("Throttle - Changed direction to Forward Locomotive: {}",address);
             }
-        } else if ((b2 & 0x80) == 0x00 && this.isForward == true) {
+        } else if ((b2 & 0x80) == 0x00 && this.isForward) {
             log.trace("Throttle - Direction Reverse Locomotive: {}", address);
-            notifyPropertyChangeListener("IsForward",
+            notifyPropertyChangeListener(ISFORWARD,
                     Boolean.valueOf(this.isForward),
                     Boolean.valueOf(this.isForward = false));
-            if (this.isForward == false) {
+            if (!this.isForward) {
                 log.trace("Throttle - Changed direction to Reverse Locomotive: {}",address);
             }
         }
@@ -681,7 +661,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 126)) >= 0.0079) {
-                notifyPropertyChangeListener("SpeedSetting",
+                notifyPropertyChangeListener(SPEEDSETTING,
                         Float.valueOf(this.speedSetting),
                         Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 126));
@@ -701,7 +681,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 28)) >= 0.035) {
-                notifyPropertyChangeListener("SpeedSetting",
+                notifyPropertyChangeListener(SPEEDSETTING,
                         Float.valueOf(this.speedSetting),
                         Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 28));
@@ -721,7 +701,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 27)) >= 0.037) {
-                notifyPropertyChangeListener("SpeedSetting",
+                notifyPropertyChangeListener(SPEEDSETTING,
                         Float.valueOf(this.speedSetting),
                         Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 27));
@@ -736,7 +716,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 14)) >= 0.071) {
-                notifyPropertyChangeListener("SpeedSetting",
+                notifyPropertyChangeListener(SPEEDSETTING,
                         Float.valueOf(this.speedSetting),
                         Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 14));
@@ -748,132 +728,132 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function F0-F12 status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the status of F0 F4 F3 F2 F1 */
-        if ((b3 & 0x10) == 0x10 && getF0() == false) {
+        if ((b3 & 0x10) == 0x10 && !getF0()) {
             notifyPropertyChangeListener(Throttle.F0,
                     Boolean.valueOf(this.f0),
                     Boolean.valueOf(this.f0 = true));
-        } else if ((b3 & 0x10) == 0x00 && getF0() == true) {
+        } else if ((b3 & 0x10) == 0x00 && getF0()) {
             notifyPropertyChangeListener(Throttle.F0,
                     Boolean.valueOf(this.f0),
                     Boolean.valueOf(this.f0 = false));
         }
 
-        if ((b3 & 0x01) == 0x01 && getF1() == false) {
+        if ((b3 & 0x01) == 0x01 && !getF1()) {
             notifyPropertyChangeListener(Throttle.F1,
                     Boolean.valueOf(this.f1),
                     Boolean.valueOf(this.f1 = true));
-        } else if ((b3 & 0x01) == 0x00 && getF1() == true) {
+        } else if ((b3 & 0x01) == 0x00 && getF1()) {
             notifyPropertyChangeListener(Throttle.F1,
                     Boolean.valueOf(this.f1),
                     Boolean.valueOf(this.f1 = false));
         }
 
-        if ((b3 & 0x02) == 0x02 && getF2() == false) {
+        if ((b3 & 0x02) == 0x02 && !getF2()) {
             notifyPropertyChangeListener(Throttle.F2,
                     Boolean.valueOf(this.f2),
                     Boolean.valueOf(this.f2 = true));
-        } else if ((b3 & 0x02) == 0x00 && getF2() == true) {
+        } else if ((b3 & 0x02) == 0x00 && getF2()) {
             notifyPropertyChangeListener(Throttle.F2,
                     Boolean.valueOf(this.f2),
                     Boolean.valueOf(this.f2 = false));
         }
 
-        if ((b3 & 0x04) == 0x04 && getF3() == false) {
+        if ((b3 & 0x04) == 0x04 && !getF3()) {
             notifyPropertyChangeListener(Throttle.F3,
                     Boolean.valueOf(this.f3),
                     Boolean.valueOf(this.f3 = true));
-        } else if ((b3 & 0x04) == 0x00 && getF3() == true) {
+        } else if ((b3 & 0x04) == 0x00 && getF3()) {
             notifyPropertyChangeListener(Throttle.F3,
                     Boolean.valueOf(this.f3),
                     Boolean.valueOf(this.f3 = false));
         }
 
-        if ((b3 & 0x08) == 0x08 && getF4() == false) {
+        if ((b3 & 0x08) == 0x08 && !getF4()) {
             notifyPropertyChangeListener(Throttle.F4,
                     Boolean.valueOf(this.f4),
                     Boolean.valueOf(this.f4 = true));
-        } else if ((b3 & 0x08) == 0x00 && getF4() == true) {
+        } else if ((b3 & 0x08) == 0x00 && getF4()) {
             notifyPropertyChangeListener(Throttle.F4,
                     Boolean.valueOf(this.f4),
                     Boolean.valueOf(this.f4 = false));
         }
 
         /* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        if ((b4 & 0x01) == 0x01 && getF5() == false) {
+        if ((b4 & 0x01) == 0x01 && !getF5()) {
             notifyPropertyChangeListener(Throttle.F5,
                     Boolean.valueOf(this.f5),
                     Boolean.valueOf(this.f5 = true));
-        } else if ((b4 & 0x01) == 0x00 && getF5() == true) {
+        } else if ((b4 & 0x01) == 0x00 && getF5()) {
             notifyPropertyChangeListener(Throttle.F5,
                     Boolean.valueOf(this.f5),
                     Boolean.valueOf(this.f5 = false));
         }
 
-        if ((b4 & 0x02) == 0x02 && getF6() == false) {
+        if ((b4 & 0x02) == 0x02 && !getF6()) {
             notifyPropertyChangeListener(Throttle.F6,
                     Boolean.valueOf(this.f6),
                     Boolean.valueOf(this.f6 = true));
-        } else if ((b4 & 0x02) == 0x00 && getF6() == true) {
+        } else if ((b4 & 0x02) == 0x00 && getF6()) {
             notifyPropertyChangeListener(Throttle.F6,
                     Boolean.valueOf(this.f6),
                     Boolean.valueOf(this.f6 = false));
         }
 
-        if ((b4 & 0x04) == 0x04 && getF7() == false) {
+        if ((b4 & 0x04) == 0x04 && !getF7()) {
             notifyPropertyChangeListener(Throttle.F7,
                     Boolean.valueOf(this.f7),
                     Boolean.valueOf(this.f7 = true));
-        } else if ((b4 & 0x04) == 0x00 && getF7() == true) {
+        } else if ((b4 & 0x04) == 0x00 && getF7()) {
             notifyPropertyChangeListener(Throttle.F7,
                     Boolean.valueOf(this.f7),
                     Boolean.valueOf(this.f7 = false));
         }
 
-        if ((b4 & 0x08) == 0x08 && getF8() == false) {
+        if ((b4 & 0x08) == 0x08 && !getF8()) {
             notifyPropertyChangeListener(Throttle.F8,
                     Boolean.valueOf(this.f8),
                     Boolean.valueOf(this.f8 = true));
-        } else if ((b4 & 0x08) == 0x00 && getF8() == true) {
+        } else if ((b4 & 0x08) == 0x00 && getF8()) {
             notifyPropertyChangeListener(Throttle.F8,
                     Boolean.valueOf(this.f8),
                     Boolean.valueOf(this.f8 = false));
         }
 
-        if ((b4 & 0x10) == 0x10 && getF9() == false) {
+        if ((b4 & 0x10) == 0x10 && !getF9()) {
             notifyPropertyChangeListener(Throttle.F9,
                     Boolean.valueOf(this.f9),
                     Boolean.valueOf(this.f9 = true));
-        } else if ((b4 & 0x10) == 0x00 && getF9() == true) {
+        } else if ((b4 & 0x10) == 0x00 && getF9()) {
             notifyPropertyChangeListener(Throttle.F9,
                     Boolean.valueOf(this.f9),
                     Boolean.valueOf(this.f9 = false));
         }
 
-        if ((b4 & 0x20) == 0x20 && getF10() == false) {
+        if ((b4 & 0x20) == 0x20 && !getF10()) {
             notifyPropertyChangeListener(Throttle.F10,
                     Boolean.valueOf(this.f10),
                     Boolean.valueOf(this.f10 = true));
-        } else if ((b4 & 0x20) == 0x00 && getF10() == true) {
+        } else if ((b4 & 0x20) == 0x00 && getF10()) {
             notifyPropertyChangeListener(Throttle.F10,
                     Boolean.valueOf(this.f10),
                     Boolean.valueOf(this.f10 = false));
         }
 
-        if ((b4 & 0x40) == 0x40 && getF11() == false) {
+        if ((b4 & 0x40) == 0x40 && !getF11()) {
             notifyPropertyChangeListener(Throttle.F11,
                     Boolean.valueOf(this.f11),
                     Boolean.valueOf(this.f11 = true));
-        } else if ((b4 & 0x40) == 0x00 && getF11() == true) {
+        } else if ((b4 & 0x40) == 0x00 && getF11()) {
             notifyPropertyChangeListener(Throttle.F11,
                     Boolean.valueOf(this.f11),
                     Boolean.valueOf(this.f11 = false));
         }
 
-        if ((b4 & 0x80) == 0x80 && getF12() == false) {
+        if ((b4 & 0x80) == 0x80 && !getF12()) {
             notifyPropertyChangeListener(Throttle.F12,
                     Boolean.valueOf(this.f12),
                     Boolean.valueOf(this.f12 = true));
-        } else if ((b4 & 0x80) == 0x00 && getF12() == true) {
+        } else if ((b4 & 0x80) == 0x00 && getF12()) {
             notifyPropertyChangeListener(Throttle.F12,
                     Boolean.valueOf(this.f12),
                     Boolean.valueOf(this.f12 = false));
@@ -884,162 +864,162 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function F13-F28 status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
-        if ((b3 & 0x01) == 0x01 && getF13() == false) {
+        if ((b3 & 0x01) == 0x01 && !getF13()) {
             notifyPropertyChangeListener(Throttle.F13,
                     Boolean.valueOf(this.f13),
                     Boolean.valueOf(this.f13 = true));
-        } else if ((b3 & 0x01) == 0x00 && getF13() == true) {
+        } else if ((b3 & 0x01) == 0x00 && getF13()) {
             notifyPropertyChangeListener(Throttle.F13,
                     Boolean.valueOf(this.f13),
                     Boolean.valueOf(this.f13 = false));
         }
 
-        if ((b3 & 0x02) == 0x02 && getF14() == false) {
+        if ((b3 & 0x02) == 0x02 && !getF14()) {
             notifyPropertyChangeListener(Throttle.F14,
                     Boolean.valueOf(this.f14),
                     Boolean.valueOf(this.f14 = true));
-        } else if ((b3 & 0x02) == 0x00 && getF14() == true) {
+        } else if ((b3 & 0x02) == 0x00 && getF14()) {
             notifyPropertyChangeListener(Throttle.F14,
                     Boolean.valueOf(this.f14),
                     Boolean.valueOf(this.f14 = false));
         }
 
-        if ((b3 & 0x04) == 0x04 && getF15() == false) {
+        if ((b3 & 0x04) == 0x04 && !getF15()) {
             notifyPropertyChangeListener(Throttle.F15,
                     Boolean.valueOf(this.f15),
                     Boolean.valueOf(this.f15 = true));
-        } else if ((b3 & 0x04) == 0x00 && getF15() == true) {
+        } else if ((b3 & 0x04) == 0x00 && getF15()) {
             notifyPropertyChangeListener(Throttle.F15,
                     Boolean.valueOf(this.f15),
                     Boolean.valueOf(this.f15 = false));
         }
 
-        if ((b3 & 0x08) == 0x08 && getF16() == false) {
+        if ((b3 & 0x08) == 0x08 && !getF16()) {
             notifyPropertyChangeListener(Throttle.F16,
                     Boolean.valueOf(this.f16),
                     Boolean.valueOf(this.f16 = true));
-        } else if ((b3 & 0x08) == 0x00 && getF16() == true) {
+        } else if ((b3 & 0x08) == 0x00 && getF16()) {
             notifyPropertyChangeListener(Throttle.F16,
                     Boolean.valueOf(this.f16),
                     Boolean.valueOf(this.f16 = false));
         }
 
-        if ((b3 & 0x10) == 0x10 && getF17() == false) {
+        if ((b3 & 0x10) == 0x10 && !getF17()) {
             notifyPropertyChangeListener(Throttle.F17,
                     Boolean.valueOf(this.f17),
                     Boolean.valueOf(this.f17 = true));
-        } else if ((b3 & 0x10) == 0x00 && getF17() == true) {
+        } else if ((b3 & 0x10) == 0x00 && getF17()) {
             notifyPropertyChangeListener(Throttle.F17,
                     Boolean.valueOf(this.f17),
                     Boolean.valueOf(this.f17 = false));
         }
 
-        if ((b3 & 0x20) == 0x20 && getF18() == false) {
+        if ((b3 & 0x20) == 0x20 && !getF18()) {
             notifyPropertyChangeListener(Throttle.F18,
                     Boolean.valueOf(this.f18),
                     Boolean.valueOf(this.f18 = true));
-        } else if ((b3 & 0x20) == 0x00 && getF18() == true) {
+        } else if ((b3 & 0x20) == 0x00 && getF18()) {
             notifyPropertyChangeListener(Throttle.F18,
                     Boolean.valueOf(this.f18),
                     Boolean.valueOf(this.f18 = false));
         }
 
-        if ((b3 & 0x40) == 0x40 && getF19() == false) {
+        if ((b3 & 0x40) == 0x40 && !getF19()) {
             notifyPropertyChangeListener(Throttle.F19,
                     Boolean.valueOf(this.f19),
                     Boolean.valueOf(this.f19 = true));
-        } else if ((b3 & 0x40) == 0x00 && getF19() == true) {
+        } else if ((b3 & 0x40) == 0x00 && getF19()) {
             notifyPropertyChangeListener(Throttle.F19,
                     Boolean.valueOf(this.f19),
                     Boolean.valueOf(this.f19 = false));
         }
 
-        if ((b3 & 0x80) == 0x80 && getF20() == false) {
+        if ((b3 & 0x80) == 0x80 && !getF20()) {
             notifyPropertyChangeListener(Throttle.F20,
                     Boolean.valueOf(this.f20),
                     Boolean.valueOf(this.f20 = true));
-        } else if ((b3 & 0x80) == 0x00 && getF20() == true) {
+        } else if ((b3 & 0x80) == 0x00 && getF20()) {
             notifyPropertyChangeListener(Throttle.F20,
                     Boolean.valueOf(this.f20),
                     Boolean.valueOf(this.f20 = false));
         }
         /* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
 
-        if ((b4 & 0x01) == 0x01 && getF21() == false) {
+        if ((b4 & 0x01) == 0x01 && !getF21()) {
             notifyPropertyChangeListener(Throttle.F21,
                     Boolean.valueOf(this.f21),
                     Boolean.valueOf(this.f21 = true));
-        } else if ((b4 & 0x01) == 0x00 && getF21() == true) {
+        } else if ((b4 & 0x01) == 0x00 && getF21()) {
             notifyPropertyChangeListener(Throttle.F21,
                     Boolean.valueOf(this.f21),
                     Boolean.valueOf(this.f21 = false));
         }
 
-        if ((b4 & 0x02) == 0x02 && getF22() == false) {
+        if ((b4 & 0x02) == 0x02 && !getF22()) {
             notifyPropertyChangeListener(Throttle.F22,
                     Boolean.valueOf(this.f22),
                     Boolean.valueOf(this.f22 = true));
-        } else if ((b4 & 0x02) == 0x00 && getF22() == true) {
+        } else if ((b4 & 0x02) == 0x00 && getF22()) {
             notifyPropertyChangeListener(Throttle.F22,
                     Boolean.valueOf(this.f22),
                     Boolean.valueOf(this.f22 = false));
         }
 
-        if ((b4 & 0x04) == 0x04 && getF23() == false) {
+        if ((b4 & 0x04) == 0x04 && !getF23()) {
             notifyPropertyChangeListener(Throttle.F23,
                     Boolean.valueOf(this.f23),
                     Boolean.valueOf(this.f23 = true));
-        } else if ((b4 & 0x04) == 0x00 && getF23() == true) {
+        } else if ((b4 & 0x04) == 0x00 && getF23()) {
             notifyPropertyChangeListener(Throttle.F23,
                     Boolean.valueOf(this.f23),
                     Boolean.valueOf(this.f23 = false));
         }
 
-        if ((b4 & 0x08) == 0x08 && getF24() == false) {
+        if ((b4 & 0x08) == 0x08 && !getF24()) {
             notifyPropertyChangeListener(Throttle.F24,
                     Boolean.valueOf(this.f24),
                     Boolean.valueOf(this.f24 = true));
-        } else if ((b4 & 0x08) == 0x00 && getF24() == true) {
+        } else if ((b4 & 0x08) == 0x00 && getF24()) {
             notifyPropertyChangeListener(Throttle.F24,
                     Boolean.valueOf(this.f24),
                     Boolean.valueOf(this.f24 = false));
         }
 
-        if ((b4 & 0x10) == 0x10 && getF25() == false) {
+        if ((b4 & 0x10) == 0x10 && !getF25()) {
             notifyPropertyChangeListener(Throttle.F25,
                     Boolean.valueOf(this.f25),
                     Boolean.valueOf(this.f25 = true));
-        } else if ((b4 & 0x10) == 0x00 && getF25() == true) {
+        } else if ((b4 & 0x10) == 0x00 && getF25()) {
             notifyPropertyChangeListener(Throttle.F25,
                     Boolean.valueOf(this.f25),
                     Boolean.valueOf(this.f25 = false));
         }
 
-        if ((b4 & 0x20) == 0x20 && getF26() == false) {
+        if ((b4 & 0x20) == 0x20 && !getF26()) {
             notifyPropertyChangeListener(Throttle.F26,
                     Boolean.valueOf(this.f26),
                     Boolean.valueOf(this.f26 = true));
-        } else if ((b4 & 0x20) == 0x00 && getF26() == true) {
+        } else if ((b4 & 0x20) == 0x00 && getF26()) {
             notifyPropertyChangeListener(Throttle.F26,
                     Boolean.valueOf(this.f26),
                     Boolean.valueOf(this.f26 = false));
         }
 
-        if ((b4 & 0x40) == 0x40 && getF27() == false) {
+        if ((b4 & 0x40) == 0x40 && !getF27()) {
             notifyPropertyChangeListener(Throttle.F27,
                     Boolean.valueOf(this.f27),
                     Boolean.valueOf(this.f27 = true));
-        } else if ((b4 & 0x40) == 0x00 && getF27() == true) {
+        } else if ((b4 & 0x40) == 0x00 && getF27()) {
             notifyPropertyChangeListener(Throttle.F27,
                     Boolean.valueOf(this.f27),
                     Boolean.valueOf(this.f27 = false));
         }
 
-        if ((b4 & 0x80) == 0x80 && getF28() == false) {
+        if ((b4 & 0x80) == 0x80 && !getF28()) {
             notifyPropertyChangeListener(Throttle.F28,
                     Boolean.valueOf(this.f28),
                     Boolean.valueOf(this.f28 = true));
-        } else if ((b4 & 0x80) == 0x00 && getF28() == true) {
+        } else if ((b4 & 0x80) == 0x00 && getF28()) {
             notifyPropertyChangeListener(Throttle.F28,
                     Boolean.valueOf(this.f28),
                     Boolean.valueOf(this.f28 = false));
@@ -1050,132 +1030,132 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         log.trace("Parsing Function Momentary status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
-        if ((b3 & 0x10) == 0x10 && this.f0Momentary == false) {
+        if ((b3 & 0x10) == 0x10 && !this.f0Momentary) {
             notifyPropertyChangeListener(Throttle.F0Momentary,
                     Boolean.valueOf(this.f0Momentary),
                     Boolean.valueOf(this.f0Momentary = true));
-        } else if ((b3 & 0x10) == 0x00 && this.f0Momentary == true) {
+        } else if ((b3 & 0x10) == 0x00 && this.f0Momentary) {
             notifyPropertyChangeListener(Throttle.F0Momentary,
                     Boolean.valueOf(this.f0Momentary),
                     Boolean.valueOf(this.f0Momentary = false));
         }
 
-        if ((b3 & 0x01) == 0x01 && this.f1Momentary == false) {
+        if ((b3 & 0x01) == 0x01 && !this.f1Momentary) {
             notifyPropertyChangeListener(Throttle.F1Momentary,
                     Boolean.valueOf(this.f1Momentary),
                     Boolean.valueOf(this.f1Momentary = true));
-        } else if ((b3 & 0x01) == 0x00 && this.f1Momentary == true) {
+        } else if ((b3 & 0x01) == 0x00 && this.f1Momentary) {
             notifyPropertyChangeListener(Throttle.F1Momentary,
                     Boolean.valueOf(this.f1Momentary),
                     Boolean.valueOf(this.f1Momentary = false));
         }
 
-        if ((b3 & 0x02) == 0x02 && this.f2Momentary == false) {
+        if ((b3 & 0x02) == 0x02 && !this.f2Momentary) {
             notifyPropertyChangeListener(Throttle.F2Momentary,
                     Boolean.valueOf(this.f2Momentary),
                     Boolean.valueOf(this.f2Momentary = true));
-        } else if ((b3 & 0x02) == 0x00 && this.f2Momentary == true) {
+        } else if ((b3 & 0x02) == 0x00 && this.f2Momentary) {
             notifyPropertyChangeListener(Throttle.F2Momentary,
                     Boolean.valueOf(this.f2Momentary),
                     Boolean.valueOf(this.f2Momentary = false));
         }
 
-        if ((b3 & 0x04) == 0x04 && this.f3Momentary == false) {
+        if ((b3 & 0x04) == 0x04 && !this.f3Momentary) {
             notifyPropertyChangeListener(Throttle.F3Momentary,
                     Boolean.valueOf(this.f3Momentary),
                     Boolean.valueOf(this.f3Momentary = true));
-        } else if ((b3 & 0x04) == 0x00 && this.f3Momentary == true) {
+        } else if ((b3 & 0x04) == 0x00 && this.f3Momentary) {
             notifyPropertyChangeListener(Throttle.F3Momentary,
                     Boolean.valueOf(this.f3Momentary),
                     Boolean.valueOf(this.f3Momentary = false));
         }
 
-        if ((b3 & 0x08) == 0x08 && this.f4Momentary == false) {
+        if ((b3 & 0x08) == 0x08 && !this.f4Momentary) {
             notifyPropertyChangeListener(Throttle.F4Momentary,
                     Boolean.valueOf(this.f4Momentary),
                     Boolean.valueOf(this.f4Momentary = true));
-        } else if ((b3 & 0x08) == 0x00 && this.f4Momentary == true) {
+        } else if ((b3 & 0x08) == 0x00 && this.f4Momentary) {
             notifyPropertyChangeListener(Throttle.F4Momentary,
                     Boolean.valueOf(this.f4Momentary),
                     Boolean.valueOf(this.f4Momentary = false));
         }
 
         /* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
-        if ((b4 & 0x01) == 0x01 && this.f5Momentary == false) {
+        if ((b4 & 0x01) == 0x01 && !this.f5Momentary) {
             notifyPropertyChangeListener(Throttle.F5Momentary,
                     Boolean.valueOf(this.f5Momentary),
                     Boolean.valueOf(this.f5Momentary = true));
-        } else if ((b4 & 0x01) == 0x00 && this.f5Momentary == true) {
+        } else if ((b4 & 0x01) == 0x00 && this.f5Momentary) {
             notifyPropertyChangeListener(Throttle.F5Momentary,
                     Boolean.valueOf(this.f5Momentary),
                     Boolean.valueOf(this.f5Momentary = false));
         }
 
-        if ((b4 & 0x02) == 0x02 && this.f6Momentary == false) {
+        if ((b4 & 0x02) == 0x02 && !this.f6Momentary) {
             notifyPropertyChangeListener(Throttle.F6Momentary,
                     Boolean.valueOf(this.f6Momentary),
                     Boolean.valueOf(this.f6Momentary = true));
-        } else if ((b4 & 0x02) == 0x00 && this.f6Momentary == true) {
+        } else if ((b4 & 0x02) == 0x00 && this.f6Momentary) {
             notifyPropertyChangeListener(Throttle.F6Momentary,
                     Boolean.valueOf(this.f6Momentary),
                     Boolean.valueOf(this.f6Momentary = false));
         }
 
-        if ((b4 & 0x04) == 0x04 && this.f7Momentary == false) {
+        if ((b4 & 0x04) == 0x04 && !this.f7Momentary) {
             notifyPropertyChangeListener(Throttle.F7Momentary,
                     Boolean.valueOf(this.f7Momentary),
                     Boolean.valueOf(this.f7Momentary = true));
-        } else if ((b4 & 0x04) == 0x00 && this.f7Momentary == true) {
+        } else if ((b4 & 0x04) == 0x00 && this.f7Momentary) {
             notifyPropertyChangeListener(Throttle.F7Momentary,
                     Boolean.valueOf(this.f7Momentary),
                     Boolean.valueOf(this.f7Momentary = false));
         }
 
-        if ((b4 & 0x08) == 0x08 && this.f8Momentary == false) {
+        if ((b4 & 0x08) == 0x08 && !this.f8Momentary) {
             notifyPropertyChangeListener(Throttle.F8Momentary,
                     Boolean.valueOf(this.f8Momentary),
                     Boolean.valueOf(this.f8Momentary = true));
-        } else if ((b4 & 0x08) == 0x00 && this.f8Momentary == true) {
+        } else if ((b4 & 0x08) == 0x00 && this.f8Momentary) {
             notifyPropertyChangeListener(Throttle.F8Momentary,
                     Boolean.valueOf(this.f8Momentary),
                     Boolean.valueOf(this.f8Momentary = false));
         }
 
-        if ((b4 & 0x10) == 0x10 && this.f9Momentary == false) {
+        if ((b4 & 0x10) == 0x10 && !this.f9Momentary) {
             notifyPropertyChangeListener(Throttle.F9Momentary,
                     Boolean.valueOf(this.f9Momentary),
                     Boolean.valueOf(this.f9Momentary = true));
-        } else if ((b4 & 0x10) == 0x00 && this.f9Momentary == true) {
+        } else if ((b4 & 0x10) == 0x00 && this.f9Momentary) {
             notifyPropertyChangeListener(Throttle.F9Momentary,
                     Boolean.valueOf(this.f9Momentary),
                     Boolean.valueOf(this.f9Momentary = false));
         }
 
-        if ((b4 & 0x20) == 0x20 && this.f10Momentary == false) {
+        if ((b4 & 0x20) == 0x20 && !this.f10Momentary) {
             notifyPropertyChangeListener(Throttle.F10Momentary,
                     Boolean.valueOf(this.f10Momentary),
                     Boolean.valueOf(this.f10Momentary = true));
-        } else if ((b4 & 0x20) == 0x00 && this.f10Momentary == true) {
+        } else if ((b4 & 0x20) == 0x00 && this.f10Momentary) {
             notifyPropertyChangeListener(Throttle.F10Momentary,
                     Boolean.valueOf(this.f10Momentary),
                     Boolean.valueOf(this.f10Momentary = false));
         }
 
-        if ((b4 & 0x40) == 0x40 && this.f11Momentary == false) {
+        if ((b4 & 0x40) == 0x40 && !this.f11Momentary) {
             notifyPropertyChangeListener(Throttle.F11Momentary,
                     Boolean.valueOf(this.f11Momentary),
                     Boolean.valueOf(this.f11Momentary = true));
-        } else if ((b4 & 0x40) == 0x00 && this.f11Momentary == true) {
+        } else if ((b4 & 0x40) == 0x00 && this.f11Momentary) {
             notifyPropertyChangeListener(Throttle.F11Momentary,
                     Boolean.valueOf(this.f11Momentary),
                     Boolean.valueOf(this.f11Momentary = false));
         }
 
-        if ((b4 & 0x80) == 0x80 && this.f12Momentary == false) {
+        if ((b4 & 0x80) == 0x80 && !this.f12Momentary) {
             notifyPropertyChangeListener(Throttle.F12Momentary,
                     Boolean.valueOf(this.f12Momentary),
                     Boolean.valueOf(this.f12Momentary = true));
-        } else if ((b4 & 0x80) == 0x00 && this.f12Momentary == true) {
+        } else if ((b4 & 0x80) == 0x00 && this.f12Momentary) {
             notifyPropertyChangeListener(Throttle.F12Momentary,
                     Boolean.valueOf(this.f12Momentary),
                     Boolean.valueOf(this.f12Momentary = false));
@@ -1187,162 +1167,162 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                   b3,b4);
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
 
-        if ((b3 & 0x01) == 0x01 && this.f13Momentary == false) {
+        if ((b3 & 0x01) == 0x01 && !this.f13Momentary) {
             notifyPropertyChangeListener(Throttle.F13Momentary,
                     Boolean.valueOf(this.f13Momentary),
                     Boolean.valueOf(this.f13Momentary = true));
-        } else if ((b3 & 0x01) == 0x00 && this.f13Momentary == true) {
+        } else if ((b3 & 0x01) == 0x00 && this.f13Momentary) {
             notifyPropertyChangeListener(Throttle.F13Momentary,
                     Boolean.valueOf(this.f13Momentary),
                     Boolean.valueOf(this.f13Momentary = false));
         }
 
-        if ((b3 & 0x02) == 0x02 && this.f2Momentary == false) {
+        if ((b3 & 0x02) == 0x02 && !this.f14Momentary) {
             notifyPropertyChangeListener(Throttle.F14Momentary,
                     Boolean.valueOf(this.f14Momentary),
                     Boolean.valueOf(this.f14Momentary = true));
-        } else if ((b3 & 0x02) == 0x00 && this.f14Momentary == true) {
+        } else if ((b3 & 0x02) == 0x00 && this.f14Momentary) {
             notifyPropertyChangeListener(Throttle.F14Momentary,
                     Boolean.valueOf(this.f14Momentary),
                     Boolean.valueOf(this.f14Momentary = false));
         }
 
-        if ((b3 & 0x04) == 0x04 && this.f15Momentary == false) {
+        if ((b3 & 0x04) == 0x04 && !this.f15Momentary) {
             notifyPropertyChangeListener(Throttle.F15Momentary,
                     Boolean.valueOf(this.f15Momentary),
                     Boolean.valueOf(this.f15Momentary = true));
-        } else if ((b3 & 0x04) == 0x00 && this.f15Momentary == true) {
+        } else if ((b3 & 0x04) == 0x00 && this.f15Momentary) {
             notifyPropertyChangeListener(Throttle.F15Momentary,
                     Boolean.valueOf(this.f15Momentary),
                     Boolean.valueOf(this.f15Momentary = false));
         }
 
-        if ((b3 & 0x08) == 0x08 && this.f16Momentary == false) {
+        if ((b3 & 0x08) == 0x08 && !this.f16Momentary) {
             notifyPropertyChangeListener(Throttle.F16Momentary,
                     Boolean.valueOf(this.f16Momentary),
                     Boolean.valueOf(this.f16Momentary = true));
-        } else if ((b3 & 0x08) == 0x00 && this.f16Momentary == true) {
+        } else if ((b3 & 0x08) == 0x00 && this.f16Momentary) {
             notifyPropertyChangeListener(Throttle.F16Momentary,
                     Boolean.valueOf(this.f16Momentary),
                     Boolean.valueOf(this.f16Momentary = false));
         }
 
-        if ((b3 & 0x10) == 0x10 && this.f17Momentary == false) {
+        if ((b3 & 0x10) == 0x10 && !this.f17Momentary) {
             notifyPropertyChangeListener(Throttle.F17Momentary,
                     Boolean.valueOf(this.f17Momentary),
                     Boolean.valueOf(this.f17Momentary = true));
-        } else if ((b3 & 0x10) == 0x00 && this.f17Momentary == true) {
+        } else if ((b3 & 0x10) == 0x00 && this.f17Momentary) {
             notifyPropertyChangeListener(Throttle.F17Momentary,
                     Boolean.valueOf(this.f17Momentary),
                     Boolean.valueOf(this.f17Momentary = false));
         }
 
-        if ((b3 & 0x20) == 0x20 && this.f18Momentary == false) {
+        if ((b3 & 0x20) == 0x20 && !this.f18Momentary) {
             notifyPropertyChangeListener(Throttle.F18Momentary,
                     Boolean.valueOf(this.f18Momentary),
                     Boolean.valueOf(this.f18Momentary = true));
-        } else if ((b3 & 0x20) == 0x00 && this.f18Momentary == true) {
+        } else if ((b3 & 0x20) == 0x00 && this.f18Momentary) {
             notifyPropertyChangeListener(Throttle.F18Momentary,
                     Boolean.valueOf(this.f18Momentary),
                     Boolean.valueOf(this.f18Momentary = false));
         }
 
-        if ((b3 & 0x40) == 0x40 && this.f19Momentary == false) {
+        if ((b3 & 0x40) == 0x40 && !this.f19Momentary) {
             notifyPropertyChangeListener(Throttle.F19Momentary,
                     Boolean.valueOf(this.f19Momentary),
                     Boolean.valueOf(this.f19Momentary = true));
-        } else if ((b3 & 0x40) == 0x00 && this.f19Momentary == true) {
+        } else if ((b3 & 0x40) == 0x00 && this.f19Momentary) {
             notifyPropertyChangeListener(Throttle.F19Momentary,
                     Boolean.valueOf(this.f19Momentary),
                     Boolean.valueOf(this.f19Momentary = false));
         }
 
-        if ((b3 & 0x80) == 0x80 && this.f20Momentary == false) {
+        if ((b3 & 0x80) == 0x80 && !this.f20Momentary) {
             notifyPropertyChangeListener(Throttle.F20Momentary,
                     Boolean.valueOf(this.f20Momentary),
                     Boolean.valueOf(this.f20Momentary = true));
-        } else if ((b3 & 0x80) == 0x00 && this.f20Momentary == true) {
+        } else if ((b3 & 0x80) == 0x00 && this.f20Momentary) {
             notifyPropertyChangeListener(Throttle.F20Momentary,
                     Boolean.valueOf(this.f20Momentary),
                     Boolean.valueOf(this.f20Momentary = false));
         }
 
         /* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
-        if ((b4 & 0x01) == 0x01 && this.f21Momentary == false) {
-            notifyPropertyChangeListener(Throttle.F5Momentary,
+        if ((b4 & 0x01) == 0x01 && !this.f21Momentary) {
+            notifyPropertyChangeListener(Throttle.F21Momentary,
                     Boolean.valueOf(this.f21Momentary),
                     Boolean.valueOf(this.f21Momentary = true));
-        } else if ((b4 & 0x01) == 0x00 && this.f21Momentary == true) {
+        } else if ((b4 & 0x01) == 0x00 && this.f21Momentary) {
             notifyPropertyChangeListener(Throttle.F21Momentary,
                     Boolean.valueOf(this.f21Momentary),
                     Boolean.valueOf(this.f21Momentary = false));
         }
 
-        if ((b4 & 0x02) == 0x02 && this.f22Momentary == false) {
+        if ((b4 & 0x02) == 0x02 && !this.f22Momentary) {
             notifyPropertyChangeListener(Throttle.F22Momentary,
                     Boolean.valueOf(this.f22Momentary),
                     Boolean.valueOf(this.f22Momentary = true));
-        } else if ((b4 & 0x02) == 0x00 && this.f22Momentary == true) {
+        } else if ((b4 & 0x02) == 0x00 && this.f22Momentary) {
             notifyPropertyChangeListener(Throttle.F22Momentary,
                     Boolean.valueOf(this.f22Momentary),
                     Boolean.valueOf(this.f22Momentary = false));
         }
 
-        if ((b4 & 0x04) == 0x04 && this.f23Momentary == false) {
+        if ((b4 & 0x04) == 0x04 && !this.f23Momentary) {
             notifyPropertyChangeListener(Throttle.F23Momentary,
                     Boolean.valueOf(this.f23Momentary),
                     Boolean.valueOf(this.f23Momentary = true));
-        } else if ((b4 & 0x04) == 0x00 && this.f23Momentary == true) {
+        } else if ((b4 & 0x04) == 0x00 && this.f23Momentary) {
             notifyPropertyChangeListener(Throttle.F23Momentary,
                     Boolean.valueOf(this.f23Momentary),
                     Boolean.valueOf(this.f23Momentary = false));
         }
 
-        if ((b4 & 0x08) == 0x08 && this.f24Momentary == false) {
+        if ((b4 & 0x08) == 0x08 && !this.f24Momentary) {
             notifyPropertyChangeListener(Throttle.F24Momentary,
                     Boolean.valueOf(this.f24Momentary),
                     Boolean.valueOf(this.f24Momentary = true));
-        } else if ((b4 & 0x08) == 0x00 && this.f24Momentary == true) {
+        } else if ((b4 & 0x08) == 0x00 && this.f24Momentary) {
             notifyPropertyChangeListener(Throttle.F24Momentary,
                     Boolean.valueOf(this.f24Momentary),
                     Boolean.valueOf(this.f24Momentary = false));
         }
 
-        if ((b4 & 0x10) == 0x10 && this.f25Momentary == false) {
+        if ((b4 & 0x10) == 0x10 && !this.f25Momentary) {
             notifyPropertyChangeListener(Throttle.F25Momentary,
                     Boolean.valueOf(this.f25Momentary),
                     Boolean.valueOf(this.f25Momentary = true));
-        } else if ((b4 & 0x10) == 0x00 && this.f25Momentary == true) {
+        } else if ((b4 & 0x10) == 0x00 && this.f25Momentary) {
             notifyPropertyChangeListener(Throttle.F25Momentary,
                     Boolean.valueOf(this.f25Momentary),
                     Boolean.valueOf(this.f25Momentary = false));
         }
 
-        if ((b4 & 0x20) == 0x20 && this.f26Momentary == false) {
+        if ((b4 & 0x20) == 0x20 && !this.f26Momentary) {
             notifyPropertyChangeListener(Throttle.F26Momentary,
                     Boolean.valueOf(this.f26Momentary),
                     Boolean.valueOf(this.f26Momentary = true));
-        } else if ((b4 & 0x20) == 0x00 && this.f26Momentary == true) {
+        } else if ((b4 & 0x20) == 0x00 && this.f26Momentary) {
             notifyPropertyChangeListener(Throttle.F26Momentary,
                     Boolean.valueOf(this.f26Momentary),
                     Boolean.valueOf(this.f26Momentary = false));
         }
 
-        if ((b4 & 0x40) == 0x40 && this.f27Momentary == false) {
+        if ((b4 & 0x40) == 0x40 && !this.f27Momentary) {
             notifyPropertyChangeListener(Throttle.F27Momentary,
                     Boolean.valueOf(this.f27Momentary),
                     Boolean.valueOf(this.f27Momentary = true));
-        } else if ((b4 & 0x40) == 0x00 && this.f27Momentary == true) {
+        } else if ((b4 & 0x40) == 0x00 && this.f27Momentary) {
             notifyPropertyChangeListener(Throttle.F27Momentary,
                     Boolean.valueOf(this.f27Momentary),
                     Boolean.valueOf(this.f27Momentary = false));
         }
 
-        if ((b4 & 0x80) == 0x80 && this.f28Momentary == false) {
+        if ((b4 & 0x80) == 0x80 && !this.f28Momentary) {
             notifyPropertyChangeListener(Throttle.F28Momentary,
                     Boolean.valueOf(this.f28Momentary),
                     Boolean.valueOf(this.f28Momentary = true));
-        } else if ((b4 & 0x80) == 0x00 && this.f28Momentary == true) {
+        } else if ((b4 & 0x80) == 0x00 && this.f28Momentary) {
             notifyPropertyChangeListener(Throttle.F28Momentary,
                     Boolean.valueOf(this.f28Momentary),
                     Boolean.valueOf(this.f28Momentary = false));
@@ -1360,7 +1340,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         /* if we're setting this to true, stop the timer,
          otherwise start the timer. */
-        if (Available == true) {
+        if (Available) {
             stopStatusTimer();
         } else {
             startStatusTimer();
@@ -1411,12 +1391,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Send message from queue.
      */
-    synchronized protected void sendQueuedMessage() {
+    protected synchronized void sendQueuedMessage() {
 
         RequestMessage msg = null;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
-        if (requestList.size() != 0) {
+        if (!requestList.isEmpty()) {
             log.debug("sending message to traffic controller");
             // if the queue is not empty, remove the first message
             // from the queue, send the message, and set the state machine 
@@ -1440,13 +1420,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Queue a message.
      */
-    synchronized protected void queueMessage(XNetMessage m, int s) {
+    protected synchronized void queueMessage(XNetMessage m, int s) {
         log.debug("adding message to message queue");
         // put the message in the queue
         RequestMessage msg = new RequestMessage(m, s);
         try {
             requestList.put(msg);
         } catch (java.lang.InterruptedException ie) {
+            log.trace("Interrupted while queueing message {}",msg);
         }
         // if the state is idle, trigger the message send
         if (requestState == THROTTLEIDLE) {
@@ -1477,6 +1458,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     // register for notification
-    private final static Logger log = LoggerFactory.getLogger(XNetThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetThrottle.class);
 
 }

@@ -506,7 +506,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             sendToLayout();
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -553,7 +553,7 @@ public class CbusThrottle extends AbstractThrottle {
         }
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
     }
@@ -568,7 +568,7 @@ public class CbusThrottle extends AbstractThrottle {
         this.isForward = forward;
         if (old != this.isForward) {
             sendToLayout();
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 
@@ -583,7 +583,7 @@ public class CbusThrottle extends AbstractThrottle {
         isForward = forward;
         // updateSpeedSetting(intSpeed(speedSetting));
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

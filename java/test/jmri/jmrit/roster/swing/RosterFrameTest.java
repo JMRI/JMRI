@@ -182,7 +182,7 @@ public class RosterFrameTest {
 
         // right now, nothing is ever selected, because multiple selection 
         // is not working.  See @Ignore above
-        
+
         JUnitUtil.waitFor(() ->{
                 return frame.getSelectedRosterEntries().length == 2;
             }, "selection complete");
