@@ -8,7 +8,7 @@ package jmri.jmrix.dccpp;
   *
  * Based on AbstractXNetSerialConnectionConfig by Paul Bender
  */
-abstract public class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
+public abstract class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
