@@ -155,14 +155,13 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void threePartFail() {
         t = new CbusLight("ML","+7;-5;+11",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
+        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusLight system name");
     }
 
     @Test
     public void badSysNameErrorLog() {
-        
         t = new CbusLight("ML","+7;-5;+11",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
+        JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusLight system name");
     }
 
     @Test

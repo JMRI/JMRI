@@ -41,7 +41,7 @@ public class CbusLight extends AbstractLight
         CbusAddress[] v = a.split();
         switch (v.length) {
             case 0:
-                log.error("Did not find usable system name: " + address);
+                log.error("Did not find usable system name: {}", address);
                 return;
             case 1:
                 addrOn = v[0];
@@ -52,7 +52,7 @@ public class CbusLight extends AbstractLight
                 } else if (address.startsWith("-")) {
                     addrOff = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -61,7 +61,7 @@ public class CbusLight extends AbstractLight
                 addrOff = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
+                log.error("Can't parse CbusLight system name: {}", address);
                 return;
         }
         // connect
@@ -84,7 +84,7 @@ public class CbusLight extends AbstractLight
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+            log.warn("illegal state requested for Light: {}", getSystemName());
         }
     }
 
