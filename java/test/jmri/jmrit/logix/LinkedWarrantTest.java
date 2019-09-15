@@ -41,16 +41,12 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-        panel.setVisible(false);  // hide panel to prevent repaint.
+//        panel.setVisible(false);  // hide panel to prevent repaint.
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor1);
-
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
@@ -74,7 +70,9 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB12");
         
         // Run the train, then checks end location
-        Assert.assertEquals("LoopDeLoop after first leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("LoopDeLoop after first leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -86,7 +84,9 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "Loopy 2 starts to move at 8th command");
 
-        Assert.assertEquals("LoopDeLoop after second leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("LoopDeLoop after second leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -98,7 +98,9 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "Loopy 3 starts to move at 8th command");
 
-        Assert.assertEquals("LoopDeLoop after last leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("LoopDeLoop after last leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -114,16 +116,15 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-        panel.setVisible(false);  // hide panel to prevent repaint.
+//        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor12 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor12);
 
+        Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
+        Assert.assertNotNull("Senor IS1 not found", sensor1);
         NXFrameTest.setAndConfirmSensorAction(sensor12, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
@@ -148,18 +149,19 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB12");
 
         // Run the train, then checks end location
-        Assert.assertEquals("Train after first leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("Train after first leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
 
-        Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        // "Loop&Fred" links to "WestToEast". Get start for "WestToEast" occupied quickly
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
-
-        warrant = _warrantMgr.getWarrant("WestToEast");
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return (m.startsWith("Launching warrant"));
         }, "Train Loopy finished first leg");
+
+        warrant = _warrantMgr.getWarrant("WestToEast");
 
         Warrant ww = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -187,12 +189,9 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-        panel.setVisible(false);  // hide panel to prevent repaint.
+//        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
@@ -275,16 +274,12 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
-        panel.setVisible(false);  // hide panel to prevent repaint.
+//        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
-
         NXFrameTest.setAndConfirmSensorAction(sensor0, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB0"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
@@ -309,7 +304,9 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB10");
 
         // Run the train, then checks end location
-        Assert.assertEquals("Tinker after first leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("Tinker after first leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
 
         Sensor sensor7 = _sensorMgr.getBySystemName("IS7");
         Assert.assertNotNull("Senor IS7 not found", sensor7);
@@ -331,7 +328,9 @@ public class LinkedWarrantTest {
         String[] route2 = {"OB7", "OB3", "OB2", "OB1"};
         block = _OBlockMgr.getOBlock("OB1");
 
-        Assert.assertEquals("Evers after second leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("Evers after second leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
 
         Sensor sensor6 = _sensorMgr.getBySystemName("IS6");
         Assert.assertNotNull("Senor IS6 not found", sensor6);
@@ -352,7 +351,9 @@ public class LinkedWarrantTest {
         String[] route3 = {"OB6", "OB3", "OB4", "OB5"};
         block = _OBlockMgr.getOBlock("OB5");
 
-        Assert.assertEquals("Chance after third leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("Chance after third leg", 
+                block.getSensor().getDisplayName(), 
+                NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -365,25 +366,25 @@ public class LinkedWarrantTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDebugPowerManager();
-        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initOBlockManager();
-        JUnitUtil.initLogixManager();
         JUnitUtil.initWarrantManager();
         JUnitUtil.initShutDownManager();
+        JUnitUtil.initDebugThrottleManager();
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
         _OBlockMgr = null;
         _sensorMgr = null;
         _warrantMgr = null;
+        JUnitUtil.tearDown();
     }
 
 }
