@@ -691,6 +691,7 @@
         <copy todir="${testtarget}">
             <fileset dir="${test}" includes="**/*.properties"/>
             <fileset dir="${test}" includes="**/*.xml"/>
+            <fileset dir="${test}" includes="**/*.py"/>
             <fileset dir="${test}" includes="META-INF/**"/>
         </copy>
     </target>
