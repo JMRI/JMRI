@@ -167,7 +167,7 @@ public abstract class AbstractThrottleManagerTestBase {
         Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,Throttle.ISFORWARD));
         Assert.assertNotNull("speed setting",tm.getThrottleInfo(addr,Throttle.SPEEDSETTING));
         Assert.assertNotNull("speed increment",tm.getThrottleInfo(addr,Throttle.SPEEDINCREMENT));
-        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,Throttle.SPEEDSTEPS));
+        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,Throttle.SPEEDSTEPMODE));
         Assert.assertNotNull("F0",tm.getThrottleInfo(addr,Throttle.F0));
         Assert.assertNotNull("F1",tm.getThrottleInfo(addr,Throttle.F1));
         Assert.assertNotNull("F2",tm.getThrottleInfo(addr,Throttle.F2));
