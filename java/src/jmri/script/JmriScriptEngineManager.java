@@ -1,5 +1,6 @@
 package jmri.script;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.script.Bindings;
@@ -77,7 +77,6 @@ public final class JmriScriptEngineManager {
     private final HashMap<String, String> names = new HashMap<>();
     private final HashMap<String, ScriptEngineFactory> factories = new HashMap<>();
     private final HashMap<String, ScriptEngine> engines = new HashMap<>();
-    private final HashMap<ScriptEngine, Set<String>> engineMimeTypes = new HashMap<>();
     private final ScriptContext context;
 
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
@@ -319,8 +318,8 @@ public final class JmriScriptEngineManager {
     public Object eval(File file) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            try (Reader fr = pythonEncodingFileReader(file)) {
-                this.jython.exec(jython.compile(fr, file.getPath()));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
             }
             return null;
         }
@@ -362,8 +361,8 @@ public final class JmriScriptEngineManager {
     public Object eval(File file, Bindings bindings) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            try (Reader fr = pythonEncodingFileReader(file)) {
-                this.jython.exec(jython.compile(fr, file.getPath()));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
             }
             return null;
         }
@@ -388,8 +387,8 @@ public final class JmriScriptEngineManager {
     public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            try (Reader fr = pythonEncodingFileReader(file)) {
-                this.jython.exec(jython.compile(fr, file.getPath()));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
             }
             return null;
         }
@@ -583,86 +582,9 @@ public final class JmriScriptEngineManager {
      * Default encoding used to read scripts.
      */
     private static final String DEFAULT_ENCODING = "UTF-8";
-    
-    /**
-     * Creates a Reader, which respects Python's encoding directives.
-     * The implementation Will open the file twice: The BufferedReader has an internal buffer in it and
-     * it's not that inefficient to read up to two lines twice. since {@link InputStreamReader}s and 
-     * {@code StreamDecoders} maintain an internal buffer, they read from the underlying {@link InputStream}
-     * some bytes ahead and it's not possible (reliable) to switch on the fly or even reposition
-     * the Stream back to the end of line where the "coding switch" had occured.
-     * 
-     * @param f file to read
-     * @return Reader configured for the file's encoding
-     */
-    static final Reader pythonEncodingFileReader(File f) throws IOException {
-        String encoding = null;
-        char[] prologue = new char[ENCODING_LOOKAHEAD_BUFFER];
-        int prologueLen;
-        try (FileInputStream is = new FileInputStream(f);
-            Reader r = new InputStreamReader(is, DEFAULT_ENCODING)) {
-            prologueLen = r.read(prologue);
-        }
-        int lineStart = 0;
-        int lineNo = 0;
-        int codingLineStart = -1;
-        int codingLineEnd = -1;
-        int lastLineBreak = -1;
-        boolean wasCR = false;
-        boolean wasLF = false;
-        
-        for (int i = 0; i < prologueLen; i++) {
-            char c = prologue[i];
-            
-            switch (c) {
-                case '\n':
-                    if (!(wasLF || wasCR)) {
-                        lastLineBreak = i;
-                    }
-                    if (!wasLF) {
-                        wasLF = true;
-                        continue;
-                    }
-                case '\r':
-                    if (!(wasLF || wasCR)) {
-                        lastLineBreak = i;
-                    }
-                    if (!wasCR) {
-                        wasCR = true;
-                        continue;
-                    }
-                default:
-                    if (!(wasCR || wasLF)) {
-                        wasCR = wasLF = false;
-                        continue;
-                    }
-            }
-            wasCR = wasLF = false;
-            // reached a character AFTER an end-of-line; read & process the entire line
-            String line = String.copyValueOf(prologue, lineStart, (i -lineStart));
-            Matcher m = CODING_PATTERN.matcher(line);
-            if (m.find()) {
-                encoding = m.group(1);
-                codingLineStart = lineStart;
-                // will truncate the content to just an empty line, to preserve line numbering
-                // in the possible parser error output
-                codingLineEnd = lastLineBreak;
-                break;
-            }
-            if (++lineNo >= ENCODING_LINES_LOOKAHEAD) {
-                break;
-            }
-            lineStart = i;
-        }
-        
-        if (encoding == null) {
-            return new InputStreamReader(new FileInputStream(f), DEFAULT_ENCODING);
-        } 
-        // skip all characters before the 'coding' line. Must re-decode characters after that
-        // line, BUT including the line terminator.
-        InputStreamReader delegate = new InputStreamReader(new FileInputStream(f), encoding);
-        delegate.skip(codingLineEnd);
-        return new PrologueBufferReader(prologue, codingLineStart, delegate);
+
+    static Reader pythonEncodingFileReader(File f) throws IOException {
+        return new PrologueBufferReader(f);
     }
     
     /**
@@ -672,18 +594,101 @@ public final class JmriScriptEngineManager {
      * stream.
      */
     static final class PrologueBufferReader extends Reader {
-        private final char[] preRead;
-        private final int prereadLimit;
-        private final Reader delegate;
-        private int pos;
+        private final char[] preRead = new char[ENCODING_LOOKAHEAD_BUFFER];
+        private Reader delegate;
+        private int prereadLimit = -1;
+        private int pos = -1;
 
-        public PrologueBufferReader(char[] preRead, int prereadLimit, Reader delegate) {
-            this.preRead = preRead;
-            this.prereadLimit = prereadLimit;
-            this.delegate = delegate;
-            this.pos = 0;
+        /**
+         * Creates a Reader, which respects Python's encoding directives.
+         * The implementation Will open the file twice: The BufferedReader has an internal buffer in it and
+         * it's not that inefficient to read up to two lines twice. since {@link InputStreamReader}s and 
+         * {@code StreamDecoders} maintain an internal buffer, they read from the underlying {@link InputStream}
+         * some bytes ahead and it's not possible (reliable) to switch on the fly or even reposition
+         * the Stream back to the end of line where the "coding switch" had occured.
+         * 
+         * @param f file to read
+         */
+        public PrologueBufferReader(File f) throws IOException {
+            try (InputStream is = new FileInputStream(f);
+                Reader r = new InputStreamReader(is)) {
+                this.delegate = createDelegate(f, r);
+            }
         }
-
+        
+        @SuppressFBWarnings("DLS_DEAD_LOCAL_STORE")
+        private Reader createDelegate(File f, Reader fr) throws IOException {
+            String encoding = null;
+            int lineStart = 0;
+            int lineNo = 0;
+            int codingLineStart = -1;
+            int codingLineEnd = -1;
+            int lastLineBreak = -1;
+            boolean wasCR = false;
+            boolean wasLF = false;
+            
+            for (int i = 0; i < preRead.length; i++) {
+                int c = fr.read();
+                if (c < 0) {
+                    break;
+                }
+                preRead[i] = (char)c;
+                switch (c) {
+                    case '\n':
+                        if (!(wasLF || wasCR)) {
+                            lastLineBreak = i;
+                        }
+                        if (!wasLF) {
+                            wasLF = true;
+                            continue;
+                        }
+                    case '\r':
+                        if (!(wasLF || wasCR)) {
+                            lastLineBreak = i;
+                        }
+                        if (!wasCR) {
+                            wasCR = true;
+                            continue;
+                        }
+                    default:
+                        if (!(wasCR || wasLF)) {
+                            wasCR = wasLF = false;
+                            continue;
+                        }
+                }
+                wasCR = wasLF = false;
+                // reached a character AFTER an end-of-line; read & process the entire line
+                String line = String.copyValueOf(preRead, lineStart, (i -lineStart));
+                Matcher m = CODING_PATTERN.matcher(line);
+                if (m.find()) {
+                    encoding = m.group(1);
+                    codingLineStart = lineStart;
+                    // will truncate the content to just an empty line, to preserve line numbering
+                    // in the possible parser error output
+                    codingLineEnd = lastLineBreak;
+                    break;
+                }
+                if (++lineNo >= ENCODING_LINES_LOOKAHEAD) {
+                    break;
+                }
+                lineStart = i;
+            }
+            if (encoding == null) {
+                return new InputStreamReader(new FileInputStream(f), DEFAULT_ENCODING);
+            } 
+            // skip all characters before the 'coding' line. Must re-decode characters after that
+            // line, BUT including the line terminator.
+            InputStreamReader del = new InputStreamReader(new FileInputStream(f), encoding);
+            
+            // If less that 'codingLineEnd' was skipped, the end-of-stream was reached and
+            // the Reader will report -1 from the next read. No need to process the actual
+            // number of bytes.
+            long actuallySkippedUnused = del.skip(codingLineEnd);
+            this.prereadLimit = codingLineStart;
+            this.pos = 0;
+            return del;
+        }
+        
         @Override
         public int read() throws IOException {
             if (pos < 0) {
