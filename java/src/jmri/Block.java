@@ -300,7 +300,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Get a copy of the list of Paths
+     * Get a copy of the list of Paths.
      *
      * @return the paths or an empty list
      */

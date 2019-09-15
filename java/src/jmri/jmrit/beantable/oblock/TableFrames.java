@@ -10,8 +10,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.Nonnull;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
@@ -44,6 +46,7 @@ import jmri.util.com.sun.TransferActionListener;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,6 +92,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     boolean _showWarnings = true;
     JMenuItem _showWarnItem;
+    JMenuItem importBlocksItem;
     JMenu _openMenu;
     HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
     HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
@@ -222,6 +226,21 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         });
         optionMenu.add(_showWarnItem);
         setShowWarnings("ShowWarning");
+
+        importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlockMenu"));
+        importBlocksItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                importBlocks();
+            }
+        });
+        optionMenu.add(importBlocksItem);
+        // disable ourself if there is no primary Block manager available
+        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) // || Block list is empty
+        {
+            importBlocksItem.setEnabled(false);
+        }
+
         menuBar.add(optionMenu);
 
         _openMenu = new JMenu(Bundle.getMessage("OpenMenu"));
@@ -255,6 +274,107 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setVisible(true);
         pack();
         errorCheck();
+    }
+
+    /**
+     * Convert a copy of JMRI Blocks to OBlocks.
+     * EBR 2019
+     */
+    private void importBlocks() throws IllegalArgumentException {
+        Manager<Block> bm = InstanceManager.getDefault(jmri.BlockManager.class);
+        OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+        PortalManager pom = InstanceManager.getDefault(PortalManager.class);
+        SortedSet<Block> blkList = bm.getNamedBeanSet();
+        // don't return an element if there are no Blocks to include
+        if (blkList.isEmpty()) {
+            log.warn("no Blocks to convert"); // NOI18N
+            JOptionPane.showMessageDialog(this, "No Blocks to convert",
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        for (Block b : blkList) {
+            try {
+                // read Block properties
+                String sName = b.getSystemName();
+                String uName = b.getUserName();
+                String blockNumber = sName.substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
+                String oBlockName = "OB" + blockNumber;
+                String sensor = b.getSensor().getDisplayName();
+                float length = b.getLengthIn();
+                int curve = b.getCurvature();
+                List<Path> blockPaths = b.getPaths();
+                String toBlockName;
+                Portal port = null;
+                int n = 0;
+                Portal prevPortal = null;
+
+                log.debug("start creating OBlock {} from Block {}", oBlockName, sName);
+                if (obm.getOBlock(uName) != null) {
+                    log.warn("an OBlock with this user name already exists, replacing {}", uName);
+                }
+                // create the OBlock by systemName
+                OBlock oBlock = obm.provideOBlock(oBlockName);
+                oBlock.setUserName(uName);
+                if (!sensor.isEmpty()) {
+                    oBlock.setSensor(sensor);
+                }
+                oBlock.setLength(length);
+                oBlock.setCurvature(curve);
+
+                for (Path pa : blockPaths) {
+                    log.debug("Start loop: path {} on block {}", n, oBlockName);
+                    String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
+                    toBlockName = "OB" + toBlockNumber;
+                    boolean duplicate = false;
+                    SortedSet<Portal> poList = pom.getNamedBeanSet();
+                    String portalName = "IP" + toBlockNumber + "-" + blockNumber;
+                    for (Portal p : poList) {
+                        log.debug("Checking existing portal {} for match", p.getName());
+                        // check for portal as opposite pair; we need only one Portal/OBlock pair per OBlock connection
+                        if (p.getName().equals(portalName)) {
+                            duplicate = true;
+                            log.debug("DUPLICATE = {}", p.getName());
+                            port = p;
+                            break;
+                        }
+                    }
+                    if (!duplicate) {
+                        portalName = "IP" + blockNumber + "-" + toBlockNumber; // normal name for new Portal
+                        log.debug("new Portal {} on block {}, path #{}", portalName, toBlockName, n);
+                        port = pom.providePortal(portalName); // normally, will create a new Portal
+                        port.setFromBlock(oBlock, false);
+                        port.setToBlock(obm.provideOBlock(toBlockName), false); // create one if required
+                    } else {
+                        log.debug("duplicate Portal {} on block {}, path #{}", portalName, toBlockName, n);
+                        // Portal port already set
+                    }
+                    oBlock.addPortal(port);
+
+                    // create OPath from this Path
+                    OPath opa = new OPath(oBlock, "IP" + n++);
+                    log.debug("new OPath {} - {} on OBlock {}", n, opa.getName(), opa.getBlock().getDisplayName());
+                    oBlock.addPath(opa); // checks for duplicates, will add OPath to any Portals on oBlock as well
+                    log.debug("number of paths: {}", oBlock.getPaths().size());
+
+                    // set _fromPortal and _toPortal for each OPath in OBlock
+                    if (opa.getFromPortal() == null) {
+                        opa.setFromPortal(port);
+                    }
+                    if ((opa.getToPortal() == null) && (prevPortal != null)) {
+                        opa.setToPortal(prevPortal);
+                        // leaves ToPortal in previously created OPath n-1 empty
+                    }
+                    prevPortal = port; // remember the new portal for use as ToPortal in opposing OPath
+                    // user must remove nonsense manually
+                }
+            } catch (IllegalArgumentException iae) {
+                log.error(iae.toString());
+            }
+            // finished setting up 1 OBlock
+        }
+        errorCheck();
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportBlockComplete"),
+                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
     protected final JScrollPane getBlockTablePane() {
@@ -311,7 +431,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         for (OBlock oblock : manager.getNamedBeanSet()) {
             WarrantTableAction.checkPathPortals(oblock);
         }
@@ -387,7 +507,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 openBlockPathFrame(sysName);
             }
         };
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         for (OBlock block : manager.getNamedBeanSet()) {
             JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
             mi.setActionCommand(block.getSystemName());
@@ -745,7 +865,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     protected void openBlockPathFrame(String sysName) {
         JInternalFrame frame = _blockPathMap.get(sysName);
         if (frame == null) {
-            OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
             if (block == null) {
                 return;
             }
@@ -776,7 +896,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             int index = pathTurnoutName.indexOf('&');
             String pathName = pathTurnoutName.substring(1, index);
             String sysName = pathTurnoutName.substring(index + 1);
-            OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
             if (block == null) {
                 return;
             }

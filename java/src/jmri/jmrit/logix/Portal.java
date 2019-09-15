@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A Portal is a boundary between two Blocks.
- *
  * <p>
  * A Portal has Lists of the OPaths that connect through it. The direction of
  * trains passing through the portal is managed from the BlockOrders of the
@@ -32,11 +31,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     private final ArrayList<OPath> _fromPaths = new ArrayList<>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
-    private float _fromSignalOffset;           // adjustment distance for speed change
+    private float _fromSignalOffset;        // adjustment distance for speed change
     private final ArrayList<OPath> _toPaths = new ArrayList<>();
     private OBlock _toBlock;
     private NamedBean _toSignal;            // may be either SignalHead or SignalMast
-    private float _toSignalOffset;             // adjustment distance for speed change
+    private float _toSignalOffset;          // adjustment distance for speed change
     private int _state = UNKNOWN;
 
     public static final int ENTER_TO_BLOCK = 0x02;
@@ -47,7 +46,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Determine which list the Path belongs to and add it to the list
+     * Determine which list the Path belongs to and add it to that list.
      *
      * @param path OPath to add
      * @return false if Path does not have a matching block for this Portal
@@ -55,7 +54,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     public boolean addPath(OPath path) {
         Block block = path.getBlock();
         if (block == null) {
-            log.error("Path \"{}\" has no block.",  path.getName());
+            log.error("Path \"{}\" has no block.", path.getName());
             return false;
         }
         if (!this.equals(path.getFromPortal())
@@ -72,24 +71,21 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Utility for both path lists
-     * Check for duplicate name
+     * Utility for both path lists.
+     * Checks for duplicate name.
      */
     private boolean addPath(List<OPath> list, OPath path) {
         String pName = path.getName();
-        for (int i = 0; i < list.size(); i++) {
-            OPath p = list.get(i);           
+        for (OPath p : list) {
             if (p.equals(path)) {
                 if (pName.equals(p.getName())) {
                     return true;    // OK, everything equal
                 } else {
-                    log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.",
-                            path.getName(), p.getName(), getUserName(), path.getBlock().getDisplayName());
-                    return false;                    
+                    log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.", path.getName(), p.getName(), getUserName(), path.getBlock().getDisplayName());
+                    return false;
                 }
             } else if (pName.equals(p.getName())) {
-                log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.",
-                        path.getName(), getUserName(), path.getBlock().getDisplayName());
+                log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.", path.getName(), getUserName(), path.getBlock().getDisplayName());
                 return false;
             }
         }
@@ -97,13 +93,19 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return true;
     }
 
+    /**
+     * Remove an OPath from this Portal.
+     * Checks both the _fromBlock list as the _toBlock list.
+     *
+     * @param path the OPath to remove
+     */
     public void removePath(OPath path) {
         Block block = path.getBlock();
         if (block == null) {
             log.error("Path \"{}\" has no block.", path.getName());
             return;
         }
-        //if (log.isDebugEnabled()) log.debug("removePath: "+toString());
+        // log.debug("removePath: {}", toString());
         if (!this.equals(path.getFromPortal())
                 && !this.equals(path.getToPortal())) {
             return;
@@ -116,10 +118,10 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Check for duplicate name in either block
+     * Set userName of this Portal. Checks if name is available.
      *
      * @param newName Name for path
-     * @return return error message, return null if name change is OK
+     * @return return error message, null if name change is OK
      */
     public String setName(String newName) {
         if (newName == null || newName.length() == 0) {
@@ -143,14 +145,21 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return msg;
     }
 
+    /**
+     * Check for duplicate name in either block.
+     *
+     * @param name suggested Portal user name
+     * @param block the OBlock for which the Portal name should be checked
+     * @return null if successful, name of existing Portal if name is already in use on a Portal
+     */
     static private String checkName(String name, OBlock block) {
         if (block == null) {
             return null;
         }
         List<Portal> list = block.getPortals();
-        for (int i = 0; i < list.size(); i++) {
-            if (name.equals(list.get(i).getName())) {
-                return list.get(i).getName();
+        for (Portal portal : list) {
+            if (name.equals(portal.getName())) {
+                return portal.getName();
             }
         }
         return null;
@@ -161,7 +170,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Set this portal's toBlock.  Remove this portal from old toBlock, if any.
+     * Set this portal's toBlock. Remove this portal from old toBlock, if any.
      * Add this portal in the new toBlock's list of portals. 
      *
      * @param block to be the new toBlock
@@ -175,14 +184,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         if (changePaths) {
             //Switch paths to new block.  User will need to verify connections
-            for (int i = 0; i < _toPaths.size(); i++) {
-                _toPaths.get(i).setBlock(block);
+            for (OPath opa : _toPaths) {
+                opa.setBlock(block);
             }
         } else if (!verify(_toPaths, block)) {
             return false;
         }
-//        if (log.isDebugEnabled()) log.debug("setToBlock: oldBlock= \""+getToBlockName()
-//                  +"\" newBlock \""+(block!=null ? block.getDisplayName() : null)+"\".");
+        // log.debug("setToBlock: oldBlock= \"{}\" newBlock \"{}\".", getToBlockName(),
+        //      (block != null ? block.getDisplayName() : null));
         if (_toBlock != null) {
             _toBlock.removePortal(this);
         }
@@ -220,14 +229,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         if (changePaths) {
             //Switch paths to new block.  User will need to verify connections
-            for (int i = 0; i < _fromPaths.size(); i++) {
-                _fromPaths.get(i).setBlock(block);
+            for (OPath fromPath : _fromPaths) {
+                fromPath.setBlock(block);
             }
         } else if (!verify(_fromPaths, block)) {
             return false;
         }
-//        if (log.isDebugEnabled()) log.debug("setFromBlock: oldBlock= \""+getFromBlockName()+
-//                  "\" newBlock \""+(block!=null ? block.getDisplayName() : null)+"\".");
+        // log.debug("setFromBlock: oldBlock= \"{}\" newBlock \"{}\".", getFromBlockName(),
+        //     (block!=null ? block.getDisplayName() : null));
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
         }
@@ -270,14 +279,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (_fromBlock!=null && _fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalOffset = length;
-            if (log.isDebugEnabled()) log.debug("setProtectSignal: _toSignal= \"{}\", protectedBlock= {}",
+            log.debug("setProtectSignal: _toSignal= \"{}\", protectedBlock= {}",
                     signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
         }
         if (_toBlock!=null && _toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalOffset = length;
-            if (log.isDebugEnabled()) log.debug("setProtectSignal: _fromSignal= \"{}\", protectedBlock= {}",
+            log.debug("setProtectSignal: _fromSignal= \"{}\", protectedBlock= {}",
                     signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
         }
@@ -419,6 +428,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 setState(ENTER_TO_BLOCK);
             }
         } catch (jmri.JmriException ex) {
+            log.error("setEntryState failed");
         }
     }
 
@@ -464,7 +474,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         } else {
             log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
         }
-        if (log.isDebugEnabled() && speed != null) {
+        if (speed != null) {
             log.debug("Portal \"{}\" has ENTRANCE speed= {} into \"{}\" from signal.",
                     getUserName(), speed, blockName);
         }
@@ -541,7 +551,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         } else {
             log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
         }
-        if (log.isDebugEnabled() && speed != null) {
+        if (speed != null) {
             log.debug("Portal \"{}\" has EXIT speed= {} into \"{}\" from signal.",
                     getUserName(), speed,  blockName);
         }
@@ -557,10 +567,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                     signal.getDisplayName(), signal.getAppearanceName(appearance));
             speed = "Restricted";
         }
-        if (log.isDebugEnabled()) {
-            log.debug("SignalHead \"{}\" has speed notch= {} from appearance \"{}\".",
-                    signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
-        }
+        log.debug("SignalHead \"{}\" has speed notch= {} from appearance \"{}\".",
+                signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         return speed;
     }
 
@@ -572,10 +580,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                     signal.getDisplayName(), aspect);
             speed = "Restricted";
         }
-        if (log.isDebugEnabled()) {
-            log.debug("SignalMast {} has speed notch= {} from aspect \"{}\"",
-                    signal.getDisplayName(), speed, aspect);
-        }
+        log.debug("SignalMast {} has speed notch= {} from aspect \"{}\"",
+                signal.getDisplayName(), speed, aspect);
         return speed;
     }
 
@@ -587,10 +593,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                     signal.getDisplayName(), signal.getAppearanceName(appearance));
             speed = "Restricted";
         }
-        if (log.isDebugEnabled()) {
-            log.debug("\"{}\" has exit speed notch= {} from appearance \"{}\"",
-                    signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
-        }
+        log.debug("\"{}\" has exit speed notch= {} from appearance \"{}\"",
+                signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         return speed;
     }
 
@@ -602,24 +606,18 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                     signal.getDisplayName(), aspect);
             speed = "Restricted";
         }
-        if (log.isDebugEnabled()) {
-            log.debug("\"{}\" has exit speed notch= {} from aspect \"{}\"",
-                    signal.getDisplayName(), speed, aspect);
-        }
+        log.debug("\"{}\" has exit speed notch= {} from aspect \"{}\"",
+                signal.getDisplayName(), speed, aspect);
         return speed;
     }
 
     static private boolean verify(List<OPath> paths, OBlock block) {
         if (block == null) {
-            if (paths.size() == 0) {
-                return true;
-            }
-            return false;
+            return (paths.size() == 0);
         }
         String name = block.getSystemName();
-        for (int i = 0; i < paths.size(); i++) {
-            OPath path = paths.get(i);
-            jmri.Block blk = path.getBlock();
+        for (OPath path : paths) {
+            Block blk = path.getBlock();
             if (blk == null) {
                 log.error("Path \"{}\" belongs to null block. Cannot verify set block to \"{}\"",
                         path.getName(), name);
@@ -636,19 +634,20 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Check if path connects to Portal
+     * Check if path connects to Portal.
+     *
      * @param path OPath to test
      * @return true if valid
      */
     public boolean isValidPath(OPath path) {
         String name = path.getName();
-        for (int i = 0; i < _toPaths.size(); i++) {
-            if (_toPaths.get(i).getName().equals(name)) {
+        for (OPath toPath : _toPaths) {
+            if (toPath.getName().equals(name)) {
                 return true;
             }
         }
-        for (int i = 0; i < _fromPaths.size(); i++) {
-            if (_fromPaths.get(i).getName().equals(name)) {
+        for (OPath fromPath : _fromPaths) {
+            if (fromPath.getName().equals(name)) {
                 return true;
             }
         }
@@ -656,7 +655,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Check portal has both blocks and they are different blocks
+     * Check portal has both blocks and they are different blocks.
      * 
      * @return true if valid
      */
@@ -664,10 +663,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (_toBlock == null || _fromBlock==null) {
             return false;
         }
-        if (_toBlock.equals(_fromBlock)) {
-            return false;
-        }
-        return true;
+        return (!_toBlock.equals(_fromBlock));
     }
 
     @Override
@@ -688,6 +684,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     @Override
+    @Nonnull
     // note that this doesn't properly implement the 
     // contract in {@link NamedBean.toString()}, 
     // which means things like tables and persistance 
@@ -704,9 +701,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     @Override
+    @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNamePortal");
     }
 
     private final static Logger log = LoggerFactory.getLogger(Portal.class);
+
 }

@@ -14,7 +14,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
- * Basic Implementation of a BlockManager.
+ * Basic implementation of a BlockManager.
  * <p>
  * Note that this does not enforce any particular system naming convention.
  * <p>
@@ -73,7 +73,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     /**
-     * Method to create a new Block only if it does not exist
+     * Create a new Block, only if it does not exist.
      *
      * @param systemName the system name
      * @param userName   the user name
@@ -120,7 +120,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     /**
-     * Method to create a new Block using an automatically incrementing system
+     * Create a new Block using an automatically incrementing system
      * name.
      *
      * @param userName the user name for the new block
@@ -166,12 +166,12 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         return b;
     }
 
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
+    private DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    int lastAutoBlockRef = 0;
+    private int lastAutoBlockRef = 0;
 
     /**
-     * Method to get an existing Block. First looks up assuming that name is a
+     * Get an existing Block. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      *
@@ -213,7 +213,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         return (retv);
     }
 
-    String defaultSpeed = "Normal";
+    private String defaultSpeed = "Normal";
 
     /**
      * @param speed the speed
@@ -252,7 +252,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     /**
-     * Returns a list of blocks which the supplied roster entry appears to be
+     * Get a list of blocks which the supplied roster entry appears to be
      * occupying. A block is assumed to contain this roster entry if its value
      * is the RosterEntry itself, or a string with the entry's id or dcc
      * address.
@@ -320,7 +320,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     /**
-     * Returns the amount of time since the layout was last powered up,
+     * Get the amount of time since the layout was last powered up,
      * in milliseconds. If the layout has not been powered up as far as
      * JMRI knows it returns a very long time indeed.
      *
@@ -334,9 +334,11 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     @Override
-    public Block provide(String name) throws IllegalArgumentException {
+    @Nonnull
+    public Block provide(@Nonnull String name) throws IllegalArgumentException {
         return provideBlock(name);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
+
 }
