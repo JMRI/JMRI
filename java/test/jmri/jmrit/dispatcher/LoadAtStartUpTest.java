@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
+import jmri.Throttle;
 import jmri.ThrottleManager;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;

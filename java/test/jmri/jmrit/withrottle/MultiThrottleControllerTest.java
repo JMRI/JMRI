@@ -3,6 +3,7 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 //import jmri.InstanceManager;
 //import jmri.NamedBeanHandleManager;
+import jmri.Throttle;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -226,7 +227,7 @@ public class MultiThrottleControllerTest {
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
        controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,0.0f,63.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,0.0f,63.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63",cis.getLastPacket() );
     }
 
