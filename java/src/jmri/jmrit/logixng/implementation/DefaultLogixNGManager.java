@@ -297,8 +297,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         }
     }
     
-    @SuppressFBWarnings(value = {"DM_EXIT", "DMI_HARDCODED_ABSOLUTE_FILENAME"},
-            justification = "This is a test method that must be removed before merging this PR")
+//    @SuppressFBWarnings(value = {"DM_EXIT", "DMI_HARDCODED_ABSOLUTE_FILENAME"},
+//            justification = "This is a test method that must be removed before merging this PR")
     public void testLogixNGs() throws PropertyVetoException {
         
         // FOR TESTING ONLY. REMOVE LATER.
@@ -343,10 +343,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     Turnout turnout5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT5");
                     turnout5.setCommandedState(Turnout.CLOSED);
                     
-    //                AtomicBoolean atomicBoolean = new AtomicBoolean(false);
                     LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-//                    ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-//                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
                     ConditionalNG conditionalNG =
                             InstanceManager.getDefault(ConditionalNG_Manager.class)
                                     .createConditionalNG("A conditionalNG");
@@ -357,8 +354,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     conditionalNG.setEnabled(true);
 
                     logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("Another logixNG");
-//                    conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-//                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
                     conditionalNG =
                             InstanceManager.getDefault(ConditionalNG_Manager.class)
                                     .createConditionalNG(""
@@ -368,8 +363,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.addConditionalNG(conditionalNG);
 
                     logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("Yet another logixNG");
-//                    conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-//                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
                     conditionalNG =
                             InstanceManager.getDefault(ConditionalNG_Manager.class)
                                     .createConditionalNG("Yet another conditionalNG");
@@ -377,25 +370,12 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                             .setupInitialConditionalNGTree(conditionalNG);
                     logixNG.addConditionalNG(conditionalNG);
 
-//                    DigitalAction actionIfThen = new IfThenElse(conditionalNG, IfThenElse.Type.TRIGGER_ACTION);
-//                    MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
-//                    conditionalNG.getChild(0).connect(socketIfThen);
-
                     MaleSocket socketMany = conditionalNG.getChild(0).getConnectedSocket();
                     MaleSocket socketIfThen = socketMany.getChild(1).getConnectedSocket();
                     
                     Or expressionOr = new Or(getSystemNamePrefix()+"DE:00001", null);
                     MaleSocket socketOr = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionOr);
                     socketIfThen.getChild(0).connect(socketOr);
-                    
-                    final String treeIndent2 = "   ";
-                    StringWriter stringWriter2 = new StringWriter();
-                    PrintWriter printWriter2 = new PrintWriter(stringWriter2);
-                    logixNG.printTree(Locale.ENGLISH, printWriter2, treeIndent2);
-                    final String originalTree2 = stringWriter2.toString();
-                    log.error(originalTree2);
-                    if (1==1) throw new RuntimeException("DANIEL");
-                    
                     
                     int index = 0;
                     
@@ -709,19 +689,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
                     socketSecondMany.getChild(index++).connect(socket);
                     
-//                    java.io.PrintWriter writer = new java.io.PrintWriter(new java.io.OutputStreamWriter(System.out));
-//                    logixNG.printTree(writer, "   ");
-//                    writer.flush();
-                    
-                    final String treeIndent1 = "   ";
-                    StringWriter stringWriter1 = new StringWriter();
-                    PrintWriter printWriter1 = new PrintWriter(stringWriter1);
-                    logixNG.printTree(Locale.ENGLISH, printWriter1, treeIndent1);
-                    final String originalTree1 = stringWriter1.toString();
-                    log.error(originalTree1);
-                    if (1==1) throw new RuntimeException("DANIEL");
-                    
-                    
                     resolveAllTrees();
                     setupAllLogixNGs();
                     
@@ -736,9 +703,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
                         File file = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
                         System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
-    //                    java.io.File file = new java.io.File("F:\\temp\\DanielTestarLogixNG.xml");
-    //                    cm.makeBackup(file);
-                        // and finally store
 
                         final String treeIndent = "   ";
                         StringWriter stringWriter = new StringWriter();

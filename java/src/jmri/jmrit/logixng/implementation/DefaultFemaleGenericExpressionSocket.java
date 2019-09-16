@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -352,7 +353,7 @@ public class DefaultFemaleGenericExpressionSocket
         return classes;
     }
     
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     public Lock getLock() {
         if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
@@ -362,7 +363,7 @@ public class DefaultFemaleGenericExpressionSocket
         }
     }
     
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     public void setLock(Lock lock) {
         if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
@@ -371,7 +372,7 @@ public class DefaultFemaleGenericExpressionSocket
             throw new UnsupportedOperationException("Socket is not connected");
         }
     }
-    
+*/    
     /** {@inheritDoc} */
     @Override
     public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
@@ -445,7 +446,7 @@ public class DefaultFemaleGenericExpressionSocket
 //        _listener.disconnected(socket);
     }
     
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     protected void registerListenersForThisClass() {
         if (_currentActiveSocket != null) {
@@ -453,22 +454,22 @@ public class DefaultFemaleGenericExpressionSocket
         }
     }
     
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     protected void unregisterListenersForThisClass() {
         if (_currentActiveSocket != null) {
             _currentActiveSocket.unregisterListeners();
         }
     }
-
+*/
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
-            MaleSocket aSocket = _currentActiveSocket.getConnectedSocket();
-            disconnect();
-            aSocket.dispose();
-        }
+//        if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
+//            MaleSocket aSocket = _currentActiveSocket.getConnectedSocket();
+//            disconnect();
+//            aSocket.dispose();
+//        }
     }
     
     

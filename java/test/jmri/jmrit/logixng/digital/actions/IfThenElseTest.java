@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
+import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -11,6 +12,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -101,8 +103,23 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         conditionalNG.getChild(0).connect(maleSocket);
+        
+        ExpressionSensor expressionSensor = new ExpressionSensor("IQDE321", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
+        action.getChild(0).connect(maleSocket2);
+        
+        ActionTurnout actionTurnout = new ActionTurnout("IQDA322", null);
+        maleSocket2 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
+        action.getChild(1).connect(maleSocket2);
+        
         _base = action;
         _baseMaleSocket = maleSocket;
+        
+        System.err.format("expr: %b%n", action.getChild(0).isConnected());
+        System.err.format("action1: %b%n", action.getChild(1).isConnected());
+        System.err.format("action2: %b%n", action.getChild(2).isConnected());
     }
 
     @After

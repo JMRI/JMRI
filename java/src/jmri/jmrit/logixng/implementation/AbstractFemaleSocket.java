@@ -51,17 +51,17 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public void setParentForAllChildren() {
-        if (_socket != null) {
-            _socket.setParent(this);
-            _socket.setParentForAllChildren();
+        if (isConnected()) {
+            getConnectedSocket().setParent(this);
+            getConnectedSocket().setParentForAllChildren();
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public Lock getLock() {
-        if (_socket != null) {
-            return _socket.getLock();
+        if (isConnected()) {
+            return getConnectedSocket().getLock();
         } else {
             throw new UnsupportedOperationException("Socket is not connected");
         }
@@ -70,8 +70,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public void setLock(Lock lock) {
-        if (_socket != null) {
-            _socket.setLock(lock);
+        if (isConnected()) {
+            getConnectedSocket().setLock(lock);
         } else {
             throw new UnsupportedOperationException("Socket is not connected");
         }
@@ -84,7 +84,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             throw new NullPointerException("socket cannot be null");
         }
         
-        if (_socket != null) {
+        if (isConnected()) {
             throw new SocketAlreadyConnectedException("Socket is already connected");
         }
         
@@ -154,8 +154,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     /** {@inheritDoc} */
     @Override
     public final void dispose() {
-        if (_socket != null) {
-            MaleSocket aSocket = _socket;
+        if (isConnected()) {
+            MaleSocket aSocket = getConnectedSocket();
             disconnect();
             aSocket.dispose();
         }
@@ -188,8 +188,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     @Override
     public void registerListeners() {
         registerListenersForThisClass();
-        if (_socket != null) {
-            _socket.registerListeners();
+        if (isConnected()) {
+            getConnectedSocket().registerListeners();
         }
     }
     
@@ -199,8 +199,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     @Override
     public void unregisterListeners() {
         unregisterListenersForThisClass();
-        if (_socket != null) {
-            _socket.unregisterListeners();
+        if (isConnected()) {
+            getConnectedSocket().unregisterListeners();
         }
     }
     
@@ -293,8 +293,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
 
-        if (_socket != null) {
-            _socket.printTree(locale, writer, indent, currentIndent+indent);
+        if (isConnected()) {
+            getConnectedSocket().printTree(locale, writer, indent, currentIndent+indent);
         } else {
             writer.append(currentIndent);
             writer.append(indent);
