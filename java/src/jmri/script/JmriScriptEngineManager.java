@@ -187,11 +187,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws ScriptException if unable to get a matching ScriptEngine
      */
     public ScriptEngine getEngineByExtension(String extension) throws ScriptException {
-        String name = this.names.get(extension);
-        if (name == null) {
-            throw scriptEngineNotFound(extension, "extension", false);
-        }
-        return this.getEngine(name);
+        return getEngine(extension, "extension");
     }
 
     /**
@@ -203,11 +199,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws ScriptException if unable to get a matching ScriptEngine
      */
     public ScriptEngine getEngineByMimeType(String mimeType) throws ScriptException {
-        String name = this.names.get(mimeType);
-        if (name == null) {
-            throw scriptEngineNotFound(mimeType, "mime type", false);
-        }
-        return this.getEngine(name);
+        return getEngine(mimeType, "mime type");
     }
 
     /**
@@ -218,13 +210,17 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws ScriptException if unable to get a matching ScriptEngine
      */
     public ScriptEngine getEngineByName(String shortName) throws ScriptException {
-        String name = this.names.get(shortName);
-        if (name == null) {
-            throw scriptEngineNotFound(shortName, "name", false);
-        }
-        return this.getEngine(name);
+        return getEngine(shortName, "name");
     }
 
+    private ScriptEngine getEngine(String engineName, String type) throws ScriptException {
+        String name = names.get(engineName);
+        if (name == null) {
+            throw scriptEngineNotFound(engineName, type, false);
+        }
+        return getEngine(name);
+    }
+    
     /**
      * Get a ScriptEngine by its name.
      *
@@ -423,11 +419,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
     public ScriptEngineFactory getFactoryByExtension(String extension) throws ScriptException {
-        String name = this.names.get(extension);
-        if (name == null) {
-            throw scriptEngineNotFound(extension, "extension", true);
-        }
-        return this.getFactory(name);
+        return getFactory(extension, "extension");
     }
 
     /**
@@ -439,11 +431,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
     public ScriptEngineFactory getFactoryByMimeType(String mimeType) throws ScriptException {
-        String name = this.names.get(mimeType);
-        if (name == null) {
-            throw scriptEngineNotFound(mimeType, "mime type", true);
-        }
-        return this.getFactory(name);
+        return getFactory(mimeType, "mime type");
     }
 
     /**
@@ -454,9 +442,13 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
     public ScriptEngineFactory getFactoryByName(String shortName) throws ScriptException {
-        String name = this.names.get(shortName);
+        return getFactory(shortName, "name");
+    }
+
+    private ScriptEngineFactory getFactory(String factoryName, String type) throws ScriptException {
+        String name = this.names.get(factoryName);
         if (name == null) {
-            throw scriptEngineNotFound(shortName, "name", true);
+            throw scriptEngineNotFound(factoryName, type, true);
         }
         return this.getFactory(name);
     }
