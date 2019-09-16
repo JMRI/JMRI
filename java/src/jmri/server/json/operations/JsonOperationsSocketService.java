@@ -52,7 +52,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     private final HashMap<String, EngineListener> engineListeners = new HashMap<>();
     private final EnginesListener enginesListener = new EnginesListener();
 
-    private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
 
     public JsonOperationsSocketService(JsonConnection connection) {
         this(connection, new JsonOperationsHttpService(connection.getObjectMapper()));
@@ -154,7 +154,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     }
 
     private void addListenersToTrains() {
-        InstanceManager.getDefault(TrainManager.class).getTrainsByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(TrainManager.class).getTrainsByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!trainListeners.containsKey(t.getId())) {
                 log.debug("adding TrainListener for Train ID '{}'", t.getId());
                 trainListeners.put(t.getId(), new TrainListener(t.getId()));
@@ -164,7 +164,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     }
 
     private void addListenersToCars() {
-        InstanceManager.getDefault(CarManager.class).getByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(CarManager.class).getByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!carListeners.containsKey(t.getId())) {
                 log.debug("adding CarListener for Car ID '{}'", t.getId());
                 carListeners.put(t.getId(), new CarListener(t.getId()));
@@ -174,7 +174,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     }
 
     private void addListenersToLocations() {
-        InstanceManager.getDefault(LocationManager.class).getLocationsByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(LocationManager.class).getLocationsByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!locationListeners.containsKey(t.getId())) {
                 log.debug("adding LocationListener for Location ID '{}'", t.getId());
                 locationListeners.put(t.getId(), new LocationListener(t.getId()));
@@ -184,7 +184,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     }
 
     private void addListenersToEngines() {
-        InstanceManager.getDefault(EngineManager.class).getByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(EngineManager.class).getByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!engineListeners.containsKey(t.getId())) {
                 log.debug("adding EngineListener for Engine ID '{}'", t.getId());
                 engineListeners.put(t.getId(), new EngineListener(t.getId()));
