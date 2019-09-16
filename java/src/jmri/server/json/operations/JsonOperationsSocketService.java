@@ -195,10 +195,20 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
     @Override
     public void onClose() {
-        this.trainListeners.values().forEach((listener) -> {
-            listener.train.removePropertyChangeListener(listener);
-        });
-        this.trainListeners.clear();
+        carListeners.values()
+                .forEach(listener -> listener.car.removePropertyChangeListener(listener));
+        carListeners.clear();
+        engineListeners.values()
+                .forEach(listener -> listener.engine.removePropertyChangeListener(listener));
+        engineListeners.clear();
+        locationListeners.values()
+                .forEach(listener -> listener.location.removePropertyChangeListener(listener));
+        trainListeners.values()
+                .forEach(listener -> listener.train.removePropertyChangeListener(listener));
+        trainListeners.clear();
+        InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(carsListener);
+        InstanceManager.getDefault(EngineManager.class).removePropertyChangeListener(enginesListener);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(locationsListener);
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
