@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Properties;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
@@ -24,6 +27,7 @@ import jmri.BlockManager;
 import jmri.CommandStation;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.MemoryManager;
@@ -50,11 +54,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a manager for {@link javax.script.ScriptEngine}s.
- *
- * The following methods are the only mechanisms for evaluating a Python script
- * that respect the <code>jython.exec</code> property in the
- * <em>python.properties</em> file:
+ * Provide a manager for {@link javax.script.ScriptEngine}s. The following
+ * methods are the only mechanisms for evaluating a Python script that respect
+ * the <code>jython.exec</code> property in the <em>python.properties</em> file:
  * <ul>
  * <li>{@link #eval(java.io.File)}</li>
  * <li>{@link #eval(java.io.File, javax.script.Bindings)}</li>
@@ -68,7 +70,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public final class JmriScriptEngineManager {
+public final class JmriScriptEngineManager implements InstanceManagerAutoDefault {
 
     private final ScriptEngineManager manager = new ScriptEngineManager();
     private final HashMap<String, String> names = new HashMap<>();
@@ -77,7 +79,9 @@ public final class JmriScriptEngineManager {
     private final ScriptContext context;
 
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
-    private static final String JYTHON_DEFAULTS = "jmri_defaults.py"; // should be replaced with default context
+    // should be replaced with default context
+    // package private for unit testing
+    static final String JYTHON_DEFAULTS = "jmri_defaults.py";
 
     public static final String PYTHON = "jython";
     private PythonInterpreter jython = null;
@@ -88,29 +92,29 @@ public final class JmriScriptEngineManager {
      * instances.
      */
     public JmriScriptEngineManager() {
-        this.manager.getEngineFactories().stream().forEach((factory) -> {
+        this.manager.getEngineFactories().stream().forEach(factory -> {
             log.info("{} {} is provided by {} {}",
                     factory.getLanguageName(),
                     factory.getLanguageVersion(),
                     factory.getEngineName(),
                     factory.getEngineVersion());
-            factory.getExtensions().stream().forEach((extension) -> {
+            factory.getExtensions().stream().forEach(extension -> {
                 names.put(extension, factory.getEngineName());
                 log.debug("\tExtension: {}", extension);
             });
-            factory.getExtensions().stream().forEach((mimeType) -> {
+            factory.getExtensions().stream().forEach(mimeType -> {
                 names.put(mimeType, factory.getEngineName());
                 log.debug("\tMime type: {}", mimeType);
             });
-            factory.getNames().stream().forEach((name) -> {
+            factory.getNames().stream().forEach(name -> {
                 names.put(name, factory.getEngineName());
                 log.debug("\tNames: {}", name);
             });
             this.names.put(factory.getLanguageName(), factory.getEngineName());
             this.factories.put(factory.getEngineName(), factory);
         });
-        
-        // this should agree with jmri_bindings.py and help/en/html/tools/scripting/Start.shtml
+
+        // this should agree with help/en/html/tools/scripting/Start.shtml
         Bindings bindings = new SimpleBindings();
         bindings.put("sensors", InstanceManager.getNullableDefault(SensorManager.class));
         bindings.put("turnouts", InstanceManager.getNullableDefault(TurnoutManager.class));
@@ -162,9 +166,7 @@ public final class JmriScriptEngineManager {
      * @return the default JmriScriptEngineManager
      */
     public static JmriScriptEngineManager getDefault() {
-        return InstanceManager.getOptionalDefault(JmriScriptEngineManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
-        });
+        return InstanceManager.getDefault(JmriScriptEngineManager.class);
     }
 
     /**
@@ -187,8 +189,7 @@ public final class JmriScriptEngineManager {
     public ScriptEngine getEngineByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
         if (name == null) {
-            log.error("Could not find script engine for extension \"{}\", expected one of {}", extension, String.join(",", names.keySet()));
-            throw new ScriptException("Could not find script engine for extension \""+extension+"\" expected "+String.join(",", names.keySet()));
+            throw scriptEngineNotFound(extension, "extension", false);
         }
         return this.getEngine(name);
     }
@@ -204,8 +205,7 @@ public final class JmriScriptEngineManager {
     public ScriptEngine getEngineByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
         if (name == null) {
-            log.error("Could not find script engine for mime type \"{}\", expected one of {}", mimeType, String.join(",", names.keySet()));
-            throw new ScriptException("Could not find script engine for mime type \""+mimeType+"\" expected "+String.join(",", names.keySet()));
+            throw scriptEngineNotFound(mimeType, "mime type", false);
         }
         return this.getEngine(name);
     }
@@ -220,8 +220,7 @@ public final class JmriScriptEngineManager {
     public ScriptEngine getEngineByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
         if (name == null) {
-            log.error("Could not find script engine for short name \"{}\", expected one of {}", shortName, String.join(",", names.keySet()));
-            throw new ScriptException("Could not find script engine for short name \""+shortName+"\" expected "+String.join(",", names.keySet()));
+            throw scriptEngineNotFound(shortName, "name", false);
         }
         return this.getEngine(name);
     }
@@ -235,7 +234,8 @@ public final class JmriScriptEngineManager {
     public ScriptEngine getEngine(String engineName) {
         if (!this.engines.containsKey(engineName)) {
             if (PYTHON.equals(engineName)) {
-                // Setup the default python engine to use the JMRI python properties
+                // Setup the default python engine to use the JMRI python
+                // properties
                 this.initializePython();
             } else {
                 log.debug("Create engine for {}", engineName);
@@ -312,7 +312,7 @@ public final class JmriScriptEngineManager {
      * @throws java.io.FileNotFoundException if the script file cannot be found.
      * @throws java.io.IOException           if the script file cannot be read.
      */
-    public Object eval(File file) throws ScriptException, FileNotFoundException, IOException {
+    public Object eval(File file) throws ScriptException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
@@ -338,7 +338,7 @@ public final class JmriScriptEngineManager {
      * @throws java.io.FileNotFoundException if the script file cannot be found.
      * @throws java.io.IOException           if the script file cannot be read.
      */
-    public Object eval(File file, Bindings bindings) throws ScriptException, FileNotFoundException, IOException {
+    public Object eval(File file, Bindings bindings) throws ScriptException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
@@ -364,7 +364,7 @@ public final class JmriScriptEngineManager {
      * @throws java.io.FileNotFoundException if the script file cannot be found.
      * @throws java.io.IOException           if the script file cannot be read.
      */
-    public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException, IOException {
+    public Object eval(File file, ScriptContext context) throws ScriptException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
@@ -401,9 +401,7 @@ public final class JmriScriptEngineManager {
      * initialization of a ScriptEngine from causing a pause in JMRI.
      */
     public void initializeAllEngines() {
-        this.factories.keySet().stream().forEach((name) -> {
-            this.getEngine(name);
-        });
+        this.factories.keySet().stream().forEach(this::getEngine);
     }
 
     /**
@@ -427,8 +425,7 @@ public final class JmriScriptEngineManager {
     public ScriptEngineFactory getFactoryByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
         if (name == null) {
-            log.error("Could not find script engine factory for extension \"{}\", expected one of {}", extension, String.join(",", names.keySet()));
-            throw new ScriptException("Could not find script engine for extension \""+extension+"\" expected "+String.join(",", names.keySet()));
+            throw scriptEngineNotFound(extension, "extension", true);
         }
         return this.getFactory(name);
     }
@@ -444,8 +441,7 @@ public final class JmriScriptEngineManager {
     public ScriptEngineFactory getFactoryByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
         if (name == null) {
-            log.error("Could not find script engine factory for mime type \"{}\", expected one of {}", mimeType, String.join(",", names.keySet()));
-            throw new ScriptException("Could not find script engine for mime type \""+mimeType+"\" expected "+String.join(",", names.keySet()));
+            throw scriptEngineNotFound(mimeType, "mime type", true);
         }
         return this.getFactory(name);
     }
@@ -460,8 +456,7 @@ public final class JmriScriptEngineManager {
     public ScriptEngineFactory getFactoryByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
         if (name == null) {
-            log.error("Could not find script engine factory for name \"{}\", expected one of {}", shortName, String.join(",", names.keySet()));
-            throw new ScriptException("Could not find script engine for short name \""+shortName+"\" expected "+String.join(",", names.keySet()));
+            throw scriptEngineNotFound(shortName, "name", true);
         }
         return this.getFactory(name);
     }
@@ -485,57 +480,104 @@ public final class JmriScriptEngineManager {
      */
     public void initializePython() {
         if (!this.engines.containsKey(PYTHON)) {
-            // Get properties for interpreter
-            // Search in user files, the settings directory, and in the program path
-            InputStream is = FileUtil.findInputStream("python.properties", new String[]{
-                FileUtil.getUserFilesPath(),
-                FileUtil.getPreferencesPath(),
-                FileUtil.getProgramPath()
-            });
-            boolean execJython = false;
-            if (is != null) {
-                Properties properties;
-                try {
-                    properties = new Properties(System.getProperties());
-                    properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
-                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
-                    properties.load(is);
-                    String path = properties.getProperty("python.path", "");
-                    if (path.length() != 0) {
-                        path = path.concat(File.pathSeparator);
-                    }
-                    properties.setProperty("python.path", path.concat(FileUtil.getScriptsPath().concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
-                    execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(false)));
-                } catch (IOException ex) {
-                    log.error("Found, but unable to read python.properties: {}", ex.getMessage());
-                    properties = null;
-                }
-                PySystemState.initialize(null, properties);
-                log.debug("Jython path is {}", PySystemState.getBaseProperties().getProperty("python.path"));
-            }
-
-            // Create the interpreter
-            try {
-                log.debug("create interpreter");
-                ScriptEngine python = this.manager.getEngineByName(PYTHON);
-                python.setContext(this.context);
-                is = FileUtil.findInputStream(JYTHON_DEFAULTS, new String[]{
-                    FileUtil.getUserFilesPath(),
-                    FileUtil.getPreferencesPath()
-                });
-                if (execJython) {
-                    this.jython = new PythonInterpreter();
-                }
-                if (is != null) {
-                    python.eval(new InputStreamReader(is));
-                    if (this.jython != null) {
-                        this.jython.execfile(is);
-                    }
-                }
-                this.engines.put(PYTHON, python);
-            } catch (ScriptException e) {
-                log.error("Exception creating jython system objects", e);
-            }
+            initializePythonInterpreter(initializePythonState());
         }
+    }
+
+    /**
+     * Initialize the Python ScriptEngine state including Python global state.
+     * 
+     * @return true if the Python interpreter will be used outside a
+     *         ScriptEngine; false otherwise
+     */
+    private boolean initializePythonState() {
+        // Get properties for interpreter
+        // Search in user files, the profile directory, the settings directory,
+        // and in the program path in that order
+        InputStream is = FileUtil.findInputStream("python.properties",
+                FileUtil.getUserFilesPath(),
+                FileUtil.getProfilePath(),
+                FileUtil.getPreferencesPath(),
+                FileUtil.getProgramPath());
+        Properties properties;
+        properties = new Properties(System.getProperties());
+        properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
+        properties.setProperty("python.cachedir", FileUtil
+                .getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
+        boolean execJython = false;
+        if (is != null) {
+            String pythonPath = "python.path";
+            try {
+                properties.load(is);
+                String path = properties.getProperty(pythonPath, "");
+                if (path.length() != 0) {
+                    path = path.concat(File.pathSeparator);
+                }
+                properties.setProperty(pythonPath, path.concat(FileUtil.getScriptsPath()
+                        .concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
+                    execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(execJython)));
+            } catch (IOException ex) {
+                log.error("Found, but unable to read python.properties: {}", ex.getMessage());
+            }
+            log.debug("Jython path is {}", PySystemState.getBaseProperties().getProperty(pythonPath));
+        }
+        PySystemState.initialize(null, properties);
+        return execJython;
+    }
+
+    /**
+     * Initialize the Python ScriptEngine and interpreter, including running any
+     * code in {@value #JYTHON_DEFAULTS}, if present.
+     * 
+     * @param execJython true if also initializing an independent interpreter;
+     *                   false otherwise
+     */
+    private void initializePythonInterpreter(boolean execJython) {
+        // Create the interpreter
+        try {
+            log.debug("create interpreter");
+            ScriptEngine python = this.manager.getEngineByName(PYTHON);
+            python.setContext(this.context);
+            InputStream is = FileUtil.findInputStream(JYTHON_DEFAULTS,
+                    FileUtil.getUserFilesPath(),
+                    FileUtil.getProfilePath(),
+                    FileUtil.getPreferencesPath());
+            if (execJython) {
+                this.jython = new PythonInterpreter();
+                context.getBindings(ScriptContext.GLOBAL_SCOPE).forEach((name, value) -> jython.set(name, value));
+            }
+            if (is != null) {
+                python.eval(new InputStreamReader(is));
+                if (this.jython != null) {
+                    this.jython.execfile(is);
+                }
+            }
+            this.engines.put(PYTHON, python);
+        } catch (ScriptException e) {
+            log.error("Exception creating jython system objects", e);
+        }
+    }
+
+    // package private for unit testing
+    @CheckForNull
+    PythonInterpreter getPythonInterpreter() {
+        return jython;
+    }
+
+    /**
+     * Helper to handle logging and exceptions.
+     * 
+     * @param key       the item for which a ScriptEngine or ScriptEngineFactory
+     *                  was not found
+     * @param type      the type of key (name, mime type, extension)
+     * @param isFactory true for a not found ScriptEngineFactory, false for a
+     *                  not found ScriptEngine
+     */
+    private ScriptException scriptEngineNotFound(@Nonnull String key, @Nonnull String type, boolean isFactory) {
+        String expected = String.join(",", names.keySet());
+        String factory = isFactory ? " factory" : "";
+        log.error("Could not find script engine{} for {} \"{}\", expected one of {}", factory, type, key, expected);
+        return new ScriptException(String.format("Could not find script engine%s for %s \"%s\" expected one of %s",
+                factory, type, key, expected));
     }
 }

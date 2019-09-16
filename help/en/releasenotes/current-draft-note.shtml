@@ -391,7 +391,9 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>Added a new SetUnknownTurnoutsClosed script that does what it says on the tin</li>
-            <li>Added script tests for SetUnknownTurnoutsClosed and SetAllTurnoutsClosed
+            <li>Added script tests for SetUnknownTurnoutsClosed and SetAllTurnoutsClosed</li>
+            <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
+              Jython/Python scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -478,6 +480,6 @@
                 files in order by their Manager system prefix and system name.
                 Previously, they had (roughly) been written in the order they'd be 
                 read from the earlier file(s). This will result in a big change to the order
-                the first time a file is re-written, but after that it should be much more stable.
+                the first time a file is re-written, but after that it should be much more stable.</li>
         </ul>
 
