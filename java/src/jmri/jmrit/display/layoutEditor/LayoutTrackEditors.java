@@ -1434,33 +1434,6 @@ public class LayoutTrackEditors {
             contentPane.add(panel4);
 
             // set up Done and Cancel buttons
-//             JPanel panel5 = new JPanel();
-//             panel5.setLayout(new FlowLayout());
-//             panel5.add(editLevelXingDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-//             editLevelXingDoneButton.addActionListener((ActionEvent e) -> {
-//                 editLevelXingDonePressed(e);
-//             });
-//             editLevelXingDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-
-//             make this button the default button (return or enter activates)
-//             Note: We have to invoke this later because we don't currently have a root pane
-//             SwingUtilities.invokeLater(() -> {
-//                 JRootPane rootPane = SwingUtilities.getRootPane(editLevelXingDoneButton);
-//                 if (rootPane != null) {
-//                     rootPane.setDefaultButton(editLevelXingDoneButton);
-//                 }
-//             });
-//
-//             Cancel
-//             panel5.add(editLevelXingCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-//             editLevelXingCancelButton.addActionListener((ActionEvent e) -> {
-//                 editLevelXingCancelPressed(e);
-//             });
-//             editLevelXingCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
-//             contentPane.add(panel5);
-
-
-            // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
             addDoneCancelButtons(panel5, editLevelXingFrame.getRootPane(),
@@ -1706,28 +1679,13 @@ public class LayoutTrackEditors {
             panel3.add(editLayoutTurntableDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TurntableDCCControlled")));  // NOI18N
             headerPane.add(panel3);
 
+
+
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editLayoutTurntableDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-            editLayoutTurntableDoneButton.addActionListener((ActionEvent e) -> {
-                editLayoutTurntableDonePressed(e);
-            });
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLayoutTurntableDoneButton);
-                rootPane.setDefaultButton(editLayoutTurntableDoneButton);
-            });
-
-            editLayoutTurntableDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-            // Cancel
-            panel5.add(editLayoutTurntableCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLayoutTurntableCancelButton.addActionListener((ActionEvent e) -> {
-                turntableEditCancelPressed(e);
-            });
-            editLayoutTurntableCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editLayoutTurntableFrame.getRootPane(),
+                    this::editLayoutTurntableDonePressed, this::turntableEditCancelPressed);
             footerPane.add(panel5);
 
             editLayoutTurntableRayPanel = new JPanel();
