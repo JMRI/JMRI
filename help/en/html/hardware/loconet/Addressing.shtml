@@ -61,7 +61,7 @@
           "Logix Conditionals".  JMRI developers <strong>suggest</strong> that users make
           use of object "User Names" wherever possible.  Additional general
           information on JMRI "System Names" and "User Names" may be found <a
-              href="../../doc/technical/Names.shtml"> here.</a></p>
+              href="../../doc/Technical/Names.shtml"> here.</a></p>
 
       <h2>System Names and LocoNet</h2>
       <p>JMRI communicates with the individual physical turnouts, sensors, reporters and other
