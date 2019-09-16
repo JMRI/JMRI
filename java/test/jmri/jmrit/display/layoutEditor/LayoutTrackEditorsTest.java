@@ -59,7 +59,7 @@ public class LayoutTrackEditorsTest {
         e.dispose();
     }
 
-//     @Test
+    @Test
     public void testEditTurnoutDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         createTurnouts();
@@ -105,10 +105,9 @@ public class LayoutTrackEditorsTest {
         d.setText("Blk 3");
 
         new JButtonOperator(jfo, "Done").doClick();
-// new EventTool().waitNoEvent(1000);
     }
 
-//     @Test
+    @Test
     public void testEditTurnoutCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -120,7 +119,7 @@ public class LayoutTrackEditorsTest {
         new JButtonOperator(jfo, "Cancel").doClick();
     }
 
-//     @Test
+    @Test
     public void testEditSlipDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         createTurnouts();
@@ -152,11 +151,10 @@ public class LayoutTrackEditorsTest {
         // Trigger Test button
         new JButtonOperator(jfo, "Test").doClick();
 
-// new EventTool().waitNoEvent(5000);
         new JButtonOperator(jfo, "Done").doClick();
     }
 
-//     @Test
+    @Test
     public void testEditSlipCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -232,7 +230,6 @@ public class LayoutTrackEditorsTest {
             jmri.util.JUnitUtil.initInternalTurnoutManager();
             jmri.util.JUnitUtil.initInternalSensorManager();
             layoutEditor = new LayoutEditor();
-//             trackEditor = new LayoutTrackEditors(layoutEditor);
         }
     }
 

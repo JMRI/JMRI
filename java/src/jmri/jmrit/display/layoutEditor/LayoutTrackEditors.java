@@ -1040,31 +1040,12 @@ public class LayoutTrackEditors {
             editLayoutSlipBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
 
             contentPane.add(panel4);
+
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editLayoutSlipDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLayoutSlipDoneButton);
-                if (rootPane != null) {
-                    rootPane.setDefaultButton(editLayoutSlipDoneButton);
-                }
-            }
-            );
-
-            editLayoutSlipDoneButton.addActionListener((ActionEvent event) -> {
-                editLayoutSlipDonePressed(event);
-            });
-            editLayoutSlipDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-            // Cancel
-            panel5.add(editLayoutSlipCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLayoutSlipCancelButton.addActionListener((ActionEvent event) -> {
-                editLayoutSlipCancelPressed(event);
-            });
-            editLayoutSlipCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editLayoutSlipFrame.getRootPane(),
+                    this::editLayoutSlipDonePressed, this::editLayoutSlipCancelPressed);
             contentPane.add(panel5);
         }
 
@@ -1451,30 +1432,39 @@ public class LayoutTrackEditors {
             });
             editLevelXingBlock2Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
             contentPane.add(panel4);
+
+            // set up Done and Cancel buttons
+//             JPanel panel5 = new JPanel();
+//             panel5.setLayout(new FlowLayout());
+//             panel5.add(editLevelXingDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
+//             editLevelXingDoneButton.addActionListener((ActionEvent e) -> {
+//                 editLevelXingDonePressed(e);
+//             });
+//             editLevelXingDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
+
+//             make this button the default button (return or enter activates)
+//             Note: We have to invoke this later because we don't currently have a root pane
+//             SwingUtilities.invokeLater(() -> {
+//                 JRootPane rootPane = SwingUtilities.getRootPane(editLevelXingDoneButton);
+//                 if (rootPane != null) {
+//                     rootPane.setDefaultButton(editLevelXingDoneButton);
+//                 }
+//             });
+//
+//             Cancel
+//             panel5.add(editLevelXingCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
+//             editLevelXingCancelButton.addActionListener((ActionEvent e) -> {
+//                 editLevelXingCancelPressed(e);
+//             });
+//             editLevelXingCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+//             contentPane.add(panel5);
+
+
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editLevelXingDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-            editLevelXingDoneButton.addActionListener((ActionEvent e) -> {
-                editLevelXingDonePressed(e);
-            });
-            editLevelXingDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLevelXingDoneButton);
-                if (rootPane != null) {
-                    rootPane.setDefaultButton(editLevelXingDoneButton);
-                }
-            });
-
-            // Cancel
-            panel5.add(editLevelXingCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLevelXingCancelButton.addActionListener((ActionEvent e) -> {
-                editLevelXingCancelPressed(e);
-            });
-            editLevelXingCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editLevelXingFrame.getRootPane(),
+                    this::editLevelXingDonePressed, this::editLevelXingCancelPressed);
             contentPane.add(panel5);
         }
 
