@@ -596,34 +596,27 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         if ((b1 & 0x01) == 0x01) {
             log.trace("Speed Step setting 27");
-            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_27) {
-                notifyPropertyChangeListener(SPEEDSTEPS,
-                        this.speedStepMode,
-                        this.speedStepMode = SpeedStepMode.NMRA_DCC_27);
-            }
+            notifyNewSpeedStepMode(SpeedStepMode.NMRA_DCC_27);
         } else if ((b1 & 0x02) == 0x02) {
             log.trace("Speed Step setting 28");
-            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_28) {
-                notifyPropertyChangeListener(SPEEDSTEPS,
-                        this.speedStepMode,
-                        this.speedStepMode = SpeedStepMode.NMRA_DCC_28);
-            }
+            notifyNewSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
         } else if ((b1 & 0x04) == 0x04) {
             log.trace("Speed Step setting 128");
-            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_128) {
-                notifyPropertyChangeListener(SPEEDSTEPS,
-                        this.speedStepMode,
-                        this.speedStepMode = SpeedStepMode.NMRA_DCC_128);
-            }
+            notifyNewSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
         } else {
             log.trace("Speed Step setting 14");
-            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_14) {
-                notifyPropertyChangeListener(SPEEDSTEPS,
-                        this.speedStepMode,
-                        this.speedStepMode = SpeedStepMode.NMRA_DCC_14);
-            }
+            notifyNewSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
         }
     }
+
+    protected void notifyNewSpeedStepMode(SpeedStepMode mode){
+        if (this.speedStepMode != mode) {
+            notifyPropertyChangeListener(SPEEDSTEPS,
+                this.speedStepMode,
+                this.speedStepMode = mode);
+        }
+    }
+
 
     /**
      * Get Speed and Direction information.
@@ -632,21 +625,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         /* the second byte indicates the speed and direction setting */
 
         if ((b2 & 0x80) == 0x80 && !this.isForward) {
-            log.trace("Throttle - Direction Forward Locomotive: {}",address);
-            notifyPropertyChangeListener(ISFORWARD,
-                    Boolean.valueOf(this.isForward),
-                    Boolean.valueOf(this.isForward = true));
-            if (this.isForward) {
-                log.trace("Throttle - Changed direction to Forward Locomotive: {}",address);
-            }
+            notifyNewDirection(true);
         } else if ((b2 & 0x80) == 0x00 && this.isForward) {
-            log.trace("Throttle - Direction Reverse Locomotive: {}", address);
-            notifyPropertyChangeListener(ISFORWARD,
-                    Boolean.valueOf(this.isForward),
-                    Boolean.valueOf(this.isForward = false));
-            if (!this.isForward) {
-                log.trace("Throttle - Changed direction to Reverse Locomotive: {}",address);
-            }
+            notifyNewDirection(false);
         }
 
         if (this.speedStepMode == SpeedStepMode.NMRA_DCC_128) {
@@ -723,6 +704,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         }
     }
+
+    protected void notifyNewDirection(boolean forward){
+        notifyPropertyChangeListener(ISFORWARD,
+                Boolean.valueOf(this.isForward),
+                Boolean.valueOf(this.isForward = forward));
+        log.trace("Throttle - Changed direction to {} Locomotive: {}", forward?"forward":"reverse", getDccAddress());
+    }
+
 
     protected void parseFunctionInformation(int b3, int b4) {
         log.trace("Parsing Function F0-F12 status, function bytes: {} and {}",
