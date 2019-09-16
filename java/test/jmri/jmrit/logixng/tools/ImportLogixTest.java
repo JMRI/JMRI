@@ -38,9 +38,7 @@ public class ImportLogixTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixManager();
-        JUnitUtil.initLogixNGManager();
-        JUnitUtil.initDigitalExpressionManager();
-        JUnitUtil.initDigitalActionManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

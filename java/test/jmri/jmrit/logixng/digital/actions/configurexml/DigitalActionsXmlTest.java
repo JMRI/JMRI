@@ -94,13 +94,7 @@ public class DigitalActionsXmlTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
-        JUnitUtil.initAnalogActionManager();
-        JUnitUtil.initAnalogExpressionManager();
-        JUnitUtil.initDigitalActionManager();
-        JUnitUtil.initDigitalExpressionManager();
-        JUnitUtil.initStringActionManager();
-        JUnitUtil.initStringExpressionManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

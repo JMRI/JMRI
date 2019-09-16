@@ -29,6 +29,12 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
                 .getNewSystemName();
     }
     
+    @Test
+    public void testCtor() {
+        StringActionBean action = new StringActionMemory("IQSA321", null);
+        Assert.assertNotNull("exists", new DefaultMaleStringActionSocket(action));
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -36,6 +42,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         StringActionBean actionA = new StringActionMemory("IQSA321", null);
         Assert.assertNotNull("exists", actionA);

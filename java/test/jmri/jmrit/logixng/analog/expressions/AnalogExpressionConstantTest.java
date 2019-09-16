@@ -8,6 +8,7 @@ import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
@@ -16,7 +17,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -58,7 +58,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
                 "LogixNG: A logixNG%n" +
-                "   ConditionalNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Read analog E1 and set analog A1%n" +
                 "            ?~ E1%n" +
@@ -220,28 +220,34 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNG();
         
         expressionConstant = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
         expressionConstant.setValue(10.2);
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
-        DigitalActionBean actionDoAnalog = new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
-        MaleSocket socketDoAnalog = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
+        DigitalActionBean actionDoAnalog =
+                new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        MaleSocket socketDoAnalog =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
         conditionalNG.getChild(0).connect(socketDoAnalog);
         
-        MaleSocket socketExpression = InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(expressionConstant);
+        MaleSocket socketExpression =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(expressionConstant);
         socketDoAnalog.getChild(0).connect(socketExpression);
         
         _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         _memoryOut.setValue(0.0);
         actionMemory = new AnalogActionMemory("IQAA1", null);
         actionMemory.setMemory(_memoryOut);
-        MaleSocket socketAction = InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
+        MaleSocket socketAction =
+                InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
         socketDoAnalog.getChild(1).connect(socketAction);
         
         _base = expressionConstant;

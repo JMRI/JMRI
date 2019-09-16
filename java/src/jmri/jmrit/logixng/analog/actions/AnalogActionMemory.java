@@ -5,9 +5,9 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.AnalogActionManager;
@@ -101,7 +101,8 @@ public class AnalogActionMemory extends AbstractAnalogAction
     
     /** {@inheritDoc} */
     @Override
-    public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
+    public FemaleSocket getChild(int index)
+            throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");
     }
 

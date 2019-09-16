@@ -49,6 +49,7 @@ public class TimerSwingTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

@@ -133,6 +133,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();

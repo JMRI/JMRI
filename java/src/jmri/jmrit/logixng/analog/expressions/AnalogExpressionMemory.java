@@ -48,6 +48,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         return new AnalogExpressionMemory(this);
     }
     
+    /** {@inheritDoc} */
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -77,6 +78,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         return true;
     }
     
+    /** {@inheritDoc} */
     public void setMemory(String memoryName) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
@@ -95,6 +97,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         }
     }
     
+    /** {@inheritDoc} */
     public void setMemory(NamedBeanHandle<Memory> handle) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
@@ -104,6 +107,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         _memoryHandle = handle;
     }
     
+    /** {@inheritDoc} */
     public void setMemory(@CheckForNull Memory memory) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
@@ -118,6 +122,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         }
     }
     
+    /** {@inheritDoc} */
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
@@ -138,17 +143,20 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         // Do nothing
     }
     
+    /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index)
             throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getChildCount() {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
@@ -158,6 +166,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
         return getShortDescription(locale);

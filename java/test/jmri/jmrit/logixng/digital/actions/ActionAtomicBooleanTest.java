@@ -3,12 +3,12 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -48,7 +48,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
                 "LogixNG: A logixNG%n" +
-                "   ConditionalNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Set the atomic boolean to true%n");
     }
@@ -76,14 +76,17 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         atomicBoolean = new AtomicBoolean(false);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
         actionAtomicBoolean = new ActionAtomicBoolean("IQDA321", null, atomicBoolean, true);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        MaleSocket socket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         conditionalNG.getChild(0).connect(socket);
         
         _base = actionAtomicBoolean;

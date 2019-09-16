@@ -45,7 +45,8 @@ public class DefaultConditionalNGXml extends jmri.managers.configurexml.Abstract
      * @return Element containing the complete info
      */
     public Element store(ConditionalNG conditionalNG) {
-        log.debug("logix system name is " + conditionalNG.getSystemName());  // NOI18N
+        if (1==1) throw new RuntimeException("AAA");
+        log.debug("conditionalng system name is " + conditionalNG.getSystemName());  // NOI18N
         boolean enabled = conditionalNG.isEnabled();
         Element elem = new Element("conditionalng");  // NOI18N
         elem.addContent(new Element("systemName").addContent(conditionalNG.getSystemName()));  // NOI18N

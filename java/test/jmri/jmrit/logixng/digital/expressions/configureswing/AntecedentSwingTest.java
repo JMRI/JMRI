@@ -49,6 +49,7 @@ public class AntecedentSwingTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

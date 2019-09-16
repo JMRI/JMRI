@@ -106,6 +106,9 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         return _expression.isExternal();
     }
     
+    /**
+     * Get the value of the AnalogExpressionBean.
+     */
     private double internalEvaluate() {
         double result = _expression.evaluate();
         

@@ -122,6 +122,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();

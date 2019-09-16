@@ -25,6 +25,7 @@ public class JMRI_NativeNamespaceTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

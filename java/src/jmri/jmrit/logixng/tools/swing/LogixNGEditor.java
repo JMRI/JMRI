@@ -32,6 +32,7 @@ import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
@@ -441,8 +442,13 @@ public final class LogixNGEditor {
         while (_curConditionalNG == null) {
             cName = _curLogixNG.getSystemName() + ":" + Integer.toString(num);
             if (_curLogixNG.getConditionalNG(cName) == null) {
-                _curConditionalNG = new DefaultConditionalNG(cName, null);
-                InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(_curConditionalNG);
+                _curConditionalNG =
+                        InstanceManager.getDefault(ConditionalNG_Manager.class)
+                                .createConditionalNG(cName, null);
+                InstanceManager.getDefault(ConditionalNG_Manager.class)
+                        .setupInitialConditionalNGTree(_curConditionalNG);
+//                _curConditionalNG = new DefaultConditionalNG(cName, null);
+//                InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(_curConditionalNG);
             }
             num++;
             if (num == 1000) {

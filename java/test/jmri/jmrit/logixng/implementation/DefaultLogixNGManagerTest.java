@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -109,16 +110,17 @@ public class DefaultLogixNGManagerTest {
     
     @Test
     public void testSetupInitialConditionalNGTree() {
-        LogixNG_Manager manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        
         // Correct system name
-        LogixNG logixNG = manager.createLogixNG("IQ1", "Some name");
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("IQ1", "Some name");
         Assert.assertNotNull("exists", logixNG);
         
-        ConditionalNG conditionalNG = new DefaultConditionalNG("IQ1:1", null);
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         Assert.assertNotNull("exists", conditionalNG);
         logixNG.addConditionalNG(conditionalNG);
-        manager.setupInitialConditionalNGTree(conditionalNG);
+        InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .setupInitialConditionalNGTree(conditionalNG);
         
         FemaleSocket child = conditionalNG.getChild(0);
         Assert.assertEquals("action is of correct class",
@@ -154,6 +156,7 @@ public class DefaultLogixNGManagerTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

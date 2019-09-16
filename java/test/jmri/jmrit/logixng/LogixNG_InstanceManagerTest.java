@@ -28,9 +28,7 @@ public class LogixNG_InstanceManagerTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
-        JUnitUtil.initDigitalExpressionManager();
-        JUnitUtil.initDigitalActionManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

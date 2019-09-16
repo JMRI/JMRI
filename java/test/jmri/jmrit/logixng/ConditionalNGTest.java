@@ -19,7 +19,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test LogixNG
+ * Test ConditionalNG
  * 
  * @author Daniel Bergqvist 2018
  */
@@ -28,23 +28,27 @@ public class ConditionalNGTest {
     @Test
     public void testGetNewObjectBasedOnTemplate() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        DefaultConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        DefaultConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG_1);
-        DefaultConditionalNG conditionalNG_2 = new DefaultConditionalNG(logixNG.getSystemName()+":2", null, conditionalNG_1);
+        ConditionalNG conditionalNG_2 = (ConditionalNG) conditionalNG_1.getNewObjectBasedOnTemplate();
+//        DefaultConditionalNG conditionalNG_2 = new DefaultConditionalNG(logixNG.getSystemName()+":2", null, conditionalNG_1);
         Assert.assertNotNull("conditionalNG_2 is not null", conditionalNG_2);
     }
     
     @Test
     public void testGetBeanType() {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+//        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         Assert.assertEquals("beanType is correct", "ConditionalNG", conditionalNG.getBeanType());
     }
     
     @Test
     public void testGetParent() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         Assert.assertTrue("getParent() returns correct value", null == conditionalNG_1.getParent());
         logixNG.addConditionalNG(conditionalNG_1);
         Assert.assertTrue("getParent() returns correct value", logixNG == conditionalNG_1.getParent());
@@ -53,7 +57,8 @@ public class ConditionalNGTest {
     @Test
     public void testGetLogixNG() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         Assert.assertTrue("getLogixNG() returns correct value", null == conditionalNG_1.getLogixNG());
         logixNG.addConditionalNG(conditionalNG_1);
         Assert.assertTrue("getLogixNG() returns correct value", logixNG == conditionalNG_1.getLogixNG());
@@ -62,7 +67,8 @@ public class ConditionalNGTest {
     @Test
     public void testGetRoot() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         Assert.assertTrue("getRoot() returns correct value", conditionalNG_1 == conditionalNG_1.getRoot());
         logixNG.addConditionalNG(conditionalNG_1);
         Assert.assertTrue("getRoot() returns correct value", logixNG == conditionalNG_1.getRoot());
@@ -70,7 +76,8 @@ public class ConditionalNGTest {
     
     @Test
     public void testState() throws JmriException {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
         Assert.assertTrue("getState() returns UNKNOWN", logixNG.getState() == LogixNG.UNKNOWN);
         JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultLogixNG.");
         logixNG.setState(LogixNG.INCONSISTENT);
@@ -81,11 +88,15 @@ public class ConditionalNGTest {
     
     @Test
     public void testConnectDisconnect() throws SocketAlreadyConnectedException {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+        DefaultConditionalNG conditionalNG =
+                (DefaultConditionalNG) InstanceManager.getDefault(ConditionalNG_Manager.class)
+                        .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         Assert.assertEquals("socket name is correct", null, conditionalNG.getSocketSystemName());
-        InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+        InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .setupInitialConditionalNGTree(conditionalNG);
         MaleSocket many = conditionalNG.getChild(0).getConnectedSocket();
         Assert.assertTrue("description is correct", "Many".equals(many.getLongDescription()));
         Assert.assertEquals("socket name is correct", many.getSystemName(), conditionalNG.getSocketSystemName());
@@ -95,8 +106,12 @@ public class ConditionalNGTest {
     
     @Test
     public void testSetSocketName() throws SocketAlreadyConnectedException {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+        DefaultConditionalNG conditionalNG =
+                (DefaultConditionalNG) InstanceManager.getDefault(ConditionalNG_Manager.class)
+                        .createConditionalNG("A conditionalNG");  // NOI18N
+//        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
         
         DigitalActionManager digitalActionManager =
@@ -123,17 +138,19 @@ public class ConditionalNGTest {
     @Test
     public void testShortDescription() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         Assert.assertEquals("getLongDescription() returns correct value",
-                "ConditionalNG", conditionalNG_1.getLongDescription(Locale.US));
+                "ConditionalNG: A conditionalNG", conditionalNG_1.getLongDescription(Locale.US));
     }
     
     @Test
     public void testLongDescription() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        ConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         Assert.assertEquals("getLongDescription() returns correct value",
-                "ConditionalNG", conditionalNG_1.getLongDescription(Locale.US));
+                "ConditionalNG: A conditionalNG", conditionalNG_1.getLongDescription(Locale.US));
     }
     
     @Ignore("Not implemented yet")
@@ -279,9 +296,10 @@ public class ConditionalNGTest {
         
         StringWriter writer = new StringWriter();
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
+//        ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
         logixNG.addConditionalNG(conditionalNG);
-        InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
         logixNG.printTree(new PrintWriter(writer), "...");
         String resultStr = writer.toString();
         
@@ -292,8 +310,11 @@ public class ConditionalNGTest {
     @Test
     public void testSetup() throws SocketAlreadyConnectedException {
         
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+        DefaultConditionalNG conditionalNG =
+                (DefaultConditionalNG) InstanceManager.getDefault(ConditionalNG_Manager.class)
+                        .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         
         String systemName = InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName();
@@ -320,9 +341,7 @@ public class ConditionalNGTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNGManager();
-        JUnitUtil.initDigitalExpressionManager();
-        JUnitUtil.initDigitalActionManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

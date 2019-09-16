@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.implementation.JmriSimplePropertyListener;
+// import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,21 +32,37 @@ public class DefaultLogixNG extends AbstractNamedBean
 //    private DefaultLogixNG _template;
     private boolean _enabled = false;
 //    private boolean _userEnabled = false;
+    private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
+    
+    /**
+     * Persistant instance variables (saved between runs)
+     */
+//    List<ConditionalNG> _conditionalNG_List = new ArrayList<>();
+//    ArrayList<JmriSimplePropertyListener> _listeners = new ArrayList<>();
+    
+    /**
+     * Maintain a list of conditional objects.  The key is the conditional system name
+     */
+    HashMap<String, ConditionalNG> _conditionalNGMap = new HashMap<>();
+    
+    /**
+     * Operational instance variables (not saved between runs)
+     */
+    private boolean _isActivated = false;
     
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
     }
     
-//    private DefaultLogixNG(DefaultLogixNG template) {
-//        super(InstanceManager.getDefault(LogixNG_Manager.class).getNewSystemName(), null);
+    private DefaultLogixNG(DefaultLogixNG template) {
+        super(InstanceManager.getDefault(LogixNG_Manager.class).getNewSystemName(), null);
 //        _template = template;
-//    }
+    }
     
     /** {@inheritDoc} */
     @Override
     public Base getNewObjectBasedOnTemplate() {
-        return null;
-//        return new DefaultLogixNG(this);
+        return new DefaultLogixNG(this);
     }
     
     /** {@inheritDoc} */
@@ -151,9 +170,32 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     final public void setup() {
-        log.debug("LogixNG: setup()");
-        for (ConditionalNG c : _conditionalNG_List) {
-            c.setup();
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            if ( entry._conditionalNG == null
+                    || !entry._conditionalNG.getSystemName()
+                            .equals(entry._systemName)) {
+
+                String systemName = entry._systemName;
+                if (systemName != null) {
+                    entry._conditionalNG =
+                            InstanceManager.getDefault(ConditionalNG_Manager.class)
+                                    .getBeanBySystemName(systemName);
+                    if (entry._conditionalNG != null) {
+                        entry._conditionalNG.setup();
+                    } else {
+                        log.error("cannot load conditionalNG " + systemName);
+                    }
+                }
+            } else {
+                entry._conditionalNG.setup();
+            }
+        }
+        if (1==0) {
+            try {
+                throw new RuntimeException("Daniel");
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -194,26 +236,29 @@ public class DefaultLogixNG extends AbstractNamedBean
     }
 */    
     
-    /**
-     * Persistant instance variables (saved between runs)
-     */
-    List<ConditionalNG> _conditionalNG_List = new ArrayList<>();
-    ArrayList<JmriSimplePropertyListener> _listeners = new ArrayList<>();
+    /** {@inheritDoc} */
+    @Override
+    public String getConditionalNG_SystemName(int index) {
+        return _conditionalNG_Entries.get(index)._systemName;
+    }
     
-    /**
-     * Maintain a list of conditional objects.  The key is the conditional system name
-     */
-    HashMap<String, ConditionalNG> _conditionalNGMap = new HashMap<>();
-    
-    /**
-     * Operational instance variables (not saved between runs)
-     */
-    private boolean _isActivated = false;
+    /** {@inheritDoc} */
+    @Override
+    public void setConditionalNG_SystemName(int index, String systemName) {
+        System.err.format("AAA zzz: %s - %d: %s%n", this.getSystemName(), index, systemName);
+        if (index == _conditionalNG_Entries.size()) {
+            _conditionalNG_Entries.add(new ConditionalNG_Entry(systemName));
+        } else {
+            ConditionalNG_Entry entry = _conditionalNG_Entries.get(index);
+            entry._systemName = systemName;
+            entry._conditionalNG = null;
+        }
+    }
     
     /** {@inheritDoc} */
     @Override
     public int getNumConditionalNGs() {
-        return _conditionalNG_List.size();
+        return _conditionalNG_Entries.size();
     }
 
     /** {@inheritDoc} */
@@ -222,18 +267,18 @@ public class DefaultLogixNG extends AbstractNamedBean
         if (row <= nextInOrder) {
             return;
         }
-        ConditionalNG temp = _conditionalNG_List.get(row);
+        ConditionalNG_Entry temp = _conditionalNG_Entries.get(row);
         for (int i = row; i > nextInOrder; i--) {
-            _conditionalNG_List.set(i, _conditionalNG_List.get(i - 1));
+            _conditionalNG_Entries.set(i, _conditionalNG_Entries.get(i - 1));
         }
-        _conditionalNG_List.set(nextInOrder, temp);
+        _conditionalNG_Entries.set(nextInOrder, temp);
     }
 
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNG(int order) {
         try {
-            return _conditionalNG_List.get(order);
+            return _conditionalNG_Entries.get(order)._conditionalNG;
         } catch (java.lang.IndexOutOfBoundsException ioob) {
             return null;
         }
@@ -244,7 +289,8 @@ public class DefaultLogixNG extends AbstractNamedBean
     public boolean addConditionalNG(ConditionalNG conditionalNG) {
         ConditionalNG chkDuplicate = _conditionalNGMap.putIfAbsent(conditionalNG.getSystemName(), conditionalNG);
         if (chkDuplicate == null) {
-            _conditionalNG_List.add(conditionalNG);
+            ConditionalNG_Entry entry = new ConditionalNG_Entry(conditionalNG);
+            _conditionalNG_Entries.add(entry);
             conditionalNG.setParent(this);
             return (true);
         }
@@ -261,9 +307,9 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public ConditionalNG getConditionalNGByUserName(String userName) {
-        for (ConditionalNG conditionalNG : _conditionalNGMap.values()) {
-            if (userName.equals(conditionalNG.getUserName())) {
-                return conditionalNG;
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            if (userName.equals(entry._conditionalNG.getUserName())) {
+                return entry._conditionalNG;
             }
         }
         return null;
@@ -272,13 +318,21 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void deleteConditionalNG(ConditionalNG conditionalNG) {
-        if (_conditionalNG_List.size() <= 0) {
+        if (_conditionalNG_Entries.size() <= 0) {
             log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
             return;
         }
-
+        
+        boolean found = false;
         // Remove Conditional from this logix
-        if (!_conditionalNG_List.remove(conditionalNG)) {
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            if (conditionalNG == entry._conditionalNG) {
+                _conditionalNG_Entries.remove(entry);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
             log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
             return;
         }
@@ -345,8 +399,8 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void calculateConditionalNGs() {
-        for (ConditionalNG c : _conditionalNG_List) {
-            c.execute();
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            entry._conditionalNG.execute();
         }
     }
 
@@ -371,25 +425,27 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void setParentForAllChildren() {
-        for (ConditionalNG c : _conditionalNG_List) {
-            c.setParent(this);
-            c.setParentForAllChildren();
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            if (entry._conditionalNG != null) {
+                entry._conditionalNG.setParent(this);
+                entry._conditionalNG.setParentForAllChildren();
+            }
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public void registerListeners() {
-        for (ConditionalNG c : _conditionalNG_List) {
-            c.registerListeners();
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            entry._conditionalNG.registerListeners();
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListeners() {
-        for (ConditionalNG c : _conditionalNG_List) {
-            c.unregisterListeners();
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            entry._conditionalNG.unregisterListeners();
         }
     }
     
@@ -421,4 +477,24 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
     }
     
+    
+    private static class ConditionalNG_Entry {
+        private String _systemName;
+        private ConditionalNG _conditionalNG;
+        
+        private ConditionalNG_Entry(ConditionalNG conditionalNG, String systemName) {
+            _systemName = systemName;
+            _conditionalNG = conditionalNG;
+        }
+        
+        private ConditionalNG_Entry(ConditionalNG conditionalNG) {
+            this._conditionalNG = conditionalNG;
+        }
+        
+        private ConditionalNG_Entry(String systemName) {
+            this._systemName = systemName;
+        }
+        
+    }
+
 }

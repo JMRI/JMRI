@@ -23,7 +23,22 @@ public interface LogixNG extends Base, NamedBean {
      * 
      * @return true if the LogixNG is enabled, false otherwise
      */
+    @Override
     public boolean isEnabled();
+    
+    /**
+     * Set the system name for the conditionalNG at the specified position in this list
+     * @param index index of the element to set the system name
+     * @return the system name
+     */
+    public String getConditionalNG_SystemName(int index);
+    
+    /**
+     * Set the system name for the conditionalNG at the specified position in this list
+     * @param index index of the element to set the system name
+     * @param systemName the new system name
+     */
+    public void setConditionalNG_SystemName(int index, String systemName);
     
     /**
      * Get number of ConditionalNGs for this LogixNG.

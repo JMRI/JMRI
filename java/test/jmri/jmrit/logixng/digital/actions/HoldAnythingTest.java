@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
@@ -9,7 +10,6 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -47,7 +47,7 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
                 "LogixNG: A new logix for test%n" +
-                "   ConditionalNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Hold anything%n" +
                 "            ! A1%n");
@@ -74,9 +74,11 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         HoldAnything action = new HoldAnything("IQDA321", null);
         MaleSocket maleSocket =

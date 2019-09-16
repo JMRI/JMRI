@@ -61,6 +61,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -71,6 +72,7 @@ import jmri.jmrit.logixng.digital.implementation.DefaultDigitalExpressionManager
 import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionManager;
 import jmri.jmrit.logixng.analog.implementation.DefaultAnalogExpressionManager;
 import jmri.jmrit.logixng.analog.implementation.DefaultAnalogActionManager;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
 import jmri.jmrit.logixng.string.implementation.DefaultStringExpressionManager;
 import jmri.jmrit.logixng.string.implementation.DefaultStringActionManager;
 import jmri.jmrit.roster.RosterConfigManager;
@@ -858,11 +860,32 @@ public class JUnitUtil {
         }
     }
 
+    public static void initLogixNG() {
+/*        
+        initLogixNGManager();
+        initConditionalNGManager();
+        initAnalogExpressionManager();
+        initAnalogActionManager();
+        initDigitalExpressionManager();
+        initDigitalActionManager();
+        initStringExpressionManager();
+        initStringActionManager();
+*/        
+    }
+
     public static void initLogixNGManager() {
         LogixNG_Manager m = new DefaultLogixNGManager(
                 InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.LOGIXNGS);
+        }
+    }
+
+    public static void initConditionalNGManager() {
+        ConditionalNG_Manager m = new DefaultConditionalNGManager(
+                InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALNGS);
         }
     }
 

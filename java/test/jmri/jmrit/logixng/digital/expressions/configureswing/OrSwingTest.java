@@ -49,6 +49,7 @@ public class OrSwingTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

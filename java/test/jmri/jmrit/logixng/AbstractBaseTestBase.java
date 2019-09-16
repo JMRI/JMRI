@@ -31,6 +31,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetConditionalNG() {
         if (getConditionalNG() == null) {
             log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
+            log.error("Method getConditionalNG() returns null for class {}", this.getClass().getName());
         }
         Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
         

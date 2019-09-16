@@ -233,7 +233,6 @@ public class Many extends AbstractDigitalAction
     }
 
 
-//    /* This class is public since ActionManyXml needs to access it. */
     private static class ActionEntry {
         private String _socketSystemName;
         private final FemaleDigitalActionSocket _socket;
@@ -246,10 +245,6 @@ public class Many extends AbstractDigitalAction
         private ActionEntry(FemaleDigitalActionSocket socket) {
             this._socket = socket;
         }
-        
-//        public DigitalAction getAction() {
-//            return (MaleDigitalActionSocket) socket.getConnectedSocket();
-//        }
         
     }
 

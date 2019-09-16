@@ -153,6 +153,7 @@ public class DoAnalogAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
+        log.error("expr.name: {}, actionname: {}", _analogExpressionSocketSystemName, _analogActionSocketSystemName);
         try {
             if (!_analogExpressionSocket.isConnected()
                     || !_analogExpressionSocket.getConnectedSocket().getSystemName()
@@ -203,6 +204,9 @@ public class DoAnalogAction
             // This shouldn't happen and is a runtime error if it does.
             throw new RuntimeException("socket is already connected");
         }
+        log.error("expr.name: {}, actionname: {}, expr.socket: {}, actionsocket: {}",
+                _analogExpressionSocketSystemName, _analogActionSocketSystemName,
+                _analogExpressionSocket.isConnected(), _analogActionSocket.isConnected());
     }
     
     /** {@inheritDoc} */

@@ -90,6 +90,7 @@ public class DigitalExpressionsTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

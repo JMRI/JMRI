@@ -41,6 +41,7 @@ public class IfThenElseSwingTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

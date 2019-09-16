@@ -9,6 +9,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
@@ -62,8 +63,8 @@ public class ExpressionLightTest {
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         LogixNG logixNG =
                 InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG =
-                new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         
@@ -205,6 +206,7 @@ public class ExpressionLightTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

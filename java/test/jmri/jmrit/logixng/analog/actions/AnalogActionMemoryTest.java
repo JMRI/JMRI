@@ -10,13 +10,13 @@ import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -54,7 +54,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
                 "LogixNG: A new logix for test%n" +
-                "   ConditionalNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Read analog E1 and set analog A1%n" +
                 "            ?~ E1%n" +
@@ -242,18 +242,24 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNG();
         
-        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
+                .createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA321", null);
         MaleSocket maleSocketDoAnalogAction =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .registerAction(doAnalogAction);
         conditionalNG.getChild(0).connect(maleSocketDoAnalogAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        AnalogActionMemory analogActionMemory = new AnalogActionMemory("IQAA321", "AnalogIO_Memory");
+        AnalogActionMemory analogActionMemory =
+                new AnalogActionMemory("IQAA321", "AnalogIO_Memory");
         MaleSocket maleSocketAnalogActionMemory =
-                InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
+                InstanceManager.getDefault(AnalogActionManager.class)
+                        .registerAction(analogActionMemory);
         doAnalogAction.getChild(1).connect(maleSocketAnalogActionMemory);
         analogActionMemory.setMemory(_memory);
         _base = analogActionMemory;

@@ -43,6 +43,7 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         StringExpressionBean actionA = new StringExpressionMemory("IQSE321", null);
         Assert.assertNotNull("exists", actionA);

@@ -5,6 +5,7 @@ import java.util.Set;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.openide.util.lookup.ServiceProvider;
@@ -40,6 +41,11 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         // the manager also needs to be added to the method getInitalizes()
         // below.
 
+        if (type == ConditionalNG_Manager.class) {
+            return new DefaultConditionalNGManager(
+                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        }
+
         if (type == LogixNG_Manager.class) {
             return new DefaultLogixNGManager(
                     InstanceManager.getDefault(InternalSystemConnectionMemo.class));
@@ -56,6 +62,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
+                ConditionalNG_Manager.class,
                 LogixNG_Manager.class,
                 LogixNGPreferences.class
         ));

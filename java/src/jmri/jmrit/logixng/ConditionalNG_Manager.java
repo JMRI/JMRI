@@ -4,20 +4,20 @@ import java.util.List;
 import jmri.Manager;
 
 /**
- * Manager for LogixNG
+ * Manager for ConditionalNG
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface LogixNG_Manager extends Manager<LogixNG> {
+public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
 
     /**
-     * Create a new LogixNG if the LogixNG does not exist.
+     * Create a new ConditionalNG if the ConditionalNG does not exist.
      *
      * @param systemName the system name
      * @param userName   the user name
-     * @return a new LogixNG or null if unable to create
+     * @return a new ConditionalNG or null if unable to create
      */
-    public LogixNG createLogixNG(String systemName, String userName)
+    public ConditionalNG createConditionalNG(String systemName, String userName)
             throws IllegalArgumentException;
     
     /**
@@ -25,13 +25,13 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * the user can optionally supply a username.
      *
      * @param userName the user name
-     * @return a new LogixNG or null if unable to create
+     * @return a new ConditionalNG or null if unable to create
      */
-    public LogixNG createLogixNG(String userName)
+    public ConditionalNG createConditionalNG(String userName)
             throws IllegalArgumentException;
     
-    /*.*
-     * Creates the initial items in the LogixNG tree.
+    /**
+     * Creates the initial items in the ConditionalNG tree.
      * 
      * By default, this is as following:
      * + ActionMany
@@ -39,9 +39,9 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      *   + ActionDoIf
      * 
      * @param conditionalNG the ConditionalNG to be initialized with a tree
-     *./
+     */
     public void setupInitialConditionalNGTree(ConditionalNG conditionalNG);
-*/
+
     /**
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
@@ -49,44 +49,44 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public LogixNG getLogixNG(String name);
+    public ConditionalNG getConditionalNG(String name);
 
-    public LogixNG getByUserName(String name);
+    public ConditionalNG getByUserName(String name);
 
-    public LogixNG getBySystemName(String name);
+    public ConditionalNG getBySystemName(String name);
     
     /**
-     * Create a new system name for a LogixNG.
+     * Create a new system name for a ConditionalNG.
      * @return a new system name
      */
     public String getNewSystemName();
     
     /**
-     * Resolve all the LogixNG trees.
+     * Resolve all the ConditionalNG trees.
      * <P>
-     * This method ensures that everything in the LogixNG tree has a pointer
+     * This method ensures that everything in the ConditionalNG tree has a pointer
      * to its parent.
      */
     public void resolveAllTrees();
 
     /**
-     * Setup all LogixNGs. This method is called after a configuration file is
+     * Setup all ConditionalNGs. This method is called after a configuration file is
      * loaded.
      */
-    public void setupAllLogixNGs();
+    public void setupAllConditionalNGs();
 
     /**
-     * Delete LogixNG by removing it from the manager. The LogixNG must first
+     * Delete ConditionalNG by removing it from the manager. The ConditionalNG must first
      * be deactivated so it stops processing.
      *
-     * @param x the LogixNG to delete
+     * @param x the ConditionalNG to delete
      */
-    void deleteLogixNG(LogixNG x);
+    void deleteConditionalNG(ConditionalNG x);
 
     /**
-     * Support for loading LogixNGs in a disabled state
+     * Support for loading ConditionalNGs in a disabled state
      * 
-     * @param s true if LogixNG should be disabled when loaded
+     * @param s true if ConditionalNG should be disabled when loaded
      */
     public void setLoadDisabled(boolean s);
     

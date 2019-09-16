@@ -51,9 +51,9 @@ public class ImportConditional {
 //        _logix = logix;
         _conditional = conditional;
 //        _logixNG = logixNG;
-        _conditionalNG = new DefaultConditionalNG(conditionalNG_SysName, null);
-//        _conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
-//                .createConditionalNG("Logix: "+_logix.getDisplayName(), false);
+//        _conditionalNG = new DefaultConditionalNG(conditionalNG_SysName, null);
+        _conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
+                .createConditionalNG(conditionalNG_SysName, null);
         
 //        log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
         log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());

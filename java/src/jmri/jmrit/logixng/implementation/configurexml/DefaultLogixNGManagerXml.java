@@ -48,12 +48,23 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 // store common part
                 storeCommon(logixNG, elem);
 
+                Element e = new Element("conditionalngs");
+                for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
+                    if (logixNG.getConditionalNG(i) != null) {
+                        e.addContent(new Element("conditionalNG_SystemName").addContent(logixNG.getConditionalNG(i).getSystemName()));
+                    } else {
+                        e.addContent(new Element("conditionalNG_SystemName").addContent(logixNG.getConditionalNG_SystemName(i)));
+                    }
+                }
+                elem.addContent(e);
+
+/*
                 // add conditionalNG elements
                 DefaultConditionalNGXml defaultConditionalNGXml = new DefaultConditionalNGXml();
                 for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
                     elem.addContent(defaultConditionalNGXml.store(logixNG.getConditionalNG(i)));
                 }
-
+*/
                 if (enabled) {
                     elem.setAttribute("enabled", "yes");  // NOI18N
                 } else {
@@ -145,6 +156,20 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                     }
                 }
                 
+//                Element conditionalNG_Element = logixNG_Element.getChild("conditionalngs");
+                List<Element> conditionalNGList =
+                        logixNG_Element.getChild("conditionalngs").getChildren();  // NOI18N
+                for (int j = 0; j < conditionalNGList.size(); j++) {
+//                for (Element socketElement : conditionalNG_Element.getChildren()) {
+//                    Element systemNameElement = socketElement.getChild("systemName");
+                    Element systemNameElement = conditionalNGList.get(j);
+                    String systemName = null;
+                    if (systemNameElement != null) {
+                        systemName = systemNameElement.getTextTrim();
+                    }
+                    logixNG.setConditionalNG_SystemName(j, systemName);
+                }
+/*                
                 // load conditionals, if there are any
                 List<Element> logixNGConditionalList = logixNG_Element.getChildren("conditionalng");  // NOI18N
                 if (logixNGConditionalList.size() > 0) {
@@ -160,6 +185,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                         }
                     }
                 }
+*/                
             }
         }
     }

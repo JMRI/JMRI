@@ -6,6 +6,7 @@ import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.JUnitAppender;
@@ -31,7 +32,9 @@ public class ImportConditionalTest {
         Conditional conditional = InstanceManager.getDefault(ConditionalManager.class).createNewConditional(logix.getSystemName()+"C1", "A new conditional for test");  // NOI18N
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logixNG for test");  // NOI18N
         
-        ImportConditional t = new ImportConditional(logix, conditional, logixNG, logixNG.getSystemName()+":1");
+        ImportConditional t =
+                new ImportConditional(logix, conditional, logixNG,
+                        InstanceManager.getDefault(ConditionalNG_Manager.class).getNewSystemName());
         Assert.assertNotNull("exists",t);
         
         // Remove this when the import tool is completed.
@@ -46,9 +49,7 @@ public class ImportConditionalTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixManager();
-        JUnitUtil.initLogixNGManager();
-        JUnitUtil.initDigitalExpressionManager();
-        JUnitUtil.initDigitalActionManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

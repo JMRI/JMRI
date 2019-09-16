@@ -7,12 +7,12 @@ import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -51,7 +51,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
                 "LogixNG: A logixNG%n" +
-                "   ConditionalNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Set turnout IT1 to Thrown%n");
     }
@@ -143,11 +143,13 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout.setCommandedState(Turnout.CLOSED);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
         actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);

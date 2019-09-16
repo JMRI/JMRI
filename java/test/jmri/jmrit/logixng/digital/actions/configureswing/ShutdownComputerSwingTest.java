@@ -41,6 +41,7 @@ public class ShutdownComputerSwingTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

@@ -295,6 +295,11 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
         if (_socket != null) {
             _socket.printTree(locale, writer, indent, currentIndent+indent);
+        } else {
+            writer.append(currentIndent);
+            writer.append(indent);
+            writer.append("Socket not connected");
+            writer.println();
         }
     }
     

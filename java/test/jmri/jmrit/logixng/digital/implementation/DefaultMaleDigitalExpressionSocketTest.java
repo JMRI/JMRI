@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleSocketTestBase;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -45,6 +44,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNG();
         
         DigitalExpressionBean expressionA = new ExpressionTurnout("IQDE321", null);
         Assert.assertNotNull("exists", expressionA);

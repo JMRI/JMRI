@@ -5,9 +5,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.JmriException;
@@ -21,11 +24,10 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -36,7 +38,6 @@ import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleStringActionSocket;
 import jmri.jmrit.logixng.MaleStringExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
@@ -189,7 +190,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public LogixNG createLogixNG(String userName) throws IllegalArgumentException {
         return createLogixNG(getNewSystemName(), userName);
     }
-
+/*
     @Override
     public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
         try {
@@ -232,18 +233,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     InstanceManager.getDefault(DigitalActionManager.class)
                             .registerAction(new IfThenElse(femaleSocket.getConditionalNG(), IfThenElse.Type.CONTINOUS_ACTION));
             femaleSocket.connect(actionIfThenSocket2);
-*/            
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
+*./            
+            /* FOR TESTING ONLY *./
+            /* FOR TESTING ONLY *./
+            /* FOR TESTING ONLY *./
+            /* FOR TESTING ONLY *./
 
         } catch (SocketAlreadyConnectedException e) {
             // This should never be able to happen.
             throw new RuntimeException(e);
         }
     }
-    
+*/    
     @Override
     public LogixNG getLogixNG(String name) {
         LogixNG x = getByUserName(name);
@@ -344,20 +345,36 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     
     //                AtomicBoolean atomicBoolean = new AtomicBoolean(false);
                     LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-                    ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+//                    ConditionalNG conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+//                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+                    ConditionalNG conditionalNG =
+                            InstanceManager.getDefault(ConditionalNG_Manager.class)
+                                    .createConditionalNG("A conditionalNG");
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .setupInitialConditionalNGTree(conditionalNG);
                     logixNG.addConditionalNG(conditionalNG);
                     logixNG.setEnabled(true);
                     conditionalNG.setEnabled(true);
 
                     logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("Another logixNG");
-                    conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+//                    conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+//                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+                    conditionalNG =
+                            InstanceManager.getDefault(ConditionalNG_Manager.class)
+                                    .createConditionalNG(""
+                                            + "");
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .setupInitialConditionalNGTree(conditionalNG);
                     logixNG.addConditionalNG(conditionalNG);
 
                     logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("Yet another logixNG");
-                    conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+//                    conditionalNG = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
+//                    InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+                    conditionalNG =
+                            InstanceManager.getDefault(ConditionalNG_Manager.class)
+                                    .createConditionalNG("Yet another conditionalNG");
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .setupInitialConditionalNGTree(conditionalNG);
                     logixNG.addConditionalNG(conditionalNG);
 
 //                    DigitalAction actionIfThen = new IfThenElse(conditionalNG, IfThenElse.Type.TRIGGER_ACTION);
@@ -370,6 +387,15 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     Or expressionOr = new Or(getSystemNamePrefix()+"DE:00001", null);
                     MaleSocket socketOr = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionOr);
                     socketIfThen.getChild(0).connect(socketOr);
+                    
+                    final String treeIndent2 = "   ";
+                    StringWriter stringWriter2 = new StringWriter();
+                    PrintWriter printWriter2 = new PrintWriter(stringWriter2);
+                    logixNG.printTree(Locale.ENGLISH, printWriter2, treeIndent2);
+                    final String originalTree2 = stringWriter2.toString();
+                    log.error(originalTree2);
+                    if (1==1) throw new RuntimeException("DANIEL");
+                    
                     
                     int index = 0;
                     
@@ -650,8 +676,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     socketAnalogActionMemory = InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
 
                     doAnalogAction = new DoAnalogAction(getSystemNamePrefix()+"DA:00102", null);
-                    doAnalogAction.setAnalogExpressionSocketSystemName(socketAnalogExpressionMemory.getSystemName());
-                    doAnalogAction.setAnalogActionSocketSystemName(socketAnalogActionMemory.getSystemName());
+//                    doAnalogAction.setAnalogExpressionSocketSystemName(socketAnalogExpressionMemory.getSystemName());
+                    doAnalogAction.getChild(0).connect(socketAnalogExpressionMemory);
+//                    doAnalogAction.setAnalogActionSocketSystemName(socketAnalogActionMemory.getSystemName());
+                    doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
                     socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
                     socketSecondMany.getChild(index++).connect(socket);
                     
@@ -685,80 +713,120 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 //                    logixNG.printTree(writer, "   ");
 //                    writer.flush();
                     
+                    final String treeIndent1 = "   ";
+                    StringWriter stringWriter1 = new StringWriter();
+                    PrintWriter printWriter1 = new PrintWriter(stringWriter1);
+                    logixNG.printTree(Locale.ENGLISH, printWriter1, treeIndent1);
+                    final String originalTree1 = stringWriter1.toString();
+                    log.error(originalTree1);
+                    if (1==1) throw new RuntimeException("DANIEL");
+                    
+                    
                     resolveAllTrees();
                     setupAllLogixNGs();
                     
                     logixNG.setEnabled(true);
                     conditionalNG.setEnabled(true);
-                }
-                
-                // Store panels
-                jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-                if (cm == null) {
-                    log.error("Failed to make backup due to unable to get default configure manager");
-                } else {
-                    FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-                    File file = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-                    System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
-//                    java.io.File file = new java.io.File("F:\\temp\\DanielTestarLogixNG.xml");
-//                    cm.makeBackup(file);
-                    // and finally store
                     
-                    if (store == 1) {
+                    // Store panels
+                    jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+                    if (cm == null) {
+                        log.error("Failed to make backup due to unable to get default configure manager");
+                    } else {
+                        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+                        File file = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
+                        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
+    //                    java.io.File file = new java.io.File("F:\\temp\\DanielTestarLogixNG.xml");
+    //                    cm.makeBackup(file);
+                        // and finally store
+
+                        final String treeIndent = "   ";
+                        StringWriter stringWriter = new StringWriter();
+                        PrintWriter printWriter = new PrintWriter(stringWriter);
+                        logixNG.printTree(Locale.ENGLISH, printWriter, treeIndent);
+                        final String originalTree = stringWriter.toString();
+                        
                         boolean results = cm.storeUser(file);
                         log.debug(results ? "store was successful" : "store failed");
                         if (!results) {
                             log.error("Failed to store panel");
                             System.exit(-1);
                         }
-                    }
-                    
-                    if (load == 1) {
-                        java.util.Set<LogixNG> set = new java.util.HashSet<>(InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet());
                         
-                        for (LogixNG logixNG : set) {
-                            InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(logixNG);
-                        }
-                        java.util.SortedSet<MaleAnalogActionSocket> set1 = InstanceManager.getDefault(AnalogActionManager.class).getNamedBeanSet();
-                        List<MaleSocket> l = new ArrayList<>(set1);
-                        for (MaleSocket x1 : l) {
-                            InstanceManager.getDefault(AnalogActionManager.class).deleteBean((MaleAnalogActionSocket)x1, "DoDelete");
-                        }
-                        java.util.SortedSet<MaleAnalogExpressionSocket> set2 = InstanceManager.getDefault(AnalogExpressionManager.class).getNamedBeanSet();
-                        l = new ArrayList<>(set2);
-                        for (MaleSocket x2 : l) {
-                            InstanceManager.getDefault(AnalogExpressionManager.class).deleteBean((MaleAnalogExpressionSocket)x2, "DoDelete");
-                        }
-                        java.util.SortedSet<MaleDigitalActionSocket> set3 = InstanceManager.getDefault(DigitalActionManager.class).getNamedBeanSet();
-                        l = new ArrayList<>(set3);
-                        for (MaleSocket x3 : l) {
-                            InstanceManager.getDefault(DigitalActionManager.class).deleteBean((MaleDigitalActionSocket)x3, "DoDelete");
-                        }
-                        java.util.SortedSet<MaleDigitalExpressionSocket> set4 = InstanceManager.getDefault(DigitalExpressionManager.class).getNamedBeanSet();
-                        l = new ArrayList<>(set4);
-                        for (MaleSocket x4 : l) {
-                            InstanceManager.getDefault(DigitalExpressionManager.class).deleteBean((MaleDigitalExpressionSocket)x4, "DoDelete");
-                        }
-                        java.util.SortedSet<MaleStringActionSocket> set5 = InstanceManager.getDefault(StringActionManager.class).getNamedBeanSet();
-                        l = new ArrayList<>(set5);
-                        for (MaleSocket x5 : l) {
-                            InstanceManager.getDefault(StringActionManager.class).deleteBean((MaleStringActionSocket)x5, "DoDelete");
-                        }
-                        java.util.SortedSet<MaleStringExpressionSocket> set6 = InstanceManager.getDefault(StringExpressionManager.class).getNamedBeanSet();
-                        l = new ArrayList<>(set6);
-                        for (MaleSocket x6 : l) {
-                            InstanceManager.getDefault(StringExpressionManager.class).deleteBean((MaleStringExpressionSocket)x6, "DoDelete");
-                        }
+                        log.error(InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC:0001").getChild(0).getConnectedSocket().getSystemName());
+                        log.error("AAAAAAA: {}, {}", conditionalNG.getSystemName(), conditionalNG.getChild(0).getConnectedSocket().getSystemName());
                         
-                        boolean results = cm.load(file);
-                        log.debug(results ? "load was successful" : "store failed");
-                        if (results) {
-                            resolveAllTrees();
-                            setupAllLogixNGs();
-                        } else {
-                            throw new RuntimeException("Failed to load panel");
-//                            log.error("Failed to load panel");
-//                            System.exit(-1);
+                        
+                        if (load == 1) {
+                            java.util.Set<LogixNG> logixNG_Set = new java.util.HashSet<>(InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet());
+                            for (LogixNG aLogixNG : logixNG_Set) {
+                                InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(aLogixNG);
+                            }
+                            
+                            java.util.Set<ConditionalNG> conditionalNG_Set = new java.util.HashSet<>(InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet());
+                            for (ConditionalNG aConditionalNG : conditionalNG_Set) {
+                                InstanceManager.getDefault(ConditionalNG_Manager.class).deleteConditionalNG(aConditionalNG);
+                            }
+                            java.util.SortedSet<MaleAnalogActionSocket> set1 = InstanceManager.getDefault(AnalogActionManager.class).getNamedBeanSet();
+                            List<MaleSocket> l = new ArrayList<>(set1);
+                            for (MaleSocket x1 : l) {
+                                InstanceManager.getDefault(AnalogActionManager.class).deleteBean((MaleAnalogActionSocket)x1, "DoDelete");
+                            }
+                            java.util.SortedSet<MaleAnalogExpressionSocket> set2 = InstanceManager.getDefault(AnalogExpressionManager.class).getNamedBeanSet();
+                            l = new ArrayList<>(set2);
+                            for (MaleSocket x2 : l) {
+                                InstanceManager.getDefault(AnalogExpressionManager.class).deleteBean((MaleAnalogExpressionSocket)x2, "DoDelete");
+                            }
+                            java.util.SortedSet<MaleDigitalActionSocket> set3 = InstanceManager.getDefault(DigitalActionManager.class).getNamedBeanSet();
+                            l = new ArrayList<>(set3);
+                            for (MaleSocket x3 : l) {
+                                InstanceManager.getDefault(DigitalActionManager.class).deleteBean((MaleDigitalActionSocket)x3, "DoDelete");
+                            }
+                            java.util.SortedSet<MaleDigitalExpressionSocket> set4 = InstanceManager.getDefault(DigitalExpressionManager.class).getNamedBeanSet();
+                            l = new ArrayList<>(set4);
+                            for (MaleSocket x4 : l) {
+                                InstanceManager.getDefault(DigitalExpressionManager.class).deleteBean((MaleDigitalExpressionSocket)x4, "DoDelete");
+                            }
+                            java.util.SortedSet<MaleStringActionSocket> set5 = InstanceManager.getDefault(StringActionManager.class).getNamedBeanSet();
+                            l = new ArrayList<>(set5);
+                            for (MaleSocket x5 : l) {
+                                InstanceManager.getDefault(StringActionManager.class).deleteBean((MaleStringActionSocket)x5, "DoDelete");
+                            }
+                            java.util.SortedSet<MaleStringExpressionSocket> set6 = InstanceManager.getDefault(StringExpressionManager.class).getNamedBeanSet();
+                            l = new ArrayList<>(set6);
+                            for (MaleSocket x6 : l) {
+                                InstanceManager.getDefault(StringExpressionManager.class).deleteBean((MaleStringExpressionSocket)x6, "DoDelete");
+                            }
+
+                            results = cm.load(file);
+                            log.debug(results ? "load was successful" : "store failed");
+                            if (results) {
+                                resolveAllTrees();
+                                setupAllLogixNGs();
+                                
+                                log.error("BBBBBBB: {}, {}", "IQC:0003", InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC:0003").getChild(0).getConnectedSocket().getSystemName());
+                                
+                                logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getLogixNG("Yet another logixNG");
+                                stringWriter = new StringWriter();
+                                printWriter = new PrintWriter(stringWriter);
+                                logixNG.printTree(Locale.ENGLISH, printWriter, treeIndent);
+                                
+                                if (!originalTree.equals(stringWriter.toString())) {
+                                    log.error("--------------------------------------------");
+                                    log.error("Old tree:");
+                                    log.error(originalTree);
+                                    log.error("--------------------------------------------");
+                                    log.error("New tree:");
+                                    log.error(stringWriter.toString());
+                                    log.error("--------------------------------------------");
+                                    
+//                                    log.error(InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
+                                    
+                                    throw new RuntimeException("tree has changed");
+                                }
+                            } else {
+                                throw new RuntimeException("Failed to load panel");
+                            }
                         }
                     }
                 }

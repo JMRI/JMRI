@@ -168,7 +168,7 @@ public class DefaultAnalogActionManagerXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initAnalogActionManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After
@@ -208,6 +208,12 @@ public class DefaultAnalogActionManagerXmlTest {
         MyManager() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
+        
+        @Override
+        protected void registerSelf() {
+            // We don't want to save config for this class
+        }
+        
     }
     
 }

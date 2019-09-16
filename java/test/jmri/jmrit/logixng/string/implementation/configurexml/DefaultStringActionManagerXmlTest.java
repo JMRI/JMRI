@@ -7,9 +7,6 @@ import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrit.logixng.string.actions.configurexml.StringActionMemoryXml;
 import jmri.jmrit.logixng.string.implementation.DefaultStringActionManager;
-import jmri.jmrit.logixng.string.implementation.configurexml.DefaultStringActionManagerXml;
-import jmri.jmrit.logixng.string.implementation.configurexml.DefaultStringActionManagerXmlTest;
-import jmri.jmrit.logixng.string.implementation.configurexml.DefaultStringActionManagerXml;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -171,6 +168,7 @@ public class DefaultStringActionManagerXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initLogixNG();
     }
 
     @After

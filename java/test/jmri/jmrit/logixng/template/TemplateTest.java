@@ -297,6 +297,7 @@ public class TemplateTest {
         JUnitUtil.initSectionManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After

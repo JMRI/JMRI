@@ -66,7 +66,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         element.addContent(e2);
 
         e2 = new Element("elseSocket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
+        e2.addContent(new Element("socketName").addContent(p.getChild(2).getName()));
         socket = p.getElseActionSocket().getConnectedSocket();
         if (socket != null) {
             socketSystemName = socket.getSystemName();
@@ -111,7 +111,7 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         h.getChild(2).setName(socketName.getTextTrim());
         socketSystemName = shared.getChild("elseSocket").getChild("systemName");
         if (socketSystemName != null) {
-            h.setThenActionSocketSystemName(socketSystemName.getTextTrim());
+            h.setElseActionSocketSystemName(socketSystemName.getTextTrim());
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

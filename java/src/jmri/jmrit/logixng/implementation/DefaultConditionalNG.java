@@ -10,9 +10,11 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import org.slf4j.Logger;
@@ -37,8 +39,8 @@ public class DefaultConditionalNG extends AbstractBase
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
     }
     
-    public DefaultConditionalNG(String sys, String user, DefaultConditionalNG template) {
-        super(sys, user);
+    public DefaultConditionalNG(DefaultConditionalNG template) {
+        super(InstanceManager.getDefault(ConditionalNG_Manager.class).getNewSystemName(), null);
         _template = template;
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, _template._femaleActionSocket.getName());
     }
@@ -46,7 +48,7 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public Base getNewObjectBasedOnTemplate() {
-        throw new UnsupportedOperationException("Not supported");
+        return new DefaultConditionalNG(this);
     }
     
     @Override
@@ -178,7 +180,7 @@ public class DefaultConditionalNG extends AbstractBase
 
     @Override
     public String getLongDescription(Locale locale) {
-        return "ConditionalNG";
+        return "ConditionalNG: "+getDisplayName();
     }
 
     @Override
@@ -230,12 +232,13 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     final public void setup() {
+        log.error("AAAAA: {}, {}, {}", this.getSystemName(), _socketSystemName, _femaleActionSocket.isConnected());
         if (!_femaleActionSocket.isConnected()
                 || !_femaleActionSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
-        
+            
             _femaleActionSocket.disconnect();
-
+            
             if (_socketSystemName != null) {
                 try {
                     MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).getBeanBySystemName(_socketSystemName);
@@ -253,6 +256,7 @@ public class DefaultConditionalNG extends AbstractBase
         } else {
             _femaleActionSocket.setup();
         }
+        log.error("BBBBB: {}, {}, {}, {}", this.getSystemName(), _socketSystemName, _femaleActionSocket.isConnected(), _femaleActionSocket.getConnectedSocket().getSystemName());
     }
 
     /** {@inheritDoc} */
@@ -266,7 +270,8 @@ public class DefaultConditionalNG extends AbstractBase
     public void setEnabled(boolean enable) {
         _enabled = enable;
         if (enable) {
-            if (getLogixNG().isActive()) {
+            LogixNG logixNG = getLogixNG();
+            if ((logixNG != null) && logixNG.isActive()) {
                 registerListeners();
             }
         } else {

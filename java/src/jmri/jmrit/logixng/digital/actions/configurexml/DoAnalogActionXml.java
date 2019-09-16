@@ -48,9 +48,9 @@ public class DoAnalogActionXml extends jmri.managers.configurexml.AbstractNamedB
             element.addContent(new Element("expressionSystemName").addContent(systemName));
         }
 
-        FemaleAnalogActionSocket _thenActionSocket = p.getAnalogActionSocket();
-        if (_thenActionSocket.isConnected()) {
-            systemName = _thenActionSocket.getConnectedSocket().getSystemName();
+        FemaleAnalogActionSocket actionSocket = p.getAnalogActionSocket();
+        if (actionSocket.isConnected()) {
+            systemName = actionSocket.getConnectedSocket().getSystemName();
         } else {
             systemName = p.getAnalogActionSocketSystemName();
         }

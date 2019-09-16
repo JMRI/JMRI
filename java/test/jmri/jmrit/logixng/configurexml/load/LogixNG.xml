@@ -4,16 +4,19 @@
   <jmriversion>
     <major>4</major>
     <minor>17</minor>
-    <test>4</test>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
-      <systemName>IS1_Daniel</systemName>
+      <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2_Daniel</systemName>
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS100</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
@@ -26,27 +29,27 @@
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT1_Daniel</systemName>
+      <systemName>IT1</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT2_Daniel</systemName>
+      <systemName>IT2</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT3_Daniel</systemName>
+      <systemName>IT3</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT4_Daniel</systemName>
+      <systemName>IT4</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT5_Daniel</systemName>
+      <systemName>IT5</systemName>
     </turnout>
   </turnouts>
   <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
     <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
-      <systemName>IL1_Daniel</systemName>
+      <systemName>IL1</systemName>
     </light>
     <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
-      <systemName>IL2_Daniel</systemName>
+      <systemName>IL2</systemName>
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
@@ -62,7 +65,7 @@
     <memory>
       <systemName>IM4</systemName>
     </memory>
-    <memory value="8:42 fm">
+    <memory value="6:43 em">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -75,39 +78,28 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Sep 15 18:43:11 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="yes">
       <systemName>IQ:0001</systemName>
       <userName>A logixNG</userName>
-      <conditionalng enabled="yes">
-        <systemName>IQ:0001:1</systemName>
-        <socket>
-          <socketName />
-          <systemName>IQDA:0001</systemName>
-        </socket>
-      </conditionalng>
+      <conditionalngs>
+        <conditionalNG_SystemName>IQC:0001</conditionalNG_SystemName>
+      </conditionalngs>
     </logixng>
     <logixng enabled="no">
       <systemName>IQ:0002</systemName>
       <userName>Another logixNG</userName>
-      <conditionalng enabled="no">
-        <systemName>IQ:0002:1</systemName>
-        <socket>
-          <socketName />
-          <systemName>IQDA:0004</systemName>
-        </socket>
-      </conditionalng>
+      <conditionalngs>
+        <conditionalNG_SystemName>IQC:0002</conditionalNG_SystemName>
+      </conditionalngs>
     </logixng>
     <logixng enabled="yes">
       <systemName>IQ:0003</systemName>
       <userName>Yet another logixNG</userName>
-      <conditionalng enabled="yes">
-        <systemName>IQ:0003:1</systemName>
-        <socket>
-          <socketName />
-          <systemName>IQDA:0007</systemName>
-        </socket>
-      </conditionalng>
+      <conditionalngs>
+        <conditionalNG_SystemName>IQC:0003</conditionalNG_SystemName>
+      </conditionalngs>
     </logixng>
   </logixngs>
   <logixngDigitalActions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionManagerXml">
@@ -139,7 +131,7 @@
         <socketName>A1</socketName>
       </thenSocket>
       <elseSocket>
-        <socketName>A1</socketName>
+        <socketName>A2</socketName>
       </elseSocket>
     </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
@@ -170,7 +162,7 @@
         <socketName>A1</socketName>
       </thenSocket>
       <elseSocket>
-        <socketName>A1</socketName>
+        <socketName>A2</socketName>
       </elseSocket>
     </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
@@ -203,7 +195,8 @@
         <systemName>IQDA:00010</systemName>
       </thenSocket>
       <elseSocket>
-        <socketName>A1</socketName>
+        <socketName>A2</socketName>
+        <systemName>IQDA:10010</systemName>
       </elseSocket>
     </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
@@ -267,22 +260,26 @@
         </socket>
         <socket>
           <socketName>A15</socketName>
-          <systemName>IQDA:00101</systemName>
+          <systemName>IQDA:10024</systemName>
         </socket>
         <socket>
           <socketName>A16</socketName>
-          <systemName>IQDA:00102</systemName>
+          <systemName>IQDA:00101</systemName>
         </socket>
         <socket>
           <socketName>A17</socketName>
-          <systemName>IQDA:00103</systemName>
+          <systemName>IQDA:00102</systemName>
         </socket>
         <socket>
           <socketName>A18</socketName>
-          <systemName>IQDA:00104</systemName>
+          <systemName>IQDA:00103</systemName>
         </socket>
         <socket>
           <socketName>A19</socketName>
+          <systemName>IQDA:00104</systemName>
+        </socket>
+        <socket>
+          <socketName>A20</socketName>
         </socket>
       </actions>
     </many>
@@ -300,7 +297,7 @@
         <socketName>A1</socketName>
       </thenSocket>
       <elseSocket>
-        <socketName>A1</socketName>
+        <socketName>A2</socketName>
       </elseSocket>
     </if-then-else>
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
@@ -336,7 +333,7 @@
     <action-sensor class="jmri.jmrit.logixng.digital.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:00021</systemName>
       <userName>My sensor action</userName>
-      <sensor>IS2_Daniel</sensor>
+      <sensor>IS2</sensor>
       <sensorState>ACTIVE</sensorState>
     </action-sensor>
     <action-turnout class="jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml">
@@ -345,7 +342,8 @@
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:00023</systemName>
-      <turnout>IT2_Daniel</turnout>
+      <userName>My turnout action</userName>
+      <turnout>IT2</turnout>
       <turnoutState>THROWN</turnoutState>
     </action-turnout>
     <do-analog-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoAnalogActionXml">
@@ -370,15 +368,23 @@
       <expressionSystemName>IQSE:00002</expressionSystemName>
       <actionSystemName>IQSA:00002</actionSystemName>
     </do-string-action>
+    <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
+      <systemName>IQDA:10010</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+        </socket>
+      </actions>
+    </many>
     <action-light class="jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml">
       <systemName>IQDA:10019</systemName>
       <userName>My light action</userName>
-      <light>IL2_Daniel</light>
+      <light>IL2</light>
       <lightState>ON</lightState>
     </action-light>
     <throttle class="jmri.jmrit.logixng.digital.actions.configurexml.ActionThrottleXml">
       <systemName>IQDA:10023</systemName>
-      <userName>My turnout action</userName>
+      <userName>My throttle action</userName>
       <locoAddressSocket>
         <socketName>E1</socketName>
         <systemName>IQAE:00001</systemName>
@@ -386,6 +392,20 @@
       <locoSpeedSocket>
         <socketName>E2</socketName>
         <systemName>IQAE:00002</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:10028</systemName>
+      </locoDirectionSocket>
+    </throttle>
+    <throttle class="jmri.jmrit.logixng.digital.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:10024</systemName>
+      <userName>My other throttle action</userName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
       </locoSpeedSocket>
       <locoDirectionSocket>
         <socketName>E2</socketName>
@@ -525,20 +545,20 @@
     </and>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:00005</systemName>
-      <turnout>IT3_Daniel</turnout>
+      <turnout>IT3</turnout>
       <is_isNot>IS</is_isNot>
       <turnoutState>THROWN</turnoutState>
     </expression-turnout>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:00006</systemName>
       <userName>My new turnout</userName>
-      <turnout>IT4_Daniel</turnout>
+      <turnout>IT4</turnout>
       <is_isNot>IS</is_isNot>
       <turnoutState>CLOSED</turnoutState>
     </expression-turnout>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:00007</systemName>
-      <turnout>IT5_Daniel</turnout>
+      <turnout>IT5</turnout>
       <is_isNot>IS_NOT</is_isNot>
       <turnoutState>OTHER</turnoutState>
     </expression-turnout>
@@ -678,7 +698,7 @@
     </true>
     <expression-light class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:00026</systemName>
-      <light>IL1_Daniel</light>
+      <light>IL1</light>
       <is_isNot>IS</is_isNot>
       <lightState>ON</lightState>
     </expression-light>
@@ -690,7 +710,7 @@
     </expression-light>
     <expression-sensor class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:00028</systemName>
-      <sensor>IS1_Daniel</sensor>
+      <sensor>IS100</sensor>
       <is_isNot>IS</is_isNot>
       <sensorState>ACTIVE</sensorState>
     </expression-sensor>
@@ -702,7 +722,7 @@
     </expression-sensor>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:00030</systemName>
-      <turnout>IT1_Daniel</turnout>
+      <turnout>IT1</turnout>
       <is_isNot>IS</is_isNot>
       <turnoutState>THROWN</turnoutState>
     </expression-turnout>
@@ -712,6 +732,11 @@
       <is_isNot>IS</is_isNot>
       <turnoutState>THROWN</turnoutState>
     </expression-turnout>
+    <expression-sensor class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:10028</systemName>
+      <is_isNot>IS</is_isNot>
+      <sensorState>ACTIVE</sensorState>
+    </expression-sensor>
   </logixngDigitalExpressions>
   <logixngAnalogExpressions class="jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogExpressionManagerXml">
     <analog-expression-constant class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionConstantXml">
@@ -761,13 +786,13 @@
       <userName>My action</userName>
     </string-action-memory>
   </logixngStringActions>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Sep 09 08:42:33 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml" />
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Sep 09 08:42:33 CEST 2019</date>
+      <date>Sun Sep 15 18:43:11 CEST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+daniel+20190909T0642Z on Mon Sep 09 08:42:33 CEST 2019-->
+  <!--Written by JMRI version 4.17.5ish+daniel+20190915T1642Z on Sun Sep 15 18:43:11 CEST 2019-->
 </layout-config>

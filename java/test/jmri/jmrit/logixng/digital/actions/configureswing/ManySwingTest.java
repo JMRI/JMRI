@@ -41,6 +41,7 @@ public class ManySwingTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNG();
     }
 
     @After
