@@ -10,43 +10,29 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
-import javax.annotation.Nonnull;
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.TransferHandler;
+import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableRowSorter;
+import jmri.Block;
 import jmri.InstanceManager;
+import jmri.Manager;
 import jmri.Path;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.SystemType;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,31 +57,30 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     private static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
 
-    JTable _oBlockTable;
-    OBlockTableModel _oBlockModel;
-    JTable _portalTable;
-    PortalTableModel _portalModel;
-    JTable _blockPortalTable;
-    BlockPortalTableModel _blockPortalXRefModel;
-    JTable _signalTable;
-    SignalTableModel _signalModel;
+    private JTable _oBlockTable;
+    private OBlockTableModel _oBlockModel;
+    private JTable _portalTable;
+    private PortalTableModel _portalModel;
+    private JTable _blockPortalTable;
+    private BlockPortalTableModel _blockPortalXRefModel;
+    private JTable _signalTable;
+    private SignalTableModel _signalModel;
 
-    JScrollPane _blockTablePane;
-    JScrollPane _portalTablePane;
-    JScrollPane _signalTablePane;
+    private JScrollPane _blockTablePane;
+    private JScrollPane _portalTablePane;
+    private JScrollPane _signalTablePane;
 
-    JDesktopPane _desktop;
-    JInternalFrame _blockTableFrame;
-    JInternalFrame _portalTableFrame;
-    JInternalFrame _blockPortalXRefFrame;
-    JInternalFrame _signalTableFrame;
+    private JDesktopPane _desktop;
+    private JInternalFrame _blockTableFrame;
+    private JInternalFrame _portalTableFrame;
+    private JInternalFrame _blockPortalXRefFrame;
+    private JInternalFrame _signalTableFrame;
 
-    boolean _showWarnings = true;
-    JMenuItem _showWarnItem;
-    JMenuItem importBlocksItem;
-    JMenu _openMenu;
-    HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
-    HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
+    private boolean _showWarnings = true;
+    private JMenuItem _showWarnItem;
+    private JMenu _openMenu;
+    private HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
+    private HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
 
     public TableFrames() {
         this("OBlock Table");
@@ -227,7 +212,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         optionMenu.add(_showWarnItem);
         setShowWarnings("ShowWarning");
 
-        importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlockMenu"));
+        JMenuItem importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlocksMenu"));
         importBlocksItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -278,7 +263,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     /**
      * Convert a copy of JMRI Blocks to OBlocks.
-     * EBR 2019
+     * @author EBR 2019
      */
     private void importBlocks() throws IllegalArgumentException {
         Manager<Block> bm = InstanceManager.getDefault(jmri.BlockManager.class);
@@ -288,7 +273,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         // don't return an element if there are no Blocks to include
         if (blkList.isEmpty()) {
             log.warn("no Blocks to convert"); // NOI18N
-            JOptionPane.showMessageDialog(this, "No Blocks to convert",
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportNoBlocks"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -623,7 +608,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    void showPopup(MouseEvent me) {
+    private void showPopup(MouseEvent me) {
         Point p = me.getPoint();
         int col = _oBlockTable.columnAtPoint(p);
         if (!me.isPopupTrigger() && !me.isMetaDown() && !me.isAltDown() && col == OBlockTableModel.STATECOL) {
