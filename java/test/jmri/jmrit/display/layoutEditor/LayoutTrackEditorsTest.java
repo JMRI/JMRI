@@ -7,8 +7,6 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
-// import jmri.JmriException;
-// import jmri.Sensor;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
@@ -28,8 +26,6 @@ public class LayoutTrackEditorsTest {
     private LayoutSlip slip = null;
     private LevelXing xing = null;
     private TrackSegment segment = null;
-
-    private JFrameOperator jfo = null;
 
     @Test
     public void testCTor() {
@@ -70,7 +66,7 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(dxo);
 
         // Select main turnout
-        jfo = new JFrameOperator("Edit Turnout");
+        JFrameOperator jfo = new JFrameOperator("Edit Turnout");
         JComboBoxOperator tcbo = new JComboBoxOperator(jfo, 0);
         Assert.assertNotNull(tcbo);
         tcbo.selectItem(1);
@@ -114,7 +110,7 @@ public class LayoutTrackEditorsTest {
         // Edit the double crossover
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(dxo);
-        jfo = new JFrameOperator("Edit Turnout");
+        JFrameOperator jfo = new JFrameOperator("Edit Turnout");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
@@ -130,7 +126,7 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(slip);
 
         // Select turnout A
-        jfo = new JFrameOperator("Edit Slip");
+        JFrameOperator jfo = new JFrameOperator("Edit Slip");
         JComboBoxOperator tcbA = new JComboBoxOperator(jfo, 0);
         Assert.assertNotNull(tcbA);
         tcbA.selectItem(1);
@@ -141,9 +137,9 @@ public class LayoutTrackEditorsTest {
         tcbB.selectItem(2);
 
         // Select a block
-        JComboBoxOperator blk_cbo = new JComboBoxOperator(jfo, 10);
-        Assert.assertNotNull(blk_cbo);
-        blk_cbo.selectItem(1);
+        JComboBoxOperator blk_cbo_slip = new JComboBoxOperator(jfo, 10);
+        Assert.assertNotNull(blk_cbo_slip);
+        blk_cbo_slip.selectItem(1);
 
         // Enable Hide
         new JCheckBoxOperator(jfo, 0).doClick();
@@ -161,7 +157,7 @@ public class LayoutTrackEditorsTest {
         // Edit the double slip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(slip);
-        jfo = new JFrameOperator("Edit Slip");
+        JFrameOperator jfo = new JFrameOperator("Edit Slip");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
@@ -174,7 +170,7 @@ public class LayoutTrackEditorsTest {
         // Edit the level crossing
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(xing);
-        jfo = new JFrameOperator("Edit Level Crossing");
+        JFrameOperator jfo = new JFrameOperator("Edit Level Crossing");
 
         // Select AC block
         JComboBoxOperator blk_cbo_AC = new JComboBoxOperator(jfo, 0);
@@ -199,7 +195,7 @@ public class LayoutTrackEditorsTest {
         // Edit the level crossing
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(xing);
-        jfo = new JFrameOperator("Edit Level Crossing");
+        JFrameOperator jfo = new JFrameOperator("Edit Level Crossing");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
