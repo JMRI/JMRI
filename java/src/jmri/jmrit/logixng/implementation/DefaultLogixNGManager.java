@@ -644,8 +644,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     MaleSocket socketAnalogActionMemory = InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
 
                     DoAnalogAction doAnalogAction = new DoAnalogAction(getSystemNamePrefix()+"DA:00101", "My do analog action");
-                    doAnalogAction.setAnalogExpressionSocketSystemName(socketAnalogExpressionMemory.getSystemName());
-                    doAnalogAction.setAnalogActionSocketSystemName(socketAnalogActionMemory.getSystemName());
+                    doAnalogAction.getChild(0).connect(socketAnalogExpressionMemory);
+//DANIEL                    doAnalogAction.setAnalogExpressionSocketSystemName(socketAnalogExpressionMemory.getSystemName());
+                    doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
+//DANIEL                    doAnalogAction.setAnalogActionSocketSystemName(socketAnalogActionMemory.getSystemName());
                     MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
                     socketSecondMany.getChild(index++).connect(socket);
                     
@@ -672,8 +674,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     MaleSocket socketStringActionMemory = InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
 
                     DoStringAction doStringAction = new DoStringAction(getSystemNamePrefix()+"DA:00103", "My do string action");
-                    doStringAction.setStringExpressionSocketSystemName(socketStringExpressionMemory.getSystemName());
-                    doStringAction.setStringActionSocketSystemName(socketStringActionMemory.getSystemName());
+                    doStringAction.getChild(0).connect(socketStringExpressionMemory);
+//DANIEL                    doStringAction.setStringExpressionSocketSystemName(socketStringExpressionMemory.getSystemName());
+                    doStringAction.getChild(1).connect(socketStringActionMemory);
+//DANIEL                    doStringAction.setStringActionSocketSystemName(socketStringActionMemory.getSystemName());
                     socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
                     socketSecondMany.getChild(index++).connect(socket);
 
@@ -684,8 +688,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     socketStringActionMemory = InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
 
                     doStringAction = new DoStringAction(getSystemNamePrefix()+"DA:00104", null);
-                    doStringAction.setStringExpressionSocketSystemName(socketStringExpressionMemory.getSystemName());
-                    doStringAction.setStringActionSocketSystemName(socketStringActionMemory.getSystemName());
+                    doStringAction.getChild(0).connect(socketStringExpressionMemory);
+//DANIEL                    doStringAction.setStringExpressionSocketSystemName(socketStringExpressionMemory.getSystemName());
+                    doStringAction.getChild(1).connect(socketStringActionMemory);
+//DANIEL                    doStringAction.setStringActionSocketSystemName(socketStringActionMemory.getSystemName());
                     socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
                     socketSecondMany.getChild(index++).connect(socket);
                     
@@ -778,10 +784,10 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                                 if (!originalTree.equals(stringWriter.toString())) {
                                     log.error("--------------------------------------------");
                                     log.error("Old tree:");
-                                    log.error(originalTree);
+                                    log.error("XXX"+originalTree+"XXX");
                                     log.error("--------------------------------------------");
                                     log.error("New tree:");
-                                    log.error(stringWriter.toString());
+                                    log.error("XXX"+stringWriter.toString()+"XXX");
                                     log.error("--------------------------------------------");
                                     
 //                                    log.error(InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
