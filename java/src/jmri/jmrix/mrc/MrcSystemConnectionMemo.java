@@ -35,6 +35,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * @return current traffic controller for this connection
      */
     public MrcTrafficController getMrcTrafficController() {
+        if (mrcTrafficController == null) new Exception("found tc null in request").printStackTrace();
         return mrcTrafficController;
     }
     private MrcTrafficController mrcTrafficController;
@@ -54,7 +55,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         }
         if (programmerManager == null) {
-            programmerManager = new MrcProgrammerManager(new MrcProgrammer(getMrcTrafficController()), this);
+            programmerManager = new MrcProgrammerManager(new MrcProgrammer(this), this);
         }
         return programmerManager;
     }
