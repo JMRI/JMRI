@@ -43,7 +43,7 @@ public class LinkedWarrantTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-//        panel.setVisible(false);  // hide panel to prevent repaint.
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor1);
@@ -118,7 +118,7 @@ public class LinkedWarrantTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-//        panel.setVisible(false);  // hide panel to prevent repaint.
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor12 = _sensorMgr.getBySystemName("IS12");
         Assert.assertNotNull("Senor IS12 not found", sensor12);
@@ -191,7 +191,7 @@ public class LinkedWarrantTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
-//        panel.setVisible(false);  // hide panel to prevent repaint.
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
@@ -276,7 +276,7 @@ public class LinkedWarrantTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
-//        panel.setVisible(false);  // hide panel to prevent repaint.
+        panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);

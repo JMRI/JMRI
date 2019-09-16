@@ -144,7 +144,6 @@ public class LearnWarrantTest {
 
         // wait for done
         final String name =  w.getDisplayName();
-//        warrant.getRunModeMessage(); //throw away one read to help waitFor
         jmri.util.JUnitUtil.waitFor(()->{
             return w.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));
         }, "warrant NotRunning message");

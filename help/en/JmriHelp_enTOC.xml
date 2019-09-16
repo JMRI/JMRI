@@ -520,6 +520,8 @@
 
    <tocitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
+   <tocitem text="Train Trackers " target="package.jmri.jmrit.logix.Tracker"/>
+
    <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
 
    <tocitem text="Creating and Editing OBlocks, Portals and OPaths " target="package.jmri.jmrit.logix.OBlockEdit"/>

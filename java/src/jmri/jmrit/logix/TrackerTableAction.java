@@ -161,9 +161,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     }
 
     boolean nameInuse(String name) {
-        Iterator<Tracker> iter = _trackerList.iterator();
-        while (iter.hasNext()) {
-            Tracker t = iter.next();
+        for (Tracker t : _trackerList) {
             if (name.equals(t.getTrainName())) {
                 return true;
             }
@@ -187,9 +185,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * @return Tracker if found
      */
     public Tracker findTrackerIn(OBlock b) {
-        Iterator<Tracker> iter = _trackerList.iterator();
-        while (iter.hasNext()) {
-            Tracker t = iter.next();
+        for (Tracker t : _trackerList) {
             if (t.getBlocksOccupied().contains(b)) {
                 return t;
             }
@@ -606,6 +602,8 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             tablePanel.add(panel, BorderLayout.CENTER);
 
             setContentPane(tablePanel);
+
+            addHelpMenu("package.jmri.jmrit.logix.Tracker", true);
 
             addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
