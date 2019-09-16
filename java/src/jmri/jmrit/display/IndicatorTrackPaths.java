@@ -139,7 +139,7 @@ public class IndicatorTrackPaths {
         _loco.setLineWidth(1);
         _loco.setLineColor(Color.BLACK);
         _loco.setFillColor(block.getMarkerBackground());
-        _loco.setBlock(block, this);
+        _loco.setBlock(block);
         _loco.setWidth(width + height / 2);
         _loco.setHeight(height + 2);
         _loco.setCornerRadius(height);

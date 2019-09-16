@@ -182,11 +182,11 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
        _frame.setStatus(msg);
    }
     /**
-     * Called by Warrant class see if any Trackers are occupying block
+     * See if any Trackers are occupying block
      * @param b Block being queried
-     * @return Name of tracker if found
+     * @return Tracker if found
      */
-    protected Tracker findTrackerIn(OBlock b) {
+    public Tracker findTrackerIn(OBlock b) {
         Iterator<Tracker> iter = _trackerList.iterator();
         while (iter.hasNext()) {
             Tracker t = iter.next();

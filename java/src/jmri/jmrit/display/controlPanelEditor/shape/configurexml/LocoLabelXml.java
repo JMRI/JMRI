@@ -69,7 +69,7 @@ public class LocoLabelXml extends PositionableRectangleXml {
             String name = elem.getAttribute("systemName").getValue();
             OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
             OBlock block = manager.getBySystemName(name);
-            ll.setBlock(block, null);
+            ll.setBlock(block);
             if (elem.getAttribute("trainName") != null && block != null) {
                 block.setValue(elem.getAttribute("trainName").getValue());
             }
