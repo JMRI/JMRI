@@ -58,6 +58,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
                 "      ! %n" +
                 "         Read string E1 and set string A1%n" +
                 "            ?s E1%n" +
+                "               Socket not connected%n" +
                 "            !s A1%n" +
                 "               Set memory IM1%n");
     }

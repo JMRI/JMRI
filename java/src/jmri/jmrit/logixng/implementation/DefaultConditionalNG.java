@@ -232,7 +232,6 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     final public void setup() {
-        log.error("AAAAA: {}, {}, {}", this.getSystemName(), _socketSystemName, _femaleActionSocket.isConnected());
         if (!_femaleActionSocket.isConnected()
                 || !_femaleActionSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
@@ -256,7 +255,6 @@ public class DefaultConditionalNG extends AbstractBase
         } else {
             _femaleActionSocket.setup();
         }
-        log.error("BBBBB: {}, {}, {}, {}", this.getSystemName(), _socketSystemName, _femaleActionSocket.isConnected(), _femaleActionSocket.getConnectedSocket().getSystemName());
     }
 
     /** {@inheritDoc} */

@@ -40,6 +40,8 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
         
         storeCommon(p, element);
         
+        element.addContent(new Element("antecedent").addContent(p.getAntecedent()));
+        
         Element e = new Element("expressions");
         for (int i=0; i < p.getChildCount(); i++) {
             Element e2 = new Element("socket");
@@ -79,11 +81,17 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
+        
+        String antecedent = "";
+        if (shared.getChild("antecedent") != null) {
+            antecedent = shared.getChild("antecedent").getText();
+        }
+        
         DigitalExpressionBean h;
         if (uname == null) {
-            h = new Antecedent(sys, null, "", expressionSystemNames);
+            h = new Antecedent(sys, null, antecedent, expressionSystemNames);
         } else {
-            h = new Antecedent(sys, uname, "", expressionSystemNames);
+            h = new Antecedent(sys, uname, antecedent, expressionSystemNames);
         }
 
         loadCommon(h, shared);

@@ -245,7 +245,6 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void setConditionalNG_SystemName(int index, String systemName) {
-        System.err.format("AAA zzz: %s - %d: %s%n", this.getSystemName(), index, systemName);
         if (index == _conditionalNG_Entries.size()) {
             _conditionalNG_Entries.add(new ConditionalNG_Entry(systemName));
         } else {

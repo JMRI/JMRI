@@ -39,7 +39,9 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "Read analog E1 and set analog A1%n" +
                 "   ?~ E1%n" +
-                "   !~ A1%n");
+                "      Socket not connected%n" +
+                "   !~ A1%n" +
+                "      Socket not connected%n");
     }
     
     @Override
@@ -50,7 +52,9 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
                 "      ! %n" +
                 "         Read analog E1 and set analog A1%n" +
                 "            ?~ E1%n" +
-                "            !~ A1%n");
+                "               Socket not connected%n" +
+                "            !~ A1%n" +
+                "               Socket not connected%n");
     }
     
     @Test

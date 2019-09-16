@@ -42,7 +42,8 @@ public class ManyTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Many%n" +
-                "   ! A1%n");
+                "   ! A1%n" +
+                "      Socket not connected%n");
     }
     
     @Override
@@ -52,7 +53,8 @@ public class ManyTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Many%n" +
-                "            ! A1%n");
+                "            ! A1%n" +
+                "               Socket not connected%n");
     }
     
     @Test

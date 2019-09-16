@@ -44,8 +44,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "If E then A1 else A2%n" +
                 "   ? E%n" +
+                "      Sensor Not selected is Active%n" +
                 "   ! A1%n" +
-                "   ! A2%n");
+                "      Set turnout '' to Thrown%n" +
+                "   ! A2%n" +
+                "      Socket not connected%n");
     }
     
     @Override
@@ -56,8 +59,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
+                "               Sensor Not selected is Active%n" +
                 "            ! A1%n" +
-                "            ! A2%n");
+                "               Set turnout '' to Thrown%n" +
+                "            ! A2%n" +
+                "               Socket not connected%n");
     }
     
     @Test
@@ -116,10 +122,6 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         
         _base = action;
         _baseMaleSocket = maleSocket;
-        
-        System.err.format("expr: %b%n", action.getChild(0).isConnected());
-        System.err.format("action1: %b%n", action.getChild(1).isConnected());
-        System.err.format("action2: %b%n", action.getChild(2).isConnected());
     }
 
     @After

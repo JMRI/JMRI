@@ -62,6 +62,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
                 "      ! %n" +
                 "         Read string E1 and set string A1%n" +
                 "            ?s E1%n" +
+                "               Get memory IM1%n" +
                 "            !s A1%n" +
                 "               Set memory IM2%n");
     }

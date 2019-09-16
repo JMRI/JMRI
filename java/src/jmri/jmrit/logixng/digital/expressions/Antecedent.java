@@ -196,6 +196,10 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
         return _expressionEntries.get(index)._socketSystemName;
     }
 
+    public String getAntecedent() {
+        return _antecedent;
+    }
+    
     @Override
     public void connected(FemaleSocket socket) {
         boolean hasFreeSocket = false;

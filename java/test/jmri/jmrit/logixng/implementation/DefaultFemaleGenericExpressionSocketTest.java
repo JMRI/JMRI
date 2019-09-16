@@ -36,7 +36,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         femaleSocket.connect(maleSocket);
         femaleSocket.setParentForAllChildren();
         Assert.assertEquals("malesocket.getParent() is femaleSocket",
-                femaleGenericSocket.getCurrentActiveSocket(),
+                femaleGenericSocket,
                 maleSocket.getParent());
     }
     

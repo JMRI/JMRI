@@ -46,7 +46,8 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Execute A after 0 milliseconds%n" +
-                "   ! A%n");
+                "   ! A%n" +
+                "      Socket not connected%n");
     }
     
     @Override
@@ -56,7 +57,8 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Execute A after 0 milliseconds%n" +
-                "            ! A%n");
+                "            ! A%n" +
+                "               Socket not connected%n");
     }
     
     @Test

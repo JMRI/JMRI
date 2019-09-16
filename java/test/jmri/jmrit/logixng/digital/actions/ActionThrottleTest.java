@@ -38,7 +38,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Throttle%n" +
-                "   ?~ E1%n");
+                "   ?~ E1%n" +
+                "      Socket not connected%n");
     }
     
     @Override
@@ -48,7 +49,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Throttle%n" +
-                "            ?~ E1%n");
+                "            ?~ E1%n" +
+                "               Socket not connected%n");
     }
     
     @Test

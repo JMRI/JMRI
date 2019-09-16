@@ -67,6 +67,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
                 "      ! %n" +
                 "         Read analog E1 and set analog A1%n" +
                 "            ?~ E1%n" +
+                "               Get memory IM1%n" +
                 "            !~ A1%n" +
                 "               Set memory IM2%n");
     }

@@ -723,10 +723,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                             System.exit(-1);
                         }
                         
-                        log.error(InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC:0001").getChild(0).getConnectedSocket().getSystemName());
-                        log.error("AAAAAAA: {}, {}", conditionalNG.getSystemName(), conditionalNG.getChild(0).getConnectedSocket().getSystemName());
-                        
-                        
                         if (load == 1) {
                             java.util.Set<LogixNG> logixNG_Set = new java.util.HashSet<>(InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet());
                             for (LogixNG aLogixNG : logixNG_Set) {
@@ -773,8 +769,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                             if (results) {
                                 resolveAllTrees();
                                 setupAllLogixNGs();
-                                
-                                log.error("BBBBBBB: {}, {}", "IQC:0003", InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC:0003").getChild(0).getConnectedSocket().getSystemName());
                                 
                                 logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getLogixNG("Yet another logixNG");
                                 stringWriter = new StringWriter();

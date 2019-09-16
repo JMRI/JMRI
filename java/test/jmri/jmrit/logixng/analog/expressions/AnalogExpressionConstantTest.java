@@ -62,6 +62,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
                 "      ! %n" +
                 "         Read analog E1 and set analog A1%n" +
                 "            ?~ E1%n" +
+                "               Get constant value 10.2%n" +
                 "            !~ A1%n" +
                 "               Set memory IM2%n");
     }

@@ -58,6 +58,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
                 "      ! %n" +
                 "         Read analog E1 and set analog A1%n" +
                 "            ?~ E1%n" +
+                "               Socket not connected%n" +
                 "            !~ A1%n" +
                 "               Set memory IM1%n");
     }

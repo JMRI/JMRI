@@ -65,7 +65,7 @@
     <memory>
       <systemName>IM4</systemName>
     </memory>
-    <memory value="6:43 em">
+    <memory value="9:58 fm">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -78,7 +78,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Sep 15 18:43:11 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Sep 16 09:58:25 CEST 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="yes">
       <systemName>IQ:0001</systemName>
@@ -564,6 +564,7 @@
     </expression-turnout>
     <antecedent class="jmri.jmrit.logixng.digital.expressions.configurexml.AntecedentXml">
       <systemName>IQDE:00008</systemName>
+      <antecedent>R1</antecedent>
       <expressions>
         <socket>
           <socketName>E1</socketName>
@@ -572,6 +573,7 @@
     </antecedent>
     <antecedent class="jmri.jmrit.logixng.digital.expressions.configurexml.AntecedentXml">
       <systemName>IQDE:00009</systemName>
+      <antecedent>R1</antecedent>
       <expressions>
         <socket>
           <socketName>E1</socketName>
@@ -585,6 +587,7 @@
     <antecedent class="jmri.jmrit.logixng.digital.expressions.configurexml.AntecedentXml">
       <systemName>IQDE:00010</systemName>
       <userName>My Antecedent expression</userName>
+      <antecedent>R1</antecedent>
       <expressions>
         <socket>
           <socketName>E1</socketName>
@@ -786,13 +789,37 @@
       <userName>My action</userName>
     </string-action-memory>
   </logixngStringActions>
-  <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml" />
+  <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
+    <conditionalng enabled="yes">
+      <systemName>IQC:0001</systemName>
+      <userName>A conditionalNG</userName>
+      <socket>
+        <socketName />
+        <systemName>IQDA:0001</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="no">
+      <systemName>IQC:0002</systemName>
+      <socket>
+        <socketName />
+        <systemName>IQDA:0004</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:0003</systemName>
+      <userName>Yet another conditionalNG</userName>
+      <socket>
+        <socketName />
+        <systemName>IQDA:0007</systemName>
+      </socket>
+    </conditionalng>
+  </logixngConditionalNGs>
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sun Sep 15 18:43:11 CEST 2019</date>
+      <date>Mon Sep 16 09:58:25 CEST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.5ish+daniel+20190915T1642Z on Sun Sep 15 18:43:11 CEST 2019-->
+  <!--Written by JMRI version 4.17.5ish+daniel+20190916T0758Z on Mon Sep 16 09:58:25 CEST 2019-->
 </layout-config>

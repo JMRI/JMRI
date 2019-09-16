@@ -40,7 +40,8 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Hold anything%n" +
-                "   ! A1%n");
+                "   ! A1%n" +
+                "      Socket not connected%n");
     }
     
     @Override
@@ -50,7 +51,8 @@ public class HoldAnythingTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Hold anything%n" +
-                "            ! A1%n");
+                "            ! A1%n" +
+                "               Socket not connected%n");
     }
     
     @Test
