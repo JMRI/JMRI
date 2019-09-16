@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Turnout via Tams communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Tams communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
@@ -126,7 +126,7 @@ public class TamsTurnout extends AbstractTurnout
      * state change (by using a throttle), and that command has
      * already taken effect. Hence we use "newKnownState" to indicate it's taken
      * place.
-     * <P>
+     *
      * @param state Observed state, updated state from command station
      */
     synchronized void setKnownStateFromCS(int state) {
@@ -142,7 +142,7 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     /**
-     * Tams turnouts can be inverted
+     * Tams turnouts can be inverted.
      */
     @Override
     public boolean canInvert() {
@@ -159,10 +159,9 @@ public class TamsTurnout extends AbstractTurnout
         // get control
         TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "r" : "g") + ",1");
         tc.sendTamsMessage(m, this);
-
     }
 
-    // to listen for status changes from Tams system
+    // Listen for status changes from Tams system.
     @Override
     public void reply(TamsReply m) {
         log.debug("*** TamsReply ***");
@@ -229,6 +228,5 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsTurnout.class);
+
 }
-
-

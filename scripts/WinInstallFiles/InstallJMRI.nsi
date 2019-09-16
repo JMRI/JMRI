@@ -50,6 +50,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.24.1
+; - Correct the support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
+; - Version 0.1.24.0
+; - Add support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.15
 ; - Backup and remove classes folder
 ; -------------------------------------------------------------------------
@@ -298,7 +304,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.15"                   ; Installer version
+!define INST_VER  "0.1.24.1"                   ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -477,6 +483,12 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- that might not be consistent with this new version
     RMDir /R "$OUTDIR\classes"
 
+	; -- Delete OBE JSON processing files as of JMRI 4.15.5
+    Delete "$OUTDIR\lib\jackson-annotations-2.8.11.jar"
+    Delete "$OUTDIR\lib\jackson-core-2.8.11.jar"
+    Delete "$OUTDIR\lib\jackson-databind-2.8.11.jar"
+    Delete "$OUTDIR\lib\json-schema-validator-0.1.19.jar"
+	
     ; -- Delete insecure jackson jar files as of JMRI 4.11.3
     Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
     Delete "$OUTDIR\lib\jackson-core-2.8.5.jar"
@@ -1194,9 +1206,12 @@ Function CheckJRE
     ClearErrors
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JRE\$1" "JavaHome"
-    IfErrors 0 +3
+    IfErrors 0 JRECheck
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$1" "JavaHome"
+    IfErrors 0 JRECheck
+    ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
+    ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JDK\$1" "JavaHome"
 
     ; -- Not found
     IfErrors 0 JRECheck

@@ -7,11 +7,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import jmri.jmris.JmriServer;
+
 /**
- * Frame displaying start/stop buttons for the JMRI server.
+ * Frame displaying start/stop buttons for the JMRI SRCP server.
  *
  * @author Paul Bender Copyright (C) 2009
-  */
+ */
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
     public JmriSRCPServerFrame() {
@@ -79,11 +81,11 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSRCPServer() {
-        JmriSRCPServer.instance().start();
+        jmri.InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopSRCPServer() {
-        JmriSRCPServer.instance().stop();
+        jmri.InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }

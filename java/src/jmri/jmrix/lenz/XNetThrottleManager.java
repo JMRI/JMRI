@@ -1,8 +1,9 @@
 package jmri.jmrix.lenz;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import jmri.LocoAddress;
-import jmri.ThrottleManager;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +11,11 @@ import org.slf4j.LoggerFactory;
 /**
  * XNet implementation of a ThrottleManager based on the
  * AbstractThrottleManager.
- * <P>
+ *
  * @author Paul Bender Copyright (C) 2002-2004
  * @navassoc 1 - * jmri.jmrix.lenz.XNetThrottle
  */
-public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener {
+public class XNetThrottleManager extends AbstractThrottleManager implements XNetListener {
 
     protected HashMap<LocoAddress, XNetThrottle> throttles = new HashMap<LocoAddress, XNetThrottle>(5);
 
@@ -71,6 +72,8 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * XpressNet based systems can have multiple throttles for the same
      * device.
+     * <p>
+     * {@inheritDoc}
      */
     @Override
     protected boolean singleUse() {
@@ -114,11 +117,11 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * 14,27,28 and 128 speed step modes
      */
     @Override
-    public int supportedSpeedModes() {
-        return (jmri.DccThrottle.SpeedStepMode128
-                | jmri.DccThrottle.SpeedStepMode28
-                | jmri.DccThrottle.SpeedStepMode27
-                | jmri.DccThrottle.SpeedStepMode14);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
+                , SpeedStepMode.NMRA_DCC_28
+                , SpeedStepMode.NMRA_DCC_27
+                , SpeedStepMode.NMRA_DCC_14);
     }
 
     /**

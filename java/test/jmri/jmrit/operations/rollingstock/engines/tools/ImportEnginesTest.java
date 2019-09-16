@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.regex.Pattern;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -12,19 +11,23 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JFileChooserOperator;
+
+import org.junit.*;
+import org.junit.rules.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
 public class ImportEnginesTest extends OperationsTestCase {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(60); // 60 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCTor() {
@@ -60,6 +63,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -69,20 +78,15 @@ public class ImportEnginesTest extends OperationsTestCase {
         Assert.assertEquals("engines", 0, emanager.getNumEntries());
 
         // do import      
-        Thread mb = new ImportEngines();
+        Thread mb = new ImportEngines(){
+            @Override
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportEngines.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for file chooser");
-
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportEngines.getOperationsFileName());
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return mb.getState().equals(Thread.State.WAITING);
@@ -149,6 +153,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -160,24 +170,15 @@ public class ImportEnginesTest extends OperationsTestCase {
         lmanager.deregister(loc);
 
         // do import      
-        Thread mb = new ImportEngines();
+        Thread mb = new ImportEngines(){
+            @Override
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportEngines.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for file chooser");
-
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportEngines.getOperationsFileName());
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog window to appear");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
@@ -223,25 +224,14 @@ public class ImportEnginesTest extends OperationsTestCase {
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.TERMINATED);
-        }, "wait for import complete");
+        try {
+            mb.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportEnginesTest.class);

@@ -11,26 +11,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class JmriJFrameTest {
-
-    @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JmriJFrame t = new JmriJFrame("JmriJFrame ConstructorTest");
-        Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(t);
-    }
+public class JmriJFrameTest extends JmriJFrameTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new JmriJFrame("JmriJFrame ConstructorTest");
+        }
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JmriJFrameTest.class);

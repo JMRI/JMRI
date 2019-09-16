@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import java.util.Locale;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the Acela-specific Sensor implementation.
  * <p>
- * System names are "ASnnnn", where nnnn is the sensor number without padding.
+ * System names are "ASnnnn", where A is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 0.
  * <p>
@@ -23,19 +25,16 @@ import org.slf4j.LoggerFactory;
 public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         implements AcelaListener {
 
-    private AcelaSystemConnectionMemo _memo = null;
-
     public AcelaSensorManager(AcelaSystemConnectionMemo memo) {
-        super();
-        _memo = memo;
+        super(memo);
     }
 
     /**
-     * Get the configured system prefix for this connection.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public AcelaSystemConnectionMemo getMemo() {
+        return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
@@ -45,8 +44,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
-        // validate the system name, and normalize it
-        String sName = normalizeSystemName(systemName);
+        // TODO: validate the system name
+        String sName = systemName;
         if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Acela Sensor system name: {}", systemName);
@@ -67,8 +66,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
         // check bit number
         int bit = AcelaAddress.getBitFromSystemName(sName, getSystemPrefix());
-        if ((bit < 0) || (bit >= 1023)) {
-            log.error("Sensor bit number {} is outside the supported range 1-1024", Integer.toString(bit));
+        if ((bit < AcelaAddress.MINSENSORADDRESS) || (bit > AcelaAddress.MAXSENSORADDRESS)) {
+            log.error("Sensor bit number {} is outside the supported range {}-{}", bit, AcelaAddress.MINSENSORADDRESS, AcelaAddress.MAXSENSORADDRESS);
             return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
@@ -79,7 +78,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         }
 
         // ensure that a corresponding Acela Node exists
-        AcelaNode node = AcelaAddress.getNodeFromSystemName(sName, _memo);
+        AcelaNode node = AcelaAddress.getNodeFromSystemName(sName, getMemo());
         if (node == null) {
             log.warn("Sensor: {} refers to an undefined Acela Node.", sName);
             return s;
@@ -96,24 +95,26 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Public method to validate system name format.
-     *
-     * @return VALID if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
+     * <p>
+     * Verifies system name has valid prefix and is an integer from
+     * {@value AcelaAddress#MINSENSORADDRESS} to
+     * {@value AcelaAddress#MAXSENSORADDRESS}.
+     */
+    @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return super.validateIntegerSystemNameFormat(systemName,
+                AcelaAddress.MINSENSORADDRESS,
+                AcelaAddress.MAXSENSORADDRESS,
+                locale);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format,
-     * else return ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }
 
     /**
@@ -130,7 +131,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public void reply(AcelaReply r) {
         // Determine which state we are in: Initializing Acela Network or Polling Sensors
-        boolean currentstate = _memo.getTrafficController().getAcelaTrafficControllerState();
+        boolean currentstate = getMemo().getTrafficController().getAcelaTrafficControllerState();
         //  Flag to indicate which state we are in: 
         //  false == Initializing Acela Network
         //  true == Polling Sensors
@@ -194,16 +195,16 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                             }
                         }
                         int tempaddr = i + 1;
-                        new AcelaNode(tempaddr, nodetype, _memo.getTrafficController());
+                        new AcelaNode(tempaddr, nodetype, getMemo().getTrafficController());
                         log.info("Created a new Acela Node [{}] as a result of Acela network Poll of type: {}", tempaddr, replynodetype);
                     }
-                    _memo.getTrafficController().setAcelaTrafficControllerState(true);
+                    getMemo().getTrafficController().setAcelaTrafficControllerState(true);
                 }
             }
         } else {
             int replysize = r.getNumDataElements();
             if (replysize > 1) {  // Bob C: not good if only one sensor module !!
-                _memo.getTrafficController().updateSensorsFromPoll(r);
+                getMemo().getTrafficController().updateSensorsFromPoll(r);
             }
         }
     }
@@ -211,6 +212,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Method to register any orphan Sensors when a new Acela Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
         log.info("Trying to register sensor from Manager 2: {}Sxx", getSystemPrefix()); // multichar prefix
@@ -226,7 +228,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("system Name is {}", sName);
                 if (sName.startsWith(getSystemPrefix() + "S")) { // multichar prefix
                     // This is an Acela Sensor
-                    tNode = AcelaAddress.getNodeFromSystemName(sName, _memo);
+                    tNode = AcelaAddress.getNodeFromSystemName(sName, getMemo());
                     if (tNode == node) {
                         // This sensor is for this new Acela Node - register it
                         node.registerSensor(getBySystemName(sName),
@@ -240,18 +242,6 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
-    }
-
-    /**
-     * Static function returning the AcelaSensorManager instance to use.
-     *
-     * @return The registered AcelaSensorManager instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public AcelaSensorManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class);

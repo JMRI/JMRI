@@ -45,6 +45,8 @@ import org.junit.runners.Suite;
         SplitButtonColorChooserPanelTest.class,
         JmriColorChooserPanelTest.class,
         JmriColorChooserTest.class,
+        TextAreaFIFOTest.class,
+        ComboBoxToolTipRendererTest.class
 })
 
 /**

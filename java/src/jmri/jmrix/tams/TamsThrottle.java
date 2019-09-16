@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a TAMS connection.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottle implementation and work by
  * Kevin Dickerson
  *
@@ -39,7 +39,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     public TamsThrottle(TamsSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
         tc = memo.getTrafficController();
 
         // cache settings. It would be better to read the
@@ -172,7 +172,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -259,7 +259,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
             return 0.f;
         } else if (lSpeed == 1) {
             return -1.f;   // estop
-        } else if (super.speedStepMode == SpeedStepMode128) {
+        } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             return ((lSpeed - 1) / 126.f);
         } else {
             return (int) (lSpeed * 27.f + 0.5) + 1;

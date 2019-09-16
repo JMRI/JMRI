@@ -7,6 +7,7 @@ import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -730,15 +731,6 @@ public class AbstractThrottleTest {
      * Test of dispose method, of class AbstractThrottle.
      */
     @Test
-    public void testDispose_0args() {
-        instance.dispose();
-        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
-    }
-
-    /**
-     * Test of dispose method, of class AbstractThrottle.
-     */
-    @Test
     public void testDispose_ThrottleListener() {
         ThrottleListener l = null;
         instance.dispose(l);
@@ -748,27 +740,9 @@ public class AbstractThrottleTest {
      * Test of dispatch method, of class AbstractThrottle.
      */
     @Test
-    public void testDispatch_0args() {
-        instance.dispatch();
-        jmri.util.JUnitAppender.assertWarnMessage("dispatch called without knowing the original throttle listener");
-    }
-
-    /**
-     * Test of dispatch method, of class AbstractThrottle.
-     */
-    @Test
     public void testDispatch_ThrottleListener() {
         ThrottleListener l = null;
         instance.dispatch(l);
-    }
-
-    /**
-     * Test of release method, of class AbstractThrottle.
-     */
-    @Test
-    public void testRelease_0args() {
-        instance.release();
-        jmri.util.JUnitAppender.assertWarnMessage("Release called without knowing the original throttle listener");
     }
 
     /**
@@ -1439,8 +1413,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testSetSpeedStepMode() {
-        int Mode = 0;
-        instance.setSpeedStepMode(Mode);
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
     }
 
     /**
@@ -1448,8 +1421,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeedStepMode() {
-        int expResult = 0;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.UNKNOWN;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 

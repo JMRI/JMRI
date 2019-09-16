@@ -50,8 +50,9 @@ abstract public class AbstractController {
      * jmri.Manager *Manager can implement specifics in register().
      *
      */
-    @SuppressWarnings("unchecked") // The systemNameList assignment is List<E extends Namedbean> to List<NamedBean>
-                                   // Make this class generic on <E extends NamedBean> (and manager) to fix this.
+    @SuppressWarnings({"unchecked", "deprecation"}) // The systemNameList assignment is List<E extends Namedbean> to List<NamedBean>
+                                    // Make this class generic on <E extends NamedBean> (and manager) to fix this.
+                                    // deprecation needs careful unwinding for Set operations
     public void buildList(jmri.Manager manager) {
         if (sysNameList == null) {
             sysNameList = manager.getSystemNameList();
@@ -68,7 +69,7 @@ abstract public class AbstractController {
 
     /**
      * If no listeners, clear sysNameList pointer and allow list to be re-built
-     * *Manager can implement specifics in deregister().
+     *Manager can implement specifics in deregister().
      */
     public void checkCanBuildList() {
         if (listeners.isEmpty()) {

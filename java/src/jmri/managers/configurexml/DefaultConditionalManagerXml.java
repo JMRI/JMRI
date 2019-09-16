@@ -16,8 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for configuring ConditionalManagers
- * <P>
+ * Provides the functionality for configuring ConditionalManagers.
  *
  * @author Dave Duchamp Copyright (c) 2007
  * @author Pete Cressman Copyright (C) 2009, 2011
@@ -34,6 +33,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
 //    	long numCond = 0;
 //    	long numStateVars = 0;
@@ -77,7 +77,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // store common parts
                 storeCommon(c, elem);
                 elem.setAttribute("antecedent", c.getAntecedentExpression());  // NOI18N
-                elem.setAttribute("logicType", Integer.toString(c.getLogicType()));  // NOI18N
+                elem.setAttribute("logicType", Integer.toString(c.getLogicType().getIntValue()));  // NOI18N
                 if (c.getTriggerOnChange()) {
                     elem.setAttribute("triggerOnChange", "yes");  // NOI18N
                 } else {
@@ -105,7 +105,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     } else {
                         vElem.setAttribute("negated", "no");  // NOI18N
                     }
-                    vElem.setAttribute("type", Integer.toString(variable.getType()));  // NOI18N
+                    vElem.setAttribute("type", Integer.toString(variable.getType().getIntValue()));  // NOI18N
                     vElem.setAttribute("systemName", variable.getName());  // NOI18N
                     vElem.setAttribute("dataString", variable.getDataString());  // NOI18N
                     vElem.setAttribute("num1", Integer.toString(variable.getNum1()));  // NOI18N
@@ -127,7 +127,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     ConditionalAction action = actionList.get(k);
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N
-                    aElem.setAttribute("type", Integer.toString(action.getType()));  // NOI18N
+                    aElem.setAttribute("type", Integer.toString(action.getType().getIntValue()));  // NOI18N
                     aElem.setAttribute("systemName", action.getDeviceName());  // NOI18N
                     aElem.setAttribute("data", Integer.toString(action.getActionData()));  // NOI18N
                     // To allow regression of config files back to previous releases
@@ -265,7 +265,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 logicType = Integer.parseInt(
                         condElem.getAttribute("logicType").getValue());  // NOI18N
             }
-            c.setLogicType(logicType, ant);
+            c.setLogicType(Conditional.AntecedentOperator.getOperatorFromIntValue(logicType), ant);
 
             // load state variables, if there are any
             List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");  // NOI18N
@@ -286,6 +286,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 } else {
                     int oper = Integer.parseInt(conditionalVarList.get(n)
                             .getAttribute("operator").getValue());  // NOI18N
+                    // Adjust old, lt 4.13.4, xml content
+                    if (oper == 2) oper = 4;
+                    if (oper == 3) oper = 1;
+                    if (oper == 6) oper = 5;
                     Conditional.Operator operator = Conditional.Operator.getOperatorFromIntValue(oper);
                     variable.setOpern(operator);
                 }
@@ -297,8 +301,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         variable.setNegation(false);
                     }
                 }
-                variable.setType(Integer.parseInt(conditionalVarList.get(n)
-                        .getAttribute("type").getValue()));  // NOI18N
+                variable.setType(Conditional.Type.getOperatorFromIntValue(
+                        Integer.parseInt(conditionalVarList.get(n).getAttribute("type").getValue())));  // NOI18N
                 variable.setName(conditionalVarList.get(n)
                         .getAttribute("systemName").getValue());  // NOI18N
                 if (conditionalVarList.get(n).getAttribute("dataString") != null) {  // NOI18N
@@ -353,7 +357,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 attr = conditionalActionList.get(n).getAttribute("type");  // NOI18N
                 if (attr != null) {
-                    action.setType(Integer.parseInt(attr.getValue()));
+                    action.setType(Conditional.Action.getOperatorFromIntValue(Integer.parseInt(attr.getValue())));
                 } else {
                     log.warn("unexpected null in type " + conditionalActionList.get(n)  // NOI18N
                             + " " + conditionalActionList.get(n).getAttributes());
@@ -425,7 +429,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     InstanceManager.getDefault(jmri.ConditionalManager.class));
         }
         // register new one with InstanceManager
-        DefaultConditionalManager pManager = DefaultConditionalManager.instance();
+        DefaultConditionalManager pManager = InstanceManager.getDefault(DefaultConditionalManager.class);
         InstanceManager.store(pManager, ConditionalManager.class);
         InstanceManager.setDefault(ConditionalManager.class, pManager);
         // register new one for configuration

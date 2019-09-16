@@ -9,9 +9,7 @@ import java.awt.GraphicsEnvironment;
 import org.junit.*;
 import org.junit.rules.Timeout;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -75,9 +73,11 @@ public class MaintenanceTest {
         String[] result;
         
         // hit on sensor via to-capital system name
-        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
-        result = Maintenance.getTypeAndNames("is1");
-        checkReturnString(result, "Sensor", null, "IS1", "1");  //num listeners is empirical
+        InstanceManager.getDefault(SensorManager.class).provideSensor("is1");
+        result = Maintenance.getTypeAndNames("IS1");
+        checkReturnString(result, "", "IS1", "IS1", "0"); // Sensor "IS1" not found
+        result = Maintenance.getTypeAndNames("ISis1"); // because "is" is invalid prefix, system name is "ISis1"
+        checkReturnString(result, "Sensor", null, "ISis1", "1"); // num listeners is empirical
     }
 
     void checkReturnString(String[] result, String compare, String username, String systemname, String listeners) {
@@ -89,7 +89,7 @@ public class MaintenanceTest {
     }
    
     @Test
-    public void testDeviceReportPressed(){
+    public void testDeviceReportPressed() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -101,10 +101,11 @@ public class MaintenanceTest {
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
         });
+        t.join(); // only proceed when all done
     }
 
     @Test
-    public void testFindOrphansPressed(){
+    public void testFindOrphansPressed() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -116,10 +117,11 @@ public class MaintenanceTest {
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
         });
+        t.join(); // only proceed when all done
     }
 
     //@Test
-    public void testFindEmptyPressed(){
+    public void testFindEmptyPressed() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -131,6 +133,7 @@ public class MaintenanceTest {
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
         });
+        t.join(); // only proceed when all done
     }
 
 

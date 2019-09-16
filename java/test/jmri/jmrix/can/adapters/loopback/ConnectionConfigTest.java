@@ -11,20 +11,22 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
         cc = new ConnectionConfig();
+        cc.setManufacturer("MERG");
    }
 
    @After
+   @Override
    public void tearDown(){
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
    }
 

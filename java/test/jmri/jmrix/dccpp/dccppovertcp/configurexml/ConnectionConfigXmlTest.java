@@ -15,6 +15,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
@@ -24,6 +25,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;

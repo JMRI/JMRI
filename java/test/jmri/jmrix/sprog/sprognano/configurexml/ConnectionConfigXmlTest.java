@@ -2,6 +2,7 @@ package jmri.jmrix.sprog.sprognano.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.sprognano.ConnectionConfig;
 
 /**
@@ -13,8 +14,10 @@ import jmri.jmrix.sprog.sprognano.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
+    // need to override this to retain
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -22,9 +25,21 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+
+        // if we've started a traffic controller, dispose of it
+        if (cc.getAdapter() != null) {
+            if (cc.getAdapter().getSystemConnectionMemo() != null) {
+                if ( ((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController() != null)
+                    ((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController().dispose();
+            }
+        }
+ 
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
+    
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConnectionConfigXmlTest.class);
 }

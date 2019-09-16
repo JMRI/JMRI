@@ -36,7 +36,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -104,7 +104,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SectionGenerationComplete"));
+                JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
     }
@@ -222,7 +222,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             /**
              * Is this property event announcing a change this table should
              * display?
-             * <P>
+             * <p>
              * Note that events will come both from the NamedBeans and also from
              * the manager
              */
@@ -304,13 +304,14 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case SOURCEAPPCOL:
                     case COMCOL:
                     case DESTAPPCOL:
-                    case MAXSPEEDCOL:
                         return String.class;
                     case ENABLECOL:
                         return Boolean.class;
                     case EDITLOGICCOL:
                     case DELCOL:
                         return JButton.class;
+                    case MAXSPEEDCOL:
+                        return Float.class;
                     default:
                         return null;
                 }
@@ -534,10 +535,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     void autoCreatePairs(jmri.util.JmriJFrame f) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
+            int response = JOptionPane.showConfirmDialog(f, Bundle.getMessage("EnableLayoutBlockRouting"),
+                    Bundle.getMessage("TitleBlockRouting"), JOptionPane.YES_NO_OPTION);
             if (response == 0) {
                 InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("LayoutBlockRoutingEnabled"));
             } else {
                 return;
             }

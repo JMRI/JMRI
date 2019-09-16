@@ -53,7 +53,7 @@
         <li>They have passed all the CI tests
         <li>They have no outstanding reviews
         <li>If in a new area, large or from a new contributor, 
-            they have been in-cue for at least a day or so to allow people to take a look at them
+            they have been in-queue for at least a day or so to allow people to take a look at them
         <li>Don't appear to have any un-resolved controversies in the comments
       </ul>
       

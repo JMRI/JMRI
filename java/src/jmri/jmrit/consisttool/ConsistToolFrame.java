@@ -6,12 +6,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -25,6 +29,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import org.jdom2.JDOMException;
@@ -209,6 +217,24 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         setTitle(Bundle.getMessage("ConsistToolTitle"));
         //getContentPane().setLayout(new GridLayout(4,1));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        // add a "File" menu
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
+        menuBar.add(fileMenu);
+
+        // Add a save item
+        fileMenu.add(new AbstractAction(Bundle.getMessage("ScanConsists")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                scanRoster();
+                initializeConsistBox();
+                consistModel.fireTableDataChanged();
+                resetLocoButtonActionPerformed(e);
+            }
+        });
 
         // install items in GUI
         // The address and related buttons are installed in a single pane
@@ -664,6 +690,9 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     private boolean _readConsistFile = true;
 
     // ConsistListListener interface
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyConsistListChanged() {
         if (_readConsistFile) {
@@ -678,6 +707,40 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         }
         // update the consist list.
         initializeConsistBox();
+    }
+
+    /*
+     * private method to scan the roster for consists
+     */
+    private void scanRoster(){
+       List<RosterEntry> roster = Roster.getDefault().getAllEntries();
+       for(RosterEntry entry:roster){
+            DccLocoAddress address = entry.getDccLocoAddress();
+            CvTableModel  cvTable = new CvTableModel(_status, null);  // will hold CV objects
+            entry.readFile();  // read, but don’t yet process
+
+            entry.loadCvModel(null, cvTable);
+            CvValue cv19Value = cvTable.getCvByNumber("19");
+            if(cv19Value!=null && (cv19Value.getValue() & 0x7F)!=0){
+                boolean direction = ((cv19Value.getValue()&0x80)==0)?true:false;
+                DccLocoAddress consistAddress = new DccLocoAddress((cv19Value.getValue()&0x7f),false);
+                /*
+                 * Make sure the marked consist type is an advanced consist.
+                 * this consist
+                  */
+                Consist consist = consistManager.getConsist(consistAddress);
+                if (Consist.ADVANCED_CONSIST != consist.getConsistType()) {
+                    consist.setConsistType(Consist.ADVANCED_CONSIST);
+                }
+
+                if (consist.contains(address)) {
+                   continue; // skip to the next entry
+                } else {
+                   consist.add(address, direction );
+                   consist.setRosterId(address, entry.titleString());
+                }
+            }
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class);

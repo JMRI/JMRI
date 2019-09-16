@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2019-02-18</date>
+      <revremark>Initial version as include</revremark>
+    </revision>
+  </revhistory>
+  <!-- Uhlenbrock Intellimatic list from 73235 datasheet -->
+    <enumChoice choice="0">
+        <choice>0</choice>
+    </enumChoice>
+    <enumChoice choice="1">
+        <choice>1</choice>
+    </enumChoice>
+    <enumChoice choice="2">
+        <choice>2</choice>
+    </enumChoice>
+    <enumChoice choice="3">
+        <choice>3</choice>
+    </enumChoice>
+    <enumChoice choice="4">
+        <choice>4</choice>
+    </enumChoice>
+    <enumChoice choice="5">
+        <choice>5</choice>
+    </enumChoice>
+    <enumChoice choice="6">
+        <choice>6</choice>
+    </enumChoice>
+    <enumChoice choice="7">
+        <choice>7</choice>
+    </enumChoice>
+    <enumChoice choice="8">
+        <choice>8</choice>
+    </enumChoice>
+    <enumChoice choice="9">
+        <choice>9</choice>
+    </enumChoice>
+    <!--specific commands, incomplete-->
+    <enumChoice choice="Turn off Fn" value="32">
+        <choice>Turn off Function:</choice>
+        <choice xml:lang="de">Funktion ausschalten:</choice>
+    </enumChoice>
+    <enumChoice choice="Turn on Fn" value="40">
+        <choice>Turn on Function:</choice>
+        <choice xml:lang="de">Funktion einschalten:</choice>
+    </enumChoice>
+
+    <enumChoice choice="Apply Speed" value="65">
+        <choice>Change speed to:</choice>
+        <choice xml:lang="de">Fahrstufe ändern Sollwert:</choice>
+    </enumChoice>
+    <enumChoice choice="Recall speed" value="66">
+        <choice>Load store speed and go</choice>
+        <choice xml:lang="de">Soll-stufe laden und fahren</choice>
+    </enumChoice>
+    <enumChoice choice="Store speed" value="67">
+        <choice>Store current speed</choice>
+        <choice xml:lang="de">Soll-Fahrstufe speichern</choice>
+    </enumChoice>
+
+    <enumChoice choice="Change Direction" value="82">
+        <choice>Change direction</choice>
+        <choice xml:lang="de">Fahrtrichtung wechseln</choice>
+    </enumChoice>
+    <enumChoice choice="Freeze Speed" value="91">
+        <choice>Freeze speed + direction</choice>
+        <choice xml:lang="de">Friere Geschw. + Richtung</choice>
+    </enumChoice>
+
+    <enumChoice choice="Wait for Fn" value="168">
+        <choice>Wait until F key:</choice>
+        <choice xml:lang="de">Warte auf F-taste:</choice>
+    </enumChoice>
+    <enumChoice choice="Wait until" value="186">
+        <choice>Wait until speed reached</choice>
+        <choice xml:lang="de">Warte bis Sollwert errecht:</choice>
+    </enumChoice>
+
+    <enumChoice choice="Wait time" value="232">
+        <choice>Wait for: (*0.2 s)</choice>
+        <choice xml:lang="de">Warten für: (*0.2 s)</choice>
+    </enumChoice>
+    <enumChoice choice="Start with Fn" value="152">
+        <choice>Start macro with F key:</choice>
+        <choice xml:lang="de">Starte Ablauf mit F-taste:</choice>
+    </enumChoice>
+    <enumChoice choice="End macro" value="255">
+        <choice>End macro</choice>
+        <choice xml:lang="de">Ende des Ablaufes</choice>
+    </enumChoice>
+  </enumVal>

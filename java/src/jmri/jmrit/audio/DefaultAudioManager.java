@@ -3,11 +3,13 @@ package jmri.jmrit.audio;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractAudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +19,14 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -34,6 +35,10 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static int countListeners = 0;
     private static int countSources = 0;
     private static int countBuffers = 0;
+
+    public DefaultAudioManager(InternalSystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /**
      * Reference to the currently active AudioFactory. 
@@ -49,11 +54,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     public int getXMLOrder() {
         return jmri.Manager.AUDIO;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -109,12 +109,11 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     @Override
     public List<String> getSystemNameList(char subType) {
-        List<String> tempList = getSystemNameList();
+        Set<Audio> tempSet = getNamedBeanSet();
         List<String> out = new ArrayList<>();
-        tempList.stream().forEach((tempList1) -> {
-            Audio audio = this.getBySystemName(tempList1);
+        tempSet.stream().forEach((audio) -> {
             if (audio.getSubType() == subType) {
-                out.add(tempList1);
+                out.add(audio.getSystemName());
             }
         });
         return out;
@@ -169,9 +168,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     }
                 };
             }
-            if (InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
-                InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
-            }
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
 
             initialised = true;
             if (log.isDebugEnabled()) {
@@ -222,15 +219,12 @@ public class DefaultAudioManager extends AbstractAudioManager {
      * If not existing, create a new instance.
      *
      * @return reference to currently active AudioManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
+    @Deprecated
     public static DefaultAudioManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultAudioManager();
-        }
-        return _instance;
+        return InstanceManager.getDefault(DefaultAudioManager.class);
     }
-
-    private volatile static DefaultAudioManager _instance;
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class);
 

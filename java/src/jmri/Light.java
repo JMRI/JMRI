@@ -1,6 +1,8 @@
 package jmri;
 
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
+
 import jmri.implementation.LightControl;
 
 /**
@@ -18,7 +20,7 @@ import jmri.implementation.LightControl;
  * The primary states are:
  * <ul>
  * <li>ON, corresponding to maximum intensity
- * <LI>INTERMEDIATE, some value between maximum and minimum
+ * <li>INTERMEDIATE, some value between maximum and minimum
  * <li>OFF, corresponding to minimum intensity
  * </ul>
  * The underlying hardware may provide just the ON/OFF two levels, or have a
@@ -48,30 +50,20 @@ import jmri.implementation.LightControl;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Dave Duchamp Copyright (C) 2004, 2010
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends NamedBean {
-
-    /**
-     * State value indicating output intensity is at or above maxIntensity
-     */
-    public static final int ON = 0x02;
-
-    /**
-     * State value indicating output intensity is at or below minIntensity
-     */
-    public static final int OFF = 0x04;
+public interface Light extends DigitalIO, AnalogIO {
 
     /**
      * State value indicating output intensity is less than maxIntensity and
@@ -110,6 +102,47 @@ public interface Light extends NamedBean {
      * request to transition.
      */
     public static final int TRANSITIONING = 0x010;
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF)
+                || (getState() == INTERMEDIATE);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentValue() {
+        // Assume that the value is consistent if the state is consistent.
+        return isConsistentState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void setCommandedState(int s) {
+        setState(s);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getCommandedState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getKnownState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void requestUpdateFromLayout() {
+        // Do nothing
+    }
 
     /**
      * Set the demanded output state. Valid values are ON and OFF. ON
@@ -125,6 +158,7 @@ public interface Light extends NamedBean {
      * @throws IllegalArgumentException if invalid newState provided
      */
     @Override
+    @InvokeOnLayoutThread
     public void setState(int newState);
 
     /**
@@ -134,16 +168,16 @@ public interface Light extends NamedBean {
     public int getState();
 
     // control types - types defined
+    public static final int NO_CONTROL = 0x00;
     public static final int SENSOR_CONTROL = 0x01;
     public static final int FAST_CLOCK_CONTROL = 0x02;
     public static final int TURNOUT_STATUS_CONTROL = 0x03;
     public static final int TIMED_ON_CONTROL = 0x04;
     public static final int TWO_SENSOR_CONTROL = 0x05;
-    public static final int NO_CONTROL = 0x00;
 
     /**
      * Check if this object can handle variable intensity.
-     * <P>
+     * <p>
      * Unbound property.
      *
      * @return false if only ON/OFF is available.
@@ -174,18 +208,19 @@ public interface Light extends NamedBean {
      * TargetIntensity set to values between MinIntensity and MaxIntensity,
      * which would result in the INTERMEDIATE state, as that is invalid for
      * them.
-     * <P>
+     * <p>
      * If a non-zero value is set in the transitionTime property, the state will
      * be one of TRANSITIONTOFULLON, TRANSITIONHIGHER, TRANSITIONLOWER or
      * TRANSITIONTOFULLOFF until the transition is complete.
-     * <P>
-     * @param intensity the desired brightness
+     *
+ * @param intensity the desired brightness
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
      *                                  than 1.0
      * @throws IllegalArgumentException if isIntensityVariable is false and the
      *                                  new value is between MaxIntensity and
      *                                  MinIntensity
      */
+    @InvokeOnLayoutThread
     public void setTargetIntensity(double intensity);
 
     /**
@@ -228,6 +263,7 @@ public interface Light extends NamedBean {
      *                                  current value of the minIntensity
      *                                  property
      */
+    @InvokeOnLayoutThread
     public void setMaxIntensity(double intensity);
 
     /**
@@ -255,6 +291,7 @@ public interface Light extends NamedBean {
      *                                  current value of the maxIntensity
      *                                  property
      */
+    @InvokeOnLayoutThread
     public void setMinIntensity(double intensity);
 
     /**
@@ -268,7 +305,7 @@ public interface Light extends NamedBean {
     public double getMinIntensity();
 
     /**
-     * Can the Light change it's intensity setting slowly?
+     * Can the Light change its intensity setting slowly?
      * <p>
      * If true, this Light supports a non-zero value of the transitionTime
      * property, which controls how long the Light will take to change from one
@@ -283,7 +320,7 @@ public interface Light extends NamedBean {
     /**
      * Set the fast-clock duration for a transition from full ON to full OFF or
      * vice-versa.
-     * <P>
+     * <p>
      * Note there is no guarantee of how this scales when other changes in
      * intensity take place. In particular, some Light implementations will
      * change at a constant fraction per fastclock minute and some will take a
@@ -296,6 +333,7 @@ public interface Light extends NamedBean {
      *                                  minutes is not 0.0
      * @throws IllegalArgumentException if minutes is negative
      */
+    @InvokeOnLayoutThread
     public void setTransitionTime(double minutes);
 
     /**
@@ -317,14 +355,25 @@ public interface Light extends NamedBean {
      */
     public boolean isTransitioning();
 
+    // LightControl information management methods
+     
     /**
-     * LightControl information management methods
+     * Clears (removes) all LightControl objects for this light
      */
-    public void clearLightControls();  // clears all Light Controls for this Light
+    public void clearLightControls();
 
-    public void addLightControl(jmri.implementation.LightControl c); // add a LightControl
+    /** 
+     * Add a LightControl to this Light.
+     * <p>
+     * Duplicates are considered the same, hence not added
+     */
+    public void addLightControl(@Nonnull jmri.implementation.LightControl c);
 
-    public ArrayList<LightControl> getLightControlList(); // return a list of all LightControls
+    /**
+     * @return a list of all LightControls
+     */
+    @Nonnull
+    public ArrayList<LightControl> getLightControlList();
 
     /**
      * Set the Enabled property, which determines whether the control logic
@@ -333,6 +382,7 @@ public interface Light extends NamedBean {
      *
      * @param state true if control logic is enabled; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setEnabled(boolean state);
 
     /**
@@ -347,11 +397,13 @@ public interface Light extends NamedBean {
      * Activates a Light. This method activates each LightControl, setting up a
      * control mechanism, appropriate to its control type.
      */
+    @InvokeOnLayoutThread
     public void activateLight();
 
     /**
      * Deactivates a Light. This method deactivates each LightControl, shutting
      * down its control mechanism.
      */
+    @InvokeOnLayoutThread
     public void deactivateLight();
 }

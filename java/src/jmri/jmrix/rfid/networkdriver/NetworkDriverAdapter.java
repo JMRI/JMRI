@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements PortAdapter for a network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
@@ -57,26 +57,29 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
                 // create a Generic Stand-alone port controller
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
             case "MERG Concentrator": // NOI18N
                 // create a MERG Concentrator port controller
                 log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new ConcentratorSensorManager(control, this.getSystemPrefix()),
-                        new ConcentratorReporterManager(control, this.getSystemPrefix()));
+                        new ConcentratorSensorManager(this.getSystemConnectionMemo()),
+                        new ConcentratorReporterManager(this.getSystemConnectionMemo()));
                 break;
             default:
                 // no connection at all - warn
                 log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone"); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
-                        new StandaloneSensorManager(control, this.getSystemPrefix()),
-                        new StandaloneReporterManager(control, this.getSystemPrefix()));
+                        new StandaloneSensorManager(this.getSystemConnectionMemo()),
+                        new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;
         }
 

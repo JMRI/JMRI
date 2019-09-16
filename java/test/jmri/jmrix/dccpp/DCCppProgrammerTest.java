@@ -36,6 +36,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
  
     @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
@@ -58,7 +59,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write
-        p.writeCV(29, 34, l);
+        p.writeCV("29", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 29 34 0 87", t.outbound.elementAt(0).toString());
@@ -80,7 +81,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("test is commented out")
+    @Ignore("test body is commented out")
     public void testWriteRegisterSequence() throws JmriException {
         /*
         // infrastructure objects
@@ -97,7 +98,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
-        p.writeCV(29, 12, l);
+        p.writeCV("29", 12, l);
         // check "prog mode" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
@@ -150,7 +151,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         };
 
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "R 29 0 82", t.outbound.elementAt(0).toString());
@@ -191,7 +192,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 11 05 36", t.outbound.elementAt(0).toString());
@@ -245,7 +246,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         };
 
         // and do the write
-        p.writeCV(300, 34, l);
+        p.writeCV("300", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 300 34 0 87", t.outbound.elementAt(0).toString());
@@ -283,7 +284,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         };
 
         // and do the read
-        p.readCV(300, l);
+        p.readCV("300", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "R 300 0 82", t.outbound.elementAt(0).toString());
@@ -309,6 +310,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanWrite(int,string) function works correctly
     // TODO: Fix test to verify exception thrown for Register and paged modes.
     @Test
+    @Override
     public void testGetCanWrite() {
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertTrue("DCC++ Base Station can write CV3 in Register Mode", p.getCanWrite("3"));
@@ -341,6 +343,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanRead(int,string) function works correctly
     // TODO: Fix test to verify exception thrown for Register and paged modes.
     @Test
+    @Override
     public void testGetCanRead() {
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertTrue("DCC++ Base Station Can Read CV3 in register mode", p.getCanRead("3"));

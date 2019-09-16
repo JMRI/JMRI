@@ -8,15 +8,15 @@ import org.slf4j.LoggerFactory;
  * This class holds information and options for a Section when assigned to a
  * Transit. Corresponds to an allocatable "Section" of track assigned to a
  * Transit.
- * <P>
+ * <p>
  * A TransitSection holds the following information: Section ID Section
  * Direction Sequence number of Section within the Transit Special actions list
  * for train in this Section, if requested (see TransitSectionAction.java)
  * Whether this Section is a primary section or an alternate section
- * <P>
+ * <p>
  * A TransitSection is referenced via a list in its parent Transit, and is
  * stored on disk when its parent Transit is stored.
- * <P>
+ * <p>
  * Provides for delayed initializatio of Section when loading panel files, so
  * that this is not dependent on order of items in the panel file.
  *
@@ -62,13 +62,16 @@ public class TransitSection {
      *                  primary or has no alternates
      * @param safe      true if this is a safe section. When dispatcher by safe sections
      *                  a train is dispatched safe section to safe section with all intervening sections available.
+     * @param stopAllocatingSensorName If this sensor is present, valid, and Active allocation will stop until
+     *                  it is no longer Active.
      */
-    public TransitSection(jmri.Section s, int seq, int direction, boolean alt, boolean safe) {
+    public TransitSection(jmri.Section s, int seq, int direction, boolean alt, boolean safe, String stopAllocatingSensorName) {
         mSection = s;
         mSequence = seq;
         mDirection = direction;
         mAlternate = alt;
         mSafe = safe;
+        mStopAllocatingSensorName = stopAllocatingSensorName;
     }
 
     /**
@@ -100,13 +103,16 @@ public class TransitSection {
      *                  primary or has no alternates
      * @param safe      true if this is a safe section. When dispatcher by safe sections
      *                  a train is dispatched safe section to safe section with all intervening sections available.
+     * @param stopAllocatingSensorName If this sensor is present, valid, and Active allocation will stop until
+     *                  it is no longer Active.
      */
-    public TransitSection(String secName, int seq, int direction, boolean alt, boolean safe) {
+    public TransitSection(String secName, int seq, int direction, boolean alt, boolean safe, String stopAllocatingSensorName) {
         tSectionName = secName;
         mSequence = seq;
         mDirection = direction;
         mAlternate = alt;
         mSafe = safe;
+        mStopAllocatingSensorName = stopAllocatingSensorName;
         needsInitialization = true;
     }
 
@@ -117,6 +123,7 @@ public class TransitSection {
     private final ArrayList<TransitSectionAction> mTransitSectionActionList = new ArrayList<>();
     private boolean mAlternate = false;
     private boolean mSafe = false;
+    private String mStopAllocatingSensorName = "";
 
     // temporary variables and method for delayed initialization of Section
     private String tSectionName = "";
@@ -197,6 +204,15 @@ public class TransitSection {
     public void setSafe(boolean safe) {
         mSafe = safe;
     }
+
+    public String getStopAllocatingSensor() {
+        return mStopAllocatingSensorName;
+    }
+
+    public void setStopAllocatingSensor(String stopAllocatingSensor ) {
+        mStopAllocatingSensorName = stopAllocatingSensor;
+    }
+
 
     /**
      * Get a list of the actions for this TransitSection

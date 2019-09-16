@@ -35,6 +35,7 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
 
     @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
@@ -43,7 +44,7 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     @Test
     public void testWriteSequence() throws jmri.ProgrammerException {
-        p.writeCV(4, 5, testListener);
+        p.writeCV("4", 5, testListener);
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
@@ -58,7 +59,7 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     @Test
     public void testReadSequence() throws jmri.ProgrammerException {
-        p.readCV(4, testListener);
+        p.readCV("4", testListener);
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());

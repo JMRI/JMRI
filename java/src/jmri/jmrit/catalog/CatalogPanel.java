@@ -475,7 +475,6 @@ public class CatalogPanel extends JPanel {
     /**
      * Create panel element containing a "View on:" drop down list.
      * Employs a normal JComboBox, no Panel Background option.
-     * @see jmri.jmrit.catalog.PreviewDialog#setupPanel()
      *
      * @return the JPanel with label and drop down
      */
@@ -703,9 +702,8 @@ public class CatalogPanel extends JPanel {
         CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
         catalog.init(treeDrop, dragIcon);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        List<String> sysNames = manager.getSystemNameList();
-        for (int i = 0; i < sysNames.size(); i++) {
-            String systemName = sysNames.get(i);
+        for (CatalogTree tree : manager.getNamedBeanSet()) {
+            String systemName = tree.getSystemName();
             if (systemName.charAt(0) == 'I') {
                 catalog.addTree(manager.getBySystemName(systemName));
             }
@@ -765,15 +763,13 @@ public class CatalogPanel extends JPanel {
         if (dx == 0) {
             return sb.toString();
         }
-        if (decimalPlaces > 0) {
-            sb.append('.');
+        sb.append('.');
+        num /= 10;
+        while (num > dx) {
+            sb.append('0');
             num /= 10;
-            while (num > dx) {
-                sb.append('0');
-                num /= 10;
-            }
-            sb.append(dx);
         }
+        sb.append(dx);
         return sb.toString();
     }
 

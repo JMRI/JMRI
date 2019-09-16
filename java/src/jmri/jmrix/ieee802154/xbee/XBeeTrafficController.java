@@ -116,6 +116,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * should just sleep.
      */
     @Override
+    @SuppressWarnings("deprecation") // until there's a replacement for getPreferedTransmitAddress()
     protected AbstractMRMessage pollMessage() {
         if (numNodes <= 0) {
             return null;
@@ -177,6 +178,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
     }
 
+    @SuppressFBWarnings(value="VO_VOLATILE_INCREMENT", justification="synchronized method provides locking")
     public synchronized void deleteNode(XBeeNode node) {
         // find the serial node
         int index = 0;

@@ -57,8 +57,8 @@
       DecoderPro looks and how you may use it.</p>
 
       <p>DecoderPro is also covered in Joe Fugate's <a href=
-      "http://trainmasters.tv/videos/3-4-siskiyou-line-dcc-programming-decoderpro">
-      TrainMasters.TV video library, part 3.4</a>, as
+      "https://trainmasters.tv/videos/2016-11-4">
+      TrainMasters.TV video library, episode 2016-11.4</a>, as
       he shows how he used DP on his Siskiyou Line layout.</p>
 
       <h2>What you need to use DecoderPro</h2>
@@ -76,8 +76,9 @@
       <p>You also need to have a connection to your DCC system. For
       more information, please see the <a href=
       "../../hardware/index.shtml">DCC hardware
-      pages</a>.</p><a name="guide" id="guide"></a>
+      pages</a>.</p>
 
+      <a name="guide" id="guide"></a>
       <h2>DecoderPro User Guide</h2>
 
       <dl class="toc">
@@ -125,12 +126,13 @@
         Definitions</a></dt>
       </dl>
 
-      <h2>Decoder information</h2>
+      <a name="decoderlisting" id="decoderlisting"></a>
+      <h2>Decoder Information</h2>
 
       <p>The JMRI project has compiled a lot of information about
       decoders from many manufacturers, which we make freely
       available in several forms. To learn more, see the <a href=
-      "http://jmri.org/xml/XSLT/">Decoder information page</a>.</p>
+      "http://jmri.org/xml/XSLT/">Decoder Information page</a>.</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

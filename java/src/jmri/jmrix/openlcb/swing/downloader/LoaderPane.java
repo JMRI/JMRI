@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * 2016
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
-        implements ActionListener, jmri.jmrix.can.swing.CanPanelInterface {
+        implements jmri.jmrix.can.swing.CanPanelInterface {
 
     protected CanSystemConnectionMemo memo;
     Connection connection;
@@ -180,7 +180,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * @return selected node id
      */
     NodeID destNodeID() {
-        return (NodeID) nodeSelector.getSelectedItem();
+        return nodeSelector.getSelectedItem();
     }
 
     @Override

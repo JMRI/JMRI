@@ -9,7 +9,7 @@ import org.junit.*;
  * Tests for TimeLock class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class TimeLockTest {
 
     @Test
@@ -26,6 +26,7 @@ public class TimeLockTest {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
 
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return false;}
         };
         list.add(s);
@@ -40,6 +41,7 @@ public class TimeLockTest {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
 
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return true;}
         };
         list.add(s);
@@ -52,6 +54,7 @@ public class TimeLockTest {
     @Test
     public void testOneFailStringArrayCtor() throws JmriException {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return true;}
         };
 
@@ -63,6 +66,7 @@ public class TimeLockTest {
     @Test
     public void testOneFailSingleCtor() throws JmriException {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return true;}
         };
 
@@ -76,11 +80,13 @@ public class TimeLockTest {
         ArrayList<SignalHeadSection> list = new ArrayList<>();
 
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return false;}
         };
         list.add(s);
 
         s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return true;}
         };
         list.add(s);
@@ -93,6 +99,7 @@ public class TimeLockTest {
     @Test
     public void testBeanSettingMatch() throws JmriException {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return true;}
         };
 
@@ -108,6 +115,7 @@ public class TimeLockTest {
     @Test
     public void testBeanSettingoMatch() throws JmriException {
         SignalHeadSection s = new SignalHeadSection() {
+            @Override
             public boolean isRunningTime() { return true;}
         };
 

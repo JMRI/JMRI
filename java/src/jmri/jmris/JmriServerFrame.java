@@ -10,7 +10,7 @@ import javax.swing.JToggleButton;
  * Frame displaying start/stop buttons for the JMRI server.
  *
  * @author Paul Bender Copyright (C) 2010
-  */
+ */
 public class JmriServerFrame extends jmri.util.JmriJFrame {
 
     public JmriServerFrame() {
@@ -78,11 +78,11 @@ public class JmriServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startServer() {
-        JmriServer.instance().start();
+        jmri.InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopServer() {
-        JmriServer.instance().stop();
+        jmri.InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }

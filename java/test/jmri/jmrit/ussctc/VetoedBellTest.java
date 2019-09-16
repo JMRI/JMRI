@@ -8,7 +8,7 @@ import org.junit.*;
  * Tests for VetoedBell class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class VetoedBellTest {
 
     @Test
@@ -20,6 +20,7 @@ public class VetoedBellTest {
     public void testBellStrokeAllowed() throws JmriException {
         rung = false;
         Bell bell = new Bell(){
+            @Override
             public void ring() {
                 rung = true;
             }
@@ -36,6 +37,7 @@ public class VetoedBellTest {
     public void testBellStrokeNotAllowed() throws JmriException  {
         rung = false;
         Bell bell = new Bell(){
+            @Override
             public void ring() {
                 rung = true;
             }

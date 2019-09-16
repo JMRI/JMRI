@@ -7,6 +7,7 @@ import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.FileUtil;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring
  * AudioManagers, working with AbstractAudioManagers.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element audio) class,
  * relying on implementation here to load the individual Audio objects. Note
  * that these are stored explicitly, so the resolution mechanism doesn't need to
@@ -27,15 +28,14 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris copyright (c) 2009, 2011
@@ -60,8 +60,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(audio);
         AudioManager am = (AudioManager) o;
         if (am != null) {
-            java.util.Iterator<String> iter
-                    = am.getSystemNameAddedOrderList().iterator();
+            java.util.Iterator<Audio> iter
+                    = am.getNamedBeanSet().iterator();
 
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) {
@@ -80,10 +80,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             int vsdObjectCount = 0;
 
             // count all VSD objects
-            for (String sname : am.getSystemNameAddedOrderList()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Check if " + sname + " is a VSD object");
-                }
+            for (Audio aud : am.getNamedBeanSet()) {
+                String sname = aud.getSystemName();
                 if (sname.length() >= 8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
                     log.debug("...yes");
                     vsdObjectCount++;
@@ -106,28 +104,20 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
 
             // store global information
-            audio.setAttribute("distanceattenuated",
-                    am.getActiveAudioFactory().isDistanceAttenuated() ? "yes" : "no");
-
+            AudioFactory audioFact = am.getActiveAudioFactory();
+            if (audioFact != null) {
+                audio.setAttribute("distanceattenuated", audioFact.isDistanceAttenuated() ? "yes" : "no");
+            }
             // store the audios
             while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");
-                    continue;
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("system name is " + sname);
-                }
+                Audio a = iter.next();
+                String sname = a.getSystemName();
+                log.debug("system name is {}", sname);
 
                 if (sname.length() >= 8 && sname.substring(3, 8).equalsIgnoreCase("$VSD:")) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Skipping storage of VSD object " + sname);
-                    }
+                    log.debug("Skipping storage of VSD object {}", sname);
                     continue;
                 }
-
-                Audio a = am.getBySystemName(sname);
 
                 // Transient objects for current element and any children
                 Element e = null;
@@ -519,7 +509,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
             Attribute a;
             if ((a = audio.getAttribute("distanceattenuated")) != null) {
-                am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
+                AudioFactory audioFact = am.getActiveAudioFactory();
+                if (audioFact != null) {
+                    audioFact.setDistanceAttenuated(a.getValue().equals("yes"));
+                }
             }
         }
     }
@@ -530,4 +523,5 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class);
+
 }

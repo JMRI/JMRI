@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RosterGroupsPanelTest {
 
@@ -18,14 +18,14 @@ public class RosterGroupsPanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RosterGroupsPanel t = new RosterGroupsPanel();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -34,5 +34,4 @@ public class RosterGroupsPanelTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RosterGroupsPanelTest.class);
-
 }

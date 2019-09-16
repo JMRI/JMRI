@@ -1,8 +1,11 @@
 package jmri;
 
 import java.util.*;
+import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -64,12 +67,13 @@ public class ManagerTest {
     }
 
     // Test legacy prefixes
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @Test
     public void testGetSystemPrefixLengthLegacyPrefixes() {
         Assert.assertEquals("DCCPPT12", 5, Manager.getSystemPrefixLength("DCCPPT12"));
         Assert.assertEquals("MRT13", 2, Manager.getSystemPrefixLength("MRT13"));
         Assert.assertEquals("DXT512", 2, Manager.getSystemPrefixLength("DXT512"));
+
     }
 
     @Test
@@ -90,7 +94,7 @@ public class ManagerTest {
     }
 
     // Test legacy prefixes
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @Test
     public void testGetSystemPrefixLegacyPrefixes() {
         Assert.assertEquals("DCCPPT12", "DCCPP", Manager.getSystemPrefix("DCCPPT12"));
@@ -98,7 +102,7 @@ public class ManagerTest {
         Assert.assertEquals("DXT512", "DX", Manager.getSystemPrefix("DXT512"));
     }
 
-    @Test
+    @Test // 4.11.2 to make sure we remember to remove this post-migration
     public void testGetSystemPrefixBad() {
         try {
             Assert.assertEquals("LT1", "L", Manager.getSystemPrefix(""));
@@ -109,7 +113,7 @@ public class ManagerTest {
     }
     
     // Test legacy prefixes
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @Test
     public void testIsLegacySystemPrefix() {
         Assert.assertTrue(Manager.isLegacySystemPrefix("DX"));
@@ -126,7 +130,7 @@ public class ManagerTest {
     }
     
     // Test legacy prefixes
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @Test
     public void testLegacyPrefixes() {
         // catch if this is changed, so we remember to change
@@ -135,12 +139,18 @@ public class ManagerTest {
     }
 
     // Test legacy prefixes
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @Test
     public void startsWithLegacySystemPrefix() {
         Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXS1"));
         Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT4"));
         Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DPS12"));
+
+        Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXT1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("MRT1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("TML1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("PIL1"));
         
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("CT1"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("C2T12"));
@@ -153,6 +163,61 @@ public class ManagerTest {
         for (String s : Manager.LEGACY_PREFIXES.toArray(new String[0])) {
             Assert.assertEquals("Length test of \""+s+"\"",s.length(), Manager.startsWithLegacySystemPrefix(s+"T12"));
         }
+    }
+
+    // test shutdown operation (without shutting down)
+    // doesn't check MR-is-OK-for-Reporter case
+    @Test
+    public void testLegacyReportTask() {
+
+        // load up
+        Manager.getSystemPrefixLength("DCCPPT1");
+        Manager.getSystemPrefixLength("MRT1");
+        Manager.getSystemPrefixLength("DXT1");
+        Manager.getSystemPrefixLength("TML1");
+        
+        // and try
+        Manager.legacyReportTask.execute();
+        
+        // check report (sorted order)
+        JUnitAppender.assertWarnMessage("The following legacy names need to be migrated:");
+        JUnitAppender.assertWarnMessage("    DCCPPT1");
+        JUnitAppender.assertWarnMessage("    DXT1");
+        JUnitAppender.assertWarnMessage("    MRT1");
+        JUnitAppender.assertWarnMessage("    TML1");
+        Assert.assertTrue(JUnitAppender.verifyNoBacklog());
+    }
+    
+    // test shutdown operation (without shutting down)
+    // checks MR-is-OK-for-Reporter case
+    @Test
+    public void testLegacyReportTaskWReporter() {
+        
+        // create reporter manager
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        ReporterManager m = new InternalReporterManager(new InternalSystemConnectionMemo("M", "Mike"));
+        InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.REPORTERS);
+        InstanceManager.setDefault(ReporterManager.class,m);
+
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("MR2"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).getReporter("MR2"));
+
+        // load up
+        Manager.getSystemPrefixLength("DCCPPT2");
+        Manager.getSystemPrefixLength("MR2");
+        Manager.getSystemPrefixLength("DXT2");
+        Manager.getSystemPrefixLength("TML2");
+        // and try
+        Manager.legacyReportTask.execute();
+        
+        // check report (sorted order)
+        JUnitAppender.assertWarnMessage("The following legacy names need to be migrated:");
+        JUnitAppender.assertWarnMessage("    DCCPPT2");
+        JUnitAppender.assertWarnMessage("    DXT2");
+        // MR2 suppressed
+        JUnitAppender.assertWarnMessage("    TML2");
+        Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
 
     // test proper coding of constants
@@ -237,12 +302,14 @@ public class ManagerTest {
         
     /**
      * Service routine
+     * 
+     * @param iter set of entries
      * @return true when all entries are in correct order, false otherwise
      */
     boolean checkOrderNamedBeans(Iterator<NamedBean> iter) {
         NamedBean first = iter.next();
         NamedBean next;
-        jmri.util.NamedBeanComparator comp = new jmri.util.NamedBeanComparator();
+        jmri.util.NamedBeanComparator<NamedBean> comp = new jmri.util.NamedBeanComparator<>();
         while (iter.hasNext()) {
             next = iter.next();
             if (comp.compare(first, next) >= 0) return false;
@@ -253,6 +320,8 @@ public class ManagerTest {
     
     /**
      * Service routine
+     * 
+     * @param iter set of entries
      * @return true when all entries are in correct order, false otherwise
      */
     boolean checkOrderStrings(Iterator<String> iter) {
@@ -268,8 +337,11 @@ public class ManagerTest {
     
     static class BogusBean extends jmri.implementation.AbstractNamedBean {
         public BogusBean(String n) { super(n); }
+        @Override
         public int getState() { return -1; }
+        @Override
         public String getBeanType() { return "";}
+        @Override
         public void setState(int i) {}
     }
     
@@ -281,6 +353,9 @@ public class ManagerTest {
 
     @After
     public void tearDown() {
+        // clear to avoid report at end of test
+        Manager.legacyNameSet.clear();
+
         JUnitUtil.tearDown();
     }
 

@@ -4,25 +4,37 @@
         <variable label="Configuration output 1" CV="3" default="8" item="SwitchPilot Function Output 1 effect generated">
             <decVal max="64"/>
         </variable>
-        <variable label="Mode" CV="3" default="8" item="SwitchPilot Function Output 1 Option 1">
+        <variable CV="3" default="8" item="SwitchPilot Function Output 1 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
             </enumVal>
+            <label>Mode</label>
+            <label xml:lang="de">Eigenschaften</label>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
         <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
         <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 3">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Pulse" value="8"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Pulse" value="8">
+                 <choice>Pulse</choice>
+                 <choice xml:lang="de">Impuls</choice>
+                </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="3" default="8" item="SwitchPilot Function Output 1 Choices 1" tooltip="Units = 65 msec">
+        <variable label="Pulse Duration" CV="3" default="8" item="SwitchPilot Function Output 1 Choices 1">
             <qualifier>
                 <variableref>Configuration output 1</variableref>
                 <relation>ge</relation>
@@ -34,14 +46,24 @@
                 <value>31</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotPulseEnum.xml"/>
+            <tooltip>Units = 65 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
         <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 4">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Alternating Blinker" value="32"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Alternating Blinker" value="32">
+                 <choice>Alternating Blinker</choice>
+                 <choice xml:lang="de">Wechselblinker</choice>
+                </enumChoice>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="3" default="8" item="SwitchPilot Function Output 1 Choices 2" tooltip="Units = 130 msec">
+        <variable label="ON Duration" CV="3" default="8" item="SwitchPilot Function Output 1 Choices 2">
             <qualifier>
                 <variableref>Configuration output 1</variableref>
                 <relation>ge</relation>
@@ -53,35 +75,51 @@
                 <value>63</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotAltEnum.xml"/>
+            <tooltip>Units = 130 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
         <variable label="" CV="3" default="8" item="SwitchPilot Function Output 1 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
         <variable label="Configuration output 2" CV="4" default="8" item="SwitchPilot Function Output 2 effect generated">
             <decVal max="64"/>
         </variable>
-        <variable label="Mode" CV="4" default="8" item="SwitchPilot Function Output 2 Option 1">
+        <variable CV="4" default="8" item="SwitchPilot Function Output 2 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
             </enumVal>
+            <label>Mode</label>
+            <label xml:lang="de">Eigenschaften</label>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
         <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
         <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 3">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Pulse" value="8"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Pulse" value="8">
+                 <choice>Pulse</choice>
+                 <choice xml:lang="de">Impuls</choice>
+                </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="4" default="8" item="SwitchPilot Function Output 2 Choices 1" tooltip="Units = 65 msec">
+        <variable label="Pulse Duration" CV="4" default="8" item="SwitchPilot Function Output 2 Choices 1">
             <qualifier>
                 <variableref>Configuration output 2</variableref>
                 <relation>ge</relation>
@@ -93,14 +131,24 @@
                 <value>31</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotPulseEnum.xml"/>
+            <tooltip>Units = 65 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
         <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 4">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Alternating Blinker" value="32"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Alternating Blinker" value="32">
+                 <choice>Alternating Blinker</choice>
+                 <choice xml:lang="de">Wechselblinker</choice>
+                </enumChoice>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="4" default="8" item="SwitchPilot Function Output 2 Choices 2" tooltip="Units = 130 msec">
+        <variable label="ON Duration" CV="4" default="8" item="SwitchPilot Function Output 2 Choices 2">
             <qualifier>
                 <variableref>Configuration output 2</variableref>
                 <relation>ge</relation>
@@ -112,35 +160,51 @@
                 <value>63</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotAltEnum.xml"/>
+            <tooltip>Units = 130 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
         <variable label="" CV="4" default="8" item="SwitchPilot Function Output 2 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
         <variable label="Configuration output 3" CV="5" default="8" item="SwitchPilot Function Output 3 effect generated">
             <decVal max="64"/>
         </variable>
-        <variable label="Mode" CV="5" default="8" item="SwitchPilot Function Output 3 Option 1">
+        <variable CV="5" default="8" item="SwitchPilot Function Output 3 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
             </enumVal>
+            <label>Mode</label>
+            <label xml:lang="de">Eigenschaften</label>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
         <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
         <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 3">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Pulse" value="8"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Pulse" value="8">
+                 <choice>Pulse</choice>
+                 <choice xml:lang="de">Impuls</choice>
+                </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="5" default="8" item="SwitchPilot Function Output 3 Choices 1" tooltip="Units = 65 msec">
+        <variable label="Pulse Duration" CV="5" default="8" item="SwitchPilot Function Output 3 Choices 1">
             <qualifier>
                 <variableref>Configuration output 3</variableref>
                 <relation>ge</relation>
@@ -152,14 +216,24 @@
                 <value>31</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotPulseEnum.xml"/>
+            <tooltip>Units = 65 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
         <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 4">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Alternating Blinker" value="32"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Alternating Blinker" value="32">
+                 <choice>Alternating Blinker</choice>
+                 <choice xml:lang="de">Wechselblinker</choice>
+                </enumChoice>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="5" default="8" item="SwitchPilot Function Output 3 Choices 2" tooltip="Units = 130 msec">
+        <variable label="ON Duration" CV="5" default="8" item="SwitchPilot Function Output 3 Choices 2">
             <qualifier>
                 <variableref>Configuration output 3</variableref>
                 <relation>ge</relation>
@@ -171,35 +245,51 @@
                 <value>63</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotAltEnum.xml"/>
+            <tooltip>Units = 130 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
         <variable label="" CV="5" default="8" item="SwitchPilot Function Output 3 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
         <variable label="Configuration output 4" CV="6" default="8" item="SwitchPilot Function Output 4 effect generated">
             <decVal max="64"/>
         </variable>
-        <variable label="Mode" CV="6" default="8" item="SwitchPilot Function Output 4 Option 1">
+        <variable CV="6" default="8" item="SwitchPilot Function Output 4 Option 1">
             <enumVal>
                 <enumChoice choice="" value="1"/>
                 <enumChoice choice="K83" value="0"/>
             </enumVal>
+            <label>Mode</label>
+            <label xml:lang="de">Eigenschaften</label>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K83-kompatibel: Ausgang solange aktiv, wie die Taste am Bedienpult gedrückt wird.</tooltip>
         </variable>
         <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 2">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="PECO" value="1"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Impulsbetrieb für PECO-Antriebe.</tooltip>
         </variable>
         <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 3">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Pulse" value="8"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Pulse" value="8">
+                 <choice>Pulse</choice>
+                 <choice xml:lang="de">Impuls</choice>
+                </enumChoice>
             </enumVal>
         </variable>
-        <variable label="Pulse Duration" CV="6" default="8" item="SwitchPilot Function Output 4 Choices 1" tooltip="Units = 65 msec">
+        <variable label="Pulse Duration" CV="6" default="8" item="SwitchPilot Function Output 4 Choices 1">
             <qualifier>
                 <variableref>Configuration output 4</variableref>
                 <relation>ge</relation>
@@ -211,14 +301,24 @@
                 <value>31</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotPulseEnum.xml"/>
+            <tooltip>Units = 65 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 65 msec</tooltip>
         </variable>
         <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 4">
             <enumVal>
-                <enumChoice choice="" value="0"/>
-                <enumChoice choice="Alternating Blinker" value="32"/>
+                <enumChoice choice="" value="0">
+                 <choice>.</choice>
+                 <choice xml:lang="de">.</choice>
+                </enumChoice>
+                <enumChoice choice="Alternating Blinker" value="32">
+                 <choice>Alternating Blinker</choice>
+                 <choice xml:lang="de">Wechselblinker</choice>
+                </enumChoice>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">Out A und Out B abwechselnd aktiv.</tooltip>
         </variable>
-        <variable label="ON Duration" CV="6" default="8" item="SwitchPilot Function Output 4 Choices 2" tooltip="Units = 130 msec">
+        <variable label="ON Duration" CV="6" default="8" item="SwitchPilot Function Output 4 Choices 2">
             <qualifier>
                 <variableref>Configuration output 4</variableref>
                 <relation>ge</relation>
@@ -230,76 +330,128 @@
                 <value>63</value>
             </qualifier>
             <xi:include href="http://jmri.org/xml/decoders/esu/switchPilotAltEnum.xml"/>
+            <tooltip>Units = 130 msec</tooltip>
+            <tooltip xml:lang="de">Einheit = 130 msec</tooltip>
         </variable>
         <variable label="" CV="6" default="8" item="SwitchPilot Function Output 4 Option 5">
             <enumVal>
                 <enumChoice choice="" value="0"/>
                 <enumChoice choice="K84" value="64"/>
             </enumVal>
+            <tooltip> </tooltip>
+            <tooltip xml:lang="de">K84-kompatibel: Entweder Out A oder Out B aktiv, Dauerausgang</tooltip>
         </variable>
     </variables>
-    <variable label="Transit time" CV="37" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Slider 1" tooltip="Units = 0.25 sec">
-        <decVal max="63"/>
+    <variable CV="37" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 1 Slider 1">
+         <decVal max="63"/>
+          <label>Transit time</label>
+          <label xml:lang="de">Drehgeschwindigkeit</label>
+           <tooltip>Units = 0.25 sec</tooltip>
+           <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
     </variable>
-    <variable label="Position A" CV="38" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Slider 2" tooltip="Pulse width between 1 &amp; 2 msec">
+    <variable label="Position A" CV="38" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Slider 2">
         <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
     </variable>
-    <variable label="Position B" CV="39" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Slider 3" tooltip="Pulse width between 1 &amp; 2 msec">
+    <variable label="Position B" CV="39" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Slider 3">
         <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
     </variable>
-    <variable label="Transit time" CV="40" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Slider 1" tooltip="Units = 0.25 sec">
-        <decVal max="63"/>
+    <variable CV="40" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 2 Slider 1">
+         <decVal max="63"/>
+          <label>Transit time</label>
+          <label xml:lang="de">Drehgeschwindigkeit</label>
+           <tooltip>Units = 0.25 sec</tooltip>
+           <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
     </variable>
-    <variable label="Position A" CV="41" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Slider 2" tooltip="Pulse width between 1 &amp; 2 msec">
+    <variable label="Position A" CV="41" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Slider 2">
         <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
     </variable>
-    <variable label="Position B" CV="42" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Slider 3" tooltip="Pulse width between 1 &amp; 2 msec">
+    <variable label="Position B" CV="42" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Slider 3">
         <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
     </variable>
     <variables exclude="SwitchPilot,SwitchPilot V2.0">
-        <variable label="Transit time" CV="43" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 3 Slider 1" tooltip="Units = 0.25 sec">
-            <decVal max="63"/>
+        <variable CV="43" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 3 Slider 1">
+         <decVal max="63"/>
+          <label>Transit time</label>
+          <label xml:lang="de">Drehgeschwindigkeit</label>
+           <tooltip>Units = 0.25 sec</tooltip>
+           <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
         </variable>
-        <variable label="Position A" CV="44" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Slider 2" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position A" CV="44" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Slider 2">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position B" CV="45" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Slider 3" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position B" CV="45" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Slider 3">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Transit time" CV="46" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 4 Slider 1" tooltip="Units = 0.25 sec">
-            <decVal max="63"/>
+        <variable CV="46" mask="XXVVVVVV" default="15" item="SwitchPilot Servo 4 Slider 1">
+         <decVal max="63"/>
+          <label>Transit time</label>
+          <label xml:lang="de">Drehgeschwindigkeit</label>
+           <tooltip>Units = 0.25 sec</tooltip>
+           <tooltip xml:lang="de">Einheit = 0.25 sec</tooltip>
         </variable>
-        <variable label="Position A" CV="47" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Slider 2" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position A" CV="47" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Slider 2">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position B" CV="48" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Slider 3" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position B" CV="48" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Slider 3">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
     </variables>
     <variables include="SwitchPilot Servo (2013),SwitchPilot Servo V2.0">
-        <variable label="Position C" CV="55" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Slider 4" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position C" CV="55" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 1 Slider 4">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position D" CV="56" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Slider 5" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position D" CV="56" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 1 Slider 5">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position C" CV="57" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Slider 4" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position C" CV="57" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 2 Slider 4">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position D" CV="58" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Slider 5" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position D" CV="58" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 2 Slider 5">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position C" CV="59" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Slider 4" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position C" CV="59" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 3 Slider 4">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position D" CV="60" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Slider 5" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position D" CV="60" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 3 Slider 5">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position C" CV="61" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Slider 4" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position C" CV="61" mask="XXVVVVVV" default="24" item="SwitchPilot Servo 4 Slider 4">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
-        <variable label="Position D" CV="62" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Slider 5" tooltip="Pulse width between 1 &amp; 2 msec">
+        <variable label="Position D" CV="62" mask="XXVVVVVV" default="40" item="SwitchPilot Servo 4 Slider 5">
             <decVal max="63"/>
+        <tooltip>Pulse width between 1 &amp; 2 msec</tooltip>
+        <tooltip xml:lang="de">Impulslänge zwischen 1 &amp; 2 ms</tooltip>
         </variable>
     </variables>
     <variables include="SwitchPilot V2.0">

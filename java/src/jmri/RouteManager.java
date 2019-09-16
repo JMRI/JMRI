@@ -1,30 +1,28 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
- * Interface for obtaining Routes
- * <P>
+ * Interface for obtaining Routes.
+ * <p>
  * This doesn't have a "new" method, since Routes are separately implemented,
  * instead of being system-specific.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface RouteManager extends Manager<Route> {
+public interface RouteManager extends ProvidingManager<Route> {
 
     // to free resources when no longer used
     @Override
@@ -76,4 +74,5 @@ public interface RouteManager extends Manager<Route> {
      * @param r the route to remove
      */
     void deleteRoute(@Nonnull Route r);
+
 }

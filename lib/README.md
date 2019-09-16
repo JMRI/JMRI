@@ -13,7 +13,7 @@ macOS binaries are treated slightly differently, see the README file there.
 #### Updates
 
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
-- build.xml - used by Ant, and in turn by various IDEs
+- build.xml - used by Ant, and in turn by various IDEs. Note that in addition to changing the classpath entry or entries, you should also check to make sure that the three javadoc targets are linking to the proper sources.
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
 - nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
@@ -22,7 +22,7 @@ On macOS, most of these changes can be affected with:
 ```
 find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
-(you may need to install gsed using [Homebrew](http://brew.sh))
+(you may need to install gsed using [Homebrew](http://brew.sh)), although this probably doesn't fix the Javadoc links.
 
 On Linux, these same changes can be affected with:
 ```
@@ -42,6 +42,20 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 After that, add and commit the additional files that were created within lib/
 
 ### Specific components:
+
+##### jsplitbutton-1.3.1.jar
+- version 1.3.1
+- provides a Swing split button
+- contributed by Randall Wood
+- from https://github.com/rhwood/jsplitbutton
+- javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1
+
+##### jinputvalidator-0.6.0.jar
+- version 0.6.0
+- provides validation for JComponents
+- contributed by Randall Wood
+- from https://github.com/rhwood/jinputvalidator
+- javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0
 
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
@@ -69,7 +83,7 @@ After that, add and commit the additional files that were created within lib/
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.18 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.18/openlcb-0.7.18.jar or the maven central repository.
+- 0.7.26 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.26/openlcb-0.7.26.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -77,6 +91,7 @@ After that, add and commit the additional files that were created within lib/
 ##### purejavacomm-1.0.1.jar
 - version 1.0.1
 - from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
+- javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
 
 ##### jna-4.2.2.jar
 - version 4.2.2
@@ -94,11 +109,15 @@ After that, add and commit the additional files that were created within lib/
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.8.11.jar, jackson-core-2.8.11.jar, jackson-databind-2.8.11.jar
+##### jackson-annotations-2.9.8.jar, jackson-core-2.9.8.jar, jackson-databind-2.9.8.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.8.11
+- version 2.9.8
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.11
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8
+
+##### json-schema-validator-1.0.10.jar
+- JSON Schema validation library
+- from https://github.com/networknt/json-schema-validator/releases
 
 ##### mqtt-client-0.4.0.jar
 starting in JMRI 4.11.5
@@ -133,10 +152,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
 - unlike jython-2.7.0.jar, includes embedded standard python libs
 
-##### jakarta-regexp-1.5.jar
-- (needed for jfcunit)
-- Used for testing only, not at runtime
-
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
@@ -147,6 +162,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
+- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -197,10 +213,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
 
 ##### jmdns.jar
-- Version 3.5.1 (4 August 2016)
+- Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
-
-##### jakarta-regexp-1.5.jar
 
 ##### jna-4.4.0.jar
 - Java Native Access library
@@ -209,6 +223,17 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### jna-platform-4.4.0.jar
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
+
+
+##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
+- Pi4j
+- from https://pi4j.com/
+- Used for supporting GPIO pins on a raspberry pi. pi4j-core is required at compile time.  pi4j-device and pi4j-gpio-extension may be used at runtime (by scripts) to control devices attached to the raspberry pi.
+
+##### thumbnailator-0.4.8.jar
+- Thumbnailator
+- from https://github.com/coobird/thumbnailator
+- Used by jmri.util.swing.ResizableImagePanel to read Exif information in JPEG files.
 
 ##### vecmath-1.5.2.jar
 - from Java3D 1.5.2
@@ -219,9 +244,9 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://patrick.lidstone.net/html/dev_tools.html
 - See license http://patrick.lidstone.net/html/xap.html
 
-##### xbee-api-0.9.jar
-- PBender 03-Mar-2014 This version comes from the XBee library source repository
-- (we needed some of the functionality, but the pre-compiled library has not been updated).
+##### xbee-java-library-1.2.1.jar
+- Official XBee support library from Digi
+- from https://github.com/digidotcom/XBeeJavaLibrary
 
 ##### xercesImpl.jar
 - version Xerces-J 2.11.0
@@ -238,8 +263,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.6 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- Eclipse compiler 4.10 from
+    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
 - used in ant warnings target
 
 ##### jemmy-22-00c9f753cd0a.jar
@@ -254,11 +279,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version 1.3
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
-
-##### jfcunit.jar
-- version 2.08
-- Used for testing only, not at runtime
-- from <http://jfcunit.sourceforge.net>
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.  

@@ -3,18 +3,12 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 
 /**
- * <P>
- * Tests for XBeeIOStream
- * </P>
+ * Tests for XBeeIOStream.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeIOStreamTest {
@@ -54,7 +48,7 @@ public class XBeeIOStreamTest {
    }
 
    @Test
-   @Ignore("data send occurs, but tearDown closes the pipes to quickly")
+   @Ignore("data send occurs, but tearDown closes the pipes too quickly")
    public void checkSend() throws java.io.IOException {
        a.configure(); // start the send and receive threads.
        a.getOutputStream().writeChars("Hello World");

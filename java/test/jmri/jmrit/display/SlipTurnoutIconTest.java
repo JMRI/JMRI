@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -18,20 +17,13 @@ public class SlipTurnoutIconTest extends PositionableTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new EditorScaffold();
            p = new SlipTurnoutIcon(editor);
         }
-    }
-
-    @After
-    public void tearDown() {
-        p = null;
-        editor = null;
-        JUnitUtil.tearDown();
     }
 
 }

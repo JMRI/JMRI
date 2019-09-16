@@ -36,7 +36,6 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         // create and register the XBeeComponentFactory
         InstanceManager.store(componentFactory = new jmri.jmrix.ieee802154.xbee.swing.XBeeComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-
     }
 
     /**
@@ -92,13 +91,12 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         // the start the managers.
         _NodeManager = new XBeeNodeManager(cont);
 
-        setSensorManager(new XBeeSensorManager(cont, getSystemPrefix()));
+        setSensorManager(new XBeeSensorManager(this));
         jmri.InstanceManager.setSensorManager(getSensorManager());
-        setLightManager(new XBeeLightManager(cont, getSystemPrefix()));
+        setLightManager(new XBeeLightManager(this));
         jmri.InstanceManager.setLightManager(getLightManager());
-        setTurnoutManager(new XBeeTurnoutManager(cont, getSystemPrefix()));
+        setTurnoutManager(new XBeeTurnoutManager(this));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-        
     }
 
     /*
@@ -118,8 +116,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     private XBeeNodeManager _NodeManager = null;
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
-     * NOTE: Sensor manager defaults to NULL
+     * Provides access to the SensorManager for this particular connection.
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -133,8 +131,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     private SensorManager sensorManager = null;
 
     /*
-     * Provides access to the Light Manager for this particular connection.
-     * NOTE: Light manager defaults to NULL
+     * Provides access to the LightManager for this particular connection.
+     * NOTE: LightManager defaults to NULL
      */
     public LightManager getLightManager() {
         return lightManager;
@@ -148,8 +146,8 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
     private LightManager lightManager = null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;

@@ -24,12 +24,15 @@ public class XmlFileValidateActionTest {
     @Test
     public void testFileOK() {
         XmlFileValidateAction t = new XmlFileValidateAction() {
+            @Override
             protected void showOkResults(Component who, String text) {
                 pass = true;
             }
+            @Override
             protected void showFailResults(Component who, String text) {
                 fail = true;
             }
+            @Override
             public void actionPerformed(ActionEvent e) {
                  processFile(new File("java/test/jmri/configurexml/valid/RosterSchemaTest.xml"));   
             }
@@ -46,13 +49,16 @@ public class XmlFileValidateActionTest {
     @Test
     public void testFileFails() {
         XmlFileValidateAction t = new XmlFileValidateAction() {
+            @Override
             protected void showOkResults(Component who, String text) {
                 pass = true;
             }
+            @Override
             protected void showFailResults(Component who, String text) {
                 Assert.assertTrue("check message", text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1] declared for identity constraint \"turnoutName\""));
                 fail = true;
             }
+            @Override
             public void actionPerformed(ActionEvent e) {
                  processFile(new File("java/test/jmri/configurexml/invalid/TurnoutDuplicateSystemName.xml"));   
             }

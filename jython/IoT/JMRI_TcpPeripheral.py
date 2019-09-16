@@ -282,7 +282,7 @@ class TcpPeripheral_Sensor_Listener(java.beans.PropertyChangeListener):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def propertyChange(self, event):
         sensor = event.getSource()
-        sensorName = sensor.getFullyFormattedDisplayName()
+        sensorName = sensor.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)
         TcpPeripheral_log.debug("'TcpPeripheral' - Sensor=" + sensorName + " property=" + event.propertyName + "]: oldValue=" + str(event.oldValue) + " newValue=" + str(event.newValue))
         if event.propertyName == "KnownState": # only this property matters
             gpio, id = TcpPeripheral_getGpioId(sensor.getSystemName())
@@ -304,7 +304,7 @@ class TcpPeripheral_Turnout_Listener(java.beans.PropertyChangeListener):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     def propertyChange(self, event):
         turnout = event.getSource()
-        turnoutName = turnout.getFullyFormattedDisplayName()
+        turnoutName = turnout.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)
         TcpPeripheral_log.debug("'TcpPeripheral' - Turnout=" + turnoutName + " property=" + event.propertyName + "]: oldValue=" + str(event.oldValue) + " newValue=" + str(event.newValue) + " turnoutCtrl=" + str(self.turnoutCtrl))
         if event.propertyName == "CommandedState": # only this property matters
             if event.newValue != self.turnoutCtrl: # this is a state change request
@@ -346,7 +346,7 @@ else: # Continue running script
     TcpPeripheral_running = True
     TcpPeripheral_sockets = {}
     shutdown.register(TcpPeripheral_ShutDown("TcpPeripheral"))
-    for sensor in sensors.getNamedBeanList():
+    for sensor in sensors.getNamedBeanSet():
         gpio, id = TcpPeripheral_getGpioId(sensor.getSystemName())
         TcpPeripheral_log.debug("'TcpPeripheral' - Sensor SystemName [" + sensor.getSystemName() + "] GPIO [" + str(gpio) + "] ID [" + str(id) + "]")
         if gpio != None and id != None:
@@ -354,7 +354,7 @@ else: # Continue running script
             sensor.setKnownState(jmri.Sensor.INCONSISTENT) # set sensor to inconsistent state (just to detect change to unknown)
             sensor.addPropertyChangeListener(TcpPeripheral_Sensor_Listener())
             sensor.setKnownState(jmri.Turnout.UNKNOWN) # to force send a register request to device
-    for turnout in turnouts.getNamedBeanList():
+    for turnout in turnouts.getNamedBeanSet():
         gpio, id = TcpPeripheral_getGpioId(turnout.getSystemName())
         TcpPeripheral_log.debug("'TcpPeripheral' - Turnout SystemName [" + turnout.getSystemName() + "] GPIO [" + str(gpio) + "] ID [" + str(id) + "] Kown State [" + str(turnout.getKnownState()) + "]")
         if gpio != None and id != None: # should be a valid network device and GPIO

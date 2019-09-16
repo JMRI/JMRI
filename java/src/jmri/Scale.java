@@ -1,129 +1,137 @@
 package jmri;
 
+import java.beans.PropertyVetoException;
+import javax.annotation.Nonnull;
+import jmri.beans.ConstrainedBean;
+
 /**
- * Provide values and methods related to layout scale.
- * <P>
- * *
- * @author Dave Duchamp Copyright (C) 2009
- * @since 2.5.4
+ * Define the characteristics of a layout scale.  A scale has four properties.
+ * <ul>
+ * <li>Name - A fixed string, such N or HO.
+ * <li>User name - An alternate name that can be changed.  It defaults to the scale name.
+ * <li>Ratio - The ratio for the scale, such as 160 for N scale.
+ * <li>Factor - A derived value created by dividing 1 by the scale ratio.
+ * </ul>
+ * In addition to the standard scales, there is custom entry.  Custom settings
+ * are retained in a local copy of ScaleData.xml.
+ * <p>
+ * Methods are provided to set/get the user name and the scale ratio.  The scale
+ * factor is generated from the scale ratio and is read only, as is the scale name.
+ * <p>
+ * While changing the ratio and user names of the standard scales is not
+ * prohibited, doing so is not recommended due to potential conflicts with other
+ * applications.
+ * <p>
+ * Changes to user names and ratios send a <strong>vetoableChange</strong> event.
+ * Interested applications can add a <strong>vetoableChange</strong> listener
+ * in order to be notified when an event occurs. If the listener determines that
+ * the change cannot occur, it can throw a <strong>PropertyVetoException</strong>.
+ * <p>
+ * See {@link jmri.ScaleManager Scale Manager} for manager details.
+ *
+ * @author Dave Sand Copyright (C) 2018
+ * @since 4.13.6
  */
-public class Scale {
+public class Scale extends ConstrainedBean {
 
     public Scale() {
+        super();
     }
 
-    // Scale definitions
-    public static final int Z = 0x01; //  1:220
-    public static final int N = 0x02; //  1:160 
-    public static final int TT = 0x03; //  1:120
-    public static final int HO = 0x04;  //  1:87
-    public static final int S = 0x05;   //  1:64
-    public static final int O = 0x06; //  1:48
-    public static final int G = 0x07;   //  1:24
-    public static final int UK_N = 0x08;  //  1:148
-    public static final int UK_OO = 0x09; //  1:76.2
-    public static final int UK_O = 0x0A;  //  1:43.5
+    public Scale(@Nonnull String name, double ratio, String userName) {
+        super();
+        _name = name;
+        _userName = (userName == null) ? name : userName;
+        _ratio = ratio;
+        _factor = 1.0 / _ratio;
+    }
 
-    public static final int NUM_SCALES = 10;
+    private String _name = "HO";  // NOI18N
+    private String _userName = "HO";  // NOI18N
+    private double _ratio = 87.1;
+    private double _factor = 1 / 87.1;
 
-    /**
-     * Get the scaleFactor as a number less than 1 representing the reduction
-     * from full size.
-     *
-     * @param scale the scale constant
-     * @return the ratio expressed as a real number
-     */
-    public static double getScaleFactor(int scale) {
-        switch (scale) {
-            case Z:
-                return (1.0 / 220.0);
-            case N:
-                return (1.0 / 160.0);
-            case TT:
-                return (1.0 / 120.0);
-            case HO:
-                return (1.0 / 87.0);
-            case S:
-                return (1.0 / 64.0);
-            case O:
-                return (1.0 / 48.0);
-            case G:
-                return (1.0 / 24.0);
-            case UK_N:
-                return (1.0 / 148.0);
-            case UK_OO:
-                return (1.0 / 76.2);
-            case UK_O:
-                return (1.0 / 43.5);
-            default:
-                return 1.0;
-        }
+    public String getScaleName() {
+        return _name;
+    }
+
+    public String getUserName() {
+        return _userName;
+    }
+
+    public double getScaleRatio() {
+        return _ratio;
+    }
+
+    public double getScaleFactor() {
+        return _factor;
     }
 
     /**
-     * Provide a standard human-readable indication of scale that includes both
-     * name (letter) and reduction ratio.
-     *
-     * @param scale the scale constant
-     * @return the scale name and ratio for presentation
+     * Set the user name for the current scale.
+     * Registered listeners can veto the change.
+     * @param newName The name to be applied if unique.
+     * @throws IllegalArgumentException The supplied name is a duplicate.
+     * @throws PropertyVetoException The user name change was vetoed.
      */
-    public static String getScaleID(int scale) {
-        switch (scale) {
-            case Z:
-                return ("Z - 1:220");
-            case N:
-                return ("N - 1:160");
-            case TT:
-                return ("TT - 1:120");
-            case HO:
-                return ("HO - 1:87");
-            case S:
-                return ("S - 1:64");
-            case O:
-                return ("O - 1:48");
-            case G:
-                return ("G = 1:24");
-            case UK_N:
-                return ("UK N - 1:148");
-            case UK_OO:
-                return ("UK OO - 1:76.2");
-            case UK_O:
-                return ("UK O - 1:43.5");
-            default:
-                return ("???");
+    public void setUserName(@Nonnull String newName) throws IllegalArgumentException, PropertyVetoException {
+        for (Scale scale : ScaleManager.getScales()) {
+            if (scale.getUserName().equals(newName)) {
+                if (!scale.getScaleName().equals(_name)) {
+                    throw new IllegalArgumentException("Duplicate scale user name");  // NOI18N
+                }
+            }
         }
+
+        String oldName = _userName;
+        _userName = newName;
+
+        try {
+            fireVetoableChange("ScaleUserName", oldName, newName);  // NOI18N
+        } catch (PropertyVetoException ex) {
+            // Roll back change
+            log.warn("The user name change for {} scale to {} was rejected: Reason: {}",  // NOI18N
+                     _name, _userName, ex.getMessage());
+            _userName = oldName;
+            throw ex;  // Notify caller
+        }
+        jmri.configurexml.ScaleConfigXML.doStore();
     }
 
     /**
-     * Provide the short name for the scale.
-     * @param scale the scale constant
-     * @return the scale name
+     * Set the new scale ratio and calculate the scale factor.
+     * Registered listeners can veto the change.
+     * @param newRatio A double value containing the ratio.
+     * @throws IllegalArgumentException The new ratio is less than 1.
+     * @throws PropertyVetoException The ratio change was vetoed.
      */
-    public static String getShortScaleID(int scale) {
-        switch (scale) {
-            case Z:
-                return ("Z");
-            case N:
-                return ("N");
-            case TT:
-                return ("TT");
-            case HO:
-                return ("HO");
-            case S:
-                return ("S");
-            case O:
-                return ("O");
-            case G:
-                return ("G");
-            case UK_N:
-                return ("UK-N");
-            case UK_OO:
-                return ("UK-OO");
-            case UK_O:
-                return ("UK-O");
-            default:
-                return ("???");
+    public void setScaleRatio(double newRatio) throws IllegalArgumentException, PropertyVetoException {
+        if (newRatio < 1.0) {
+            throw new IllegalArgumentException("The scale ratio is less than 1");  // NOI18N
         }
+
+        double oldRatio = _ratio;
+        _ratio = newRatio;
+        _factor = 1.0 / _ratio;
+
+        try {
+            fireVetoableChange("ScaleRatio", oldRatio, newRatio);  // NOI18N
+        } catch (PropertyVetoException ex) {
+            // Roll back change
+            log.warn("The ratio change for {} scale to {} was rejected: Reason: {}",  // NOI18N
+                     _name, _ratio, ex.getMessage());
+            _ratio = oldRatio;
+            _factor = 1.0 / oldRatio;
+            throw ex;  // Notify caller
+        }
+        jmri.configurexml.ScaleConfigXML.doStore();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%.1f)", getUserName(), getScaleRatio());
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Scale.class);
 
 }

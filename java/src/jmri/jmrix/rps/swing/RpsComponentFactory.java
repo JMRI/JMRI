@@ -28,5 +28,5 @@ public class RpsComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new RpsMenu(memo);
     }
-}
 
+}

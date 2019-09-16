@@ -35,19 +35,22 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
-        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         panel = new LoaderPane();
         helpTarget="package.jmri.jmrix.loconet.downloader.LoaderFrame";
         title="Firmware Downloader";
     }
 
     @After
+    @Override
     public void tearDown() {
         memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

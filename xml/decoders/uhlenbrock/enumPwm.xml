@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - include file for Uhlenbrock Sound Decoder 32xx5            -->
+<!--			 plus German translation									-->
+<!-- 																		-->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="None">
+	    <choice>No blink</choice>
+	    <choice xml:lang="de">Keine Puls</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 1">
+	    <choice>PWM 1</choice>
+	    <choice xml:lang="de">PWM 1</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 2">
+        <choice>PWM 2</choice>
+        <choice xml:lang="de">PWM 2</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 3">
+        <choice>PWM 3</choice>
+        <choice xml:lang="de">PWM 3</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 4">
+        <choice>PWM 4</choice>
+        <choice xml:lang="de">PWM 4</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 5">
+        <choice>PWM 5</choice>
+        <choice xml:lang="de">PWM 5</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 6">
+        <choice>PWM 6</choice>
+        <choice xml:lang="de">PWM 6</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 7">
+        <choice>PWM 7</choice>
+        <choice xml:lang="de">PWM 7</choice>
+    </enumChoice>
+    <enumChoice choice="PWM 8">
+        <choice>PWM 8</choice>
+        <choice xml:lang="de">PWM 8</choice>
+    </enumChoice>
+</enumVal>

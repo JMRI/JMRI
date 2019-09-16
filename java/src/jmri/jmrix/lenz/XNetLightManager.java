@@ -1,14 +1,14 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for XpressNet systems.
+ * Implement LightManager for XpressNet systems.
  * <p>
- * System names are "XLnnnnn", where nnnnn is the bit number without padding.
+ * System names are "XLnnn", where X is the user configurable system prefix,
+ * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialLightManager.java
  *
@@ -18,19 +18,18 @@ import org.slf4j.LoggerFactory;
 public class XNetLightManager extends AbstractLightManager {
 
     private XNetTrafficController tc = null;
-    private String prefix = null;
 
-    public XNetLightManager(XNetTrafficController tc, String prefix) {
-        this.prefix = prefix;
-        this.tc = tc;
+    public XNetLightManager(XNetSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getXNetTrafficController();
     }
 
     /**
-     * Return the system letter for XpressNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XNetSystemConnectionMemo getMemo() {
+        return (XNetSystemConnectionMemo) memo;
     }
 
     // XNet-specific methods
@@ -45,13 +44,13 @@ public class XNetLightManager extends AbstractLightManager {
     @Override
     public Light createNewLight(String systemName, String userName) {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
         Light lgt = null;
         // Normalize the System Name
-        String sName = prefix + typeLetter() + bitNum; // removes any leading zeros
+        String sName = getSystemNamePrefix() + bitNum; // removes any leading zeros
         // create the new Light object
         lgt = new XNetLight(tc, this, sName, userName);
         return lgt;
@@ -64,14 +63,21 @@ public class XNetLightManager extends AbstractLightManager {
      * @return index value for light, -1 if an error occurred
      */
     public int getBitFromSystemName(String systemName) {
-        return XNetAddress.getBitFromSystemName(systemName, prefix);
+        return XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
     }
 
     /**
-     * Validate Light system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return 'true' if system name has a valid format, else return 'false'
+     * {@inheritDoc}
+     */
+    @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return validateIntegerSystemNameFormat(name,
+                XNetAddress.MINSENSORADDRESS,
+                XNetAddress.MAXSENSORADDRESS,
+                locale);
+    }
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
@@ -101,20 +107,11 @@ public class XNetLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Allow access to XNetLightManager.
-     */
-    @Deprecated
-    static public XNetLightManager instance() {
-        return null;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     // private final static Logger log = LoggerFactory.getLogger(XNetLightManager.class);

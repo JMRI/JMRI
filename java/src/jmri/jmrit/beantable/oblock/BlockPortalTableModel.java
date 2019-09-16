@@ -6,8 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import jmri.NamedBean;
 import jmri.jmrit.logix.OBlock;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +16,11 @@ import org.slf4j.LoggerFactory;
  * GUI to define OBlocks
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -47,9 +48,9 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     @Override
     public int getRowCount() {
         int count = 0;
-        List<NamedBean> list = _oBlockModel.getBeanList();
+        List<OBlock> list = _oBlockModel.getBeanList();
         for (int i = 0; i < list.size(); i++) {
-            count += ((OBlock) list.get(i)).getPortals().size();
+            count += list.get(i).getPortals().size();
         }
         return count;
     }
@@ -70,18 +71,18 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
 
     @Override
     public Object getValueAt(int row, int col) {
-        List<NamedBean> list = _oBlockModel.getBeanList();
+        List<OBlock> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
             int count = 0;
             int idx = 0;  //accumulated row count
             OBlock block = null;
-            NamedBean[] array = new NamedBean[list.size()];
+            OBlock[] array = new OBlock[list.size()];
             array = list.toArray(array);
-            Arrays.sort(array, new jmri.util.NamedBeanComparator());
+            Arrays.sort(array, new NamedBeanComparator<>());
             while (count <= row) {
-                count += ((OBlock) array[idx++]).getPortals().size();
+                count += array[idx++].getPortals().size();
             }
-            block = (OBlock) array[--idx];
+            block = array[--idx];
             idx = row - (count - block.getPortals().size());
             if (col == BLOCK_NAME_COLUMN) {
                 if (idx == 0) {

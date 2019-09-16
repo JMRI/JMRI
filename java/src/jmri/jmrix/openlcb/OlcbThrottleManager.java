@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ThrottleManager for OpenLCB
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2005, 2012
  */
 public class OlcbThrottleManager extends AbstractThrottleManager {
@@ -27,6 +27,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     @Deprecated
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
         this(memo);
+        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottleManager(..)");        
     }
 
     /**
@@ -99,11 +100,13 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
 
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-        log.debug("disposeThrottle called for " + t);
+        log.debug("disposeThrottle called for {}", t);
         if (super.disposeThrottle(t, l)) {
-            OlcbThrottle lnt = (OlcbThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof OlcbThrottle) {
+                OlcbThrottle lnt = (OlcbThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

@@ -28,14 +28,9 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
                 tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
     }
 
-    @Test
-    @Override
-    @Ignore("requires work for tams turnouts")
-    public void testDirectFeedback() throws jmri.JmriException {
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tnis = new TamsInterfaceScaffold();

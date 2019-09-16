@@ -46,7 +46,7 @@
         together (Windows XP clients and a Windows 2000 Server). I
         would like to store the roster and all else that is needed
         on the Windows 2000 server and be able to run copies of
-        Decoder Pro on at lease two of the Windows XP PC's. Is that
+        DecoderPro on at lease two of the Windows XP PC's. Is that
         possible?
       </blockquote>Yes!
 
@@ -55,7 +55,7 @@
       preferences" to put the roster information inside that.</p>
 
       <ol>
-        <li>Set-up a shared directory.</li>
+        <li>Set up a shared directory.</li>
 
         <li>Select which roster you want to start with (since there
         might be separate ones on different machines already). On

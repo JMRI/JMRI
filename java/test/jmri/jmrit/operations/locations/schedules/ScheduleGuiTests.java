@@ -7,10 +7,8 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -33,6 +31,7 @@ public class ScheduleGuiTests extends OperationsTestCase {
     @Test
     public void testScheduleOptionsFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.loadFiveLocations();
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Track track = lManager.getLocationByName("Test Loc E").getTrackByName("Test Track", null);
         ScheduleManager sManager = InstanceManager.getDefault(ScheduleManager.class);
@@ -65,21 +64,5 @@ public class ScheduleGuiTests extends OperationsTestCase {
 
         // TODO improve test
         JUnitUtil.dispose(f);
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        JUnitOperationsUtil.loadFiveLocations();
-        
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

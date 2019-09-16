@@ -63,7 +63,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IS1");
+        iconEditor._sysNameText.setText("IS1");
         iconEditor.addToTable();
 
         SensorIcon icon = _editor.putSensor();
@@ -106,14 +106,11 @@ public class IconEditorWindowTest {
     @Test
     public void testRightTOEditor() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IT2");
+        iconEditor._sysNameText.setText("IT2");
         iconEditor.addToTable();
 
         TurnoutIcon icon = _editor.addTurnout(iconEditor);
@@ -156,7 +153,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IT1");
+        iconEditor._sysNameText.setText("IT1");
         iconEditor.addToTable();
 
         TurnoutIcon icon = _editor.addTurnout(iconEditor);
@@ -203,7 +200,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IL2");
+        iconEditor._sysNameText.setText("IL2");
         iconEditor.addToTable();
 
         LightIcon icon = _editor.addLight();
@@ -297,7 +294,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IM2");
+        iconEditor._sysNameText.setText("IM2");
         iconEditor.addToTable();
 
         MemoryIcon memIcon = _editor.putMemory();
@@ -316,7 +313,7 @@ public class IconEditorWindowTest {
         int yloc = memIcon.getLocation().y + memIcon.getSize().height / 2;
         jfo.clickMouse(xloc, yloc, 1);
 
-        iconEditor._sysNametext.setText("IM1");
+        iconEditor._sysNameText.setText("IM1");
         iconEditor.addToTable();
 
         MemorySpinnerIcon memSpinIcon = _editor.addMemorySpinner();
@@ -333,7 +330,7 @@ public class IconEditorWindowTest {
         yloc = memIcon.getLocation().y + memSpinIcon.getSize().height / 2;
         jfo.clickMouse(xloc, yloc, 1);
 
-        iconEditor._sysNametext.setText("IM2");
+        iconEditor._sysNameText.setText("IM2");
         iconEditor.addToTable();
 
         MemoryInputIcon memInputIcon = _editor.addMemoryInputBox();
@@ -360,7 +357,7 @@ public class IconEditorWindowTest {
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
 
-        iconEditor._sysNametext.setText("IR2");
+        iconEditor._sysNameText.setText("IR2");
         iconEditor.addToTable();
 
         ReporterIcon icon = _editor.addReporter();

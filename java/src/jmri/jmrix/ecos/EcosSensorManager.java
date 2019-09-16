@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for ECoS systems. The Manager handles all the state
  * changes.
  * <p>
- * System names are "USnnn:yy", where nnn is the ECoS Object Number for a given
+ * System names are "USnnn:yy", Dcc4PcBoardManager nnn is the ECoS Object Number for a given
  * s88 Bus Module and yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
@@ -18,7 +18,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
 
     public EcosSensorManager(EcosSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
         tc = memo.getTrafficController();
         // listen for sensor creation
         // connect to the TrafficManager
@@ -32,20 +32,23 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);
     }
-    EcosSystemConnectionMemo memo;
+
     EcosTrafficController tc;
     //The hash table simply holds the object number against the EcosSensor ref.
     private Hashtable<Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public EcosSystemConnectionMemo getMemo() {
+        return (EcosSystemConnectionMemo) memo;
     }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        //int ports = Integer.parseInt(systemName.substring(2));
+        //int ports = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Sensor s = new EcosSensor(systemName, userName);
         //s.setUserName(userName);
 
@@ -93,7 +96,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                             }
                             sb.append(j);
                             try {
-                                EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
+                                EcosReporter rp = (EcosReporter) getMemo().getReporterManager().provideReporter(sb.toString());
                                 rp.decodeDetails(lines[i]);
                             } catch (IllegalArgumentException ex) {
                                 log.warn("Failed to provide Reporter \"{}\" in reply", sb.toString());
@@ -148,7 +151,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                                 }
                                                 sb.append(j);
                                                 try {
-                                                    EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
+                                                    EcosReporter rp = (EcosReporter) getMemo().getReporterManager().provideReporter(sb.toString());
                                                     rp.setObjectPort(object, (j - 1));
                                                     es.setReporter(rp);
                                                     EcosMessage em = new EcosMessage("get(" + object + ", railcom[" + (j - 1) + "])");
@@ -211,7 +214,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
          view each individual sensor*/
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);

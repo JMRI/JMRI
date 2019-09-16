@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring the
  * CatalogTreeManager.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element catalogTree)
  * class, relying on implementation here to load the individual CatalogTree
  * objects.
@@ -49,10 +49,8 @@ public class OBlockManagerXml // extends XmlFile
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class", "jmri.jmrit.logix.configurexml.OBlockManagerXml");
         OBlockManager manager = (OBlockManager) o;
-        Iterator<String> iter = manager.getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            OBlock block = manager.getBySystemName(sname);
+        for (OBlock block : manager.getNamedBeanSet()) {
+            String sname = block.getSystemName();
             String uname = block.getUserName();
             if (log.isDebugEnabled()) {
                 log.debug("OBlock: sysName= {}, userName= {}", sname, uname);
@@ -207,7 +205,7 @@ public class OBlockManagerXml // extends XmlFile
     OBlockManager _manager;
     PortalManager _portalMgr;
 
-    OBlock getBlock(String sysName) {
+    private OBlock getBlock(String sysName) {
         OBlock block = _blockMap.get(sysName);
         if (block == null) {
             try {
@@ -222,7 +220,7 @@ public class OBlockManagerXml // extends XmlFile
         return block;
     }
 
-    Portal getPortal(String name) {
+    private Portal getPortal(String name) {
         Portal portal = _portalMgr.providePortal(name);
         if (portal == null) {
             portal = _portalMgr.createNewPortal(null, name);

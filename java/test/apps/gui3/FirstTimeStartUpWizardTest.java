@@ -57,7 +57,7 @@ public class FirstTimeStartUpWizardTest {
                 // called when wizard is disposed, but do nothing in tests
             }
         };
-        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Decoder Pro Wizard", false, false);
+        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("DecoderPro Wizard", false, false);
         FirstTimeStartUpWizard t = new FirstTimeStartUpWizard(jf, a);
         Assert.assertNotNull("exists", t);
         t.dispose();

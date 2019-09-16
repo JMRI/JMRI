@@ -23,8 +23,8 @@
  *  TODO: draw dashed curves
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
+ *  TODO:    ditto for sensorIcons with text
  *  TODO: add support for slipturnouticon (one2beros)
- *  TODO: improve handling of layoutBlock with systemname != username
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *
  **********************************************************************************************/
@@ -174,8 +174,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                 // icon names based on states returned from JSON server,
                 $widget['state'] = UNKNOWN; //initial state is unknown
                 $widget.jsonType = ""; //default to no JSON type (avoid undefined)
-                if (typeof $widget["id"] !== "undefined") {
-                    $widget.systemName = $widget["id"];
+                
+                if ((typeof $widget["systemName"] == "undefined") &&  //set systemName from id if missing 
+                	  (typeof $widget["id"] !== "undefined")) {  
+                	$widget.systemName = $widget["id"];
                 }
                 $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
                 $widget['widgetFamily'] = $getWidgetFamily($widget, this);
@@ -405,6 +407,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
                                     $widget['state'] = item.attributes['value'].value; //use value for initial state
                                 });
+                                $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
@@ -451,7 +454,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 break;
                             case "fastclock" :
-                                $widget['name'] = 'IMCURRENTTIME';
+                                jmri.getMemory("IMRATEFACTOR"); //enable updates for fast clock rate                               
+                                $widget['name'] = 'IMCURRENTTIME';  // already defined in JMRI
                                 $widget.jsonType = 'memory';
                                 $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
                                 $widget.styles['height'] = "166px";
@@ -464,6 +468,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
+
                                 break;
                             case "memoryicon" :
                                 $widget['name'] = $widget.memory; //normalize name
@@ -473,6 +478,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
+                                break;
+                            case "reportericon" :
+                                $widget['name'] = $widget.reporter; //normalize name
+                                $widget.jsonType = "reporter"; // JSON object type
+                                $widget['text'] = $widget.reporter; //use name for initial text
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                jmri.getReporter($widget["systemName"]);
                                 break;
                             case "BlockContentsIcon" :
                                 $widget['name'] = $widget.systemName; //normalize name (id got stepped on)
@@ -538,8 +551,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 break;
                         }
-                        $widget['safeName'] = $safeName($widget.name);
-                        $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                        $widget['safeName'] = $safeName($widget.name);                                            
+                        switch ($widget['orientation']) { //use orientation instead of degrees if populated
+                        	case "vertical_up"   : $widget.degrees = 270;
+                        	case "vertical_down" : $widget.degrees = 90;
+                        }
+                        $gWidgets[$widget.id] = $widget; //store widget in persistent array                        
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
                         $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
@@ -566,15 +583,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['state'] = UNKNOWN;  //add a state member for this block
                                 $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
                                 //store these blocks in a persistent var
-                                //id is username, because references use it
-                                $gBlks[$widget.username] = $widget;
-                                jmri.getLayoutBlock($widget.username);
+                                $gBlks[$widget.systemName] = $widget;
+                                jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
                                 $widget['name'] = $widget.turnoutname; //normalize name
-                                if (typeof $widget.secondturnoutname !== "undefined") {
-                                    $widget['name2nd'] = $widget.secondturnoutname; //normalize name
-                                }
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
@@ -890,8 +903,17 @@ function $handleClick(e) {
     } else {
         var $newState = $getNextState($widget);  //determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);
-        if (typeof $widget.turnoutB !== "undefined") {  //TODO: put this in a more logical place?
-            sendElementChange($widget.jsonType, $widget.turnoutB, $newState);  //also send 2nd turnout
+        //also send new state to related turnout
+        if (typeof $widget.turnoutB !== "undefined") {  
+            sendElementChange($widget.jsonType, $widget.turnoutB, $newState);
+        } 
+        //used for crossover, layoutTurnout type 5
+        if (typeof $widget.secondturnoutname !== "undefined") {
+        	//invert 2nd turnout if requested
+        	if ($widget.secondturnoutinverted == "true") {
+        		$newState = ($newState==CLOSED ? THROWN : CLOSED); 
+        	}
+        	sendElementChange($widget.jsonType, $widget.secondturnoutname, $newState);
         }
     }
 }
@@ -1145,10 +1167,13 @@ function $drawIcon($widget) {
 
         $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
 
-        //add in overlay text if specified  (append "overlay" to id to keep them unique)
+        //add overlay text if specified, one layer above, and copy attributes (except background-color)
         if (typeof $widget.text !== "undefined") {
-            $("#panel-area").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
-            $("#panel-area>#" + $widget.id + "overlay").css({position: 'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: ($widget.level - 1)});
+            $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
+			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1.0 + 1, pointerEvents: 'none'};
+			$.extend(ovlCSS, $widget.styles); //append the styles from the widget  
+			delete ovlCSS['background-color'];  //clear the background color
+            $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
         jmri.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
@@ -1215,8 +1240,8 @@ function $drawTurnout($widget) {
 //    } else {
 //       jmri.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
     }
-    var cenx = $widget.xcen;
-    var ceny = $widget.ycen
+    var cenx = $widget.xcen * 1.0;
+    var ceny = $widget.ycen * 1.0;
     var ax = $gPts[$widget.ident + PT_A].x;
     var ay = $gPts[$widget.ident + PT_A].y;
     var bx = $gPts[$widget.ident + PT_B].x;
@@ -1226,10 +1251,10 @@ function $drawTurnout($widget) {
     var abx = (ax * 1) + ((bx - ax) * 0.5); // midpoint AB
     var aby = (ay * 1) + ((by - ay) * 0.5);
     if ($gPanel.turnoutdrawunselectedleg == 'yes') { //only calculate midpoints if needed
-        var cenbx = (cenx * 1) + ((bx - cenx) * 0.5); // midpoint cenB
-        var cenby = (ceny * 1) + ((by - ceny) * 0.5);
-        var cencx = (cenx * 1) + ((cx - cenx) * 0.5); // midpoint cenC
-        var cency = (ceny * 1) + ((cy - ceny) * 0.5);
+    	var cenbx = (cenx * 1) + ((bx - cenx) * 0.5); // midpoint cenB
+    	var cenby = (ceny * 1) + ((by - ceny) * 0.5);
+    	var cencx = (cenx * 1) + ((cx - cenx) * 0.5); // midpoint cenC
+    	var cency = (ceny * 1) + ((cy - ceny) * 0.5);
     }
     var dx, dy, dcx, dcy;
     if (typeof $gPts[$widget.ident + PT_D] !== "undefined") {
@@ -1283,6 +1308,11 @@ function $drawTurnout($widget) {
             if ($widget.state == $widget.continuing) {
                 $drawLine(ax, ay, bx, by, $color, $width); //A to B
                 $drawLine(dx, dy, cx, cy, $color, $width); //D to C
+                if ($widget.type == DOUBLE_XOVER) {
+                	//TODO: draw this
+                } else if ($widget.type == RH_XOVER || $widget.type == LH_XOVER) {
+                    $drawLine((abx+cenx)*0.5, (aby+ceny)*0.5, (dcx+cenx)*0.5, (dcy+ceny)*0.5, $color, $width);//center of midAB to midDC
+                }
             } else {
                 if ($widget.type == DOUBLE_XOVER) {
                     $drawLine(ax, ay, cx, cy, $color, $width); //A to C
@@ -1795,6 +1825,9 @@ var $getTextCSSFromObj = function($widget) {
     if (typeof $widget.size !== "undefined") {
         $retCSS['font-size'] = $widget.size + "px ";
     }
+    if (typeof $widget.fontname !== "undefined") {
+        $retCSS['font-family'] = $widget.fontname;
+    }
     if (typeof $widget.margin !== "undefined") {
         $retCSS['padding'] = $widget.margin + "px ";
     }
@@ -2019,10 +2052,10 @@ var $setWidgetState = function($id, $newState) {
                 $reDrawIcon($widget)
                 break;
             case "text" :
-                if ($widget.jsonType == "memory" || $widget.jsonType == "block") {
+                if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {  //set memory/block text to new value from server, suppressing "null"
+                    } else {  //set memory/block/reporter text to new value from server, suppressing "null"
                         $('div#' + $id).text(($newState != null) ? $newState : "");
                     }
                 } else {
@@ -2242,7 +2275,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "memoryInputIcon" :
         case "fastclock" :
         case "BlockContentsIcon" :
-//  case "reportericon" :
+        case "reportericon" :
         case "beanswitch" :
             return "text";
             break;
@@ -2365,7 +2398,7 @@ function updateOccupancy(occupancyName, state, data) {
 
 function updateOccupancySub(occupancyName, state) {
     if (occupancyNames[occupancyName]) {
-        jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
+        //jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
         $.each(occupancyNames[occupancyName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
             if ($widget.blockname) {
@@ -2386,7 +2419,7 @@ function updateOccupancySub(occupancyName, state) {
 }
 
 function setBlockColor(blockName, newColor) {
-    jmri.log("setting color for block " + blockName + " to " + newColor);
+    //jmri.log("setting color for block " + blockName + " to " + newColor);
     var $blk = $gBlks[blockName];
     if (typeof $blk != "undefined") {
         $gBlks[blockName].blockcolor = newColor;
@@ -2521,16 +2554,19 @@ $(document).ready(function() {
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
-        // Add a widget to retrieve current fastclock rate
-        // this is a widget so special logic for retrieving this information
-        // is not required
+        // Add a widget to retrieve fastclock rate
         $widget = new Array();
         $widget.jsonType = "memory";
         $widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
         $widget['id'] = $widget['name'];
         $widget['safeName'] = $widget['name'];
+        $widget['systemName'] = $widget['name'];       
         $widget['state'] = "1.0";
         $gWidgets[$widget.id] = $widget;
+        if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
+            whereUsed[$widget.systemName] = new Array();
+        }
+        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;        
 
         // request actual xml of panel, and process it on return
         // uses setTimeout simply to not block other JavaScript since

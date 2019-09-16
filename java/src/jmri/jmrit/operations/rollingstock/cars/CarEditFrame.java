@@ -1,35 +1,36 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of car
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014, 2018
  */
-public class CarEditFrame extends RollingStockEditFrame implements java.beans.PropertyChangeListener {
+public class CarEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
@@ -53,8 +54,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
     
     JComboBox<String> colorComboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
     JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
-
-    JTextField blockingTextField = new JTextField(4);
 
     CarLoadEditFrame carLoadEditFrame;
 
@@ -81,10 +80,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
 
         // default check box selections
         autoWeightCheckBox.setSelected(true);
-        passengerCheckBox.setSelected(false);
-        cabooseCheckBox.setSelected(false);
-        fredCheckBox.setSelected(false);
-        hazardousCheckBox.setSelected(false);
 
         // load tool tips
         weightTextField.setToolTipText(Bundle.getMessage("TipCarWeightOz"));
@@ -111,12 +106,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 
-        // row 4
-        pBlocking.setLayout(new GridBagLayout());
-        pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPassengerBlocking")));
-        addItem(pBlocking, blockingTextField, 0, 0);
-        blockingTextField.setText("0");
-
         // row 7
         pWeightOz.setLayout(new GridBagLayout());
         addItem(pWeightOz, textWeightOz, 0, 0);
@@ -137,6 +126,9 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         addItem(pLoad, loadComboBox, 1, 0);
         addItem(pLoad, editLoadButton, 2, 0);
         pLoad.setVisible(true);
+        
+        // select first item so load combobox will update
+        typeComboBox.setSelectedIndex(0);
 
         // row 10
         pGroup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Kernel")));
@@ -178,7 +170,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         hazardousCheckBox.setSelected(car.isHazardous());
 
         pBlocking.setVisible(car.isPassenger() || car.getKernel() != null);
-        blockingTextField.setText(Integer.toString(car.getBlocking()));
 
         if (!InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), car.getLoadName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("loadNameNotExist"),
@@ -213,6 +204,9 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
             log.debug("Type comboBox sees change, update car loads");
             InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typeComboBox.getSelectedItem(),
                     loadComboBox);
+            if (_rs != null) {
+                loadComboBox.setSelectedItem(((Car)_rs).getLoadName());
+            }
         }
         if (ae.getSource() == lengthComboBox && autoWeightCheckBox.isSelected()) {
             calculateWeight();
@@ -238,22 +232,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         super.buttonActionPerformed(ae);
-        if (ae.getSource() == deleteButton) {
-            log.debug("car delete button activated");
-            // disable delete and save buttons
-            deleteButton.setEnabled(false);
-            saveButton.setEnabled(false);
-            if (_rs != null) {
-                _rs.removePropertyChangeListener(this);
-            }
-            Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
-                    .getText());
-            if (car != null) {
-                carManager.deregister(car);
-            }
-            _rs = null;
-            OperationsXml.save();
-        }
         if (ae.getSource() == fillWeightButton) {
             calculateWeight();
         }
@@ -351,16 +329,7 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
             }
         }
         car.setPassenger(passengerCheckBox.isSelected());
-        int blocking = 0;
-        try {
-            blocking = Integer.parseInt(blockingTextField.getText());
-            // only allow numbers between 0 and 100
-            if (blocking < 0 || blocking > 100) {
-                blocking = 0;
-            }
-        } catch (Exception e) {
-            log.warn("Blocking must be a number between 0 and 100");
-        }
+        int blocking = Integer.parseInt(blockingTextField.getText());
         // ask if blocking order should be the same
         if (isSave && car.getKernel() == null && passengerCheckBox.isSelected() && car.getBlocking() != blocking) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
@@ -497,6 +466,15 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
                     }
                 }
             }
+        }
+    }
+    
+    @Override
+    protected void delete() {
+        Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
+                .getText());
+        if (car != null) {
+            carManager.deregister(car);
         }
     }
 

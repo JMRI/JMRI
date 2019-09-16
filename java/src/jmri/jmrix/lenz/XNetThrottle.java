@@ -1,13 +1,11 @@
 package jmri.jmrix.lenz;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.Timer;
 
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
 import org.slf4j.Logger;
@@ -22,8 +20,6 @@ import org.slf4j.LoggerFactory;
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected boolean isAvailable;  // Flag  stating if the throttle is in use or not.
-
-    static protected AtomicReference<Timer> statusTimer = new AtomicReference<>(); // Shared Timer used for status
 
     protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
                                                 // status of the throttle when throttle not available.
@@ -60,8 +56,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         super(memo);
         this.tc = controller;
         this.setDccAddress(address.getNumber());
-        this.speedIncrement = SPEED_STEP_128_INCREMENT;
-        this.speedStepMode = DccThrottle.SpeedStepMode128;
+        this.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
         //       this.isForward=true;
         setIsAvailable(false);
 
@@ -265,11 +260,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     /**
      * Set the speed step value and the related speedIncrement value.
      *
-     * @param Mode - the current speed step mode - default should be 128
+     * @param Mode  the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
     @Override
-    public void setSpeedStepMode(int Mode) {
+    public void setSpeedStepMode(SpeedStepMode Mode) {
         super.setSpeedStepMode(Mode);
         // On a lenz system, we need to send the speed to make sure the 
         // command station knows about the change.
@@ -365,15 +360,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         // now, we send the message to the command station
         queueMessage(msg, (THROTTLEHIGHMOMSTATSENT | THROTTLESTATSENT) );
         return;
-    }
-
-    /**
-     * Handle quantized speed. Note this can change!
-     * Value returned is always positive.
-     */
-    @Override
-    public float getSpeedIncrement() {
-        return speedIncrement;
     }
 
     // Handle incoming messages for This throttle.
@@ -630,35 +616,31 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         }
         if ((b1 & 0x01) == 0x01) {
             log.trace("Speed Step setting 27");
-            this.speedIncrement = SPEED_STEP_27_INCREMENT;
-            if (this.speedStepMode != DccThrottle.SpeedStepMode27) {
+            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_27) {
                 notifyPropertyChangeListener("SpeedSteps",
-                        Integer.valueOf(this.speedStepMode),
-                        Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode27));
+                        this.speedStepMode,
+                        this.speedStepMode = SpeedStepMode.NMRA_DCC_27);
             }
         } else if ((b1 & 0x02) == 0x02) {
             log.trace("Speed Step setting 28");
-            this.speedIncrement = SPEED_STEP_28_INCREMENT;
-            if (this.speedStepMode != DccThrottle.SpeedStepMode28) {
+            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_28) {
                 notifyPropertyChangeListener("SpeedSteps",
-                        Integer.valueOf(this.speedStepMode),
-                        Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode28));
+                        this.speedStepMode,
+                        this.speedStepMode = SpeedStepMode.NMRA_DCC_28);
             }
         } else if ((b1 & 0x04) == 0x04) {
             log.trace("Speed Step setting 128");
-            this.speedIncrement = SPEED_STEP_128_INCREMENT;
-            if (this.speedStepMode != DccThrottle.SpeedStepMode128) {
+            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_128) {
                 notifyPropertyChangeListener("SpeedSteps",
-                        Integer.valueOf(this.speedStepMode),
-                        Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode128));
+                        this.speedStepMode,
+                        this.speedStepMode = SpeedStepMode.NMRA_DCC_128);
             }
         } else {
             log.trace("Speed Step setting 14");
-            this.speedIncrement = SPEED_STEP_14_INCREMENT;
-            if (this.speedStepMode != DccThrottle.SpeedStepMode14) {
+            if (this.speedStepMode != SpeedStepMode.NMRA_DCC_14) {
                 notifyPropertyChangeListener("SpeedSteps",
-                        Integer.valueOf(this.speedStepMode),
-                        Integer.valueOf(this.speedStepMode = DccThrottle.SpeedStepMode14));
+                        this.speedStepMode,
+                        this.speedStepMode = SpeedStepMode.NMRA_DCC_14);
             }
         }
     }
@@ -687,7 +669,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         }
 
-        if (this.speedStepMode == DccThrottle.SpeedStepMode128) {
+        if (this.speedStepMode == SpeedStepMode.NMRA_DCC_128) {
             // We're in 128 speed step mode
             int speedVal = b2 & 0x7f;
             // The first speed step used is actually at 2 for 128 
@@ -704,7 +686,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                         Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 126));
             }
-        } else if (this.speedStepMode == DccThrottle.SpeedStepMode28) {
+        } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_28) {
             // We're in 28 speed step mode
             // We have to re-arange the bits, since bit 4 is the LSB,
             // but other bits are in order from 0-3
@@ -724,7 +706,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                         Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 28));
             }
-        } else if (this.speedStepMode == DccThrottle.SpeedStepMode27) {
+        } else if (this.speedStepMode == SpeedStepMode.NMRA_DCC_27) {
             // We're in 27 speed step mode
             // We have to re-arange the bits, since bit 4 is the LSB,
             // but other bits are in order from 0-3
@@ -1391,12 +1373,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void startStatusTimer() {
         log.debug("Status Timer Started");
 
-        // atomically make sure there's a timer available
-        statusTimer.updateAndGet(timer -> {
-            if (timer == null) return new java.util.Timer("XPressNet Throttle Status Timer", true);
-            else return timer;
-        });
-        
         if (statusTask != null) {
             statusTask.cancel();
             statusTask = null;
@@ -1410,7 +1386,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         };
         
-        statusTimer.get().schedule(statusTask, statTimeoutValue, statTimeoutValue);
+        jmri.util.TimerUtil.schedule(statusTask, statTimeoutValue, statTimeoutValue);
     }
 
     /**

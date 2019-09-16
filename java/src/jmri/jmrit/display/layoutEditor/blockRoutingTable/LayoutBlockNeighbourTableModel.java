@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Neighbouring layout blocks.
- * <P>
+ * <p>
  * Any desired ordering, etc, is handled outside this class.
  *
  * @author Kevin Dickerson Copyright (C) 2011

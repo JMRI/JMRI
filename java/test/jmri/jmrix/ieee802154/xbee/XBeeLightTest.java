@@ -44,7 +44,7 @@ public class XBeeLightTest {
         memo = new XBeeConnectionMemo();
         memo.setSystemPrefix("ABC");
         tc.setAdapterMemo(memo);
-        memo.setLightManager(new XBeeLightManager(tc, "ABC"));
+        memo.setLightManager(new XBeeLightManager(memo));
     }
 
     @After

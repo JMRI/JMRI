@@ -208,7 +208,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                                 hidden = true;
                             }
 
-                            jtpm.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
+                            setTableColumnPreferences(jtpm, strTableName, strColumnName, order, width, sort, hidden);
                         }
                     }
                 }
@@ -218,5 +218,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return true;
     }
 
+    private void setTableColumnPreferences(JmriJTablePersistenceManager jtpm, String table, String column, int order, int width, SortOrder sort, boolean hidden) {
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class);
 }

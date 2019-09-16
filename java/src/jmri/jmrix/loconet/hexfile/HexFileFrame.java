@@ -39,7 +39,7 @@ public class HexFileFrame extends JmriJFrame {
 
     /**
      * Because this creates a FileChooser, this should be invoked on the
-     * GUI frame
+     * GUI frame.
      */
     @InvokeOnGuiThread
     public HexFileFrame() {
@@ -130,7 +130,7 @@ public class HexFileFrame extends JmriJFrame {
     @InvokeOnGuiThread
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
-        // running.
+        // running so that the application can keep pretending to run with the window closed.
         super.dispose();
     }
 
@@ -151,7 +151,7 @@ public class HexFileFrame extends JmriJFrame {
         port.load(inputFileChooser.getSelectedFile());
 
         // wake copy
-        sourceThread.interrupt();
+        sourceThread.interrupt();  // really should be using notifyAll instead....
 
         // reach here while file runs.  Need to return so GUI still acts,
         // but that normally lets the button go back to default.
@@ -179,7 +179,7 @@ public class HexFileFrame extends JmriJFrame {
             LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
             LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
         } else {
-            log.info("Sensor Manager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+            log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
         }
 
         // Install a debug programmer, replacing the existing LocoNet one
@@ -207,6 +207,11 @@ public class HexFileFrame extends JmriJFrame {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {
+                if (!(a instanceof DccLocoAddress)) {
+                    log.error("{} is not a DccLocoAddress",a);
+                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
+                    return;
+                }
                 connectedAddresses++;
                 DccLocoAddress address = (DccLocoAddress) a;
                 //create some testing situations
@@ -253,7 +258,7 @@ public class HexFileFrame extends JmriJFrame {
         }
     }
 
-    private Thread sourceThread;
+    Thread sourceThread;  // tests need access
 
     public void setAdapter(LnHexFilePort adapter) {
         port = adapter;

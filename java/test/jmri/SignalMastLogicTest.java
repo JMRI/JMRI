@@ -3,7 +3,6 @@ package jmri;
 import java.util.Hashtable;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.netbeans.jemmy.EventTool;
 
 /**
  * Tests for the jmri.SignalMastLogic class
@@ -40,7 +39,7 @@ public class SignalMastLogicTest {
         Assert.assertEquals("IS2 not included", false, sml.isSensorIncluded(is2, sm2));
         Assert.assertEquals("IS1 state", 1, sml.getSensorState(is1, sm2));
         // add 1 control turnout
-        Hashtable<NamedBeanHandle<Turnout>, Integer> hashTurnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>();
+        Hashtable<NamedBeanHandle<Turnout>, Integer> hashTurnouts = new Hashtable<>();
         NamedBeanHandle<Turnout> namedTurnout1 = nbhm.getNamedBeanHandle("IT1", it1);
         hashTurnouts.put(namedTurnout1, 1); // 1 = Closed
         sml.setTurnouts(hashTurnouts, sm2);
@@ -54,7 +53,7 @@ public class SignalMastLogicTest {
         Assert.assertEquals("IT2 after", true, sml.isTurnoutIncluded(it2, sm2));
         Assert.assertEquals("IT1 state", 1, sml.getTurnoutState(it1, sm2));
         // add a control signal mast
-        Hashtable<SignalMast, String> hashSignalMast = new Hashtable<SignalMast, String>();
+        Hashtable<SignalMast, String> hashSignalMast = new Hashtable<>();
         hashSignalMast.put(sm3, "Stop");
         sml.setMasts(hashSignalMast, sm2);
         // check config
@@ -121,7 +120,8 @@ public class SignalMastLogicTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
@@ -130,4 +130,5 @@ public class SignalMastLogicTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

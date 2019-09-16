@@ -15,20 +15,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.FileUtil;
 import jmri.util.swing.WindowInterface;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Reload the JMRI Roster ({@link jmri.jmrit.roster.Roster}) from a file
+ * Reload the entire JMRI Roster ({@link jmri.jmrit.roster.Roster}) from a file
  * previously stored by {@link jmri.jmrit.roster.FullBackupExportAction}.
  * <p>
  * Does not currently handle importing the group(s) that the entry belongs to.
  *
- * @author Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014, 2018
  */
 public class FullBackupImportAction extends ImportRosterItemAction {
-
-    private final static Logger log = LoggerFactory.getLogger(FullBackupImportAction.class);
 
     //private Component _who;
     public FullBackupImportAction(String s, WindowInterface wi) {
@@ -52,7 +48,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     public void actionPerformed(ActionEvent e) {
 
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // make sure instance loaded
         Roster.getDefault();
@@ -74,7 +70,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         }
 
         String filename = chooser.getSelectedFile().getAbsolutePath();
-
+        
         try {
 
             inputfile = new FileInputStream(filename);
@@ -89,6 +85,9 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             // entry call will return a ZipEntry for each file in the
             // stream
             ZipEntry entry;
+            boolean acceptAll = false; // skip prompting for each entry and accept all
+            boolean acceptAllDup = false;  // skip prompting for dups and accept all
+            
             while ((entry = zipper.getNextEntry()) != null) {
                 log.debug(String.format("Entry: %s len %d added %TD",
                         entry.getName(), entry.getSize(),
@@ -106,7 +105,9 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                     mToID = lroot.getChild("locomotive").getAttributeValue("id");
 
                     // see if user wants to do it
-                    int retval = JOptionPane.showOptionDialog(mParent,
+                    int retval = 2; // accept if acceptall
+                    if (!acceptAll) {
+                        retval = JOptionPane.showOptionDialog(mParent,
                             Bundle.getMessage("ConfirmImportID", mToID),
                             Bundle.getMessage("ConfirmImport"),
                             0,
@@ -114,20 +115,29 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                             null,
                             new Object[]{Bundle.getMessage("CancelImports"),
                                 Bundle.getMessage("Skip"),
-                                Bundle.getMessage("ButtonOK")},
+                                Bundle.getMessage("ButtonOK"),
+                                Bundle.getMessage("ButtonAcceptAll")},
                             null);
+                    }
                     if (retval == 0) {
+                        // cancel case
                         break;
                     }
                     if (retval == 1) {
+                        // skip case
                         continue;
+                    }
+                    if (retval == 3) {
+                        // accept all case
+                        acceptAll = true;
                     }
 
                     // see if duplicate
                     RosterEntry currentEntry = Roster.getDefault().getEntryForId(mToID);
 
                     if (currentEntry != null) {
-                        retval = JOptionPane.showOptionDialog(mParent,
+                        if (!acceptAllDup) {
+                            retval = JOptionPane.showOptionDialog(mParent,
                                 Bundle.getMessage("ConfirmImportDup", mToID),
                                 Bundle.getMessage("ConfirmImport"),
                                 0,
@@ -135,18 +145,26 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                                 null,
                                 new Object[]{Bundle.getMessage("CancelImports"),
                                     Bundle.getMessage("Skip"),
-                                    Bundle.getMessage("ButtonOK")},
+                                    Bundle.getMessage("ButtonOK"),
+                                    Bundle.getMessage("ButtonAcceptAll")},
                                 null);
+                        }
                         if (retval == 0) {
+                            // cancel case
                             break;
                         }
                         if (retval == 1) {
+                            // skip case
                             continue;
+                        }
+                        if (retval == 3) {
+                            // accept all case
+                            acceptAllDup = true;
                         }
 
                         // turn file into backup
                         LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                        df.makeBackupFile(LocoFile.getFileLocation() + currentEntry.getFileName());
+                        df.makeBackupFile(Roster.getDefault().getRosterFilesLocation() + currentEntry.getFileName());
 
                         // delete entry
                         Roster.getDefault().removeEntry(currentEntry);
@@ -178,4 +196,6 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         }
 
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupImportAction.class);
 }

@@ -45,18 +45,20 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     }
 
     @Test
+    @Override
     public void testGetAddressNumber(){
        Assert.assertEquals("address",5,op.getAddressNumber());
     }
 
     @Test
+    @Override
     public void testGetAddress(){
        Assert.assertEquals("address","5 true",op.getAddress());
     }
 
     @Test
     public void testWriteCV() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -68,7 +70,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
     @Test
     public void testReadCV() throws jmri.ProgrammerException{
-        op.readCV(29,pl);
+        op.readCV("29",pl);
         XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,0);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -84,7 +86,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
     @Test
     public void testConfirmCV() throws jmri.ProgrammerException{
-        op.confirmCV(29,5,pl);
+        op.confirmCV("29",5,pl);
         XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -100,7 +102,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
     @Test
     public void testWriteCVWithNotSupported() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -112,7 +114,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
     @Test
     public void testWriteCVWithRetransmittableError() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -132,7 +134,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
     @Test
     public void testWriteCVWithOtherError() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -144,6 +146,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -166,6 +169,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     }
 
     @After
+    @Override
     public void tearDown() {
         tc = null;
         op = null;

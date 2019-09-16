@@ -5,7 +5,7 @@ import javax.swing.JMenuBar;
 
 /**
  * Method for invoking user code at startup time.
- * <P>
+ * <p>
  * This class provides a null static member. By replacing it with another
  * implementation, the user can update configuration, etc at startup time.
  *

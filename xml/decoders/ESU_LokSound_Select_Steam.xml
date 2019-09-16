@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- made from the ESU_LokSound_Select.xml Ver 2 file -->
     <!-- ver1 new file -->
     <version author="Michael Mosher" version="1" lastUpdated="20101020"/>
@@ -58,9 +58,11 @@
     <version author="Dave Heap" version="18" lastUpdated="20150427"/>
     <!-- ver19 this file is now basically legacy, with only obsolete definitions -->
     <version author="Dave Heap" version="19" lastUpdated="20170819"/>
+    <!-- ver20 refactor -->
+    <version author="Dave Heap" version="20" lastUpdated="20190507"/>
     <decoder>
         <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model show="no" model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+            <model show="no" model="LokSound Select Steam Generic" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="Steam Generic">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
                 <functionlabels>
                     <functionlabel num="0" lockable="true"></functionlabel>
@@ -123,30 +125,31 @@
                     <soundlabel num="27"></soundlabel>
                 </soundlabels>
             </model>
-            <model show="no" model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+            <model show="no" model="LokSound Select Big Boy 4-8-8-4" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73416">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+            <model show="no" model="LokSound Select SP Cab Forward" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73409">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+            <model show="no" model="LokSound Select Y6B 2-8-8-2" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73457">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+            <model show="no" model="LokSound Select Steam 3 Driven Axles" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73413">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+            <model show="no" model="LokSound Select Steam 4 Driven Axles" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73414">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+            <model show="no" model="LokSound Select Steam Geared" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73415">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+            <model show="no" model="LokSound Select Steam Articulated" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73416">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+            <model show="no" model="LokSound Select Steam Collection" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73417">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4lsOutputLabels.xml"/>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Light</functionlabel>
                 <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -208,6 +211,7 @@
                 <parameter name="PI">31</parameter>
                 <parameter name="SI">32</parameter>
                 <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">true</parameter>
             </capability>
         </programming>
         <variables>
@@ -396,13 +400,11 @@
                 </enumVal>
                 <label>Brake Squeal</label>
             </variable>
-            <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>
         <resets>
             <factReset label="Reset All CVs." CV="8" default="8"/>
         </resets>
     </decoder>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>

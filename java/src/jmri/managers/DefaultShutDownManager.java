@@ -69,7 +69,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void register(ShutDownTask s) {
         Objects.requireNonNull(s, "Shutdown task cannot be null.");
@@ -80,7 +82,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void deregister(ShutDownTask s) {
         if (s == null) {
@@ -92,19 +96,26 @@ public class DefaultShutDownManager implements ShutDownManager {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<ShutDownTask> tasks() {
         return java.util.Collections.unmodifiableList(tasks);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean shutdown() {
         return shutdown(0, true);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean restart() {
@@ -112,7 +123,8 @@ public class DefaultShutDownManager implements ShutDownManager {
     }
 
     /**
-     * First asks the shutdown tasks if shutdown is allowed. If not return false.
+     * First asks the shutdown tasks if shutdown is allowed. If not return
+     * false.
      * <p>
      * Then run the shutdown tasks, and then terminate the program with status 0
      * if not aborted. Does not return under normal circumstances. Does return
@@ -128,14 +140,14 @@ public class DefaultShutDownManager implements ShutDownManager {
      * @return false if shutdown or restart failed
      */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
-    public boolean shutdown(int status, boolean exit) {
+    protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             Date start = new Date();
             log.debug("Shutting down with {} tasks", this.tasks.size());
             setShuttingDown(true);
             // First check if shut down is allowed
             for (ShutDownTask task : tasks) {
-                if (! task.isShutdownAllowed()) {
+                if (!task.isShutdownAllowed()) {
                     setShuttingDown(false);
                     return false;
                 }
@@ -175,7 +187,12 @@ public class DefaultShutDownManager implements ShutDownManager {
                         // do nothing
                     }
                     if ((new Date().getTime() - start.getTime()) > (timeout * 1000)) { // milliseconds
-                        log.warn("Terminating without waiting for all tasks to complete");
+                        log.warn("Terminating without waiting for the following tasks to complete");
+                        this.tasks.forEach((task) -> {
+                            if (!task.isComplete()) {
+                                log.warn("\t{}", task.getName());
+                            }
+                        });
                         break;
                     }
                 }
@@ -232,7 +249,9 @@ public class DefaultShutDownManager implements ShutDownManager {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isShuttingDown() {
         return shuttingDown;
@@ -244,7 +263,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      *
      * @param state true if shutting down; false otherwise
      */
-    private static void setShuttingDown(boolean state) {
+    protected static void setShuttingDown(boolean state) {
         shuttingDown = state;
         log.debug("Setting shuttingDown to {}", state);
     }

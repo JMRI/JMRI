@@ -38,9 +38,9 @@ public class ConcentratorSystemConnectionMemo extends RfidSystemConnectionMemo {
      */
     @Override
     public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
-        this.sensorManager = new ConcentratorSensorManager(getTrafficController(), getSystemPrefix());
+        this.sensorManager = new ConcentratorSensorManager(this);
         InstanceManager.setSensorManager(getSensorManager());
-        this.reporterManager = new ConcentratorReporterManager(getTrafficController(), getSystemPrefix());
+        this.reporterManager = new ConcentratorReporterManager(this);
         InstanceManager.setReporterManager(getReporterManager());
     }
 

@@ -76,8 +76,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Creates a JFrame with standard settings, optional save/restore of size
      * and position.
      *
-     * @param saveSize     - Set true to save the last known size
-     * @param savePosition - Set true to save the last known location
+     * @param saveSize      Set true to save the last known size
+     * @param savePosition  Set true to save the last known location
      */
     public JmriJFrame(boolean saveSize, boolean savePosition) {
         super();
@@ -128,7 +128,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Creates a JFrame with with given name plus standard settings, including
      * saving/restoring of size and position.
      *
-     * @param name - Title of the JFrame
+     * @param name  Title of the JFrame
      */
     public JmriJFrame(String name) {
         this(name, true, true);
@@ -138,9 +138,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Creates a JFrame with with given name plus standard settings, including
      * optional save/restore of size and position.
      *
-     * @param name         - Title of the JFrame
-     * @param saveSize     - Set true to save the last knowm size
-     * @param savePosition - Set true to save the last known location
+     * @param name          Title of the JFrame
+     * @param saveSize      Set true to save the last knowm size
+     * @param savePosition  Set true to save the last known location
      */
     public JmriJFrame(String name, boolean saveSize, boolean savePosition) {
         this(saveSize, savePosition);
@@ -737,8 +737,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     protected void handleModified() {
         if (getModifiedFlag()) {
             this.setVisible(true);
-            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"), Bundle
-                    .getMessage("WarnChangedTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
+            int result = javax.swing.JOptionPane.showOptionDialog(this, Bundle.getMessage("WarnChangedMsg"),
+                    Bundle.getMessage("WarnChangedTitle"), javax.swing.JOptionPane.YES_NO_OPTION,
                     javax.swing.JOptionPane.WARNING_MESSAGE, null, // icon
                     new String[]{Bundle.getMessage("WarnYesSave"), Bundle.getMessage("WarnNoClose")}, Bundle
                     .getMessage("WarnYesSave"));
@@ -831,16 +831,14 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     private transient jmri.implementation.AbstractShutDownTask task = null;
 
     protected void setShutDownTask() {
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(sdm -> {
-            task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
-                @Override
-                public boolean execute() {
-                    handleModified();
-                    return true;
-                }
-            };
-            sdm.register(task);
-        });
+        task = new jmri.implementation.AbstractShutDownTask(getTitle()) {
+            @Override
+            public boolean execute() {
+                handleModified();
+                return true;
+            }
+        };
+        InstanceManager.getDefault(ShutDownManager.class).register(task);
     }
 
     protected boolean reuseFrameSavedPosition = true;

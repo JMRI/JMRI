@@ -17,6 +17,7 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
    private SpecificTrafficController tc = null;
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 

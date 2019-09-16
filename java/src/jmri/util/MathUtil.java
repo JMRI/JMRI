@@ -12,6 +12,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -811,38 +813,10 @@ public final class MathUtil {
      *
      * @param r the Rectangle
      * @return the Rectangle2D
-     * @deprecated since 4.9.4; use
-     * {@link #rectangleToRectangle2D(java.awt.Rectangle)} instead
-     */
-    @Deprecated
-    @CheckReturnValue
-    public static Rectangle2D rectangle2DForRectangle(@Nonnull Rectangle r) {
-        return rectangleToRectangle2D(r);
-    }
-
-    /**
-     * Convert Rectangle to Rectangle2D
-     *
-     * @param r the Rectangle
-     * @return the Rectangle2D
      */
     @CheckReturnValue
     public static Rectangle2D rectangleToRectangle2D(@Nonnull Rectangle r) {
         return new Rectangle2D.Double(r.x, r.y, r.width, r.height);
-    }
-
-    /**
-     * Convert Rectangle2D to Rectangle
-     *
-     * @param r the Rectangle
-     * @return the Rectangle2D
-     * @deprecated since 4.9.4; use
-     * {@link #rectangle2DToRectangle(java.awt.geom.Rectangle2D)} instead
-     */
-    @Deprecated
-    @CheckReturnValue
-    public static Rectangle rectangleForRectangle2D(@Nonnull Rectangle2D r) {
-        return rectangle2DToRectangle(r);
     }
 
     /**
@@ -990,6 +964,19 @@ public final class MathUtil {
         return offset(r1, subtract(center(r2), center(r1)));
     }
 
+    /**
+     * return rectangle at point
+     *
+     * @param p      the point
+     * @param width  the width
+     * @param height the height
+     * @return the rectangle
+     */
+    @CheckReturnValue
+    public static Rectangle2D rectangleAtPoint(@Nonnull Point2D p, Double width, Double height) {
+        return new Rectangle2D.Double(p.getX(), p.getY(), width, height);
+    }
+
     // recursive routine to plot a cubic Bezier...
     // (also returns distance!)
     private static double plotBezier(
@@ -1015,10 +1002,9 @@ public final class MathUtil {
         // (I just kept moving it closer to 1 until I got good results. ;-)
         if ((depth > 12) || (flatness <= 1.001)) {
             Point2D vO = normalize(orthogonal(subtract(p3, p0)), displacement);
-            if (bezier1st) {
+            if (path.getCurrentPoint() == null) {   // if this is the 1st point
                 Point2D p0P = add(p0, vO);
                 path.moveTo(p0P.getX(), p0P.getY());
-                bezier1st = false;
             }
             Point2D p3P = add(p3, vO);
             path.lineTo(p3P.getX(), p3P.getY());
@@ -1037,9 +1023,9 @@ public final class MathUtil {
             Point2D s = midPoint(r0, r1);
 
             // draw left side Bezier
-            result = MathUtil.plotBezier(path, p0, q0, r0, s, depth + 1, displacement);
+            result = plotBezier(path, p0, q0, r0, s, depth + 1, displacement);
             // draw right side Bezier
-            result += MathUtil.plotBezier(path, s, r1, q2, p3, depth + 1, displacement);
+            result += plotBezier(path, s, r1, q2, p3, depth + 1, displacement);
         }
         return result;
     }
@@ -1062,8 +1048,7 @@ public final class MathUtil {
             @Nonnull Point2D p2,
             @Nonnull Point2D p3) {
         GeneralPath path = new GeneralPath();
-        bezier1st = true;
-        double result = MathUtil.plotBezier(path, p0, p1, p2, p3, 0, 0.0);
+        double result = plotBezier(path, p0, p1, p2, p3, 0, 0.0);
         g2.draw(path);
         return result;
     }
@@ -1081,9 +1066,9 @@ public final class MathUtil {
         // calculate flatness to determine if we need to recurse...
         double outer_distance = 0;
         for (idx = 1; idx < len; idx++) {
-            outer_distance += MathUtil.distance(points[idx - 1], points[idx]);
+            outer_distance += distance(points[idx - 1], points[idx]);
         }
-        double inner_distance = MathUtil.distance(points[0], points[len - 1]);
+        double inner_distance = distance(points[0], points[len - 1]);
         double flatness = outer_distance / inner_distance;
 
         // depth prevents stack overflow
@@ -1093,10 +1078,9 @@ public final class MathUtil {
         if ((depth > 12) || (flatness <= 1.001)) {
             Point2D p0 = points[0], pN = points[len - 1];
             Point2D vO = normalize(orthogonal(subtract(pN, p0)), displacement);
-            if (bezier1st) {
+            if (path.getCurrentPoint() == null) {   // if this is the 1st point
                 Point2D p0P = add(p0, vO);
                 path.moveTo(p0P.getX(), p0P.getY());
-                bezier1st = false;
             }
             Point2D pNP = add(pN, vO);
             path.lineTo(pNP.getX(), pNP.getY());
@@ -1138,11 +1122,69 @@ public final class MathUtil {
         return result;
     }
 
+    /*
+     * plot a Bezier curve
+     *
+     * @param g2           the Graphics2D to draw to
+     * @param p            control points
+     * @param displacement right/left to draw a line parallel to the Bezier
+     * @param fillFlag     false to draw / true to fill
+     * @return the length of the Bezier curve
+     */
+    private static double plotBezier(
+            Graphics2D g2,
+            @Nonnull Point2D p[],
+            double displacement,
+            boolean fillFlag) {
+        double result;
+        GeneralPath path = new GeneralPath();
+        if (p.length == 4) {    // draw cubic bezier?
+            result = plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
+        } else {    // (nope)
+            result = plotBezier(path, p, 0, displacement);
+        }
+        if (fillFlag) {
+            g2.fill(path);
+        } else {
+            g2.draw(path);
+        }
+        return result;
+    }
+
+    /**
+     * get the path for a Bezier curve
+     *
+     * @param p             control points
+     * @param displacement right/left to draw a line parallel to the Bezier
+     * @return the length of the Bezier curve
+     */
+    public static GeneralPath getBezierPath(
+            @Nonnull Point2D p[],
+            double displacement) {
+        GeneralPath result = new GeneralPath();
+        if (p.length == 4) {    // draw cubic bezier?
+            plotBezier(result, p[0], p[1], p[2], p[3], 0, displacement);
+        } else {    // (nope)
+            plotBezier(result, p, 0, displacement);
+        }
+        return result;
+    }
+
+    /**
+     * get the path for a Bezier curve
+     *
+     * @param p   control points
+     * @return the length of the Bezier curve
+     */
+    public static GeneralPath getBezierPath(@Nonnull Point2D p[]) {
+        return getBezierPath(p, 0);
+    }
+
     /**
      * Draw a Bezier curve
      *
-     * @param g2  the Graphics2D to draw to
-     * @param p[] control points
+     * @param g2           the Graphics2D to draw to
+     * @param p            control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1150,27 +1192,44 @@ public final class MathUtil {
             Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement) {
-        double result;
-        GeneralPath path = new GeneralPath();
-        bezier1st = true;
-        if (p.length == 4) {    // draw cubic bezier?
-            result = plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
-        } else {    // (nope)
-            result = plotBezier(path, p, 0, displacement);
-        }
-        g2.draw(path);
-        return result;
-        }
+        return plotBezier(g2, p, displacement, false);
+    }
+
+    /**
+     * Fill a Bezier curve
+     *
+     * @param g2           the Graphics2D to draw to
+     * @param p            control points
+     * @param displacement right/left to draw a line parallel to the Bezier
+     * @return the length of the Bezier curve
+     */
+    public static double fillBezier(
+            Graphics2D g2,
+            @Nonnull Point2D p[],
+            double displacement) {
+        return plotBezier(g2, p, displacement, true);
+    }
 
     /**
      * Draw a Bezier curve
      *
      * @param g2  the Graphics2D to draw to
-     * @param p[] control points
+     * @param p control points
      * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         return drawBezier(g2, p, 0.0);
     }
-    private static boolean bezier1st = false;
+
+    /**
+     * Fill a Bezier curve
+     *
+     * @param g2  the Graphics2D to draw to
+     * @param p   control points
+     * @return the length of the Bezier curve
+     */
+    public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
+        return plotBezier(g2, p, 0.0, true);
+    }
+    // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

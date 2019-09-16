@@ -1,16 +1,19 @@
 package jmri.jmrix.rfid.protocol.em18;
 
 import jmri.jmrix.AbstractMRReply;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the Em18RfidProtocol class
  *
  * @author Matthew Harris
  */
-public class Em18RfidProtocolTest extends TestCase {
+public class Em18RfidProtocolTest {
 
     AbstractMRReply msgStandalone = new AbstractMRReplyImpl("7800656EB6C5");
     AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("7800656EB6C6");
@@ -18,6 +21,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of getMaxSize method, of class Em18RfidProtocol.
      */
+    @Test
     public void testGetMaxSize() {
         assertEquals(12, Em18RfidProtocol.getMaxSize());
     }
@@ -25,6 +29,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of initString method, of class Em18RfidProtocol.
      */
+    @Test
     public void testInitString() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals("", instance.initString());
@@ -33,6 +38,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of getTag method, of class Em18RfidProtocol.
      */
+    @Test
     public void testGetTag() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals("7800656EB6", instance.getTag(msgStandalone));
@@ -41,6 +47,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of providesChecksum method, of class Em18RfidProtocol.
      */
+    @Test
     public void testProvidesChecksum() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals(true, instance.providesChecksum());
@@ -49,6 +56,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of getCheckSum method, of class Em18RfidProtocol.
      */
+    @Test
     public void testGetCheckSum() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals("C5", instance.getCheckSum(msgStandalone));
@@ -57,6 +65,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of isValid method, of class Em18RfidProtocol.
      */
+    @Test
     public void testIsValid() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
@@ -66,6 +75,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of isCheckSumValid method, of class Em18RfidProtocol.
      */
+    @Test
     public void testIsCheckSumValid() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals(true, instance.isCheckSumValid(msgStandalone));
@@ -75,6 +85,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of endOfMessage method, of class Em18RfidProtocol.
      */
+    @Test
     public void testEndOfMessage() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals(true, instance.endOfMessage(msgStandalone));
@@ -83,6 +94,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of getReaderPort method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetReaderPort() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         char expResult = 0x00;
@@ -92,6 +104,7 @@ public class Em18RfidProtocolTest extends TestCase {
     /**
      * Test of toMonitorString method, of class Em18RfidProtocol.
      */
+    @Test
     public void testToMonitorString() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         String expResult = "Reply from EM-18 reader. Tag read 7800656EB6 checksum C5 valid? yes";
@@ -115,33 +128,13 @@ public class Em18RfidProtocolTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public Em18RfidProtocolTest(String testName) {
-        super(testName);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Em18RfidProtocolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Em18RfidProtocolTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

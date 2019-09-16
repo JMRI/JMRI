@@ -1,44 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-reporter-server-message",
+    "title": "jmri-json-rosterGroup-server-message",
     "type": "object",
-    "description": "Data portion of message from JMRI to client for type \"reporter\"",
+    "description": "Data portion of message from JMRI to client for type \"rosterGroup\"",
     "properties": {
         "name": {
             "type": "string",
-            "description": "System name of the reporter"
+            "description": "Name of the rosterGroup"
         },
-        "userName": {
-            "type": "string",
-            "description": "User name of the reporter"
-        },
-        "comment": {
-            "type": "string",
-            "description": "Comment for the reporter"
-        },
-        "properties": {
-            "type": "array",
-            "description": "NamedBean properties of the reporter",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key by which property is accessed"
-                    },
-                    "value": {
-                        "type": ["string", "null"],
-                        "description": "String value of property or null"
-                    }
-                }
-            }
-        },
-        "state": {
+        "length": {
             "type": "integer",
-            "description": "The state of the reporter",
-            "enum": [0, 2, 4, 8]
+            "description": "Number of entries in the rosterGroup"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["name", "length"]
 }

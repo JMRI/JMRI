@@ -285,7 +285,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (self.debugLevel >= LowDebug) :
                 self.msgText("stop and release the current loco: " + str(oldId))
             self.doStop();
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
             self.currentThrottle = None
             if (self.debugLevel >= LowDebug) :
                 self.msgText("Throttle " + str(oldId) + " released")
@@ -674,7 +674,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             #self.msgText("releasing throttle")
             self.currentThrottle.setSpeedSetting(0)
-            self.currentThrottle.release()
+            self.currentThrottle.release(None)
         self.isAborting = True
         return
 
@@ -1435,8 +1435,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     isOk = False
         if (isOk) :
             # clear id from any existing blocks
-            for x in blocks.getSystemNameList().toArray() :
-                b = blocks.getBySystemName(x)
+            for b in blocks.getNamedBeanSet() :
                 if (b != blocks.getBlock(self.blockStart.text) and b.getValue() == self.locoAddress.text) :
                     b.setValue("")
             if (self.blockDirection.isSelected()) :
@@ -1705,10 +1704,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findCurrentBlocks(self) :
         # search the block list for the matching loco
         blockList = []
-        blockArray = blocks.getSystemNameList().toArray()
-        #self.msgText("blocks #: " + str(len(blockArray)))
-        for x in blockArray :
-            b = blocks.getBySystemName(x)
+        for b in blocks.getNamedBeanSet() :
             if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
         return blockList
@@ -1902,7 +1898,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.redFlashSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-flashred-short.gif", "RedFlashCabSignal")
         self.darkSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-dark-short.gif", "DarkCabSignal")
         self.unknownSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/misc/Question-black.gif", "UnknownCabSignal")
-        self.throttleManager = jmri.InstanceManager.throttleManagerInstance()
+        self.throttleManager = jmri.InstanceManager.getDefault(jmri.ThrottleManager)
         if (self.throttleManager == None) :
             print("No command station found!!\nRT has no way to control the trains.\n")
             return

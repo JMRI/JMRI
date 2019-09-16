@@ -34,6 +34,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-02-19</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 26 Unlit</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -379,6 +385,19 @@
     </aspect>
 
     <aspect>
+      <name>Zhasnuto</name>
+      <title>Unlit</title>
+      <indication>Traffic locking in opposing direction on a banalized ABS</indication>
+      <description>Unlit all lights</description>
+      <reference> </reference>
+      <comment>Znasnuté návěstidlo v nesprávném směru</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>26</dccAspect>
+    </aspect>
+
+    <aspect>
       <name>Posun zakázán</name>
       <title>Shunting forbidden</title>
       <indication>Shunting not allowed</indication>
@@ -488,6 +507,8 @@
     <appearancefile href="appearance-abs4.xml"/>
     
     <appearancefile href="appearance-shunting.xml"/>
+
+    <appearancefile href="appearance-test.xml"/>
 
   </appearancefiles>
 

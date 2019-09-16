@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JMenus.
- * <P>
+ * <p>
  * Chief among these is the loadMenu method, for creating a set of menus from an
  * XML definition
  *
@@ -79,7 +79,7 @@ public class JMenuUtil extends GuiUtilBase {
                     if (!(SystemType.isMacOSX()
                             && UIManager.getLookAndFeel().isNativeLookAndFeel()
                             && ((child.getChild("adapter") != null
-                            && child.getChild("adapter").getText().equals("apps.gui3.TabbedPreferencesAction"))
+                            && child.getChild("adapter").getText().equals("apps.gui3.tabbedpreferences.TabbedPreferencesAction"))
                             || (child.getChild("current") != null
                             && child.getChild("current").getText().equals("quit"))))) {
                         if (addSep) {

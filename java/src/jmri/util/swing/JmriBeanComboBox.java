@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultListSelectionModel;
@@ -32,7 +33,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This class could definitely benefit from beng made generic on "E extends NamedBean"
  * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean}" method.
+ * 
+ * @deprecated since 4.17.1; use {@link jmri.swing.NamedBeanComboBox} instead
  */
+@Deprecated
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
     /**
@@ -177,16 +181,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             break;
 
                         case USERNAMESYSTEMNAME:
-                            if (uname != null && !uname.equals("")) {
-                                displayList[i] = nBean.getUserName() + " - " + name;
-                            } else {
-                                displayList[i] = name;
-                            }
-                            break;
-
                         case SYSTEMNAMEUSERNAME:
                             if (uname != null && !uname.equals("")) {
-                                displayList[i] = name + " - " + nBean.getUserName();
+                                displayList[i] = nBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                             } else {
                                 displayList[i] = name;
                             }
@@ -347,7 +344,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
     /**
      * Set the display order of the combobox.
      *
-     * @param inDisplayOrder - the desired display order for this combobox
+     * @param inDisplayOrder  the desired display order for this combobox
      */
     public void setDisplayOrder(DisplayOptions inDisplayOrder) {
         if (_displayOrder != inDisplayOrder) {
@@ -396,16 +393,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     break;
 
                 case USERNAMESYSTEMNAME:
-                    if (uname != null && !uname.equals("")) {
-                        selectedItem = uname + " - " + inNamedBean.getSystemName();
-                    } else {
-                        selectedItem = inNamedBean.getSystemName();
-                    }
-                    break;
-
                 case SYSTEMNAMEUSERNAME:
                     if (uname != null && !uname.equals("")) {
-                        selectedItem = inNamedBean.getSystemName() + " - " + uname;
+                        selectedItem = inNamedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                     } else {
                         selectedItem = inNamedBean.getSystemName();
                     }
@@ -524,16 +514,13 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                 if (found) {    //if we found it there then...
                     //walk the namedBeanList...
-                    List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
+                    Set<NamedBean> namedBeanSet = uDaManager.getNamedBeanSet();
 
-                    for (NamedBean namedBean : namedBeanList) {
-                        //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
-                        String uname = namedBean.getUserName();
-                        String sname = namedBean.getSystemName();
-
-                        if ((null != uname)) {
-                            String usname = uname + " - " + sname;
-                            String suname = sname + " - " + uname;
+                    for (NamedBean namedBean : namedBeanSet) {
+                        //checking to see if it matches "<sname> (<uname>)" or "<uname> (<sname>)"
+                        if ((namedBean.getUserName() != null)) {
+                            String usname = namedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                            String suname = namedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
 
                             if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
                                 result = namedBean;
@@ -756,7 +743,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             _enableRenderer = new EnabledComboBoxRenderer();
             setRenderer(_enableRenderer);
             ListSelectionModel lsm = _enableRenderer.getEnabledItems();
-            lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
+            lsm.addSelectionInterval(0, _manager.getNamedBeanSet().size());
         }
         return _enableRenderer;
     }

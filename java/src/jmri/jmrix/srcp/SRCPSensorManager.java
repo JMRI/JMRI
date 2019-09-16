@@ -3,43 +3,38 @@ package jmri.jmrix.srcp;
 import jmri.Sensor;
 
 /**
- * Implement Sensor manager for SRCP systems
- * <P>
- * System names are "DSnnn", where nnn is the sensor number without padding.
+ * Implement Sensor manager for SRCP systems.
+ * <p>
+ * System names are "DSnnn", where D is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    SRCPBusConnectionMemo _memo = null;
     int _bus;
 
     public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
-        _memo = memo;
+        super(memo);
         _bus = bus;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public SRCPBusConnectionMemo getMemo() {
+        return (SRCPBusConnectionMemo) memo;
     }
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new SRCPSensor(addr, _memo);
+        t = new SRCPSensor(addr, getMemo());
         t.setUserName(userName);
 
         return t;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SRCPSensorManager instance() {
-        return null;
     }
 
 }

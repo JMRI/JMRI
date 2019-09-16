@@ -178,7 +178,7 @@ public class AutomatTableDataModel extends AbstractTableModel {
     }
 
     /**
-     * Service method to setup a column so that it will hold a button for it's
+     * Service method to setup a column so that it will hold a button for its
      * values
      *
      * @param table the table in which to configure the column

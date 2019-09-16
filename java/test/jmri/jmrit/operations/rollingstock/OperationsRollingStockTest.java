@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.rollingstock;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -7,10 +10,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Car class Last manually cross-checked on
@@ -154,7 +153,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", Car.DESTINATION_CHANGED_PROPERTY);
         Assert.assertEquals("Car Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", Car.DESTINATION_TRACK_CHANGED_PROPERTY);
 
-        Assert.assertEquals("Car Constant COUPLER", 4, Car.COUPLER);
+        Assert.assertEquals("Car Constant COUPLERS", 4, Car.COUPLERS);
     }
 
     // test Car location and track
@@ -214,6 +213,9 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         rs1.setLength("40");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("Car null Set Length match", "okay", testresult);
+        
+        // car is now on track, need to remove to continue testing
+        rs1.setLocation(null, null);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.INCLUDE_ROADS);
@@ -225,6 +227,9 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.addRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("Car Set includeroads", "okay", testresult);
+        
+        // car is now on track, need to remove to continue testing
+        rs1.setLocation(null, null);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.EXCLUDE_ROADS);
@@ -235,6 +240,9 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.setRoadOption(Track.ALL_ROADS);
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("Car Set allroads", "okay", testresult);
+        
+        // car is now on track, need to remove to continue testing
+        rs1.setLocation(null, null);
 
         /* track needs to accept road */
         testtrack1.setRoadOption(Track.EXCLUDE_ROADS);
@@ -244,19 +252,5 @@ public class OperationsRollingStockTest extends OperationsTestCase {
 
         // Normally logged message
         jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

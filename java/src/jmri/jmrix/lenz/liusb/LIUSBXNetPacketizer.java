@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is an extention of the XNetPacketizer to handle the device specific
  * requirements of the LIUSB.
- * <P>
+ * <p>
  * In particular, LIUSBXNetPacketizer adds functions to add and remove the 0xFF
  * 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
@@ -57,9 +57,9 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
 
     /**
      * Get characters from the input source, and file a message.
-     * <P>
+     * <p>
      * Returns only when the message is complete.
-     * <P>
+     * <p>
      * Only used in the Receive thread.
      *
      * @param msg     message to fill

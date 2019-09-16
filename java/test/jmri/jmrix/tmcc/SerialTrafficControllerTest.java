@@ -4,11 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -222,7 +218,13 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
+        }
+
+        //@Override
+        @Override
+        public int[] validBaudNumbers() {
+            return new int[] {};
         }
 
         protected SerialPortControllerScaffold() throws Exception {

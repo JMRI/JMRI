@@ -1,20 +1,17 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Instant;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a BlockManager.
@@ -37,12 +34,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager<Block> implements PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
+public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
-    private String powerManagerChangeName;
+    private final String powerManagerChangeName;
 
     public BlockManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
         InstanceManager.getList(PowerManager.class).forEach((pm) -> {
@@ -56,13 +53,6 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @CheckReturnValue
     public int getXMLOrder() {
         return Manager.BLOCKS;
-    }
-
-    @Override
-    @CheckReturnValue
-    @Nonnull
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -154,11 +144,13 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      *
      * @param name the system name or the user name for the block
      * @return a new or existing Block
-     * @throws IllegalArgumentException if cannot create block; never returns
-     *                                  null
+     * @throws IllegalArgumentException if cannot create block or no name supplied; never returns null
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Could not create block, no name supplied");
+        }
         Block b = getBlock(name);
         if (b != null) {
             return b;
@@ -166,7 +158,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             b = createNewBlock(name, null);
         } else {
-            b = createNewBlock(makeSystemName(name), null);
+            b = createNewBlock(name);
         }
         if (b == null) {
             throw new IllegalArgumentException("Could not create block \"" + name + "\"");
@@ -198,8 +190,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
 
     @CheckReturnValue
     @CheckForNull
-    public Block getBySystemName(@Nonnull String name) {
-        String key = name.toUpperCase();
+    public Block getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
@@ -220,33 +211,6 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         }
         // If it's not in the system list, go ahead and return null
         return (retv);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IB prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IB")) {
-            inputName = "IB" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
-     * @return the default BlockManager instance
-     * @deprecated since 4.9.1; use
-     * {@link InstanceManager#getDefault(Class)} instead
-     */
-    @Deprecated
-    @CheckForNull
-    static public BlockManager instance() {
-        return InstanceManager.getDefault(BlockManager.class);
     }
 
     String defaultSpeed = "Normal";
@@ -283,8 +247,8 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @Override
     @CheckReturnValue
     @Nonnull
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameBlock");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameBlocks" : "BeanNameBlock");
     }
 
     /**
@@ -301,8 +265,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 
-        getSystemNameList().stream().forEach((sysName) -> {
-            Block b = getBySystemName(sysName);
+        getNamedBeanSet().stream().forEach((b) -> {
             Object obj;
             if (b!= null && (obj = b.getValue()) != null) {
                 if (obj instanceof RosterEntry && obj == re) {
@@ -327,7 +290,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      *
      * Also listen for additions/removals or PowerManagers
      *
-     * @param e - the change event
+     * @param e the change event
      */
 
     @Override
@@ -370,6 +333,10 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         return Instant.now().toEpochMilli() - lastTimeLayoutPowerOn.toEpochMilli();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
+    @Override
+    public Block provide(String name) throws IllegalArgumentException {
+        return provideBlock(name);
+    }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
 }

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Timer;
 import java.util.TimerTask;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
@@ -566,7 +565,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
         private final JTable table;
         private final JmriJTablePersistenceManager manager;
-        private Timer delay = null;
 
         public JTableListener(JTable table, JmriJTablePersistenceManager manager) {
             this.table = table;
@@ -656,6 +654,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
             log.trace("Got columnSelectionChanged for {} ({} -> {})", this.table.getName(), e.getFirstIndex(), e.getLastIndex());
         }
 
+        TimerTask delay;
+        
         protected void cancelDelay() {
             if (this.delay != null) {
                 this.delay.cancel(); // cancel complete before dropping reference
@@ -673,8 +673,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
          */
         private void saveState() {
             cancelDelay();
-            delay = new Timer("JmriJTablePersistenceManager save delay");
-            delay.schedule(new TimerTask() {
+            jmri.util.TimerUtil.schedule(delay = new TimerTask() {
                 @Override
                 public void run() {
                     JTableListener.this.manager.cacheState(JTableListener.this.table);

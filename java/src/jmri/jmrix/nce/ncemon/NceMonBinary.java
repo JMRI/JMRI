@@ -13,13 +13,10 @@ import org.slf4j.LoggerFactory;
  * published November 2007 and is used with NCE's permission.
  *
  * @author Daniel Boudreau Copyright (C) 2012
- *
  */
 public class NceMonBinary {
 
     private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
-
-    private static final String NEW_LINE = "\n";
 
     private int replyType = REPLY_UNKNOWN;
 
@@ -37,13 +34,14 @@ public class NceMonBinary {
     private static final int REPLY_OK = '!';   // command completed successfully
 
     /**
-     * Creates a command message for the log, in a human-friendly form if possible.
+     * Creates a command message for the log, in a human-friendly form if
+     * possible.
      *
      * @param m the raw command message
      * @return the displayable message string
      */
     public String displayMessage(NceMessage m) {
-        return parseMessage(m) + NEW_LINE;
+        return parseMessage(m);
     }
 
     private String parseMessage(NceMessage m) {
@@ -59,8 +57,7 @@ public class NceMonBinary {
             case (NceMessage.SET_CLOCK_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(Bundle.getMessage("SET_CLOCK_CMD"),
-                            new Object[]{m.getElement(1), m.getElement(2)})
-                            + NEW_LINE;
+                            new Object[]{m.getElement(1), m.getElement(2)});
                 }
                 break;
             case (NceMessage.CLOCK_1224_CMD):
@@ -482,20 +479,21 @@ public class NceMonBinary {
     }
 
     /**
-     * Creates a reply message for the log, in a human-friendly form if possible.
+     * Creates a reply message for the log, in a human-friendly form if
+     * possible.
      *
      * @param r the raw reply message
-     * @return  the displayable message string
+     * @return the displayable message string
      */
     public String displayReply(NceReply r) {
-        return parseReply(r) + NEW_LINE;
+        return parseReply(r);
     }
 
     private String parseReply(NceReply r) {
         switch (replyType) {
             case (REPLY_STANDARD):
                 /* standard reply is a single byte
-                 * Errors returned: 
+                 * Errors returned:
                  * '0'= command not supported
                  * '1'= loco/accy/signal address out of range
                  * '2'= cab address or op code out of range
@@ -548,4 +546,5 @@ public class NceMonBinary {
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});
     }
+
 }

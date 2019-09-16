@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- made from the ESU_LokSoundV3_5.file -->
     <!-- ver1 new file -->
     <version author="Michael Mosher" version="1" lastUpdated="20100301"/>
@@ -60,116 +60,115 @@
     <version author="Dave Heap" version="19" lastUpdated="20160519"/>
     <!-- ver20 concealed obsolete legacy definitions and removed obsolete functionlabels & soundlabels -->
     <version author="Dave Heap" version="20" lastUpdated="20170819"/>
+    <!-- ver21 refactor -->
+    <version author="Dave Heap" version="21" lastUpdated="20190507"/>
     <decoder>
         <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527,33554569">
+            <model model="LokSound Select" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554492,33554511,33554527,33554569">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model model="LokSound Select direct / micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+            <model model="LokSound Select direct / micro" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554506,33554543,33554560">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533,33554570">
+            <model model="LokSound Select OEM" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554533,33554570">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
+            <model model="LokSound Select L" numOuts="12" maxMotorCurrent="3A" extFnsESU="V4" productID="33554553">
                 <size length="51" width="26" height="14" units="mm"/>
             </model>
-            <model show="no" model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+            <model show="no" model="LokSound Select Direct" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554506,33554543,33554560">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
+            <model show="no" model="LokSound Select Micro" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554506,33554543,33554560">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
+            <model show="no" model="LokSound Select Diesel Generic" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="Diesel Generic">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
+            <model show="no" model="LokSound Select Alco 244" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73401">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Alco 251" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73402">
+            <model show="no" model="LokSound Select Alco 251" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73402">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Alco 251-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73427">
+            <model show="no" model="LokSound Select Alco 251-16" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73427">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Alco 539T" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73411">
+            <model show="no" model="LokSound Select Alco 539T" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73411">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Baldwin 606_606NA" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73446">
+            <model show="no" model="LokSound Select Baldwin 606_606NA" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73446">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Baldwin 606SC_606A" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73447">
+            <model show="no" model="LokSound Select Baldwin 606SC_606A" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73447">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Baldwin VO-6" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+            <model show="no" model="LokSound Select Baldwin VO-6" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73405">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 567" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73406">
+            <model show="no" model="LokSound Select EMD 567" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73406">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 645E" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73407">
+            <model show="no" model="LokSound Select EMD 645E" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73407">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 12-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73443">
+            <model show="no" model="LokSound Select EMD 12-645 non turbo" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73443">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 12-645E3" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73439">
+            <model show="no" model="LokSound Select EMD 12-645E3" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73439">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 16-645 non turbo" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73426">
+            <model show="no" model="LokSound Select EMD 16-645 non turbo" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73426">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD F40PH" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73430">
+            <model show="no" model="LokSound Select EMD F40PH" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73430">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 16-645F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73450">
+            <model show="no" model="LokSound Select EMD 16-645F" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73450">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 645E/F" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73408">
+            <model show="no" model="LokSound Select EMD 645E/F" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73408">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD 710GB" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73410">
+            <model show="no" model="LokSound Select EMD 710GB" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73410">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD SD70M-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73425">
+            <model show="no" model="LokSound Select EMD SD70M-2" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73425">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD SD80MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73461">
+            <model show="no" model="LokSound Select EMD SD80MAC" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73461">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD SD90MAC" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73431">
+            <model show="no" model="LokSound Select EMD SD90MAC" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73431">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select EMD MP40PH-2C" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73428">
+            <model show="no" model="LokSound Select EMD MP40PH-2C" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73428">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select GE Cat-44" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73444">
+            <model show="no" model="LokSound Select GE Cat-44" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73444">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select GE FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73403">
+            <model show="no" model="LokSound Select GE FDL" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73403">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select GE FDL-16" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73445">
+            <model show="no" model="LokSound Select GE FDL-16" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73445">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select GE 7FDL" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73404">
+            <model show="no" model="LokSound Select GE 7FDL" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73404">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select Baldwin" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73405">
+            <model show="no" model="LokSound Select Baldwin" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73405">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
-            <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73418">
+            <model show="no" model="LokSound Select PCC trolley steetcar" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="73418">
                 <size length="1.41" width=".51" height=".25" units="inches"/>
             </model>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4lsOutputLabels.xml"/>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Light</functionlabel>
                 <functionlabel num="2" lockable="false">Horn</functionlabel>
             </functionlabels>
-            <soundlabels>
-                <soundlabel num="25">Random sounds</soundlabel>
-                <soundlabel num="26">Automatic brake sound</soundlabel>
-                <soundlabel num="27">Gear shift sound</soundlabel>
-            </soundlabels>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLabels.xml"/>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
@@ -185,6 +184,7 @@
                 <parameter name="PI">31</parameter>
                 <parameter name="SI">32</parameter>
                 <parameter name="cvFirst">false</parameter>
+                <parameter name="skipDupIndexWrite">true</parameter>
             </capability>
         </programming>
         <variables>
@@ -534,13 +534,11 @@
                 </enumVal>
                 <label>Brake Squeal</label>
             </variable>
-            <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
         </variables>
         <resets>
             <factReset label="Reset All CVs." CV="8" default="8"/>
         </resets>
     </decoder>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>

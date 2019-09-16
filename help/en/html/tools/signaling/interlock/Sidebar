@@ -40,6 +40,7 @@
 				<li><dfn><a href="../../speedometer/index.shtml">Speedometer</a></dfn>
 				<li><dfn><a href="../../Audio.shtml">Audio</a></dfn>
 				<li><dfn><a href="../../IdTags.shtml">ID Tags</a></dfn>
+				<li><dfn><a href="../../TimeTable.shtml">Timetable</a></dfn>
 		
 		    <li><dfn><a href="../../index.shtml#systemSpecificTools">System-specific...</a></dfn>
 		   </ul>
@@ -56,6 +57,7 @@
             <li><dfn><a href="../../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="../../Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="../../fastclock/">Fast Clocks</a></dfn>
+		    <li><dfn><a href="../../uss/index.shtml">USS CTC</a></dfn>
 		    <li><dfn><a href="../../scripting/index.shtml">Scripting</a></dfn>
 		    </ul>
 		</dd>

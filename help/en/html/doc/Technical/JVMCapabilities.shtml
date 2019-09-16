@@ -54,6 +54,10 @@
       at a minimum we'll have to have JMRI running under
       both Java 8 and 
       Java 11/18.9 by January 2019.
+      For more information on this, see also this
+      <a href="http://www.javamagazine.mozaicreader.com/NovemberDecember2018/default/52/0/#&amp;pageSet=52&amp;page=0&amp;contentItem=0">
+        Java Magazine article from November 2018
+        </a>.
       
       <h2>Capabilities</h2>
       <p>This section lists new Java

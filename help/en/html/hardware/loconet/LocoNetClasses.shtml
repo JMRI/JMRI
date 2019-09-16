@@ -137,17 +137,18 @@
       implementation for it's subclasses, and adds a mechanism to
       find a usable LocoNetInterface implementation.</p>
 
-      <p>The routine addLocoNetListener and removeLocoNetListener
-      methods are implemented here, along with a notify method to
+      <p>The routine <code>addLocoNetListener</code> and
+      <code>removeLocoNetListener</code> methods are implemented here,
+      along with a <code>notify</code> method to
       forward LocoNetMessages to the listeners.</p>
 
-      <p>Until JMRI version 4.11.5 the static instance() method
-      was used by a large number of
+      <p>Until JMRI version 4.11.5 the static
+      <code>instance()</code> method was used by a large number of
       jmrix.loconet classes to find a LocoNetInterface for
       transmitting and receiving messages. It worked through a
       "self" static member, which was initialized when a
       LnTrafficController subclass object was created. All objects
-      wanting to send or receive over the LocoNet will thence use
+      wanting to send or receive over the LocoNet would thence use
       the last-created LnTrafficController implementation.<br>
       See the section on "<a href="#startup">Startup</a>" for
       more information on this.</p><img src=
@@ -199,31 +200,18 @@
       <p>Note that the "some remote comm class" could also be
       implemented as a subclass of LnTrafficRouter, instead of
       communicating with one. 
-      <!-- This subclass from 2002 is no longer supported as of JMRI 4.3, see http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/package-tree.html (Egbert Broerse 2015)
-<h3>LocoNetInterfaceScaffold</h3>
-The 
-<a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html">LocoNetInterfaceScaffold</a> class provides a LnTrafficController implementation for use in test programs.
-Rather than communicate with a real LocoNet, it provides scaffolding to 
-make it easy to test the transmission and receipt of messages. --></p>
+      </p>
 
       <h2><a name="startup" id="startup">Startup</a></h2>
-      <p>There are "action" classes that connect to an input source.
-      The main program puts these in a menu, on a button, etc,
+      <p>Until JMRI 4.11.5 "action" classes connected to an input source.
+      In the current code <span class="since">Since
+      <a href="/releasenotes/jmri4.11.6.shtml"
+      target="_blank">JMRI 4.11.6</a></span>
+      "ConnectionConfig" classes connect an adapter to an input
+      source. The main program reads them from the LnConnectionTypeList
+      to create a combo box in the Connection Config pane,
       so that the user can select the connection desired.<br>
-      The current (March 2002) set is:
 
-      <ul>
-        <li>LocoBufferAction - creates a LocoBufferAdapter object
-        and configures for operation with a LocoBuffer</li>
-
-        <li>MS100Action - creates a MS100Adapter object and
-        configures for operation with an MS100</li>
-
-        <li>LnHexFileAction - creates an LnHexFilePort object and
-        configures for operation as "LocoNet Simulator"
-        (previously, this was known as "LocoNet Hex File", as it
-        can load contents from a file of hexadecimal strings)</li>
-      </ul>
       In addition to configuring the adapter for the input source,
       something has to configure the complete set of Manager
       objects and the LocoNet-handling objects. These include:
@@ -233,16 +221,17 @@ make it easy to test the transmission and receipt of messages. --></p>
         for objects that use memo.getLnTrafficController() to
         locate an interface.</li>
 
-        <li>A ProgrammerInstance</li>
+        <li>A Programmer instance</li>
 
-        <li>A PowerManagerInstance</li>
+        <li>A PowerManager instance</li>
 
-        <li>A TurnoutManagerInstance</li>
+        <li>TurnoutManager etc. instances</li>
       </ul>These last three provide LocoNet-based services for the
-      higher-level JMRI interfaces.
-
-      <p>The configure() methods in the various adapter classes do
-      this. That's not a very general mechanism. Although a
+      higher-level JMRI interfaces (the <code>instance()</code> method
+      was deprecated to support multiple connections. The
+      <code>configure()</code> methods in the various adapter classes
+      now handle this.)
+      <p>Note this wasn't a general mechanism. Although a
       LnPacketizer is the right thing to connect to each of the
       serial port adapters, the rest of the configuration might
       vary.</p>
@@ -257,13 +246,14 @@ make it easy to test the transmission and receipt of messages. --></p>
       <p>Note that the current MS100 implementation is
       not as robust as we really need it to be. In particular,
       back-off and retransmit is not being checked. Other interface
-      devices, such as the Digitrax PR3, the LocoBuffer,
-      LocoBuffer-II, and LocoBuffer-USB all implement an internal
+      devices, such as the Digitrax PR3 and PR4, Digitrax DCS240 and DCS52 USB 
+      interfaces, and the LocoBuffer,
+      LocoBuffer-II, and LocoBuffer-USB devices, all implement an internal
       microcontroller which handles back-off and retransmit
       operations properly and are therefore preferred over the
       MS100.</p>
 
-      <p>The MS100Action class (package jmrix.loconet.ms100) starts
+      <p>The ConnectionConfig class (in package jmrix.loconet.ms100) starts
       up a LocoNet connection via a MS100. When triggered, it
       creates a visible MS100Frame object.</p>
 
@@ -349,6 +339,24 @@ make it easy to test the transmission and receipt of messages. --></p>
       HexFileFrame object stays visible so that it can control the
       flow of messages from the file.</p>
 
+      <h4>LocoBuffer II</h4>
+
+      <h4>LocoBuffer USB</h4>
+
+      <h4>Uhlenbrock Intellibox I</h4>
+
+      <h4>LocoNet over TCP</h4>
+
+      <h4>LocoNet RMI Server</h4>
+
+      <h4>LocoNet PR2/3/4</h4>
+
+      <h4>Uhlenbrock Intellibox-II (USB)</h4>
+
+      <h4>DCS52 (USB)</h4>
+
+      <h4>DCS240 (USB)</h4>
+
       <h2>Slot and Programmer management</h2>
 
       <p>"Slots" are basic to the operation of a LocoNet command
@@ -367,9 +375,9 @@ make it easy to test the transmission and receipt of messages. --></p>
       class that wants to be notified when a slot changes.</p>
 
       <p>Because Digitrax command stations handle programming via a
-      special reserved slot, the jmri.Programmer interface is also
-      implemented by the loconet.SlotManager class. This greatly
-      complicates the class, but is acceptable for now.</p>
+      special reserved slot, the <code>jmri.Programmer</code> interface
+      is also implemented by the <code>loconet.SlotManager</code> class.
+      This greatly complicates the class, but is acceptable for now.</p>
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>

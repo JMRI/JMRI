@@ -3,7 +3,7 @@ package jmri.server.web;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -93,7 +93,7 @@ public class Bundle extends jmri.server.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

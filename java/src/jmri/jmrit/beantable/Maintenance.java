@@ -67,6 +67,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findOrphansPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -249,6 +250,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findEmptyPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -339,7 +341,8 @@ public class Maintenance {
      * Searches each Manager for a reference to the "name".
      *
      * @param name string (name base) to look for
-     * @return 4 element String array: {Type, userName, sysName, numListeners}
+     * @return 4 element String array: {Type, userName, sysName, numListeners}  - 
+     * This should probably return an instance of a custom type rather than a bunch of string names
      */
     @Nonnull
     static String[] getTypeAndNames(@Nonnull String name) {
@@ -376,12 +379,11 @@ public class Maintenance {
 
     }
     // captive for above
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "null return for normal (no error) case is easy to check, and this is a really wierd array")
+    // This should probably return an instance of a custom type rather than a bunch of string names
     static private String[] checkForOneTypeAndNames( @Nonnull Manager<? extends NamedBean> manager, @Nonnull String type, @Nonnull String beanName) {
         NamedBean bean = manager.getBeanBySystemName(beanName);
-        if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
-
-        // special case  - check for upper case system name - not recommended, but here for historical reasons
-        bean = manager.getBeanBySystemName(beanName.toUpperCase());
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
         bean = manager.getBeanByUserName(beanName);
@@ -431,6 +433,7 @@ public class Maintenance {
      * @param text body of the message to be displayed reporting the result
      * @return true if name is found at least once as a bean name
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {

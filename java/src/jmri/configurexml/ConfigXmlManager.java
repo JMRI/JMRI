@@ -508,8 +508,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         log.debug("store using {}", aName);
         XmlAdapter adapter = null;
         try {
-            adapter = (XmlAdapter) Class.forName(adapterName(object)).newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+            adapter = (XmlAdapter) Class.forName(adapterName(object)).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException 
+                    | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
             log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
         if (adapter != null) {
@@ -648,7 +649,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     log.debug("attempt to get adapter {} for {}", adapterName, item);
                 }
                 adapterName = currentClassName(adapterName);
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 int order = adapter.loadOrder();
                 log.debug("add {} to load list with order id of {}", item, order);
                 loadlist.put(item, order);
@@ -666,7 +667,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
                 XmlAdapter adapter = null;
                 try {
-                    adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
 
                     // get version info
                     // loadVersion(root, adapter);
@@ -727,6 +728,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "IllegalAccessException", null, null, e);
             result = false;
+        } catch (NoSuchMethodException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
+            result = false;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
+            result = false;
         } finally {
             // no matter what, close error reporting
             handler.done();
@@ -767,7 +776,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 log.debug("deferred load via " + adapterName);
                 XmlAdapter adapter = null;
                 try {
-                    adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                    adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     boolean loadStatus = adapter.load(item, item);
                     log.debug("deferred load status for " + adapterName + " is " + loadStatus);
 
@@ -792,13 +801,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /**
      * Find a file by looking
-     * <UL>
-     * <LI> in xml/layout/ in the preferences directory, if that exists
-     * <LI> in xml/layout/ in the application directory, if that exists
-     * <LI> in xml/ in the preferences directory, if that exists
-     * <LI> in xml/ in the application directory, if that exists
-     * <LI> at top level in the application directory
-     * <LI>
+     * <ul>
+     * <li> in xml/layout/ in the preferences directory, if that exists
+     * <li> in xml/layout/ in the application directory, if that exists
+     * <li> in xml/ in the preferences directory, if that exists
+     * <li> in xml/ in the application directory, if that exists
+     * <li> at top level in the application directory
      * </ul>
      *
      * @param f Local filename, perhaps without path information

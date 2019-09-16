@@ -34,10 +34,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     EditableResizableImagePanel[] _imageFilePath;
     EditableResizableImagePanel[] _imagePressedFilePath;
 
-    // we're doing a manual allocation of position for
-    // now, based on 28 labels
-    // The references to maxfunction + 1 are due to F0
-    private final int maxfunction = 28;
+    private int maxfunction = 28; // default value
 
     /**
      * This constructor allows the panel to be used in visual bean editors, but
@@ -51,6 +48,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         super();
         re = r;
 
+        maxfunction = re.getMAXFNNUM();
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
         setLayout(gbLayout);
@@ -121,7 +119,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
             // add the function buttons
             _imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
-            _imageFilePath[i].setDropFolder(LocoFile.getFileLocation());
+            _imageFilePath[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
             _imageFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
             _imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
@@ -129,7 +127,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
 
             _imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-            _imagePressedFilePath[i].setDropFolder(LocoFile.getFileLocation());
+            _imagePressedFilePath[i].setDropFolder(Roster.getDefault().getRosterFilesLocation());
             _imagePressedFilePath[i].setBackground(new Color(0, 0, 0, 0));
             _imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
             _imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
@@ -146,7 +144,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
             // advance position
             cL.gridy++;
-            if (cL.gridy - 1 == ((maxfunction + 1) / 2) + 1) {
+            if (cL.gridy == ((maxfunction + 2) / 2) + 1) {
                 cL.gridy = 1;  // skip titles
                 nextx = nextx + 6;
             }

@@ -22,9 +22,9 @@ public class DefaultSignalGroupManagerXml
 
     /**
      * Default implementation for storing the contents of a
-     * DefaultSignalGroupManager
+     * DefaultSignalGroupManager.
      *
-     * @param o Object to store, of type TripleTurnoutSignalHead
+     * @param o Object to store, of type SignalGroup
      * @return Element containing the complete info
      */
     @Override
@@ -35,10 +35,8 @@ public class DefaultSignalGroupManagerXml
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        List<String> names = m.getSystemNameList();
-        for (int i = 0; i < names.size(); i++) {
+        for (SignalGroup p : m.getNamedBeanSet()) {
             Element e = new Element("signalgroup");
-            SignalGroup p = m.getSignalGroup(names.get(i));
             e.addContent(new Element("systemName").addContent(p.getSystemName()));
             e.addContent(new Element("userName").addContent(p.getUserName()));
             //storeCommon(p, e); would store comment, now a separate element
@@ -118,7 +116,7 @@ public class DefaultSignalGroupManagerXml
             case SignalHead.DARK:
                 return "DARK";
             default:
-                log.warn("Unexpected appearance: " + mAppearance);
+                log.warn("Unexpected appearance: {}", mAppearance);
                 // go dark
                 return "DARK";
         }
@@ -141,11 +139,7 @@ public class DefaultSignalGroupManagerXml
 
             String sys = getSystemName(e);
 
-            m = sgm.newSignalGroup(sys);
-
-            if (getUserName(e) != null) {
-                m.setUserName(getUserName(e));
-            }
+            m = sgm.provideSignalGroup(sys, getUserName(e));
 
             //loadCommon(m, e); // would store comment, now a separate element
             loadComment(m, e);
@@ -222,7 +216,6 @@ public class DefaultSignalGroupManagerXml
             }
 
         }
-
         return true;
     }
 
@@ -251,7 +244,7 @@ public class DefaultSignalGroupManagerXml
         } else if (colour.equals("FLASHLUNAR")) {
             return SignalHead.FLASHLUNAR;
         } else {
-            log.warn("Unexpected appearance: " + colour);
+            log.warn("Unexpected appearance: {}", colour);
         }
         return SignalHead.DARK;
     }
@@ -262,4 +255,5 @@ public class DefaultSignalGroupManagerXml
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
+
 }

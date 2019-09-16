@@ -1,5 +1,12 @@
 # Sample script to set all un-closed turnouts to Closed
 #
+# After this script is turn, all the Turnouts defined in JMRI
+# should be in the CLOSED state.
+#
+# Note that some "Turnouts" may actually drive other things on the layout,
+# such as signal heads. This script should be run _before_ anything that
+# sets those.  
+#
 # Part of the JMRI distribution
 
 import jmri
@@ -10,9 +17,8 @@ toCnt = 0
 chgCnt = 0
 
 # loop thru all defined turnouts
-for toName in turnouts.getSystemNameList().toArray() :
+for to in turnouts.getNamedBeanSet():
   toCnt += 1
-  to = turnouts.getTurnout(toName)
   cs = to.getState()
   if (cs != CLOSED) :
     chgCnt += 1

@@ -1,11 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 
 /**
  * Represents the road names that cars can have.
@@ -63,26 +64,24 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
      * Get the maximum character length of a road name when printing on a
      * manifest or switch list. Characters after the "-" are ignored.
      *
-     * @return the maximum character length of a car type
+     * @return the maximum character length of a car road name
      */
     @Override
     public int getMaxNameLength() {
-        if (maxNameLengthSubType == 0) {
-            String maxName = "";
-            maxNameLengthSubType = MIN_NAME_LENGTH;
+        if (maxNameLength == 0) {
+            maxName = "";
+            maxNameLength = MIN_NAME_LENGTH;
             for (String name : getNames()) {
                 String[] subString = name.split("-");
-                if (subString[0].length() > maxNameLengthSubType) {
+                if (subString[0].length() > maxNameLength) {
                     maxName = name;
-                    maxNameLengthSubType = subString[0].length();
+                    maxNameLength = subString[0].length();
                 }
             }
-            log.info("Max road name ({}) length {}", maxName, maxNameLengthSubType);
+            log.info("Max road name ({}) length {}", maxName, maxNameLength);
         }
-        return maxNameLengthSubType;
+        return maxNameLength;
     }
-
-    private int maxNameLengthSubType = 0;
 
     /**
      * Create an XML element to represent this Entry. This member has to remain

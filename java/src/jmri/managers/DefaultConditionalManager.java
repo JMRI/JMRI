@@ -15,18 +15,19 @@ import jmri.Logix;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a ConditionalManager.
- * <P>
+ * <p>
  * Note that Conditionals always have an associated parent Logix.
- * <P>
+ * <p>
  * Logix system names must begin with IX, and be followed by a string, usually,
  * but not always, a number. The system names of Conditionals always begin with
  * the parent Logix's system name, then there is a capital C and a number.
- * <P>
+ * <p>
  * Conditional system names are set automatically when the Conditional is
  * created. All alphabetic characters in a Conditional system name must be upper
  * case. This is enforced when a new Conditional is created via
@@ -39,20 +40,15 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cresman Copyright (C) 2009
  */
 public class DefaultConditionalManager extends AbstractManager<Conditional>
-        implements ConditionalManager, java.beans.PropertyChangeListener {
+        implements ConditionalManager {
 
-    public DefaultConditionalManager() {
-        super();
+    public DefaultConditionalManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.CONDITIONALS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -144,7 +140,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Logix name is 'SYS'.  LRoutes and exported Routes (RTX prefix) require
      * special logic
      *
-     * @param name - system name of Conditional (must be trimmed and upper case)
+     * @param name  system name of Conditionals
      * @return the parent Logix or null
      */
     @Override
@@ -168,8 +164,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
 
         // Now try non-standard names using a brute force scan
         jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        for (String xName : logixManager.getSystemNameList()) {
-            Logix lgx = logixManager.getLogix(xName);
+        for (Logix lgx : logixManager.getNamedBeanSet()) {
             for (int i = 0; i < lgx.getNumConditionals(); i++) {
                 String cdlName = lgx.getConditionalByNumberOrder(i);
                 if (cdlName.equals(name)) {
@@ -195,8 +190,8 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * lookup. If this fails, or if x == null, looks up assuming that name is a
      * System Name. If both fail, returns null.
      *
-     * @param x    - parent Logix (may be null)
-     * @param name - name to look up
+     * @param x     parent Logix (may be null)
+     * @param name  name to look up
      * @return null if no match found
      */
     @Override
@@ -304,15 +299,17 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Get a list of all Conditional system names
      * Overrides the bean method
      * @since 4.7.4
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link #getNamedBeanSet} 
      * @return a list of conditional system names regardless of parent Logix
      */
+    @Deprecated // 4.11.5
     @Override
     public List<String> getSystemNameList() {
         List<String> nameList = new ArrayList<>();
 
         jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        for (String xName : logixManager.getSystemNameList()) {
-            Logix lgx = logixManager.getLogix(xName);
+        for (Logix lgx : logixManager.getNamedBeanSet()) {
             for (int i = 0; i < lgx.getNumConditionals(); i++) {
                 nameList.add(lgx.getConditionalByNumberOrder(i));
             }
@@ -321,18 +318,19 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return nameList;
     }
 
-    static DefaultConditionalManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of the DefaultConditionalManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultConditionalManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultConditionalManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultConditionalManager.class);
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameConditional");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");
     }
 
     // --- Conditional Where Used processes ---

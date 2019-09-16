@@ -14,15 +14,15 @@ import org.slf4j.LoggerFactory;
  * Used through the String write/read/confirm interface. Accepts address
  * formats:
  * <ul>
- * <li> T2CV.11.12 <BR>
+ * <li> T2CV.11.12 <br>
  * The write operation writes 11 to the first index CV (201), 12 to the 2nd
- * index CV (202), then writes the data to CV 203 (MSB) and 204 (LSB).<BR>
+ * index CV (202), then writes the data to CV 203 (MSB) and 204 (LSB).<br>
  * The read operation is slightly different, writing 111 (100+11) to CV201,
  * then 12 to the 2nd index CV (202), then writes 100 to CV204, then reads the
  * two values from CV203 and CV204.
- * <li> T3CV.11.12.13 <BR>
+ * <li> T3CV.11.12.13 <br>
  * The write operation writes 11 to the first index CV (201), the data to the
- * 2nd index CV (202), then writes 12 to CV203 and 13 to CV204.<BR>
+ * 2nd index CV (202), then writes 12 to CV203 and 13 to CV204.<br>
  * The read operation writes 11 to CV201, then 12 to CV203, then 13 to CV204,
  * then reads from CV202.
  * </ul>
@@ -62,7 +62,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     int valueMSB;  //  value to write to MSB or -1
     int valueLSB;  //  value to write to LSB or -1
 
-    void parseCV(String cv) throws IllegalArgumentException {
+    private void parseCV(String cv) throws IllegalArgumentException {
         valuePI = -1;
         valueSI = -1;
         if (cv.contains(".")) {
@@ -152,10 +152,11 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
 
     int upperByte;
 
-    // get notified of the final result
-    // Note this assumes that there's only one phase to the operation
+    /** {@inheritDoc}
+     * Note this assumes that there's only one phase to the operation
+     */
     @Override
-    public void programmingOpReply(int value, int status) {
+    synchronized public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }

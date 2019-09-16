@@ -2,11 +2,7 @@ package jmri.jmrix.loconet.streamport;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -60,7 +56,9 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     @After
     public void tearDown() {
         memo.dispose();
+        lnp.terminateThreads();
         lnp = null;
+        apc.dispose();
         apc = null;
         memo = null;
         istream = null;

@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * available in Layout Editor panels. These tools allow outside classes to
  * inquire into connectivity information contained in a specified Layout Editor
  * panel.
- * <P>
+ * <p>
  * Connectivity information is stored in the track diagram of a Layout Editor
  * panel. The "connectivity graph" of the layout consists of nodes
  * (LayoutTurnouts, LevelXings, and PositionablePoints) connected by lines
@@ -30,16 +30,16 @@ import org.slf4j.LoggerFactory;
  * and make it available. Each instance of ConnectivityUtil is associated with a
  * specific Layout Editor panel, and is accessed via that LayoutEditor panel's
  * 'getConnectivityUtil' method.
- * <P>
+ * <p>
  * The methods in this module do not modify the Layout in any way, or change the
  * state of items on the layout. They only provide information to allow other
  * modules to do so as appropriate. For example, the "getTurnoutList" method
  * provides information about the turnouts in a block, but does not test the
  * state, or change the state, of any turnout.
- * <P>
+ * <p>
  * The methods in this module are accessed via direct calls from the inquiring
  * method.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
@@ -86,9 +86,9 @@ public class ConnectivityUtil {
      */
     @Nonnull
     public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(
-            @Nullable Block currBlock,
-            @Nullable Block prevBlock,
-            @Nullable Block nextBlock) {
+            @CheckForNull Block currBlock,
+            @CheckForNull Block prevBlock,
+            @CheckForNull Block nextBlock) {
         return getTurnoutList(currBlock, prevBlock, nextBlock, false);
     }
 
@@ -112,9 +112,9 @@ public class ConnectivityUtil {
      */
     @Nonnull
     public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(
-            @Nullable Block currBlock,
-            @Nullable Block prevBlock,
-            @Nullable Block nextBlock,
+            @CheckForNull Block currBlock,
+            @CheckForNull Block prevBlock,
+            @CheckForNull Block nextBlock,
             boolean suppress) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
 
@@ -736,9 +736,9 @@ public class ConnectivityUtil {
      *         of facing; may be null
      */
     @CheckReturnValue
-    @Nullable
-    public SignalHead getSignalHeadAtAnchor(@Nullable PositionablePoint p,
-            @Nullable Block block, boolean facing) {
+    @CheckForNull
+    public SignalHead getSignalHeadAtAnchor(@CheckForNull PositionablePoint p,
+            @CheckForNull Block block, boolean facing) {
         if ((p == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtAnchor");
             return null;
@@ -780,9 +780,9 @@ public class ConnectivityUtil {
      *         of facing; may be null
      */
     @CheckReturnValue
-    @Nullable
-    public SignalMast getSignalMastAtAnchor(@Nullable PositionablePoint p,
-            @Nullable Block block, boolean facing) {
+    @CheckForNull
+    public SignalMast getSignalMastAtAnchor(@CheckForNull PositionablePoint p,
+            @CheckForNull Block block, boolean facing) {
         if ((p == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtAnchor");
             return null;
@@ -843,9 +843,9 @@ public class ConnectivityUtil {
      *         of facing; may be null
      */
     @CheckReturnValue
-    @Nullable
-    public SignalHead getSignalHeadAtLevelXing(@Nullable LevelXing x,
-            @Nullable Block block, boolean facing) {
+    @CheckForNull
+    public SignalHead getSignalHeadAtLevelXing(@CheckForNull LevelXing x,
+            @CheckForNull Block block, boolean facing) {
         if ((x == null) || (block == null)) {
             log.error("null arguments in call to getSignalHeadAtLevelXing");
             return null;
@@ -900,8 +900,8 @@ public class ConnectivityUtil {
      *         contains a connecting track segment
      */
     public boolean blockInternalToLevelXing(
-            @Nullable LevelXing x,
-            @Nullable Block block) {
+            @CheckForNull LevelXing x,
+            @CheckForNull Block block) {
         if ((x == null) || (block == null)) {
             return false;
         }
@@ -966,7 +966,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Checks if the AC track of a Level Crossing and its two connecting Track
+     * Check if the AC track of a Level Crossing and its two connecting Track
      * Segments are internal to the specified block.
      * <p>
      * Note: if two connecting track segments are in the block, but the internal
@@ -998,7 +998,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Checks if the BD track of a Level Crossing and its two connecting Track
+     * Check if the BD track of a Level Crossing and its two connecting Track
      * Segments are internal to the specified block.
      * <p>
      * Note: if two connecting track segments are in the block, but the internal
@@ -1036,22 +1036,28 @@ public class ConnectivityUtil {
     public static final int CONTINUING = 0x01;
     public static final int DIVERGING = 0x02;
 
-    /*
-     * Adds the specified sensor ('name') to the SSL for the specified signal head
+    /**
+     * Add the specified sensor ('name') to the SSL for the specified signal head
      * 'name' should be the system name for the sensor.
-     * Returns 'true' if the sensor was already in the signal head SSL or if it has been
-     *      added successfully.  Returns 'false' and logs an error if not.
-     * If the SSL has not been set up yet, the sensor is not added, an error message is output,
+     * <p>
+     * If the SSL has not been set up yet, the sensor is not added, an error message is output
      *      and 'false' is returned.
-     * Parameters: 'name' - sensor name, 'sh' - signal head, 'where' should be DIVERGING if the sensor
-     *      is being added to the diverging (second) part of a facing mode SSL, 'CONTINUING' if
-     *      the sensor is being added to the continuing (first) part of a facing mode SSL, OVERALL if
-     *      the sensor is being added to the overall sensor list of a facing mode SSL. 'where' is
-     *      ignored if not a facing mode SSL.
+     * @param name sensor name
+     * @param sh signal head
+     * @param where should be one of
+     *              DIVERGING if the sensor is being added to the diverging (second) part
+     *              of a facing mode SSL,
+     *              CONTINUING if the sensor is being added to the continuing (first) part
+     *              of a facing mode SSL,
+     *              OVERALL if the sensor is being added to the overall sensor list of a
+     *              facing mode SSL.
+     *              'where' is ignored if not a facing mode SSL
+     * @return 'true' if the sensor was already in the signal head SSL or if it has been
+     *         added successfully; 'false' and logs an error if not.
      */
     public boolean addSensorToSignalHeadLogic(
-            @Nullable String name,
-            @Nullable SignalHead sh,
+            @CheckForNull String name,
+            @CheckForNull SignalHead sh,
             int where) {
         if (sh == null) {
             log.error("Null signal head on entry to addSensorToSignalHeadLogic");
@@ -1151,7 +1157,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Removes the specified sensors from the SSL for the specified signal head
+     * Remove the specified sensors from the SSL for the specified signal head
      * if any of the sensors is currently in the SSL.
      *
      * @param names the names of the sensors to remove
@@ -1159,7 +1165,7 @@ public class ConnectivityUtil {
      * @return true if successful; false otherwise
      */
     public boolean removeSensorsFromSignalHeadLogic(
-            @Nullable List<String> names, @Nullable SignalHead sh) {
+            @CheckForNull List<String> names, @CheckForNull SignalHead sh) {
         if (sh == null) {
             log.error("Null signal head on entry to removeSensorsFromSignalHeadLogic");
             return false;
@@ -1222,8 +1228,8 @@ public class ConnectivityUtil {
      *         unable to follow the track
      */
     @CheckReturnValue
-    @Nullable
-    public TrackNode getNextNode(@Nullable TrackNode cNode, int cNodeState) {
+    @CheckForNull
+    public TrackNode getNextNode(@CheckForNull TrackNode cNode, int cNodeState) {
         if (cNode == null) {
             log.error("getNextNode called with a null Track Node");
             return null;
@@ -1238,7 +1244,7 @@ public class ConnectivityUtil {
     /**
      * Get the next TrackNode following the specified TrackNode, assuming that
      * TrackNode was reached via the specified TrackSegment.
-     * <P>
+     * <p>
      * If the specified track node can lead to different paths to the next node,
      * for example, if the specified track node is a turnout entered at its
      * throat, then "cNodeState" must be specified to choose between the
@@ -1246,20 +1252,17 @@ public class ConnectivityUtil {
      * 'continuing' track; if cNodeState = 1, the search will follow the
      * 'diverging' track; if cNodeState = 2 (3-way turnouts only), the search
      * will follow the second 'diverging' track.
-     * <P>
+     * <p>
      * In determining which track is the 'continuing' track for RH, LH, and WYE
      * turnouts, this search routine uses the layout turnout's
      * 'continuingState'.
-     * <P>
+     * <p>
      * When following track, this method skips over anchor points that are not
      * block boundaries.
-     * <P>
+     * <p>
      * When following track, this method treats a modeled 3-way turnout as a
      * single turnout. It also treats two THROAT_TO_THROAT turnouts as a single
      * turnout, but with each turnout having a continuing sense.
-     * <P>
-     * Returns a TrackNode if a node or end_of-track is reached. Returns null if
-     * trouble following the track.
      *
      * @param cNode      the current node
      * @param cNodeType  the type of node
@@ -1267,17 +1270,18 @@ public class ConnectivityUtil {
      * @param cNodeState the possible path to follow (for example, if the
      *                   current node is a turnout entered at its throat, the
      *                   path could be the thrown or closed path)
-     * @return the next TrackNode following cNode for the given state or null if
-     *         unable to follow the track
+     * @return the next TrackNode following cNode for the given state if a node
+     *         or end_of-track is reachedor null if unable to follow
+     *         the track
      */
     //TODO: cTrack parameter isn't used in this method; is this a bug?
     //TODO: pType local variable is set but never used; dead-code strip?
     @CheckReturnValue
-    @Nullable
+    @CheckForNull
     public TrackNode getTrackNode(
             @Nonnull LayoutTrack cNode,
             int cNodeType,
-            @Nullable TrackSegment cTrack,
+            @CheckForNull TrackSegment cTrack,
             int cNodeState) {
         // initialize
         LayoutTrack node = null;
@@ -1552,68 +1556,100 @@ public class ConnectivityUtil {
                 break;
             }
             case LayoutTrack.LEVEL_XING_A:
-                tTrack = (TrackSegment) ((LevelXing) cNode).getConnectC();
-                pType = LayoutTrack.LEVEL_XING_C;
+                if (cNode instanceof LevelXing) {
+                    tTrack = (TrackSegment) ((LevelXing) cNode).getConnectC();
+                    pType = LayoutTrack.LEVEL_XING_C;
+                } else {
+                    log.error("cNodeType wrong for cNode");
+                }
                 break;
             case LayoutTrack.LEVEL_XING_B:
-                tTrack = (TrackSegment) ((LevelXing) cNode).getConnectD();
-                pType = LayoutTrack.LEVEL_XING_D;
+                if (cNode instanceof LevelXing) {
+                    tTrack = (TrackSegment) ((LevelXing) cNode).getConnectD();
+                    pType = LayoutTrack.LEVEL_XING_D;
+                } else {
+                    log.error("cNodeType wrong for cNode");
+                }
                 break;
             case LayoutTrack.LEVEL_XING_C:
-                tTrack = (TrackSegment) ((LevelXing) cNode).getConnectA();
-                pType = LayoutTrack.LEVEL_XING_A;
+                if (cNode instanceof LevelXing) {
+                    tTrack = (TrackSegment) ((LevelXing) cNode).getConnectA();
+                    pType = LayoutTrack.LEVEL_XING_A;
+                } else {
+                    log.error("cNodeType wrong for cNode");
+                }
                 break;
             case LayoutTrack.LEVEL_XING_D:
-                tTrack = (TrackSegment) ((LevelXing) cNode).getConnectB();
-                pType = LayoutTrack.LEVEL_XING_B;
+                if (cNode instanceof LevelXing) {
+                    tTrack = (TrackSegment) ((LevelXing) cNode).getConnectB();
+                    pType = LayoutTrack.LEVEL_XING_B;
+                } else {
+                    log.error("cNodeType wrong for cNode");
+                }
                 break;
             case LayoutTrack.SLIP_A: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if (cNodeState == 0) {
-                    tTrack = (TrackSegment) lt.getConnectC();
-                    pType = LayoutTrack.SLIP_C;
-                } else if (cNodeState == 1) {
-                    tTrack = (TrackSegment) lt.getConnectD();
-                    pType = LayoutTrack.SLIP_D;
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if (cNodeState == 0) {
+                        tTrack = (TrackSegment) lt.getConnectC();
+                        pType = LayoutTrack.SLIP_C;
+                    } else if (cNodeState == 1) {
+                        tTrack = (TrackSegment) lt.getConnectD();
+                        pType = LayoutTrack.SLIP_D;
+                    }
+                } else {
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
             case LayoutTrack.SLIP_B: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if (cNodeState == 0) {
-                    tTrack = (TrackSegment) lt.getConnectD();
-                    pType = LayoutTrack.SLIP_D;
-                } else if (cNodeState == 1 && (lt.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
-                    tTrack = (TrackSegment) lt.getConnectC();
-                    pType = LayoutTrack.SLIP_C;
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if (cNodeState == 0) {
+                        tTrack = (TrackSegment) lt.getConnectD();
+                        pType = LayoutTrack.SLIP_D;
+                    } else if (cNodeState == 1 && (lt.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
+                        tTrack = (TrackSegment) lt.getConnectC();
+                        pType = LayoutTrack.SLIP_C;
+                    } else {
+                        log.error("Request to follow not allowed on a single slip");
+                        return null;
+                    }
                 } else {
-                    log.error("Request to follow not allowed on a single slip");
-                    return null;
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
             case LayoutTrack.SLIP_C: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if (cNodeState == 0) {
-                    tTrack = (TrackSegment) lt.getConnectA();
-                    pType = LayoutTrack.SLIP_A;
-                } else if (cNodeState == 1 && (lt.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
-                    tTrack = (TrackSegment) lt.getConnectB();
-                    pType = LayoutTrack.SLIP_B;
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if (cNodeState == 0) {
+                        tTrack = (TrackSegment) lt.getConnectA();
+                        pType = LayoutTrack.SLIP_A;
+                    } else if (cNodeState == 1 && (lt.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
+                        tTrack = (TrackSegment) lt.getConnectB();
+                        pType = LayoutTrack.SLIP_B;
+                    } else {
+                        log.error("Request to follow not allowed on a single slip");
+                        return null;
+                    }
                 } else {
-                    log.error("Request to follow not allowed on a single slip");
-                    return null;
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
             case LayoutTrack.SLIP_D: {
-                LayoutTurnout lt = (LayoutTurnout) cNode;
-                if (cNodeState == 0) {
-                    tTrack = (TrackSegment) lt.getConnectB();
-                    pType = LayoutTrack.SLIP_B;
-                } else if (cNodeState == 1) {
-                    tTrack = (TrackSegment) lt.getConnectA();
-                    pType = LayoutTrack.SLIP_A;
+                if (cNode instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) cNode;
+                    if (cNodeState == 0) {
+                        tTrack = (TrackSegment) lt.getConnectB();
+                        pType = LayoutTrack.SLIP_B;
+                    } else if (cNodeState == 1) {
+                        tTrack = (TrackSegment) lt.getConnectA();
+                        pType = LayoutTrack.SLIP_A;
+                    }
+                } else {
+                    log.error("cNodeType wrong for cNode");
                 }
                 break;
             }
@@ -1679,7 +1715,7 @@ public class ConnectivityUtil {
     }
 
     /**
-     * Returns an "exit block" for the specified track node if there is one,
+     * Get an "exit block" for the specified track node if there is one,
      * else returns null. An "exit block" must be different from the block of
      * the track segment in the node. If the node is a PositionablePoint, it is
      * assumed to be a block boundary anchor point.
@@ -1689,10 +1725,10 @@ public class ConnectivityUtil {
      * @return the exit block for node or null if none exists
      */
     @CheckReturnValue
-    @Nullable
+    @CheckForNull
     public Block getExitBlockForTrackNode(
-            @Nullable TrackNode node,
-            @Nullable Block excludedBlock) {
+            @CheckForNull TrackNode node,
+            @CheckForNull Block excludedBlock) {
         if ((node == null) || node.reachedEndOfTrack()) {
             return null;
         }
@@ -1867,8 +1903,9 @@ public class ConnectivityUtil {
     }
 
     // support methods
+
     /**
-     * Initializes the setting (as an object), sets the new track segment (if in
+     * Initialize the setting (as an object), sets the new track segment (if in
      * Block), and sets the prevConnectType.
      */
     private Integer getTurnoutSetting(
@@ -2326,14 +2363,15 @@ public class ConnectivityUtil {
     }
 
     /**
-     * This method follows the track from a beginning track segment to its exits
+     * Follow the track from a beginning track segment to its exits
      * from the current LayoutBlock 'currLayoutBlock' until the track connects
      * to the designated Block 'nextLayoutBlock' or all exit points have been
-     * tested. Returns 'true' if designated Block is connected; returns 'false'
-     * if not.
+     * tested.
+     *
+     * @return 'true' if designated Block is connected; 'false' if not
      */
     private boolean trackSegmentLeadsTo(
-            @Nullable TrackSegment tsg, @Nullable LayoutTrack ob) {
+            @CheckForNull TrackSegment tsg, @CheckForNull LayoutTrack ob) {
         if ((tsg == null) || (ob == null)) {
             log.error("Null argument on entry to trackSegmentLeadsTo");
             return false;
@@ -2726,10 +2764,12 @@ public class ConnectivityUtil {
             "SLIP_LEFT", "SLIP_RIGHT"};
         if (conType < con_types.length) {
             result = con_types[conType];
-        } else if ((LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN <= conType)
-                && (conType <= LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MAX)) {
-            result = "BEZIER_CONTROL_POINT #"
-                    + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+        } else if (LayoutTrack.isBezierHitType(conType)) {
+            result = "BEZIER_CONTROL_POINT #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
+        } else if (conType == LayoutTrack.SHAPE_CENTER) {
+            result = "SHAPE_CENTER";
+        } else if (LayoutShape.isShapePointOffsetHitPointType(conType)) {
+            result = "SHAPE_POINT #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         } else if (conType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
             result = "TURNTABLE_RAY #" + (conType - LayoutTrack.TURNTABLE_RAY_OFFSET);
         }
@@ -2794,4 +2834,5 @@ public class ConnectivityUtil {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class);
+
 }

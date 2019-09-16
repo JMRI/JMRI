@@ -92,7 +92,7 @@
         <label>F0 Reverse during DC operation</label>
         <label xml:lang="it">F0 Indietro durante funzionamento Analogico</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>

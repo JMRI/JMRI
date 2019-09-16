@@ -20,7 +20,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+      <!--#include virtual="Sidebar" -->
     <div id="mainContent">
       <h2>JMRI: USS CTC Tools</h2>
 
@@ -29,12 +30,13 @@
       to drive a physical panel with real levers and lights.</p>
             
       <h3>Script-based Tools<span class="since">Since JMRI 4.8</span></h3>
-      These are very powerful, but currently can only be configured via a script.
-      <p>
+      <p>These tools are very powerful, but currently can only be configured via a script.
+      <br>
       For information how to do this, see:
       <ul>
       <li>The <a href="http://jmri.org/jython/ctc/TwoColumnMachine.py">jython/ctc/TwoColumnMachine.py</a> sample script
-      <li>The <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">JavaDoc documentation on the various components</a>
+      <li>The <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/ussctc/package-summary.html">Javadoc documentation on
+        the various components</a>
       </ul>
       
       The available tools are:
@@ -116,6 +118,24 @@
       and a separate page describing the 
       <a href="Conventions.shtml">naming conventions</a> used in the example, in case
       you find that these will save you some work on the setup.
+      
+      <p>
+      These tools log information to several JMRI Memory objects, which
+      in turn can be placed onto panels as MemoryIcons.
+      <dl>
+        <dt>IMUSS CTC:SIGNALHEADSECTION:1:LOG</dt>
+        <dd>What the code line is doing</dd>
+
+        <dt>IMUSS CTC:SIGNALHEADSECTION:1:TIME</dt>
+        <dd>Whether time is running</dd>
+
+        <dt>IMUSS CTC:LOCK:1:LOG</dt>
+        <dd>Whether any locks are showing as locked</dd>
+        
+      </dl>
+      
+      The "1" in those can change if there's more than one set of objects, 
+      i.e. if more than one code line is being modelled.
       
       <h3>Standalone Tools</h3>
 

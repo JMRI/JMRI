@@ -48,26 +48,9 @@
 
         <p>These pages are updated as people contribute decoder information to JMRI.</p>
 
-        <!-- footer copied from !include footer, current as of Jan. 2018, JMRI 4.10 -->
-        <hr class="hide">
-        <div id="footer">
-            <ul id="bn">
-                <li>Contact us via the <a href="https://groups.io/g/jmriusers">JMRI users</a> group</li>
-            </ul>
+  <hr class="hide">
+<!--#include virtual="/Footer.shtml" -->
 
-            <p>Thanks and congratulations to
-            <a href="http://jmri.org/help/en/Acknowledgements.shtml" title="Who is JMRI">
-                all who contributed</a>!</p>
-
-            <p>Copyright &copy; 1997 - 2018 JMRI Community.
-            <p>JMRI&reg;, DecoderPro&reg;, PanelPro&trade;, SignalPro&trade;, TrainPro&trade;, DispatcherPro&trade;, OperationsPro&trade; and associated logos are our trademarks.
-            <p><a href="http://jmri.org/Copyright.html">Additional information on copyright,
-                trademarks and licenses is linked here.</a></p>
-
-            <br>Site hosted by: <br/>
-            <a href="http://www.tagadab.com/">
-            <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
-        </div>
     </div><!-- closes #mainContent-->
 </div><!-- closes #mBody-->
 </body>

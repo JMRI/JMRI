@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * Tests for the SoundUtil class.
- * <P>
+ * <p>
  * Note: This makes noise!
  *
  * @author	Bob Jacobsen Copyright 2006

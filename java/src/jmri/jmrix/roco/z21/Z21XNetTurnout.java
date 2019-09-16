@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
+public class Z21XNetTurnout extends XNetTurnout {
 
     public Z21XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {  
         super(prefix,pNumber,controller);
@@ -132,13 +132,13 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
           }
           
         } else {
-          super.message(l); // the the XpressNetTurnoutManager code
+          super.message(l); // the XpressNetTurnoutManager code
                             // handle any other replies.
         }
     }
 
     @Override
-    protected XNetMessage getOffMessage() {
+    synchronized protected XNetMessage getOffMessage() {
         return( Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (getCommandedState() ==  _mThrown),
                 false, false ) );// for now always not active and not queued.

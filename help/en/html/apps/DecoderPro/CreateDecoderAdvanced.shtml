@@ -808,6 +808,11 @@ selects the different algorithm needed here.
       <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
         by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
         ESU.
+        
+      <p>Alternately the PI and/or SI CV numbers can be set by using a "nn=nn" syntax when specifying
+        PI and/or SI.  For example, using a cvFirst false syntax, "101=12.80" sets CV101 to 12 before
+        accessing CV 80, regardless of the PI value configured into the capability.
+
       <p>If skipDupIndexWrite is true, certain writes to the PI and SI
         CVs can be skipped if the user selects skipping them. This speeds up access.
         Some decoders  require that the CVs be written for each operation, 
@@ -843,7 +848,115 @@ selects the different algorithm needed here.
       </ul>For examples of how to use these, see the TCS WOW
       decoder definition.
 
-      <h4>Split Variables - "long" addresses over 2 CVs</h4>
+      <a name="splitval" id="splitval"></a>
+      <h3>Split Variables - spread over multiple CVs</h3>
+
+      <span class="since">Since <a href="jmri4.15.5.shtml">JMRI 4.15.5</a></span>
+
+      <p>Some decoders use variables that are spread over multiple CVs, contiguous or not.</p>
+
+      <p>A number of types are provided to handle this situation:</p>
+      <ul>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              type. This handles a numeric value stored across up to at least 8 CVs.
+              <ul>
+                  <li>
+                      For examples, see <a href= "#splitvalExample">splitVal example</a> below and this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details of required/optional attributes and advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html" target="_blank">splitHexVal</a>
+              type. This is like
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              but with the number entered and displayed in hexadecimal. An optional "case=" attribute can be used to force
+              the number to be displayed in "upper" or "lower" case.
+              <ul>
+                  <li>
+                      For examples, see this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitHexVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html" target="_blank">splitDateTimeVal</a>
+              type. This is like
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              but the number displayed represents a Date and/or Time value.
+              <ul>
+                  <li>
+                      For examples, see this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details of required/optional attributes and advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitDateTimeVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+          <li>
+              A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">splitTextVal</a>
+              type. This is like
+              <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
+              but allows the entry, storage (in CVs) and display of text strings.
+              The number of CVs allocated by the user in the definition governs the maximum string length.
+              <ul>
+                  <li>
+                      For examples, see this
+                      <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4projectInfoCVs.xml" target="_blank">decoder fragment file</a>.
+                  </li>
+                  <li>
+                      For details of required/optional attributes and advanced features, see this
+                      <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">JavaDoc page</a>.
+                  </li>
+              </ul>
+          </li>
+      </ul>
+
+      The original technique of specifying a "CV" and a "highCV" is not appropriate
+      in cases where many more CVs are needed. Alternative more concise methods of specifying
+      multiple CVs (contiguous or not) in the "CV" parameter are now available:
+      <ul>
+          <li>
+              The available methods (with example strings) are detailed under
+              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.String-" target="_blank">expandCvList</a>
+              on this
+              <a href="/JavaDoc/doc/jmri/util/CvUtil.html#expandCvList-java.lang.String-" target="_blank">JavaDoc page</a>.
+          </li>
+          <li>
+              For example, this
+              <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4projectInfoCVs.xml" target="_blank">decoder fragment file</a>
+              has a <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitTextVariableValue.html" target="_blank">splitTextVal</a>
+              requiring 28 CVs.
+          </li>
+          <li>
+              Other examples are found in this
+              <a href= "https://github.com/JMRI/JMRI/blob/master/xml/decoders/esu/v4decoderInfoCVs.xml" target="_blank">decoder fragment file</a>.
+          </li>
+          <li>
+              The following example reads the RailCom&reg; Production Date as per
+              <a href="http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">
+              NMRA standard 9.3.2</a>:
+          </li>
+      </ul>
+      
+      <pre style="font-family: monospace;">
+    &lt;variable CV="0.255.269:4" readOnly="yes" item="PDate"&gt;
+        &lt;splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/&gt;
+        &lt;label&gt;Production Date&lt;/label&gt;
+    &lt;/variable&gt;
+      </pre>
+
+
+      <a name="splitvalExample" id="splitvalExample"></a>
+      <h4>splitVal example - "long" addresses over 2 CVs</h4>
 
       <p>Some decoders, mostly accessory decoders, are using "long"
       addresses that are split over 2 CVs, contiguous or not.</p>
@@ -862,8 +975,8 @@ selects the different algorithm needed here.
     &lt;/variable&gt;
 </pre>
 
-      <p>The first declared CV is the LSB (Least Significant Byte)
-      whereas the "high CV" is the MSB (Most Significant Byte).</p>
+      <p>The declared "CV" is the LSB (Least Significant Byte)
+      whereas the "highCV" is the MSB (Most Significant Byte).</p>
 
       <p>splitVal actually has two parameters, a "Factor" and an
       "Offset":</p>
@@ -884,11 +997,8 @@ selects the different algorithm needed here.
       target="_blank">xml/decoders/SPROG_DCC_Servo6.xml</a>
       file.</p>
 
-      <p>For details and more advanced features, see this <a href=
-      "/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html"
-      target="_blank">Javadoc page</a></p><a name="conditional" id=
-      "conditional"></a>
-
+      
+      <a name="conditional" id="conditional"></a>
       <h3>Conditional Decoder Definitions</h3>To reduce the number
       of decoder definition files needed, each file can contain
       definitions for multiple decoder models. JMRI provides ways

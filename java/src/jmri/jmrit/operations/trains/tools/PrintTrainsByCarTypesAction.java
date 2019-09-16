@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -10,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of trains that service specific car types.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -29,9 +29,8 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
 
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
-    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
-    public PrintTrainsByCarTypesAction(String actionName, boolean preview, Component pWho) {
+    public PrintTrainsByCarTypesAction(String actionName, boolean preview) {
         super(actionName);
         isPreview = preview;
     }
@@ -41,7 +40,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
      */
     boolean isPreview;
     HardcopyWriter writer;
-    public static final int MAX_NAME_LENGTH = 25;
+    int max_name_length = Control.max_len_string_train_name + 1;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -54,34 +53,24 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
             return;
         }
 
-        // Loop through the car types showing which locations and tracks will
-        // service that car type
+        // Loop through the car types showing which trains will service that car type
         String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
-
-        List<Train> trains = trainManager.getTrainsByNameList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
 
         try {
             // title line
-            String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Trains")
-                    + TAB + TAB + TAB + Bundle.getMessage("Description") + NEW_LINE;
+            String s = Bundle.getMessage("Type") + TAB + TrainCommon.padString(Bundle.getMessage("Trains"),
+                    max_name_length) + Bundle.getMessage("Description") + NEW_LINE;
             writer.write(s);
-            // car types
+            
             for (String type : carTypes) {
                 s = type + NEW_LINE;
                 writer.write(s);
-                // trains
+                
                 for (Train train : trains) {
                     if (train.acceptsTypeName(type)) {
-                        StringBuilder sb = new StringBuilder();
-                        String name = train.getName();
-                        sb.append(TAB + name + " ");
-                        int j = MAX_NAME_LENGTH - name.length();
-                        while (j > 0) {
-                            j--;
-                            sb.append(" ");
-                        }
-                        sb.append(train.getDescription() + NEW_LINE);
-                        writer.write(sb.toString());
+                        s = TAB + TrainCommon.padString(train.getName(), max_name_length) + train.getDescription() + NEW_LINE;
+                        writer.write(s);
                     }
                 }
             }

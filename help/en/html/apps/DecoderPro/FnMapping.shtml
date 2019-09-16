@@ -116,11 +116,11 @@
         "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanel.html"
         target="_blank">Javadoc page</a>.</li>
 
-        <li>extFnsESU - when set to "yes" invokes the specialised
+        <li>extFnsESU - when set, invokes the specialised
         Function Map page required for later model ESU decoders.
         The requirements and meaning of some fnmapping elements are
-        also changed. For details see this <a href=
-        "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanelESU.html"
+        also changed. For details (and current valid settings for "extFnsESU") see this
+        <a href= "/JavaDoc/doc/jmri/jmrit/symbolicprog/FnMapPanelESU.html"
         target="_blank">Javadoc page</a>.</li>
       </ul>
 

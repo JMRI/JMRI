@@ -6,10 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * Tests for the jmri.jmrix.oaktree.SerialTurnout class
+ * Tests for the jmri.jmrix.oaktree.SerialTurnout class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;

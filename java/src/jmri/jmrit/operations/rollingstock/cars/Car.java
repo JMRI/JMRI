@@ -548,13 +548,24 @@ public class Car extends RollingStock {
         }
         return NONE;
     }
+    
+    /**
+     * Used to determine if car is lead car in a kernel
+     * @return true if lead car in a kernel
+     */
+    public boolean isLead() {
+        if (getKernel() != null) {
+           return getKernel().isLead(this);
+        }
+        return false;
+    }
 
     /**
      * Updates all cars in a kernel. After the update, the cars will all have
      * the same final destination, load, and next load.
      */
     public void updateKernel() {
-        if (getKernel() != null && getKernel().isLead(this)) {
+        if (isLead()) {
             for (Car car : getKernel().getCars()) {
                 car.setFinalDestination(getFinalDestination());
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
@@ -908,7 +919,7 @@ public class Car extends RollingStock {
         }
         if (getKernel() != null) {
             e.setAttribute(Xml.KERNEL, getKernelName());
-            if (getKernel().isLead(this)) {
+            if (isLead()) {
                 e.setAttribute(Xml.LEAD_KERNEL, Xml.TRUE);
             }
         }

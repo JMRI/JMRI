@@ -6,7 +6,7 @@ import jmri.Manager;
 
 /**
  * Comparator for JMRI System Names.
- * <P>
+ * <p>
  * A System Name is a system prefix followed by type letter then a suffix with a system-specific format. 
  * This class first compares on prefix, then if the prefixes are equal it 
  * compares the type letter, then if they're still equal it
@@ -20,7 +20,7 @@ import jmri.Manager;
  * expansion.
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2009, 2017
- * @deprecated Use NamedBean comparison instead
+ * @deprecated 4.13.1 Use NamedBean comparison instead
  */
 @Deprecated
 public class SystemNameComparator implements Comparator<String> {

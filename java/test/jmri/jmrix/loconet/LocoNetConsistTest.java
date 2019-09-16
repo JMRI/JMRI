@@ -1,12 +1,10 @@
 package jmri.jmrix.loconet;
 
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -70,9 +68,9 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Ignore("LocoNet CS consists allow any address")
     @Override
     @Test public void checkAddressAllowedBad(){
+        // LocoNet CS consists allow any valid address, so this test is empty
     }
 
     @Test public void checkAddressAllowedGoodAdvanced(){
@@ -112,6 +110,9 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
@@ -135,7 +136,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
         } catch(LocoNetException lne) {
-          Assert.fail("failed to add addresses to slot during set-up");
+          Assert.fail("failed to add addresses to slot during setup");
         }
         c = new LocoNetConsist(3,memo);
         ReturnSlotInfo();

@@ -56,66 +56,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static final String NO_MERGE = "NO_MERGE";
     public static final String PROMPT   = "PROMPT";
     public static final String MERGE_ALL = "MERGE_ALL";
-    /**
-     * @deprecated since 4.7.1; use {@link #LAYOUT_PARAMS} instead
-     */
-    @Deprecated
-    public static final String layoutParams = LAYOUT_PARAMS;
-    /**
-     * @deprecated since 4.7.1; use {@link #LAYOUT_SCALE} instead
-     */
-    @Deprecated
-    public static final String LayoutScale = LAYOUT_SCALE;
-    /**
-     * @deprecated since 4.7.1; use {@link #SEARCH_DEPTH} instead
-     */
-    @Deprecated
-    public static final String SearchDepth = SEARCH_DEPTH;
-    /**
-     * @deprecated since 4.7.1; use {@link #SPEED_MAP_PARAMS} instead
-     */
-    @Deprecated
-    public static final String SpeedMapParams = SPEED_MAP_PARAMS;
-    /**
-     * @deprecated since 4.7.1; use {@link #RAMP_PREFS} instead
-     */
-    @Deprecated
-    public static final String RampPrefs = RAMP_PREFS;
-    /**
-     * @deprecated since 4.7.1; use {@link #TIME_INCREMENT} instead
-     */
-    @Deprecated
-    public static final String TimeIncrement = TIME_INCREMENT;
-    /**
-     * @deprecated since 4.7.1; use {@link #THROTTLE_SCALE} instead
-     */
-    @Deprecated
-    public static final String ThrottleScale = THROTTLE_SCALE;
-    /**
-     * @deprecated since 4.7.1; use {@link #RAMP_INCREMENT} instead
-     */
-    @Deprecated
-    public static final String RampIncrement = RAMP_INCREMENT;
-    /**
-     * @deprecated since 4.7.1; use {@link #STEP_INCREMENTS} instead
-     */
-    @Deprecated
-    public static final String StepIncrements = STEP_INCREMENTS;
-    /**
-     * @deprecated since 4.7.1; use {@link #SPEED_NAME_PREFS} instead
-     */
-    @Deprecated
-    public static final String SpeedNamePrefs = SPEED_NAME_PREFS;
-    /**
-     * @deprecated since 4.7.1; use {@link #INTERPRETATION} instead
-     */
-    @Deprecated
-    public static final String Interpretation = INTERPRETATION;
-    /**
-     * @deprecated since 4.7.1; use {@link #APPEARANCE_PREFS} instead
-     */
-    @Deprecated
-    public static final String AppearancePrefs = APPEARANCE_PREFS;
 
     private String _fileName;
     private float _scale = 87.1f;
@@ -426,40 +366,11 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     }
 
     /**
-     * @deprecated since 4.7.2 without replacement. Classes interested in
-     * changes to the warrant preferences listen for those changes.
-     */
-    @Deprecated
-    public void apply() {
-        log.error("Using deprecated apply() method");
-    }
-
-    /**
-     * @return the scale
-     * @deprecated since 4.7.1; use {@link #getLayoutScale()} instead
-     */
-    @Deprecated
-    float getScale() {
-        log.error("Using deprecated getScale() method");
-        return this.getLayoutScale();
-    }
-
-    /**
-     * @param s the scale
-     * @deprecated since 4.7.1; use {@link #setLayoutScale(float)} instead
-     */
-    @Deprecated
-    void setScale(float s) {
-        log.error("Using deprecated setScale() method");
-        this.setLayoutScale(s);
-    }
-
-    /**
      * Get the layout scale.
      *
      * @return the scale
      */
-    public float getLayoutScale() {
+    public final float getLayoutScale() {
         return _scale;
     }
 
@@ -494,64 +405,12 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         this.firePropertyChange(SEARCH_DEPTH, oldDepth, depth);
     }
 
-    /**
-     * @return the time increment
-     * @deprecated since 4.7.1; use {@link #getTimeIncrement()} instead
-     */
-    @Deprecated
-    int getTimeIncre() {
-        log.error("Using deprecated getTimeIncre() method");
-        return getTimeIncrement();
-    }
-
-    /**
-     * @param t the time increment
-     * @deprecated since 4.7.1; use {@link #setTimeIncrement(int)} instead
-     */
-    @Deprecated
-    void setTimeIncre(int t) {
-        log.error("Using deprecated setTimeIncre() method");
-        setTimeIncrement(t);
-    }
-
-    /**
-     * @return the throttle increment
-     * @deprecated since 4.7.1; use {@link #getThrottleIncrement()} instead
-     */
-    @Deprecated
-    float getThrottleIncre() {
-        log.error("Using deprecated getThrottleIncre() method");
-        return getThrottleIncrement();
-    }
-
-    /**
-     * @param ti the throttle increment
-     * @deprecated since 4.7.1; use {@link #setThrottleIncrement(float)} instead
-     */
-    @Deprecated
-    void setThrottleIncre(float ti) {
-        log.error("Using deprecated setThrottleIncre() method");
-        setThrottleIncrement(ti);
-    }
-
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         List<Entry<String, Float>> vec = new java.util.ArrayList<>();
         _speedNames.entrySet().forEach((entry) -> {
             vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
-    }
-
-    /**
-     *
-     * @return the number of speed names
-     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
-     * result of {@link #getSpeedNames()} instead.
-     */
-    @Deprecated
-    int getSpeedNamesSize() {
-        log.error("Using deprecated getSpeedNamesSize() method");
-        return _speedNames.size();
     }
 
     Float getSpeedNameValue(String key) {
@@ -588,18 +447,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
         });
         return vec.iterator();
-    }
-
-    /**
-     *
-     * @return the number of signal head appearances
-     * @deprecated since 4.7.2; use {@link java.util.HashMap#size()} on the
-     * results of {@link #getAppearances()} instead
-     */
-    @Deprecated
-    int getAppeaancesSize() {
-        log.error("Using deprecated getAppearencesSize() method");
-        return _headAppearances.size();
     }
 
     String getAppearanceValue(String key) {
@@ -650,7 +497,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      *
      * @return the time increment in milliseconds
      */
-    public int getTimeIncrement() {
+    public final int getTimeIncrement() {
         return _msIncrTime;
     }
 
@@ -670,7 +517,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
      *
      * @return the throttle increment
      */
-    public float getThrottleIncrement() {
+    public final float getThrottleIncrement() {
         return _throttleIncr;
     }
 

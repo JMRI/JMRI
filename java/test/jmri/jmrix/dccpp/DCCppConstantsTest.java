@@ -1,22 +1,14 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
+@Ignore("test for a file of constants?")
 public class DCCppConstantsTest {
-
-    @Test
-    public void testCTor() {
-        DCCppConstants t = new DCCppConstants();
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
     @Before

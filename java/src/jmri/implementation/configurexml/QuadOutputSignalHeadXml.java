@@ -7,6 +7,8 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.QuadOutputSignalHead;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for QuadOutputSignalHead objects.
@@ -19,7 +21,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
     }
 
     /**
-     * Default implementation for storing the contents of a QuadOutputSignalHead
+     * Default implementation for storing the contents of a QuadOutputSignalHead.
      *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
@@ -66,7 +68,18 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
         loadCommon(h, shared);
 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        SignalHead existingBean =
+                InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBeanBySystemName(sys);
+
+        if ((existingBean != null) && (existingBean != h)) {
+            log.error("systemName is already registered: {}", sys);
+        } else {
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        }
+
         return true;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(QuadOutputSignalHeadXml.class);
 }

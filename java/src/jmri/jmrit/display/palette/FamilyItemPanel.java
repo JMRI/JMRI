@@ -102,7 +102,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * @param iconMap iconMap
      */
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
         _suppressDragging = true; // no dragging when updating
         if (iconMap != null) {
@@ -128,6 +127,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
         add(_bottom1Panel);
+        _initialized = true;
     }
 
     /**
@@ -552,7 +552,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (log.isDebugEnabled()) {
             log.debug("addFamilyPanels for {}", _itemType);
         }
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         boolean makeBgBoxPanel = false;
         if (_iconPanel == null) { // don't overwrite existing _iconPanel
             _iconPanel = new ImagePanel();
@@ -741,7 +740,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_suppressDragging) {
             return;
         }
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         if (iconMap != null) {
             if (iconMap.get(displayKey) == null) {
                 displayKey = (String) iconMap.keySet().toArray()[0];
@@ -784,7 +782,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             log.debug("hideIcons() _iconPanel = null");
             return;
         }
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         if (log.isDebugEnabled()) {
             log.debug("hideIcons for= {}, {}", _itemType, _family);
         }
@@ -815,10 +812,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
     
     protected void showIcons() {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        if (log.isDebugEnabled()) {
-            log.debug("showIcons for= {}, {}", _itemType, _family);
-        }
         boolean isPalette = (_paletteFrame instanceof ItemPalette); 
         Dimension totalDim;
         if (isPalette) {
@@ -839,6 +832,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
         } else {
             _previewPanel.setVisible(true);
             _previewPanel.invalidate(); // force redraw
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("showIcons for= {}, {}. oldDim= ({}, {}) totalDim= ({}, {})",
+                    _itemType, _family, oldDim.width, oldDim.height, totalDim.width, totalDim.height);
         }
         reSizeDisplay(isPalette, oldDim, totalDim);
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
@@ -897,7 +894,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return false;
         }
         Iterator<String> iter = ItemPalette.getFamilyMaps(_itemType).keySet().iterator();
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         while (iter.hasNext()) {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,

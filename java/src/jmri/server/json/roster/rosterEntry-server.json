@@ -61,11 +61,11 @@
             "description": "Comment for the rosterEntry"
         },
         "icon": {
-            "type": ["", "null"],
+            "type": ["string", "null"],
             "description": "URL of icon for the rosterEntry"
         },
         "image": {
-            "type": ["", "null"],
+            "type": ["string", "null"],
             "description": "URL of icon for the rosterEntry"
         },
         "functionKeys": {
@@ -115,11 +115,11 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "Key by which property is accessed"
+                        "description": "Key by which attribute is accessed"
                     },
                     "value": {
                         "type": ["string", "null"],
-                        "description": "String value of property or null"
+                        "description": "String value of attribute or null"
                     }
                 }
             }

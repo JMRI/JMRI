@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.blockboss.PackageTest.class,
         jmri.jmrit.catalog.PackageTest.class,
         jmri.jmrit.conditional.PackageTest.class,
+        jmri.jmrit.ctc.PackageTest.class,
         jmri.jmrit.decoderdefn.PackageTest.class,
         jmri.jmrit.dispatcher.PackageTest.class,
         jmri.jmrit.display.PackageTest.class,
@@ -64,6 +65,7 @@ import org.junit.runners.Suite;
         DebugMenuTest.class,
         LogixLoadActionTest.class,
         XmlFileCheckActionTest.class,
+        jmri.jmrit.cabsignals.PackageTest.class
 })
 
 /**

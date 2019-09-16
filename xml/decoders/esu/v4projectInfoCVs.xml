@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <!-- Project Information -->
+    <variable CV="1.0.261:28" readOnly="no" item="Project Loco Name">
+        <splitTextVal charSet="UTF-8"/>
+        <!--     <splitTextVal match=".+" termByte="99" padByte="126"/> -->
+        <!--     <splitTextVal match=".+" termByte="0" padByte="126"/> -->
+        <!--     <splitTextVal match=".+"/> -->
+        <!--     <splitTextVal match="[a-zA-Z0-9]*"/> -->
+        <label>Loco Name</label>
+        <label xml:lang="de">Lokname</label>
+    </variable>
+    <variable CV="1.0.257" mask="VVXXXXXX" readOnly="no" item="Project Loco Type">
+         <enumVal>
+            <enumChoice choice="Steam">
+             <choice>Steam</choice>
+             <choice xml:lang="de">Dampf</choice>
+            </enumChoice>
+            <enumChoice choice="Diesel">
+             <choice>Diesel</choice>
+             <choice xml:lang="de">Diesel</choice>
+            </enumChoice>
+            <enumChoice choice="Electric">
+             <choice>Electric</choice>
+             <choice xml:lang="de">Elok</choice>
+            </enumChoice>
+            <enumChoice choice="Miscellaneous">
+             <choice>Miscellaneous</choice>
+             <choice xml:lang="de">Verschiedene</choice>
+            </enumChoice>
+         </enumVal>
+        <label>Loco Type</label>
+        <label xml:lang="de">Loktyp</label>
+    </variable>
+</variables>

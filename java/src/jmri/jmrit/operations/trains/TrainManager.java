@@ -8,8 +8,15 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -25,10 +32,6 @@ import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages trains.
@@ -48,6 +51,9 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     private boolean _printPreview = false; // when true, preview train manifest
     private boolean _openFile = false; // when true, open CSV file manifest
     private boolean _runFile = false; // when true, run CSV file manifest
+    
+    // Conductor attributes
+    private boolean _showLocationHyphenName = false;
 
     // Trains window row colors
     private boolean _rowColorManual = true; // when true train colors are manually assigned
@@ -84,6 +90,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Deprecated
     public static synchronized TrainManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TrainManager.class);
     }
 
@@ -168,6 +175,14 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         setDirtyAndFirePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print", // NOI18N
                 enable ? "Preview" : "Print"); // NOI18N
     }
+    
+    /**
+     * When true show entire location name including hyphen
+     * @return true when showing entire location name
+     */
+    public boolean isShowLocationHyphenNameEnabled() {
+        return _showLocationHyphenName;
+    }
 
     public String getTrainsFrameTrainAction() {
         return _trainAction;
@@ -185,13 +200,20 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      * Sets the selected schedule id
      *
      * @param id Selected schedule id
+     * Moved to TrainScheduleManager.java
+     * @deprecated at or before 4.13.7
      */
-    @Deprecated
+    @Deprecated  // at or before 4.13.7
     public void setTrainSecheduleActiveId(String id) {
         InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
     }
 
-    @Deprecated
+    /**
+     * @deprecated at or before 4.13.7
+     * Moved to TrainScheduleManager.java
+     * @return active schedule id
+     */
+    @Deprecated // at or before 4.13.7
     public String getTrainScheduleActiveId() {
         return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }
@@ -796,7 +818,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
         // manifest options
         newTrain.setRailroadName(train.getRailroadName());
-        newTrain.setManifestLogoURL(train.getManifestLogoURL());
+        newTrain.setManifestLogoPathName(train.getManifestLogoPathName());
         newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
         // build options
         newTrain.setAllowLocalMovesEnabled(train.isAllowLocalMovesEnabled());
@@ -1012,6 +1034,14 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
                     _trainAction = a.getValue();
                 }
             }
+            
+            // Conductor options
+            Element eConductorOptions = options.getChild(Xml.CONDUCTOR_OPTIONS);
+            if (eConductorOptions != null) {
+                if ((a = eConductorOptions.getAttribute(Xml.SHOW_HYPHEN_NAME)) != null) {
+                    _showLocationHyphenName = a.getValue().equals(Xml.TRUE);
+                }
+            }
 
             // Row color options
             Element eRowColorOptions = options.getChild(Xml.ROW_COLOR_OPTIONS);
@@ -1082,6 +1112,11 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         e.setAttribute(Xml.RUN_FILE, isRunFileEnabled() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.TRAIN_ACTION, getTrainsFrameTrainAction());
         options.addContent(e);
+        
+        // Conductor options
+        e = new Element(Xml.CONDUCTOR_OPTIONS);
+        e.setAttribute(Xml.SHOW_HYPHEN_NAME, isShowLocationHyphenNameEnabled() ? Xml.TRUE : Xml.FALSE);
+        options.addContent(e);
 
         // Trains table row color options
         e = new Element(Xml.ROW_COLOR_OPTIONS);
@@ -1110,7 +1145,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
 
         InstanceManager.getDefault(TrainCustomManifest.class).store(options); // save custom manifest elements
-        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom switch list elements
 
         root.addContent(options);
 

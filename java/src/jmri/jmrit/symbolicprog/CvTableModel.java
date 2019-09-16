@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of CvValues in symbolic programmer.
- * <P>
+ * <p>
  * This represents the contents of a single decoder, so the Programmer used to
  * access it is a data member.
  *

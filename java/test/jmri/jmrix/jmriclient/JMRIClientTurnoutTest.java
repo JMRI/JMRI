@@ -1,11 +1,11 @@
 package jmri.jmrix.jmriclient;
 
 import org.junit.*;
+import jmri.Turnout;
+import jmri.util.JUnitUtil;
 
 /**
- * JMRIClientTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientTurnout class
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientTurnout class
  *
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
@@ -36,25 +36,19 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
     public void testDispose() {
         t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
 
-        //is deferred to after first use
+        // is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
-    }
-
-    @Test
-    @Override
-    @Ignore("requires work for jmriclient turnouts")
-    public void testDirectFeedback() throws jmri.JmriException {
     }
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
         
         jcins = new JMRIClientTrafficControlScaffold();
         t = new JMRIClientTurnout(3, new JMRIClientSystemConnectionMemo(jcins));
@@ -62,7 +56,7 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
         jcins = null;
     }

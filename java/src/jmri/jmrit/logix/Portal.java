@@ -9,13 +9,14 @@ import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A Portal is a boundary between two Blocks.
  *
- * <P>
+ * <p>
  * A Portal has Lists of the OPaths that connect through it. The direction of
  * trains passing through the portal is managed from the BlockOrders of the
  * Warrant the train is running under. The Portal fires a PropertyChangeEvent
@@ -249,6 +250,19 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return _fromPaths;
     }
 
+    /**
+     * Set a signal to protect an OBlock.  Warrants look ahead for speed changes
+     * and change the train speed accordingly.
+     * 
+     * @param signal Either a SignalMast or a SignalHead
+     * @param length offset length in millimeters. This is additional
+     * entrance space for the block. This distance 
+     * added to or subtracted from the calculation of the ramp distance when
+     *  a warrant must slow the train in response to the aspect or appearance 
+     *  of the signal.
+     * @param protectedBlock OBlock the signal protects
+     * @return true if signal is set.
+     */
     public boolean setProtectSignal(NamedBean signal, float length, OBlock protectedBlock) {
         if (protectedBlock == null) {
             return false;
@@ -270,6 +284,36 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return false;
     }
 
+    /**
+     * Get the signal (either a SignalMast or a SignalHead) protecting an OBlock.
+     * @param block is the direction of entry, i.e. the protected block
+     * @return signal protecting block, if block is protected, otherwise null.
+     */
+    public NamedBean getSignalProtectingBlock(@Nonnull OBlock block) {
+        if (block.equals(_toBlock)) {
+            return _fromSignal;
+        } else if (block.equals(_fromBlock)) {
+            return _toSignal;
+        }
+        return null;
+    }
+
+    /**
+     * Get the block protected by a signal.
+     * @param signal is the signal, either a SignalMast or a SignalHead
+     * @return Protected OBlock, if it is protected, otherwise null.
+     */
+    public OBlock getProtectedBlock(NamedBean signal) {
+        if (signal == null) {
+            return null;
+        }
+        if (signal.equals(_fromSignal)) {
+            return _toBlock;
+        } else if (signal.equals(_toSignal)) {
+            return _fromBlock;
+        }
+        return null;
+    }
     public NamedBean getFromSignal() {
         return _fromSignal;
     }
@@ -391,19 +435,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * @param block is the direction of entry
-     * @return signal protecting block
-     */
-    public NamedBean getSignalProtectingBlock(OBlock block) {
-        if (block.equals(_toBlock)) {
-            return _fromSignal;
-        } else if (block.equals(_fromBlock)) {
-            return _toSignal;
-        }
-        return null;
-    }
-
-    /**
      * Check signals, if any, for speed into the block. The signal that protects
      * the "to" block is the signal facing the "from" Block, i.e. the "from"
      * signal. (and vice-versa)
@@ -441,8 +472,31 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
 
-    /*
-     * +/- distance in millimeters for speed change point of signal
+    /**
+     * Set the distance (plus or minus) in millimeters from the portal gap
+     * where the speed change indicated by the signal should be completed.
+     * @param block a protected OBlock
+     * @param distance length in millimeters
+     *
+     */
+    public void setEntranceSpaceForBlock(OBlock block, float distance) {
+        if (block.equals(_toBlock)) {
+            if (_fromSignal != null) {
+                _fromSignalOffset = distance;
+            }
+        } else if (block.equals(_fromBlock)) {
+            if (_toSignal != null) {
+                _toSignalOffset = distance;
+            }
+        }
+    }
+
+    /**
+     * Get the distance (plus or minus) in millimeters from the portal gap
+     * where the speed change indicated by the signal should be completed.
+     * @param block a protected OBlock
+     * @return distance
+     *
      */
     public float getEntranceSpaceForBlock(OBlock block) {
         if (block.equals(_toBlock)) {
@@ -504,7 +558,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug("Signal \"{}\" has speed notch= {} from appearance \"{}\".",
+            log.debug("SignalHead \"{}\" has speed notch= {} from appearance \"{}\".",
                     signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         }
         return speed;
@@ -564,8 +618,17 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         String name = block.getSystemName();
         for (int i = 0; i < paths.size(); i++) {
-            String pathName = paths.get(i).getBlock().getSystemName();
+            OPath path = paths.get(i);
+            jmri.Block blk = path.getBlock();
+            if (blk == null) {
+                log.error("Path \"{}\" belongs to null block. Cannot verify set block to \"{}\"",
+                        path.getName(), name);
+                return false;
+            }
+            String pathName = blk.getSystemName();
             if (!pathName.equals(name)) {
+                log.warn("Path \"{}\" belongs to block \"{}\". Cannot verify set block to \"{}\"",
+                        path.getName(), pathName, name);
                 return false;
             }
         }
@@ -622,6 +685,22 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     public String getDescription() {
         return Bundle.getMessage("PortalDescription",
                 getUserName(), getFromBlockName(), getToBlockName());
+    }
+
+    @Override
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Portal \"");
+        sb.append(getUserName());
+        sb.append("\" from block \"");
+        sb.append(getFromBlockName());
+        sb.append("\" to block \"");
+        sb.append(getToBlockName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     @Override

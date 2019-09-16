@@ -20,7 +20,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Andrew Crosland Copyright (C) 2008
  */
-public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends PortController {
 
     SerialPort activeSerialPort = null;
 
@@ -33,8 +33,6 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
 
     @Override
     public String openPort(String portName, String appName) {
-        String[] baudRates = validBaudRates();
-        int[] baudValues = validBaudValues();
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -45,18 +43,13 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
-                int baud = baudValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < baudRates.length; i++) {
-                    if (baudRates[i].equals(mBaudRate)) {
-                        baud = baudValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -66,8 +59,8 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -97,12 +90,11 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         }
 
         return null; // indicates OK return
-
     }
 
     /**
-     * set up all of the other objects to operate with a CAN RS adapter
-     * connected to this port
+     * Set up all of the other objects to operate with a CAN RS adapter
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -146,7 +138,7 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }
@@ -156,17 +148,38 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    public int[] validBaudValues() {
+    @Override
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};
+    /**
+     * Migration method
+     * @deprecated since 4.16
+     */
+    @Deprecated
+    public int[] validBaudValues() {
+        return validBaudNumbers();
+    }
+
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud57600"),
+            Bundle.getMessage("Baud115200"), Bundle.getMessage("Baud230400"),
+            Bundle.getMessage("Baud250000"), Bundle.getMessage("Baud333333"),
+            Bundle.getMessage("Baud460800"), Bundle.getMessage("Baud500000")};
     protected int[] validSpeedValues = new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

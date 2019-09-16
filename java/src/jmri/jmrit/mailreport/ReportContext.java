@@ -25,6 +25,7 @@ import jmri.util.JmriInsets;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 import purejavacomm.CommPortIdentifier;
 
 /**
@@ -75,11 +76,16 @@ public class ReportContext {
         addCommunicationPortInfo();
 
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        addString("Active profile: " + profile.getName() + "   ");
-        addString("Profile location: " + profile.getPath().getPath() + "   ");
-        addString("Profile ID: " + profile.getId() + "   ");
+        if (profile != null) {
+            addString("Active profile: " + profile.getName() + "   ");
+            addString("Profile location: " + profile.getPath().getPath() + "   ");
+            addString("Profile ID: " + profile.getId() + "   ");
+        } else {
+            addString("No active profile");
+        }
         
-        addString("JMRI Node ID: "+ jmri.util.node.NodeIdentity.identity() );
+        addString("JMRI Network ID: " + jmri.util.node.NodeIdentity.networkIdentity());
+        addString("JMRI Storage ID: " + jmri.util.node.NodeIdentity.storageIdentity(profile));
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: " + prefs + "   ");
@@ -255,26 +261,26 @@ public class ReportContext {
             addString("Unable to enumerate Network Interfaces");
         }
 
-        Collection<ZeroConfService> services = ZeroConfService.allServices();
-        for (InetAddress address : ZeroConfService.netServices().keySet()) {
-            addString("ZeroConfService host: " + ZeroConfService.hostName(address) + " running " + services.size() + " service(s)");
+        Collection<ZeroConfService> services = InstanceManager.getDefault(ZeroConfServiceManager.class).allServices();
+        for (InetAddress address : InstanceManager.getDefault(ZeroConfServiceManager.class).getAddresses()) {
+            addString("ZeroConfService host: " + InstanceManager.getDefault(ZeroConfServiceManager.class).hostName(address) + " running " + services.size() + " service(s)");
         }
         if (services.size() > 0) {
             for (ZeroConfService service : services) {
-                addString("ZeroConfService: " + service.serviceInfo().getQualifiedName() + "  ");
-                addString(" Name: " + service.name() + "   ");
+                addString("ZeroConfService: " + service.getServiceInfo().getQualifiedName() + "  ");
+                addString(" Name: " + service.getName() + "   ");
                 try {
-                    for (String address : service.serviceInfo().getHostAddresses()) {
+                    for (String address : service.getServiceInfo().getHostAddresses()) {
                         addString(" Address:" + address + "   ");
                     }
                 } catch (NullPointerException ex) {
                     addString(" Address: [unknown due to NPE]");
                 }
-                addString(" Port: " + service.serviceInfo().getPort() + "   ");
-                addString(" Server: " + service.serviceInfo().getServer() + "   ");
-                addString(" Type: " + service.type() + "   ");
+                addString(" Port: " + service.getServiceInfo().getPort() + "   ");
+                addString(" Server: " + service.getServiceInfo().getServer() + "   ");
+                addString(" Type: " + service.getType() + "   ");
                 try {
-                    for (String url : service.serviceInfo().getURLs()) {
+                    for (String url : service.getServiceInfo().getURLs()) {
                         addString(" URL: " + url + "   ");
                     }
                 } catch (NullPointerException ex) {

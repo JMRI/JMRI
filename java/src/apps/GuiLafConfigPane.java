@@ -34,11 +34,11 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure Swing GUI LAF defaults
- * <P>
+ * <p>
  * Provides GUI configuration for SWING LAF by displaying radio buttons for each
  * LAF implementation available. This information is then persisted separately
  * by {@link apps.configurexml.GuiLafConfigPaneXml}
- * <P>
+ * <p>
  * Locale default language and country is also considered a GUI (and perhaps
  * LAF) configuration item.
  *
@@ -72,6 +72,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
     public JCheckBox graphicStateDisplay;
+    public JCheckBox editorUseOldLocSizeDisplay;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -83,6 +84,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doClickSelection(p = new JPanel());
         add(p);
         doGraphicState(p = new JPanel());
+        add(p);
+        doEditorUseOldLocSize(p = new JPanel());
         add(p);
         doToolTipDismissDelay(p = new JPanel());
         add(p);
@@ -108,6 +111,16 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(graphicStateDisplay);
     }
 
+    void doEditorUseOldLocSize(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        editorUseOldLocSizeDisplay = new JCheckBox(ConfigBundle.getMessage("GUIUseOldLocSize"));
+        editorUseOldLocSizeDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isEditorUseOldLocSize());
+        editorUseOldLocSizeDisplay.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setEditorUseOldLocSize(editorUseOldLocSizeDisplay.isSelected());
+        });
+        panel.add(editorUseOldLocSizeDisplay);
+    }
+
     void doLAF(JPanel panel) {
         // find L&F definitions
         panel.setLayout(new FlowLayout());
@@ -124,7 +137,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             LAFGroup.add(jmi);
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
-                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(installedLAFs.get(name));
             });
             if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
@@ -134,7 +147,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     /**
      * Create and return a JPanel for configuring default local.
-     * <P>
+     * <p>
      * Most of the action is handled in a separate thread, which replaces the
      * contents of a JComboBox when the list of Locales is available.
      *

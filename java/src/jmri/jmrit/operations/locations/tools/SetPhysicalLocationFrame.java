@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import javax.swing.BorderFactory;
@@ -38,6 +37,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     // check boxes
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    JButton closeButton = new JButton(Bundle.getMessage("Close"));
 
     // combo boxes
     JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
@@ -56,6 +56,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
         // set tool tips
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
+        closeButton.setToolTipText(Bundle.getMessage("TipCloseButton"));
 
         // Set up the panels
         JPanel pLocation = new JPanel();
@@ -69,17 +70,30 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         JPanel pControl = new JPanel();
         pControl.setLayout(new GridBagLayout());
         pControl.setBorder(BorderFactory.createTitledBorder(""));
-        addItem(pControl, saveButton, 2, 0);
+        addItem(pControl, saveButton, 1, 0);
+        addItem(pControl, closeButton, 2, 0);
 
         getContentPane().add(pLocation);
         getContentPane().add(physicalLocation);
         getContentPane().add(pControl);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true); // fix this later // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true); // fix this // NOI18N
+        // later
 
         // setup buttons
-        addButtonAction(saveButton);
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                saveButtonActionPerformed(e);
+            }
+        });
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                closeButtonActionPerformed(e);
+            }
+        });
 
         // setup combo box
         addComboBoxAction(locationBox);
@@ -89,16 +103,27 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         }
 
         pack();
-        setPreferredSize(new Dimension(350, 200));
-        setMaximumSize(new Dimension(350, getHeight()));
         setVisible(true);
     }
 
-    @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    /**
+     * Close button action
+     * 
+     * @param ae The ActionEvent.
+     */
+    public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
+        dispose();
+    }
+
+    /**
+     * Save button action {@literal ->} save this Reporter's location
+     * 
+     * @param ae The ActionEvent.
+     */
+    public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected
         if (locationBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"),
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectLocationToEdit"),
                     Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -152,11 +177,12 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     // Unused. Carried over from SetTrainIconPosition or whatever it was
     // called...
- /*
-     * private void spinnersEnable(boolean enable){ physicalLocation.setEnabled(enable); }
+    /*
+     * private void spinnersEnable(boolean enable){
+     * physicalLocation.setEnabled(enable); }
      */
     private void saveSpinnerValues(Location l) {
-        log.debug("Save train icons coordinates for location {}", l.getName());
+        log.debug("Save physical coordinates for location {}", l.getName());
         l.setPhysicalLocation(physicalLocation.getValue());
     }
 
@@ -165,6 +191,5 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(SetPhysicalLocationFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationFrame.class);
 }

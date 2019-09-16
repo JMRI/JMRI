@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog.sprognano;
 
 import jmri.util.JUnitUtil;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,10 +12,10 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Before
+   @Override
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -23,8 +24,18 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    }
 
    @After
+   @Override
    public void tearDown(){
-        cc=null;
+        if (cc != null) {
+            if (cc.getAdapter() != null) {
+                if (cc.getAdapter().getSystemConnectionMemo() != null) {
+                    if (((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController() != null) {
+                        ((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController().dispose();
+                    }
+                }
+            }
+        }
+        cc = null;
         JUnitUtil.tearDown();
    }
 

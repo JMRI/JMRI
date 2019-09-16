@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ResourceBundle;
 import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
@@ -58,6 +59,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
      */
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
     public void configureManagers() {
         while(!configured){
            // wait for the managers to be configured.
@@ -128,7 +130,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private ClockControl clockControl = null;
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provides access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
         return powerManager;
@@ -141,7 +143,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private PowerManager powerManager;
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
+     * Provides access to the SensorManager for this particular connection.
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -155,8 +157,8 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private SensorManager sensorManager = null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;

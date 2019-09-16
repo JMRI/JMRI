@@ -8,7 +8,6 @@ package jmri.jmrit.logix;
  * where the warranted train enters a block, the path it takes and
  * where it exits the block.
  * The Engineer is notified when the train enters the block.
- * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
  */
@@ -18,6 +17,7 @@ public class BlockOrder {
     private String _pathName;  // path the train is to take in the block
     private String _entryName; // Name of entry Portal
     private String _exitName;  // Name of exit Portal
+    private float _tempPathLen; // hold user's input for this session
 
     public BlockOrder(OBlock block) {
         _block = block;
@@ -99,10 +99,11 @@ public class BlockOrder {
     /**
      * Set Path. Note that the Path's 'fromPortal' and 'toPortal' have no
      * bearing on the BlockOrder's entryPortal and exitPortal.
-     * @param path - Name of the OPath connecting the entry and exit Portals
+     * @param path  Name of the OPath connecting the entry and exit Portals
      */
     protected void setPathName(String path) {
         _pathName = path;
+        _tempPathLen =0.0f;
     }
 
     public String getPathName() {
@@ -122,6 +123,14 @@ public class BlockOrder {
             }
         }
         return msg;
+    }
+    
+    protected void setTempPathLen(float len) {
+        _tempPathLen = len;
+    }
+
+    protected float getTempPathLen() {
+        return _tempPathLen;
     }
 
     protected void setBlock(OBlock block) {

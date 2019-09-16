@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the JMRIClientPortController class
- * <p>
+ * JUnit tests for the JMRIClientPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -29,4 +28,5 @@ public class JMRIClientPortControllerTest extends jmri.jmrix.AbstractNetworkPort
     public void tearDown(){
        JUnitUtil.tearDown();
     }
+
 }

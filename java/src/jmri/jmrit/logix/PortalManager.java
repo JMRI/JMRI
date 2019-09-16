@@ -1,14 +1,16 @@
 package jmri.jmrit.logix;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a PortalManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention.
- * <P>
+ * <p>
  * Note this is an 'after thought' manager. Portals have been in use since 2009.
  * Their use has now expanded well beyond what was expected. A Portal factory is
  * needed for development to continue.
@@ -18,35 +20,29 @@ import org.slf4j.LoggerFactory;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Pete Cressman Copyright (C) 2014
  */
 public class PortalManager extends AbstractManager<Portal>
-        implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
+        implements jmri.InstanceManagerAutoDefault {
 
     private int _nextSName = 1;
 
     public PortalManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -107,7 +103,7 @@ public class PortalManager extends AbstractManager<Portal>
      * Method to get an existing Portal. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
-     * @param name - either System name or user name
+     * @param name  either System name or user name
      * @return Portal, if found
      */
     public Portal getPortal(String name) {
@@ -160,8 +156,8 @@ public class PortalManager extends AbstractManager<Portal>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNamePortal");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNamePortals" : "BeanNamePortal");
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
