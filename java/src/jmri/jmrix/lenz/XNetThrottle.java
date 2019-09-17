@@ -718,300 +718,337 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                   b3,b4);
         /* data byte 3 is the status of F0 F4 F3 F2 F1 */
         if ((b3 & 0x10) == 0x10 && !getF0()) {
-            notifyPropertyChangeListener(Throttle.F0,
-                    Boolean.valueOf(this.f0),
-                    Boolean.valueOf(this.f0 = true));
+           notifyFunctionChanged(Throttle.F0,true);
         } else if ((b3 & 0x10) == 0x00 && getF0()) {
-            notifyPropertyChangeListener(Throttle.F0,
-                    Boolean.valueOf(this.f0),
-                    Boolean.valueOf(this.f0 = false));
+            notifyFunctionChanged(Throttle.F0,false);
         }
 
         if ((b3 & 0x01) == 0x01 && !getF1()) {
-            notifyPropertyChangeListener(Throttle.F1,
-                    Boolean.valueOf(this.f1),
-                    Boolean.valueOf(this.f1 = true));
-        } else if ((b3 & 0x01) == 0x00 && getF1()) {
-            notifyPropertyChangeListener(Throttle.F1,
-                    Boolean.valueOf(this.f1),
-                    Boolean.valueOf(this.f1 = false));
+            notifyFunctionChanged(Throttle.F1,true);
+        } else if ((b3 & 0x01) == 0x01 && getF1()) {
+            notifyFunctionChanged(Throttle.F1,false);
         }
 
         if ((b3 & 0x02) == 0x02 && !getF2()) {
-            notifyPropertyChangeListener(Throttle.F2,
-                    Boolean.valueOf(this.f2),
-                    Boolean.valueOf(this.f2 = true));
+            notifyFunctionChanged(Throttle.F2,true);
         } else if ((b3 & 0x02) == 0x00 && getF2()) {
-            notifyPropertyChangeListener(Throttle.F2,
-                    Boolean.valueOf(this.f2),
-                    Boolean.valueOf(this.f2 = false));
+            notifyFunctionChanged(Throttle.F2,false);
         }
 
         if ((b3 & 0x04) == 0x04 && !getF3()) {
-            notifyPropertyChangeListener(Throttle.F3,
-                    Boolean.valueOf(this.f3),
-                    Boolean.valueOf(this.f3 = true));
+            notifyFunctionChanged(Throttle.F3,true);
         } else if ((b3 & 0x04) == 0x00 && getF3()) {
-            notifyPropertyChangeListener(Throttle.F3,
-                    Boolean.valueOf(this.f3),
-                    Boolean.valueOf(this.f3 = false));
+            notifyFunctionChanged(Throttle.F3,false);
         }
 
         if ((b3 & 0x08) == 0x08 && !getF4()) {
-            notifyPropertyChangeListener(Throttle.F4,
-                    Boolean.valueOf(this.f4),
-                    Boolean.valueOf(this.f4 = true));
+            notifyFunctionChanged(Throttle.F4,true);
         } else if ((b3 & 0x08) == 0x00 && getF4()) {
-            notifyPropertyChangeListener(Throttle.F4,
-                    Boolean.valueOf(this.f4),
-                    Boolean.valueOf(this.f4 = false));
+            notifyFunctionChanged(Throttle.F4,false);
         }
 
         /* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
         if ((b4 & 0x01) == 0x01 && !getF5()) {
-            notifyPropertyChangeListener(Throttle.F5,
-                    Boolean.valueOf(this.f5),
-                    Boolean.valueOf(this.f5 = true));
+            notifyFunctionChanged(Throttle.F5,true);
         } else if ((b4 & 0x01) == 0x00 && getF5()) {
-            notifyPropertyChangeListener(Throttle.F5,
-                    Boolean.valueOf(this.f5),
-                    Boolean.valueOf(this.f5 = false));
+            notifyFunctionChanged(Throttle.F5,false);
         }
 
         if ((b4 & 0x02) == 0x02 && !getF6()) {
-            notifyPropertyChangeListener(Throttle.F6,
-                    Boolean.valueOf(this.f6),
-                    Boolean.valueOf(this.f6 = true));
+            notifyFunctionChanged(Throttle.F6,true);
         } else if ((b4 & 0x02) == 0x00 && getF6()) {
-            notifyPropertyChangeListener(Throttle.F6,
-                    Boolean.valueOf(this.f6),
-                    Boolean.valueOf(this.f6 = false));
+            notifyFunctionChanged(Throttle.F6,false);
         }
 
         if ((b4 & 0x04) == 0x04 && !getF7()) {
-            notifyPropertyChangeListener(Throttle.F7,
-                    Boolean.valueOf(this.f7),
-                    Boolean.valueOf(this.f7 = true));
+            notifyFunctionChanged(Throttle.F7,true);
         } else if ((b4 & 0x04) == 0x00 && getF7()) {
-            notifyPropertyChangeListener(Throttle.F7,
-                    Boolean.valueOf(this.f7),
-                    Boolean.valueOf(this.f7 = false));
+            notifyFunctionChanged(Throttle.F7,false);
         }
 
         if ((b4 & 0x08) == 0x08 && !getF8()) {
-            notifyPropertyChangeListener(Throttle.F8,
-                    Boolean.valueOf(this.f8),
-                    Boolean.valueOf(this.f8 = true));
+            notifyFunctionChanged(Throttle.F8,true);
         } else if ((b4 & 0x08) == 0x00 && getF8()) {
-            notifyPropertyChangeListener(Throttle.F8,
-                    Boolean.valueOf(this.f8),
-                    Boolean.valueOf(this.f8 = false));
+            notifyFunctionChanged(Throttle.F8,false);
         }
 
         if ((b4 & 0x10) == 0x10 && !getF9()) {
-            notifyPropertyChangeListener(Throttle.F9,
-                    Boolean.valueOf(this.f9),
-                    Boolean.valueOf(this.f9 = true));
+            notifyFunctionChanged(Throttle.F9,true);
         } else if ((b4 & 0x10) == 0x00 && getF9()) {
-            notifyPropertyChangeListener(Throttle.F9,
-                    Boolean.valueOf(this.f9),
-                    Boolean.valueOf(this.f9 = false));
+            notifyFunctionChanged(Throttle.F9,false);
         }
 
         if ((b4 & 0x20) == 0x20 && !getF10()) {
-            notifyPropertyChangeListener(Throttle.F10,
-                    Boolean.valueOf(this.f10),
-                    Boolean.valueOf(this.f10 = true));
+            notifyFunctionChanged(Throttle.F10,true);
         } else if ((b4 & 0x20) == 0x00 && getF10()) {
-            notifyPropertyChangeListener(Throttle.F10,
-                    Boolean.valueOf(this.f10),
-                    Boolean.valueOf(this.f10 = false));
+            notifyFunctionChanged(Throttle.F10,false);
         }
 
         if ((b4 & 0x40) == 0x40 && !getF11()) {
-            notifyPropertyChangeListener(Throttle.F11,
-                    Boolean.valueOf(this.f11),
-                    Boolean.valueOf(this.f11 = true));
+            notifyFunctionChanged(Throttle.F11,true);
         } else if ((b4 & 0x40) == 0x00 && getF11()) {
-            notifyPropertyChangeListener(Throttle.F11,
-                    Boolean.valueOf(this.f11),
-                    Boolean.valueOf(this.f11 = false));
+            notifyFunctionChanged(Throttle.F11,false);
         }
 
         if ((b4 & 0x80) == 0x80 && !getF12()) {
-            notifyPropertyChangeListener(Throttle.F12,
-                    Boolean.valueOf(this.f12),
-                    Boolean.valueOf(this.f12 = true));
+            notifyFunctionChanged(Throttle.F12,true);
         } else if ((b4 & 0x80) == 0x00 && getF12()) {
-            notifyPropertyChangeListener(Throttle.F12,
-                    Boolean.valueOf(this.f12),
-                    Boolean.valueOf(this.f12 = false));
+            notifyFunctionChanged(Throttle.F12,false);
         }
     }
+
+    protected void notifyFunctionChanged(String function,boolean newValue){
+        switch(function){
+            case Throttle.F0:
+                notifyPropertyChangeListener(Throttle.F0,
+                        Boolean.valueOf(this.f0),
+                        Boolean.valueOf(this.f0 = newValue));
+                break;
+            case Throttle.F1:
+                notifyPropertyChangeListener(Throttle.F1,
+                        Boolean.valueOf(this.f1),
+                        Boolean.valueOf(this.f1 = newValue));
+                break;
+            case Throttle.F2:
+                notifyPropertyChangeListener(Throttle.F2,
+                        Boolean.valueOf(this.f2),
+                        Boolean.valueOf(this.f2 = newValue));
+                break;
+            case Throttle.F3:
+                notifyPropertyChangeListener(Throttle.F3,
+                        Boolean.valueOf(this.f3),
+                        Boolean.valueOf(this.f3 = newValue));
+                break;
+            case Throttle.F4:
+                notifyPropertyChangeListener(Throttle.F4,
+                        Boolean.valueOf(this.f4),
+                        Boolean.valueOf(this.f4 = newValue));
+                break;
+            case Throttle.F5:
+                notifyPropertyChangeListener(Throttle.F5,
+                        Boolean.valueOf(this.f5),
+                        Boolean.valueOf(this.f5 = newValue));
+                break;
+            case Throttle.F6:
+                notifyPropertyChangeListener(Throttle.F6,
+                        Boolean.valueOf(this.f6),
+                        Boolean.valueOf(this.f6 = newValue));
+                break;
+            case Throttle.F7:
+                notifyPropertyChangeListener(Throttle.F7,
+                        Boolean.valueOf(this.f7),
+                        Boolean.valueOf(this.f7 = newValue));
+                break;
+            case Throttle.F8:
+                notifyPropertyChangeListener(Throttle.F8,
+                        Boolean.valueOf(this.f8),
+                        Boolean.valueOf(this.f8 = newValue));
+                break;
+            case Throttle.F9:
+                notifyPropertyChangeListener(Throttle.F8,
+                        Boolean.valueOf(this.f9),
+                        Boolean.valueOf(this.f9 = newValue));
+                break;
+            case Throttle.F10:
+                notifyPropertyChangeListener(Throttle.F10,
+                        Boolean.valueOf(this.f10),
+                        Boolean.valueOf(this.f10 = newValue));
+                break;
+            case Throttle.F11:
+                notifyPropertyChangeListener(Throttle.F11,
+                        Boolean.valueOf(this.f11),
+                        Boolean.valueOf(this.f11 = newValue));
+                break;
+            case Throttle.F12:
+                notifyPropertyChangeListener(Throttle.F12,
+                        Boolean.valueOf(this.f12),
+                        Boolean.valueOf(this.f12 = newValue));
+                break;
+            case Throttle.F13:
+                notifyPropertyChangeListener(Throttle.F13,
+                        Boolean.valueOf(this.f13),
+                        Boolean.valueOf(this.f13 = newValue));
+                break;
+            case Throttle.F14:
+                notifyPropertyChangeListener(Throttle.F14,
+                        Boolean.valueOf(this.f14),
+                        Boolean.valueOf(this.f14 = newValue));
+                break;
+            case Throttle.F15:
+                notifyPropertyChangeListener(Throttle.F15,
+                        Boolean.valueOf(this.f15),
+                        Boolean.valueOf(this.f15 = newValue));
+                break;
+            case Throttle.F16:
+                notifyPropertyChangeListener(Throttle.F16,
+                        Boolean.valueOf(this.f16),
+                        Boolean.valueOf(this.f16 = newValue));
+                break;
+            case Throttle.F17:
+                notifyPropertyChangeListener(Throttle.F17,
+                        Boolean.valueOf(this.f17),
+                        Boolean.valueOf(this.f17 = newValue));
+                break;
+            case Throttle.F18:
+                notifyPropertyChangeListener(Throttle.F18,
+                        Boolean.valueOf(this.f18),
+                        Boolean.valueOf(this.f18 = newValue));
+                break;
+            case Throttle.F19:
+                notifyPropertyChangeListener(Throttle.F19,
+                        Boolean.valueOf(this.f19),
+                        Boolean.valueOf(this.f19 = newValue));
+                break;
+            case Throttle.F20:
+                notifyPropertyChangeListener(Throttle.F20,
+                        Boolean.valueOf(this.f20),
+                        Boolean.valueOf(this.f20 = newValue));
+                break;
+            case Throttle.F21:
+                notifyPropertyChangeListener(Throttle.F21,
+                        Boolean.valueOf(this.f21),
+                        Boolean.valueOf(this.f21 = newValue));
+                break;
+            case Throttle.F22:
+                notifyPropertyChangeListener(Throttle.F22,
+                        Boolean.valueOf(this.f22),
+                        Boolean.valueOf(this.f22 = newValue));
+                break;
+            case Throttle.F23:
+                notifyPropertyChangeListener(Throttle.F23,
+                        Boolean.valueOf(this.f23),
+                        Boolean.valueOf(this.f23 = newValue));
+                break;
+            case Throttle.F24:
+                notifyPropertyChangeListener(Throttle.F24,
+                        Boolean.valueOf(this.f24),
+                        Boolean.valueOf(this.f24 = newValue));
+                break;
+            case Throttle.F25:
+                notifyPropertyChangeListener(Throttle.F25,
+                        Boolean.valueOf(this.f25),
+                        Boolean.valueOf(this.f25 = newValue));
+                break;
+            case Throttle.F26:
+                notifyPropertyChangeListener(Throttle.F26,
+                        Boolean.valueOf(this.f26),
+                        Boolean.valueOf(this.f26 = newValue));
+                break;
+            case Throttle.F27:
+                notifyPropertyChangeListener(Throttle.F27,
+                        Boolean.valueOf(this.f27),
+                        Boolean.valueOf(this.f27 = newValue));
+                break;
+            case Throttle.F28:
+                notifyPropertyChangeListener(Throttle.F28,
+                        Boolean.valueOf(this.f28),
+                        Boolean.valueOf(this.f28 = newValue));
+                break;
+            default:
+                log.trace("Attempt to set unknonw function {} to {}",function,newValue);
+        }
+    }
+
 
     protected void parseFunctionHighInformation(int b3, int b4) {
         log.trace("Parsing Function F13-F28 status, function bytes: {} and {}",
                   b3,b4);
         /* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
         if ((b3 & 0x01) == 0x01 && !getF13()) {
-            notifyPropertyChangeListener(Throttle.F13,
-                    Boolean.valueOf(this.f13),
-                    Boolean.valueOf(this.f13 = true));
+            notifyFunctionChanged(Throttle.F13,true);
         } else if ((b3 & 0x01) == 0x00 && getF13()) {
-            notifyPropertyChangeListener(Throttle.F13,
-                    Boolean.valueOf(this.f13),
-                    Boolean.valueOf(this.f13 = false));
+            notifyFunctionChanged(Throttle.F13,false);
         }
 
         if ((b3 & 0x02) == 0x02 && !getF14()) {
-            notifyPropertyChangeListener(Throttle.F14,
-                    Boolean.valueOf(this.f14),
-                    Boolean.valueOf(this.f14 = true));
+            notifyFunctionChanged(Throttle.F14,true);
         } else if ((b3 & 0x02) == 0x00 && getF14()) {
-            notifyPropertyChangeListener(Throttle.F14,
-                    Boolean.valueOf(this.f14),
-                    Boolean.valueOf(this.f14 = false));
+            notifyFunctionChanged(Throttle.F14,false);
         }
 
         if ((b3 & 0x04) == 0x04 && !getF15()) {
-            notifyPropertyChangeListener(Throttle.F15,
-                    Boolean.valueOf(this.f15),
-                    Boolean.valueOf(this.f15 = true));
+            notifyFunctionChanged(Throttle.F15,true);
         } else if ((b3 & 0x04) == 0x00 && getF15()) {
-            notifyPropertyChangeListener(Throttle.F15,
-                    Boolean.valueOf(this.f15),
-                    Boolean.valueOf(this.f15 = false));
+            notifyFunctionChanged(Throttle.F15,false);
         }
 
         if ((b3 & 0x08) == 0x08 && !getF16()) {
-            notifyPropertyChangeListener(Throttle.F16,
-                    Boolean.valueOf(this.f16),
-                    Boolean.valueOf(this.f16 = true));
+            notifyFunctionChanged(Throttle.F16,true);
         } else if ((b3 & 0x08) == 0x00 && getF16()) {
-            notifyPropertyChangeListener(Throttle.F16,
-                    Boolean.valueOf(this.f16),
-                    Boolean.valueOf(this.f16 = false));
+            notifyFunctionChanged(Throttle.F16,false);
         }
 
         if ((b3 & 0x10) == 0x10 && !getF17()) {
-            notifyPropertyChangeListener(Throttle.F17,
-                    Boolean.valueOf(this.f17),
-                    Boolean.valueOf(this.f17 = true));
+            notifyFunctionChanged(Throttle.F17,true);
         } else if ((b3 & 0x10) == 0x00 && getF17()) {
-            notifyPropertyChangeListener(Throttle.F17,
-                    Boolean.valueOf(this.f17),
-                    Boolean.valueOf(this.f17 = false));
+            notifyFunctionChanged(Throttle.F17,false);
         }
 
         if ((b3 & 0x20) == 0x20 && !getF18()) {
-            notifyPropertyChangeListener(Throttle.F18,
-                    Boolean.valueOf(this.f18),
-                    Boolean.valueOf(this.f18 = true));
+            notifyFunctionChanged(Throttle.F18,true);
         } else if ((b3 & 0x20) == 0x00 && getF18()) {
-            notifyPropertyChangeListener(Throttle.F18,
-                    Boolean.valueOf(this.f18),
-                    Boolean.valueOf(this.f18 = false));
+            notifyFunctionChanged(Throttle.F18,false);
         }
 
         if ((b3 & 0x40) == 0x40 && !getF19()) {
-            notifyPropertyChangeListener(Throttle.F19,
-                    Boolean.valueOf(this.f19),
-                    Boolean.valueOf(this.f19 = true));
+            notifyFunctionChanged(Throttle.F19,true);
         } else if ((b3 & 0x40) == 0x00 && getF19()) {
-            notifyPropertyChangeListener(Throttle.F19,
-                    Boolean.valueOf(this.f19),
-                    Boolean.valueOf(this.f19 = false));
+            notifyFunctionChanged(Throttle.F19,false);
         }
 
         if ((b3 & 0x80) == 0x80 && !getF20()) {
-            notifyPropertyChangeListener(Throttle.F20,
-                    Boolean.valueOf(this.f20),
-                    Boolean.valueOf(this.f20 = true));
+            notifyFunctionChanged(Throttle.F20,true);
         } else if ((b3 & 0x80) == 0x00 && getF20()) {
-            notifyPropertyChangeListener(Throttle.F20,
-                    Boolean.valueOf(this.f20),
-                    Boolean.valueOf(this.f20 = false));
+            notifyFunctionChanged(Throttle.F20,false);
         }
         /* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
 
         if ((b4 & 0x01) == 0x01 && !getF21()) {
-            notifyPropertyChangeListener(Throttle.F21,
-                    Boolean.valueOf(this.f21),
-                    Boolean.valueOf(this.f21 = true));
+            notifyFunctionChanged(Throttle.F21,true);
         } else if ((b4 & 0x01) == 0x00 && getF21()) {
-            notifyPropertyChangeListener(Throttle.F21,
-                    Boolean.valueOf(this.f21),
-                    Boolean.valueOf(this.f21 = false));
+            notifyFunctionChanged(Throttle.F21,false);
         }
 
         if ((b4 & 0x02) == 0x02 && !getF22()) {
-            notifyPropertyChangeListener(Throttle.F22,
-                    Boolean.valueOf(this.f22),
-                    Boolean.valueOf(this.f22 = true));
+            notifyFunctionChanged(Throttle.F22,true);
         } else if ((b4 & 0x02) == 0x00 && getF22()) {
-            notifyPropertyChangeListener(Throttle.F22,
-                    Boolean.valueOf(this.f22),
-                    Boolean.valueOf(this.f22 = false));
+            notifyFunctionChanged(Throttle.F22,false);
         }
 
         if ((b4 & 0x04) == 0x04 && !getF23()) {
-            notifyPropertyChangeListener(Throttle.F23,
-                    Boolean.valueOf(this.f23),
-                    Boolean.valueOf(this.f23 = true));
+            notifyFunctionChanged(Throttle.F23,true);
         } else if ((b4 & 0x04) == 0x00 && getF23()) {
-            notifyPropertyChangeListener(Throttle.F23,
-                    Boolean.valueOf(this.f23),
-                    Boolean.valueOf(this.f23 = false));
+            notifyFunctionChanged(Throttle.F23,false);
         }
 
         if ((b4 & 0x08) == 0x08 && !getF24()) {
-            notifyPropertyChangeListener(Throttle.F24,
-                    Boolean.valueOf(this.f24),
-                    Boolean.valueOf(this.f24 = true));
+            notifyFunctionChanged(Throttle.F24,true);
         } else if ((b4 & 0x08) == 0x00 && getF24()) {
-            notifyPropertyChangeListener(Throttle.F24,
-                    Boolean.valueOf(this.f24),
-                    Boolean.valueOf(this.f24 = false));
+            notifyFunctionChanged(Throttle.F24,false);
         }
 
         if ((b4 & 0x10) == 0x10 && !getF25()) {
-            notifyPropertyChangeListener(Throttle.F25,
-                    Boolean.valueOf(this.f25),
-                    Boolean.valueOf(this.f25 = true));
+            notifyFunctionChanged(Throttle.F25,true);
         } else if ((b4 & 0x10) == 0x00 && getF25()) {
-            notifyPropertyChangeListener(Throttle.F25,
-                    Boolean.valueOf(this.f25),
-                    Boolean.valueOf(this.f25 = false));
+            notifyFunctionChanged(Throttle.F25,false);
         }
 
         if ((b4 & 0x20) == 0x20 && !getF26()) {
-            notifyPropertyChangeListener(Throttle.F26,
-                    Boolean.valueOf(this.f26),
-                    Boolean.valueOf(this.f26 = true));
+            notifyFunctionChanged(Throttle.F26,true);
         } else if ((b4 & 0x20) == 0x00 && getF26()) {
-            notifyPropertyChangeListener(Throttle.F26,
-                    Boolean.valueOf(this.f26),
-                    Boolean.valueOf(this.f26 = false));
+            notifyFunctionChanged(Throttle.F26,false);
         }
 
         if ((b4 & 0x40) == 0x40 && !getF27()) {
-            notifyPropertyChangeListener(Throttle.F27,
-                    Boolean.valueOf(this.f27),
-                    Boolean.valueOf(this.f27 = true));
+            notifyFunctionChanged(Throttle.F27,true);
         } else if ((b4 & 0x40) == 0x00 && getF27()) {
-            notifyPropertyChangeListener(Throttle.F27,
-                    Boolean.valueOf(this.f27),
-                    Boolean.valueOf(this.f27 = false));
+            notifyFunctionChanged(Throttle.F27,false);
         }
 
         if ((b4 & 0x80) == 0x80 && !getF28()) {
-            notifyPropertyChangeListener(Throttle.F28,
-                    Boolean.valueOf(this.f28),
-                    Boolean.valueOf(this.f28 = true));
+            notifyFunctionChanged(Throttle.F28,true);
         } else if ((b4 & 0x80) == 0x00 && getF28()) {
-            notifyPropertyChangeListener(Throttle.F28,
-                    Boolean.valueOf(this.f28),
-                    Boolean.valueOf(this.f28 = false));
+            notifyFunctionChanged(Throttle.F28,false);
         }
     }
 
@@ -1020,134 +1057,82 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                   b3,b4);
         /* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
         if ((b3 & 0x10) == 0x10 && !this.f0Momentary) {
-            notifyPropertyChangeListener(Throttle.F0Momentary,
-                    Boolean.valueOf(this.f0Momentary),
-                    Boolean.valueOf(this.f0Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F0Momentary,true);
         } else if ((b3 & 0x10) == 0x00 && this.f0Momentary) {
-            notifyPropertyChangeListener(Throttle.F0Momentary,
-                    Boolean.valueOf(this.f0Momentary),
-                    Boolean.valueOf(this.f0Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F0Momentary,false);
         }
 
         if ((b3 & 0x01) == 0x01 && !this.f1Momentary) {
-            notifyPropertyChangeListener(Throttle.F1Momentary,
-                    Boolean.valueOf(this.f1Momentary),
-                    Boolean.valueOf(this.f1Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F1Momentary,true);
         } else if ((b3 & 0x01) == 0x00 && this.f1Momentary) {
-            notifyPropertyChangeListener(Throttle.F1Momentary,
-                    Boolean.valueOf(this.f1Momentary),
-                    Boolean.valueOf(this.f1Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F1Momentary,false);
         }
 
         if ((b3 & 0x02) == 0x02 && !this.f2Momentary) {
-            notifyPropertyChangeListener(Throttle.F2Momentary,
-                    Boolean.valueOf(this.f2Momentary),
-                    Boolean.valueOf(this.f2Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F2Momentary,true);
         } else if ((b3 & 0x02) == 0x00 && this.f2Momentary) {
-            notifyPropertyChangeListener(Throttle.F2Momentary,
-                    Boolean.valueOf(this.f2Momentary),
-                    Boolean.valueOf(this.f2Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F2Momentary,false);
         }
 
         if ((b3 & 0x04) == 0x04 && !this.f3Momentary) {
-            notifyPropertyChangeListener(Throttle.F3Momentary,
-                    Boolean.valueOf(this.f3Momentary),
-                    Boolean.valueOf(this.f3Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F3Momentary,true);
         } else if ((b3 & 0x04) == 0x00 && this.f3Momentary) {
-            notifyPropertyChangeListener(Throttle.F3Momentary,
-                    Boolean.valueOf(this.f3Momentary),
-                    Boolean.valueOf(this.f3Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F3Momentary,false);
         }
 
         if ((b3 & 0x08) == 0x08 && !this.f4Momentary) {
-            notifyPropertyChangeListener(Throttle.F4Momentary,
-                    Boolean.valueOf(this.f4Momentary),
-                    Boolean.valueOf(this.f4Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F4Momentary,true);
         } else if ((b3 & 0x08) == 0x00 && this.f4Momentary) {
-            notifyPropertyChangeListener(Throttle.F4Momentary,
-                    Boolean.valueOf(this.f4Momentary),
-                    Boolean.valueOf(this.f4Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F4Momentary,false);
         }
 
         /* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
         if ((b4 & 0x01) == 0x01 && !this.f5Momentary) {
-            notifyPropertyChangeListener(Throttle.F5Momentary,
-                    Boolean.valueOf(this.f5Momentary),
-                    Boolean.valueOf(this.f5Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F5Momentary,true);
         } else if ((b4 & 0x01) == 0x00 && this.f5Momentary) {
-            notifyPropertyChangeListener(Throttle.F5Momentary,
-                    Boolean.valueOf(this.f5Momentary),
-                    Boolean.valueOf(this.f5Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F5Momentary,false);
         }
 
         if ((b4 & 0x02) == 0x02 && !this.f6Momentary) {
-            notifyPropertyChangeListener(Throttle.F6Momentary,
-                    Boolean.valueOf(this.f6Momentary),
-                    Boolean.valueOf(this.f6Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F6Momentary,true);
         } else if ((b4 & 0x02) == 0x00 && this.f6Momentary) {
-            notifyPropertyChangeListener(Throttle.F6Momentary,
-                    Boolean.valueOf(this.f6Momentary),
-                    Boolean.valueOf(this.f6Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F6Momentary,false);
         }
 
         if ((b4 & 0x04) == 0x04 && !this.f7Momentary) {
-            notifyPropertyChangeListener(Throttle.F7Momentary,
-                    Boolean.valueOf(this.f7Momentary),
-                    Boolean.valueOf(this.f7Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F7Momentary,true);
         } else if ((b4 & 0x04) == 0x00 && this.f7Momentary) {
-            notifyPropertyChangeListener(Throttle.F7Momentary,
-                    Boolean.valueOf(this.f7Momentary),
-                    Boolean.valueOf(this.f7Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F7Momentary,false);
         }
 
         if ((b4 & 0x08) == 0x08 && !this.f8Momentary) {
-            notifyPropertyChangeListener(Throttle.F8Momentary,
-                    Boolean.valueOf(this.f8Momentary),
-                    Boolean.valueOf(this.f8Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F8Momentary,true);
         } else if ((b4 & 0x08) == 0x00 && this.f8Momentary) {
-            notifyPropertyChangeListener(Throttle.F8Momentary,
-                    Boolean.valueOf(this.f8Momentary),
-                    Boolean.valueOf(this.f8Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F8Momentary,false);
         }
 
         if ((b4 & 0x10) == 0x10 && !this.f9Momentary) {
-            notifyPropertyChangeListener(Throttle.F9Momentary,
-                    Boolean.valueOf(this.f9Momentary),
-                    Boolean.valueOf(this.f9Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F9Momentary,true);
         } else if ((b4 & 0x10) == 0x00 && this.f9Momentary) {
-            notifyPropertyChangeListener(Throttle.F9Momentary,
-                    Boolean.valueOf(this.f9Momentary),
-                    Boolean.valueOf(this.f9Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F9Momentary,false);
         }
 
         if ((b4 & 0x20) == 0x20 && !this.f10Momentary) {
-            notifyPropertyChangeListener(Throttle.F10Momentary,
-                    Boolean.valueOf(this.f10Momentary),
-                    Boolean.valueOf(this.f10Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F10Momentary,true);
         } else if ((b4 & 0x20) == 0x00 && this.f10Momentary) {
-            notifyPropertyChangeListener(Throttle.F10Momentary,
-                    Boolean.valueOf(this.f10Momentary),
-                    Boolean.valueOf(this.f10Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F10Momentary,false);
         }
 
         if ((b4 & 0x40) == 0x40 && !this.f11Momentary) {
-            notifyPropertyChangeListener(Throttle.F11Momentary,
-                    Boolean.valueOf(this.f11Momentary),
-                    Boolean.valueOf(this.f11Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F11Momentary,true);
         } else if ((b4 & 0x40) == 0x00 && this.f11Momentary) {
-            notifyPropertyChangeListener(Throttle.F11Momentary,
-                    Boolean.valueOf(this.f11Momentary),
-                    Boolean.valueOf(this.f11Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F11Momentary,false);
         }
 
         if ((b4 & 0x80) == 0x80 && !this.f12Momentary) {
-            notifyPropertyChangeListener(Throttle.F12Momentary,
-                    Boolean.valueOf(this.f12Momentary),
-                    Boolean.valueOf(this.f12Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F12Momentary,true);
         } else if ((b4 & 0x80) == 0x00 && this.f12Momentary) {
-            notifyPropertyChangeListener(Throttle.F12Momentary,
-                    Boolean.valueOf(this.f12Momentary),
-                    Boolean.valueOf(this.f12Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F12Momentary,false);
         }
     }
 
@@ -1157,164 +1142,194 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         /* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
 
         if ((b3 & 0x01) == 0x01 && !this.f13Momentary) {
-            notifyPropertyChangeListener(Throttle.F13Momentary,
-                    Boolean.valueOf(this.f13Momentary),
-                    Boolean.valueOf(this.f13Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F13Momentary,true);
         } else if ((b3 & 0x01) == 0x00 && this.f13Momentary) {
-            notifyPropertyChangeListener(Throttle.F13Momentary,
-                    Boolean.valueOf(this.f13Momentary),
-                    Boolean.valueOf(this.f13Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F13Momentary,false);
         }
 
         if ((b3 & 0x02) == 0x02 && !this.f14Momentary) {
-            notifyPropertyChangeListener(Throttle.F14Momentary,
-                    Boolean.valueOf(this.f14Momentary),
-                    Boolean.valueOf(this.f14Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F14Momentary,true);
         } else if ((b3 & 0x02) == 0x00 && this.f14Momentary) {
-            notifyPropertyChangeListener(Throttle.F14Momentary,
-                    Boolean.valueOf(this.f14Momentary),
-                    Boolean.valueOf(this.f14Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F14Momentary,false);
         }
 
         if ((b3 & 0x04) == 0x04 && !this.f15Momentary) {
-            notifyPropertyChangeListener(Throttle.F15Momentary,
-                    Boolean.valueOf(this.f15Momentary),
-                    Boolean.valueOf(this.f15Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F15Momentary,true);
         } else if ((b3 & 0x04) == 0x00 && this.f15Momentary) {
-            notifyPropertyChangeListener(Throttle.F15Momentary,
-                    Boolean.valueOf(this.f15Momentary),
-                    Boolean.valueOf(this.f15Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F15Momentary,false);
         }
 
         if ((b3 & 0x08) == 0x08 && !this.f16Momentary) {
-            notifyPropertyChangeListener(Throttle.F16Momentary,
-                    Boolean.valueOf(this.f16Momentary),
-                    Boolean.valueOf(this.f16Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F16Momentary,true);
         } else if ((b3 & 0x08) == 0x00 && this.f16Momentary) {
-            notifyPropertyChangeListener(Throttle.F16Momentary,
-                    Boolean.valueOf(this.f16Momentary),
-                    Boolean.valueOf(this.f16Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F16Momentary,false);
         }
 
         if ((b3 & 0x10) == 0x10 && !this.f17Momentary) {
-            notifyPropertyChangeListener(Throttle.F17Momentary,
-                    Boolean.valueOf(this.f17Momentary),
-                    Boolean.valueOf(this.f17Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F17Momentary,true);
         } else if ((b3 & 0x10) == 0x00 && this.f17Momentary) {
-            notifyPropertyChangeListener(Throttle.F17Momentary,
-                    Boolean.valueOf(this.f17Momentary),
-                    Boolean.valueOf(this.f17Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F17Momentary,false);
         }
 
         if ((b3 & 0x20) == 0x20 && !this.f18Momentary) {
-            notifyPropertyChangeListener(Throttle.F18Momentary,
-                    Boolean.valueOf(this.f18Momentary),
-                    Boolean.valueOf(this.f18Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F18Momentary,true);
         } else if ((b3 & 0x20) == 0x00 && this.f18Momentary) {
-            notifyPropertyChangeListener(Throttle.F18Momentary,
-                    Boolean.valueOf(this.f18Momentary),
-                    Boolean.valueOf(this.f18Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F18Momentary,false);
         }
 
         if ((b3 & 0x40) == 0x40 && !this.f19Momentary) {
-            notifyPropertyChangeListener(Throttle.F19Momentary,
-                    Boolean.valueOf(this.f19Momentary),
-                    Boolean.valueOf(this.f19Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F19Momentary,true);
         } else if ((b3 & 0x40) == 0x00 && this.f19Momentary) {
-            notifyPropertyChangeListener(Throttle.F19Momentary,
-                    Boolean.valueOf(this.f19Momentary),
-                    Boolean.valueOf(this.f19Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F19Momentary,false);
         }
 
         if ((b3 & 0x80) == 0x80 && !this.f20Momentary) {
-            notifyPropertyChangeListener(Throttle.F20Momentary,
-                    Boolean.valueOf(this.f20Momentary),
-                    Boolean.valueOf(this.f20Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F20Momentary,true);
         } else if ((b3 & 0x80) == 0x00 && this.f20Momentary) {
-            notifyPropertyChangeListener(Throttle.F20Momentary,
-                    Boolean.valueOf(this.f20Momentary),
-                    Boolean.valueOf(this.f20Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F20Momentary,false);
         }
 
         /* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
         if ((b4 & 0x01) == 0x01 && !this.f21Momentary) {
-            notifyPropertyChangeListener(Throttle.F21Momentary,
-                    Boolean.valueOf(this.f21Momentary),
-                    Boolean.valueOf(this.f21Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F21Momentary,true);
         } else if ((b4 & 0x01) == 0x00 && this.f21Momentary) {
-            notifyPropertyChangeListener(Throttle.F21Momentary,
-                    Boolean.valueOf(this.f21Momentary),
-                    Boolean.valueOf(this.f21Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F21Momentary,false);
         }
 
         if ((b4 & 0x02) == 0x02 && !this.f22Momentary) {
-            notifyPropertyChangeListener(Throttle.F22Momentary,
-                    Boolean.valueOf(this.f22Momentary),
-                    Boolean.valueOf(this.f22Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F22Momentary,true);
         } else if ((b4 & 0x02) == 0x00 && this.f22Momentary) {
-            notifyPropertyChangeListener(Throttle.F22Momentary,
-                    Boolean.valueOf(this.f22Momentary),
-                    Boolean.valueOf(this.f22Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F22Momentary,false);
         }
 
         if ((b4 & 0x04) == 0x04 && !this.f23Momentary) {
-            notifyPropertyChangeListener(Throttle.F23Momentary,
-                    Boolean.valueOf(this.f23Momentary),
-                    Boolean.valueOf(this.f23Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F23Momentary,true);
         } else if ((b4 & 0x04) == 0x00 && this.f23Momentary) {
-            notifyPropertyChangeListener(Throttle.F23Momentary,
-                    Boolean.valueOf(this.f23Momentary),
-                    Boolean.valueOf(this.f23Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F23Momentary,false);
         }
 
         if ((b4 & 0x08) == 0x08 && !this.f24Momentary) {
-            notifyPropertyChangeListener(Throttle.F24Momentary,
-                    Boolean.valueOf(this.f24Momentary),
-                    Boolean.valueOf(this.f24Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F24Momentary,true);
         } else if ((b4 & 0x08) == 0x00 && this.f24Momentary) {
-            notifyPropertyChangeListener(Throttle.F24Momentary,
-                    Boolean.valueOf(this.f24Momentary),
-                    Boolean.valueOf(this.f24Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F24Momentary,false);
         }
 
         if ((b4 & 0x10) == 0x10 && !this.f25Momentary) {
-            notifyPropertyChangeListener(Throttle.F25Momentary,
-                    Boolean.valueOf(this.f25Momentary),
-                    Boolean.valueOf(this.f25Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F25Momentary,true);
         } else if ((b4 & 0x10) == 0x00 && this.f25Momentary) {
-            notifyPropertyChangeListener(Throttle.F25Momentary,
-                    Boolean.valueOf(this.f25Momentary),
-                    Boolean.valueOf(this.f25Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F25Momentary,false);
         }
 
         if ((b4 & 0x20) == 0x20 && !this.f26Momentary) {
-            notifyPropertyChangeListener(Throttle.F26Momentary,
-                    Boolean.valueOf(this.f26Momentary),
-                    Boolean.valueOf(this.f26Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F26Momentary,true);
         } else if ((b4 & 0x20) == 0x00 && this.f26Momentary) {
-            notifyPropertyChangeListener(Throttle.F26Momentary,
-                    Boolean.valueOf(this.f26Momentary),
-                    Boolean.valueOf(this.f26Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F26Momentary,false);
         }
 
         if ((b4 & 0x40) == 0x40 && !this.f27Momentary) {
-            notifyPropertyChangeListener(Throttle.F27Momentary,
-                    Boolean.valueOf(this.f27Momentary),
-                    Boolean.valueOf(this.f27Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F27Momentary,true);
         } else if ((b4 & 0x40) == 0x00 && this.f27Momentary) {
-            notifyPropertyChangeListener(Throttle.F27Momentary,
-                    Boolean.valueOf(this.f27Momentary),
-                    Boolean.valueOf(this.f27Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F27Momentary,false);
         }
 
         if ((b4 & 0x80) == 0x80 && !this.f28Momentary) {
-            notifyPropertyChangeListener(Throttle.F28Momentary,
-                    Boolean.valueOf(this.f28Momentary),
-                    Boolean.valueOf(this.f28Momentary = true));
+            notifyFunctionMomentaryChanged(Throttle.F28Momentary,true);
         } else if ((b4 & 0x80) == 0x00 && this.f28Momentary) {
-            notifyPropertyChangeListener(Throttle.F28Momentary,
-                    Boolean.valueOf(this.f28Momentary),
-                    Boolean.valueOf(this.f28Momentary = false));
+            notifyFunctionMomentaryChanged(Throttle.F28Momentary,false);
+        }
+    }
+
+    protected void notifyFunctionMomentaryChanged(String function,boolean newValue) {
+        switch (function) {
+            case Throttle.F0Momentary:
+                notifyPropertyChangeListener(Throttle.F0Momentary, Boolean.valueOf(this.f0Momentary), Boolean.valueOf(this.f0Momentary = newValue));
+                break;
+            case Throttle.F1Momentary:
+                notifyPropertyChangeListener(Throttle.F1Momentary, Boolean.valueOf(this.f1Momentary), Boolean.valueOf(this.f1Momentary = newValue));
+                break;
+            case Throttle.F2Momentary:
+                notifyPropertyChangeListener(Throttle.F2Momentary, Boolean.valueOf(this.f2Momentary), Boolean.valueOf(this.f2Momentary = newValue));
+                break;
+            case Throttle.F3Momentary:
+                notifyPropertyChangeListener(Throttle.F3Momentary, Boolean.valueOf(this.f3Momentary), Boolean.valueOf(this.f3Momentary = newValue));
+                break;
+            case Throttle.F4Momentary:
+                notifyPropertyChangeListener(Throttle.F4Momentary, Boolean.valueOf(this.f4Momentary), Boolean.valueOf(this.f4Momentary = newValue));
+                break;
+            case Throttle.F5Momentary:
+                notifyPropertyChangeListener(Throttle.F5Momentary, Boolean.valueOf(this.f5Momentary), Boolean.valueOf(this.f5Momentary = newValue));
+                break;
+            case Throttle.F6Momentary:
+                notifyPropertyChangeListener(Throttle.F6Momentary, Boolean.valueOf(this.f6Momentary), Boolean.valueOf(this.f6Momentary = newValue));
+                break;
+            case Throttle.F7Momentary:
+                notifyPropertyChangeListener(Throttle.F7Momentary, Boolean.valueOf(this.f7Momentary), Boolean.valueOf(this.f7Momentary = newValue));
+                break;
+            case Throttle.F8Momentary:
+                notifyPropertyChangeListener(Throttle.F8Momentary, Boolean.valueOf(this.f8Momentary), Boolean.valueOf(this.f8Momentary = newValue));
+                break;
+            case Throttle.F9Momentary:
+                notifyPropertyChangeListener(Throttle.F8Momentary, Boolean.valueOf(this.f9Momentary), Boolean.valueOf(this.f9Momentary = newValue));
+                break;
+            case Throttle.F10Momentary:
+                notifyPropertyChangeListener(Throttle.F10Momentary, Boolean.valueOf(this.f10Momentary), Boolean.valueOf(this.f10Momentary = newValue));
+                break;
+            case Throttle.F11Momentary:
+                notifyPropertyChangeListener(Throttle.F11Momentary, Boolean.valueOf(this.f11Momentary), Boolean.valueOf(this.f11Momentary = newValue));
+                break;
+            case Throttle.F12Momentary:
+                notifyPropertyChangeListener(Throttle.F12Momentary, Boolean.valueOf(this.f12Momentary), Boolean.valueOf(this.f12Momentary = newValue));
+                break;
+            case Throttle.F13Momentary:
+                notifyPropertyChangeListener(Throttle.F13Momentary, Boolean.valueOf(this.f13Momentary), Boolean.valueOf(this.f13Momentary = newValue));
+                break;
+            case Throttle.F14Momentary:
+                notifyPropertyChangeListener(Throttle.F14Momentary, Boolean.valueOf(this.f14Momentary), Boolean.valueOf(this.f14Momentary = newValue));
+                break;
+            case Throttle.F15Momentary:
+                notifyPropertyChangeListener(Throttle.F15Momentary, Boolean.valueOf(this.f15Momentary), Boolean.valueOf(this.f15Momentary = newValue));
+                break;
+            case Throttle.F16Momentary:
+                notifyPropertyChangeListener(Throttle.F16Momentary, Boolean.valueOf(this.f16Momentary), Boolean.valueOf(this.f16Momentary = newValue));
+                break;
+            case Throttle.F17Momentary:
+                notifyPropertyChangeListener(Throttle.F17Momentary, Boolean.valueOf(this.f17Momentary), Boolean.valueOf(this.f17Momentary = newValue));
+                break;
+            case Throttle.F18Momentary:
+                notifyPropertyChangeListener(Throttle.F18Momentary, Boolean.valueOf(this.f18Momentary), Boolean.valueOf(this.f18Momentary = newValue));
+                break;
+            case Throttle.F19Momentary:
+                notifyPropertyChangeListener(Throttle.F19Momentary, Boolean.valueOf(this.f19Momentary), Boolean.valueOf(this.f19Momentary = newValue));
+                break;
+            case Throttle.F20Momentary:
+                notifyPropertyChangeListener(Throttle.F20Momentary, Boolean.valueOf(this.f20Momentary), Boolean.valueOf(this.f20Momentary = newValue));
+                break;
+            case Throttle.F21Momentary:
+                notifyPropertyChangeListener(Throttle.F21Momentary, Boolean.valueOf(this.f21Momentary), Boolean.valueOf(this.f21Momentary = newValue));
+                break;
+            case Throttle.F22Momentary:
+                notifyPropertyChangeListener(Throttle.F22Momentary, Boolean.valueOf(this.f22Momentary), Boolean.valueOf(this.f22Momentary = newValue));
+                break;
+            case Throttle.F23Momentary:
+                notifyPropertyChangeListener(Throttle.F23Momentary, Boolean.valueOf(this.f23Momentary), Boolean.valueOf(this.f23Momentary = newValue));
+                break;
+            case Throttle.F24Momentary:
+                notifyPropertyChangeListener(Throttle.F24Momentary, Boolean.valueOf(this.f24Momentary), Boolean.valueOf(this.f24Momentary = newValue));
+                break;
+            case Throttle.F25Momentary:
+                notifyPropertyChangeListener(Throttle.F25Momentary, Boolean.valueOf(this.f25Momentary), Boolean.valueOf(this.f25Momentary = newValue));
+                break;
+            case Throttle.F26Momentary:
+                notifyPropertyChangeListener(Throttle.F26Momentary, Boolean.valueOf(this.f26Momentary), Boolean.valueOf(this.f26Momentary = newValue));
+                break;
+            case Throttle.F27Momentary:
+                notifyPropertyChangeListener(Throttle.F27Momentary, Boolean.valueOf(this.f27Momentary), Boolean.valueOf(this.f27Momentary = newValue));
+                break;
+            case Throttle.F28Momentary:
+                notifyPropertyChangeListener(Throttle.F28Momentary, Boolean.valueOf(this.f28Momentary), Boolean.valueOf(this.f28Momentary = newValue));
+                break;
+            default:
+                log.trace("Attempt to set unknonw function {} to {}", function, newValue);
         }
     }
 
