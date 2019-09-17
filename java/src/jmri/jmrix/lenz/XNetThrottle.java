@@ -358,11 +358,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             // has taken over this address
             if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
                 log.trace("Throttle - message is LOCO_INFO_RESPONSE ");
-                if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE) {
-                    /* the address is in bytes 3 and 4*/
-                    if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
+                if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE &&
+                        getDccAddressHigh() == l.getElement(2) &&
+                        getDccAddressLow() == l.getElement(3)) {
                         locoInUse();
-                    }
                 }
             }
         } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT
