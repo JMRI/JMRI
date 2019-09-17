@@ -3,11 +3,7 @@ package jmri.jmrit.beantable.oblock;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -165,10 +161,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
@@ -178,10 +174,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
@@ -191,10 +187,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_P);
         editMenu.add(menuItem);
@@ -262,7 +258,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     /**
-     * Convert a copy of JMRI Blocks to OBlocks.
+     * Convert a copy of JMRI Blocks to OBlocks and connect them with Portals and Paths.
+     *
      * @author EBR 2019
      */
     private void importBlocks() throws IllegalArgumentException {
@@ -336,7 +333,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     oBlock.addPortal(port);
 
                     // create OPath from this Path
-                    OPath opa = new OPath(oBlock, "IP" + n++);
+                    OPath opa = new OPath(oBlock, "IP" + n++); // only needs to be unique within oBlock
                     log.debug("new OPath {} - {} on OBlock {}", n, opa.getName(), opa.getBlock().getDisplayName());
                     oBlock.addPath(opa); // checks for duplicates, will add OPath to any Portals on oBlock as well
                     log.debug("number of paths: {}", oBlock.getPaths().size());
@@ -347,16 +344,34 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     }
                     if ((opa.getToPortal() == null) && (prevPortal != null)) {
                         opa.setToPortal(prevPortal);
-                        // leaves ToPortal in previously created OPath n-1 empty
+                        // leaves ToPortal in previously (first) created OPath n-1 empty
                     }
                     prevPortal = port; // remember the new portal for use as ToPortal in opposing OPath
-                    // user must remove nonsense manually
+                    // user must remove nonsense manually unless...
+                }
+                // we use the last FromPortal as ToPortal in OPath P0
+                OPath p0 = oBlock.getPathByName("IP0");
+                if ((p0 != null) && (n > 1) && (p0.getToPortal() == null)) {
+                    p0.setToPortal(port);
                 }
             } catch (IllegalArgumentException iae) {
                 log.error(iae.toString());
             }
             // finished setting up 1 OBlock
         }
+        // add recursive Path elements to FromBlock/ToBlock
+        for (OBlock b : obm.getNamedBeanSet()) {
+            for (Portal po : b.getPortals()) {
+                String bName = po.getFromBlockName();
+                for (Path opa : obm.getByUserName(bName).getPaths()) {
+                    po.getFromBlock().addPortal (po);
+                }
+                bName = po.getToBlockName();
+                for (Path opa : obm.getByUserName(bName).getPaths()) {
+                    po.getToBlock().addPortal (po);
+                }
+            }
+        } // storing and reloading will add in these items
         errorCheck();
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportBlockComplete"),
                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);

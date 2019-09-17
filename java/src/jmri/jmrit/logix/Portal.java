@@ -215,7 +215,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Set this portal's fromBlock.  Remove this portal from old fromBlock, if any.
+     * Set this portal's fromBlock. Remove this portal from old fromBlock, if any.
      * Add this portal in the new toBlock's list of portals. 
      *
      * @param block to be the new fromBlock
@@ -260,7 +260,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Set a signal to protect an OBlock.  Warrants look ahead for speed changes
+     * Set a signal to protect an OBlock. Warrants look ahead for speed changes
      * and change the train speed accordingly.
      * 
      * @param signal Either a SignalMast or a SignalHead
@@ -295,6 +295,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Get the signal (either a SignalMast or a SignalHead) protecting an OBlock.
+     *
      * @param block is the direction of entry, i.e. the protected block
      * @return signal protecting block, if block is protected, otherwise null.
      */
@@ -309,6 +310,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Get the block protected by a signal.
+     *
      * @param signal is the signal, either a SignalMast or a SignalHead
      * @return Protected OBlock, if it is protected, otherwise null.
      */
@@ -365,7 +367,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Get the paths to the portal within the connected Block i.e. the paths in
-     * this (the param) block through the Portal
+     * this (the param) block through the Portal.
      *
      * @param block OBlock
      * @return null if portal does not connect to block
@@ -383,8 +385,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Return the block on the other side of the portal from the block
-     * block
+     * Get the block on the other side of the portal from the block
+     * block.
+     *
      * @param block OBlock
      * @return the opposite block
      */
@@ -399,7 +402,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
 
     /**
      * Get the paths from the portal in the next connected Block i.e. paths in
-     * the block on the other side of the portal from this (the param) block
+     * the block on the other side of the portal from this (the param) block.
      *
      * @param block OBlock
      * @return null if portal does not connect to block
@@ -414,7 +417,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Call is from BlockOrder when setting the path
+     * Call is from BlockOrder when setting the path.
      *
      * @param block OBlock
      */
@@ -485,9 +488,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Set the distance (plus or minus) in millimeters from the portal gap
      * where the speed change indicated by the signal should be completed.
+     *
      * @param block a protected OBlock
      * @param distance length in millimeters
-     *
      */
     public void setEntranceSpaceForBlock(OBlock block, float distance) {
         if (block.equals(_toBlock)) {
@@ -504,9 +507,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Get the distance (plus or minus) in millimeters from the portal gap
      * where the speed change indicated by the signal should be completed.
+     *
      * @param block a protected OBlock
      * @return distance
-     *
      */
     public float getEntranceSpaceForBlock(OBlock block) {
         if (block.equals(_toBlock)) {

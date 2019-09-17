@@ -52,9 +52,7 @@ public class OBlockManagerXml // extends XmlFile
         for (OBlock block : manager.getNamedBeanSet()) {
             String sname = block.getSystemName();
             String uname = block.getUserName();
-            if (log.isDebugEnabled()) {
-                log.debug("OBlock: sysName= {}, userName= {}", sname, uname);
-            }
+            log.debug("OBlock: sysName= {}, userName= {}", sname, uname);
             Element elem = new Element("oblock");
             elem.setAttribute("systemName", sname);
             if (uname != null && uname.length() > 0) {
