@@ -100,7 +100,6 @@
       	occupied, which tracker has actually made the move indeterminate. 
       	When this happens a dialog is displayed for the 
       	panel user to determine which tracked train occupies contested the block.    
-      	<p></p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
