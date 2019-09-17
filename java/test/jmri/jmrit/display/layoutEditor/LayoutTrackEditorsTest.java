@@ -24,7 +24,9 @@ public class LayoutTrackEditorsTest {
     private static LayoutEditor layoutEditor = null;
 
     private static LayoutTurnout dxo = null;
+    private static LayoutTurnout rhto = null;
     private static LayoutSlip slip = null;
+    private static LayoutSlip sslip = null;
     private static LevelXing xing = null;
     private static TrackSegment segment = null;
     private static LayoutTurntable turntable = null;
@@ -58,8 +60,18 @@ public class LayoutTrackEditorsTest {
     }
 
     @Test
+    public void testShowSensorMessage() {
+        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
+        t.sensorList.add("Test");
+        Assert.assertFalse(t.sensorList.isEmpty());
+        t.showSensorMessage();
+    }
+
+    @Test
     public void testEditTrackSegmentDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        segment.setArc(true);
+        segment.setCircle(true);
         createBlocks();
 
         // Edit the track segment
@@ -85,6 +97,10 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator segment_blk_cbo = new JComboBoxOperator(jfo, 2);
         Assert.assertNotNull(segment_blk_cbo);
         segment_blk_cbo.selectItem(2);
+        // Use editable combo instead of select
+        JTextFieldOperator jblktxt = new JTextFieldOperator(jfo, 0);
+        jblktxt.clickMouse();
+        jblktxt.setText("XYZ Block");
 
         // Set arc angle
         JTextFieldOperator jtxt = new JTextFieldOperator(jfo, 1);
@@ -103,12 +119,18 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTrackSegmentCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        segment.setArc(false);
+        segment.setCircle(false);
 
         // Edit the track segment
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(segment);
         JFrameOperator jfo = new JFrameOperator("Edit Track Segment");
         Assert.assertNotNull(jfo);
+
+        Thread segmentBlockError = createModalDialogOperatorThread("Error", "OK", "segmentBlockError");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit Block").doClick();
+        JUnitUtil.waitFor(()->{return !(segmentBlockError.isAlive());}, "segmentBlockError finished");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
@@ -122,11 +144,10 @@ public class LayoutTrackEditorsTest {
         // Edit the double crossover
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(dxo);
-
-        // Select main turnout
         JFrameOperator jfo = new JFrameOperator("Edit Turnout");
         Assert.assertNotNull(jfo);
 
+        // Select main turnout
         JComboBoxOperator tcbo = new JComboBoxOperator(jfo, 0);
         Assert.assertNotNull(tcbo);
         tcbo.selectItem(1);
@@ -185,6 +206,47 @@ public class LayoutTrackEditorsTest {
     }
 
     @Test
+    public void testEditRHTurnoutDone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        createTurnouts();
+        createBlocks();
+
+        // Edit the rh turnout
+        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
+        trackEditor.editLayoutTrack(rhto);
+        JFrameOperator jfo = new JFrameOperator("Edit Turnout");
+        Assert.assertNotNull(jfo);
+
+        // Select main turnout
+        JComboBoxOperator tcbo = new JComboBoxOperator(jfo, 0);
+        Assert.assertNotNull(tcbo);
+        tcbo.selectItem(1);
+
+        // Enable second turnout and select it
+        new JCheckBoxOperator(jfo, 0).doClick();
+        JComboBoxOperator tcbo2 = new JComboBoxOperator(jfo, 1);
+        Assert.assertNotNull(tcbo2);
+        tcbo2.selectItem(2);
+
+        // Enable Invert and Hide
+        new JCheckBoxOperator(jfo, 1).doClick();
+        new JCheckBoxOperator(jfo, 2).doClick();
+
+        // Continuing route option
+        JComboBoxOperator contOption = new JComboBoxOperator(jfo, 2);
+        Assert.assertNotNull(contOption);
+        contOption.selectItem(1);
+
+        // Use editable combo instead of select
+        JTextFieldOperator jblktxt = new JTextFieldOperator(jfo, 0);
+        jblktxt.clickMouse();
+        jblktxt.setText("QRS Block");
+
+// new EventTool().waitNoEvent(10000);
+        new JButtonOperator(jfo, "Done").doClick();
+    }
+
+    @Test
     public void testEditTurnoutCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -193,6 +255,23 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(dxo);
         JFrameOperator jfo = new JFrameOperator("Edit Turnout");
         Assert.assertNotNull(jfo);
+
+        // Invoke layout block editor with no block assigned
+        Thread turnoutBlockAError = createModalDialogOperatorThread("Error", "OK", "turnoutBlockAError");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit", 0).doClick();
+        JUnitUtil.waitFor(()->{return !(turnoutBlockAError.isAlive());}, "turnoutBlockAError finished");
+
+        Thread turnoutBlockBError = createModalDialogOperatorThread("Error", "OK", "turnoutBlockBError");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit", 0).doClick();
+        JUnitUtil.waitFor(()->{return !(turnoutBlockBError.isAlive());}, "turnoutBlockBError finished");
+
+        Thread turnoutBlockCError = createModalDialogOperatorThread("Error", "OK", "turnoutBlockCError");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit", 0).doClick();
+        JUnitUtil.waitFor(()->{return !(turnoutBlockCError.isAlive());}, "turnoutBlockCError finished");
+
+        Thread turnoutBlockDError = createModalDialogOperatorThread("Error", "OK", "turnoutBlockDError");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit", 0).doClick();
+        JUnitUtil.waitFor(()->{return !(turnoutBlockDError.isAlive());}, "turnoutBlockDError finished");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
@@ -230,6 +309,54 @@ public class LayoutTrackEditorsTest {
 
         // Trigger Test button
         new JButtonOperator(jfo, "Test").doClick();
+        new JButtonOperator(jfo, "Test").doClick();
+        new JButtonOperator(jfo, "Test").doClick();
+        new JButtonOperator(jfo, "Test").doClick();
+
+        // Invoke layout block editor
+        new JButtonOperator(jfo, "Create/Edit Block").doClick();
+        JFrameOperator blkFO = new JFrameOperator("Edit Block");
+        Assert.assertNotNull(blkFO);
+        new JButtonOperator(blkFO, "OK").doClick();
+
+        new JButtonOperator(jfo, "Done").doClick();
+    }
+
+    @Test
+    public void testEditSingleSlipDone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        createTurnouts();
+        createBlocks();
+
+        // Edit the single slip
+        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
+        trackEditor.editLayoutTrack(sslip);
+
+        // Select turnout A
+        JFrameOperator jfo = new JFrameOperator("Edit Slip");
+        Assert.assertNotNull(jfo);
+
+        JComboBoxOperator tcbA = new JComboBoxOperator(jfo, 0);
+        Assert.assertNotNull(tcbA);
+        tcbA.selectItem(1);
+
+        // Select turnout B
+        JComboBoxOperator tcbB = new JComboBoxOperator(jfo, 1);
+        Assert.assertNotNull(tcbB);
+        tcbB.selectItem(2);
+
+        // Select a block
+        JComboBoxOperator blk_cbo_slip = new JComboBoxOperator(jfo, 8);
+        Assert.assertNotNull(blk_cbo_slip);
+        blk_cbo_slip.selectItem(1);
+
+        // Enable Hide
+        new JCheckBoxOperator(jfo, 0).doClick();
+
+        // Trigger Test button
+        new JButtonOperator(jfo, "Test").doClick();
+        new JButtonOperator(jfo, "Test").doClick();
+        new JButtonOperator(jfo, "Test").doClick();
 
         // Invoke layout block editor
         new JButtonOperator(jfo, "Create/Edit Block").doClick();
@@ -249,6 +376,11 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(slip);
         JFrameOperator jfo = new JFrameOperator("Edit Slip");
         Assert.assertNotNull(jfo);
+
+        // Invoke layout block editor with no block assigned
+        Thread slipBlockError = createModalDialogOperatorThread("Error", "OK", "slipBlockError");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit Block", 0).doClick();
+        JUnitUtil.waitFor(()->{return !(slipBlockError.isAlive());}, "slipBlockError finished");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
@@ -301,6 +433,15 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(xing);
         JFrameOperator jfo = new JFrameOperator("Edit Level Crossing");
         Assert.assertNotNull(jfo);
+
+        // Invoke layout block editor with no block assigned
+        Thread xingBlock1Error = createModalDialogOperatorThread("Error", "OK", "xingBlock1Error");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit Block 1").doClick();
+        JUnitUtil.waitFor(()->{return !(xingBlock1Error.isAlive());}, "xingBlock1Error finished");
+
+        Thread xingBlock2Error = createModalDialogOperatorThread("Error", "OK", "xingBlock2Error");  // NOI18N
+        new JButtonOperator(jfo, "Create/Edit Block 2").doClick();
+        JUnitUtil.waitFor(()->{return !(xingBlock2Error.isAlive());}, "xingBlock2Error finished");
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
@@ -434,10 +575,20 @@ public class LayoutTrackEditorsTest {
             dxo = new LayoutTurnout("Double Xover",
                     LayoutTurnout.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
 
+            // RH Turnout
+            point = MathUtil.add(point, delta);
+            rhto = new LayoutTurnout("RH Turnout",
+                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
+
             // Double slip
             point = MathUtil.add(point, delta);
             slip = new LayoutSlip("Double Slip",
                     point, 0.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+
+            // Single slip
+            point = MathUtil.add(point, delta);
+            sslip = new LayoutSlip("Single Slip",
+                    point, 0.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
 
             // Level crossing
             point = MathUtil.add(point, delta);
@@ -453,8 +604,6 @@ public class LayoutTrackEditorsTest {
             PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), layoutEditor);
             PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), layoutEditor);
             segment = new TrackSegment("Segment", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, false, layoutEditor);
-            segment.setArc(true);
-            segment.setCircle(true);
         }
     }
 
@@ -469,10 +618,22 @@ public class LayoutTrackEditorsTest {
            dxo = null;
         }
 
+        if(rhto != null){
+           rhto.remove();
+           rhto.dispose();
+           rhto = null;
+        }
+
         if(slip != null){
            slip.remove();
            slip.dispose();
            slip = null;
+        }
+
+        if(sslip != null){
+           sslip.remove();
+           sslip.dispose();
+           sslip = null;
         }
 
         if(xing != null){
