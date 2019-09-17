@@ -229,11 +229,12 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         }
         return engine;
     }
-    
+
     /**
      * Get a ScriptEngine by its name(s), mime type, or supported extensions.
      *
-     * @param name the complete name, mime type, or extension for the ScriptEngine
+     * @param name the complete name, mime type, or extension for the
+     *             ScriptEngine
      * @return a ScriptEngine or null if matching engine not found
      */
     @CheckForNull
@@ -321,16 +322,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.IOException           if the script file cannot be read.
      */
     public Object eval(File file) throws ScriptException, IOException {
-        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            try (FileInputStream fi = new FileInputStream(file)) {
-                this.jython.execfile(fi);
-            }
-            return null;
-        }
-        try (FileReader fr = new FileReader(file)) {
-            return engine.eval(fr);
-        }
+        return eval(file, null, null);
     }
 
     /**
@@ -347,16 +339,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.IOException           if the script file cannot be read.
      */
     public Object eval(File file, Bindings bindings) throws ScriptException, IOException {
-        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            try (FileInputStream fi = new FileInputStream(file)) {
-                this.jython.execfile(fi);
-            }
-            return null;
-        }
-        try (FileReader fr = new FileReader(file)) {
-            return engine.eval(fr, bindings);
-        }
+        return eval(file, null, bindings);
     }
 
     /**
@@ -373,16 +356,45 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.IOException           if the script file cannot be read.
      */
     public Object eval(File file, ScriptContext context) throws ScriptException, IOException {
+        return eval(file, context, null);
+    }
+
+    /**
+     * Evaluate a script contained in a file given a set of
+     * {@link javax.script.Bindings} to add to the script's context. Uses the
+     * extension of the file to determine which ScriptEngine to use.
+     *
+     * @param file     the script file to evaluate.
+     * @param context  script context to evaluate within.
+     * @param bindings script bindings to evaluate against.
+     * @return the results of the evaluation.
+     * @throws javax.script.ScriptException  if there is an error evaluating the
+     *                                       script.
+     * @throws java.io.FileNotFoundException if the script file cannot be found.
+     * @throws java.io.IOException           if the script file cannot be read.
+     */
+
+    @CheckForNull
+    private Object eval(File file, @CheckForNull ScriptContext context, @CheckForNull Bindings bindings)
+            throws ScriptException, IOException {
         ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
+        Object result = null;
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
             }
-            return null;
+        } else {
+            try (FileReader fr = new FileReader(file)) {
+                if (context != null) {
+                    result = eval(fr, engine, context);
+                } else if (bindings != null) {
+                    result = eval(fr, engine, bindings);
+                } else {
+                    result = eval(fr, engine);
+                }
+            }
         }
-        try (FileReader fr = new FileReader(file)) {
-            return engine.eval(fr, context);
-        }
+        return result;
     }
 
     /**
@@ -462,7 +474,8 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
 
     @Nonnull
-    private ScriptEngineFactory getFactory(@CheckForNull String factoryName, @Nonnull String type) throws ScriptException {
+    private ScriptEngineFactory getFactory(@CheckForNull String factoryName, @Nonnull String type)
+            throws ScriptException {
         String name = this.names.get(factoryName);
         ScriptEngineFactory factory = getFactory(name);
         if (name == null || factory == null) {
@@ -472,7 +485,8 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
 
     /**
-     * Get a ScriptEngineFactory by its name(s), mime types, or supported extensions.
+     * Get a ScriptEngineFactory by its name(s), mime types, or supported
+     * extensions.
      *
      * @param name the complete name, mime type, or extension for a factory
      * @return a ScriptEngineFactory or null
@@ -529,7 +543,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                 }
                 properties.setProperty(pythonPath, path.concat(FileUtil.getScriptsPath()
                         .concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
-                    execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(execJython)));
+                execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(execJython)));
             } catch (IOException ex) {
                 log.error("Found, but unable to read python.properties: {}", ex.getMessage());
             }
