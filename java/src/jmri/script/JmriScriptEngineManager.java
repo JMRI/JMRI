@@ -82,7 +82,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     // should be replaced with default context
     // package private for unit testing
     static final String JYTHON_DEFAULTS = "jmri_defaults.py";
-
+    private static final String EXTENSION = "extension";
     public static final String PYTHON = "jython";
     private PythonInterpreter jython = null;
 
@@ -98,20 +98,22 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                     factory.getLanguageVersion(),
                     factory.getEngineName(),
                     factory.getEngineVersion());
+            String engineName = factory.getEngineName();
             factory.getExtensions().stream().forEach(extension -> {
-                names.put(extension, factory.getEngineName());
+                names.put(extension, engineName);
                 log.debug("\tExtension: {}", extension);
             });
-            factory.getExtensions().stream().forEach(mimeType -> {
-                names.put(mimeType, factory.getEngineName());
+            factory.getMimeTypes().stream().forEach(mimeType -> {
+                names.put(mimeType, engineName);
                 log.debug("\tMime type: {}", mimeType);
             });
             factory.getNames().stream().forEach(name -> {
-                names.put(name, factory.getEngineName());
+                names.put(name, engineName);
                 log.debug("\tNames: {}", name);
             });
-            this.names.put(factory.getLanguageName(), factory.getEngineName());
-            this.factories.put(factory.getEngineName(), factory);
+            this.names.put(factory.getLanguageName(), engineName);
+            this.names.put(engineName, engineName);
+            this.factories.put(engineName, factory);
         });
 
         // this should agree with help/en/html/tools/scripting/Start.shtml
@@ -165,6 +167,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      *
      * @return the default JmriScriptEngineManager
      */
+    @Nonnull
     public static JmriScriptEngineManager getDefault() {
         return InstanceManager.getDefault(JmriScriptEngineManager.class);
     }
@@ -174,6 +177,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      *
      * @return the ScriptEngineManager
      */
+    @Nonnull
     public ScriptEngineManager getManager() {
         return this.manager;
     }
@@ -186,8 +190,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @return a ScriptEngine or null
      * @throws ScriptException if unable to get a matching ScriptEngine
      */
+    @Nonnull
     public ScriptEngine getEngineByExtension(String extension) throws ScriptException {
-        return getEngine(extension, "extension");
+        return getEngine(extension, EXTENSION);
     }
 
     /**
@@ -198,6 +203,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @return a ScriptEngine or null
      * @throws ScriptException if unable to get a matching ScriptEngine
      */
+    @Nonnull
     public ScriptEngine getEngineByMimeType(String mimeType) throws ScriptException {
         return getEngine(mimeType, "mime type");
     }
@@ -209,38 +215,44 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @return a ScriptEngine or null
      * @throws ScriptException if unable to get a matching ScriptEngine
      */
+    @Nonnull
     public ScriptEngine getEngineByName(String shortName) throws ScriptException {
         return getEngine(shortName, "name");
     }
 
-    private ScriptEngine getEngine(String engineName, String type) throws ScriptException {
+    @Nonnull
+    private ScriptEngine getEngine(@CheckForNull String engineName, @Nonnull String type) throws ScriptException {
         String name = names.get(engineName);
-        if (name == null) {
+        ScriptEngine engine = getEngine(name);
+        if (name == null || engine == null) {
             throw scriptEngineNotFound(engineName, type, false);
         }
-        return getEngine(name);
+        return engine;
     }
     
     /**
-     * Get a ScriptEngine by its name.
+     * Get a ScriptEngine by its name(s), mime type, or supported extensions.
      *
-     * @param engineName the complete name for the ScriptEngine
-     * @return a ScriptEngine or null
+     * @param name the complete name, mime type, or extension for the ScriptEngine
+     * @return a ScriptEngine or null if matching engine not found
      */
-    public ScriptEngine getEngine(String engineName) {
-        if (!this.engines.containsKey(engineName)) {
-            if (PYTHON.equals(engineName)) {
+    @CheckForNull
+    public ScriptEngine getEngine(@CheckForNull String name) {
+        if (!engines.containsKey(name)) {
+            name = names.get(name);
+            ScriptEngineFactory factory;
+            if (PYTHON.equals(name)) {
                 // Setup the default python engine to use the JMRI python
                 // properties
-                this.initializePython();
-            } else {
-                log.debug("Create engine for {}", engineName);
-                ScriptEngine engine = this.factories.get(engineName).getScriptEngine();
-                engine.setContext(this.context);
-                this.engines.put(engineName, engine);
+                initializePython();
+            } else if ((factory = factories.get(name)) != null) {
+                log.debug("Create engine for {}", name);
+                ScriptEngine engine = factory.getScriptEngine();
+                engine.setContext(context);
+                engines.put(name, engine);
             }
         }
-        return this.engines.get(engineName);
+        return engines.get(name);
     }
 
     /**
@@ -309,7 +321,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.IOException           if the script file cannot be read.
      */
     public Object eval(File file) throws ScriptException, IOException {
-        ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
+        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
@@ -335,7 +347,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.IOException           if the script file cannot be read.
      */
     public Object eval(File file, Bindings bindings) throws ScriptException, IOException {
-        ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
+        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
@@ -361,7 +373,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.IOException           if the script file cannot be read.
      */
     public Object eval(File file, ScriptContext context) throws ScriptException, IOException {
-        ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
+        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
             try (FileInputStream fi = new FileInputStream(file)) {
                 this.jython.execfile(fi);
@@ -406,6 +418,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      *
      * @return the default ScriptContext;
      */
+    @Nonnull
     public ScriptContext getDefaultContext() {
         return this.context;
     }
@@ -418,8 +431,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @return a ScriptEngineFactory or null
      * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
+    @Nonnull
     public ScriptEngineFactory getFactoryByExtension(String extension) throws ScriptException {
-        return getFactory(extension, "extension");
+        return getFactory(extension, EXTENSION);
     }
 
     /**
@@ -430,6 +444,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @return a ScriptEngineFactory or null
      * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
+    @Nonnull
     public ScriptEngineFactory getFactoryByMimeType(String mimeType) throws ScriptException {
         return getFactory(mimeType, "mime type");
     }
@@ -441,26 +456,33 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @return a ScriptEngineFactory or null
      * @throws ScriptException if unable to get a matching ScriptEngineFactory
      */
+    @Nonnull
     public ScriptEngineFactory getFactoryByName(String shortName) throws ScriptException {
         return getFactory(shortName, "name");
     }
 
-    private ScriptEngineFactory getFactory(String factoryName, String type) throws ScriptException {
+    @Nonnull
+    private ScriptEngineFactory getFactory(@CheckForNull String factoryName, @Nonnull String type) throws ScriptException {
         String name = this.names.get(factoryName);
-        if (name == null) {
+        ScriptEngineFactory factory = getFactory(name);
+        if (name == null || factory == null) {
             throw scriptEngineNotFound(factoryName, type, true);
         }
-        return this.getFactory(name);
+        return factory;
     }
 
     /**
-     * Get a ScriptEngineFactory by its name.
+     * Get a ScriptEngineFactory by its name(s), mime types, or supported extensions.
      *
-     * @param factoryName the complete name for a factory
+     * @param name the complete name, mime type, or extension for a factory
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactory(String factoryName) {
-        return this.factories.get(factoryName);
+    @CheckForNull
+    public ScriptEngineFactory getFactory(@CheckForNull String name) {
+        if (!factories.containsKey(name)) {
+            name = names.get(name);
+        }
+        return this.factories.get(name);
     }
 
     /**
@@ -565,7 +587,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param isFactory true for a not found ScriptEngineFactory, false for a
      *                  not found ScriptEngine
      */
-    private ScriptException scriptEngineNotFound(@Nonnull String key, @Nonnull String type, boolean isFactory) {
+    private ScriptException scriptEngineNotFound(@CheckForNull String key, @Nonnull String type, boolean isFactory) {
         String expected = String.join(",", names.keySet());
         String factory = isFactory ? " factory" : "";
         log.error("Could not find script engine{} for {} \"{}\", expected one of {}", factory, type, key, expected);
