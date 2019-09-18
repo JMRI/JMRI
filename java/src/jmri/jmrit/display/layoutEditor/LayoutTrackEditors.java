@@ -321,11 +321,7 @@ public class LayoutTrackEditors {
         if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                trackSegment.setLayoutBlock(null);
-            }
+            trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editTrackSegmentNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             trackSegment.updateBlockInfo();
@@ -377,11 +373,7 @@ public class LayoutTrackEditors {
         if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                trackSegment.setLayoutBlock(null);
-            }
+            trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editTrackSegmentNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             trackSegment.updateBlockInfo();
@@ -680,11 +672,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlock(null);
-            }
+            layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -706,11 +694,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutTurnout.getBlockBName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlockB(null);
-            }
+            layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -732,11 +716,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutTurnout.getBlockCName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlockC(null);
-            }
+            layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -758,11 +738,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutTurnout.getBlockDName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlockD(null);
-            }
+            layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -834,11 +810,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlock(null);
-            }
+            layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -850,11 +822,7 @@ public class LayoutTrackEditors {
             if (newName == null) newName = "";
             if (!layoutTurnout.getBlockBName().equals(newName)) {
                 // get new block, or null if block has been removed
-                try {
-                    layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    layoutTurnout.setLayoutBlockB(null);
-                }
+                layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
@@ -863,11 +831,7 @@ public class LayoutTrackEditors {
             if (newName == null) newName = "";
             if (!layoutTurnout.getBlockCName().equals(newName)) {
                 // get new block, or null if block has been removed
-                try {
-                    layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    layoutTurnout.setLayoutBlockC(null);
-                }
+                layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
@@ -876,11 +840,7 @@ public class LayoutTrackEditors {
             if (newName == null) newName = "";
             if (!layoutTurnout.getBlockDName().equals(newName)) {
                 // get new block, or null if block has been removed
-                try {
-                    layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    layoutTurnout.setLayoutBlockD(null);
-                }
+                layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
@@ -1250,11 +1210,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutSlip.setLayoutBlock(null);
-            }
+            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             editLayoutSlipNeedsBlockUpdate = true;
         }
@@ -1297,13 +1253,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutSlip.setLayoutBlock(null);
-                editLayoutSlipBlockNameComboBox.setSelectedItem(null);
-                editLayoutSlipBlockNameComboBox.setSelectedIndex(-1);
-            }
+            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLayoutSlipNeedsBlockUpdate = true;
@@ -1469,17 +1419,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!levelXing.getBlockNameAC().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockAC(null);
-                    editLevelXingBlock1NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockAC(null);
-            }
+            levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
@@ -1501,17 +1441,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockBD(null);
-                    editLevelXingBlock2NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockBD(null);
-            }
+            levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
@@ -1533,17 +1463,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!levelXing.getBlockNameAC().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockAC(null);
-                    editLevelXingBlock1NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockAC(null);
-            }
+            levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
@@ -1552,17 +1472,7 @@ public class LayoutTrackEditors {
         if (newName == null) newName = "";
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockBD(null);
-                    editLevelXingBlock2NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockBD(null);
-            }
+            levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
