@@ -34,10 +34,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.SpeedStepMode;
+
+import jmri.*;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
@@ -1174,7 +1172,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     // update the state of this panel if any of the properties change
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("SpeedSetting")) {
+        if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             internalAdjust = true;
             float speed = ((Float) e.getNewValue()).floatValue();
             // multiply by MAX_SPEED, and round to find the new
@@ -1195,10 +1193,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 }
             }
             internalAdjust = false;
-        } else if (e.getPropertyName().equals("SpeedSteps")) {
+        } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedStepsMode(steps);
-        } else if (e.getPropertyName().equals("IsForward")) {
+        } else if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
             boolean Forward = ((Boolean) e.getNewValue()).booleanValue();
             setIsForward(Forward);
         } else if (e.getPropertyName().equals(switchSliderFunction)) {
