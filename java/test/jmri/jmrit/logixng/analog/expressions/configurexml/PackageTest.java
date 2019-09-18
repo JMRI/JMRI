@@ -1,12 +1,11 @@
 package jmri.jmrit.logixng.analog.expressions.configurexml;
 
-import jmri.jmrit.logixng.digital.expressions.configurexml.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    DigitalExpressionsTest.class,
+    AnalogExpressionsTest.class,
 })
 
 /**
