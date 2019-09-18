@@ -18,7 +18,7 @@ import org.junit.Test;
 public class DigitalActionsXmlTest {
 
     @Test
-    public void testDigitalActions() throws JmriConfigureXmlException {
+    public void testLoad() throws JmriConfigureXmlException {
         AbstractNamedBeanManagerConfigXML b;
         
         b = new ActionLightXml();
