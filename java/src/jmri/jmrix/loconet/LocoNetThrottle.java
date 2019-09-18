@@ -888,7 +888,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             log.debug("Initially starting refresh timer for slot {} address {}", slot.getSlot(), slot.locoAddr());
         }
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); // NOI18N
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); // NOI18N
         }
         record(speed);
     }
@@ -912,7 +912,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             sendExpSpeedAndDirection();
         }
         if (old != this.isForward) {
-            notifyPropertyChangeListener("IsForward", old, this.isForward); // NOI18N
+            notifyPropertyChangeListener(ISFORWARD, old, this.isForward); // NOI18N
         }
     }
 
@@ -1052,7 +1052,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (this.speedSetting != floatSpeed(slot.speed())) {
             Float newSpeed = Float.valueOf(floatSpeed(slot.speed()));
             log.debug("notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed); // NOI18N
-            notifyPropertyChangeListener("SpeedSetting", Float.valueOf(this.speedSetting), newSpeed); // NOI18N
+            notifyPropertyChangeListener(SPEEDSETTING, Float.valueOf(this.speedSetting), newSpeed); // NOI18N
             this.speedSetting = newSpeed.floatValue();
         }
 
@@ -1060,7 +1060,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (this.isForward != slot.isForward()) {
             temp = this.isForward;
             this.isForward = slot.isForward();
-            notifyPropertyChangeListener("IsForward", Boolean.valueOf(temp), Boolean.valueOf(slot.isForward())); // NOI18N
+            notifyPropertyChangeListener(ISFORWARD, Boolean.valueOf(temp), Boolean.valueOf(slot.isForward())); // NOI18N
         }
 
         // Slot status
@@ -1271,7 +1271,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             log.debug("Current Slot Mode: " + LnConstants.DEC_MODE(status)); // NOI18N
         }
         if (speedStepMode != Mode) {
-            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode, // NOI18N
+            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode, // NOI18N
                     this.speedStepMode = Mode);
         }
         if (Mode == SpeedStepMode.NMRA_DCC_14) {
