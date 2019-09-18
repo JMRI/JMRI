@@ -435,30 +435,16 @@ public final class LogixNGEditor {
         if (checkEditConditionalNG()) {
             return;
         }
-        // make system name for new conditional
-        int num = _curLogixNG.getNumConditionalNGs() + 1;
-        _curConditionalNG = null;
-        String cName = null;
-        while (_curConditionalNG == null) {
-            cName = _curLogixNG.getSystemName() + ":" + Integer.toString(num);
-            if (_curLogixNG.getConditionalNG(cName) == null) {
-                _curConditionalNG =
-                        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                                .createConditionalNG(cName, null);
+        
+        _curConditionalNG =
                 InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        .setupInitialConditionalNGTree(_curConditionalNG);
-//                _curConditionalNG = new DefaultConditionalNG(cName, null);
-//                InstanceManager.getDefault(LogixNG_Manager.class).setupInitialConditionalNGTree(_curConditionalNG);
-            }
-            num++;
-            if (num == 1000) {
-                break;
-            }
-        }
+                        .createConditionalNG(null);
+        InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .setupInitialConditionalNGTree(_curConditionalNG);
+        
         if (_curConditionalNG == null) {
             // should never get here unless there is an assignment conflict
-            log.error("Failure to create ConditionalNG with System Name: " // NOI18N
-                    + cName);
+            log.error("Failure to create ConditionalNG"); // NOI18N
             return;
         }
         // add to LogixNG at the end of the calculate order

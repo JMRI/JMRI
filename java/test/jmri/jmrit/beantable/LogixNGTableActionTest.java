@@ -146,7 +146,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase {
         jmri.util.swing.JemmyUtil.pressButton(jf,"New ConditionalNG");
         
         // Close window
-        JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit LogixNG IQ101:1");
+        JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit LogixNG " + logixNG.getConditionalNG(0));
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
         
         Assert.assertNotNull(frame);
