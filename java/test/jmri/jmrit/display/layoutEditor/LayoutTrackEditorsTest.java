@@ -233,6 +233,20 @@ public class LayoutTrackEditorsTest {
         Assert.assertNotNull(blkFOd);
         new JButtonOperator(blkFOd, "OK").doClick();
 
+        /* The previous block editor sections create new layout blocks so
+           the following force tests of the normal create process handled by done. */
+        jblktxt = new JTextFieldOperator(jfo, 1);
+        jblktxt.clickMouse();
+        jblktxt.setText("DX New B");
+
+        jblktxt = new JTextFieldOperator(jfo, 2);
+        jblktxt.clickMouse();
+        jblktxt.setText("DX New C");
+
+        jblktxt = new JTextFieldOperator(jfo, 3);
+        jblktxt.clickMouse();
+        jblktxt.setText("DX New D");
+
         new JButtonOperator(jfo, "Done").doClick();
     }
 
@@ -273,7 +287,6 @@ public class LayoutTrackEditorsTest {
         jblktxt.clickMouse();
         jblktxt.setText("QRS Block");
 
-// new EventTool().waitNoEvent(10000);
         new JButtonOperator(jfo, "Done").doClick();
     }
 
@@ -343,10 +356,10 @@ public class LayoutTrackEditorsTest {
         Assert.assertNotNull(tcbB);
         tcbB.selectItem(2);
 
-        // Select a block
-        JComboBoxOperator blk_cbo_slip = new JComboBoxOperator(jfo, 10);
-        Assert.assertNotNull(blk_cbo_slip);
-        blk_cbo_slip.selectItem(1);
+        // Create a block
+        JTextFieldOperator jblktxt = new JTextFieldOperator(jfo, 0);
+        jblktxt.clickMouse();
+        jblktxt.setText("Slip Block");
 
         // Enable Hide
         new JCheckBoxOperator(jfo, 0).doClick();
@@ -363,7 +376,14 @@ public class LayoutTrackEditorsTest {
         Assert.assertNotNull(blkFO);
         new JButtonOperator(blkFO, "OK").doClick();
 
+        /* The previous block editor sections create new layout blocks so
+           the following force tests of the normal create process handled by done. */
+        jblktxt = new JTextFieldOperator(jfo, 0);
+        jblktxt.clickMouse();
+        jblktxt.setText("New Slip Block");
+
         new JButtonOperator(jfo, "Done").doClick();
+
     }
 
     @Test
@@ -454,14 +474,13 @@ public class LayoutTrackEditorsTest {
         Assert.assertNotNull(jfo);
 
         // Select AC block
-        JComboBoxOperator blk_cbo_AC = new JComboBoxOperator(jfo, 0);
-        Assert.assertNotNull(blk_cbo_AC);
-        blk_cbo_AC.selectItem(1);
+        JTextFieldOperator jblktxt = new JTextFieldOperator(jfo, 0);
+        jblktxt.clickMouse();
+        jblktxt.setText("Xing Blk AC");
 
-        // Select BD block
-        JComboBoxOperator blk_cbo_BD = new JComboBoxOperator(jfo, 1);
-        Assert.assertNotNull(blk_cbo_BD);
-        blk_cbo_BD.selectItem(2);
+        jblktxt = new JTextFieldOperator(jfo, 1);
+        jblktxt.clickMouse();
+        jblktxt.setText("Xing Blk BD");
 
         // Enable Hide
         new JCheckBoxOperator(jfo, 0).doClick();
@@ -477,6 +496,16 @@ public class LayoutTrackEditorsTest {
         JFrameOperator blkFObd = new JFrameOperator("Edit Block");
         Assert.assertNotNull(blkFObd);
         new JButtonOperator(blkFObd, "OK").doClick();
+
+        /* The previous block editor sections create new layout blocks so
+           the following force tests of the normal create process handled by done. */
+        jblktxt = new JTextFieldOperator(jfo, 0);
+        jblktxt.clickMouse();
+        jblktxt.setText("Xing New AC");
+
+        jblktxt = new JTextFieldOperator(jfo, 1);
+        jblktxt.clickMouse();
+        jblktxt.setText("Xing New BD");
 
         new JButtonOperator(jfo, "Done").doClick();
     }
@@ -521,13 +550,13 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         createTurnouts();
 
-        // Edit the level crossing
+        // Edit the turntable
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
         trackEditor.editLayoutTrack(turntable);
         JFrameOperator jfo = new JFrameOperator("Edit Turntable");
         Assert.assertNotNull(jfo);
 
-        // Set radius
+        // Set good radius
         JTextFieldOperator jtxt = new JTextFieldOperator(jfo, 0);
         jtxt.clickMouse();
         jtxt.setText("30");
@@ -582,6 +611,22 @@ public class LayoutTrackEditorsTest {
         turnout_cbo.selectItem(2);
         state_cbo.selectItem(1);
 
+        // Add a valid ray and then change the angle to an invalid value
+        jtxt = new JTextFieldOperator(jfo, 2);
+        jtxt.clickMouse();
+        jtxt.setText("qqq");
+
+        // Move focus
+        Thread badRayAngle = createModalDialogOperatorThread("Error", "OK", "badRayAngle");  // NOI18N
+        jtxt = new JTextFieldOperator(jfo, 3);
+        jtxt.clickMouse();
+        JUnitUtil.waitFor(()->{return !(badRayAngle.isAlive());}, "badRayAngle finished");
+
+        // Put a good value back in
+        jtxt = new JTextFieldOperator(jfo, 2);
+        jtxt.clickMouse();
+        jtxt.setText("30");
+
         new JButtonOperator(jfo, "Done").doClick();
     }
 
@@ -597,6 +642,49 @@ public class LayoutTrackEditorsTest {
 
         new JButtonOperator(jfo, "Cancel").doClick();
     }
+
+    @Test
+    public void testEditTurntableClose() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // Edit the Turntable
+        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
+        trackEditor.editLayoutTrack(turntable);
+        JFrameOperator jfo = new JFrameOperator("Edit Turntable");
+        Assert.assertNotNull(jfo);
+
+        jfo.close();
+    }
+
+    @Test
+    public void testEditTurntableErrors() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // Edit the turntable
+        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
+        trackEditor.editLayoutTrack(turntable);
+        JFrameOperator jfo = new JFrameOperator("Edit Turntable");
+        Assert.assertNotNull(jfo);
+
+        // Ray angle
+        JTextFieldOperator jtxt = new JTextFieldOperator(jfo, 1);
+        jtxt.clickMouse();
+        jtxt.setText("xyz");
+        Thread badAngle = createModalDialogOperatorThread("Error", "OK", "badAngle");  // NOI18N
+        new JButtonOperator(jfo, "New Ray Track").doClick();
+        JUnitUtil.waitFor(()->{return !(badAngle.isAlive());}, "badAngle finished");
+
+        // Set radius
+        jtxt = new JTextFieldOperator(jfo, 0);
+        jtxt.clickMouse();
+        jtxt.setText("abc");
+
+        Thread badRadius = createModalDialogOperatorThread("Error", "OK", "badRadius");  // NOI18N
+        new JButtonOperator(jfo, "Done").doClick();
+        JUnitUtil.waitFor(()->{return !(badRadius.isAlive());}, "badRadius finished");
+    }
+
+// new EventTool().waitNoEvent(10000);
 
     // from here down is testing infrastructure
     public void createTurnouts() {

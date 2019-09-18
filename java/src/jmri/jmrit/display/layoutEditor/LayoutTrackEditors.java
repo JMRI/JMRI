@@ -1707,7 +1707,7 @@ public class LayoutTrackEditors {
     //    layoutTurntable.deleteRay(closest);
     //}
 
-  private void editLayoutTurntableDonePressed(ActionEvent a) {
+    private void editLayoutTurntableDonePressed(ActionEvent a) {
         // check if new radius was entered
         String str = editLayoutTurntableRadiusTextField.getText();
         if (!str.equals(editLayoutTurntableOldRadius)) {
