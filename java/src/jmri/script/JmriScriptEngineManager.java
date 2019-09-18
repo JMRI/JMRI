@@ -279,7 +279,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param engine The script engine.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
+     * @deprecated since 4.17.5 without direct replacement
      */
+    @Deprecated
     public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
         return engine.eval(reader);
     }
@@ -292,7 +294,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param bindings Bindings passed to the script.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
+     * @deprecated since 4.17.5 without direct replacement
      */
+    @Deprecated
     public Object eval(Reader reader, ScriptEngine engine, Bindings bindings) throws ScriptException {
         return engine.eval(reader, bindings);
     }
@@ -305,7 +309,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param context Context for the script.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
+     * @deprecated since 4.17.5 without direct replacement
      */
+    @Deprecated
     public Object eval(Reader reader, ScriptEngine engine, ScriptContext context) throws ScriptException {
         return engine.eval(reader, context);
     }
@@ -373,24 +379,19 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @throws java.io.FileNotFoundException if the script file cannot be found.
      * @throws java.io.IOException           if the script file cannot be read.
      */
-
     @CheckForNull
     private Object eval(File file, @CheckForNull ScriptContext context, @CheckForNull Bindings bindings)
             throws ScriptException, IOException {
-        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
+        ScriptEngine engine;
         Object result = null;
-        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            try (FileInputStream fi = new FileInputStream(file)) {
-                this.jython.execfile(fi);
-            }
-        } else {
+        if ((engine = getEngineOrEval(file)) != null) {
             try (FileReader fr = new FileReader(file)) {
                 if (context != null) {
-                    result = eval(fr, engine, context);
+                    result = engine.eval(fr, context);
                 } else if (bindings != null) {
-                    result = eval(fr, engine, bindings);
+                    result = engine.eval(fr, bindings);
                 } else {
-                    result = eval(fr, engine);
+                    result = engine.eval(fr);
                 }
             }
         }
@@ -398,8 +399,36 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
 
     /**
+     * Get the ScriptEngine to evaluate the file with; if not using a
+     * ScriptEngine to evaluate Python files, evaluate the file with a
+     * {@link org.python.util.PythonInterpreter} and do not return a
+     * ScriptEngine.
+     *
+     * @param file the script file to evaluate.
+     * @return the ScriptEngine or null if evaluated with a PythonInterpreter.
+     * @throws javax.script.ScriptException  if there is an error evaluating the
+     *                                       script.
+     * @throws java.io.FileNotFoundException if the script file cannot be found.
+     * @throws java.io.IOException           if the script file cannot be read.
+     */
+    @CheckForNull
+    private ScriptEngine getEngineOrEval(File file) throws ScriptException, IOException {
+        ScriptEngine engine = this.getEngine(FilenameUtils.getExtension(file.getName()), EXTENSION);
+        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
+            return null;
+        }
+        return engine;
+    }
+
+    /**
      * Run a script, suppressing common errors. Note that the file needs to have
      * a registered extension, or a NullPointerException will be thrown.
+     * <p>
+     * <strong>Note:</strong> this will eventually be deprecated in favor of using
+     * {@link #eval(File)} and having callers handle exceptions.
      *
      * @param file the script to run.
      */
