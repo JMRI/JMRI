@@ -45,8 +45,6 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
             SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal);
             if (signalMast != null) {
                 _mNamedBeanHandleSignalMast = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalMast);
-//  Do this to get around a "bug" in the compiler.  When I used "_mDangerAppearance" instead of "temp",
-//  it "wrongly" complained: "variable _mDangerAppearance might already have been assigned".
                 String temp = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
                 if (temp == null) temp = "Stop"; // Safety
                 _mDangerAppearance = temp;
@@ -82,9 +80,22 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     @Override
     public void setAppearance(int newAppearance) {}
 
-//  "getAspect()" can return "null" if (for instance) the signal has no rules (i.e. no "Discover" done yet,
-//  or the signal is shown on the screen as a big red "X".
-//  In that case, we default to "_mDangerAppearance".
+/**
+ *
+ * Function to insure that a non null aspect value is always returned to the caller.
+ *
+ * Background (regarding the value contained in "_mDangerAppearance"):
+ * In this objects constructor, "_mDangerAppearance" is set to getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER).
+ * If "...getSpecificAppearance..." returns "null" (undocumented in JMRI documents as of 9/18/2019),
+ * "_mDangerAppearance" is set to "Stop" for safety.
+ * So "_mDangerAppearance" will NEVER be null for use as follows:
+ *
+ * SignalMast.getAspect() can return "null" (undocumented in JMRI documents as of 9/18/2019) if (for instance) the signal has no
+ * rules (i.e. no "Discover" done yet, or the signal is shown on the screen as a big red "X").
+ * In this case, we return "_mDangerAppearance".
+ *
+ * @return  Return a guaranteed non null aspect name.
+ */
     public String getAspect() {
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
         String returnAspect = _mNamedBeanHandleSignalMast.getBean().getAspect();
