@@ -426,10 +426,13 @@ public class LinkedWarrantTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-        _OBlockMgr = null;
-        _sensorMgr = null;
+        _warrantMgr.dispose();
         _warrantMgr = null;
+        _OBlockMgr.dispose();
+        _OBlockMgr = null;
+        _sensorMgr.dispose();
+        _sensorMgr = null;
+        JUnitUtil.tearDown();
     }
 
 }
