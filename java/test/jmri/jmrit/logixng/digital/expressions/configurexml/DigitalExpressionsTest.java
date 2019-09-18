@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.expressions.configurexml;
 
-import jmri.jmrit.logixng.digital.actions.configurexml.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;

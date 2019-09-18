@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-//    jmri.jmrit.logixng.actions.configurexml.PackageTest.class,
+    jmri.jmrit.logixng.analog.expressions.configurexml.PackageTest.class,
     AnalogExpressionConstantTest.class,
     AnalogExpressionMemoryTest.class,
 })
