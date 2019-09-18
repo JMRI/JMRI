@@ -82,10 +82,7 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         
-        String antecedent = "";
-        if (shared.getChild("antecedent") != null) {
-            antecedent = shared.getChild("antecedent").getText();
-        }
+        String antecedent = shared.getChild("antecedent").getText();
         
         DigitalExpressionBean h;
         if (uname == null) {

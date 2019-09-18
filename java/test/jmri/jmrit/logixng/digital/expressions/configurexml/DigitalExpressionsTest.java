@@ -19,7 +19,7 @@ import org.junit.Test;
 public class DigitalExpressionsTest {
 
     @Test
-    public void testDigitalActions() throws JmriConfigureXmlException {
+    public void testLoad() throws JmriConfigureXmlException {
         AbstractNamedBeanManagerConfigXML b;
         
         b = new AndXml();
