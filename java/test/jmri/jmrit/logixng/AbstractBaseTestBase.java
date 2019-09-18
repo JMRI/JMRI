@@ -92,6 +92,69 @@ public abstract class AbstractBaseTestBase {
     }
     
     /**
+     * Set parent to null for all children to item, and their children.
+     */
+    private void clearParent(Base item) {
+        for (int i=0; i < item.getChildCount(); i++) {
+            FemaleSocket femaleSocket = item.getChild(i);
+            femaleSocket.setParent(null);
+            
+            if (femaleSocket.isConnected()) {
+                clearParent(femaleSocket.getConnectedSocket());
+            }
+        }
+    }
+    
+    /**
+     * Check that parent is correct for all children to item, and their children.
+     */
+    private void checkParent(Base item) {
+        for (int i=0; i < item.getChildCount(); i++) {
+            FemaleSocket femaleSocket = item.getChild(i);
+            if (item != femaleSocket.getParent()) {
+                log.error("item: {}, {} - parent: {}, {}", item, item.getClass().getName(), femaleSocket.getParent(), femaleSocket.getParent().getClass().getName());
+            }
+            Assert.assertTrue("parent is correct", item == femaleSocket.getParent());
+            
+            if (femaleSocket.isConnected()) {
+                MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
+                
+                if (femaleSocket != connectedSocket.getParent()) {
+                    log.error("femaleSocket: {}, {} - parent: {}, {} - child: {}, {}", femaleSocket, femaleSocket.getClass().getName(), connectedSocket.getParent(), connectedSocket.getParent().getClass().getName(), connectedSocket, connectedSocket.getClass().getName());
+                }
+                Assert.assertTrue("parent is correct", femaleSocket == connectedSocket.getParent());
+                checkParent(connectedSocket);
+            }
+        }
+    }
+    
+    /**
+     * Test that the method setParentForAllChildren() works when there are
+     * connected children.
+     */
+    @Test
+    public void testSetParentForAllChildren_WithConnectedChildren() {
+        clearParent(_base);
+        _base.setParentForAllChildren();
+        checkParent(_base);
+    }
+    
+    /**
+     * Test that the method setParentForAllChildren() works when there are
+     * no connected children.
+     */
+    @Test
+    public void testSetParentForAllChildren_WithoutConnectedChildren() {
+        clearParent(_base);
+        for (int i=0; i < _base.getChildCount(); i++) {
+            FemaleSocket femaleSocket = _base.getChild(i);
+            femaleSocket.disconnect();
+        }
+        _base.setParentForAllChildren();
+        checkParent(_base);
+    }
+    
+    /**
      * Returns the expected result of _base.printTree(writer, TREE_INDENT)
      * @return the expected printed tree
      */
