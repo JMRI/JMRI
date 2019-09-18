@@ -1,7 +1,10 @@
 package jmri.script;
 
 import jmri.InstanceManager;
+import jmri.TurnoutManager;
 import jmri.profile.NullProfile;
+import jmri.profile.ProfileManager;
+import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -16,10 +19,12 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
+import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,11 +33,55 @@ import org.python.util.PythonInterpreter;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright 2017
+ * @author Randall Wood Copyright 2019
  */
 public class JmriScriptEngineManagerTest {
 
     private JmriScriptEngineManager jsem;
+
+    @Test
+    public void testEval_String_ScriptEngine() throws ScriptException {
+        Object result = null;
+        TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
+        assertNull(result);
+        assertNull(manager.getBySystemName("IT1"));
+        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.PYTHON);
+        result = jsem.eval("turnouts.provideTurnout(\"1\")", engine);
+        assertNotNull(result);
+        assertNotNull(manager.getBySystemName("IT1"));
+        assertEquals(manager.getBySystemName("IT1"), result);
+    }
+
+    @Test
+    public void testEval_File() throws IOException, ScriptException {
+        Object result = null;
+        TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
+        assertNull(result);
+        assertNull(manager.getBySystemName("IT1"));
+        JUnitUtil.resetProfileManager(new NullProfile(new File("java/test/jmri/script/exec-file-profile")));
+        result = jsem.eval(FileUtil.getFile("profile:turnout.py"));
+        assertNotNull(result);
+        assertNotNull(manager.getBySystemName("IT1"));
+        assertEquals(InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT1"), result);
+    }
+
+    @Test
+    public void testEval_File_Bindings() throws IOException, ScriptException {
+        // first test that test binding is not in default bindings
+        // to ensure later part of tests are not obscured by existing binding
+        jsem.getDefaultContext().getBindings(ScriptContext.GLOBAL_SCOPE).forEach((name, value) -> assertNotEquals("profiles", name));
+        // and now test
+        JUnitUtil.resetProfileManager(new NullProfile(new File("java/test/jmri/script/exec-file-profile")));
+        Bindings bindings = new SimpleBindings();
+        bindings.put("profiles", ProfileManager.getDefault());
+        Object result = null;
+        ProfileManager manager = ProfileManager.getDefault();
+        assertNull(result);
+        result = jsem.eval(FileUtil.getFile("profile:profile.py"), bindings);
+        assertNotNull(result);
+        assertEquals(Integer.valueOf(manager.getAutoStartActiveProfileTimeout()), result);
+    }
 
     @Test
     public void testGetDefault() {
@@ -227,6 +276,9 @@ public class JmriScriptEngineManagerTest {
         // ensure no bindings are null in tests
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugCommandStation();
+        // create an object for test scripts
+        JUnitUtil.initInternalTurnoutManager();
+        // create the tested object
         jsem = new JmriScriptEngineManager();
     }
 
