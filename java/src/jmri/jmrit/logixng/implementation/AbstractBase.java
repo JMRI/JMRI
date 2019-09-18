@@ -105,7 +105,12 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
-        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
+        if (isEnabled()) {
+            if (getParent() == null) return true;
+            return getParent().isEnabled();
+        }
+        return false;
+//        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
     }
     
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
