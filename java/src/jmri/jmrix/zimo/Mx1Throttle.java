@@ -194,7 +194,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         this.speedSetting = speed;
         sendSpeedCmd();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); //IN18N
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); //IN18N
         }
         record(speed);
     }
@@ -272,7 +272,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward); //IN18N
+            notifyPropertyChangeListener(ISFORWARD, old, isForward); //IN18N
         }
     }
 

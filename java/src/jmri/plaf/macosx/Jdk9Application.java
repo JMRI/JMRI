@@ -38,17 +38,17 @@ import org.slf4j.LoggerFactory;
  */
 class Jdk9Application extends Application {
 
-    private final static Logger log = LoggerFactory.getLogger(Jdk9Application.class);
+    private static final Logger log = LoggerFactory.getLogger(Jdk9Application.class);
 
     Jdk9Application() {
     }
 
     private void setHandler(String methodName, String handlerType, Object handler) {
         try {
-            Class parameterType = Class.forName(handlerType);
-            Class parameterTypes[] = {parameterType};
+            Class<?> parameterType = Class.forName(handlerType);
+            Class<?>[] parameterTypes = {parameterType};
             Method method = java.awt.Desktop.class.getDeclaredMethod(methodName, parameterTypes);
-            Object parameters[] = {handler};
+            Object[] parameters = {handler};
             method.invoke(Desktop.getDesktop(), parameters);
         } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.debug("Exception calling {} with {}", methodName, handlerType, ex);
@@ -61,7 +61,7 @@ class Jdk9Application extends Application {
             try {
                 InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream("AboutHandler.js")); // NOI18N
                 ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
-                JmriScriptEngineManager.getDefault().eval(reader, engine, this.getContext(handler));
+                engine.eval(reader, this.getContext(handler));
             } catch (ScriptException ex) {
                 log.error("Unable to execute script AboutHandler.js", ex);
             }
@@ -76,7 +76,7 @@ class Jdk9Application extends Application {
             try {
                 InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream("PreferencesHandler.js")); // NOI18N
                 ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
-                JmriScriptEngineManager.getDefault().eval(reader, engine, this.getContext(handler));
+                engine.eval(reader, this.getContext(handler));
             } catch (ScriptException ex) {
                 log.error("Unable to execute script PreferencesHandler.js", ex);
             }
@@ -91,7 +91,7 @@ class Jdk9Application extends Application {
             try {
                 InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream("QuitHandler.js")); // NOI18N
                 ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
-                JmriScriptEngineManager.getDefault().eval(reader, engine, this.getContext(handler));
+                engine.eval(reader, this.getContext(handler));
             } catch (ScriptException ex) {
                 log.error("Unable to execute script QuitHandler.js", ex);
             }

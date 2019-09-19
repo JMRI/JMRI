@@ -934,7 +934,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (tm != null) {
                 tm.releaseThrottle(throttle, this);
             } else {
-                log.error(Bundle.getMessage("noThrottle", throttle.getLocoAddress()));
+                log.error("{} on thread {}",Bundle.getMessage("noThrottle", throttle.getLocoAddress()),
+                        Thread.currentThread().getName());
             }
         }
     }
@@ -2748,7 +2749,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         if (log.isDebugEnabled()) {
             log.debug(" waitTime= {}, availDist= {} waitSpeed= {}, rampLen= {}, ramp start speed= {}",
-                    waitTime, availDist, waitSpeed, rampLen);
+                    waitTime, availDist, waitSpeed, rampLen,speedSetting);
         }
         rampSpeedDelay(waitTime, speedType, endBlockIdx);
         return true;

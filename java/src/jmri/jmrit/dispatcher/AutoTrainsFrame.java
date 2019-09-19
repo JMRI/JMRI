@@ -147,7 +147,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals("SpeedSetting") && !e.getPropertyName().equals("IsForward")) {
+        if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
             return; //ignore if not speed or direction
         }
         int index = _throttles.indexOf(e.getSource());
@@ -176,7 +176,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             return;
         }
         jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
-        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
     }
 
     private void updateStatusLabel(JLabel status, Object speed, Object forward) {
@@ -202,7 +202,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
             jmri.InstanceManager.throttleManagerInstance().attachListener(addy, _throttleListeners.get(index));
             JLabel status = _throttleStatus.get(index);
-            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
         }
     }
 

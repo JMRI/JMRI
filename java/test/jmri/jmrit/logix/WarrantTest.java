@@ -324,6 +324,7 @@ public class WarrantTest {
 
     @After
     public void tearDown() {
+        warrant.stopWarrant(true);
         _OBlockMgr = null;
         _portalMgr = null;
         _sensorMgr = null;
