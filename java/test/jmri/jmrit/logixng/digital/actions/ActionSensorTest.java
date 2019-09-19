@@ -33,6 +33,26 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     private Sensor sensor;
     
     
+    @Test
+    public void testSensorState() {
+        Assert.assertEquals("String matches", "Inactive", ActionSensor.SensorState.INACTIVE.toString());
+        Assert.assertEquals("String matches", "Active", ActionSensor.SensorState.ACTIVE.toString());
+        Assert.assertEquals("String matches", "Toggle", ActionSensor.SensorState.TOGGLE.toString());
+        
+        Assert.assertTrue("objects are equal", ActionSensor.SensorState.INACTIVE == ActionSensor.SensorState.get(Sensor.INACTIVE));
+        Assert.assertTrue("objects are equal", ActionSensor.SensorState.ACTIVE == ActionSensor.SensorState.get(Sensor.ACTIVE));
+        Assert.assertTrue("objects are equal", ActionSensor.SensorState.TOGGLE == ActionSensor.SensorState.get(-1));
+        
+        boolean hasThrown = false;
+        try {
+            ActionSensor.SensorState.get(Sensor.UNKNOWN);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "invalid sensor state".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;

@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,6 +33,26 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     private ActionLight actionLight;
     private Light light;
     
+    
+    @Test
+    public void testLightState() {
+        Assert.assertEquals("String matches", "Off", ActionLight.LightState.OFF.toString());
+        Assert.assertEquals("String matches", "On", ActionLight.LightState.ON.toString());
+        Assert.assertEquals("String matches", "Toggle", ActionLight.LightState.TOGGLE.toString());
+        
+        Assert.assertTrue("objects are equal", ActionLight.LightState.OFF == ActionLight.LightState.get(Light.OFF));
+        Assert.assertTrue("objects are equal", ActionLight.LightState.ON == ActionLight.LightState.get(Light.ON));
+        Assert.assertTrue("objects are equal", ActionLight.LightState.TOGGLE == ActionLight.LightState.get(-1));
+        
+        boolean hasThrown = false;
+        try {
+            ActionLight.LightState.get(Light.UNKNOWN);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "invalid light state".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
     
     @Override
     public ConditionalNG getConditionalNG() {

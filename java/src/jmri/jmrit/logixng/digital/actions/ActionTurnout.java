@@ -22,7 +22,7 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private ActionTurnout _template;
+//    private ActionTurnout _template;
     private NamedBeanHandle<Turnout> _turnoutHandle;
     private TurnoutState _turnoutState = TurnoutState.THROWN;
     
@@ -33,8 +33,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     
     private ActionTurnout(ActionTurnout template) {
         super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
+//        _template = template;
     }
     
     /** {@inheritDoc} */
@@ -182,11 +181,15 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
 
     
+    // This constant is only used internally in TurnoutState but must be outside
+    // the enum.
+    private static final int TOGGLE_ID = -1;
+    
     
     public enum TurnoutState {
         CLOSED(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
         THROWN(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
-        TOGGLE(-1, Bundle.getMessage("TurnoutToggleStatus"));
+        TOGGLE(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus"));
         
         private final int _id;
         private final String _text;
@@ -203,6 +206,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                     
                 case Turnout.THROWN:
                     return THROWN;
+                    
+                case TOGGLE_ID:
+                    return TOGGLE;
                     
                 default:
                     throw new IllegalArgumentException("invalid turnout state");

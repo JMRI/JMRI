@@ -22,7 +22,7 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionLight extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private ActionLight _template;
+//    private ActionLight _template;
     private NamedBeanHandle<Light> _lightHandle;
     private LightState _lightState = LightState.ON;
     
@@ -33,8 +33,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     
     private ActionLight(ActionLight template) {
         super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
+//        _template = template;
     }
     
     /** {@inheritDoc} */
@@ -180,11 +179,15 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     }
 
     
+    // This constant is only used internally in LightState but must be outside
+    // the enum.
+    private static final int TOGGLE_ID = -1;
+    
     
     public enum LightState {
         OFF(Light.OFF, Bundle.getMessage("StateOff")),
         ON(Light.ON, Bundle.getMessage("StateOn")),
-        TOGGLE(-1, Bundle.getMessage("LightToggleStatus"));
+        TOGGLE(TOGGLE_ID, Bundle.getMessage("LightToggleStatus"));
         
         private final int _id;
         private final String _text;
@@ -201,6 +204,9 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
                     
                 case Light.ON:
                     return ON;
+                    
+                case TOGGLE_ID:
+                    return TOGGLE;
                     
                 default:
                     throw new IllegalArgumentException("invalid light state");

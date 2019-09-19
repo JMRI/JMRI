@@ -22,7 +22,7 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionSensor extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private ActionSensor _template;
+//    private ActionSensor _template;
     private NamedBeanHandle<Sensor> _sensorHandle;
     private SensorState _sensorState = SensorState.ACTIVE;
     
@@ -33,8 +33,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     
     private ActionSensor(ActionSensor template) {
         super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
+//        _template = template;
     }
     
     /** {@inheritDoc} */
@@ -182,11 +181,15 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     }
     
     
+    // This constant is only used internally in SensorState but must be outside
+    // the enum.
+    private static final int TOGGLE_ID = -1;
+    
     
     public enum SensorState {
         INACTIVE(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
         ACTIVE(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
-        TOGGLE(-1, Bundle.getMessage("SensorToggleStatus"));
+        TOGGLE(TOGGLE_ID, Bundle.getMessage("SensorToggleStatus"));
         
         private final int _id;
         private final String _text;
@@ -203,6 +206,9 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
                     
                 case Sensor.ACTIVE:
                     return ACTIVE;
+                    
+                case TOGGLE_ID:
+                    return TOGGLE;
                     
                 default:
                     throw new IllegalArgumentException("invalid sensor state");
