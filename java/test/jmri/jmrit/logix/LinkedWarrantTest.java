@@ -41,9 +41,6 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
@@ -121,9 +118,6 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
@@ -207,9 +201,6 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
@@ -303,9 +294,6 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
         
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
@@ -422,14 +410,20 @@ public class LinkedWarrantTest {
         JUnitUtil.initLogixManager();
         JUnitUtil.initWarrantManager();
         JUnitUtil.initShutDownManager();
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
     }
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-        _OBlockMgr = null;
-        _sensorMgr = null;
+        _warrantMgr.dispose();
         _warrantMgr = null;
+        _OBlockMgr.dispose();
+        _OBlockMgr = null;
+        _sensorMgr.dispose();
+        _sensorMgr = null;
+        JUnitUtil.tearDown();
     }
 
 }

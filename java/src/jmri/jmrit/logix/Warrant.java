@@ -2749,7 +2749,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         if (log.isDebugEnabled()) {
             log.debug(" waitTime= {}, availDist= {} waitSpeed= {}, rampLen= {}, ramp start speed= {}",
-                    waitTime, availDist, waitSpeed, rampLen);
+                    waitTime, availDist, waitSpeed, rampLen,speedSetting);
         }
         rampSpeedDelay(waitTime, speedType, endBlockIdx);
         return true;
