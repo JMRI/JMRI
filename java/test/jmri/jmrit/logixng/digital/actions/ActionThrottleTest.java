@@ -7,6 +7,7 @@ import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
@@ -28,6 +29,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
+    ActionThrottle actionThrottle;    
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -137,15 +139,15 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         
         Assert.assertEquals("Num children is correct", 3, _base.getChildCount());
         
-        // Socket 0 is loco address
-        Assert.assertTrue("Child 0 supports analog male socket",
-                _base.getChild(0).isCompatible(analogExpressionMaleSocket));
-        // Socket 1 is loco speed
-        Assert.assertTrue("Child 1 supports analog male socket",
-                _base.getChild(1).isCompatible(analogExpressionMaleSocket));
-        // Socket 2 is loco direction
-        Assert.assertTrue("Child 2 supports analog male socket",
-                _base.getChild(2).isCompatible(digitalExpressionMaleSocket));
+        // Socket LOCO_ADDRESS_SOCKET is loco address
+        Assert.assertTrue("Child LOCO_ADDRESS_SOCKET supports analog male socket",
+                _base.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).isCompatible(analogExpressionMaleSocket));
+        // Socket LOCO_SPEED_SOCKET is loco speed
+        Assert.assertTrue("Child LOCO_SPEED_SOCKET supports analog male socket",
+                _base.getChild(ActionThrottle.LOCO_SPEED_SOCKET).isCompatible(analogExpressionMaleSocket));
+        // Socket LOCO_DIRECTION_SOCKET is loco direction
+        Assert.assertTrue("Child LOCO_DIRECTION_SOCKET supports analog male socket",
+                _base.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).isCompatible(digitalExpressionMaleSocket));
         
         boolean hasThrown = false;
         try {
@@ -153,6 +155,60 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertTrue("Error message is correct", "index has invalid value: 3".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
+    public void testConnectedDisconnected() throws SocketAlreadyConnectedException {
+        Assert.assertEquals("Num children is correct", 3, _base.getChildCount());
+        
+        MaleSocket analogExpressionMaleSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class)
+                        .registerExpression(new AnalogExpressionConstant("IQAE1", null));
+        MaleSocket digitalExpressionMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(new ExpressionSensor("IQDE1", null));
+        
+        actionThrottle.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).disconnect();
+        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        actionThrottle.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(analogExpressionMaleSocket);
+        Assert.assertEquals("socket name is correct", "IQAE1", actionThrottle.getLocoAddressSocketSystemName());
+        actionThrottle.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).disconnect();
+        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        
+        actionThrottle.getChild(ActionThrottle.LOCO_SPEED_SOCKET).disconnect();
+        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        actionThrottle.getChild(ActionThrottle.LOCO_SPEED_SOCKET).connect(analogExpressionMaleSocket);
+        Assert.assertEquals("socket name is correct", "IQAE1", actionThrottle.getLocoSpeedSocketSystemName());
+        actionThrottle.getChild(ActionThrottle.LOCO_SPEED_SOCKET).disconnect();
+        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        
+        actionThrottle.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).disconnect();
+        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        actionThrottle.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).connect(digitalExpressionMaleSocket);
+        Assert.assertEquals("socket name is correct", "IQDE1", actionThrottle.getLocoDirectionSocketSystemName());
+        actionThrottle.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).disconnect();
+        Assert.assertNull("socket name is null", actionThrottle.getLocoAddressSocketSystemName());
+        
+        FemaleSocket badFemaleSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
+                .createFemaleSocket(actionThrottle, actionThrottle, "E1");
+        
+        boolean hasThrown = false;
+        try {
+            actionThrottle.connected(badFemaleSocket);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "unkown socket", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+        
+        hasThrown = false;
+        try {
+            actionThrottle.disconnected(badFemaleSocket);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "unkown socket", ex.getMessage());
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
@@ -179,11 +235,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        ActionThrottle action = new ActionThrottle("IQDA321", null);
+        actionThrottle = new ActionThrottle("IQDA321", null);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle);
         conditionalNG.getChild(0).connect(maleSocket);
-        _base = action;
+        _base = actionThrottle;
         _baseMaleSocket = maleSocket;
     }
 

@@ -33,6 +33,10 @@ import org.slf4j.LoggerFactory;
 public class ActionThrottle extends AbstractDigitalAction
         implements FemaleSocketListener {
 
+    public static final int LOCO_ADDRESS_SOCKET = 0;
+    public static final int LOCO_SPEED_SOCKET = 1;
+    public static final int LOCO_DIRECTION_SOCKET = 2;
+    
     private ActionThrottle _template;
     
     // The throttle if we have anyone or if a request is sent, null otherwise
@@ -204,13 +208,13 @@ public class ActionThrottle extends AbstractDigitalAction
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
-            case 0:
+            case LOCO_ADDRESS_SOCKET:
                 return _locoAddressSocket;
                 
-            case 1:
+            case LOCO_SPEED_SOCKET:
                 return _locoSpeedSocket;
                 
-            case 2:
+            case LOCO_DIRECTION_SOCKET:
                 return _locoDirectionSocket;
                 
             default:
