@@ -326,10 +326,10 @@ public class JUnitUtil {
                 
                 didSetUp = false;
                 didTearDown = true;
-                
+            
                 if (checkSequenceDumpsStack) lastTearDownStackTrace = Thread.currentThread().getStackTrace();
             }
-            
+        
             // To save time & space, only print end when doing full check
             if (printSetUpTearDownNames && checkSetUpTearDownSequence)  System.err.println("<<   Ending test in "+lastTearDownClassName);
 
@@ -1135,7 +1135,7 @@ public class JUnitUtil {
 
         return "<unknown class>";
     }
-    
+        
     /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using
