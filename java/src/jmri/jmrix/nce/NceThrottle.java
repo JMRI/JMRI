@@ -377,7 +377,7 @@ public class NceThrottle extends AbstractThrottle {
 
         }
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -391,7 +391,7 @@ public class NceThrottle extends AbstractThrottle {
             log.debug("setIsForward= " + forward);
         }
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 
