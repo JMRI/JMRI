@@ -30,6 +30,15 @@ import java.util.Vector;
 public interface Throttle {
 
     /**
+     * Properties strings sent to property change listeners
+     */
+    public static final String SPEEDSTEPS = "SpeedSteps"; // speed steps NOI18N
+    public static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
+    public static final String SPEEDSETTING = "SpeedSetting"; // speed setting NOI18N
+    public static final String ISFORWARD = "IsForward"; // direction setting NOI18N
+    public static final String SPEEDINCREMENT= "SpeedIncrement"; // direction setting NOI18N
+
+    /**
      * Constants to represent the functions F0 through F28.
      */
     public static final String F0 = "F0"; // NOI18N

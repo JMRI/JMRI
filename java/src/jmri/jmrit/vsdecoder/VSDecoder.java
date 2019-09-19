@@ -9,6 +9,7 @@ import java.util.Iterator;
 import jmri.Audio;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.Throttle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.Route;
@@ -299,21 +300,21 @@ public class VSDecoder implements PropertyChangeListener {
         log.debug("VSDecoderPane throttle property change: {}", eventName);
 
         if (eventName.equals("throttleAssigned")) {
-            Float s = (Float) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "SpeedSetting"); 
+            Float s = (Float) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), Throttle.SPEEDSETTING);
             if (s != null) {
                 ((EngineSound) this.getSound("ENGINE")).setFirstSpeed(true); // Auto-start needs this
                 // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
                 log.debug("Existing DCC Throttle found. Speed: {}", s);
-                this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
+                this.throttlePropertyChange(new PropertyChangeEvent(this, Throttle.SPEEDSETTING, null, s));
             }
 
             // Check for an existing throttle and get loco direction if it exists.
-            Boolean b = (Boolean) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "IsForward");
+            Boolean b = (Boolean) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), Throttle.ISFORWARD);
             if (b != null) {
                 dirfn = b ? 1 : -1;
                 log.debug("Existing DCC Throttle found. IsForward is {}", b);
                 log.debug("Initial dirfn: {} for {}", dirfn, config.getDccAddress());
-                this.throttlePropertyChange(new PropertyChangeEvent(this, "IsForward", null, b));
+                this.throttlePropertyChange(new PropertyChangeEvent(this, Throttle.ISFORWARD, null, b));
             } else {
                 log.warn("No existing DCC throttle found.");
             }
@@ -342,11 +343,11 @@ public class VSDecoder implements PropertyChangeListener {
             t.propertyChange(event);
         }
 
-        if (eventName.equals("SpeedSetting")) {
+        if (eventName.equals(Throttle.SPEEDSETTING)) {
             currentspeed = (float) this.getSound("ENGINE").speedCurve((float) event.getNewValue());
         }
 
-        if (eventName.equals("IsForward")) {
+        if (eventName.equals(Throttle.ISFORWARD)) {
             dirfn = (Boolean) event.getNewValue() ? 1 : -1;
         }
     }
