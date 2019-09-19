@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.Category;
@@ -137,6 +139,37 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
+    }
+    
+    @Test
+    public void testSetTurnout() {
+        Turnout turnout11 = InstanceManager.getDefault(TurnoutManager.class).provide("IL11");
+        Turnout turnout12 = InstanceManager.getDefault(TurnoutManager.class).provide("IL12");
+        NamedBeanHandle<Turnout> turnoutHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout12.getDisplayName(), turnout12);
+        Turnout turnout13 = InstanceManager.getDefault(TurnoutManager.class).provide("IL13");
+        Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IL14");
+        turnout14.setUserName("Some user name");
+        
+        actionTurnout.setTurnout((Turnout)null);
+        Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
+        
+        actionTurnout.setTurnout(turnout11);
+        Assert.assertTrue("turnout is correct", turnout11 == actionTurnout.getTurnout().getBean());
+        
+        actionTurnout.setTurnout((NamedBeanHandle<Turnout>)null);
+        Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
+        
+        actionTurnout.setTurnout(turnoutHandle12);
+        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == actionTurnout.getTurnout());
+        
+        actionTurnout.setTurnoutName("A non existent turnout");
+        Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
+        
+        actionTurnout.setTurnoutName(turnout13.getSystemName());
+        Assert.assertTrue("turnout is correct", turnout13 == actionTurnout.getTurnout().getBean());
+        
+        actionTurnout.setTurnoutName(turnout14.getUserName());
+        Assert.assertTrue("turnout is correct", turnout14 == actionTurnout.getTurnout().getBean());
     }
     
     @Test

@@ -6,6 +6,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -14,7 +16,6 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -138,6 +139,37 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
+    }
+    
+    @Test
+    public void testSetLight() {
+        Light light11 = InstanceManager.getDefault(LightManager.class).provide("IL11");
+        Light light12 = InstanceManager.getDefault(LightManager.class).provide("IL12");
+        NamedBeanHandle<Light> lightHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(light12.getDisplayName(), light12);
+        Light light13 = InstanceManager.getDefault(LightManager.class).provide("IL13");
+        Light light14 = InstanceManager.getDefault(LightManager.class).provide("IL14");
+        light14.setUserName("Some user name");
+        
+        actionLight.setLight((Light)null);
+        Assert.assertNull("light handle is null", actionLight.getLight());
+        
+        actionLight.setLight(light11);
+        Assert.assertTrue("light is correct", light11 == actionLight.getLight().getBean());
+        
+        actionLight.setLight((NamedBeanHandle<Light>)null);
+        Assert.assertNull("light handle is null", actionLight.getLight());
+        
+        actionLight.setLight(lightHandle12);
+        Assert.assertTrue("light handle is correct", lightHandle12 == actionLight.getLight());
+        
+        actionLight.setLightName("A non existent light");
+        Assert.assertNull("light handle is null", actionLight.getLight());
+        
+        actionLight.setLightName(light13.getSystemName());
+        Assert.assertTrue("light is correct", light13 == actionLight.getLight().getBean());
+        
+        actionLight.setLightName(light14.getUserName());
+        Assert.assertTrue("light is correct", light14 == actionLight.getLight().getBean());
     }
     
     @Test

@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.Category;
@@ -137,6 +139,37 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
+    }
+    
+    @Test
+    public void testSetSensor() {
+        Sensor sensor11 = InstanceManager.getDefault(SensorManager.class).provide("IL11");
+        Sensor sensor12 = InstanceManager.getDefault(SensorManager.class).provide("IL12");
+        NamedBeanHandle<Sensor> sensorHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor12.getDisplayName(), sensor12);
+        Sensor sensor13 = InstanceManager.getDefault(SensorManager.class).provide("IL13");
+        Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IL14");
+        sensor14.setUserName("Some user name");
+        
+        actionSensor.setSensor((Sensor)null);
+        Assert.assertNull("sensor handle is null", actionSensor.getSensor());
+        
+        actionSensor.setSensor(sensor11);
+        Assert.assertTrue("sensor is correct", sensor11 == actionSensor.getSensor().getBean());
+        
+        actionSensor.setSensor((NamedBeanHandle<Sensor>)null);
+        Assert.assertNull("sensor handle is null", actionSensor.getSensor());
+        
+        actionSensor.setSensor(sensorHandle12);
+        Assert.assertTrue("sensor handle is correct", sensorHandle12 == actionSensor.getSensor());
+        
+        actionSensor.setSensorName("A non existent sensor");
+        Assert.assertNull("sensor handle is null", actionSensor.getSensor());
+        
+        actionSensor.setSensorName(sensor13.getSystemName());
+        Assert.assertTrue("sensor is correct", sensor13 == actionSensor.getSensor().getBean());
+        
+        actionSensor.setSensorName(sensor14.getUserName());
+        Assert.assertTrue("sensor is correct", sensor14 == actionSensor.getSensor().getBean());
     }
     
     @Test
