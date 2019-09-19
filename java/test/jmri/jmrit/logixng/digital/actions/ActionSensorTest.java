@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -57,9 +58,65 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testCtor() {
-        ActionSensor t = new ActionSensor("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+    public void testCtor() throws JmriException {
+        Assert.assertTrue("object exists", _base != null);
+        
+        ActionSensor action2;
+        Assert.assertNotNull("sensor is not null", sensor);
+        sensor.setState(Sensor.ON);
+        
+        action2 = new ActionSensor("IQDA321", null);
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Set sensor '' to Active", action2.getLongDescription());
+        
+        action2 = new ActionSensor("IQDA321", "My sensor");
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My sensor", action2.getUserName());
+        Assert.assertEquals("String matches", "Set sensor '' to Active", action2.getLongDescription());
+        
+        action2 = new ActionSensor("IQDA321", null);
+        action2.setSensor(sensor);
+        Assert.assertTrue("atomic boolean is correct", sensor == action2.getSensor().getBean());
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Set sensor IS1 to Active", action2.getLongDescription());
+        
+        Sensor l = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        action2 = new ActionSensor("IQDA321", "My sensor");
+        action2.setSensor(l);
+        Assert.assertTrue("atomic boolean is correct", l == action2.getSensor().getBean());
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My sensor", action2.getUserName());
+        Assert.assertEquals("String matches", "Set sensor IS1 to Active", action2.getLongDescription());
+        
+        // Test template
+        action2 = (ActionSensor)_base.getNewObjectBasedOnTemplate();
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username is null", action2.getUserName());
+//        Assert.assertTrue("Username matches", "My sensor".equals(expression2.getUserName()));
+        Assert.assertEquals("String matches", "Set sensor '' to Active", action2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ActionSensor("IQA55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ActionSensor("IQA55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        // Test setup(). This method doesn't do anything, but execute it for coverage.
+        _base.setup();
     }
     
     @Test
@@ -134,6 +191,39 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Sensor matches", sensor, action.getSensor().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
         Assert.assertNull("Sensor is null", action.getSensor());
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
+    public void testShortDescription() {
+        Assert.assertEquals("String matches", "Set sensor", _base.getShortDescription());
+    }
+    
+    @Test
+    public void testLongDescription() {
+        Assert.assertEquals("String matches", "Set sensor IS1 to Active", _base.getLongDescription());
+    }
+    
+    @Test
+    public void testChild() {
+        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
+        boolean hasThrown = false;
+        try {
+            _base.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     // The minimal setup for log4J

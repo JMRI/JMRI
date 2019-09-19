@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -58,8 +59,64 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        ActionLight t = new ActionLight("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        Assert.assertTrue("object exists", _base != null);
+        
+        ActionLight action2;
+        Assert.assertNotNull("light is not null", light);
+        light.setState(Light.ON);
+        
+        action2 = new ActionLight("IQDA321", null);
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Set light '' to On", action2.getLongDescription());
+        
+        action2 = new ActionLight("IQDA321", "My light");
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My light", action2.getUserName());
+        Assert.assertEquals("String matches", "Set light '' to On", action2.getLongDescription());
+        
+        action2 = new ActionLight("IQDA321", null);
+        action2.setLight(light);
+        Assert.assertTrue("atomic boolean is correct", light == action2.getLight().getBean());
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());
+        
+        Light l = InstanceManager.getDefault(LightManager.class).provide("IL1");
+        action2 = new ActionLight("IQDA321", "My light");
+        action2.setLight(l);
+        Assert.assertTrue("atomic boolean is correct", l == action2.getLight().getBean());
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My light", action2.getUserName());
+        Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());
+        
+        // Test template
+        action2 = (ActionLight)_base.getNewObjectBasedOnTemplate();
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username is null", action2.getUserName());
+//        Assert.assertTrue("Username matches", "My light".equals(expression2.getUserName()));
+        Assert.assertEquals("String matches", "Set light '' to On", action2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ActionLight("IQA55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ActionLight("IQA55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        // Test setup(). This method doesn't do anything, but execute it for coverage.
+        _base.setup();
     }
     
     @Test
@@ -135,6 +192,39 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Light matches", light, actionLight.getLight().getBean());
         actionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
         Assert.assertNull("Light is null", actionLight.getLight());
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
+    public void testShortDescription() {
+        Assert.assertEquals("String matches", "Set light", _base.getShortDescription());
+    }
+    
+    @Test
+    public void testLongDescription() {
+        Assert.assertEquals("String matches", "Set light IL1 to On", _base.getLongDescription());
+    }
+    
+    @Test
+    public void testChild() {
+        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
+        boolean hasThrown = false;
+        try {
+            _base.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     // The minimal setup for log4J

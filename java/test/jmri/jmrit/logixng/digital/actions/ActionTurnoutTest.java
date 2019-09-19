@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -57,9 +58,65 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testCtor() {
-        ActionTurnout t = new ActionTurnout("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+    public void testCtor() throws JmriException {
+        Assert.assertTrue("object exists", _base != null);
+        
+        ActionTurnout action2;
+        Assert.assertNotNull("turnout is not null", turnout);
+        turnout.setState(Turnout.ON);
+        
+        action2 = new ActionTurnout("IQDA321", null);
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Set turnout '' to Thrown", action2.getLongDescription());
+        
+        action2 = new ActionTurnout("IQDA321", "My turnout");
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
+        Assert.assertEquals("String matches", "Set turnout '' to Thrown", action2.getLongDescription());
+        
+        action2 = new ActionTurnout("IQDA321", null);
+        action2.setTurnout(turnout);
+        Assert.assertTrue("atomic boolean is correct", turnout == action2.getTurnout().getBean());
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username matches", action2.getUserName());
+        Assert.assertEquals("String matches", "Set turnout IT1 to Thrown", action2.getLongDescription());
+        
+        Turnout l = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        action2 = new ActionTurnout("IQDA321", "My turnout");
+        action2.setTurnout(l);
+        Assert.assertTrue("atomic boolean is correct", l == action2.getTurnout().getBean());
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
+        Assert.assertEquals("String matches", "Set turnout IT1 to Thrown", action2.getLongDescription());
+        
+        // Test template
+        action2 = (ActionTurnout)_base.getNewObjectBasedOnTemplate();
+        Assert.assertNotNull("object exists", action2);
+        Assert.assertNull("Username is null", action2.getUserName());
+//        Assert.assertTrue("Username matches", "My turnout".equals(expression2.getUserName()));
+        Assert.assertEquals("String matches", "Set turnout '' to Thrown", action2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ActionTurnout("IQA55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ActionTurnout("IQA55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        // Test setup(). This method doesn't do anything, but execute it for coverage.
+        _base.setup();
     }
     
     @Test
@@ -134,6 +191,39 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
         Assert.assertNull("Turnout is null", action.getTurnout());
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
+    public void testShortDescription() {
+        Assert.assertEquals("String matches", "Set turnout", _base.getShortDescription());
+    }
+    
+    @Test
+    public void testLongDescription() {
+        Assert.assertEquals("String matches", "Set turnout IT1 to Thrown", _base.getLongDescription());
+    }
+    
+    @Test
+    public void testChild() {
+        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
+        boolean hasThrown = false;
+        try {
+            _base.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     // The minimal setup for log4J

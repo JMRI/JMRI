@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -14,7 +15,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.DigitalActionBean;
 
 /**
  * Test ActionTurnout
@@ -58,7 +58,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("object exists", _base != null);
         
         ActionAtomicBoolean action2;
-        Assert.assertNotNull("memory is not null", atomicBoolean);
+        Assert.assertNotNull("atomicBoolean is not null", atomicBoolean);
         atomicBoolean.set(true);
         
         action2 = new ActionAtomicBoolean("IQDA321", null);
@@ -66,28 +66,31 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
         
-        action2 = new ActionAtomicBoolean("IQDA321", "My memory");
+        action2 = new ActionAtomicBoolean("IQDA321", "My atomicBoolean");
         Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My memory", action2.getUserName());
+        Assert.assertEquals("Username matches", "My atomicBoolean", action2.getUserName());
         Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
         
         action2 = new ActionAtomicBoolean("IQDA321", null);
         action2.setAtomicBoolean(atomicBoolean);
+        Assert.assertTrue("atomic boolean is correct", atomicBoolean == action2.getAtomicBoolean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
         
-        action2 = new ActionAtomicBoolean("IQDA321", "My memory");
-        action2.setAtomicBoolean(atomicBoolean);
+        AtomicBoolean ab = new AtomicBoolean();
+        action2 = new ActionAtomicBoolean("IQDA321", "My atomicBoolean");
+        action2.setAtomicBoolean(ab);
+        Assert.assertTrue("atomic boolean is correct", ab == action2.getAtomicBoolean());
         Assert.assertNotNull("object exists", action2);
-        Assert.assertEquals("Username matches", "My memory", action2.getUserName());
+        Assert.assertEquals("Username matches", "My atomicBoolean", action2.getUserName());
         Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
         
         // Test template
         action2 = (ActionAtomicBoolean)_base.getNewObjectBasedOnTemplate();
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username is null", action2.getUserName());
-//        Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
+//        Assert.assertTrue("Username matches", "My atomicBoolean".equals(expression2.getUserName()));
         Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
         
         boolean thrown = false;
@@ -107,6 +110,9 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
+        
+        // Test setup(). This method doesn't do anything, but execute it for coverage.
+        _base.setup();
     }
     
     @Test
@@ -128,6 +134,39 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the atomic boolean should be true
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
+    public void testShortDescription() {
+        Assert.assertEquals("String matches", "Set the atomic boolean", _base.getShortDescription());
+    }
+    
+    @Test
+    public void testLongDescription() {
+        Assert.assertEquals("String matches", "Set the atomic boolean to true", _base.getLongDescription());
+    }
+    
+    @Test
+    public void testChild() {
+        Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
+        boolean hasThrown = false;
+        try {
+            _base.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     // The minimal setup for log4J
