@@ -81,13 +81,13 @@ public class ActionThrottle extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.ITEM;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isExternal() {
-        return false;
+        return true;
     }
     
     /** {@inheritDoc} */
@@ -221,7 +221,7 @@ public class ActionThrottle extends AbstractDigitalAction
 
     @Override
     public int getChildCount() {
-        return 1;
+        return 3;
     }
 
     @Override
