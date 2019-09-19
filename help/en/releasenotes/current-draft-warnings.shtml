@@ -1,4 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
 
-    <li>None yet</li>
+    <li><strong>Windows Only</strong> The JMRI installer removes the existing
+        <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
+        existing lib folder contents are retained in the backup folder.</li>
+    <li></li>

@@ -390,6 +390,7 @@
         <ul>
             <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
               Jython/Python scripts.</li>
+            <li>Jython has been upgraded to version 2.7.1</li>
         </ul>
 
     <h3>Signals</h3>
@@ -471,6 +472,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li><strong>Windows Only</strong> The JMRI installer removes the existing
+                <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
+                existing lib folder contents are retained in the backup folder.</li>
+            </li>
         </ul>
 
