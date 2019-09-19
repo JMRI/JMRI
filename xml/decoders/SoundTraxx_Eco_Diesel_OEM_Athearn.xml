@@ -85,6 +85,12 @@
             <authorinitials>MM</authorinitials>
             <revremark>Add new SD40 models</revremark>
         </revision>
+        <revision>
+            <revnumber>8</revnumber>
+            <date>2019-09-09</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Add new SD40-2 model</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -108,6 +114,8 @@
             <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="975" comment="Model E0102.011">
             </model>
             <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E0102.005">
+            </model>
+            <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="801" comment="Model E0102.???B">
             </model>
             <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B">
             </model>
@@ -253,7 +261,7 @@
                 <label>FX3 Forward Directional Control</label>
             </variable>
             <variable item="FX6 Forward Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" tooltip="Check to enable FX4 function output in Forward direction">
-                <defaultItem default="0" include="862,863,975"/>
+                <defaultItem default="0" include="801,862,863,975"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX4 Forward Directional Control</label>
             </variable>
@@ -266,7 +274,7 @@
                 <label>Backup Light F0(r) Reverse Directional Control</label>
             </variable>
             <variable item="FX5 Reverse Directional Control" CV="58" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Reverse direction">
-                <defaultItem default="0" include="781,825,862,863,864"/>
+                <defaultItem default="0" include="781,801,825,862,863,864"/>
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
                 <label>FX3 Reverse Directional Control</label>
             </variable>
@@ -276,7 +284,7 @@
                 <label>FX4 Reverse Directional Control</label>
             </variable>
             <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="7" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
-                <defaultItem default="5" include="789,862,863,864,975"/>
+                <defaultItem default="5" include="789,801,862,863,864,975"/>
                 <decVal max="15"/>
                 <label>Hyperlight Flash Rate (0-15)</label>
             </variable>
@@ -335,7 +343,7 @@
             </variable>
             <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" default="2" exclude="825">
                 <defaultItem default="0" include="774,775,780,850,851"/>
-                <defaultItem default="2" include="773,781,789,862,863,864,975"/>
+                <defaultItem default="2" include="773,781,789,801,862,863,864,975"/>
                 <defaultItem default="3" include="846"/>
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumPrimeMover1Athearn.xml"/>
                 <label>Prime Mover Select</label>

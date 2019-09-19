@@ -343,9 +343,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         ObjectNode data = InstanceManager.getDefault(JsonThrottleManager.class).getObjectMapper().createObjectNode();
         String property = evt.getPropertyName();
-        if (property.equals("SpeedSetting")) { // NOI18N
+        if (property.equals(Throttle.SPEEDSETTING)) { // NOI18N
             data.put(SPEED, ((Number) evt.getNewValue()).floatValue());
-        } else if (property.equals("IsForward")) { // NOI18N
+        } else if (property.equals(Throttle.ISFORWARD)) { // NOI18N
             data.put(FORWARD, ((Boolean) evt.getNewValue()));
         } else if (property.startsWith(F) && !property.contains("Momentary")) { // NOI18N
             data.put(property, ((Boolean) evt.getNewValue()));

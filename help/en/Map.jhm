@@ -534,6 +534,8 @@
 
 <mapID target="package.jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/ieee802154/swing/nodeconfig/NodeConfigFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ExchangeBetweenFreightAndLocal" url="package/jmri/jmrit/operations/Operations.shtml#ExchangeBetweenFreightAndLocal"/>
+
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
 <mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml"/>

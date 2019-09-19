@@ -261,14 +261,12 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Genesis add SD70ACe model</li>
-                <li>ECO Athearn RTR add new SD40 models</li>
+                <li></li>
             </ul>
 
         <h4>TCS</h4>
             <ul>
-                <li>WestAust55 -Motor Pane Restructured plus CV182 for Special BEMF and Keep-Alive added</li>
-                <li>WestAust55 -CV104 added for third Private User ID purposes</li>
+                <li></li>
             </ul>
 	    
 	    <h4>Team Digital</h4>
@@ -390,8 +388,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added a new SetUnknownTurnoutsClosed script that does what it says on the tin</li>
-            <li>Added script tests for SetUnknownTurnoutsClosed and SetAllTurnoutsClosed
+            <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
+              Jython/Python scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -473,11 +471,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Removed <code>Manager.getSystemNameAddedOrderList()</code>, deprecated in JMRI 4.11.1</li>
-            <li>Panel file NamedBean items such as Turnouts, Sensors, etc are now written to panel
-                files in order by their Manager system prefix and system name.
-                Previously, they had (roughly) been written in the order they'd be 
-                read from the earlier file(s). This will result in a big change to the order
-                the first time a file is re-written, but after that it should be much more stable.
+            <li></li>
         </ul>
 
