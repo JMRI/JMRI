@@ -286,7 +286,6 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
         
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         turnout.setCommandedState(Turnout.CLOSED);

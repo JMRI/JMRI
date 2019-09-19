@@ -45,7 +45,6 @@ public class ExpressionNodeIdentifierTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

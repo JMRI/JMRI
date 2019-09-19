@@ -39,7 +39,6 @@ public class AnalogExpressionsTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

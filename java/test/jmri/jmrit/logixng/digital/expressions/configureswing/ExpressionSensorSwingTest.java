@@ -50,7 +50,6 @@ public class ExpressionSensorSwingTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

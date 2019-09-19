@@ -26,7 +26,6 @@ public class DefaultFemaleDigitalExpressionSocketFactoryTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

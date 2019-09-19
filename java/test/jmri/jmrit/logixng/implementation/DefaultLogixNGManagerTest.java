@@ -156,7 +156,6 @@ public class DefaultLogixNGManagerTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

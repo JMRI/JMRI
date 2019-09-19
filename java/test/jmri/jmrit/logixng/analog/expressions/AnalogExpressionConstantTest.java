@@ -221,7 +221,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
-        JUnitUtil.initLogixNG();
         
         expressionConstant = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
         expressionConstant.setValue(10.2);

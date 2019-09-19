@@ -109,8 +109,6 @@ public class LogixNG_StartupTest {
         JUnitUtil.initSignalMastLogicManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initWarrantManager();
-        
-        JUnitUtil.initLogixNG();
    }
 
     @After

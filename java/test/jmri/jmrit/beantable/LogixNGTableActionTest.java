@@ -286,7 +286,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initLogixNGManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
 
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ101", "LogixNG 101");

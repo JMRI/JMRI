@@ -49,7 +49,6 @@ public class ImportConditionalTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

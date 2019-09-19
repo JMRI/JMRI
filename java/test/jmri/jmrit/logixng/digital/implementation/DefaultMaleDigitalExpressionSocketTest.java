@@ -44,7 +44,6 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
         
         DigitalExpressionBean expressionA = new ExpressionTurnout("IQDE321", null);
         Assert.assertNotNull("exists", expressionA);

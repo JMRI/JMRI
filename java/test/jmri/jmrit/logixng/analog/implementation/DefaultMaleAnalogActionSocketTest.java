@@ -42,7 +42,6 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
         
         AnalogActionBean actionA = new AnalogActionMemory("IQAA321", null);
         Assert.assertNotNull("exists", actionA);

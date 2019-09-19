@@ -168,7 +168,6 @@ public class DefaultDigitalActionManagerXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initLogixNG();
     }
 
     @After

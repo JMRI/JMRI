@@ -299,7 +299,6 @@ public class AntecedentTest implements FemaleSocketListener {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A LogixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

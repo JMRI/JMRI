@@ -43,7 +43,6 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
         
         DigitalActionBean actionA = new ActionTurnout("IQDA321", null);
         Assert.assertNotNull("exists", actionA);

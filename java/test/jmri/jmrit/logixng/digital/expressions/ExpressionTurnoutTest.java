@@ -202,7 +202,6 @@ public class ExpressionTurnoutTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

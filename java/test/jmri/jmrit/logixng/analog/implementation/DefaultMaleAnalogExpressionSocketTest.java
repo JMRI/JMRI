@@ -43,7 +43,6 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initLogixNG();
         
         AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE321", null);
         Assert.assertNotNull("exists", expressionA);

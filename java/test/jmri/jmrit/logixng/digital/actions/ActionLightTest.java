@@ -287,7 +287,6 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
-        JUnitUtil.initLogixNG();
         
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);

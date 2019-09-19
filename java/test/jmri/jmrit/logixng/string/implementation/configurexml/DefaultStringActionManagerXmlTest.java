@@ -168,7 +168,6 @@ public class DefaultStringActionManagerXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initLogixNG();
     }
 
     @After

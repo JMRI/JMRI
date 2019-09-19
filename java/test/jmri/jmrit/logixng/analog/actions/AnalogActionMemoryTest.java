@@ -243,7 +243,6 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
-        JUnitUtil.initLogixNG();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .createLogixNG("A new logix for test");  // NOI18N

@@ -206,7 +206,6 @@ public class ExpressionLightTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

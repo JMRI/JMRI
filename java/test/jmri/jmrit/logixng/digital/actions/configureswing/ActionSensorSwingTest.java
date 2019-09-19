@@ -41,7 +41,6 @@ public class ActionSensorSwingTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initLogixNG();
     }
 
     @After

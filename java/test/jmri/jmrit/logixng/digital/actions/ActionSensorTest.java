@@ -286,7 +286,6 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initLogixNG();
         
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor.setCommandedState(Sensor.INACTIVE);

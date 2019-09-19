@@ -322,7 +322,6 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
-        JUnitUtil.initLogixNG();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

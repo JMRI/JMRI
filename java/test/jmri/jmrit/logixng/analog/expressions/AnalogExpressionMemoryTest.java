@@ -325,7 +325,6 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
-        JUnitUtil.initLogixNG();
         
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNotNull("memory is not null", _memory);
