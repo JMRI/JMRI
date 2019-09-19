@@ -217,7 +217,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
-        menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")) {
             @Override

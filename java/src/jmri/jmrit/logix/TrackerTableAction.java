@@ -19,12 +19,17 @@ import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -567,7 +572,46 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             _status.addMouseListener(this);
             panel.add(p);
 
-            p = new JPanel();
+            tablePanel.add(makeButtonPanel(), BorderLayout.CENTER);
+            tablePanel.add(panel, BorderLayout.CENTER);
+
+            setContentPane(tablePanel);
+
+            JMenuBar menuBar = new JMenuBar();
+            JMenu optionMenu = new JMenu(Bundle.getMessage("MenuMoreOptions"));
+            optionMenu.add(makePathRequirement());
+
+            JMenuItem pickerMenu = new JMenuItem(Bundle.getMessage("MenuBlockPicker"));
+            pickerMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    openPickList();
+                }
+            });
+            optionMenu.add(pickerMenu);
+
+            optionMenu.add(WarrantTableAction.makeLogMenu());
+            menuBar.add(optionMenu);
+            setJMenuBar(menuBar);
+            addHelpMenu("package.jmri.jmrit.logix.Tracker", true);
+
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+                    if (_pickFrame != null) {
+                        _pickFrame.dispose();
+                    }
+                    _model.fireTableDataChanged();
+                }
+            });
+            setLocation(0, 100);
+            setVisible(true);
+            pack();
+        }
+
+        private JPanel makeButtonPanel() {
+            JPanel panel = new JPanel();
             JButton button = new JButton(Bundle.getMessage("MenuNewTracker"));
             button.addActionListener(new ActionListener() {
                 @Override
@@ -575,8 +619,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                     newTrackerDialog();
                 }
             });
-            tablePanel.add(p, BorderLayout.CENTER);
-            p.add(button);
+            panel.add(button);
 
             button = new JButton(Bundle.getMessage("MenuRefresh"));
             button.addActionListener(new ActionListener() {
@@ -585,36 +628,48 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                     _model.fireTableDataChanged();
                 }
             });
-            tablePanel.add(p, BorderLayout.CENTER);
-            p.add(button);
+            panel.add(button);
 
-            button = new JButton(Bundle.getMessage("MenuBlockPicker"));
-            button.addActionListener(new ActionListener() {
+            return panel;
+        }
+
+        
+        
+        private JMenuItem makePathRequirement() {
+            JMenu pathkMenu = new JMenu(Bundle.getMessage("MenuPathRanking"));
+            ButtonGroup pathButtonGroup = new ButtonGroup();
+            JRadioButtonMenuItem r;
+            r = new JRadioButtonMenuItem(Bundle.getMessage("showAllTrackers"));
+            r.addActionListener(new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent a) {
-                    openPickList();
+                public void actionPerformed(ActionEvent e) {
+                    _requirePaths = false;
                 }
             });
-            tablePanel.add(p, BorderLayout.CENTER);
-            p.add(button);
+            pathButtonGroup.add(r);
+            if (_requirePaths) {
+                r.setSelected(false);
+            } else {
+                r.setSelected(true);
+            }
+            pathkMenu.add(r);
 
-            panel.add(p);
-            tablePanel.add(panel, BorderLayout.CENTER);
-
-            setContentPane(tablePanel);
-
-            addHelpMenu("package.jmri.jmrit.logix.Tracker", true);
-
-            addWindowListener(new java.awt.event.WindowAdapter() {
+            r = new JRadioButtonMenuItem(Bundle.getMessage("showMostLikely"));
+            r.addActionListener(new ActionListener() {
                 @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-                    _model.fireTableDataChanged();
+                public void actionPerformed(ActionEvent e) {
+                    _requirePaths = true;
                 }
             });
-            setLocation(0, 100);
-            setVisible(true);
-            pack();
+            pathButtonGroup.add(r);
+            if (_requirePaths) {
+                r.setSelected(true);
+            } else {
+                r.setSelected(false);
+            }
+            pathkMenu.add(r);
+
+            return pathkMenu;
         }
 
         protected boolean mouseClickedOnBlock(OBlock block) {
@@ -735,11 +790,6 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             content.add(new PickPanel(models));
 
             _pickFrame.setContentPane(content);
-            /*         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-             public void windowClosing(java.awt.event.WindowEvent e) {
-             closePickList();
-             }
-             });*/
             _pickFrame.setLocationRelativeTo(this);
             _pickFrame.toFront();
             _pickFrame.setVisible(true);

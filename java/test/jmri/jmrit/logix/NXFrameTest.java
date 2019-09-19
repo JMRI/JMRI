@@ -8,11 +8,13 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -26,6 +28,9 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
  * todo - test error conditions
  */
 public class NXFrameTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2);  // allow 3 tries
 
     OBlockManager _OBlockMgr;
     SensorManager _sensorMgr;

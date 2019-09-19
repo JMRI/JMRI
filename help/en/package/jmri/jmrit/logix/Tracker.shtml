@@ -36,7 +36,7 @@
       <h2>What's Needed to Have a Tracker</h2>
       	Trackers function on the same foundation as Warrants. That is, track occupation
       	detection is by <b>OBlocks</b> and the directions trains move by
-      	<b>Portals and Paths</b>. For detailed information about what 
+      	<b>Portals</b> and <b>Paths</b>. For detailed information about what 
       	these objects are and how to make
       	them see <a href="../display/CircuitBuilder.shtml">Circuit Builder</a>
       	or <a href="../OBlockTable.shtml">Occupancy Block Tables</a>. 
@@ -56,10 +56,13 @@
       	through them connecting one occupancy block with another. 
       	</p><p>
       	The last requirement is each block should have
-      	at least one Indicator Track icon configured to display names. The popup menu
-      	of these icons has a "<i>Display Train Name when occupied</i>"
-      	checkbox menu item when editing with <b>Control Panel Editor</b>. Select
-      	it to show the current location of a tracked train.
+      	at least one Indicator Track icon configured to display names. The popup
+      	window displayed when the <i>Edit Icon</i> menu item is selected
+      	has a checkbox labeled "<i>Display Train Name when occupied</i>".
+      	(You must edit with 
+      	<a href="../display/ControlPanelEditor.shtml">Control Panel Editor</a>
+      	to get this window.) 
+      	Check this box to show the current location of a tracked train.
       	</p>
 
       <h2>How to Make a Tracker</h2>
@@ -69,27 +72,45 @@
       	that it occupies to make a tracker for the train. The name will appear on
       	the track icon selected for display in every block the train occupies. As 
       	train moves track icons change colors and show the name of the tracker
-      	<p>
-      	An much easier way to make a Tracker is simply to drag and drop a <b>Marker</b>
+
+		<h3>An Easier Way to Make a Tracker</h3>
+      	A much easier way to make a Tracker is simply to drag and drop a <b>Marker</b>
       	icon onto the block the train occupies. This opens the <b>Tracker Table</b> window
       	automatically and creates a Tracker with the text and color of the marker.
       	When a tracker is made this way, the marker will return to its docking position.
       	A marker's docking position can be set from it's popup menu. Markers have
-      	a menu to created and configure them when not in an editing mode.
-      	</p>
+      	a popup menu to configure them when not in an editing mode, but setting the
+      	docking position must be done in an editing mode.
 
        <h2>The Tracker Table</h2>
-      	 The table consists of a list of the active trackers with their current status.
-      	 The status names the block the train has currently occupied the longest.
-      	 A <b>Stop</b> button on each row will terminate the tracker.  Below the list
-      	 is the <b>Last Event</b> status window. The events shown are when a trains enters
-      	 a block, leaves a block and any error or warning messages.  The time each 
-      	 block has been occupied is also recorded. A mouse click on the window drops
-      	 down a record of the last 20 events.  Below the status window are three buttons;
-      	 the <b>New tracker</b> button which was mentioned above, the 
-      	 <b>Refresh Tracker Info</b> button that will update the status of the active 
-      	 trackers and the <b>OBlock Pick List</b> button that opens a list of the track
-      	 circuits.
+      	 The Tracker Table window consists of a list of the active trackers with their current
+      	 status. Each line shows the block the train is currently occupying the longest and
+      	 the elapsed time it has been there.
+      	 A <b>Stop</b> button on each row will terminate the tracker.
+		<p>
+		 Below the list
+      	 is the <b>Last Event</b> status window. The events shown are: when a trains enters
+      	 a block, leaves a block and any error or warning message.  When leaving a block
+      	 the elapsed time the
+      	 block was occupied is recorded. A mouse click on the window drops
+      	 down a record of the last 20 events.
+		</p><p>
+		 Below the status window are two buttons;
+      	 the <b>New tracker</b> button which was mentioned above, and the 
+      	 <b>Refresh Tracker Info</b> button. The button updates the elapsed time each tracker
+      	 has spent in its current block.
+      	 </p>
+      	 <h3>The Tracking Options Menu</h3>
+      	 The <b>Tracking Options</b> menu has three items:
+      	 <ul>
+      	 	<li><b>Multiple Trackers Ranking</b> applies only when several trackers are running.
+      	 		It is an advanced feature discussed below.</li>
+      	 	<li><b>OBlock Pick List</b> opens a OBlock table window. The items can be dragged to
+      	 		the New Tracker dialog.</li>
+      	 	<li><b>Open Session Log</b> opens a dialog to create a session log.  All Tracker events
+      	 		and Warrant events are logged to this file. The default directory of this file
+      	 		is the <i>File Location</i> directory you specified in Preferences.</li>
+      	</ul>
 
        <h2>When Multiple Trackers Are Active</h2>
       	A tracker posts an identifying label on all the blocks that
@@ -97,9 +118,28 @@
       	Any block adjacent to the head or tail of its train becoming occupied
       	is assumed to be the move of the train.  However, when two or
       	more trackers have adjacent blocks in common and a common block becomes
-      	occupied, which tracker has actually made the move indeterminate. 
+      	occupied, which tracker has actually made the move is indeterminate. 
       	When this happens a dialog is displayed for the 
-      	panel user to determine which tracked train occupies contested the block.    
+      	panel user to determine which tracked train occupies contested the block.
+
+		<h3>Filtering Multiple Trackers</h3>      	
+      	When multiple trackers "compete" for occupation of a block there is no way to
+      	guarantee the selection of the train actually entering the block.  However,
+      	the Tracker Table can make an educated guess. The <b>Multiple Trackers Ranking</b>
+      	menu item <i>Only Show Most Likely Trackers</i> activates this feature. Note that
+      	unlike warrants which always set turnouts to be paths in a block, manual operators
+      	can throw switches that don't configure a path. This "Most Likely" option is
+      	based on the following logic:
+      	<p>
+      	A tracker that has both a path set to exit its current block and a path set to enter
+      	the newly occupied block is chosen over a tracker having only one path exiting 
+      	or entering the block. The latter such tracker has precedence over a tracker with
+      	neither an exit nor an entrance path set.
+      	</p><p>
+      	This could be useful in situations where the panel operator does not have full
+      	view of the layout. Should ties occur in the ranking, the dialog to pick the
+      	tracker is displayed.
+      	</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
