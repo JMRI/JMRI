@@ -59,22 +59,6 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionManager;
-import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
-import jmri.jmrit.logixng.digital.implementation.DefaultDigitalExpressionManager;
-import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionManager;
-import jmri.jmrit.logixng.analog.implementation.DefaultAnalogExpressionManager;
-import jmri.jmrit.logixng.analog.implementation.DefaultAnalogActionManager;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
-import jmri.jmrit.logixng.string.implementation.DefaultStringExpressionManager;
-import jmri.jmrit.logixng.string.implementation.DefaultStringActionManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
@@ -148,12 +132,12 @@ public class JUnitUtil {
      * Public in case modification is needed from a test or script.
      */
     static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
-
+    
     /**
      * Standard time step (in mSec) when looping in a waitFor operation.
      * <p>
      * Public in case modification is needed from a test or script.
-     */
+     */    
     static final public int WAITFOR_DELAY_STEP = 5;
     /**
      * Maximum time to wait before failing a waitFor operation.
@@ -162,7 +146,7 @@ public class JUnitUtil {
      * to time out before this logs the error....
      * <p>
      * Public in case modification is needed from a test or script.
-     */
+     */    
     static final public int WAITFOR_MAX_DELAY = 10000;
 
     /**
@@ -207,7 +191,7 @@ public class JUnitUtil {
     static long    checkTestDurationStartTime = 0;  // working value
     
     static private int threadCount = 0;
-
+    
     static private boolean didSetUp = false;
     static private boolean didTearDown = true;
     static private String lastSetUpClassName = "<unknown>";
@@ -216,7 +200,7 @@ public class JUnitUtil {
     static private String lastTearDownClassName = "<unknown>";
     static private String lastTearDownThreadName = "<unknown>";
     static private StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
-
+    
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
     /**
@@ -230,7 +214,7 @@ public class JUnitUtil {
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
             Log4JUtil.initLogging(filename);
         }
-
+        
         // need to do this each time
         try {
             JUnitAppender.start();
@@ -276,12 +260,12 @@ public class JUnitUtil {
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastSetUpClassName = getTestClassName();
-
+            
             if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
-
+            
             if ( checkSetUpTearDownSequence)  {
                 if (checkSequenceDumpsStack)  lastSetUpThreadName = Thread.currentThread().getName();
-
+                
                 if (didSetUp || ! didTearDown) {
                     System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
                     if (checkSequenceDumpsStack) {
@@ -294,7 +278,7 @@ public class JUnitUtil {
                         System.err.println("----------------------");
                     }
                 }
-
+                
                 didTearDown = false;
                 didSetUp = true;
 
@@ -305,7 +289,7 @@ public class JUnitUtil {
         // checking time?
         if (checkTestDuration) checkTestDurationStartTime = System.currentTimeMillis();
     }
-
+    
     /**
      * Teardown from tests. This should be the last line in the {@code @After}
      * annotated method.

@@ -52,7 +52,6 @@ public class ActionThrottle extends AbstractDigitalAction
     private final FemaleAnalogExpressionSocket _locoAddressSocket;
     private final FemaleAnalogExpressionSocket _locoSpeedSocket;
     private final FemaleDigitalExpressionSocket _locoDirectionSocket;
-    long _delay = 0;
     boolean _isActive = false;
     
     public ActionThrottle(String sys, String user) {
@@ -191,20 +190,6 @@ public class ActionThrottle extends AbstractDigitalAction
         
     }
 
-    /**
-     * Get the type.
-     */
-    public long getDelay() {
-        return _delay;
-    }
-    
-    /**
-     * Set the type.
-     */
-    public void setDelay(long delay) {
-        _delay = delay;
-    }
-    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
@@ -261,7 +246,7 @@ public class ActionThrottle extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Throttle_Long", _locoAddressSocket.getName(), _delay);
+        return Bundle.getMessage(locale, "Throttle_Long", _locoAddressSocket.getName());
     }
 
     public FemaleAnalogExpressionSocket getLocoAddressSocket() {
