@@ -1570,9 +1570,10 @@
 
             <classpath refid="test.class.path"/>
 
+            <formatter usefile="no" type="brief"/>
+            
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
-                <formatter usefile="no" type="brief"/>
             </test>
         </junit>
         </jacoco:coverage>
