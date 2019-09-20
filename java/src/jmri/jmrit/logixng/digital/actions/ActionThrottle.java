@@ -217,10 +217,13 @@ public class ActionThrottle extends AbstractDigitalAction
     public void connected(FemaleSocket socket) {
         if (socket == _locoAddressSocket) {
             _locoAddressSocketSystemName = socket.getConnectedSocket().getSystemName();
+            getConditionalNG().execute();
         } else if (socket == _locoSpeedSocket) {
             _locoSpeedSocketSystemName = socket.getConnectedSocket().getSystemName();
+            getConditionalNG().execute();
         } else if (socket == _locoDirectionSocket) {
             _locoDirectionSocketSystemName = socket.getConnectedSocket().getSystemName();
+            getConditionalNG().execute();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -230,10 +233,13 @@ public class ActionThrottle extends AbstractDigitalAction
     public void disconnected(FemaleSocket socket) {
         if (socket == _locoAddressSocket) {
             _locoAddressSocketSystemName = null;
+            getConditionalNG().execute();
         } else if (socket == _locoSpeedSocket) {
             _locoSpeedSocketSystemName = null;
+            getConditionalNG().execute();
         } else if (socket == _locoDirectionSocket) {
             _locoDirectionSocketSystemName = null;
+            getConditionalNG().execute();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }

@@ -136,6 +136,11 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
         }
     }
     
+    /**
+     * Dispose this class.
+     * Listeners do not need to be unregistered by this method since they are
+     * unregistered by dispose().
+     */
     abstract protected void disposeMe();
     
     /** {@inheritDoc} */
