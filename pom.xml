@@ -403,7 +403,6 @@
                     <forkCount>1</forkCount>
                     <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
-                    <printSummary>false</printSummary>
                     -->
                     <dependencies>
                         <dependency>
