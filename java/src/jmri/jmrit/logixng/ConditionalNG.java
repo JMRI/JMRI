@@ -65,10 +65,9 @@ public interface ConditionalNG extends Base, NamedBean {
     public boolean isExecutionEnabled();
     
     /**
-     * Execute the LogixNG.
-     * Most of the LogixNG's has a ActionDoIf as its action and it's that
-     * action that evaluates the expression and decides if it should execute
-     * its action.
+     * Execute the ConditionalNG.
+     * This method must not be called directly. Use triggerExecute() instead
+     * to ensure that the call comes from the correct thread.
      */
     public void execute();
 

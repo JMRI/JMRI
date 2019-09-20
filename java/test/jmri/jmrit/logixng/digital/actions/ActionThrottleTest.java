@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.concurrent.atomic.AtomicReference;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -172,7 +173,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testExecute() throws SocketAlreadyConnectedException {
+    public void testExecute() throws SocketAlreadyConnectedException, JmriException {
 //        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A second conditionalNG");  // NOI18N
@@ -202,14 +203,17 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("has throttle", myThrottleRef.get());
         
         Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
+        locoAddressMemory.setValue(locoAddress);
         AnalogExpressionMemory locoAddressExpression = new AnalogExpressionMemory("IQAE111", null);
         locoAddressExpression.setMemory(locoAddressMemory);
         
-        Memory locoASpeedMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco speed memory");
+        Memory locoSpeedMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco speed memory");
+        locoSpeedMemory.setValue(0);
         AnalogExpressionMemory locoSpeedExpression = new AnalogExpressionMemory("IQAE112", null);
-        locoSpeedExpression.setMemory(locoASpeedMemory);
+        locoSpeedExpression.setMemory(locoSpeedMemory);
         
         Sensor locoDirectionSensor = InstanceManager.getDefault(SensorManager.class).provide("Loco direction sensor");
+        locoDirectionSensor.setState(Sensor.ACTIVE);
         ExpressionSensor locoDirectionExpression = new ExpressionSensor("IQDE113", null);
         locoDirectionExpression.setSensor(locoDirectionSensor);
         
@@ -219,17 +223,53 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                         .registerExpression(locoAddressExpression);
         actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(locoAddressSocket);
         
+        // Test execute when loco address socket is connected
+        actionThrottle2.execute();
+        Assert.assertTrue("loco speed is correct", 0 == myThrottleRef.get().getSpeedSetting());
+        
         // Set loco address of actionThrottle2
         MaleSocket locoSpeedSocket =
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         .registerExpression(locoSpeedExpression);
         actionThrottle2.getChild(ActionThrottle.LOCO_SPEED_SOCKET).connect(locoSpeedSocket);
+        Assert.assertTrue("loco direction is correct", myThrottleRef.get().getIsForward());
+        
+        // Test execute when loco speed socket is connected
+        actionThrottle2.execute();
         
         // Set loco address of actionThrottle2
         MaleSocket locoDirectionSocket =
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(locoDirectionExpression);
         actionThrottle2.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).connect(locoDirectionSocket);
+        
+        // Test execute when loco direction socket is connected
+        actionThrottle2.execute();
+        
+        // Set a different speed
+        locoSpeedMemory.setValue(0.5);
+        // Test execute when loco speed is changed
+        actionThrottle2.execute();
+        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        Assert.assertTrue("loco direction is correct", myThrottleRef.get().getIsForward());
+        
+        // Set a different direction
+        locoDirectionSensor.setState(Sensor.INACTIVE);
+        // Test execute when loco direction is changed
+        actionThrottle2.execute();
+        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        Assert.assertFalse("loco direction is correct", myThrottleRef.get().getIsForward());
+        
+        // Test execute when loco address is changed
+        actionThrottle2.execute();
+        
+        // Test execute when loco address socket is connected
+        actionThrottle2.execute();
+        
+        // Test execute when loco address socket is connected
+        actionThrottle2.execute();
+        
+        
     }
     
     @Test

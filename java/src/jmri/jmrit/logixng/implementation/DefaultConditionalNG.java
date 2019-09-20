@@ -5,6 +5,7 @@ import static jmri.NamedBean.UNKNOWN;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.util.ThreadingUtil;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -33,6 +34,8 @@ public class DefaultConditionalNG extends AbstractBase
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleActionSocket;
     private boolean _enabled = false;
+    private boolean _currentlyExecuting = false;
+    private boolean _executeAgain = false;
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
@@ -108,9 +111,22 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        if (isEnabled()) {
-            _femaleActionSocket.execute();
-        }
+        // This method can be called from different threads and it can be
+        // called recursive from the same thread.
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            if (!_currentlyExecuting) {
+                _currentlyExecuting = true;
+                do {
+                    _executeAgain = false;
+                    if (isEnabled()) {
+                        _femaleActionSocket.execute();
+                    }
+                } while (_executeAgain);
+                _currentlyExecuting = false;
+            } else {
+                _executeAgain = true;
+            }
+        });
     }
 
     @Override
