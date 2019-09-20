@@ -361,25 +361,29 @@ public class NXFrameTest {
         OBlock block = mgr.getOBlock(route[0]);
         Sensor sensor = block.getSensor();
         for (int i = 1; i < route.length; i++) {
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
 
             OBlock nextBlock = mgr.getOBlock(route[i]);
             Sensor nextSensor;
             boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
             if (!dark) {
                 nextSensor = nextBlock.getSensor();
-                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
+                nextSensor.setState(Sensor.ACTIVE);
+                // May cause InvocationTargetException
+//                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
             } else {
                 nextSensor = null;
             }
             if (sensor != null) {
-                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
+                sensor.setState(Sensor.INACTIVE);
+//                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             }
             if (!dark) {
                 sensor = nextSensor;
                 block = nextBlock;
             }
         }
+        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         return sensor;
     }
 
