@@ -42,7 +42,8 @@ deploy: off
 
 artifacts:
   - path: instanceManagerSequence.txt
-  - path: tests.log 
+  - path: tests.log
+  - path: junit-results.xml
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml
