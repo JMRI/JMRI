@@ -1569,10 +1569,9 @@
             <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
-
+            
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
-                <formatter usefile="no" type="brief"/>
             </test>
         </junit>
         </jacoco:coverage>
