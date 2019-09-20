@@ -29,7 +29,7 @@ before_test:
 
 test_script:
 - ps: |
-    mvn test -P appveyor --batch-mode
+    mvn --quiet test -P appveyor --batch-mode
 
 after_test:
 # upload results to Appveyor
@@ -42,7 +42,8 @@ deploy: off
 
 artifacts:
   - path: instanceManagerSequence.txt
-  - path: tests.log 
+  - path: tests.log
+  - path: junit-results.xml
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml
