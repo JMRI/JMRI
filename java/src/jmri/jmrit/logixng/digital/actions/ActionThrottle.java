@@ -8,6 +8,7 @@ import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.AnalogExpressionManager;
@@ -54,6 +55,8 @@ public class ActionThrottle extends AbstractDigitalAction
     private final FemaleDigitalExpressionSocket _locoDirectionSocket;
     boolean _isActive = false;
     
+    private boolean _listenersAreRegistered = false;
+    
     public ActionThrottle(String sys, String user) {
         super(sys, user);
         _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
@@ -97,19 +100,20 @@ public class ActionThrottle extends AbstractDigitalAction
     @Override
     public void execute() {
         
-        int newLocoAddress;
+        int currentLocoAddress = -1;
+        int newLocoAddress = -1;
+        
+        if (_throttle != null) {
+            currentLocoAddress = _throttle.getLocoAddress().getNumber();
+        }
         
         if (_locoAddressSocket.isConnected()) {
             newLocoAddress =
                     (int) ((MaleAnalogExpressionSocket)_locoAddressSocket.getConnectedSocket())
                             .evaluate();
-            
-        } else {
-            newLocoAddress = -1;
         }
         
-        if (((newLocoAddress != -1) && (_throttle == null))
-                || (newLocoAddress != _throttle.getLocoAddress().getNumber())) {
+        if (newLocoAddress != currentLocoAddress) {
             
             if (_throttle != null) {
                 // Stop the loco
@@ -217,13 +221,13 @@ public class ActionThrottle extends AbstractDigitalAction
     public void connected(FemaleSocket socket) {
         if (socket == _locoAddressSocket) {
             _locoAddressSocketSystemName = socket.getConnectedSocket().getSystemName();
-            getConditionalNG().execute();
+            executeConditionalNG();
         } else if (socket == _locoSpeedSocket) {
             _locoSpeedSocketSystemName = socket.getConnectedSocket().getSystemName();
-            getConditionalNG().execute();
+            executeConditionalNG();
         } else if (socket == _locoDirectionSocket) {
             _locoDirectionSocketSystemName = socket.getConnectedSocket().getSystemName();
-            getConditionalNG().execute();
+            executeConditionalNG();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -233,15 +237,24 @@ public class ActionThrottle extends AbstractDigitalAction
     public void disconnected(FemaleSocket socket) {
         if (socket == _locoAddressSocket) {
             _locoAddressSocketSystemName = null;
-            getConditionalNG().execute();
+            executeConditionalNG();
         } else if (socket == _locoSpeedSocket) {
             _locoSpeedSocketSystemName = null;
-            getConditionalNG().execute();
+            executeConditionalNG();
         } else if (socket == _locoDirectionSocket) {
             _locoDirectionSocketSystemName = null;
-            getConditionalNG().execute();
+            executeConditionalNG();
         } else {
             throw new IllegalArgumentException("unkown socket");
+        }
+    }
+    
+    private void executeConditionalNG() {
+        if (_listenersAreRegistered) {
+            ConditionalNG c = getConditionalNG();
+            if (c != null) {
+                c.execute();
+            }
         }
     }
 
@@ -369,13 +382,13 @@ public class ActionThrottle extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        // Do nothing
+        _listenersAreRegistered = true;
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        // Do nothing
+        _listenersAreRegistered = false;
     }
     
     /** {@inheritDoc} */

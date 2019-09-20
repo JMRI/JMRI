@@ -1,6 +1,15 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.concurrent.atomic.AtomicReference;
+import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -13,12 +22,15 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
+import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test ActionTimer
@@ -160,6 +172,67 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testExecute() throws SocketAlreadyConnectedException {
+//        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A second conditionalNG");  // NOI18N
+        logixNG.addConditionalNG(conditionalNG_2);
+        ActionThrottle actionThrottle2 = new ActionThrottle("IQDA999", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
+        conditionalNG_2.getChild(0).connect(maleSocket2);
+        
+        // Test execute when no children are connected
+        actionThrottle2.execute();
+        
+        MyThrottleListener myThrottleListener =  new MyThrottleListener();
+        
+        int locoAddress = 1234;
+        AtomicReference<DccThrottle> myThrottleRef = myThrottleListener.myThrottleRef;
+        
+        boolean result = InstanceManager.getDefault(ThrottleManager.class)
+                .requestThrottle(locoAddress, myThrottleListener);
+
+        if (!result) {
+            log.error("loco {} cannot be aquired", locoAddress);
+//        } else {
+//            _throttleIsRequested = true;
+        }
+        
+        Assert.assertNotNull("has throttle", myThrottleRef.get());
+        
+        Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
+        AnalogExpressionMemory locoAddressExpression = new AnalogExpressionMemory("IQAE111", null);
+        locoAddressExpression.setMemory(locoAddressMemory);
+        
+        Memory locoASpeedMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco speed memory");
+        AnalogExpressionMemory locoSpeedExpression = new AnalogExpressionMemory("IQAE112", null);
+        locoSpeedExpression.setMemory(locoASpeedMemory);
+        
+        Sensor locoDirectionSensor = InstanceManager.getDefault(SensorManager.class).provide("Loco direction sensor");
+        ExpressionSensor locoDirectionExpression = new ExpressionSensor("IQDE113", null);
+        locoDirectionExpression.setSensor(locoDirectionSensor);
+        
+        // Set loco address of actionThrottle2
+        MaleSocket locoAddressSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class)
+                        .registerExpression(locoAddressExpression);
+        actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(locoAddressSocket);
+        
+        // Set loco address of actionThrottle2
+        MaleSocket locoSpeedSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class)
+                        .registerExpression(locoSpeedExpression);
+        actionThrottle2.getChild(ActionThrottle.LOCO_SPEED_SOCKET).connect(locoSpeedSocket);
+        
+        // Set loco address of actionThrottle2
+        MaleSocket locoDirectionSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(locoDirectionExpression);
+        actionThrottle2.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).connect(locoDirectionSocket);
+    }
+    
+    @Test
     public void testConnectedDisconnected() throws SocketAlreadyConnectedException {
         Assert.assertEquals("Num children is correct", 3, _base.getChildCount());
         
@@ -229,6 +302,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
@@ -246,5 +320,35 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+    
+    
+    
+    private class MyThrottleListener implements ThrottleListener {
+        
+        private final AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
+        
+        @Override
+        @Deprecated
+        public void notifyStealThrottleRequired(LocoAddress address) {
+            log.error("Loco {} cannot be aquired. Decision required.", address.getNumber());
+        }
+
+        @Override
+        public void notifyThrottleFound(DccThrottle t) {
+            myThrottleRef.set(t);
+        }
+
+        @Override
+        public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+            log.error("loco {} cannot be aquired", address.getNumber());
+        }
+
+        @Override
+        public void notifyDecisionRequired(LocoAddress address, ThrottleListener.DecisionType question) {
+            log.error("Loco {} cannot be aquired. Decision required.", address.getNumber());
+        }
+    }
+    
+    private final static Logger log = LoggerFactory.getLogger(ActionThrottleTest.class);
     
 }
