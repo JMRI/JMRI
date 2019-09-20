@@ -183,6 +183,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
         conditionalNG_2.getChild(0).connect(maleSocket2);
         
+        logixNG.setParentForAllChildren();
+        
         // Test execute when no children are connected
         actionThrottle2.execute();
         
