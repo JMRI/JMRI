@@ -291,6 +291,10 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         actionThrottle2.execute();
         Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
         Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef2.get().getSpeedSetting(), 0.0001);
+        
+        // Test execute when loco address socket is disconnected
+        actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).disconnect();
+        actionThrottle2.execute();
     }
     
     @Test

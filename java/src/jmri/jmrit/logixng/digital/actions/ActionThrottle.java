@@ -178,13 +178,6 @@ public class ActionThrottle extends AbstractDigitalAction
             _throttle.setSpeedSetting((float) speed);
             _throttle.setIsForward(isForward);
         }
-        
-//        jmri.jmrit.throttle.ControlPanel b;
-        
-//        jmri.jmrit.automat.AbstractAutomaton a;
-        
-        
-        
     }
 
     @Override
@@ -229,6 +222,12 @@ public class ActionThrottle extends AbstractDigitalAction
     @Override
     public void disconnected(FemaleSocket socket) {
         if (socket == _locoAddressSocket) {
+            if (_throttle != null) {
+                // Stop the loco
+                _throttle.setSpeedSetting(0);
+                // Release the loco
+                InstanceManager.getDefault(ThrottleManager.class).releaseThrottle(_throttle, _throttleListener);
+            }
             _locoAddressSocketSystemName = null;
             executeConditionalNG();
         } else if (socket == _locoSpeedSocket) {
