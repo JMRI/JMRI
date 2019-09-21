@@ -252,7 +252,7 @@ public class JUnitUtil {
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
-        resetWindows(false, false);
+        resetWindows(false, true);
 
         // Do a minimal amount of de-novo setup
         resetInstanceManager();
@@ -338,7 +338,7 @@ public class JUnitUtil {
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
-        resetWindows(false, false);
+        resetWindows(false, true);
 
         // Check final status of logging in the test just completed
         JUnitAppender.end();
@@ -1168,7 +1168,7 @@ public class JUnitUtil {
                 JUnitUtil.dispose(frame);
             }
         }
-        /*for (Window window : Window.getWindows()) {
+        for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
@@ -1187,7 +1187,7 @@ public class JUnitUtil {
                 }
                 JUnitUtil.dispose(window);
             }
-        }*/
+        }
     }
 
     /**
