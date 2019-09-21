@@ -1168,8 +1168,7 @@ public class JUnitUtil {
                 JUnitUtil.dispose(frame);
             }
         }
-        System.gc();
-        for (Window window : Window.getWindows()) {
+        /*for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
@@ -1188,7 +1187,7 @@ public class JUnitUtil {
                 }
                 JUnitUtil.dispose(window);
             }
-        }
+        }*/
     }
 
     /**
