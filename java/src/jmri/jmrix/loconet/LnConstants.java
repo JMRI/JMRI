@@ -337,17 +337,6 @@ public final class LnConstants {
 
     public final static int CVH_D7 = 0x02;      /* MSbit for data value      */
 
-// The following two are commented out pending some decisions as to (a) whether
-// they belong here or in the parser and (b) understanding what they say about
-// a data format; note use of a pointer dereference
-
-    /* build data byte from programmer message */
-//public final static int PROG_DATA(ptr)      (((ptr->cvh & CVH_D7) << 6) | (ptr->data7 & 0x7f))
-
-    /* build CV # from programmer message */
-//public final static int PROG_CV_NUM(ptr)    (((((ptr->cvh & CVH_CV8_CV9) >> 3) | (ptr->cvh & CVH_CV7)) * 128)   \
-//                            + (ptr->cvl & 0x7f))
-
     /* LocoNet opcodes */
     public final static int OPC_GPBUSY = 0x81;
     public final static int OPC_GPOFF = 0x82;
