@@ -1,8 +1,7 @@
 package jmri.jmrit.automat;
 
-import jmri.InstanceManager;
+import jmri.script.JmriScriptEngineManager;
 
-import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,25 +42,11 @@ public class JythonSiglet extends Siglet {
     @Override
     public void defineIO() {
 
-        PySystemState.initialize();
-
-        interp = new PythonInterpreter();
+        interp = JmriScriptEngineManager.getDefault().newPythonInterpreter();
 
         // load some general objects
         interp.set("inputs", inputs);
         interp.set("outputs", outputs);
-        interp.set("turnouts", InstanceManager.turnoutManagerInstance());
-        interp.set("sensors", InstanceManager.sensorManagerInstance());
-        interp.set("signals", InstanceManager.getDefault(jmri.SignalHeadManager.class));
-        interp.set("dcc", InstanceManager.getNullableDefault(jmri.CommandStation.class));
-
-        interp.set("CLOSED", Integer.valueOf(jmri.Turnout.CLOSED));
-        interp.set("THROWN", Integer.valueOf(jmri.Turnout.THROWN));
-        interp.set("ACTIVE", Integer.valueOf(jmri.Sensor.ACTIVE));
-        interp.set("INACTIVE", Integer.valueOf(jmri.Sensor.INACTIVE));
-        interp.set("GREEN", Integer.valueOf(jmri.SignalHead.GREEN));
-        interp.set("YELLOW", Integer.valueOf(jmri.SignalHead.YELLOW));
-        interp.set("RED", Integer.valueOf(jmri.SignalHead.RED));
 
         // have jython read the file
         interp.execfile(filename);

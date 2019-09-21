@@ -542,6 +542,18 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
     }
 
     /**
+     * Create a new PythonInterpreter with the default bindings.
+     * 
+     * @return a new interpreter
+     */
+    public PythonInterpreter newPythonInterpreter() {
+        initializePython();
+        PythonInterpreter pi = new PythonInterpreter();
+        context.getBindings(ScriptContext.GLOBAL_SCOPE).forEach(pi::set);
+        return pi;
+    }
+
+    /**
      * Initialize the Python ScriptEngine state including Python global state.
      * 
      * @return true if the Python interpreter will be used outside a
@@ -595,13 +607,13 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
             log.debug("create interpreter");
             ScriptEngine python = this.manager.getEngineByName(PYTHON);
             python.setContext(this.context);
+            engines.put(PYTHON, python);
             InputStream is = FileUtil.findInputStream(JYTHON_DEFAULTS,
                     FileUtil.getUserFilesPath(),
                     FileUtil.getProfilePath(),
                     FileUtil.getPreferencesPath());
             if (execJython) {
-                this.jython = new PythonInterpreter();
-                context.getBindings(ScriptContext.GLOBAL_SCOPE).forEach((name, value) -> jython.set(name, value));
+                jython = newPythonInterpreter();
             }
             if (is != null) {
                 python.eval(new InputStreamReader(is));
@@ -609,7 +621,6 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                     this.jython.execfile(is);
                 }
             }
-            this.engines.put(PYTHON, python);
         } catch (ScriptException e) {
             log.error("Exception creating jython system objects", e);
         }

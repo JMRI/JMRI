@@ -1,8 +1,7 @@
 package jmri.jmrit.automat;
 
-import jmri.InstanceManager;
+import jmri.script.JmriScriptEngineManager;
 
-import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +35,7 @@ public class JythonAutomaton extends AbstractAutomaton {
     @Override
     protected void init() {
 
-        PySystemState.initialize();
-
-        interp = new PythonInterpreter();
-
-        // load some general objects
-        interp.set("dcc", InstanceManager.getNullableDefault(jmri.CommandStation.class));
+        interp = JmriScriptEngineManager.getDefault().newPythonInterpreter();
 
         // have jython read the file
         interp.execfile(filename);
