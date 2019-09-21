@@ -188,18 +188,18 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         // Test execute when no children are connected
         actionThrottle2.execute();
         
-        MyThrottleListener myThrottleListener =  new MyThrottleListener();
+        Assert.assertNotNull("getConditionalNG() returns not null", actionThrottle2.getConditionalNG());
         
         int locoAddress = 1234;
-        AtomicReference<DccThrottle> myThrottleRef = myThrottleListener.myThrottleRef;
+        AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
+        
+        MyThrottleListener myThrottleListener = new MyThrottleListener(myThrottleRef);
         
         boolean result = InstanceManager.getDefault(ThrottleManager.class)
                 .requestThrottle(locoAddress, myThrottleListener);
 
         if (!result) {
             log.error("loco {} cannot be aquired", locoAddress);
-//        } else {
-//            _throttleIsRequested = true;
         }
         
         Assert.assertNotNull("has throttle", myThrottleRef.get());
@@ -227,7 +227,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         
         // Test execute when loco address socket is connected
         actionThrottle2.execute();
-        Assert.assertTrue("loco speed is correct", 0 == myThrottleRef.get().getSpeedSetting());
+        Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
         
         // Set loco address of actionThrottle2
         MaleSocket locoSpeedSocket =
@@ -272,6 +272,25 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         actionThrottle2.execute();
         
         
+        // Test execute when loco address is changed
+        int locoAddress2 = 1235;
+        AtomicReference<DccThrottle> myThrottleRef2 = new AtomicReference<>();
+        MyThrottleListener myThrottleListener2 = new MyThrottleListener(myThrottleRef2);
+        result = InstanceManager.getDefault(ThrottleManager.class)
+                .requestThrottle(locoAddress2, myThrottleListener2);
+        if (!result) {
+            log.error("loco {} cannot be aquired", locoAddress);
+        }
+        Assert.assertNotNull("has throttle", myThrottleRef2.get());
+        myThrottleRef2.get().setSpeedSetting(1);
+        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        Assert.assertEquals("loco speed is correct", 1.0, myThrottleRef2.get().getSpeedSetting(), 0.0001);
+        // Change loco address
+        locoAddressMemory.setValue(locoAddress2);
+        // Execute the action
+        actionThrottle2.execute();
+        Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        Assert.assertEquals("loco speed is correct", 0.5, myThrottleRef2.get().getSpeedSetting(), 0.0001);
     }
     
     @Test
@@ -367,7 +386,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     
     private class MyThrottleListener implements ThrottleListener {
         
-        private final AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
+        private final AtomicReference<DccThrottle> _myThrottleRef;
+        
+        public MyThrottleListener(AtomicReference<DccThrottle> myThrottleRef) {
+            _myThrottleRef = myThrottleRef;
+        }
         
         @Override
         @Deprecated
@@ -377,7 +400,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
 
         @Override
         public void notifyThrottleFound(DccThrottle t) {
-            myThrottleRef.set(t);
+            _myThrottleRef.set(t);
         }
 
         @Override

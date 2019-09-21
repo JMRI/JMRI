@@ -44,9 +44,6 @@ public class ActionThrottle extends AbstractDigitalAction
     private DccThrottle _throttle;
     private ThrottleListener _throttleListener;
     
-    // true if a throttle request is sent
-//    private boolean _throttleIsRequested = false;
-    
     private String _locoAddressSocketSystemName;
     private String _locoSpeedSocketSystemName;
     private String _locoDirectionSocketSystemName;
@@ -121,12 +118,10 @@ public class ActionThrottle extends AbstractDigitalAction
                 // Release the loco
                 InstanceManager.getDefault(ThrottleManager.class).releaseThrottle(_throttle, _throttleListener);
                 _throttle = null;
-//                _throttleIsRequested = false;
             }
             
             if (newLocoAddress != -1) {
                 
-                final ActionThrottle thisActionThrottle = this;
                 _throttleListener =  new ThrottleListener() {
                     @Override
                     @Deprecated
@@ -138,9 +133,7 @@ public class ActionThrottle extends AbstractDigitalAction
                     @Override
                     public void notifyThrottleFound(DccThrottle t) {
                         _throttle = t;
-//                        _throttleIsRequested = false;
-                        thisActionThrottle.getConditionalNG().execute();
-//                        t.addPropertyChangeListener();
+                        executeConditionalNG();
                     }
 
                     @Override
@@ -159,16 +152,12 @@ public class ActionThrottle extends AbstractDigitalAction
                 
                 if (!result) {
                     log.warn("loco {} cannot be aquired", newLocoAddress);
-//                } else {
-//                    _throttleIsRequested = true;
                 }
             }
             
         }
         
-        // We have a throttle if _throttle is not null and _throttleIsRequested
-        // is false.
-//        if ((_throttle != null) && (!_throttleIsRequested)) {
+        // We have a throttle if _throttle is not null
         if (_throttle != null) {
             
             double speed = 0;
