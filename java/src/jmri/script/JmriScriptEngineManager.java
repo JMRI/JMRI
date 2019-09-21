@@ -3,11 +3,11 @@ package jmri.script;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -279,7 +279,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param engine The script engine.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5 without direct replacement
+     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader)} instead
      */
     @Deprecated
     public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
@@ -294,7 +294,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param bindings Bindings passed to the script.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5 without direct replacement
+     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader, Bindings)} instead
      */
     @Deprecated
     public Object eval(Reader reader, ScriptEngine engine, Bindings bindings) throws ScriptException {
@@ -309,7 +309,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
      * @param context Context for the script.
      * @return The results of evaluating the script.
      * @throws javax.script.ScriptException if there is an error in the script.
-     * @deprecated since 4.17.5 without direct replacement
+     * @deprecated since 4.17.5; use {@link ScriptEngine#eval(Reader, ScriptContext)} instead
      */
     @Deprecated
     public Object eval(Reader reader, ScriptEngine engine, ScriptContext context) throws ScriptException {
@@ -385,13 +385,13 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         ScriptEngine engine;
         Object result = null;
         if ((engine = getEngineOrEval(file)) != null) {
-            try (FileReader fr = new FileReader(file)) {
+            try (InputStreamReader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
                 if (context != null) {
-                    result = engine.eval(fr, context);
+                    result = engine.eval(reader, context);
                 } else if (bindings != null) {
-                    result = engine.eval(fr, bindings);
+                    result = engine.eval(reader, bindings);
                 } else {
-                    result = engine.eval(fr);
+                    result = engine.eval(reader);
                 }
             }
         }
