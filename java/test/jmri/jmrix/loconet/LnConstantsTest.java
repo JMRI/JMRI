@@ -1,5 +1,12 @@
 package jmri.jmrix.loconet;
 
+import static jmri.jmrix.loconet.LnConstants.DEC_MODE_128;
+import static jmri.jmrix.loconet.LnConstants.DEC_MODE_128A;
+import static jmri.jmrix.loconet.LnConstants.DEC_MODE_14;
+import static jmri.jmrix.loconet.LnConstants.DEC_MODE_28A;
+import static jmri.jmrix.loconet.LnConstants.DEC_MODE_28TRI;
+import static jmri.jmrix.loconet.LnConstants.DEC_MODE_MASK;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -91,6 +98,28 @@ public class LnConstantsTest {
         Assert.assertEquals("check OPC_NAME(0xef)", "OPC_WR_SL_DATA", LnConstants.OPC_NAME(0xef));
         Assert.assertEquals("check OPC_0x80", "<unknown>", LnConstants.OPC_NAME(0x80));
     }
+    
+    @Test
+    public void testDEC_MODE() { // encode decoder type as a string
+        
+        Assert.assertEquals("check decoder mode (0x00)", "28", LnConstants.DEC_MODE(0x00));
+        Assert.assertEquals("check decoder mode (0x01)", "28 (Motorola)", LnConstants.DEC_MODE(0x01));
+        Assert.assertEquals("check decoder mode (0x02)", "14", LnConstants.DEC_MODE(0x02));
+        Assert.assertEquals("check decoder mode (0x03)", "128", LnConstants.DEC_MODE(0x03));
+        Assert.assertEquals("check decoder mode (0x04)", "28 (Allow Adv. consisting)", LnConstants.DEC_MODE(0x04));
+        Assert.assertEquals("check decoder mode (0x05)", "28", LnConstants.DEC_MODE(0x05));
+        Assert.assertEquals("check decoder mode (0x06)", "28", LnConstants.DEC_MODE(0x06));
+        Assert.assertEquals("check decoder mode (0x07)", "128 (Allow Adv. consisting)", LnConstants.DEC_MODE(0x07));
+        Assert.assertEquals("check decoder mode (0xf0)", "28", LnConstants.DEC_MODE(0xf0));
+        Assert.assertEquals("check decoder mode (0x09)", "28 (Motorola)", LnConstants.DEC_MODE(0x09));
+        Assert.assertEquals("check decoder mode (0x12)", "14", LnConstants.DEC_MODE(0x12));
+        Assert.assertEquals("check decoder mode (0x23)", "128", LnConstants.DEC_MODE(0x23));
+        Assert.assertEquals("check decoder mode (0x44)", "28 (Allow Adv. consisting)", LnConstants.DEC_MODE(0x44));
+        Assert.assertEquals("check decoder mode (0x85)", "28", LnConstants.DEC_MODE(0x85));
+        Assert.assertEquals("check decoder mode (0xF6)", "28", LnConstants.DEC_MODE(0xf6));
+        Assert.assertEquals("check decoder mode (0x57)", "128 (Allow Adv. consisting)", LnConstants.DEC_MODE(0x57));
+    }
+    
     @Before
     public void setUp() {
         JUnitUtil.setUp();
