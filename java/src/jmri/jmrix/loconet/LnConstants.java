@@ -353,6 +353,7 @@ public final class LnConstants {
     public final static int OPC_GPOFF = 0x82;
     public final static int OPC_GPON = 0x83;
     public final static int OPC_IDLE = 0x85;
+    public final static int OPC_RE_LOCORESET_BUTTON = 0x8A; // Undocumented name
     public final static int OPC_LOCO_SPD = 0xa0;
     public final static int OPC_LOCO_DIRF = 0xa1;
     public final static int OPC_LOCO_SND = 0xa2;
@@ -421,6 +422,7 @@ public final class LnConstants {
             case OPC_GPOFF      : return "OPC_GPOFF"; // NOI18N
             case OPC_GPON       : return "OPC_GPON"; // NOI18N
             case OPC_IDLE       : return "OPC_IDLE"; // NOI18N
+            case OPC_RE_LOCORESET_BUTTON:   return "OPC_RE_LOCORESET_BUTTON"; // NOI18N
             case OPC_LOCO_SPD   : return "OPC_LOCO_SPD"; // NOI18N
             case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF"; // NOI18N
             case OPC_LOCO_SND   : return "OPC_LOCO_SND"; // NOI18N
