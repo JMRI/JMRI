@@ -309,16 +309,7 @@ returns to the command line.
       "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
       classes provide hooks for user layout automation, including
       signaling. But they require that you write Java code and
-      compile it into .class files.
-
-      <p>The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">
-      JythonAutomaton</a> class is intended to make it easier to
-      code custom layout automation, as it will allow you to invoke
-      a Jython script. Once it's integrated into the configuration
-      process, you'll be able to code your automation in one or
-      more .py files, and have the program start running them at
-      startup.</p>
+      compile it into .class files, or write Jython code and import it.
 
       <h2>Next steps</h2>We're just learning how to best to
       integrate JMRI and Python, so there are still some basic

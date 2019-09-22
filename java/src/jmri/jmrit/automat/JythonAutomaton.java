@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
  * This sample Automaton invokes a Jython interpreter to handle a script.
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @deprecated since 4.17.5; use {@link JmriScriptEngineManager#eval(java.io.File)}
+ * with a subclass of {@link AbstractAutomaton} instead
  */
+@Deprecated
 public class JythonAutomaton extends AbstractAutomaton {
 
     PythonInterpreter interp;

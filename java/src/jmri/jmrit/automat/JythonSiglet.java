@@ -17,7 +17,10 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @deprecated since 4.17.5; use {@link JmriScriptEngineManager#eval(java.io.File)}
+ * with a subclass of {@link Siglet} instead
  */
+@Deprecated
 public class JythonSiglet extends Siglet {
 
     PythonInterpreter interp;
