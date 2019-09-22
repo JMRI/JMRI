@@ -314,7 +314,12 @@ public final class ConditionalNGEditor extends JmriJFrame {
             Category category = _categoryComboBox.getItemAt(_categoryComboBox.getSelectedIndex());
             _swingConfiguratorComboBox.removeAllItems();
             for (Class<? extends Base> clazz : connectableClasses.get(category)) {
-                _swingConfiguratorComboBox.addItem(SwingTools.getSwingConfiguratorForClass(clazz));
+                SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
+                if (sci != null) {
+                    _swingConfiguratorComboBox.addItem(sci);
+                } else {
+                    log.error("Class {} has no swing configurator interface", clazz.getName());
+                }
             }
         });
         
