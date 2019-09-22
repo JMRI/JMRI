@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -66,7 +68,7 @@ public class Tracker {
         _startTime = System.currentTimeMillis();
         block._entryTime = _startTime;
         List<OBlock> occupy = initialRange(_parent);
-        if (occupy.size() > 1) {
+        if (occupy.size() > 0) {
             new ChooseStartBlock(block, occupy, this, _parent);
         } else {
             _parent.addTracker(this);
@@ -78,11 +80,20 @@ public class Tracker {
 
     private List<OBlock> initialRange(TrackerTableAction parent) {
         makeRange();
+        if (getHeadBlock().equals(getTailBlock())) {
+            return makeChoiceList(_headRange, parent);
+        } else { // make additional block the tail
+            return makeChoiceList(_tailRange, parent);
+        }
+    }
+    
+    private List<OBlock> makeChoiceList(List<OBlock> range, TrackerTableAction parent) {
         ArrayList<OBlock> occupy = new ArrayList<>();
-        for (OBlock b : _tailRange) {
-            if (!b.equals(getTailBlock())
-                    && (b.getState() & OBlock.OCCUPIED) != 0 && parent.checkBlock(b)) {
-                occupy.add(b); // make additional block the tail
+        for (OBlock b : range) {
+            if (!_occupies.contains(b) && 
+                    ((b.getState() & OBlock.OCCUPIED) != 0 || (b.getState() & OBlock.UNDETECTED) != 0)
+                    && parent.checkBlock(b)) {
+                occupy.add(b);
             }
         }
         return occupy;
@@ -140,103 +151,95 @@ public class Tracker {
      * blkA is the current Head or Tail block
      * blkB is a block from the headRange or tailRange, where entry may be possible
      */
-   private PathSet hasPathBetween(@Nonnull OBlock blkA, @Nonnull OBlock blkB) {
+   private PathSet hasPathBetween(@Nonnull OBlock blkA, @Nonnull OBlock blkB, boolean recurse) {
        // first check if there is an exit path set from blkA, to blkB
-       OBlock darkBlock = null;
-       PathSet hasPathSet = PathSet.NO;
-       PathSet darkPathSet = PathSet.NO;
+       PathSet pathset = PathSet.NO;
+       boolean hasExitA = false;
+       boolean hasEnterB = false;
+       boolean adjacentBlock = false;
+       ArrayList<OBlock> darkBlocks = new ArrayList<>();
        for (Portal portal : blkA.getPortals()) {
            OBlock block = portal.getOpposingBlock(blkA);
            if (blkB.equals(block)) {
                if (!getPathsSet(blkA, portal).isEmpty()) { // set paths of blkA to portal
-                   hasPathSet = PathSet.PARTIAL;
+                   hasExitA = true;
                   if (!getPathsSet(blkB, portal).isEmpty()) { // paths of blkB to portal
-                      _darkBlock = null;
-                      return PathSet.SET;
+                      // done, path through portal is set
+                      pathset = PathSet.SET;
+                      break;
                   }
                } else if (!getPathsSet(blkB, portal).isEmpty()) {
-                   hasPathSet = PathSet.PARTIAL;
+                   hasEnterB = true;
                }
-           } else if ((block.getState() & OBlock.UNDETECTED) != 0 && darkPathSet != PathSet.SET) {
-               darkBlock = block;
+               adjacentBlock = true;
+           } else if ((block.getState() & OBlock.UNDETECTED) != 0) {
+               darkBlocks.add(block);
            }
        }
-       // not PathSet.SET so continue by looking at dark blocks
-       if (darkBlock != null) {
-           for (Portal portal : blkA.getPortals()) {
-               OBlock block = portal.getOpposingBlock(blkA);
-               if ((block.getState() & OBlock.UNDETECTED) != 0) {
-                   // connected to a dark block. Look for a path through it to blkB
-                   for (Portal port : block.getPortals()) {
-                       OBlock b = port.getOpposingBlock(block);
-                       if (blkB.equals(b)) {
-                           // "block" is a dark block between blkA and blkB
-                           PathSet setA = PathSet.NO; // for paths between blkA and darkBlock
-                           PathSet setB = PathSet.NO; // for paths between darkBlock and blkB
-                           if (!getPathsSet(blkA, portal).isEmpty()) {
-                               setA =  PathSet.PARTIAL;
-                               if (!getPathsSet(block, portal).isEmpty()) {
-                                   setA = PathSet.SET;
-                               }
-                           } else if (!getPathsSet(block, portal).isEmpty()) {
-                               setA = PathSet.PARTIAL;
-                           }
-                               
-                           if (!getPathsSet(blkB, port).isEmpty()) {
-                               setB =  PathSet.PARTIAL;
-                               if (!getPathsSet(block, port).isEmpty()) {
-                                   setB = PathSet.SET;
-                               }
-                           } else if (!getPathsSet(block, port).isEmpty()) {
-                               setB = PathSet.PARTIAL;
-                           }
-                           switch (setA) {
-                               case SET:
-                                   if (setB == PathSet.SET) {
-                                       darkPathSet = PathSet.SET;
-                                       _darkBlock = block;
-                                       break;
-                                   } else if (setB == PathSet.PARTIAL) {
-                                       if (darkPathSet != PathSet.SET) {
-                                           darkPathSet = PathSet.PARTIAL;
-                                           _darkBlock = block;
-                                       }
-                                   }
-                                   break;
-                               case PARTIAL:
-                                   if (setB == PathSet.SET || setB == PathSet.PARTIAL) {
-                                       if (darkPathSet != PathSet.SET) {
-                                           darkPathSet = PathSet.PARTIAL;
-                                           _darkBlock = block;
-                                       }
-                                   }
-                                   break;
-                               default:
-                                   darkBlock = null;
-                                   break;    
-                           }                           
-                       }
-                   }
-               }
+       if (pathset != PathSet.SET) {
+           if (hasExitA || hasEnterB) {
+               pathset = PathSet.PARTIAL;
            }
        }
-       if (darkPathSet == PathSet.SET) {
-           hasPathSet = darkPathSet;
-       } else if (hasPathSet == PathSet.PARTIAL) {
-           _darkBlock = darkBlock;
+       if (adjacentBlock || !recurse) {
+           /*if (log.isDebugEnabled()) {
+               log.debug("hasPathBetween: {} path for \"{}\"--\"{}\"",
+                       pathset, blkA.getDisplayName(), blkB.getDisplayName());
+           }*/
+           return pathset;
        }
-       if (hasPathSet != PathSet.SET) {
-           log.info("train {} has no path set from block {} to block {}",
-                   _trainName, blkA.getDisplayName(), blkB.getDisplayName());
+       // blkA and blkB not adjacent, so look for a connecting dark block
+       PathSet darkPathSet = PathSet.NO;
+       for (OBlock block : darkBlocks) {
+           // if more than one dark block, set _darkBlock to the one with best accessing paths
+           darkPathSet = hasDarkBlockPathBetween(blkA, block, blkB);
+           if (darkPathSet == PathSet.SET) {
+               _darkBlock = block;
+               pathset = PathSet.SET;
+               break;
+           }
+           if (darkPathSet == PathSet.PARTIAL) {
+               _darkBlock = block;
+               pathset = PathSet.PARTIAL;
+           }
        }
-        return hasPathSet;
-    }
-    
+       if (_darkBlock == null && !darkBlocks.isEmpty()) {
+           // no good paths, nevertheless there is an intermediate dark block
+           _darkBlock = darkBlocks.get(0);
+       }
+       /*if (log.isDebugEnabled()) {
+           if (_darkBlock != null) {
+               log.debug("hasPathBetween: {} path for \"{}\"-\"{}\"-\"{}\"",
+                       pathset, blkA.getDisplayName(), _darkBlock.getDisplayName(), blkB.getDisplayName());
+           } else {
+               log.debug("hasPathBetween: {} path for \"{}\"--\"{}\"",
+                       pathset, blkA.getDisplayName(), blkB.getDisplayName());
+           }
+       }*/
+       return pathset;
+   }
+       
+   private PathSet hasDarkBlockPathBetween(OBlock blkA, OBlock block, OBlock blkB) {
+       PathSet pathset = PathSet.NO;
+       PathSet setA = hasPathBetween(blkA, block, false);
+       PathSet setB = hasPathBetween(block, blkB, false);
+       if (setA == PathSet.SET && setB == PathSet.SET) {
+           pathset = PathSet.SET;
+       } else if (setA != PathSet.NO && setB != PathSet.NO) {
+               pathset = PathSet.PARTIAL;
+       }
+       /*if (log.isDebugEnabled()) {
+           log.debug("hasDarkBlockPathBetween: {} path for \"{}\"-\"{}\"-\"{}\"",
+                   pathset, blkA.getDisplayName(), block.getDisplayName(), blkB.getDisplayName());
+       }*/
+       return pathset;
+   }
+
     protected PathSet hasPathInto(OBlock block) throws JmriException {
         _darkBlock = null;
         OBlock blk = getHeadBlock();
         if (blk != null) {
-            PathSet hasPathSet = hasPathBetween(blk, block);
+            PathSet hasPathSet = hasPathBetween(blk, block, true);
             if (hasPathSet != PathSet.NO) {
                 return hasPathSet;
             }
@@ -246,10 +249,7 @@ public class Tracker {
             throw new JmriException();
         }
         if (!b.equals(blk)) {
-            return  hasPathBetween(b, block);
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Tracker {} does not have a path into {}", _trainName, block.getDisplayName());
+            return  hasPathBetween(b, block, true);
         }
         return PathSet.NO;
     }
@@ -262,16 +262,10 @@ public class Tracker {
         List<OPath> setPaths = new ArrayList<>();
         for (OPath path : paths) {
             if (path.checkPathSet()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Train {}. Path {} in block {} is set to portal {}",
-                            _trainName, path.getName(), block.getDisplayName(), portal.getDisplayName());
-                }
                 setPaths.add(path);
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("Train {}. Path {} in block {} NOT set to portal {}",
-                            _trainName, path.getName(), block.getDisplayName(), portal.getDisplayName());
-                }
+                /*if (log.isDebugEnabled()) {
+                    log.debug("Path \"{}\" set to block {} through portal {}", path.getName(), block.getDisplayName(), portal.getUserName());
+                }*/
             }
         }
         return setPaths;
@@ -294,25 +288,19 @@ public class Tracker {
     }
 
     private void addtoOccupies(OBlock b, boolean atHead) {
-        if (b != null) {
-            if (!_occupies.contains(b)) {
-                if (atHead) {
-                    _occupies.addFirst(b);
-                } else {
-                    _occupies.addLast(b);
-                }
-                showBlockValue(b);
-                if (_lostRange.contains(b)) {
-                    _lostRange.remove(b);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Tracker {} recovers block \"{}\"",
-                            _trainName, b.getDisplayName());
-                    }
-                }
+        if (!_occupies.contains(b)) {
+            if (atHead) {
+                _occupies.addFirst(b);
             } else {
-                log.warn("Tracker {} already occupies \"{}\"", 
-                        _trainName, b.getDisplayName());
+                _occupies.addLast(b);
             }
+            showBlockValue(b);
+            if (_lostRange.contains(b)) {
+                _lostRange.remove(b);
+            }
+        } else {
+            log.warn("Tracker {} already occupies \"{}\"", 
+                    _trainName, b.getDisplayName());
         }
     }
 
@@ -321,8 +309,6 @@ public class Tracker {
             _occupies.remove(b);
             if (_lostRange.contains(b)) {
                 _lostRange.remove(b);
-                log.debug("Tracker {} recovers block \"{}\"",
-                        _trainName, b.getDisplayName());
             }
         }
     }
@@ -336,9 +322,10 @@ public class Tracker {
         _tailRange = new ArrayList<OBlock>();
         OBlock headBlock = getHeadBlock();
         OBlock tailBlock = getTailBlock();
-        if (log.isDebugEnabled()) {
-            log.debug("Make range for \"{}\"", _trainName);
-        }
+        /*if (log.isDebugEnabled()) {
+            log.debug("Make range for \"{}\" head = {} tail = {}",
+                    _trainName, headBlock.getDisplayName(), tailBlock.getDisplayName());
+        }*/
         if (headBlock != null) {
             for (Portal portal : headBlock.getPortals()) {
                 OBlock block = portal.getOpposingBlock(headBlock);
@@ -373,12 +360,12 @@ public class Tracker {
                  }
             }
         }
-        if (log.isTraceEnabled()) {
+        /*if (log.isDebugEnabled()) {
             log.debug("   _headRange.size()= " + _headRange.size());
             log.debug("   _tailRange.size()= " + _tailRange.size());
             log.debug("   _lostRange.size()= " + _lostRange.size());
             log.debug("   _occupies.size()= " + _occupies.size());
-        }
+        }*/
 
         return buildRange();
     }
@@ -391,16 +378,16 @@ public class Tracker {
         }
         for (OBlock b : _occupies) {
             range.add(b);
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("   {} occupies \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
-            }
+            }*/
         }
         for (OBlock b : _headRange) {
             range.add(b);
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("   {} head range from {} includes \"{}\" value= {}",
                         _trainName, getHeadBlock().getDisplayName(), b.getDisplayName(), b.getValue());
-            }
+            }*/
         }
         for (OBlock b : _tailRange) {
             range.add(b);
@@ -422,50 +409,25 @@ public class Tracker {
         return _occupies;
     }
 
+    protected void stop() {
+        for (OBlock b : _occupies) {
+            if ((b.getState() & OBlock.UNDETECTED) != 0) {
+                removeName(b);
+            }
+        }
+    }
+
     private void removeBlock(@Nonnull OBlock block) {
         int size = _occupies.size();
         int index = _occupies.indexOf(block);
-        switch (index) {
-            case -1:
-                log.error(" Cannot remove. Tracker {} does not occupy block \"{}\"!", _trainName, block.getDisplayName());
-                return;
-            case 0:
-                // Head Block
-                if (log.isDebugEnabled() && size > 1) {
-                    hasPathBetween(_occupies.getFirst(), _occupies.get(1));
-                }
-                while (++index < size-1) {
-                    OBlock b = _occupies.get(index);
-                    if ((b.getState() & OBlock.OCCUPIED) == 0) {
-                        // next to first block unoccupied. Remove it also.
-                        removeFromOccupies(b);
-                        _lostRange.add(b);
-                    }
-                }
-                break;
-            default:
-                if (index == size-1) {
-                    // Tail block
-                    if (log.isDebugEnabled() && size > 1) {
-                        hasPathBetween(_occupies.getLast(), _occupies.get(size - 2));
-                    }
-                    while (--index > 0) {
-                        OBlock b = _occupies.get(index);
-                        if ((b.getState() & OBlock.OCCUPIED) == 0) {
-                            // next to last block unoccupied. Remove it also.
-                            removeFromOccupies(b);
-                            _lostRange.add(b);
-                        }
-                    }
-                } else if (size > 2) {
-                    // Mid range. Temporary lost of detection?  Don't remove from _occupies
-                    log.warn("Tracker {} lost occupancy mid train at block \"{}\"!", _trainName, block.getDisplayName());
-                    _statusMessage = Bundle.getMessage("trackerLostBlock", _trainName, block.getDisplayName());
-                    return;
-                }
-               break;
+        if (index > 0 && index < size-1) {
+            // Mid range. Temporary lost of detection?  Don't remove from _occupies
+            log.warn("Tracker {} lost occupancy mid train at block \"{}\"!", _trainName, block.getDisplayName());
+            _statusMessage = Bundle.getMessage("trackerLostBlock", _trainName, block.getDisplayName());
+            return;
         }
         removeFromOccupies(block);
+        // remove any adjacent dark block 
         for (Portal p : block.getPortals()) {
             OBlock b = p.getOpposingBlock(block);
             if ((b.getState() & OBlock.UNDETECTED) != 0) {
@@ -475,7 +437,6 @@ public class Tracker {
             
         }
         removeName(block);
-        // consider doing _lostRange.add(block); for above unexpected cases that may be temporary lost of detection.
     }
 
     private void removeName(OBlock block) {
@@ -486,9 +447,9 @@ public class Tracker {
     }
 
     protected boolean move(OBlock block, int state) {
-        if (log.isDebugEnabled()) {
+        /*if (log.isDebugEnabled()) {
             log.debug("move( {}, {}) by {}", block.getDisplayName(), state, _trainName);
-        }
+        }*/
         _statusMessage = null;
         if ((state & OBlock.OCCUPIED) != 0) {
             if (_occupies.contains(block)) {
@@ -503,9 +464,9 @@ public class Tracker {
                 }
             } else if (_lostRange.contains(block)) {
                 _lostRange.remove(block);
-                if (log.isDebugEnabled()) {
+                /*if (log.isDebugEnabled()) {
                     log.debug("Block \"{}\" is occupied and was in lost range for train {}.", _trainName, block.getDisplayName());
-                }
+                }*/
             }
             Warrant w = block.getWarrant();
             if (w != null) {
@@ -515,10 +476,10 @@ public class Tracker {
                 // Was it the warranted train that entered the block?
                 // Can't tell who got notified first - tracker or warrant?
                 // is distance of 1 block OK?
-                if (log.isDebugEnabled()) {
+                /*if (log.isDebugEnabled()) {
                     log.debug("Block \"{}\" allocated to warrant \"{}\" currentIndex= {} blockIndex= {}",
                             block.getDisplayName(), w.getDisplayName(), w.getCurrentOrderIndex(), w.getIndexOfBlock(block, 0));
-                }
+                }*/
                 if (Math.abs(w.getIndexOfBlock(block, 0) - idx) < 2) {
                     _statusMessage = msg;
                 } else {  // otherwise claim it for tracker
@@ -547,10 +508,10 @@ public class Tracker {
                 recover(block);
             } else {    // otherwise head or tail is holding a path fixed through a portal (thrown switch should have derailed train by now)
                 if (!_occupies.contains(block)) {
-                    if (log.isDebugEnabled() && size > 1) {
-                        hasPathBetween(_occupies.getLast(), _occupies.get(size - 2));
-                        hasPathBetween(_occupies.getFirst(), _occupies.get(1));
-                    }
+                    /*if (log.isDebugEnabled() && size > 1) {
+                        hasPathBetween(_occupies.getLast(), _occupies.get(size - 2),true);
+                        hasPathBetween(_occupies.getFirst(), _occupies.get(1), true);
+                    }*/
                 }
                 makeRange();
             }
@@ -582,14 +543,14 @@ public class Tracker {
         for (OBlock b : list) {
             if ((b.getState() & (OBlock.UNDETECTED | OBlock.OCCUPIED)) != 0) {
                 lostRange.add(b);
-                if (log.isDebugEnabled()) {
+                /*if (log.isDebugEnabled()) {
                     log.debug("  lostRange.add \"{}\" value= {}", b.getDisplayName(), b.getValue());
-                }
+                }*/
             }
         }
-        if (log.isDebugEnabled()) {
+        /*if (log.isDebugEnabled()) {
             log.debug("recovery: list size= {} filtered size= {}", list.size(), lostRange.size());
-        }
+        }*/
         TrackerTableAction parent = InstanceManager.getDefault(TrackerTableAction.class);
         if (lostRange.isEmpty()) {
             parent.stopTracker(this, block);
@@ -611,7 +572,10 @@ public class Tracker {
         JPanel makeBlurb() {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(new JLabel(Bundle.getMessage("MultipleStartBlocks", getHeadBlock().getDisplayName(), _trainName)));
+            panel.add(new JLabel(Bundle.getMessage("MultipleStartBlocks1", getHeadBlock().getDisplayName(), _trainName)));
+            panel.add(new JLabel(Bundle.getMessage("MultipleStartBlocks2")));
+            panel.add(new JLabel(Bundle.getMessage("MultipleStartBlocks3", _trainName)));
+            panel.add(new JLabel(Bundle.getMessage("MultipleStartBlocks4",Bundle.getMessage("ButtonStart"))));
             return panel;
         }
 
@@ -709,6 +673,7 @@ public class Tracker {
             _jList.setModel(new BlockListModel(list));
             _jList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
             _jList.addListSelectionListener(this);
+            _jList.setCellRenderer(new BlockCellRenderer());
             panel.add(_jList);
             p = new JPanel();
             p.add(panel);
@@ -717,6 +682,7 @@ public class Tracker {
             contentPanel.add(Box.createVerticalStrut(TrackerTableAction.STRUT_SIZE));
             contentPanel.add(makeButtonPanel());
             setContentPane(contentPanel);
+            
             pack();
             setLocation(parent._frame.getLocation());
             setAlwaysOnTop(true);
@@ -745,7 +711,30 @@ public class Tracker {
             }
         }
 
-        class BlockListModel extends AbstractListModel<OBlock> {
+        class BlockCellRenderer extends JLabel implements ListCellRenderer<Object> {
+
+            public Component getListCellRendererComponent(
+              JList<?> list,           // the list
+              Object value,            // value to display
+              int index,               // cell index
+              boolean isSelected,      // is the cell selected
+              boolean cellHasFocus)    // does the cell have focus
+            {
+                String s = ((OBlock)value).getDisplayName();
+                setText(s);
+                if (isSelected) {
+                    setBackground(list.getSelectionBackground());
+                    setForeground(list.getSelectionForeground());
+                } else {
+                    setBackground(list.getBackground());
+                    setForeground(list.getForeground());
+                }
+                setEnabled(list.isEnabled());
+                setFont(list.getFont());
+                setOpaque(true);
+                return this;
+            }
+        }        class BlockListModel extends AbstractListModel<OBlock> {
             List<OBlock> blockList;
 
             BlockListModel(List<OBlock> bl) {

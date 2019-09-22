@@ -39,7 +39,7 @@ public class LearnWarrantTest {
     private OBlockManager _OBlockMgr;
 
     @Test
-    @Ignore("skip")
+//    @Ignore("skip")
     public void testLearnWarrant() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display

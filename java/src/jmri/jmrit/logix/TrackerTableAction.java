@@ -205,10 +205,10 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      */
     protected void addBlockListeners(Tracker tracker) {
         List<OBlock> range = tracker.makeRange();
-        if (log.isDebugEnabled()) {
+        /*if (log.isDebugEnabled()) {
             log.debug("addBlockListeners for tracker= \"" + tracker.getTrainName()
                     + "\" has range of " + range.size() + " blocks.");
-        }
+        }*/
         Iterator<OBlock> iter = range.iterator();
         while (iter.hasNext()) {
             addBlockListener(iter.next(), tracker);
@@ -227,21 +227,21 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                 _trackerBlocks.put(block, trackers);
                 block.addPropertyChangeListener(this);
             }
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
-            }
+            }*/
         } else {
             if (trackers.isEmpty()) {
                 if ((block.getState() & OBlock.UNDETECTED) == 0) {
                     block.addPropertyChangeListener(this);
                 }
-                if (log.isDebugEnabled()) {
+                /*if (log.isDebugEnabled()) {
                     log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
                 }
             } else {
                 if (log.isDebugEnabled()) {
                     log.debug("\tassumed block {} already has listener",block.getDisplayName());
-                }
+                }*/
             }
             if (!trackers.contains(tracker)) {
                 trackers.add(tracker);
@@ -269,9 +269,9 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     }
 
     protected void removeBlockListeners(Tracker tracker) {
-        if (log.isDebugEnabled()) {
+        /*if (log.isDebugEnabled()) {
             log.debug("removeBlockListeners for tracker= \"{}\"", tracker.getTrainName());
-        }
+        }*/
         for (OBlock block : _trackerBlocks.keySet()) {
             removeBlockListener(block, tracker);
         }
@@ -301,16 +301,16 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             // The following washes out the extra notifications
             if ((state & OBlock.UNOCCUPIED) == (oldState & OBlock.UNOCCUPIED)
                     && (state & OBlock.OCCUPIED) == (oldState & OBlock.OCCUPIED)) {
-                if (log.isDebugEnabled()) {
+                /*if (log.isDebugEnabled()) {
                     log.debug("Skip propertyChange of block \"{}\" from oldstate= {} to state= {}",
                             block.getDisplayName(), oldState, state);
-                }
+                }*/
                 return;
-            } else {
+            /*} else {
                 if (log.isDebugEnabled()) {
                     log.debug("propertyChange of block \"{}\" from oldstate= {} to state= {}", 
                             block.getDisplayName(), oldState, state);
-                }
+                }*/
                 
             }
             ArrayList<Tracker> trackerListeners = _trackerBlocks.get(block);
@@ -406,9 +406,9 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * <p>
      */
     private void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
-        if (log.isDebugEnabled()) {
+        /*if (log.isDebugEnabled()) {
             log.debug("processTrackerStateChange for block= " + block.getDisplayName() + " state= " + state + " TrackerName= " + tracker.getTrainName());
-        }
+        }*/
         List<OBlock> oldRange = tracker.makeRange();// total range in effect when state change was detected
         if (tracker.move(block, state)) {   // new total range has been made after move was done.
             block._entryTime = System.currentTimeMillis();
@@ -432,11 +432,18 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     }
 
     private void stopTrain(Tracker t, OBlock b) {
+        t.stop();
         removeBlockListeners(t);
         _trackerList.remove(t);
         long et = (System.currentTimeMillis() - t._startTime) / 1000;
+        String location;
+        if (b!= null) {
+            location = b.getDisplayName(); 
+        }else {
+            location = Bundle.getMessage("BeanStateUnknown");
+        }
         _frame.setStatus(Bundle.getMessage("TrackerStopped", 
-                t.getTrainName(), b.getDisplayName(), et / 60, et % 60));
+                t.getTrainName(), location, et / 60, et % 60));
         _frame._model.fireTableDataChanged();
     }
 
