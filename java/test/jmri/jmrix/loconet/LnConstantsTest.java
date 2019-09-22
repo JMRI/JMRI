@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LnConstantsTest {
 
@@ -24,7 +24,7 @@ public class LnConstantsTest {
         LnConstants t = new LnConstants();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testOpCodeConstants() {
         Assert.assertEquals("check 0x81", 0x81, LnConstants.OPC_GPBUSY);
@@ -98,10 +98,10 @@ public class LnConstantsTest {
         Assert.assertEquals("check OPC_NAME(0xef)", "OPC_WR_SL_DATA", LnConstants.OPC_NAME(0xef));
         Assert.assertEquals("check OPC_0x80", "<unknown>", LnConstants.OPC_NAME(0x80));
     }
-    
+
     @Test
     public void testDEC_MODE() { // encode decoder type as a string
-        
+
         Assert.assertEquals("check decoder mode (0x00)", "28", LnConstants.DEC_MODE(0x00));
         Assert.assertEquals("check decoder mode (0x01)", "28 (Motorola)", LnConstants.DEC_MODE(0x01));
         Assert.assertEquals("check decoder mode (0x02)", "14", LnConstants.DEC_MODE(0x02));
@@ -119,7 +119,23 @@ public class LnConstantsTest {
         Assert.assertEquals("check decoder mode (0xF6)", "28", LnConstants.DEC_MODE(0xf6));
         Assert.assertEquals("check decoder mode (0x57)", "128 (Allow Adv. consisting)", LnConstants.DEC_MODE(0x57));
     }
-    
+
+    @Test
+    public void testCONSIST_STAT() {
+        Assert.assertEquals("check consist stat (0x00)", "Not Consisted", LnConstants.CONSIST_STAT(0x00));
+        Assert.assertEquals("check consist stat (0x08)", "Consist TOP", LnConstants.CONSIST_STAT(0x08));
+        Assert.assertEquals("check consist stat (0x40)", "Sub Consist", LnConstants.CONSIST_STAT(0x40));
+        Assert.assertEquals("check consist stat (0x48)", "Mid Consist", LnConstants.CONSIST_STAT(0x48));
+    }
+
+    @Test
+    public void testLOCO_STAT() {
+        Assert.assertEquals("check consist stat (0x00)", "Free", LnConstants.LOCO_STAT(0x00));
+        Assert.assertEquals("check consist stat (0x20)", "Idle", LnConstants.LOCO_STAT(0x20));
+        Assert.assertEquals("check consist stat (0x30)", "In-Use", LnConstants.LOCO_STAT(0x30));
+        Assert.assertEquals("check consist stat (0x10)", "Common", LnConstants.LOCO_STAT(0x10));
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
