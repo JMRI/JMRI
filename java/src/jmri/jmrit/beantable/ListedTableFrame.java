@@ -214,7 +214,6 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
     void buildMenus(final TabbedTableItem<E> item) {
         JMenuBar menuBar = new JMenuBar();
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
 
@@ -226,7 +225,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
-        JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener((ActionEvent e) -> {
             try {

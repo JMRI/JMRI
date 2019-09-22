@@ -690,19 +690,34 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         
     }
     
+    /**
+     * Get the core list containing all table events
+     */
     protected ArrayList<CbusTableEvent> getEvents() {
         return _mainArray;
     }
     
     /**
+     * Remove all events from table
+     */
+    protected void clearAllEvents() {
+        _mainArray = new ArrayList<CbusTableEvent>();
+    }
+    
+    /**
      * Remove Row from table
      * @param row int row number
-     */    
+     */
     void removeRow(int row) {
         _mainArray.remove(row);
         ThreadingUtil.runOnGUI( ()->{
             fireTableRowsDeleted(row,row); 
         });
+    }
+    
+    // for testing
+    protected CbusEventTableAction getCbusEventTableAction() {
+        return ta;
     }
     
     /**

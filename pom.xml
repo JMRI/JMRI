@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.17.4-SNAPSHOT</version>
+    <version>4.17.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -165,6 +165,72 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>test-warnings-check</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <compilerId>eclipse</compilerId>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <failOnWarnings>true</failOnWarnings>
+                            <compilerArgs>
+                                <properties>${basedir}/java/ecj.warning.options-ci</properties>
+                            </compilerArgs>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-compiler-eclipse</artifactId>
+                                <version>2.8.3</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.eclipse.jdt</groupId>
+                                <artifactId>ecj</artifactId>
+                                <version>3.18.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis-scanhelp</id>
+            <build>
+                <plugins>
+                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>scripts/tidy-check.sh</executable>
+                            <arguments>
+                                <argument>help/en/*/*</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
@@ -259,7 +325,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -559,7 +625,7 @@
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
                                 <File>jmri/server/json/roster/JsonRoster.class</File>
                                 <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
+                                <File>jmri/server/json/signalmast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -1016,6 +1082,20 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time, 
+                                           may be used at runtime. -->
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-gpio-extension</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time,
+                                           may be used at runtime. -->
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>

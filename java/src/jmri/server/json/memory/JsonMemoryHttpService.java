@@ -64,7 +64,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                         "jmri/server/json/memory/memory-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -74,7 +74,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    protected ProvidingManager<Memory> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Memory> getManager() {
         return InstanceManager.getDefault(MemoryManager.class);
     }
 }
