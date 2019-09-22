@@ -50,8 +50,8 @@ on_failure:
 - appveyor PushArtifact junit-results.xml
 # modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
 - ps: |
-     $xml = [xml](Get-Content .\junit-results.xml)
-     $xml.testcase |where { $_.failure }
+    $xml = [xml](Get-Content .\junit-results.xml)
+    $xml.SelectNodes("/testsuit/testcase/failure") | format-table ParentNode.classname,message
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml
