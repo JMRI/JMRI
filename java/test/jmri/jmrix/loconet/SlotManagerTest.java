@@ -1109,7 +1109,7 @@ public class SlotManagerTest {
     public void testGetUserName() {
         Assert.assertEquals("check getUserName","LocoNet", slotmanager.getUserName());
     }
-    
+
     @Test
     public void testOpCode8a() {
         slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
@@ -1118,7 +1118,7 @@ public class SlotManagerTest {
             Assert.assertEquals("testOpCode8a: loop "+i+" check sent opcode", 0xBB, lnis.outbound.get(i).getOpCode());
             Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 1", i, lnis.outbound.get(i).getElement(1));
             Assert.assertEquals("testOpCode8a: loop "+i+" check sent byte 2", 0, lnis.outbound.get(i).getElement(2));
-            
+
         }
     }
 
