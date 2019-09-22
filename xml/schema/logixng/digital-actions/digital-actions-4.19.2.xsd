@@ -25,16 +25,16 @@
             "
         >
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-string-action-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/hold-anything-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/shutdown-computer-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.17.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-string-action-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/hold-anything-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/shutdown-computer-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/throttle-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_DigitalActionManagerType">
       <xs:annotation>

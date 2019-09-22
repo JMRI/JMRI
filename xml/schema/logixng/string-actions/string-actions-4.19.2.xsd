@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!-- This file contains definitions for LogixNG AnalogActions.              -->
+<!-- This file contains definitions for LogixNG StringActions.              -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,15 +25,15 @@
             "
         >
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/action-memory-4.17.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-actions/action-memory-4.19.2.xsd"/>
 
-    <xs:complexType name="LogixNG_AnalogActionManagerType">
+    <xs:complexType name="LogixNG_StringActionManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a AnalogActionManager implementation.
+          Define the XML stucture for storing the contents of a StringActionManager implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogActionManagerXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.string.implementation.configurexml.StringAnalogActionManagerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
@@ -41,7 +41,7 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
-            <xs:element name="analog-action-memory"  type="LogixNG_AnalogAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="string-action-memory"  type="LogixNG_StringAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
 
           </xs:choice>
       </xs:sequence>

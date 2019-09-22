@@ -25,19 +25,19 @@
             "
         >
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/and-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/antecedent-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-buffered-sensor-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-light-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-turnout-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/false-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/hold-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/or-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/reset-on-true-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/timer-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/trigger-once-4.17.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/true-4.17.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/and-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/antecedent-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-buffered-sensor-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-light-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-turnout-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/false-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/hold-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/or-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/reset-on-true-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/timer-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/trigger-once-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/true-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_DigitalExpressionManagerType">
       <xs:annotation>
