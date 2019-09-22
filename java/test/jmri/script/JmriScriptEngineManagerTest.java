@@ -61,6 +61,7 @@ public class JmriScriptEngineManagerTest {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         assertNull(result);
         assertNull(manager.getBySystemName("IT1"));
+        result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/turnout.py"));
         assertNotNull(result);
         assertNotNull(manager.getBySystemName("IT1"));
         assertEquals(InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT1"), result);
