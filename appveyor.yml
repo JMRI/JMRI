@@ -48,6 +48,10 @@ artifacts:
 on_failure:
 - appveyor PushArtifact tests.log
 - appveyor PushArtifact junit-results.xml
+# modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
+- ps: |
+     $xml = [xml](Get-Content .\junit-results.xml)
+     $xml.testcase |where { $_.failure }
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml
