@@ -143,7 +143,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             log.debug("Float speed = " + speed + " Int speed = " + value);
         }
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
     }
 
@@ -164,7 +164,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         setSpeedSetting(0.0f); //Stop the loco first before changing direction.
         tc.sendMarklinMessage(MarklinMessage.setLocoDirection(getCANAddress(), (forward ? 0x01 : 0x02)), this);
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 
@@ -234,7 +234,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                         if (!isForward) {
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            notifyPropertyChangeListener("IsForward", isForward, true);
+                            notifyPropertyChangeListener(ISFORWARD, isForward, true);
                             isForward = true;
                         }
                         return;
@@ -242,14 +242,14 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                         if (isForward) {
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            notifyPropertyChangeListener("IsForward", isForward, false);
+                            notifyPropertyChangeListener(ISFORWARD, isForward, false);
                             isForward = false;
                         }
                         return;
                     case 0x03:
                         speedSetting = 0.0f;
                         super.setSpeedSetting(speedSetting);
-                        notifyPropertyChangeListener("Isforward", isForward, !isForward);
+                        notifyPropertyChangeListener(ISFORWARD, isForward, !isForward);
                         isForward = !isForward;
                         return;
                     default:

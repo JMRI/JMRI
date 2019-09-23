@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -139,7 +140,7 @@ public class SRCPThrottle extends AbstractThrottle {
         this.speedSetting = speed;
         sendUpdate();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
     }
 
@@ -149,7 +150,7 @@ public class SRCPThrottle extends AbstractThrottle {
         isForward = forward;
         sendUpdate();
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(Throttle.ISFORWARD, old, isForward);
         }
     }
 

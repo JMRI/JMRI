@@ -53,7 +53,7 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
     }
 
     @Test
-    public void testDefaultSystemMixedDigitx() {
+    public void testDefaultSystemMixedDigit() {
         // create
         Reporter t = l.provideReporter("ZRa1c3:5");
         // check
@@ -62,9 +62,21 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
         Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZRA1C3:5"));
     }
 
-   @Before
+    @Test
+    public void testDefaultSystemMixedCase() {
+        // create
+        Reporter t = l.provideReporter("ZRaBcD:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct", t, l.getBySystemName("ZRaBcD:5"));
+        Assert.assertEquals("system name opposite input correct", t, l.getBySystemName("ZRAbCd:5"));
+        Assert.assertEquals("system name same all lower", t, l.getBySystemName("ZRabcd:5"));
+        Assert.assertEquals("system name same all upper", t, l.getBySystemName("ZRABCD:5"));
+    }
+
+    @Before
     @Override
-   public void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         memo = new Z21SystemConnectionMemo();

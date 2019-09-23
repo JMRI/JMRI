@@ -175,7 +175,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             displayState();
         }
         if (e.getSource() instanceof jmri.Throttle) {
-            if (e.getPropertyName().equals("IsForward")) {
+            if (e.getPropertyName().equals(jmri.Throttle.ISFORWARD)) {
                 Boolean boo = (Boolean) e.getNewValue();
                 if (boo) {
                     flipIcon(NamedIcon.NOFLIP);
@@ -440,7 +440,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 flipIcon(NamedIcon.HORIZONTALFLIP);
             }
             jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), "IsForward");
+            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), jmri.Throttle.ISFORWARD);
             if (isForward != null) {
                 if (!(Boolean) isForward) {
                     flipIcon(NamedIcon.HORIZONTALFLIP);

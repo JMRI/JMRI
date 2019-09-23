@@ -28,7 +28,7 @@ public class Z21CanBusAddress {
 
     /**
      * Public static method to parse a Z21CanBus system name.
-     * Note: Bits are numbered from 1.
+     * Note: Bits are numbered from 0.
      *
      * @return the hardware address number, return -1 if an error is found
      */
@@ -110,36 +110,32 @@ public class Z21CanBusAddress {
         name = manager.validateSystemNamePrefix(name, locale);
         String[] parts = name.substring(manager.getSystemNamePrefix().length()).split(":");
         if (parts.length != 2) {
-            throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidMissingParts", name),
-                    Bundle.getMessage(locale, "SystemNameInvalidMissingParts", name));
+            throw newBadSystemNameException(name,"SystemNameInvalidMissingParts",locale);
         }
         int num;
         try {
             num = parseEncoderAddress(parts[0],0,parts[0].length());
             if (num < 0 || num > 65535) {
-            throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidCanAddress", name),
-                    Bundle.getMessage(locale, "SystemNameInvalidCanAddress", name));
+                throw newBadSystemNameException(name, "SysteNameInvalidCanAddress", locale);
             }
         } catch (NumberFormatException ex) {
-            throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidCanAddress", name),
-                    Bundle.getMessage(locale, "SystemNameInvalidCanAddress", name));
+            throw newBadSystemNameException(name,"SysteNameInvalidCanAddress",locale);
         }
         try {
             num = Integer.parseInt(parts[1]);
-            if (num < 1 || num > 8) {
-            throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
-                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+            if (num < 0 || num > 7) {
+                throw newBadSystemNameException(name,"SystemNameInvalidPin",locale);
             }
         } catch (NumberFormatException ex) {
-            throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidPin", name),
-                    Bundle.getMessage(locale, "SystemNameInvalidPin", name));
+            throw newBadSystemNameException(name,"SystemNameInvalidPin",locale);
         }
         return name;
+    }
+
+    private static NamedBean.BadSystemNameException newBadSystemNameException(String name, String reasonKey, Locale locale){
+        return new NamedBean.BadSystemNameException(
+                Bundle.getMessage(Locale.ENGLISH, reasonKey, name),
+                Bundle.getMessage(locale, reasonKey, name));
     }
 
     /**
@@ -155,7 +151,7 @@ public class Z21CanBusAddress {
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
-        if (getBitFromSystemName(systemName, prefix) > 0) {
+        if (getBitFromSystemName(systemName, prefix) >= 0) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
@@ -195,6 +191,14 @@ public class Z21CanBusAddress {
         } 
         // not any known sensor
         return ("");
+    }
+
+    public static String buildDecimalSystemNameFromParts(String prefix, char typeLetter, int userAddress,int pin){
+        return String.format("%s%c%d:%d",prefix,typeLetter, userAddress,pin);
+    }
+
+    public static String buildHexSystemNameFromParts(String prefix, char typeLetter,int globalCANaddress,int pin){
+            return String.format("%s%c%4X:%d",prefix,typeLetter, globalCANaddress,pin);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21CanBusAddress.class);

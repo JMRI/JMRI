@@ -224,6 +224,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
+
+##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
+- Pi4j
+- from https://pi4j.com/
+- Used for supporting GPIO pins on a raspberry pi. pi4j-core is required at compile time.  pi4j-device and pi4j-gpio-extension may be used at runtime (by scripts) to control devices attached to the raspberry pi.
+
 ##### thumbnailator-0.4.8.jar
 - Thumbnailator
 - from https://github.com/coobird/thumbnailator

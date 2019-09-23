@@ -347,6 +347,9 @@ public class LightControlTest {
         lc.setParentLight(l);
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(3, 0, 4, 0); // onHr, OnMin, OffHr, OffMin
+        
+        Assert.assertTrue("Total On Time",180==lc.getFastClockOnCombined());
+        Assert.assertTrue("Total Off Time",240==lc.getFastClockOffCombined());
 
         l.addLightControl(lc);
         l.activateLight();
@@ -522,6 +525,9 @@ public class LightControlTest {
         LightControl lcb = new LightControl(l);
         lcb.setControlType(Light.FAST_CLOCK_CONTROL);
         lcb.setFastClockControlSchedule(3, 30, 4, 30); // onHr, OnMin, OffHr, OffMin
+
+        Assert.assertTrue("Total On Time",210==lcb.getFastClockOnCombined());
+        Assert.assertTrue("Total Off Time",270==lcb.getFastClockOffCombined());
 
         l.addLightControl(lc);
         l.addLightControl(lcb);
@@ -831,6 +837,45 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
+        
+    }
+    
+    @Test
+    public void testUniqueTimes() {
+        l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
+        Assert.assertEquals("OFF state by default", Light.OFF, l.getState()); // lights are OFF by default
+
+        lc = new LightControl(l);
+        lc.setControlType(Light.FAST_CLOCK_CONTROL);
+        lc.setFastClockControlSchedule(0, 0, 0, 0); // onHr, OnMin, OffHr, OffMin
+
+        Assert.assertTrue(lc.onOffTimesFaulty());
+        lc.setFastClockControlSchedule(1, 2, 3, 4); // onHr, OnMin, OffHr, OffMin
+        Assert.assertFalse(lc.onOffTimesFaulty());
+ 
+        LightControl lcb = new LightControl(l);
+        lcb.setControlType(Light.FAST_CLOCK_CONTROL);
+        lcb.setFastClockControlSchedule(1, 2, 0, 0); // onHr, OnMin, OffHr, OffMin
+
+        l.addLightControl(lc);
+        Assert.assertFalse(lc.areFollowerTimesFaulty(l.getLightControlList()));
+        
+        l.addLightControl(lcb);
+        
+        Assert.assertTrue(lcb.areFollowerTimesFaulty(l.getLightControlList()));
+        lcb.setFastClockControlSchedule(0, 0, 0, 0); // onHr, OnMin, OffHr, OffMin
+        Assert.assertTrue(lcb.areFollowerTimesFaulty(l.getLightControlList()));
+        
+        lcb.setFastClockControlSchedule(9, 0, 10, 0); // onHr, OnMin, OffHr, OffMin
+        Assert.assertFalse(lcb.areFollowerTimesFaulty(l.getLightControlList()));
+        
+        lcb.setFastClockControlSchedule(0, 0, 3, 4); // onHr, OnMin, OffHr, OffMin
+        Assert.assertTrue(lcb.areFollowerTimesFaulty(l.getLightControlList()));
+        l.activateLight();
+        
+        JUnitAppender.assertErrorMessage("Light has multiple actions for the same time in Light Controller ILL1 ON at 01:02, OFF at 03:04.");
+        JUnitAppender.assertErrorMessage("Light has multiple actions for the same time in Light Controller ILL1 ON at 00:00, OFF at 03:04.");        
+        
     }
 
     private int _listenerkicks;

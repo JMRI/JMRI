@@ -42,12 +42,12 @@ public class Z21ConfigAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("Z21ConfigAction starting Z21ConfigFrame: Exception: " + ex.toString());
+            log.warn("Z21ConfigAction starting Z21ConfigFrame: Exception: {}",ex);
         }
         f.setVisible(true);
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21ConfigAction.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21ConfigAction.class);
 
 }

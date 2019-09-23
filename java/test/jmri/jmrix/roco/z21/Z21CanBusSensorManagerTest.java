@@ -51,7 +51,7 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
     }
 
     @Test
-    public void testDefaultSystemMixedDigitx() {
+    public void testDefaultSystemMixedDigit() {
         // create
         Sensor t = l.provideSensor("ZSa1c3:5");
         // check
@@ -59,6 +59,19 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
         Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZSa1c3:5"));
         Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZSA1C3:5"));
     }
+
+    @Test
+    public void testDefaultSystemMixedCase() {
+        // create
+        Sensor t = l.provideSensor("ZSaBcD:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct",t,l.getBySystemName("ZSaBcD:5"));
+        Assert.assertEquals("system name opposite input correct", t, l.getBySystemName("ZSAbCd:5"));
+        Assert.assertEquals("system name same all lower", t,l.getBySystemName("ZSabcd:5"));
+        Assert.assertEquals("system name same all upper", t,l.getBySystemName("ZSABCD:5"));
+    }
+
 
     @Test
     public void testZ21CanBusCTor() {

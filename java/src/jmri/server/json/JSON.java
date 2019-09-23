@@ -3,9 +3,9 @@ package jmri.server.json;
 /**
  * Common and utility constants used in the JMRI JSON protocol.
  * <p>
- * <strong>Note</strong> any documented use of a constant is not the exclusive or
- * sole use of the constant. Review the JSON schemas for all uses of any given
- * constant.
+ * <strong>Note</strong> any documented use of a constant is not the exclusive
+ * or sole use of the constant. Review the JSON schemas for all uses of any
+ * given constant.
  * 
  * @author Randall Wood (C) 2013, 2014, 2016, 2018, 2019
  */
@@ -16,7 +16,7 @@ public final class JSON {
      * history. Starting with 5.0.0, this is a semantic version string; prior to
      * that, it is just an X.Y version string.
      */
-    public static final String JSON_PROTOCOL_VERSION = "5.0.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "5.1.0"; // NOI18N
 
     /* JSON structure */
     /**
@@ -644,8 +644,8 @@ public final class JSON {
      * {@value #UNKNOWN}
      * <p>
      * Note that this value deliberately differs from
-     * {@link jmri.NamedBean#UNKNOWN} so that JSON clients can treat
-     * all known states as true, and the unknown state as false. 
+     * {@link jmri.NamedBean#UNKNOWN} so that JSON clients can treat all known
+     * states as true, and the unknown state as false.
      */
     public static final int UNKNOWN = 0x00;
 
