@@ -320,6 +320,11 @@
                         <artifactId>ant-junit</artifactId>
                         <version>${ant.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>com.tngtech.archunit</groupId>
+                        <artifactId>archunit-junit4</artifactId>
+                        <version>0.11.0</version>
+                    </dependency>
                 </dependencies>
             </plugin>
             <plugin>
