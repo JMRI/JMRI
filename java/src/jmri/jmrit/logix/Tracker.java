@@ -189,7 +189,7 @@ public class Tracker {
            return pathset;
        }
        // blkA and blkB not adjacent, so look for a connecting dark block
-       PathSet darkPathSet = PathSet.NO;
+       PathSet darkPathSet;
        for (OBlock block : darkBlocks) {
            // if more than one dark block, set _darkBlock to the one with best accessing paths
            darkPathSet = hasDarkBlockPathBetween(blkA, block, blkB);
