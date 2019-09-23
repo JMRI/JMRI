@@ -13,10 +13,8 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableRowSorter;
-import jmri.Block;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.Path;
+
+import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -262,7 +260,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      *
      * @author EBR 2019
      */
-    private void importBlocks() throws IllegalArgumentException {
+    protected void importBlocks() throws IllegalArgumentException {
         Manager<Block> bm = InstanceManager.getDefault(jmri.BlockManager.class);
         OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
         PortalManager pom = InstanceManager.getDefault(PortalManager.class);
@@ -281,7 +279,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 String uName = b.getUserName();
                 String blockNumber = sName.substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
                 String oBlockName = "OB" + blockNumber;
-                String sensor = b.getSensor().getDisplayName();
+                String sensor = "";
+                Sensor s = b.getSensor();
+                if (s != null) {
+                    sensor = s.getDisplayName();
+                }
                 float length = b.getLengthIn();
                 int curve = b.getCurvature();
                 List<Path> blockPaths = b.getPaths();
@@ -291,7 +293,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 Portal prevPortal = null;
 
                 log.debug("start creating OBlock {} from Block {}", oBlockName, sName);
-                if (obm.getOBlock(uName) != null) {
+                if ((uName != null) && (obm.getOBlock(uName) != null)) {
                     log.warn("an OBlock with this user name already exists, replacing {}", uName);
                 }
                 // create the OBlock by systemName
@@ -360,7 +362,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             // finished setting up 1 OBlock
         }
         // add recursive Path elements to FromBlock/ToBlock
-        for (OBlock b : obm.getNamedBeanSet()) {
+        SortedSet<OBlock> oblkList = obm.getNamedBeanSet();
+        for (OBlock b : oblkList) {
             for (Portal po : b.getPortals()) {
                 String bName = po.getFromBlockName();
                 for (Path opa : obm.getByUserName(bName).getPaths()) {
@@ -373,8 +376,30 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             }
         } // storing and reloading will add in these items
         errorCheck();
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportBlockComplete"),
-                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
+//        JFrame readyFrame = new JFrame(Bundle.getMessage("MessageTitle"));
+//        JTextField readyMsg = new JTextField(Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()));
+//        readyFrame.add(readyMsg);
+//        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+//        ok.addActionListener(event -> {
+//            readyFrame.setVisible(false);
+//            readyFrame.dispose();
+//        });
+//        readyFrame.add(ok);
+//        readyFrame.setVisible(true);
+//        readyFrame.getRootPane().setDefaultButton(ok);
+//        readyFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosing(java.awt.event.WindowEvent evt) {
+//                readyFrame.dispose();
+//            }
+//        });
+//        readyFrame.pack();
+        if (_showWarnings) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()),
+                    Bundle.getMessage("MessageTitle"),
+                    JOptionPane.INFORMATION_MESSAGE); // standard JOptionPane can't be found in Jemmy log4J
+        }
     }
 
     protected final JScrollPane getBlockTablePane() {
@@ -405,7 +430,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return _blockPortalXRefModel;
     }
 
-    private void setShowWarnings(String cmd) {
+    protected void setShowWarnings(String cmd) {
         if (cmd.equals("ShowWarning")) {
             _showWarnings = true;
             _showWarnItem.setActionCommand("SuppressWarning");
@@ -415,18 +440,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _showWarnItem.setActionCommand("ShowWarning");
             _showWarnItem.setText(Bundle.getMessage("ShowWarning"));
         }
-        if (log.isDebugEnabled()) {
-            log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
-        }
+        log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
     }
 
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         errorCheck();
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        if (log.isDebugEnabled()) {
-            log.debug("windowClosing: {}", toString());
-        }
+        log.debug("windowClosing: {}", toString());
     }
 
     private void errorCheck() {
