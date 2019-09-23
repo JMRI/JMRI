@@ -105,7 +105,7 @@ public class DebugThrottle extends AbstractThrottle {
         }
         this.speedSetting = speed;
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -117,7 +117,7 @@ public class DebugThrottle extends AbstractThrottle {
         this.isForward = forward;
         sendFunctionGroup1();  // send the command
         if (old != this.isForward) {
-            notifyPropertyChangeListener("IsForward", old, this.isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, this.isForward);
         }
     }
 

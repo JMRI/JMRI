@@ -29,7 +29,7 @@ before_test:
 
 test_script:
 - ps: |
-    mvn test -P appveyor --batch-mode
+    mvn --quiet test -P appveyor --batch-mode
 
 after_test:
 # upload results to Appveyor
@@ -42,7 +42,17 @@ deploy: off
 
 artifacts:
   - path: instanceManagerSequence.txt
-  - path: tests.log 
+  - path: tests.log
+  - path: junit-results.xml
+
+on_failure:
+- appveyor PushArtifact tests.log
+- appveyor PushArtifact junit-results.xml
+- ps: echo "Failing Tests"
+# modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
+- ps: |
+    $xml = [xml](get-content .\junit-results.xml)
+    $xml.SelectNodes("//testcase") | where { $_.failure } | format-table classname,name,InnerXml
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

@@ -3,6 +3,8 @@ package jmri.jmrit.vsdecoder;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
+
+import jmri.Throttle;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,9 +134,9 @@ public class EngineSoundEvent extends SoundEvent {
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         super.propertyChange(event);
-        if (event.getPropertyName().equals("SpeedSetting")) {
+        if (event.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             ((EngineSound) parent.getSound("ENGINE")).handleSpeedChange((Float) event.getNewValue(), engine_pane);
-        } else if (event.getPropertyName().equals("IsForward")) {
+        } else if (event.getPropertyName().equals(Throttle.ISFORWARD)) {
             ((EngineSound) parent.getSound("ENGINE")).changeLocoDirection((Boolean) event.getNewValue() ? 1 : -1);
             log.debug("is forward: {}", event.getNewValue());
         } else if (event.getPropertyName().startsWith("F")) {
