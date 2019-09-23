@@ -18,7 +18,12 @@ public class UsbBrowserPanelTest {
         UsbBrowserPanel t = new UsbBrowserPanel(){
            @Override
            protected UsbTreeNode getRootNode() {
-              return new UsbTreeNode(new UsbDeviceScaffold("foo","bar"));
+              return new UsbTreeNode(new UsbDeviceScaffold("foo","bar"){
+                      @Override
+                      public boolean isUsbHub() {
+                          return true;
+                      }
+              });
            }
         };
         Assert.assertNotNull("exists",t);
