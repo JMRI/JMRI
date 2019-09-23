@@ -21,6 +21,43 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 public class ArchitectureCheck {
 
     /**
+     * No access to System.err and System.out except as specified
+     */
+    @Test // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
+    public void checkStandardStreams() {
+        ArchRule thisRule = noClasses().that()
+                                // classes with permitted access
+                                .doNotHaveFullyQualifiedName("apps.SystemConsole").and()
+                                .doNotHaveFullyQualifiedName("apps.FindBugsCheck").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.loconet.cmdstnconfig.XmlConfig").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
+                                .doNotHaveFullyQualifiedName("jmri.Version")
+                            .should(
+                                com.tngtech.archunit.library.GeneralCodingRules.
+                                ACCESS_STANDARD_STREAMS
+                            );
+          
+        thisRule.check(importedAllClasses);      
+    }
+    
+    /**
+     * No access to java.util.Timer except jmri.util.TimerUtil
+     */
+    @Test 
+    public void checkTimerClassRestricted() {
+        ArchRule thisRule = noClasses().that()
+                                // classes with permitted access
+                                .haveNameNotMatching("jmri\\.util\\.TimerUtil")
+                            .should()
+                                .dependOnClassesThat().haveFullyQualifiedName("java.util.Timer");
+          
+        thisRule.check(importedAllClasses);      
+    }
+
+     
+    /**
      * No access to apps outside of itself.
      */
     @Test // Initially 92 flags in JMRI 4.17.3
