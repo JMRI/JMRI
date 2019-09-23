@@ -1,15 +1,10 @@
 package jmri.util.usb;
 
-import javax.usb.UsbDevice;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 
 /**
  *
@@ -17,18 +12,13 @@ import org.mockito.junit.MockitoRule;
  */
 public class UsbBrowserPanelTest {
 
-    @Rule
-    public MockitoRule rule = MockitoJUnit.rule();
-
     @Test
     public void testCTor() {
-        UsbDevice mockDevice = Mockito.mock(UsbDevice.class);
+
         UsbBrowserPanel t = new UsbBrowserPanel(){
            @Override
            protected UsbTreeNode getRootNode() {
-              UsbTreeNode retval = new UsbTreeNode(mockDevice);
-              retval.setUsbDevice(null);
-              return retval;
+              return new UsbTreeNode(new UsbDeviceScaffold("foo","bar"));
            }
         };
         Assert.assertNotNull("exists",t);
