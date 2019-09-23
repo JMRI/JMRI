@@ -99,45 +99,10 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         List<Element> windowList = shared.getChildren("windowDetails");
         for (Element win : windowList) {
             String strClass = win.getAttribute("class").getValue();
-            List<Element> locListX = win.getChildren("locX");
-            double x = 0.0;
-            for (Element locX : locListX) {
-                try {
-                    x = Double.parseDouble(locX.getText());
-                } catch (NumberFormatException e) {
-                    log.error("failed to convert positional attribute");
-                }
-            }
-            List<Element> locListY = win.getChildren("locY");
-            double y = 0.0;
-            for (Element locY : locListY) {
-                try {
-                    y = Double.parseDouble(locY.getText());
-                } catch (NumberFormatException e) {
-                    log.error("failed to convert positional attribute");
-                }
-            }
-            p.setWindowLocation(strClass, new java.awt.Point((int) x, (int) y));
-
-            List<Element> sizeWidth = win.getChildren("width");
-            double width = 0.0;
-            for (Element w : sizeWidth) {
-                try {
-                    width = Double.parseDouble(w.getText());
-                } catch (NumberFormatException e) {
-                    log.error("failed to convert positional attribute");
-                }
-            }
-            List<Element> sizeHeight = win.getChildren("height");
-            double height = 0.0;
-            for (Element h : sizeHeight) {
-                try {
-                    height = Double.parseDouble(h.getText());
-                } catch (NumberFormatException e) {
-                    log.error("failed to convert positional attribute");
-                }
-            }
-            p.setWindowSize(strClass, new java.awt.Dimension((int) width, (int) height));
+            p.setWindowLocation(strClass,
+                    new java.awt.Point(extractCoord(win, "locX"), extractCoord(win, "locY")));
+            p.setWindowSize(strClass,
+                    new java.awt.Dimension(extractCoord(win, "width"), extractCoord(win, "height")));
 
             Element prop = win.getChild("properties");
             if (prop != null) {
@@ -216,6 +181,19 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         });
         p.finishLoading();
         return true;
+    }
+
+    private int extractCoord(Element win, String name) {
+        List<Element> locList = win.getChildren(name);
+        double coord = 0.0;
+        for (Element loc : locList) {
+            try {
+                coord = Double.parseDouble(loc.getText());
+            } catch (NumberFormatException e) {
+                log.error("failed to convert positional attribute");
+            }
+        }
+        return (int) coord;
     }
 
     private void setTableColumnPreferences(JmriJTablePersistenceManager jtpm, String table, String column, int order, int width, SortOrder sort, boolean hidden) {
