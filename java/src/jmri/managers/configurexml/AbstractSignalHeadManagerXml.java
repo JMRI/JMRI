@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * *Xml classes for each specific SignalHead or AbstractSignalHead subclass at
  * store time.
  * <p>
- * Based on AbstractTurnoutManagerConfigXML
+ * Based on {@link AbstractTurnoutManagerConfigXML}
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */

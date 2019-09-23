@@ -342,16 +342,13 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             List<Element> routeTurnoutList = el.getChildren("routeTurnout");
             if (routeTurnoutList.size() > 0) {
                 // This route has turnouts
-                for (int k = 0; k < routeTurnoutList.size(); k++) {
-                    if (((routeTurnoutList.get(k))).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName {} {}", ((routeTurnoutList.get(k))),
-                                ((routeTurnoutList.get(k))).getAttributes());
+                for (Element element : routeTurnoutList) {
+                    if (element.getAttribute("systemName") == null) {
+                        log.warn("unexpected null in systemName {} {}", element, element.getAttributes());
                         break;
                     }
-                    String tSysName = ((routeTurnoutList.get(k)))
-                            .getAttribute("systemName").getValue();
-                    String rState = ((routeTurnoutList.get(k)))
-                            .getAttribute("state").getValue();
+                    String tSysName = element.getAttribute("systemName").getValue();
+                    String rState = element.getAttribute("state").getValue();
                     int tSetState = Turnout.CLOSED;
                     if (rState.equals("THROWN")) {
                         tSetState = Turnout.THROWN;
@@ -366,7 +363,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             routeTurnoutList = el.getChildren("routeOutputTurnout");
             if (routeTurnoutList.size() > 0) {
                 // This route has turnouts
-                for (int k = 0; k < routeTurnoutList.size(); k++) {
+                for (int k = 0; k < routeTurnoutList.size(); k++) { // index k is required later to get Locked state
                     if (routeTurnoutList.get(k).getAttribute("systemName") == null) {
                         log.warn("unexpected null in systemName {} {}", routeTurnoutList.get(k),
                                 routeTurnoutList.get(k).getAttributes());
@@ -492,8 +489,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         }
         // if old manager exists, remove it from configuration process
         if (current != null) {
-            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(
-                    current);
+            InstanceManager.getDefault(jmri.ConfigureManager.class).deregister(current);
             InstanceManager.deregister(current, RouteManager.class);
         }
 

@@ -39,117 +39,115 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
             source.setAttribute("source", sml.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sml.getSourceMast().getDisplayName()));
             List<SignalMast> destinations = sml.getDestinationList();
-            if (destinations.size() != 0) {
-                for (SignalMast dest : destinations) {
-                    if (sml.getStoreState(dest) != SignalMastLogic.STORENONE) {
-                        Element elem = new Element("destinationMast");
-                        elem.setAttribute("destination", dest.getDisplayName()); // added purely to make human reading of the xml easier
-                        elem.addContent(new Element("destinationSignalMast").addContent(dest.getDisplayName()));
-                        elem.addContent(new Element("comment").addContent(sml.getComment(dest)));
-                        if (sml.isEnabled(dest)) {
-                            elem.addContent(new Element("enabled").addContent("yes"));
-                        } else {
-                            elem.addContent(new Element("enabled").addContent("no"));
-                        }
-
-                        if (sml.allowAutoMaticSignalMastGeneration(dest)) {
-                            elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("yes"));
-                        } else {
-                            elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("no"));
-                        }
-
-                        if (sml.useLayoutEditor(dest)) {
-                            elem.addContent(new Element("useLayoutEditor").addContent("yes"));
-                        } else {
-                            elem.addContent(new Element("useLayoutEditor").addContent("no"));
-                        }
-
-                        if (sml.useLayoutEditorTurnouts(dest)) {
-                            elem.addContent(new Element("useLayoutEditorTurnouts").addContent("yes"));
-                        } else {
-                            elem.addContent(new Element("useLayoutEditorTurnouts").addContent("no"));
-                        }
-
-                        if (sml.useLayoutEditorBlocks(dest)) {
-                            elem.addContent(new Element("useLayoutEditorBlocks").addContent("yes"));
-                        } else {
-                            elem.addContent(new Element("useLayoutEditorBlocks").addContent("no"));
-                        }
-
-                        if (sml.getAssociatedSection(dest) != null) {
-                            elem.addContent(new Element("associatedSection").addContent(sml.getAssociatedSection(dest).getDisplayName()));
-                        }
-                        if (sml.isTurnoutLockAllowed(dest)) {
-                            elem.addContent(new Element("lockTurnouts").addContent("yes"));
-                        } else {
-                            elem.addContent(new Element("lockTurnouts").addContent("no"));
-                        }
-
-                        if (sml.getStoreState(dest) == SignalMastLogic.STOREALL) {
-                            List<Block> blocks = sml.getBlocks(dest);
-                            if (blocks.size() > 0) {
-                                Element blockElement = new Element("blocks");
-                                for (Block bl : blocks) {
-                                    Element bloc = new Element("block");
-                                    bloc.addContent(new Element("blockName").addContent(bl.getDisplayName()));
-                                    String blkState = "anyState";
-                                    if (sml.getBlockState(bl, dest) == Block.OCCUPIED) {
-                                        blkState = "occupied";
-                                    } else if (sml.getBlockState(bl, dest) == Block.UNOCCUPIED) {
-                                        blkState = "unoccupied";
-                                    }
-                                    bloc.addContent(new Element("blockState").addContent(blkState));
-                                    blockElement.addContent(bloc);
-                                }
-                                elem.addContent(blockElement);
-                            }
-                            List<NamedBeanHandle<Turnout>> turnouts = sml.getNamedTurnouts(dest);
-                            if (turnouts.size() > 0) {
-                                Element turnoutElement = new Element("turnouts");
-                                for (NamedBeanHandle<Turnout> t : turnouts) {
-                                    Element turn = new Element("turnout");
-                                    turn.addContent(new Element("turnoutName").addContent(t.getName()));
-                                    String turnState = "thrown";
-                                    if (sml.getTurnoutState(t.getBean(), dest) == Turnout.CLOSED) {
-                                        turnState = "closed";
-                                    }
-                                    turn.addContent(new Element("turnoutState").addContent(turnState));
-                                    turnoutElement.addContent(turn);
-                                }
-                                elem.addContent(turnoutElement);
-                            }
-                            List<NamedBeanHandle<Sensor>> sensors = sml.getNamedSensors(dest);
-                            if (sensors.size() > 0) {
-                                Element sensorElement = new Element("sensors");
-                                for (NamedBeanHandle<Sensor> s : sensors) {
-                                    Element sensor = new Element("sensor");
-                                    sensor.addContent(new Element("sensorName").addContent(s.getName()));
-                                    String sensorState = "inActive";
-                                    if (sml.getSensorState(s.getBean(), dest) == Sensor.ACTIVE) {
-                                        sensorState = "active";
-                                    }
-                                    sensor.addContent(new Element("sensorState").addContent(sensorState));
-                                    sensorElement.addContent(sensor);
-                                }
-                                elem.addContent(sensorElement);
-                            }
-                            List<SignalMast> masts = sml.getSignalMasts(dest);
-                            if (masts.size() > 0) {
-                                Element mastElement = new Element("masts");
-                                for (SignalMast sm : masts) {
-                                    Element mast = new Element("mast");
-                                    mast.addContent(new Element("mastName").addContent(sm.getDisplayName()));
-                                    mast.addContent(new Element("mastState").addContent(sml.getSignalMastState(sm, dest)));
-                                    mastElement.addContent(mast);
-                                }
-                                elem.addContent(mastElement);
-                            }
-                        }
-                        source.addContent(elem);
+            for (SignalMast dest : destinations) {
+                if (sml.getStoreState(dest) != SignalMastLogic.STORENONE) {
+                    Element elem = new Element("destinationMast");
+                    elem.setAttribute("destination", dest.getDisplayName()); // added purely to make human reading of the xml easier
+                    elem.addContent(new Element("destinationSignalMast").addContent(dest.getDisplayName()));
+                    elem.addContent(new Element("comment").addContent(sml.getComment(dest)));
+                    if (sml.isEnabled(dest)) {
+                        elem.addContent(new Element("enabled").addContent("yes"));
+                    } else {
+                        elem.addContent(new Element("enabled").addContent("no"));
                     }
+
+                    if (sml.allowAutoMaticSignalMastGeneration(dest)) {
+                        elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("yes"));
+                    } else {
+                        elem.addContent(new Element("allowAutoMaticSignalMastGeneration").addContent("no"));
+                    }
+
+                    if (sml.useLayoutEditor(dest)) {
+                        elem.addContent(new Element("useLayoutEditor").addContent("yes"));
+                    } else {
+                        elem.addContent(new Element("useLayoutEditor").addContent("no"));
+                    }
+
+                    if (sml.useLayoutEditorTurnouts(dest)) {
+                        elem.addContent(new Element("useLayoutEditorTurnouts").addContent("yes"));
+                    } else {
+                        elem.addContent(new Element("useLayoutEditorTurnouts").addContent("no"));
+                    }
+
+                    if (sml.useLayoutEditorBlocks(dest)) {
+                        elem.addContent(new Element("useLayoutEditorBlocks").addContent("yes"));
+                    } else {
+                        elem.addContent(new Element("useLayoutEditorBlocks").addContent("no"));
+                    }
+
+                    if (sml.getAssociatedSection(dest) != null) {
+                        elem.addContent(new Element("associatedSection").addContent(sml.getAssociatedSection(dest).getDisplayName()));
+                    }
+                    if (sml.isTurnoutLockAllowed(dest)) {
+                        elem.addContent(new Element("lockTurnouts").addContent("yes"));
+                    } else {
+                        elem.addContent(new Element("lockTurnouts").addContent("no"));
+                    }
+
+                    if (sml.getStoreState(dest) == SignalMastLogic.STOREALL) {
+                        List<Block> blocks = sml.getBlocks(dest);
+                        if (blocks.size() > 0) {
+                            Element blockElement = new Element("blocks");
+                            for (Block bl : blocks) {
+                                Element bloc = new Element("block");
+                                bloc.addContent(new Element("blockName").addContent(bl.getDisplayName()));
+                                String blkState = "anyState";
+                                if (sml.getBlockState(bl, dest) == Block.OCCUPIED) {
+                                    blkState = "occupied";
+                                } else if (sml.getBlockState(bl, dest) == Block.UNOCCUPIED) {
+                                    blkState = "unoccupied";
+                                }
+                                bloc.addContent(new Element("blockState").addContent(blkState));
+                                blockElement.addContent(bloc);
+                            }
+                            elem.addContent(blockElement);
+                        }
+                        List<NamedBeanHandle<Turnout>> turnouts = sml.getNamedTurnouts(dest);
+                        if (turnouts.size() > 0) {
+                            Element turnoutElement = new Element("turnouts");
+                            for (NamedBeanHandle<Turnout> t : turnouts) {
+                                Element turn = new Element("turnout");
+                                turn.addContent(new Element("turnoutName").addContent(t.getName()));
+                                String turnState = "thrown";
+                                if (sml.getTurnoutState(t.getBean(), dest) == Turnout.CLOSED) {
+                                    turnState = "closed";
+                                }
+                                turn.addContent(new Element("turnoutState").addContent(turnState));
+                                turnoutElement.addContent(turn);
+                            }
+                            elem.addContent(turnoutElement);
+                        }
+                        List<NamedBeanHandle<Sensor>> sensors = sml.getNamedSensors(dest);
+                        if (sensors.size() > 0) {
+                            Element sensorElement = new Element("sensors");
+                            for (NamedBeanHandle<Sensor> s : sensors) {
+                                Element sensor = new Element("sensor");
+                                sensor.addContent(new Element("sensorName").addContent(s.getName()));
+                                String sensorState = "inActive";
+                                if (sml.getSensorState(s.getBean(), dest) == Sensor.ACTIVE) {
+                                    sensorState = "active";
+                                }
+                                sensor.addContent(new Element("sensorState").addContent(sensorState));
+                                sensorElement.addContent(sensor);
+                            }
+                            elem.addContent(sensorElement);
+                        }
+                        List<SignalMast> masts = sml.getSignalMasts(dest);
+                        if (masts.size() > 0) {
+                            Element mastElement = new Element("masts");
+                            for (SignalMast sm : masts) {
+                                Element mast = new Element("mast");
+                                mast.addContent(new Element("mastName").addContent(sm.getDisplayName()));
+                                mast.addContent(new Element("mastState").addContent(sml.getSignalMastState(sm, dest)));
+                                mastElement.addContent(mast);
+                            }
+                            elem.addContent(mastElement);
+                        }
+                    }
+                    source.addContent(elem);
                 }
-                signalMastLogic.addContent(source);
             }
+            signalMastLogic.addContent(source);
         }
         return signalMastLogic;
     }
