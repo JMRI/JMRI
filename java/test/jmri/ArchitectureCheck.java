@@ -1,129 +1,74 @@
 package jmri;
 
 import org.junit.*;
+import org.junit.runner.*;
 
 import com.tngtech.archunit.*;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
-import com.tngtech.archunit.lang.ArchRule;
+import com.tngtech.archunit.lang.*;
+import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 /**
  * Check the architecture of the JMRI library
  * <p>
- * Note that this only checkst the classes in target/classes, which come from java/src, not
+ * This inherits from the 
+ * {link ArchitectureTest} class, which includes tests that are passing.
+ * This file is for checks that are valid, but not yet passing due to 
+ * (too many) existing violations.
+ * <p>
+ * Note that this only checks the classes in target/classes, which come from java/src, not
  * the ones in target/test-classes, which come from java/test.  It's relying on the common
  * build procedure to make this distinction.
  *
  * @author Bob Jacobsen 2019
  */
-public class ArchitectureCheck {
+ 
+@RunWith(ArchUnitRunner.class)  // Remove this for JUnit 5
+ 
+// Pick up all classes from the target/classes directory, which is just the main (not test) code
+@AnalyzeClasses(packages = {"target/classes"}) // "jmri","apps"
 
-    /**
-     * No access to System.err and System.out except as specified
-     */
-    @Test // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
-    public void checkStandardStreams() {
-        ArchRule thisRule = noClasses().that()
-                                // classes with permitted access
-                                .doNotHaveFullyQualifiedName("apps.SystemConsole").and()
-                                .doNotHaveFullyQualifiedName("apps.FindBugsCheck").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrix.loconet.cmdstnconfig.XmlConfig").and()
-                                .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
-                                .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
-                                .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
-                                .doNotHaveFullyQualifiedName("jmri.Version")
-                            .should(
-                                com.tngtech.archunit.library.GeneralCodingRules.
-                                ACCESS_STANDARD_STREAMS
-                            );
-          
-        thisRule.check(importedAllClasses);      
-    }
-    
-    /**
-     * No access to java.util.Timer except jmri.util.TimerUtil
-     */
-    @Test 
-    public void checkTimerClassRestricted() {
-        ArchRule thisRule = noClasses().that()
-                                // classes with permitted access
-                                .haveNameNotMatching("jmri\\.util\\.TimerUtil")
-                            .should()
-                                .dependOnClassesThat().haveFullyQualifiedName("java.util.Timer");
-          
-        thisRule.check(importedAllClasses);      
-    }
+public class ArchitectureCheck extends ArchitectureTest {
 
-     
     /**
      * No access to apps outside of itself.
      */
-    @Test // Initially 92 flags in JMRI 4.17.3
-    public void checkAppsPackage() {
-        ArchRule thisRule = classes()
+    @ArchTest // Initially 92 flags in JMRI 4.17.3
+    public static final ArchRule checkAppsPackage = classes()
             .that().resideInAPackage("apps..")
             .should().onlyBeAccessed().byAnyPackage("apps..");
-          
-        thisRule.check(importedAllClasses);      
-    }
 
     /**
      * No access to jmri.jmrix outside of itself and apps
      */
-    @Test // Initially 226 flags in JMRI 4.17.3
-    public void checkJmrixPackage() {
-        ArchRule thisRule = classes()
+    @ArchTest // Initially 226 flags in JMRI 4.17.3
+    public static final ArchRule checkJmrixPackage = classes()
             .that().resideInAPackage("jmri.jmrix..")
             .should().onlyBeAccessed().byAnyPackage("jmri.jmrix..", "apps..");
-          
-        thisRule.check(importedAllClasses);      
-    }
 
     /**
      * No access to jmri.jmrit outside of itself and apps
      */
-    @Test // Initially 2061 flags in JMRI 4.17.3
-    public void checkJmritPackage() {
-        ArchRule thisRule = classes()
+    @ArchTest // Initially 2061 flags in JMRI 4.17.3
+    public static final ArchRule checkJmritPackage = classes()
             .that().resideInAPackage("jmri.jmrit..")
             .should().onlyBeAccessed().byAnyPackage("jmri.jmrit..", "apps..");
-          
-        thisRule.check(importedAllClasses);      
-    }
 
     /**
-     * No jmri.jmrix in basic interfaces.
-     * <p>
-     * Intentionally redundant with the check for references to
-     * jmri.jmrix outside itself; fix these first!
-     */
-    @Test // Initially 1 flags in JMRI 4.17.3
-    public void checkJmriPackageJmrix() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri")
-        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * No jmri.jmrit in basic interfaces.
+     * No jmri.jmrit in basic jmri interfaces.
      * <p>
      * Intentionally redundant with the check for references to
      * jmri.jmrit outside itself; fix these first!
      * <p>
      * 
      */
-    @Test // Initially 458 flags in JMRI 4.17.3
-    public void checkJmriPackageJmrit() {
-        ArchRule thisRule = noClasses()
+    @ArchTest // Initially 458 flags in JMRI 4.17.3
+    public static final ArchRule checkJmriPackageJmrit = noClasses()
         .that().resideInAPackage("jmri")
         .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
-          
-        thisRule.check(importedAllClasses);      
-    }
 
     /**
      * Jmri.jmris should not reference jmri.jmrit
@@ -133,31 +78,10 @@ public class ArchitectureCheck {
      * <p>
      * 
      */
-    @Test
-    public void checkJmrisPackageJmrit() {
-        ArchRule thisRule = noClasses()
+    @ArchTest
+    public static final ArchRule checkJmrisPackageJmrit = noClasses()
         .that().resideInAPackage("jmri.jmris")
         .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Jmri.jmris should not reference jmri.jmrix
-     * <p>
-     * Intentionally redundant with the check for references to
-     * jmri.jmrix outside itself; fix these first!
-     * <p>
-     * 
-     */
-    @Test
-    public void checkJmrisPackageJmrix() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri.jmris")
-        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
-          
-        thisRule.check(importedAllClasses);      
-    }
 
     /**
      * Jmri.server should not reference jmri.jmrit
@@ -167,162 +91,9 @@ public class ArchitectureCheck {
      * <p>
      * 
      */
-    @Test
-    public void checkServerPackageJmrit() {
-        ArchRule thisRule = noClasses()
+    @ArchTest // initially 45 flags in JMRI 4.17.3
+    public static final ArchRule checkServerPackageJmrit = noClasses()
         .that().resideInAPackage("jmri.jmris")
         .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Jmri.server should not reference jmri.jmrix
-     * <p>
-     * Intentionally redundant with the check for references to
-     * jmri.jmrix outside itself; fix these first!
-     * <p>
-     * 
-     */
-    @Test
-    public void checkServerPackageJmrix() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri.jmris")
-        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Jmri.web should not reference jmri.jmrit
-     * <p>
-     * Intentionally redundant with the check for references to
-     * jmri.jmrit outside itself; fix these first!
-     * <p>
-     * 
-     */
-    @Test
-    public void checkWebPackageJmrit() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri.web")
-        .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Jmri.web should not reference jmri.jmrix
-     * <p>
-     * Intentionally redundant with the check for references to
-     * jmri.jmrix outside itself; fix these first!
-     * <p>
-     * 
-     */
-    @Test
-    public void checkWebPackageJmrix() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri.web")
-        .should().dependOnClassesThat().resideInAPackage("jmri.jmrix..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * No AWT in basic interfaces.
-     */
-    @Test // Initially 8 flags in JMRI 4.17.3
-    public void checkJmriPackageAwt() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri")
-        .should().dependOnClassesThat().resideInAPackage("java.awt..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * No Swing in basic interfaces.
-     */
-    @Test // Initially 5 flags in JMRI 4.17.3
-    public void checkJmriPackageSwing() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri")
-        .should().dependOnClassesThat().resideInAPackage("javax.swing..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * No JDOM in basic interfaces.
-     */
-    @Test // Initially 3 flags in JMRI 4.17.3
-    public void checkJmriPackageJdom() {
-        ArchRule thisRule = noClasses()
-        .that().resideInAPackage("jmri")
-        .should().dependOnClassesThat().resideInAPackage("org.jdom2..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * (Try to) confine JDOM to configurexml packages.
-     * (Is this working right? Seems to not flag anything)
-     */
-    @Test
-    public void checkJdomOutsideConfigurexml() {
-        ArchRule thisRule = classes()
-            .that().resideInAPackage("org.jdom2..")
-            .should().onlyBeAccessed().byAnyPackage("..configurexml..");
-          
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Check that *Bundle classes inherit from their parent.
-     * (not done yet, not sure how to do it)
-     */
-    @Test
-    public void checkBundleInheritance() {
-        ArchRule thisRule = classes()
-            .that().areAssignableTo(jmri.Bundle.class)
-            .should().haveSimpleNameEndingWith("Bundle");
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Check that *Bundle classes are named Bundle
-     */
-    @Test
-    public void checkBundleNames() {
-        ArchRule thisRule = classes()
-            .that().areAssignableTo(jmri.Bundle.class)
-            .should().haveSimpleName("Bundle");
-        thisRule.check(importedAllClasses);      
-    }
-
-    /**
-     * Check that classes named *Bundle are Bundles
-     */
-    @Test
-    public void checkBundleNamesOnlyOnBundleClass() {
-        ArchRule thisRule = classes()
-            .that().haveSimpleNameEndingWith("Bundle")
-            .should().beAssignableTo(jmri.Bundle.class);
-        thisRule.check(importedAllClasses);      
-    }
-
-    JavaClasses importedAllClasses; // inclusive contents of all packages compiled from jmri/src
-    
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-
-        importedAllClasses = new ClassFileImporter().importPath("target/classes/");
-    }
-
-    @After
-    public void tearDown() {
-        importedAllClasses = null;
-        jmri.util.JUnitUtil.tearDown();
-    }
 
 }
