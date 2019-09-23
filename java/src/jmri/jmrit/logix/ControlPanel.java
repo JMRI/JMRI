@@ -25,6 +25,7 @@ import javax.swing.event.ChangeListener;
 import jmri.DccThrottle;
 import jmri.SpeedStepMode;
 
+import jmri.Throttle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,7 +141,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             log.debug("propertyChange: " + e.getPropertyName() + ", newValue= "
                     + e.getNewValue().toString());
         }
-        if (e.getPropertyName().equals("SpeedSetting")) {
+        if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             internalAdjust = true;
             float speed = ((Float) e.getNewValue()).floatValue();
 //            speedSetting(speed);
@@ -151,11 +152,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             if (speed != 0.0F) {
                 _emergencyStop = (speed < 0.0F);
             }
-        } else if (e.getPropertyName().equals("SpeedSteps")) {
+        } else if (e.getPropertyName().equals(Throttle.SPEEDSTEPS)) {
             SpeedStepMode steps = (SpeedStepMode)e.getNewValue();
             setSpeedSteps(steps);
             _throttleFrame.setSpeedStepMode(steps);
-        } else if (e.getPropertyName().equals("IsForward")) {
+        } else if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
             boolean Forward = ((Boolean) e.getNewValue()).booleanValue();
             _throttleFrame.setButtonForward(Forward);
         } else {
