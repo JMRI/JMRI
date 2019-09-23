@@ -160,15 +160,14 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 List<Element> logixConditionalList = elem.getChildren("logixConditional");  // NOI18N
                 // add conditionals
                 for (Element lxcond : logixConditionalList) {
-                    if (lxcond.getAttribute("systemName") == null) {    // NOI18N
-                        log.warn("unexpected null in systemName {} {}", lxcond, // NOI18N
-                                lxcond.getAttributes());
+                    String cSysName = lxcond.getAttribute("systemName").getValue();  // NOI18N
+                    if (cSysName == null) {
+                        log.warn("unexpected null in systemName {} {}", // NOI18N
+                                lxcond, lxcond.getAttributes());
                         break;
                     }
-                    String cSysName = lxcond
-                            .getAttribute("systemName").getValue();  // NOI18N
                     int cOrder = Integer.parseInt(lxcond
-                            .getAttribute("order").getValue());  // NOI18N
+                            .getAttribute("order").getValue()); // NOI18N
                     // add conditional to logix
                     x.addConditional(cSysName, cOrder);
                 }
