@@ -71,6 +71,18 @@ public class ArchitectureCheck extends ArchitectureTest {
         .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..");
 
     /**
+     * Jmri.util should only reference jmri, not any below that (except jmri.util, of course)
+     * 
+     */
+    @ArchTest // Initially 311 flags in JMRI 4.17.3
+    public static final ArchRule checkJmriUtil = noClasses()
+            .that()
+                .resideInAPackage("jmri.util..")
+            .should().dependOnClassesThat()
+                    .resideOutsideOfPackages("jmri", "jmri.util..",
+                                             "java..", "javax..", "org..") // swing et al imported
+            ;
+    /**
      * Jmri.jmris should not reference jmri.jmrit
      * <p>
      * Intentionally redundant with the check for references to
