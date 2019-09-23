@@ -391,10 +391,10 @@ public class Tracker {
         }
         for (OBlock b : _tailRange) {
             range.add(b);
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("   {} tail range from {} includes \"{}\" value= {}",
                         _trainName, getTailBlock().getDisplayName(), b.getDisplayName(), b.getValue());
-            }
+            }*/
         }
         /*for (OBlock b : _lostRange) {
             range.add(b);

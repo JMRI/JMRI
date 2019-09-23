@@ -321,40 +321,9 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                 return;
             }
             if ((state & OBlock.OCCUPIED) != 0) {   // going occupied
-                ArrayList<Tracker> trackers;
-                if (_requirePaths) {
-                    trackers = new ArrayList<>();
-                    ArrayList<Tracker> partials = new ArrayList<>();
-                    // filter for trackers with paths set into block
-                    for (Tracker t : trackerListeners) {
-                        try {
-                            switch (t.hasPathInto(block)) {
-                                case SET:
-                                    trackers.add(t);
-                                    break;
-                                case PARTIAL:
-                                    partials.add(t);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        } catch (JmriException je) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("No head or tail blocks for {}", t.getTrainName());
-                            }
-                            return;
-                        }
-                    }
-                    if (trackers.isEmpty()) {   // nobody has paths set.
-                        // even so, likely to be possible for somebody to get there
-                        if (!partials.isEmpty()) {
-                            trackers = partials; // OK, maybe not all switches are lined up
-                        } else {
-                            trackers = trackerListeners; // maybe even this bad. 
-                        }
-                    }
-                } else {
-                    trackers = trackerListeners;
+                List<Tracker> trackers = getAvailableTrackers(block);
+                if (trackers.isEmpty()) {
+                    return;
                 }
                 if (trackers.size() > 1) { // if several trackers listen for this block, user must identify which one.
                     if (_trackerChooser != null) {
@@ -367,7 +336,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                
                 Tracker tracker = trackers.get(0);
                 if (block.getValue() != null &&  !block.getValue().equals(tracker.getTrainName())) {
-                    log.error("Block \"{} \" going active with value= {} for Tracker {}! What is \"{}\"?",
+                    log.error("Block \"{} \" going active with value= {} for Tracker {}! Who/What is \"{}\"?",
                             block.getDisplayName(), block.getValue(), tracker.getTrainName(), block.getValue());
                     return;
                } else {
@@ -398,6 +367,41 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         _frame._model.fireTableDataChanged();
     }
 
+    private List<Tracker> getAvailableTrackers(OBlock block) {
+        List<Tracker> trackers = new ArrayList<>();
+        ArrayList<Tracker> trackerListeners = _trackerBlocks.get(block);
+        if (_requirePaths) {
+            ArrayList<Tracker> partials = new ArrayList<>();
+            // filter for trackers with paths set into block
+            for (Tracker t : trackerListeners) {
+                try {
+                    switch (t.hasPathInto(block)) {
+                        case SET:
+                            trackers.add(t);
+                            break;
+                        case PARTIAL:
+                            partials.add(t);
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (JmriException je) {
+                    log.error("No head or tail blocks for {}", t.getTrainName());
+                }
+            }
+            if (trackers.isEmpty()) {   // nobody has paths set.
+                // even so, likely to be possible for somebody to get there
+                if (!partials.isEmpty()) {
+                    trackers = partials; // OK, maybe not all switches are lined up
+                } else {
+                    trackers = trackerListeners; // maybe even this bad. 
+                }
+            }
+        } else {
+            trackers = trackerListeners;
+        }
+        return trackers;
+    }
     /**
      * Called when a state change has occurred for one the blocks listened
      * to for this tracker. Tracker.move makes the changes to OBlocks to

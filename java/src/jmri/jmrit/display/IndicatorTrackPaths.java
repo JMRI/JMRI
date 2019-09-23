@@ -125,7 +125,7 @@ public class IndicatorTrackPaths {
             removeLocoIcon();
             return;
         }
-        if (_loco != null) {
+        if (_loco != null || pt == null) {
             return;
         }
         trainName = trainName.trim();
