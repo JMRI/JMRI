@@ -284,7 +284,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 if (s != null) {
                     sensor = s.getDisplayName();
                 }
-                float length = b.getLengthIn();
+                float length = b.getLengthMm(); // length is stored in Mm in OBlock.setLength(float)
                 int curve = b.getCurvature();
                 List<Path> blockPaths = b.getPaths();
                 String toBlockName;
@@ -302,6 +302,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 if (!sensor.isEmpty()) {
                     oBlock.setSensor(sensor);
                 }
+                oBlock.setMetricUnits(true); // length always stored in Mm in Block, so copy that for OBlock
                 oBlock.setLength(length);
                 oBlock.setCurvature(curve);
 
@@ -336,6 +337,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
                     // create OPath from this Path
                     OPath opa = new OPath(oBlock, "IP" + n++); // only needs to be unique within oBlock
+                    opa.setLength(oBlock.getLengthMm()); // simple assumption, works for default OBlock/OPath
                     log.debug("new OPath {} - {} on OBlock {}", n, opa.getName(), opa.getBlock().getDisplayName());
                     oBlock.addPath(opa); // checks for duplicates, will add OPath to any Portals on oBlock as well
                     log.debug("number of paths: {}", oBlock.getPaths().size());
@@ -363,18 +365,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         // add recursive Path elements to FromBlock/ToBlock
         SortedSet<OBlock> oblkList = obm.getNamedBeanSet();
-        for (OBlock b : oblkList) {
-            for (Portal po : b.getPortals()) {
-                String bName = po.getFromBlockName();
-                for (Path opa : obm.getByUserName(bName).getPaths()) {
-                    po.getFromBlock().addPortal (po);
-                }
-                bName = po.getToBlockName();
-                for (Path opa : obm.getByUserName(bName).getPaths()) {
-                    po.getToBlock().addPortal (po);
+        for (OBlock oblk : oblkList) {
+            for (Portal po : oblk.getPortals()) {
+                obm.getByUserName(po.getFromBlockName()).addPortal(po);
+                obm.getByUserName(po.getToBlockName()).addPortal(po);
                 }
             }
-        } // storing and reloading will add in these items
+        // storing and reloading will add in these items
         errorCheck();
 //        JFrame readyFrame = new JFrame(Bundle.getMessage("MessageTitle"));
 //        JTextField readyMsg = new JTextField(Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()));
