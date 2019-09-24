@@ -51,6 +51,27 @@ public class LnCommandStationTypeTest {
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getImplementsIdle());
         }
 
+    @Test
+    public void testSupportsLocoReset() {
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DB150.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS200.getSupportsLocoReset());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsLocoReset());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE.getSupportsLocoReset());
+
+        // the following command station types are _assumed_ by the coder to not support "idle".
+        // these assertions need to be verified with respect to real hardware.
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsLocoReset());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getSupportsLocoReset());
+        }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
