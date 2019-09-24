@@ -49,10 +49,8 @@ public class WindowPreferences {
             if (e.getAttribute("isIconified") != null) {
                 c.setIcon(e.getAttribute("isIconified").getBooleanValue());
             }
-        } catch (org.jdom2.DataConversionException ex) {
-            log.warn(ex);
-        } catch (PropertyVetoException ex) {
-            log.warn(ex);
+        } catch (org.jdom2.DataConversionException | PropertyVetoException ex) {
+            log.warn("Exception setting preferences", ex);
         }
     }
 
