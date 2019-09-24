@@ -32,7 +32,7 @@ public class DefaultMaleDigitalActionWithChangeSocketTest extends MaleSocketTest
     
     @Test
     public void testCtor() {
-        DigitalActionWithChangeBean action = new OnChangeAction("IQDA321", null, OnChangeAction.ChangeType.CHANGE);
+        DigitalActionWithChangeBean action = new OnChangeAction("IQDC321", null, OnChangeAction.ChangeType.CHANGE);
         Assert.assertNotNull("exists", new DefaultMaleDigitalActionWithChangeSocket(action));
     }
     
@@ -44,9 +44,9 @@ public class DefaultMaleDigitalActionWithChangeSocketTest extends MaleSocketTest
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        DigitalActionWithChangeBean actionA = new OnChangeAction("IQDA321", null, OnChangeAction.ChangeType.CHANGE);
+        DigitalActionWithChangeBean actionA = new OnChangeAction("IQDC321", null, OnChangeAction.ChangeType.CHANGE);
         Assert.assertNotNull("exists", actionA);
-        DigitalActionWithChangeBean actionB = new MyDigitalActionWithChange("IQDA322");
+        DigitalActionWithChangeBean actionB = new MyDigitalActionWithChange("IQDC322");
         Assert.assertNotNull("exists", actionA);
         
         maleSocketA =

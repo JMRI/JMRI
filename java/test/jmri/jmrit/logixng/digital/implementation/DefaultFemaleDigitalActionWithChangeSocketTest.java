@@ -70,8 +70,8 @@ public class DefaultFemaleDigitalActionWithChangeSocketTest extends FemaleSocket
     
     @Test
     public void testSystemName() {
-        Assert.assertEquals("String matches", "IQDA10", femaleSocket.getExampleSystemName());
-        Assert.assertEquals("String matches", "IQDA:0001", femaleSocket.getNewSystemName());
+        Assert.assertEquals("String matches", "IQDC10", femaleSocket.getExampleSystemName());
+        Assert.assertEquals("String matches", "IQDC:0001", femaleSocket.getNewSystemName());
     }
     
     @Test
@@ -88,24 +88,18 @@ public class DefaultFemaleDigitalActionWithChangeSocketTest extends FemaleSocket
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionLight.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionTurnout.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionSensor.class);
+//        classes.add(jmri.jmrit.logixng.digital.actions.ActionLight.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.DoAnalogAction.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.Many.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.HoldAnything.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.DoStringAction.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.IfThenElse.class);
+        classes.add(jmri.jmrit.logixng.digital.actions_with_change.OnChangeAction.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.ShutdownComputer.class);
+//        classes.add(jmri.jmrit.logixng.digital.actions.ShutdownComputer.class);
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",
@@ -128,8 +122,8 @@ public class DefaultFemaleDigitalActionWithChangeSocketTest extends FemaleSocket
         
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
-        _action = new MyOnChangeAction("IQDA321");
-        OnChangeAction otherAction = new MyOnChangeAction("IQDA322");
+        _action = new MyOnChangeAction("IQDC321");
+        OnChangeAction otherAction = new MyOnChangeAction("IQDC322");
         maleSocket = new DefaultMaleDigitalActionWithChangeSocket(_action);
         otherMaleSocket = new DefaultMaleDigitalActionWithChangeSocket(otherAction);
         femaleSocket = new DefaultFemaleDigitalActionWithChangeSocket(null, new FemaleSocketListener() {

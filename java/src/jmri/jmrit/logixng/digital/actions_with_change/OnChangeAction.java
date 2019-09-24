@@ -99,7 +99,7 @@ public class OnChangeAction extends AbstractDigitalActionWithChange
     /**
      * Get the type.
      */
-    public ChangeType getType() {
+    public ChangeType getWhichChange() {
         return _whichChange;
     }
     

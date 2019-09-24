@@ -53,7 +53,7 @@ public class DefaultDigitalActionWithChangeManager extends AbstractManager<MaleD
         
         for (DigitalActionWithChangeFactory actionFactory : ServiceLoader.load(DigitalActionWithChangeFactory.class)) {
             actionFactory.getClasses().forEach((entry) -> {
-//                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
+                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
@@ -140,7 +140,7 @@ public class DefaultDigitalActionWithChangeManager extends AbstractManager<MaleD
     public String getNewSystemName() {
         int nextAutoLogixNGRef = ++lastAutoActionRef;
         StringBuilder b = new StringBuilder(getSystemNamePrefix());
-        b.append("DA:");
+        b.append("DC:");
         String nextNumber = paddedNumber.format(nextAutoLogixNGRef);
         b.append(nextNumber);
         return b.toString();

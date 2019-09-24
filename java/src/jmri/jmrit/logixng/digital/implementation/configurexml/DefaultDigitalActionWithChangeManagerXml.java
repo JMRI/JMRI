@@ -9,14 +9,15 @@ import java.util.Map;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionManager;
+import jmri.jmrit.logixng.DigitalActionBean;
+import jmri.jmrit.logixng.DigitalActionWithChangeBean;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
+import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionWithChangeManager;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring ActionManagers
@@ -31,10 +32,12 @@ public class DefaultDigitalActionWithChangeManagerXml extends jmri.managers.conf
     public DefaultDigitalActionWithChangeManagerXml() {
     }
 
-    private DigitalActionBean getAction(DigitalActionBean action) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
+    private DigitalActionWithChangeBean getAction(DigitalActionWithChangeBean action)
+            throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
+        
         Field f = action.getClass().getDeclaredField("_action");
         f.setAccessible(true);
-        return (DigitalActionBean) f.get(action);
+        return (DigitalActionWithChangeBean) f.get(action);
     }
     
     /**
@@ -45,11 +48,11 @@ public class DefaultDigitalActionWithChangeManagerXml extends jmri.managers.conf
      */
     @Override
     public Element store(Object o) {
-        Element actions = new Element("logixngDigitalActions");
+        Element actions = new Element("logixngDigitalActionsWithChange");
         setStoreElementClass(actions);
-        DigitalActionManager tm = (DigitalActionManager) o;
+        DigitalActionWithChangeManager tm = (DigitalActionWithChangeManager) o;
         if (tm != null) {
-            for (DigitalActionBean action : tm.getNamedBeanSet()) {
+            for (DigitalActionWithChangeBean action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
 //                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
@@ -156,7 +159,7 @@ public class DefaultDigitalActionWithChangeManagerXml extends jmri.managers.conf
      */
     protected void replaceActionManager() {
         if (InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class).getClass().getName()
-                .equals(DefaultDigitalActionManager.class.getName())) {
+                .equals(DefaultDigitalActionWithChangeManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
@@ -170,8 +173,8 @@ public class DefaultDigitalActionWithChangeManagerXml extends jmri.managers.conf
 
         ThreadingUtil.runOnGUI(() -> {
             // register new one with InstanceManager
-            DefaultDigitalActionManager pManager = DefaultDigitalActionManager.instance();
-            InstanceManager.store(pManager, DigitalActionManager.class);
+            DefaultDigitalActionWithChangeManager pManager = DefaultDigitalActionWithChangeManager.instance();
+            InstanceManager.store(pManager, DigitalActionWithChangeManager.class);
             // register new one for configuration
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {

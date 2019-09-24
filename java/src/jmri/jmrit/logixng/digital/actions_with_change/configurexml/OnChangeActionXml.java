@@ -30,13 +30,13 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
     public Element store(Object o) {
         OnChangeAction p = (OnChangeAction) o;
 
-        Element element = new Element("if-then-else");
+        Element element = new Element("on-change");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
 
-        element.setAttribute("type", p.getType().name());
+        element.setAttribute("whichChange", p.getWhichChange().name());
         
         Element e2 = new Element("socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
@@ -58,8 +58,8 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
     @Override
     public boolean load(Element shared, Element perNode) {
         
-        Attribute typeAttribute = shared.getAttribute("type");
-        OnChangeAction.ChangeType whichChange = OnChangeAction.ChangeType.valueOf(typeAttribute.getValue());
+        Attribute whichChangeAttribute = shared.getAttribute("whichChange");
+        OnChangeAction.ChangeType whichChange = OnChangeAction.ChangeType.valueOf(whichChangeAttribute.getValue());
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
@@ -68,8 +68,8 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
         loadCommon(h, shared);
         
         Element socketName = shared.getChild("socket").getChild("socketName");
-        h.getChild(1).setName(socketName.getTextTrim());
-        Element socketSystemName = shared.getChild("thenSocket").getChild("systemName");
+        h.getChild(0).setName(socketName.getTextTrim());
+        Element socketSystemName = shared.getChild("socket").getChild("systemName");
         if (socketSystemName != null) {
             h.setActionSocketSystemName(socketSystemName.getTextTrim());
         }

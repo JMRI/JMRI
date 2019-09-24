@@ -20,56 +20,99 @@ public abstract class MaleSocketTestBase {
     protected abstract String getNewSystemName();
     
     @Test
-    public void testMaleSocket() throws JmriException {
+    public void testExists() throws JmriException {
         Assert.assertNotNull("exists", maleSocketA);
         Assert.assertNotNull("exists", maleSocketB);
         Assert.assertNotEquals("not equals", maleSocketA, maleSocketB);
-        
+    }
+    
+    @Test
+    public void testTemplate() throws JmriException {
         Assert.assertNotNull("get object based on template is not null",
                 maleSocketA.getNewObjectBasedOnTemplate());
-        
+    }
+    
+    @Test
+    public void testLock() throws JmriException {
         maleSocketA.setLock(Base.Lock.NONE);
         Assert.assertTrue("lock is correct",
                 Base.Lock.NONE == maleSocketA.getLock());
         maleSocketA.setLock(Base.Lock.USER_LOCK);
         Assert.assertTrue("lock is correct",
                 Base.Lock.USER_LOCK == maleSocketA.getLock());
-        
+    }
+    
+    @Test
+    public void testCategory() throws JmriException {
         Assert.assertEquals("category is correct",
                 maleSocketA.getObject().getCategory(), maleSocketA.getCategory());
         Assert.assertEquals("category is correct",
                 maleSocketB.getObject().getCategory(), maleSocketB.getCategory());
         Assert.assertNotEquals("categories are different",
                 maleSocketA.getCategory(), maleSocketB.getCategory());
-        
+    }
+    
+    @Test
+    public void testIsExternal() throws JmriException {
         Assert.assertEquals("isExternal() is correct",
                 maleSocketA.getObject().isExternal(), maleSocketA.isExternal());
         Assert.assertEquals("isExternal() is correct",
                 maleSocketB.getObject().isExternal(), maleSocketB.isExternal());
-        Assert.assertNotEquals("isExternal() are different",
-                maleSocketA.isExternal(), maleSocketB.isExternal());
-        
+//        Assert.assertNotEquals("isExternal() are different",
+//                maleSocketA.isExternal(), maleSocketB.isExternal());
+    }
+    
+    @Test
+    public void testShortDescription() throws JmriException {
         Assert.assertEquals("getShortDescription() is correct",
                 maleSocketA.getObject().getShortDescription(), maleSocketA.getShortDescription());
         Assert.assertEquals("getShortDescription() is correct",
                 maleSocketB.getObject().getShortDescription(), maleSocketB.getShortDescription());
         Assert.assertNotEquals("getShortDescription() are different",
                 maleSocketA.getShortDescription(), maleSocketB.getShortDescription());
-        
+    }
+    
+    @Test
+    public void testLongDescription() throws JmriException {
         Assert.assertEquals("getLongDescription() is correct",
                 maleSocketA.getObject().getLongDescription(), maleSocketA.getLongDescription());
         Assert.assertEquals("getLongDescription() is correct",
                 maleSocketB.getObject().getLongDescription(), maleSocketB.getLongDescription());
         Assert.assertNotEquals("getLongDescription() are different",
                 maleSocketA.getLongDescription(), maleSocketB.getLongDescription());
-        
+    }
+    
+    @Test
+    public void testGetSystemName() throws JmriException {
         Assert.assertEquals("getSystemName() is correct",
                 maleSocketA.getObject().getSystemName(), maleSocketA.getSystemName());
         Assert.assertEquals("getSystemName() is correct",
                 maleSocketB.getObject().getSystemName(), maleSocketB.getSystemName());
         Assert.assertNotEquals("getSystemName() are different",
                 maleSocketA.getSystemName(), maleSocketB.getSystemName());
+    }
+    
+    @Test
+    public void testUserName() throws JmriException {
+        maleSocketA.setUserName("Test username Abc");
+        Assert.assertEquals("getUserName() is correct",
+                maleSocketA.getObject().getUserName(), maleSocketA.getUserName());
+        Assert.assertEquals("getUserName() is correct",
+                maleSocketB.getObject().getUserName(), maleSocketB.getUserName());
+        Assert.assertNotEquals("getUserName() are different",
+                maleSocketA.getUserName(), maleSocketB.getUserName());
         
+        maleSocketA.getObject().setUserName("Abc");
+        Assert.assertEquals("getUserName() is correct",
+                "Abc", maleSocketA.getUserName());
+        
+        maleSocketA.getObject().setUserName("Def");
+        Assert.assertEquals("getUserName() is correct",
+                "Def", maleSocketA.getUserName());
+    }
+    
+    @Test
+    public void testDisplayName() throws JmriException {
         maleSocketA.setUserName("Test username Abc");
         Assert.assertEquals("getUserName() is correct",
                 maleSocketA.getObject().getUserName(), maleSocketA.getUserName());
@@ -92,19 +135,19 @@ public abstract class MaleSocketTestBase {
                 ((NamedBean)maleSocketB.getObject()).getDisplayName(), ((NamedBean)maleSocketB).getDisplayName());
         Assert.assertNotEquals("getDisplayName() are different",
                 ((NamedBean)maleSocketA).getDisplayName(), ((NamedBean)maleSocketB).getDisplayName());
-        
+    }
+    
+    @Test
+    public void testState() throws JmriException {
         ((NamedBean)maleSocketA).setState(NamedBean.UNKNOWN);
         Assert.assertEquals("getState() is correct",
                 NamedBean.UNKNOWN, ((NamedBean)maleSocketA).getState());
         JUnitAppender.assertWarnMessageStartsWith("Unexpected call to setState in ");
         JUnitAppender.assertWarnMessageStartsWith("Unexpected call to getState in ");
-        
-        ((NamedBean)maleSocketA).setState(NamedBean.INCONSISTENT);
-        Assert.assertEquals("getState() is correct",
-                NamedBean.INCONSISTENT, ((NamedBean)maleSocketA).getState());
-        JUnitAppender.assertWarnMessageStartsWith("Unexpected call to setState in ");
-        JUnitAppender.assertWarnMessageStartsWith("Unexpected call to getState in ");
-        
+    }
+    
+    @Test
+    public void testComment() throws JmriException {
         ((NamedBean)maleSocketA).setComment("Abc");
         Assert.assertEquals("getComment() is correct",
                 "Abc", ((NamedBean)maleSocketA).getComment());

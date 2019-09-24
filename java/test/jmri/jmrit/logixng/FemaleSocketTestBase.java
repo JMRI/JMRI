@@ -67,8 +67,11 @@ public abstract class FemaleSocketTestBase {
             Map<Category, List<Class<? extends Base>>> actualMap) {
         
         List<Class<? extends Base>> classes;
-/*        
+        
         for (Category category : Category.values()) {
+            System.out.format("FemaleSocket: %s, category: %s%n",
+                    femaleSocket.getClass().getName(),
+                    category.name());
             classes = femaleSocket.getConnectableClasses().get(category);
             for (Class<? extends Base> clazz : classes) {
                 System.out.format("FemaleSocket: %s, category: %s, class: %s%n",
@@ -77,7 +80,7 @@ public abstract class FemaleSocketTestBase {
                         clazz.getName());
             }
         }
-*/        
+        
         for (Category category : Category.values()) {
             
             if (!isSetsEqual(

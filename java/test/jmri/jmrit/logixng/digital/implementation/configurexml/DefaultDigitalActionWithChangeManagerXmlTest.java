@@ -50,22 +50,32 @@ public class DefaultDigitalActionWithChangeManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.logixemulator.actions.configurexml.ActionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.digital.actions_with_change.configurexml.OnChangeActionXml");
         e.addContent(e2);
-        e2.addContent(new Element("systemName").addContent("IQDA1"));
+        e2.addContent(new Element("systemName").addContent("IQDC1"));
+        Element socketElement = new Element("socket");
+        e2.addContent(socketElement);
+        socketElement.addContent(new Element("socketName").addContent("A"));
+        socketElement.addContent(new Element("systemName").addContent("IQDA2"));
+        e2.setAttribute("whichChange", "CHANGE_TO_TRUE");
         b.loadActions(e);
         
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.logixemulator.actions.configurexml.ActionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.digital.actions_with_change.configurexml.OnChangeActionXml");
         e.addContent(e2);
-        e2.addContent(new Element("systemName").addContent("IQDA2"));
+        e2.addContent(new Element("systemName").addContent("IQDC2"));
+        socketElement = new Element("socket");
+        e2.addContent(socketElement);
+        socketElement.addContent(new Element("socketName").addContent("A"));
+        socketElement.addContent(new Element("systemName").addContent("IQDA2"));
+        e2.setAttribute("whichChange", "CHANGE_TO_TRUE");
         b.loadActions(e);
         
         // Test trying to load a class with private constructor
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.logixemulator.implementation.configurexml.DefaultDigitalActionWithChangeManagerXmlTest$PrivateConstructorXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionWithChangeManagerXmlTest$PrivateConstructorXml");
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
@@ -93,8 +103,8 @@ public class DefaultDigitalActionWithChangeManagerXmlTest {
         DigitalActionWithChangeManager manager = InstanceManager.getDefault(DigitalActionWithChangeManager.class);
         manager.registerAction(new MyDigitalActionWithChange());
         b.store(manager);
-        JUnitAppender.assertErrorMessage("Cannot load configuration adapter for jmri.jmrit.logixng.logixemulator.implementation.configurexml.DefaultDigitalActionWithChangeManagerXmlTest$MyDigitalActionWithChange");
-        JUnitAppender.assertErrorMessage("Cannot store configuration for jmri.jmrit.logixng.logixemulator.implementation.configurexml.DefaultDigitalActionWithChangeManagerXmlTest$MyDigitalActionWithChange");
+        JUnitAppender.assertErrorMessage("Cannot load configuration adapter for jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionWithChangeManagerXmlTest$MyDigitalActionWithChange");
+        JUnitAppender.assertErrorMessage("Cannot store configuration for jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionWithChangeManagerXmlTest$MyDigitalActionWithChange");
     }
     
     @Test
@@ -184,7 +194,7 @@ public class DefaultDigitalActionWithChangeManagerXmlTest {
     private class MyDigitalActionWithChange extends OnChangeAction {
         
         MyDigitalActionWithChange() {
-            super("IQDA9999", null, OnChangeAction.ChangeType.CHANGE);
+            super("IQDC9999", null, OnChangeAction.ChangeType.CHANGE);
         }
         
     }

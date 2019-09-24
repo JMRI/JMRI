@@ -70,7 +70,7 @@ public final class DefaultFemaleDigitalActionWithChangeSocket
     /** {@inheritDoc} */
     @Override
     public String getExampleSystemName() {
-        return InstanceManager.getDefault(DigitalActionWithChangeManager.class).getSystemNamePrefix() + "DA10";
+        return InstanceManager.getDefault(DigitalActionWithChangeManager.class).getSystemNamePrefix() + "DC10";
     }
 
     /** {@inheritDoc} */
