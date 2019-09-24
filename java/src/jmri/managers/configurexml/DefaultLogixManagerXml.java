@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.managers.DefaultLogixManager;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
     }
 
     /**
-     * Default implementation for storing the contents of a LogixManager
+     * Default implementation for storing the contents of a LogixManager.
      *
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
@@ -51,7 +52,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 // As a work-around for backward compatibility, store systemName and username as attribute.
                 // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 String uName = x.getUserName();
-                if (uName != null && !uName.isEmpty()) {
+                if ((uName != null) && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);  // NOI18N
                 }
 
@@ -160,7 +161,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 List<Element> logixConditionalList = elem.getChildren("logixConditional");  // NOI18N
                 // add conditionals
                 for (Element lxcond : logixConditionalList) {
-                    String cSysName = lxcond.getAttribute("systemName").getValue();  // NOI18N
+                    String cSysName = getAttributeString(lxcond, "systemName");
                     if (cSysName == null) {
                         log.warn("unexpected null in systemName {} {}", // NOI18N
                                 lxcond, lxcond.getAttributes());
@@ -168,7 +169,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                     }
                     int cOrder = Integer.parseInt(lxcond
                             .getAttribute("order").getValue()); // NOI18N
-                    // add conditional to logix
+                    // add the conditional to logix
                     x.addConditional(cSysName, cOrder);
                 }
             }
@@ -191,7 +192,6 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             if (cmOD != null) {
                 cmOD.deregister(InstanceManager.getDefault(jmri.LogixManager.class));
             }
-
         }
 
         // register new one with InstanceManager

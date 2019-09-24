@@ -51,11 +51,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     /**
-     * Method to create a new Logix if the Logix does not exist.
-     * <p>
-     * Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new Logix.
+     * Create a new Logix if the Logix does not exist.
+     *
+     * @return null if a Logix with the same systemName or userName
+     * already exists, or if there is trouble creating a new Logix
      */
     @Override
     public Logix createNewLogix(String systemName, String userName) {
@@ -155,8 +154,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     /**
-     * Method to get an existing Logix. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
+     * Get an existing Logix. First looks up assuming name is a
+     * User Name. If this fails looks up assuming name is a System Name. If
      * both fail, returns null.
      */
     @Override
@@ -204,4 +203,5 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
+
 }

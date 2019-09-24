@@ -84,10 +84,10 @@ public class DefaultSignalMastManagerXml
     @Override
     public boolean load(Element shared, Element perNode) {
         // loop over contained signalmast elements
-        List<Element> list = shared.getChildren("signalmast");
+        List<Element> mastList = shared.getChildren("signalmast");
         boolean result = true;
 
-        for (Element e : list) {
+        for (Element e : mastList) {
             if (e.getAttribute("class") == null) {
                 SignalMast m;
                 String sys = getSystemName(e);
@@ -124,10 +124,10 @@ public class DefaultSignalMastManagerXml
         loadSignalMastClass(shared, "dccsignalmast");
         loadSignalMastClass(shared, "olcbsignalmast");
 
-        list = shared.getChildren("signalmastrepeater");
-        if (list != null) {
+        mastList = shared.getChildren("signalmastrepeater");
+        if (mastList != null) {
             DefaultSignalMastManager m = (DefaultSignalMastManager) InstanceManager.getDefault(jmri.SignalMastManager.class);
-            for (Element e : list) {
+            for (Element e : mastList) {
                 String masterName = e.getChild("masterMast").getText();
                 String slaveName = e.getChild("slaveMast").getText();
                 SignalMast masterMast = m.getSignalMast(masterName);
@@ -168,19 +168,12 @@ public class DefaultSignalMastManagerXml
     }
 
     private void loadSignalMastClass(Element shared, String signalMastClass) {
-        List<Element> list = shared.getChildren(signalMastClass);
-        if (list != null) {
-            for (Element e : list) {
-                String adapterName = e.getAttribute("class").getValue();
-                log.debug("load via {}", adapterName);
-                try {
-                    XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
-                    // and do it
-                    adapter.load(e, null);
-                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | java.lang.reflect.InvocationTargetException | jmri.configurexml.JmriConfigureXmlException ex) {
-                    log.error("Exception while loading {}: {}", e.getName(), ex, ex);
-                }
-            }
+        List<Element> mastClassList = shared.getChildren(signalMastClass);
+        log.debug("Found {} signal masts", mastClassList.size());
+        // load the contents
+        boolean result = loadInAdapter(mastClassList, null);
+        if (!result) {
+            log.warn("error loading signalmasts");
         }
     }
 

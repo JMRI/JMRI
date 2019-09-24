@@ -115,23 +115,12 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      */
     public void loadSignalHeads(Element shared, Element perNode) {
         InstanceManager.getDefault(SignalHeadManager.class);
-
+        List<Element> headClassList = shared.getChildren();
+        log.debug("Found {} signal heads", headClassList.size());
         // load the contents
-        List<Element> items = shared.getChildren();
-        log.debug("Found {} signal heads", items.size());
-        for (Element item : items) {
-            // get the class, hence the adapter object to do loading
-            String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via {}", adapterName);
-            try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
-                // and do it
-                adapter.load(item, null);
-            } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
-                        | IllegalAccessException | java.lang.reflect.InvocationTargetException
-                        | JmriConfigureXmlException e) {
-                log.error("Exception while loading {}: {}", item.getName(), e, e);
-            }
+        boolean result = loadInAdapter(headClassList, null);
+        if (!result) {
+            log.warn("error loading signalheads");
         }
     }
 
