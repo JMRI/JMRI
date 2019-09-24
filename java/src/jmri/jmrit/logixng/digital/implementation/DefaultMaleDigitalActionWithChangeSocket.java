@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.logixemulator.implementation;
+package jmri.jmrit.logixng.digital.implementation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -14,24 +14,24 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.MaleLogixEmulatorActionSocket;
-import jmri.jmrit.logixng.LogixEmulatorActionBean;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
+import jmri.jmrit.logixng.DigitalActionWithChangeBean;
+import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 
 /**
- * Every LogixEmulatorActionBean has an DefaultMaleLogixEmulatorActionSocket as its parent.
+ * Every DigitalActionWithChangeBean has an DefaultMaleDigitalActionWithChangeSocket as its parent.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultMaleLogixEmulatorActionSocket extends AbstractMaleSocket implements MaleLogixEmulatorActionSocket {
+public class DefaultMaleDigitalActionWithChangeSocket extends AbstractMaleSocket implements MaleDigitalActionWithChangeSocket {
 
-    private final LogixEmulatorActionBean _action;
+    private final DigitalActionWithChangeBean _action;
     private DebugConfig _debugConfig = null;
     private boolean _enabled = true;
     
     
-    public DefaultMaleLogixEmulatorActionSocket(@Nonnull LogixEmulatorActionBean action) {
+    public DefaultMaleDigitalActionWithChangeSocket(@Nonnull DigitalActionWithChangeBean action) {
         _action = action;
     }
     
@@ -107,7 +107,7 @@ public class DefaultMaleLogixEmulatorActionSocket extends AbstractMaleSocket imp
         }
         
         if ((_debugConfig != null)
-                && ((LogixEmulatorActionDebugConfig)_debugConfig)._dontExecute) {
+                && ((DigitalActionWithChangeDebugConfig)_debugConfig)._dontExecute) {
             return;
         }
         _action.execute(hasChangedToTrue);
@@ -315,7 +315,7 @@ public class DefaultMaleLogixEmulatorActionSocket extends AbstractMaleSocket imp
     /** {@inheritDoc} */
     @Override
     public DebugConfig createDebugConfig() {
-        return new LogixEmulatorActionDebugConfig();
+        return new DigitalActionWithChangeDebugConfig();
     }
 
     /** {@inheritDoc} */
@@ -343,7 +343,7 @@ public class DefaultMaleLogixEmulatorActionSocket extends AbstractMaleSocket imp
     
 
 
-    public static class LogixEmulatorActionDebugConfig implements MaleSocket.DebugConfig {
+    public static class DigitalActionWithChangeDebugConfig implements MaleSocket.DebugConfig {
         
         // If true, the socket is not executing the action.
         // It's useful if you want to test the LogixNG without affecting the

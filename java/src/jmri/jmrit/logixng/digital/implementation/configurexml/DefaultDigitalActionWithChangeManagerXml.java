@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.string.implementation.configurexml;
+package jmri.jmrit.logixng.digital.implementation.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -6,20 +6,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.InvokeOnGuiThread;
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrit.logixng.string.implementation.DefaultStringActionManager;
-import jmri.util.Log4JUtil;
-import jmri.util.ThreadingUtil;
+import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionManager;
+import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringActionBean;
-import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import jmri.jmrit.logixng.DigitalActionBean;
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides the functionality for configuring ActionManagers
@@ -27,33 +24,34 @@ import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
  * @author Dave Duchamp Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018
  */
-public class DefaultStringActionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DefaultDigitalActionWithChangeManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
     
-    public DefaultStringActionManagerXml() {
+    public DefaultDigitalActionWithChangeManagerXml() {
     }
 
-    private StringActionBean getAction(StringActionBean action) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
+    private DigitalActionBean getAction(DigitalActionBean action) throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
         Field f = action.getClass().getDeclaredField("_action");
         f.setAccessible(true);
-        return (StringActionBean) f.get(action);
+        return (DigitalActionBean) f.get(action);
     }
     
     /**
-     * Default implementation for storing the contents of a StringActionManager
+     * Default implementation for storing the contents of a DigitalActionManager
      *
-     * @param o Object to store, of type StringActionManager
+     * @param o Object to store, of type DigitalActionManager
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        Element actions = new Element("logixngStringActions");
+        Element actions = new Element("logixngDigitalActions");
         setStoreElementClass(actions);
-        StringActionManager tm = (StringActionManager) o;
+        DigitalActionManager tm = (DigitalActionManager) o;
         if (tm != null) {
-            for (StringActionBean action : tm.getNamedBeanSet()) {
+            for (DigitalActionBean action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N
+//                log.error("action system name is " + action.getSystemName() + ", " + action.getLongDescription());  // NOI18N
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
                     if (e != null) {
@@ -84,7 +82,7 @@ public class DefaultStringActionManagerXml extends jmri.managers.configurexml.Ab
     }
 
     /**
-     * Create a StringActionManager object of the correct class, then register
+     * Create a DigitalActionManager object of the correct class, then register
      * and fill it.
      *
      * @param sharedAction  Shared top level Element to unpack.
@@ -101,11 +99,11 @@ public class DefaultStringActionManagerXml extends jmri.managers.configurexml.Ab
     }
 
     /**
-     * Utility method to load the individual StringActionBean objects. If
+     * Utility method to load the individual DigitalActionBean objects. If
      * there's no additional info needed for a specific action type, invoke
-     * this with the parent of the set of StringActionBean elements.
+     * this with the parent of the set of DigitalActionBean elements.
      *
-     * @param actions Element containing the StringActionBean elements to load.
+     * @param actions Element containing the DigitalActionBean elements to load.
      */
     public void loadActions(Element actions) {
         
@@ -152,40 +150,40 @@ public class DefaultStringActionManagerXml extends jmri.managers.configurexml.Ab
     }
 
     /**
-     * Replace the current StringActionManager, if there is one, with one newly
-     * created during a load operation. This is skipped if they are of the same absolute
-     * type.
+     * Replace the current DigitalActionManager, if there is one, with one newly
+     * created during a load operation. This is skipped if they are of the same
+     * absolute type.
      */
     protected void replaceActionManager() {
-        if (InstanceManager.getDefault(jmri.jmrit.logixng.StringActionManager.class).getClass().getName()
-                .equals(DefaultStringActionManager.class.getName())) {
+        if (InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class).getClass().getName()
+                .equals(DefaultDigitalActionManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.StringActionManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.DigitalActionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.deregister(InstanceManager.getDefault(jmri.jmrit.logixng.StringActionManager.class));
+                cmOD.deregister(InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class));
             }
 
         }
 
         ThreadingUtil.runOnGUI(() -> {
             // register new one with InstanceManager
-            DefaultStringActionManager pManager = DefaultStringActionManager.instance();
-            InstanceManager.store(pManager, StringActionManager.class);
+            DefaultDigitalActionManager pManager = DefaultDigitalActionManager.instance();
+            InstanceManager.store(pManager, DigitalActionManager.class);
             // register new one for configuration
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_STRING_ACTIONS);
+                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS_WITH_CHANGE);
             }
         });
     }
 
     @Override
     public int loadOrder() {
-        return InstanceManager.getDefault(jmri.jmrit.logixng.StringActionManager.class).getXMLOrder();
+        return InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultStringActionManagerXml.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultDigitalActionWithChangeManagerXml.class);
 }

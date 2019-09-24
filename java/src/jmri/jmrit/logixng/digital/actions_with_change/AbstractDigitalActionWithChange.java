@@ -1,44 +1,44 @@
-package jmri.jmrit.logixng.logixemulator.actions;
+package jmri.jmrit.logixng.digital.actions_with_change;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.LogixEmulatorActionBean;
-import jmri.jmrit.logixng.LogixEmulatorActionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
+import jmri.jmrit.logixng.DigitalActionWithChangeBean;
 
 /**
  * The base class for LogixNG Actions
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public abstract class AbstractLogixEmulatorAction extends AbstractBase
-        implements LogixEmulatorActionBean {
+public abstract class AbstractDigitalActionWithChange extends AbstractBase
+        implements DigitalActionWithChangeBean {
 
     private Base _parent = null;
     private Lock _lock = Lock.NONE;
-    private int _state = LogixEmulatorActionBean.UNKNOWN;
+    private int _state = DigitalActionWithChangeBean.UNKNOWN;
     
     
-    public AbstractLogixEmulatorAction(String sys) throws BadSystemNameException {
+    public AbstractDigitalActionWithChange(String sys) throws BadSystemNameException {
         super(sys);
         
         // Do this test here to ensure all the tests are using correct system names
-        Manager.NameValidity isNameValid = InstanceManager.getDefault(LogixEmulatorActionManager.class).validSystemNameFormat(mSystemName);
+        Manager.NameValidity isNameValid = InstanceManager.getDefault(DigitalActionWithChangeManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
     }
 
-    public AbstractLogixEmulatorAction(String sys, String user)
+    public AbstractDigitalActionWithChange(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         
         // Do this test here to ensure all the tests are using correct system names
-        Manager.NameValidity isNameValid = InstanceManager.getDefault(LogixEmulatorActionManager.class).validSystemNameFormat(mSystemName);
+        Manager.NameValidity isNameValid = InstanceManager.getDefault(DigitalActionWithChangeManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
@@ -89,21 +89,21 @@ public abstract class AbstractLogixEmulatorAction extends AbstractBase
 
     @Override
     public String getBeanType() {
-        return Bundle.getMessage("BeanNameLogixEmulatorAction");
+        return Bundle.getMessage("BeanNameDigitalActionWithChange");
     }
 
     @Override
     public void setState(int s) throws JmriException {
-        log.warn("Unexpected call to setState in AbstractLogixEmulatorAction.");  // NOI18N
+        log.warn("Unexpected call to setState in AbstractDigitalActionWithChange.");  // NOI18N
         _state = s;
     }
 
     @Override
     public int getState() {
-        log.warn("Unexpected call to getState in AbstractLogixEmulatorAction.");  // NOI18N
+        log.warn("Unexpected call to getState in AbstractDigitalActionWithChange.");  // NOI18N
         return _state;
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractLogixEmulatorAction.class);
+    private final static Logger log = LoggerFactory.getLogger(AbstractDigitalActionWithChange.class);
 }

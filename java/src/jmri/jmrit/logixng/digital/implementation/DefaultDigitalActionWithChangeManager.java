@@ -1,6 +1,5 @@
-package jmri.jmrit.logixng.logixemulator.implementation;
+package jmri.jmrit.logixng.digital.implementation;
 
-import jmri.jmrit.logixng.digital.implementation.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +18,22 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.LogixNGPluginFactory;
-import jmri.jmrit.logixng.LogixEmulatorActionFactory;
-import jmri.jmrit.logixng.LogixEmulatorActionManager;
-import jmri.jmrit.logixng.FemaleLogixEmulatorActionSocket;
-import jmri.jmrit.logixng.MaleLogixEmulatorActionSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.LogixEmulatorActionBean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
+import jmri.jmrit.logixng.DigitalActionWithChangeFactory;
+import jmri.jmrit.logixng.FemaleDigitalActionWithChangeSocket;
+import jmri.jmrit.logixng.DigitalActionWithChangeBean;
+import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 
 /**
- * Class providing the basic logic of the LogixEmulatorActionManager interface.
+ * Class providing the basic logic of the DigitalActionWithChangeManager interface.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogixEmulatorActionSocket>
-        implements LogixEmulatorActionManager {
+public class DefaultDigitalActionWithChangeManager extends AbstractManager<MaleDigitalActionWithChangeSocket>
+        implements DigitalActionWithChangeManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
     private int lastAutoActionRef = 0;
@@ -42,17 +41,17 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     
-    public DefaultLogixEmulatorActionManager(InternalSystemConnectionMemo memo) {
+    public DefaultDigitalActionWithChangeManager(InternalSystemConnectionMemo memo) {
         super(memo);
         
         InstanceManager.getDefault(LogixNG_Manager.class)
-                .registerFemaleSocketFactory(new DefaultFemaleLogixEmulatorActionSocketFactory());
+                .registerFemaleSocketFactory(new DefaultFemaleDigitalActionWithChangeSocketFactory());
         
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
         
-        for (LogixEmulatorActionFactory actionFactory : ServiceLoader.load(LogixEmulatorActionFactory.class)) {
+        for (DigitalActionWithChangeFactory actionFactory : ServiceLoader.load(DigitalActionWithChangeFactory.class)) {
             actionFactory.getClasses().forEach((entry) -> {
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
@@ -67,24 +66,24 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
         }
     }
 
-    protected MaleLogixEmulatorActionSocket createMaleActionSocket(LogixEmulatorActionBean action) {
-        MaleLogixEmulatorActionSocket socket = new DefaultMaleLogixEmulatorActionSocket(action);
+    protected MaleDigitalActionWithChangeSocket createMaleActionSocket(DigitalActionWithChangeBean action) {
+        MaleDigitalActionWithChangeSocket socket = new DefaultMaleDigitalActionWithChangeSocket(action);
         action.setParent(socket);
         return socket;
     }
     
     /**
      * Remember a NamedBean Object created outside the manager.
-     * This method creates a MaleLogixEmulatorActionSocket for the action.
+     * This method creates a MaleDigitalActionWithChangeSocket for the action.
      *
      * @param action the bean
      */
     @Override
-    public MaleLogixEmulatorActionSocket registerAction(@Nonnull LogixEmulatorActionBean action)
+    public MaleDigitalActionWithChangeSocket registerAction(@Nonnull DigitalActionWithChangeBean action)
             throws IllegalArgumentException {
         
-        if (action instanceof MaleLogixEmulatorActionSocket) {
-            throw new IllegalArgumentException("registerAction() cannot register a MaleLogixEmulatorActionSocket. Use the method register() instead.");
+        if (action instanceof MaleDigitalActionWithChangeSocket) {
+            throw new IllegalArgumentException("registerAction() cannot register a MaleDigitalActionWithChangeSocket. Use the method register() instead.");
         }
         
         // Check if system name is valid
@@ -102,7 +101,7 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
         }
         
         // save in the maps
-        MaleLogixEmulatorActionSocket maleSocket = createMaleActionSocket(action);
+        MaleDigitalActionWithChangeSocket maleSocket = createMaleActionSocket(action);
         register(maleSocket);
         return maleSocket;
     }
@@ -148,9 +147,9 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
     }
 
     @Override
-    public FemaleLogixEmulatorActionSocket createFemaleSocket(
+    public FemaleDigitalActionWithChangeSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
-        return new DefaultFemaleLogixEmulatorActionSocket(parent, listener, socketName);
+        return new DefaultFemaleDigitalActionWithChangeSocket(parent, listener, socketName);
     }
 
     @Override
@@ -159,7 +158,7 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
     }
 /*
     @Override
-    public void addAction(LogixEmulatorActionBean action) throws IllegalArgumentException {
+    public void addAction(DigitalActionWithChangeBean action) throws IllegalArgumentException {
         // Check if system name is valid
         if (this.validSystemNameFormat(action.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName " + action.getSystemName() + " is not in the correct format");
@@ -170,22 +169,22 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
     }
 /*
     @Override
-    public LogixEmulatorActionBean getAction(String name) {
+    public DigitalActionWithChangeBean getAction(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public LogixEmulatorActionBean getByUserName(String s) {
+    public DigitalActionWithChangeBean getByUserName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public LogixEmulatorActionBean getBySystemName(String s) {
+    public DigitalActionWithChangeBean getBySystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void deleteAction(LogixEmulatorActionBean x) {
+    public void deleteAction(DigitalActionWithChangeBean x) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 */    
@@ -193,24 +192,24 @@ public class DefaultLogixEmulatorActionManager extends AbstractManager<MaleLogix
     /** {@inheritDoc} */
     @Override
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameLogixEmulatorActions" : "BeanNameLogixEmulatorAction");
+        return Bundle.getMessage(plural ? "BeanNameDigitalActionWithChanges" : "BeanNameDigitalActionWithChange");
     }
     
-    static volatile DefaultLogixEmulatorActionManager _instance = null;
+    static volatile DefaultDigitalActionWithChangeManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultLogixEmulatorActionManager instance() {
+    static public DefaultDigitalActionWithChangeManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             Log4JUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
-            _instance = new DefaultLogixEmulatorActionManager(
+            _instance = new DefaultDigitalActionWithChangeManager(
                     InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
         return (_instance);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixEmulatorActionManager.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultDigitalActionWithChangeManager.class);
 
 }

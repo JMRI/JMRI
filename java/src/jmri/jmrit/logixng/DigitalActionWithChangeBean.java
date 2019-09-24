@@ -7,6 +7,6 @@ import jmri.NamedBean;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface LogixEmulatorActionBean extends NamedBean, LogixEmulatorAction {
+public interface DigitalActionWithChangeBean extends NamedBean, DigitalActionWithChange {
 
 }

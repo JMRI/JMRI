@@ -1,14 +1,13 @@
-package jmri.jmrit.logixng.logixemulator.implementation;
+package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.Arrays;
 import java.util.Set;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
-import jmri.jmrit.logixng.LogixEmulatorActionManager;
-import jmri.jmrit.logixng.logixemulator.actions.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
 
 /**
  * Provide the usual default implementations for the
@@ -32,7 +31,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since 2.9.4
  */
 @ServiceProvider(service = InstanceInitializer.class)
-public class LogixNG_LogixEmulatorInstanceInitializer extends AbstractInstanceInitializer {
+public class LogixNG_DigitalActionWithChangeInstanceInitializer extends AbstractInstanceInitializer {
 
     @Override
     public <T> Object getDefault(Class<T> type) {
@@ -44,8 +43,8 @@ public class LogixNG_LogixEmulatorInstanceInitializer extends AbstractInstanceIn
         InternalSystemConnectionMemo memo =
                 InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         
-        if (type == LogixEmulatorActionManager.class) {
-            return new DefaultLogixEmulatorActionManager(memo);
+        if (type == DigitalActionWithChangeManager.class) {
+            return new DefaultDigitalActionWithChangeManager(memo);
         }
 
         return super.getDefault(type);
@@ -54,8 +53,7 @@ public class LogixNG_LogixEmulatorInstanceInitializer extends AbstractInstanceIn
     @Override
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
-        set.addAll(Arrays.asList(
-                LogixEmulatorActionManager.class
+        set.addAll(Arrays.asList(DigitalActionWithChangeManager.class
         ));
         return set;
     }

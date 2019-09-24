@@ -4,14 +4,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Factory class for LogixEmulatorAction classes.
+ * Factory class for DigitalActionWithChange classes.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface LogixEmulatorActionFactory {
+public interface DigitalActionWithChangeFactory {
 
     /**
-     * Get a set of classes that implements the LogixEmulatorAction interface.
+     * Get a set of classes that implements the DigitalActionWithChange interface.
      * 
      * @return a set of entries with category and class
      */

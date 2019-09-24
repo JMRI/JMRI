@@ -1,22 +1,22 @@
-package jmri.jmrit.logixng.logixemulator.implementation;
+package jmri.jmrit.logixng.digital.implementation;
 
 import jmri.jmrit.logixng.digital.implementation.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.LogixEmulatorActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
 
 /**
  *
  */
-public class DefaultFemaleLogixEmulatorActionSocketFactory implements FemaleSocketFactory {
+public class DefaultFemaleDigitalActionWithChangeSocketFactory implements FemaleSocketFactory {
 
     @Override
     public FemaleSocket create(Base parent, FemaleSocketListener listener) {
-        return InstanceManager.getDefault(LogixEmulatorActionManager.class).createFemaleSocket(parent, listener, getNewSocketName(parent));
+        return InstanceManager.getDefault(DigitalActionWithChangeManager.class).createFemaleSocket(parent, listener, getNewSocketName(parent));
     }
 
     @Override

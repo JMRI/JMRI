@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.logixemulator.implementation;
+package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.List;
 import java.util.Locale;
@@ -6,22 +6,22 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.LogixEmulatorActionManager;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.FemaleLogixEmulatorActionSocket;
-import jmri.jmrit.logixng.MaleLogixEmulatorActionSocket;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
+import jmri.jmrit.logixng.FemaleDigitalActionWithChangeSocket;
+import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 
 /**
  *
  */
-public final class DefaultFemaleLogixEmulatorActionSocket
+public final class DefaultFemaleDigitalActionWithChangeSocket
         extends AbstractFemaleSocket
-        implements FemaleLogixEmulatorActionSocket {
+        implements FemaleDigitalActionWithChangeSocket {
 
 
-    public DefaultFemaleLogixEmulatorActionSocket(Base parent, FemaleSocketListener listener, String name) {
+    public DefaultFemaleDigitalActionWithChangeSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
     
@@ -34,7 +34,7 @@ public final class DefaultFemaleLogixEmulatorActionSocket
     
     @Override
     public boolean isCompatible(MaleSocket socket) {
-        return socket instanceof MaleLogixEmulatorActionSocket;
+        return socket instanceof MaleDigitalActionWithChangeSocket;
     }
     
     /** {@inheritDoc} */
@@ -42,7 +42,7 @@ public final class DefaultFemaleLogixEmulatorActionSocket
     public boolean supportsEnableExecution() {
         
         if (isConnected()) {
-            return ((MaleLogixEmulatorActionSocket)getConnectedSocket())
+            return ((MaleDigitalActionWithChangeSocket)getConnectedSocket())
                     .supportsEnableExecution();
         } else {
             throw new UnsupportedOperationException("Socket is not connected");
@@ -52,37 +52,37 @@ public final class DefaultFemaleLogixEmulatorActionSocket
     @Override
     public void execute(boolean hasChangedToTrue) {
         if (isConnected()) {
-            ((MaleLogixEmulatorActionSocket)getConnectedSocket())
+            ((MaleDigitalActionWithChangeSocket)getConnectedSocket())
                     .execute(hasChangedToTrue);
         }
     }
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DefaultFemaleLogixEmulatorActionSocket_Short");
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalActionWithChangeSocket_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DefaultFemaleLogixEmulatorActionSocket_Long", getName());
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalActionWithChangeSocket_Long", getName());
     }
 
     /** {@inheritDoc} */
     @Override
     public String getExampleSystemName() {
-        return InstanceManager.getDefault(LogixEmulatorActionManager.class).getSystemNamePrefix() + "DA10";
+        return InstanceManager.getDefault(DigitalActionWithChangeManager.class).getSystemNamePrefix() + "DA10";
     }
 
     /** {@inheritDoc} */
     @Override
     public String getNewSystemName() {
-        return InstanceManager.getDefault(LogixEmulatorActionManager.class)
+        return InstanceManager.getDefault(DigitalActionWithChangeManager.class)
                 .getNewSystemName();
     }
 
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
-        return InstanceManager.getDefault(LogixEmulatorActionManager.class).getActionClasses();
+        return InstanceManager.getDefault(DigitalActionWithChangeManager.class).getActionClasses();
     }
 
     /** {@inheritDoc} */

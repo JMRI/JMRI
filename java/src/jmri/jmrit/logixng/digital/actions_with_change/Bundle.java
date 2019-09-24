@@ -1,6 +1,5 @@
-package jmri.jmrit.logixng.logixemulator.implementation;
+package jmri.jmrit.logixng.digital.actions_with_change;
 
-import jmri.jmrit.logixng.digital.implementation.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
@@ -25,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.logixng.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.logixng.digital.implementation.DigitalImplementationBundle";
+    private static final String name = "jmri.jmrit.logixng.digital.actions_with_change.DigitalActionWithChangeBundle";
 
     //
     // below here is boilerplate to be copied exactly

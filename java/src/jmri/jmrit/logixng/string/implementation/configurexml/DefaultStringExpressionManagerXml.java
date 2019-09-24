@@ -176,7 +176,7 @@ public class DefaultStringExpressionManagerXml extends jmri.managers.configurexm
             // register new one for configuration
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.registerConfig(pManager, jmri.Manager.STRING_EXPRESSIONS);
+                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
             }
         });
     }

@@ -47,7 +47,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
 
     @Override
     public int getXMLOrder() {
-        return CONDITIONALNGS;
+        return LOGIXNG_CONDITIONALNGS;
     }
 
     @Override

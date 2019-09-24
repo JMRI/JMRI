@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.logixemulator.actions;
+package jmri.jmrit.logixng.digital.actions_with_change.configureswing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.logixng.Bundle {
+public class Bundle extends jmri.jmrit.logixng.digital.actions_with_change.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.logixng.digital.logixemulator.LogixEmulatorActionBundle";
+    private static final String name = "jmri.jmrit.logixng.logixemulator.actions.configureswing.DigitalActionSwingBundle";
 
     //
     // below here is boilerplate to be copied exactly

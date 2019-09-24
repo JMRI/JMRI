@@ -6,46 +6,46 @@ import javax.annotation.Nonnull;
 import jmri.Manager;
 
 /**
- * Manager for LogixEmulatorActionBean
+ * Manager for DigitalActionWithChangeBean
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface LogixEmulatorActionManager extends Manager<MaleLogixEmulatorActionSocket> {
+public interface DigitalActionWithChangeManager extends Manager<MaleDigitalActionWithChangeSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.
-     * This method creates a MaleLogixEmulatorActionSocket for the action.
+     * This method creates a MaleDigitalActionWithChangeSocket for the action.
      *
      * @param action the bean
      * @return the male socket for this action
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-    public MaleLogixEmulatorActionSocket registerAction(@Nonnull LogixEmulatorActionBean action)
+    public MaleDigitalActionWithChangeSocket registerAction(@Nonnull DigitalActionWithChangeBean action)
             throws IllegalArgumentException;
     
     /**
-     * Create a new system name for an LogixEmulatorActionBean.
+     * Create a new system name for an DigitalActionWithChangeBean.
      * @return a new system name
      */
     public String getNewSystemName();
 
-    public FemaleLogixEmulatorActionSocket createFemaleSocket(
+    public FemaleDigitalActionWithChangeSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
 
     /**
-     * Get a set of classes that implements the LogixEmulatorActionBean interface.
+     * Get a set of classes that implements the DigitalActionWithChangeBean interface.
      * 
      * @return a set of entries with category and class
      */
     public Map<Category, List<Class<? extends Base>>> getActionClasses();
 
     /*.*
-     * Add an LogixEmulatorActionBean.
+     * Add an DigitalActionWithChangeBean.
      *
      * @param action the action to add
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-//    public void addAction(LogixEmulatorActionBean action)
+//    public void addAction(DigitalActionWithChangeBean action)
 //            throws IllegalArgumentException;
 
     /*.*
@@ -55,18 +55,18 @@ public interface LogixEmulatorActionManager extends Manager<MaleLogixEmulatorAct
      * @param name User name or system name to match
      * @return null if no match found
      */
-//    public LogixEmulatorActionBean getAction(String name);
+//    public DigitalActionWithChangeBean getAction(String name);
 
-//    public LogixEmulatorActionBean getByUserName(String s);
+//    public DigitalActionWithChangeBean getByUserName(String s);
 
-//    public LogixEmulatorActionBean getBySystemName(String s);
+//    public DigitalActionWithChangeBean getBySystemName(String s);
 
     /*.*
-     * Delete LogixEmulatorActionBean by removing it from the manager. The LogixEmulatorActionBean must first be
+     * Delete DigitalActionWithChangeBean by removing it from the manager. The DigitalActionWithChangeBean must first be
      * deactivated so it stops processing.
      *
-     * @param x the LogixEmulatorActionBean to delete
+     * @param x the DigitalActionWithChangeBean to delete
      */
-//    void deleteAction(LogixEmulatorActionBean x);
+//    void deleteAction(DigitalActionWithChangeBean x);
     
 }

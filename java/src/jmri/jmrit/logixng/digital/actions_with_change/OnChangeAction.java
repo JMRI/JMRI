@@ -1,15 +1,13 @@
-package jmri.jmrit.logixng.logixemulator.actions;
+package jmri.jmrit.logixng.digital.actions_with_change;
 
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.LogixEmulatorActionManager;
-import jmri.jmrit.logixng.FemaleLogixEmulatorActionSocket;
+import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import org.slf4j.Logger;
@@ -20,33 +18,42 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class LogixEmulatorAction extends AbstractLogixEmulatorAction
+public class OnChangeAction extends AbstractDigitalActionWithChange
         implements FemaleSocketListener {
 
-    private LogixEmulatorAction _template;
+    /**
+     * The type of Action. If the type is changed, the action is aborted if it
+     * is currently running.
+     */
+    public enum ChangeType {
+        CHANGE_TO_TRUE,
+        CHANGE_TO_FALSE,
+        CHANGE,
+    }
+
+    private OnChangeAction _template;
     private String _actionSocketSystemName;
-    private final FemaleLogixEmulatorActionSocket _actionSocket;
-    private final Timer _timer = new Timer(true);
-    long _delay = 0;
-    boolean _isActive = false;
+    private final FemaleDigitalActionSocket _actionSocket;
+    ChangeType _whichChange = ChangeType.CHANGE;
     
-    public LogixEmulatorAction(String sys, String user) {
+    public OnChangeAction(String sys, String user, ChangeType whichChange) {
         super(sys, user);
-        _actionSocket = InstanceManager.getDefault(LogixEmulatorActionManager.class)
+        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
+        _whichChange = whichChange;
     }
     
-    private LogixEmulatorAction(LogixEmulatorAction template) {
-        super(InstanceManager.getDefault(LogixEmulatorActionManager.class).getNewSystemName(), null);
+    private OnChangeAction(OnChangeAction template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         _template = template;
-        _actionSocket = InstanceManager.getDefault(LogixEmulatorActionManager.class)
+        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, _template._actionSocket.getName());
     }
     
     /** {@inheritDoc} */
     @Override
     public Base getNewObjectBasedOnTemplate() {
-        return new LogixEmulatorAction(this);
+        return new OnChangeAction(this);
     }
     
     /** {@inheritDoc} */
@@ -65,27 +72,41 @@ public class LogixEmulatorAction extends AbstractLogixEmulatorAction
     @Override
     public void execute(boolean hasChangedToTrue) {
         if (_actionSocket.isConnected()) {
-            _timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    _actionSocket.execute(hasChangedToTrue);
-                }
-            }, _delay);
+            switch (_whichChange) {
+                case CHANGE_TO_TRUE:
+                    // Call execute() if change to true
+                    if (hasChangedToTrue) {
+                        _actionSocket.execute();
+                    }
+                    break;
+                case CHANGE_TO_FALSE:
+                    // Call execute() if change to false
+                    if (!hasChangedToTrue) {
+                        _actionSocket.execute();
+                    }
+                    break;
+                case CHANGE:
+                    // Always call execute()
+                    _actionSocket.execute();
+                    break;
+                default:
+                    throw new UnsupportedOperationException("_whichChange has unknown value: "+_whichChange);
+            }
         }
     }
 
     /**
      * Get the type.
      */
-    public long getDelay() {
-        return _delay;
+    public ChangeType getType() {
+        return _whichChange;
     }
     
     /**
      * Set the type.
      */
-    public void setDelay(long delay) {
-        _delay = delay;
+    public void setType(ChangeType whichChange) {
+        _whichChange = whichChange;
     }
     
     @Override
@@ -125,23 +146,23 @@ public class LogixEmulatorAction extends AbstractLogixEmulatorAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Timer_Short");
+        return Bundle.getMessage(locale, "DigitalActionWithChange_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Timer_Long", _actionSocket.getName(), _delay);
+        return Bundle.getMessage(locale, "DigitalActionWithChange_Long", _actionSocket.getName());
     }
 
-    public FemaleLogixEmulatorActionSocket getThenActionSocket() {
+    public FemaleDigitalActionSocket getActionSocket() {
         return _actionSocket;
     }
 
-    public String getTimerActionSocketSystemName() {
+    public String getActionSocketSystemName() {
         return _actionSocketSystemName;
     }
 
-    public void setTimerActionSocketSystemName(String systemName) {
+    public void setActionSocketSystemName(String systemName) {
         _actionSocketSystemName = systemName;
     }
 
@@ -157,7 +178,7 @@ public class LogixEmulatorAction extends AbstractLogixEmulatorAction
                 _actionSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(LogixEmulatorActionManager.class)
+                            InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBeanBySystemName(socketSystemName);
                     _actionSocket.disconnect();
                     if (maleSocket != null) {
@@ -189,9 +210,8 @@ public class LogixEmulatorAction extends AbstractLogixEmulatorAction
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        _timer.cancel();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LogixEmulatorAction.class);
+    private final static Logger log = LoggerFactory.getLogger(OnChangeAction.class);
 
 }

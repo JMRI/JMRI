@@ -5,13 +5,13 @@ package jmri.jmrit.logixng;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface LogixEmulatorAction extends Base {
+public interface DigitalActionWithChange extends Base {
 
-    public enum OnChangeType {
-        ON_CHANGE_TO_TRUE,
-        ON_CHANGE_TO_FALSE,
-        ON_CHANGE,
-    }
+//    public enum OnChangeType {
+//        ON_CHANGE_TO_TRUE,
+//        ON_CHANGE_TO_FALSE,
+//        ON_CHANGE,
+//    }
     
     /**
      * Determines whether this action supports enable execution for this

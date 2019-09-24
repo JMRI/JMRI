@@ -175,7 +175,7 @@ public class DefaultAnalogExpressionManagerXml extends jmri.managers.configurexm
             // register new one for configuration
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.registerConfig(pManager, jmri.Manager.ANALOG_EXPRESSIONS);
+                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
             }
         });
     }
