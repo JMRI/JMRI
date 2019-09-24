@@ -471,6 +471,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added basic support for developer architecture checks via
+                <a href="https://www.archunit.org">ArchUnit</li>,
+                see the 
+                <a href="http://jmri.org/help/en/html/doc/Technical/IntroStructure.shtml">ntroduction to JMRI Library Structure</h>
+                page.
         </ul>
 
