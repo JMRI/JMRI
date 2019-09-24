@@ -481,12 +481,6 @@ public class Tracker {
             if (size == 0) {    // lost tracker
                 recover(block);
             } else {    // otherwise head or tail is holding a path fixed through a portal (thrown switch should have derailed train by now)
-                if (!_occupies.contains(block)) {
-                    /*if (log.isDebugEnabled() && size > 1) {
-                        hasPathBetween(_occupies.getLast(), _occupies.get(size - 2),true);
-                        hasPathBetween(_occupies.getFirst(), _occupies.get(1), true);
-                    }*/
-                }
                 makeRange();
             }
             return false;
