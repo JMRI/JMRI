@@ -32,7 +32,7 @@ public class LogixEmulatorSwingTest {
         Assert.assertTrue("panel is not null",
             null != new OnChangeActionSwing().getConfigPanel());
         Assert.assertTrue("panel is not null",
-            null != new OnChangeActionSwing().getConfigPanel(new OnChangeAction("IQDA1", null, OnChangeAction.ChangeType.CHANGE)));
+            null != new OnChangeActionSwing().getConfigPanel(new OnChangeAction("IQDC1", null, OnChangeAction.ChangeType.CHANGE)));
     }
     
     // The minimal setup for log4J

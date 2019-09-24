@@ -7,6 +7,7 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
@@ -44,7 +45,7 @@ public class OnChangeAction extends AbstractDigitalActionWithChange
     }
     
     private OnChangeAction(OnChangeAction template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionWithChangeManager.class).getNewSystemName(), null);
         _template = template;
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, _template._actionSocket.getName());
@@ -146,12 +147,24 @@ public class OnChangeAction extends AbstractDigitalActionWithChange
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DigitalActionWithChange_Short");
+        return Bundle.getMessage(locale, "OnChange_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DigitalActionWithChange_Long", _actionSocket.getName());
+        switch (_whichChange) {
+            case CHANGE_TO_TRUE:
+                return Bundle.getMessage(locale, "OnChange_Long_ChangeToTrue");
+                
+            case CHANGE_TO_FALSE:
+                return Bundle.getMessage(locale, "OnChange_Long_ChangeToFalse");
+                
+            case CHANGE:
+                return Bundle.getMessage(locale, "OnChange_Long_Change");
+                
+            default:
+                throw new UnsupportedOperationException("_whichChange has unknown value: "+_whichChange);
+        }
     }
 
     public FemaleDigitalActionSocket getActionSocket() {

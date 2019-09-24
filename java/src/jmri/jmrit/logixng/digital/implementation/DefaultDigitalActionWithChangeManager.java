@@ -94,7 +94,7 @@ public class DefaultDigitalActionWithChangeManager extends AbstractManager<MaleD
         
         // Remove the letters in the beginning to get only the number of the
         // system name.
-        String actionNumberStr = action.getSystemName().replaceAll(getSystemNamePrefix()+"DA:?", "");
+        String actionNumberStr = action.getSystemName().replaceAll(getSystemNamePrefix()+"DC:?", "");
         int actionNumber = Integer.parseInt(actionNumberStr);
         if (lastAutoActionRef < actionNumber) {
             lastAutoActionRef = actionNumber;
@@ -129,7 +129,7 @@ public class DefaultDigitalActionWithChangeManager extends AbstractManager<MaleD
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSystemNamePrefix()+"DA:?\\d+")) {
+        if (systemName.matches(getSystemNamePrefix()+"DC:?\\d+")) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;

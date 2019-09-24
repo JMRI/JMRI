@@ -264,7 +264,7 @@ public class IfThenElse extends AbstractDigitalAction
         return _thenActionSocket;
     }
 
-    public String getThenExpressionSocketSystemName() {
+    public String getThenActionSocketSystemName() {
         return _thenActionSocketSystemName;
     }
 

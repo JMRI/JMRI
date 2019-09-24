@@ -8,9 +8,9 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalActionWithChangeManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
+import jmri.jmrit.logixng.FemaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import org.slf4j.Logger;
@@ -27,32 +27,26 @@ public class Logix extends AbstractDigitalAction
     private Logix _template;
     private boolean _enableExecution;
     private boolean _lastExpressionResult = false;
-    private String _ifExpressionSocketSystemName;
-    private String _thenActionSocketSystemName;
-    private String _elseActionSocketSystemName;
-    private final FemaleDigitalExpressionSocket _ifExpressionSocket;
-    private final FemaleDigitalActionSocket _thenActionSocket;
-    private final FemaleDigitalActionSocket _elseActionSocket;
+    private String _expressionSocketSystemName;
+    private String _actionSocketSystemName;
+    private final FemaleDigitalExpressionSocket _expressionSocket;
+    private final FemaleDigitalActionWithChangeSocket _actionSocket;
     
     public Logix(String sys, String user) {
         super(sys, user);
-        _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+        _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E");
-        _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A1");
-        _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A2");
+        _actionSocket = InstanceManager.getDefault(DigitalActionWithChangeManager.class)
+                .createFemaleSocket(this, this, "A");
     }
     
     private Logix(Logix template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionWithChangeManager.class).getNewSystemName(), null);
         _template = template;
-        _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._ifExpressionSocket.getName());
-        _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, _template._thenActionSocket.getName());
-        _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, _template._elseActionSocket.getName());
+        _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(this, this, _template._expressionSocket.getName());
+        _actionSocket = InstanceManager.getDefault(DigitalActionWithChangeManager.class)
+                .createFemaleSocket(this, this, _template._actionSocket.getName());
     }
     
     /** {@inheritDoc} */
@@ -93,32 +87,24 @@ public class Logix extends AbstractDigitalAction
     
     @Override
     public void evaluateOnly() {
-        _lastExpressionResult = _ifExpressionSocket.evaluate();
+        _lastExpressionResult = _expressionSocket.evaluate();
     }
     
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        _lastExpressionResult = _ifExpressionSocket.evaluate();
-
-        if (_lastExpressionResult) {
-            _thenActionSocket.execute();
-        } else {
-            _elseActionSocket.execute();
-        }
+        _lastExpressionResult = _expressionSocket.evaluate();
+        _actionSocket.execute(_lastExpressionResult);
     }
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _ifExpressionSocket;
+                return _expressionSocket;
                 
             case 1:
-                return _thenActionSocket;
-                
-            case 2:
-                return _elseActionSocket;
+                return _actionSocket;
                 
             default:
                 throw new IllegalArgumentException(
@@ -128,17 +114,15 @@ public class Logix extends AbstractDigitalAction
 
     @Override
     public int getChildCount() {
-        return 3;
+        return 2;
     }
 
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _ifExpressionSocket) {
-            _ifExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
-        } else if (socket == _thenActionSocket) {
-            _thenActionSocketSystemName = socket.getConnectedSocket().getSystemName();
-        } else if (socket == _elseActionSocket) {
-            _elseActionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        if (socket == _expressionSocket) {
+            _expressionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        } else if (socket == _actionSocket) {
+            _actionSocketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -146,12 +130,10 @@ public class Logix extends AbstractDigitalAction
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _ifExpressionSocket) {
-            _ifExpressionSocketSystemName = null;
-        } else if (socket == _thenActionSocket) {
-            _thenActionSocketSystemName = null;
-        } else if (socket == _elseActionSocket) {
-            _elseActionSocketSystemName = null;
+        if (socket == _expressionSocket) {
+            _expressionSocketSystemName = null;
+        } else if (socket == _actionSocket) {
+            _actionSocketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -164,115 +146,80 @@ public class Logix extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "IfThenElse_Long",
-                _ifExpressionSocket.getName(),
-                _thenActionSocket.getName(),
-                _elseActionSocket.getName());
+        return Bundle.getMessage(locale, "Logix_Long",
+                _expressionSocket.getName(),
+                _actionSocket.getName());
     }
 
     public FemaleDigitalExpressionSocket getIfExpressionSocket() {
-        return _ifExpressionSocket;
+        return _expressionSocket;
     }
 
-    public String getIfExpressionSocketSystemName() {
-        return _ifExpressionSocketSystemName;
+    public String getExpressionSocketSystemName() {
+        return _expressionSocketSystemName;
     }
 
-    public void setIfExpressionSocketSystemName(String systemName) {
-        _ifExpressionSocketSystemName = systemName;
+    public void setExpressionSocketSystemName(String systemName) {
+        _expressionSocketSystemName = systemName;
     }
 
-    public FemaleDigitalActionSocket getThenActionSocket() {
-        return _thenActionSocket;
+    public FemaleDigitalActionWithChangeSocket getActionSocket() {
+        return _actionSocket;
     }
 
-    public String getThenExpressionSocketSystemName() {
-        return _thenActionSocketSystemName;
+    public String getActionSocketSystemName() {
+        return _actionSocketSystemName;
     }
 
-    public void setThenActionSocketSystemName(String systemName) {
-        _thenActionSocketSystemName = systemName;
-    }
-
-    public FemaleDigitalActionSocket getElseActionSocket() {
-        return _elseActionSocket;
-    }
-
-    public String getElseExpressionSocketSystemName() {
-        return _elseActionSocketSystemName;
-    }
-
-    public void setElseActionSocketSystemName(String systemName) {
-        _elseActionSocketSystemName = systemName;
+    public void setActionSocketSystemName(String systemName) {
+        _actionSocketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
         try {
-            if ( !_ifExpressionSocket.isConnected()
-                    || !_ifExpressionSocket.getConnectedSocket().getSystemName()
-                            .equals(_ifExpressionSocketSystemName)) {
+            if ( !_expressionSocket.isConnected()
+                    || !_expressionSocket.getConnectedSocket().getSystemName()
+                            .equals(_expressionSocketSystemName)) {
                 
-                String socketSystemName = _ifExpressionSocketSystemName;
-                _ifExpressionSocket.disconnect();
+                String socketSystemName = _expressionSocketSystemName;
+                _expressionSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
                                     .getBeanBySystemName(socketSystemName);
                     if (maleSocket != null) {
-                        _ifExpressionSocket.connect(maleSocket);
+                        _expressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
                         log.error("cannot load digital expression " + socketSystemName);
                     }
                 }
             } else {
-                _ifExpressionSocket.getConnectedSocket().setup();
+                _expressionSocket.getConnectedSocket().setup();
             }
             
-            if ( !_thenActionSocket.isConnected()
-                    || !_thenActionSocket.getConnectedSocket().getSystemName()
-                            .equals(_thenActionSocketSystemName)) {
+            if ( !_actionSocket.isConnected()
+                    || !_actionSocket.getConnectedSocket().getSystemName()
+                            .equals(_actionSocketSystemName)) {
                 
-                String socketSystemName = _thenActionSocketSystemName;
-                _thenActionSocket.disconnect();
+                String socketSystemName = _actionSocketSystemName;
+                _actionSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
+                            InstanceManager.getDefault(DigitalActionWithChangeManager.class)
                                     .getBeanBySystemName(socketSystemName);
-                    _thenActionSocket.disconnect();
+                    _actionSocket.disconnect();
                     if (maleSocket != null) {
-                        _thenActionSocket.connect(maleSocket);
+                        _actionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
                         log.error("cannot load digital action " + socketSystemName);
                     }
                 }
             } else {
-                _thenActionSocket.getConnectedSocket().setup();
-            }
-            
-            if ( !_elseActionSocket.isConnected()
-                    || !_elseActionSocket.getConnectedSocket().getSystemName()
-                            .equals(_elseActionSocketSystemName)) {
-                
-                String socketSystemName = _elseActionSocketSystemName;
-                _elseActionSocket.disconnect();
-                if (socketSystemName != null) {
-                    MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
-                    _elseActionSocket.disconnect();
-                    if (maleSocket != null) {
-                        _elseActionSocket.connect(maleSocket);
-                        maleSocket.setup();
-                    } else {
-                        log.error("cannot load digital action " + socketSystemName);
-                    }
-                }
-            } else {
-                _elseActionSocket.getConnectedSocket().setup();
+                _actionSocket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
