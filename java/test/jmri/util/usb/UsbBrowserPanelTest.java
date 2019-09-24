@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import javax.usb.*;
 import javax.usb.event.UsbDeviceListener;
 import java.io.UnsupportedEncodingException;
@@ -27,7 +26,8 @@ public class UsbBrowserPanelTest {
            @Override
            protected UsbTreeNode getRootNode() {
               UsbTreeNode retval = new UsbTreeNode(hub);
-              return new UsbTreeNode(hub);
+              retval.setUsbDevice(null);
+              return retval;
            }
         };
         Assert.assertNotNull("exists",t);
