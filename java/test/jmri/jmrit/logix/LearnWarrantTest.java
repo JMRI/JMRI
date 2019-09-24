@@ -108,6 +108,8 @@ public class LearnWarrantTest {
 
         Sensor lastSensor = recordtimes(route, frame._learnThrottle.getThrottle());
 
+        // After stopping train, wait a bit before pressing stop
+        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         pressButton(jfo, Bundle.getMessage("Stop"));
         JUnitUtil.waitFor(() -> {
             return  (blk.getState() & OBlock.ALLOCATED) == 0;
@@ -189,7 +191,7 @@ public class LearnWarrantTest {
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         float speed = 0.1f;
         if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");
@@ -204,13 +206,14 @@ public class LearnWarrantTest {
                 speed -= 0.1f;
             }
             throttle.setSpeedSetting(speed);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
             OBlock blockNext = _OBlockMgr.getBySystemName(route[i]);
             Sensor sensorNext = blockNext.getSensor();
             NXFrameTest.setAndConfirmSensorAction(sensorNext, Sensor.ACTIVE, blockNext);
             NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             sensor = sensorNext;
             block = blockNext;
+            // Need to have some time elapse between commands. - Especially the last
+            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         }
         // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
         throttle.setSpeedSetting(0.0f);
