@@ -43,7 +43,6 @@ public class ArchitectureTest {
                                 // classes with permitted access
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole").and()
                                 .doNotHaveFullyQualifiedName("apps.FindBugsCheck").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrix.loconet.cmdstnconfig.XmlConfig").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
