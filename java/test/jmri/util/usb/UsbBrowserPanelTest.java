@@ -76,7 +76,7 @@ public class UsbBrowserPanelTest {
 
         @Override
         public boolean isRootUsbHub() {
-            return false;
+            return true;
         }
     }
 
