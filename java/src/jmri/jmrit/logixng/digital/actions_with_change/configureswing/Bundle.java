@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.logixng.digital.actions_with_change.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.logixng.logixemulator.actions.configureswing.DigitalActionSwingBundle";
+    private static final String name = "jmri.jmrit.logixng.digital.actions_with_change.configureswing.DigitalActionWithChangeSwingBundle";
 
     //
     // below here is boilerplate to be copied exactly

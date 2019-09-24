@@ -67,10 +67,10 @@ public class ManyTest extends AbstractDigitalActionTestBase {
     public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
         DigitalAction da = new Many("IQDA321", null);
         
-        // By default, doesn't support enable execution
+//        // By default, doesn't support enable execution
         Assert.assertFalse("supportsEnableExecution() returns correct value",
                 da.supportsEnableExecution());
-        
+/*        
         // Support enable execution if hard lock
         da.setLock(Base.Lock.HARD_WITH_CHILDREN_LOCK);
         Assert.assertTrue("supportsEnableExecution() returns correct value",
@@ -98,6 +98,7 @@ public class ManyTest extends AbstractDigitalActionTestBase {
                 ((MaleDigitalActionSocket)socket).supportsEnableExecution());
         Assert.assertTrue("supportsEnableExecution() returns correct value",
                 da.supportsEnableExecution());
+*/
     }
     
     // The minimal setup for log4J

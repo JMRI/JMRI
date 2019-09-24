@@ -15,7 +15,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class LogixEmulatorSwingTest {
+public class OnChangeActionSwingTest {
 
     @Test
     public void testCtor() {

@@ -51,11 +51,9 @@ public class DefaultDigitalActionWithChangeManager extends AbstractManager<MaleD
             actionClassList.put(category, new ArrayList<>());
         }
         
-        System.out.format("Add actions:%n");
         for (DigitalActionWithChangeFactory actionFactory : ServiceLoader.load(DigitalActionWithChangeFactory.class)) {
-            System.out.format("Add actions: %s%n", actionFactory.getClass().getName());
             actionFactory.getClasses().forEach((entry) -> {
-                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
+//                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }

@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LogixEmulatorSwingTest.class,
+    BundleTest.class,
+    OnChangeActionSwingTest.class,
 })
 
 /**

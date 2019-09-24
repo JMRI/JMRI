@@ -76,6 +76,14 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
     }
     
     @Test
+    public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
+        DigitalActionWithChangeBean da = new OnChangeAction("IQDC321", null, OnChangeAction.ChangeType.CHANGE_TO_TRUE);
+        
+        Assert.assertFalse("supportsEnableExecution() returns correct value",
+                da.supportsEnableExecution());
+    }
+    
+    @Test
     public void testGetShortDescription() {
         DigitalActionWithChangeBean a1 = new OnChangeAction("IQDC321", null, OnChangeAction.ChangeType.CHANGE_TO_TRUE);
         Assert.assertEquals("strings are equal", "On change", a1.getShortDescription());

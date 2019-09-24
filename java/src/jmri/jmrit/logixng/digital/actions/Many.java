@@ -24,10 +24,11 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class Many extends AbstractDigitalAction
-        implements FemaleSocketListener, DigitalActionWithEnableExecution {
+        implements FemaleSocketListener {
+//        implements FemaleSocketListener, DigitalActionWithEnableExecution {
 
     private Many _template;
-    private boolean _enableExecution;
+//    private boolean _enableExecution;
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
     
     public Many(String sys, String user)
@@ -60,7 +61,7 @@ public class Many extends AbstractDigitalAction
         return new Many(this);
     }
 
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     public boolean supportsEnableExecution() {
         
@@ -79,8 +80,8 @@ public class Many extends AbstractDigitalAction
         }
         return support;
     }
-    
-    /** {@inheritDoc} */
+*/    
+    /*.* {@inheritDoc} *./
     @Override
     public void setEnableExecution(boolean b) {
         if (supportsEnableExecution()) {
@@ -91,7 +92,7 @@ public class Many extends AbstractDigitalAction
         }
     }
     
-    /** {@inheritDoc} */
+    /*.* {@inheritDoc} *./
     @Override
     public boolean isExecutionEnabled() {
         if (supportsEnableExecution()) {
@@ -101,7 +102,7 @@ public class Many extends AbstractDigitalAction
             throw new UnsupportedOperationException("This digital action does not supports the method isExecutionEnabled()");
         }
     }
-    
+*/    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -113,7 +114,7 @@ public class Many extends AbstractDigitalAction
     public boolean isExternal() {
         return false;
     }
-    
+/*    
     @Override
     public void evaluateOnly() {
         for (ActionEntry actionEntry : _actionEntries) {
@@ -125,7 +126,7 @@ public class Many extends AbstractDigitalAction
             }
         }
     }
-    
+*/    
     /** {@inheritDoc} */
     @Override
     public void execute() {
