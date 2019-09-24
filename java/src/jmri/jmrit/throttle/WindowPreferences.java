@@ -50,9 +50,9 @@ public class WindowPreferences {
                 c.setIcon(e.getAttribute("isIconified").getBooleanValue());
             }
         } catch (org.jdom2.DataConversionException ex) {
-            System.out.println(ex);
+            log.warn(ex);
         } catch (PropertyVetoException ex) {
-            System.out.println(ex);
+            log.warn(ex);
         }
     }
 
@@ -112,4 +112,6 @@ public class WindowPreferences {
     public static void setPreferences(Container c, Element e) {
         setPreferences(c, e, false);
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowPreferences.class);
 }
