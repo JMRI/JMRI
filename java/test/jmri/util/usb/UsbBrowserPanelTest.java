@@ -18,13 +18,16 @@ import java.util.List;
  */
 public class UsbBrowserPanelTest {
 
+    private UsbHubScaffold hub;
+
     @Test
     public void testCTor() {
 
         UsbBrowserPanel t = new UsbBrowserPanel(){
            @Override
            protected UsbTreeNode getRootNode() {
-              return new UsbTreeNode(new UsbHubScaffold());
+              UsbTreeNode retval = new UsbTreeNode(hub);
+              return new UsbTreeNode(hub);
            }
         };
         Assert.assertNotNull("exists",t);
@@ -34,10 +37,12 @@ public class UsbBrowserPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        hub = new UsbHubScaffold();
     }
 
     @After
     public void tearDown() {
+        hub = null;
         JUnitUtil.tearDown();
     }
 
