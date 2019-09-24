@@ -323,24 +323,35 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     public void message(LocoNetMessage m) {
         if (m.getOpCode() == LnConstants.OPC_RE_LOCORESET_BUTTON) {
-            // command station LocoReset button was pressed.  The OpCode does not
-            // distinguish "Loco Reset" from "Slot Zero".
-            // Note that sending a LocoNet message using this OpCode to the command
-            // station does _not_ seem to trigger the equivalent effect; only
-            // pressing the button seems to do so.
-            // If the OpCode is received, regardless of its source, simply re-read
-            // the slots.  This will allow the slots to stay consistent with
-            // command station slot information, regardless of whether the command
-            // station just modified the slot information.
-            javax.swing.Timer t = new javax.swing.Timer(500, (java.awt.event.ActionEvent e) -> {
-                log.debug("Updating slots account received opcode 0x8a message");
-                update();
-            });
-            t.stop();
-            t.setInitialDelay(500);
-            t.setRepeats(false);
-            t.start();
-            return;
+            switch (commandStationType) {
+                case COMMAND_STATION_DCS240:
+                case COMMAND_STATION_DCS210:
+                case COMMAND_STATION_DCS052:
+                    // Command station LocoReset button (or some equivalent function) 
+                    // was triggered.
+                    // The OpCode does not distinguish "Loco Reset" from "Slot Zero", or
+                    // perhaps some other alternate implementation.
+                    //
+                    // Note that sending a LocoNet message using this OpCode to the command
+                    // station does _not_ seem to trigger the equivalent effect; only
+                    // pressing the button seems to do so.
+                    // If the OpCode is received, regardless of its source, simply re-read
+                    // the slots.  This will allow the slots to stay consistent with
+                    // command station slot information, regardless of whether the command
+                    // station just modified the slot information.
+                javax.swing.Timer t = new javax.swing.Timer(500, (java.awt.event.ActionEvent e) -> {
+                    log.debug("Updating slots account received opcode 0x8a message");   // NOI18N
+                    update();
+                });
+                t.stop();
+                t.setInitialDelay(500);
+                t.setRepeats(false);
+                t.start();
+                return;
+            default:
+                // nothing more to do with this LocoNet message
+                return;
+            }
         }
 
         // LACK processing for resend of immediate command
