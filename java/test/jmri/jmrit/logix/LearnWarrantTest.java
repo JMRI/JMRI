@@ -39,7 +39,6 @@ public class LearnWarrantTest {
     private OBlockManager _OBlockMgr;
 
     @Test
-    @Ignore("Sometimes causes InvocationTargetException at OBlock line 932")
     public void testLearnWarrant() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
@@ -109,7 +108,7 @@ public class LearnWarrantTest {
         Sensor lastSensor = recordtimes(route, frame._learnThrottle.getThrottle());
 
         // After stopping train, wait a bit before pressing stop
-        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         pressButton(jfo, Bundle.getMessage("Stop"));
         JUnitUtil.waitFor(() -> {
             return  (blk.getState() & OBlock.ALLOCATED) == 0;
@@ -191,7 +190,7 @@ public class LearnWarrantTest {
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         float speed = 0.1f;
         if (throttle == null) {
             throw new Exception("recordtimes: No Throttle");

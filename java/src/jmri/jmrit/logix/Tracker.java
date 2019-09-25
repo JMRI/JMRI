@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -185,6 +184,10 @@ public class Tracker {
            //log.debug("hasPathBetween: {} path for \"{}\"--\"{}\"", pathset, blkA.getDisplayName(), blkB.getDisplayName());
            return pathset;
        }
+       if (darkBlocks.isEmpty()) {
+           log.error("block \"{}\" and \"{}\" are NOT adjacent and have no intervening dark block!",
+                   blkA.getDisplayName(), blkB.getDisplayName());
+       }
        // blkA and blkB not adjacent, so look for a connecting dark block
        PathSet darkPathSet;
        for (OBlock block : darkBlocks) {
@@ -204,15 +207,6 @@ public class Tracker {
            // no good paths, nevertheless there is an intermediate dark block
            _darkBlock = darkBlocks.get(0);
        }
-       /*if (log.isDebugEnabled()) {
-           if (_darkBlock != null) {
-               log.debug("hasPathBetween: {} path for \"{}\"-\"{}\"-\"{}\"",
-                       pathset, blkA.getDisplayName(), _darkBlock.getDisplayName(), blkB.getDisplayName());
-           } else {
-               log.debug("hasPathBetween: {} path for \"{}\"--\"{}\"",
-                       pathset, blkA.getDisplayName(), blkB.getDisplayName());
-           }
-       }*/
        return pathset;
    }
        
@@ -263,9 +257,20 @@ public class Tracker {
         return setPaths;
     }
 
+    /**
+     * Important to keep these sets disjoint and without duplicate entries
+     * @param b block to be added
+     */
+    private boolean areDisjoint(OBlock b) {
+        if (_headRange.contains(b) || _occupies.contains(b) || _tailRange.contains(b)) {
+            return false;
+        }
+        return true;
+    }
+
     private void addtoHeadRange(OBlock b) {
         if (b != null) {
-            if (!_headRange.contains(b) && !_occupies.contains(b) && !_tailRange.contains(b)) {
+            if (areDisjoint(b)) {
                 _headRange.add(b);
             }
         }
@@ -273,7 +278,7 @@ public class Tracker {
 
     private void addtoTailRange(OBlock b) {
         if (b != null) {
-            if (!_tailRange.contains(b) && !_occupies.contains(b) && !_headRange.contains(b)) {
+            if (areDisjoint(b)) {
                 _tailRange.add(b);
             }
         }
@@ -290,9 +295,6 @@ public class Tracker {
             if (_lostRange.contains(b)) {
                 _lostRange.remove(b);
             }
-        } else {
-            log.warn("Tracker {} already occupies \"{}\"", 
-                    _trainName, b.getDisplayName());
         }
     }
 
