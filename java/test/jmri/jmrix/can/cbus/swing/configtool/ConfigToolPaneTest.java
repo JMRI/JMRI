@@ -20,19 +20,29 @@ import org.netbeans.jemmy.operators.*;
  */
 public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
 
+    private CanSystemConnectionMemo memo; 
+    private TrafficControllerScaffold tcis;
+ 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        panel = new ConfigToolPane();
+        JUnitUtil.initShutDownManager();
         title = Bundle.getMessage("CapConfigTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        panel = new ConfigToolPane();
     }
 
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        tcis = null;
+        memo = null;
+        super.tearDown();
     }
     
     @Test
@@ -40,16 +50,9 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        ConfigToolPane panel = new ConfigToolPane();
-        
-        
         Assert.assertEquals("no listener to start with",0,tcis.numListeners());
         
-        panel.initComponents(memo);
+        ((ConfigToolPane)panel).initComponents(memo);
         
         Assert.assertEquals("listening",1,tcis.numListeners());
         
@@ -81,7 +84,7 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         m.setElement(3, 0x30); // en 
         m.setElement(4, 0x39); // en 
         
-        panel.message(m);
+        ((ConfigToolPane)panel).message(m);
         Assert.assertEquals("event in capture slot 1","-n54321e12345",getStringCaptureOne(jfo) );
         
         CanReply r = new CanReply(tcis.getCanid());
@@ -92,22 +95,16 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         r.setElement(3, 0xff); // en 
         r.setElement(4, 0x39); // en 
         
-        panel.reply(r);
+        ((ConfigToolPane)panel).reply(r);
         Assert.assertEquals("event in capture slot 2","+65337",getStringCaptureTwo(jfo) );
-        
-        
+
+        panel.dispose();
         
         // Ask to close window
         jfo.requestClose();
-        
-        panel.dispose();
-        
+       
         Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
         
-        tcis = null;
-        memo = null;
-        jfo.requestClose();
-        f.dispose();
     }
     
     private boolean getResetButtonEnabled( JFrameOperator jfo ){

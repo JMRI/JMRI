@@ -24,14 +24,27 @@ import org.netbeans.jemmy.operators.*;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
+        
+    private CanSystemConnectionMemo memo; 
+    private TrafficControllerScaffold tcis; 
+    private CbusEventTableDataModel m;
 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        panel = new CbusEventTablePane();
-        title = Bundle.getMessage("MenuItemEventTable");
+        JUnitUtil.initShutDownManager();
+        title = Bundle.getMessage("EventTableTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
+        
+        m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
+        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
+        panel = new CbusEventTablePane();
     }
     
     
@@ -39,6 +52,9 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
+        memo = null;
+        tcis = null;
+        m = null;
         super.tearDown();
     }
     
@@ -47,18 +63,8 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     public void testInitComp() {
         
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
-        
-        CbusEventTableDataModel m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
-        
-        CbusEventTablePane panel = new CbusEventTablePane();
-        panel.initComponents(memo);
+         
+        ((CbusEventTablePane)panel).initComponents(memo);
         
         Assert.assertNotNull("exists", panel);
         Assert.assertEquals("name with memo","CAN " + Bundle.getMessage("EventTableTitle"),panel.getTitle());
@@ -81,9 +87,13 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         
         f.pack();
         f.setVisible(true);
-        
+       
+
+ 
         // Find new window by name
         JFrameOperator jfo = new JFrameOperator( panel.getTitle() );
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
         Assert.assertTrue(getNewEventButtonEnabled(jfo));
         
@@ -101,10 +111,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         new JButtonOperator(jfo, Bundle.getMessage("ClearFilter")).doClick();  // NOI18N
         Assert.assertFalse(getClearFilterButtonEnabled(jfo));
         
-        tcis = null;
-        memo = null;
         jfo.requestClose();
-        f.dispose();
     }
     
     private boolean getNewEventButtonEnabled( JFrameOperator jfo ){

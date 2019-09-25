@@ -279,7 +279,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     @Override
     public void dispose() {
         // disconnect from the CBUS
-        tc.removeCanListener(this);
+        if(tc!=null){
+           tc.removeCanListener(this);
+        }
+        tc = null;
         if (_filterFrame != null) {
             _filterFrame.dispose();
             _filterFrame=null;
