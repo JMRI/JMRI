@@ -51,7 +51,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+                    Automatically refresh the slot information when the DCS240/DCS210 
+                    "Loco Reset" feature is executed as a result of pressing the 
+                    "Loco Reset" button.  This feature is active only when the 
+                    JMRI connection is configured for either DCS240 or DCS210 
+                    acting as the command station.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -471,6 +476,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added basic support for developer architecture checks via
+                <a href="https://www.archunit.org">ArchUnit</a>,
+                see the 
+                <a href="http://jmri.org/help/en/html/doc/Technical/IntroStructure.shtml">Introduction to JMRI Library Structure</a>
+                page.</li>
         </ul>
 
