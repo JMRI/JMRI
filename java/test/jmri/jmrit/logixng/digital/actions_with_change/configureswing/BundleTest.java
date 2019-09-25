@@ -16,6 +16,7 @@ public class BundleTest {
 
     @Test
     public void testBundle() {
+        Assert.assertTrue("bundle is correct", "Generic".equals(Bundle.getMessage("SocketTypeGeneric")));
         Assert.assertTrue("bundle is correct", "Test Bundle bb aa cc".equals(Bundle.getMessage("TestBundle", "aa", "bb", "cc")));
         Assert.assertTrue("bundle is correct", "Generic".equals(Bundle.getMessage(Locale.US, "SocketTypeGeneric")));
         Assert.assertTrue("bundle is correct", "Test Bundle bb aa cc".equals(Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc")));
