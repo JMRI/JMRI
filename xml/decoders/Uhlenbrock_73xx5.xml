@@ -247,18 +247,16 @@
                         <choice xml:lang="de">In entweder Richtung</choice>
                         <choice xml:lang="nl">In beide richtingen</choice>
                     </enumChoice>
-                    <variableGroup include="74120">
-                        <enumChoice choice="Stops in Forward Only">
-                            <choice>Forward Braking Only</choice>
-                            <choice xml:lang="de">Nur Vorwärts</choice>
-                            <choice xml:lang="nl">Alleen Vooruit</choice>
-                        </enumChoice>
-                        <enumChoice choice="Stops in Reverse Only">
-                            <choice>Reverse Braking Only</choice>
-                            <choice xml:lang="de">Nur Rückwärts</choice>
-                            <choice xml:lang="nl">Alleen Achteruit</choice>
-                        </enumChoice>
-                    </variableGroup>
+                    <enumChoice choice="Stops in Forward Only" include="74120">
+                        <choice>Forward Braking Only</choice>
+                        <choice xml:lang="de">Nur Vorwärts</choice>
+                        <choice xml:lang="nl">Alleen Vooruit</choice>
+                    </enumChoice>
+                    <enumChoice choice="Stops in Reverse Only" include="74120">
+                        <choice>Reverse Braking Only</choice>
+                        <choice xml:lang="de">Nur Rückwärts</choice>
+                        <choice xml:lang="nl">Alleen Achteruit</choice>
+                    </enumChoice>
                 </enumVal>
                 <label>ABC Braking Setup</label>
                 <label xml:lang="de">ABC Bremseinstellung</label>
@@ -1244,9 +1242,6 @@
                 <tooltip xml:lang="nl">Spaarlamp - Duur totdat max. helderheid is bereikt - waarde * 5 ms</tooltip>
             </variable>
 
-            <variable item="Light Energy A7" CV="183" mask="VXXXXXXX" minOut="9">
-                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-            </variable>
             <variable item="Light Blend A0" CV="186" mask="XXXXXXXV">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             </variable>
