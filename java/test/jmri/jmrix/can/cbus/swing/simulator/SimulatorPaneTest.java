@@ -79,6 +79,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
 
         tcis = null;
         memo = null;
+        f.dispose();
         
     }
     

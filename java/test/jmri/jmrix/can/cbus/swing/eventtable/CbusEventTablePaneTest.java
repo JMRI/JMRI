@@ -39,7 +39,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
     
     
@@ -101,12 +101,10 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         new JButtonOperator(jfo, Bundle.getMessage("ClearFilter")).doClick();  // NOI18N
         Assert.assertFalse(getClearFilterButtonEnabled(jfo));
         
-        panel.dispose();
-        
-        panel = new CbusEventTablePane();
         tcis = null;
         memo = null;
-        
+        jfo.requestClose();
+        f.dispose();
     }
     
     private boolean getNewEventButtonEnabled( JFrameOperator jfo ){

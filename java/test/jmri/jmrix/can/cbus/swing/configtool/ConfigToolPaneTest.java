@@ -104,11 +104,10 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         
         Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
         
-        panel = new ConfigToolPane();
-        
         tcis = null;
         memo = null;
-        
+        jfo.requestClose();
+        f.dispose();
     }
     
     private boolean getResetButtonEnabled( JFrameOperator jfo ){
