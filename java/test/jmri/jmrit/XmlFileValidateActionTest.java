@@ -18,8 +18,8 @@ import org.junit.Test;
  */
 public class XmlFileValidateActionTest {
 
-    boolean pass;
-    boolean fail;
+    private boolean pass;
+    private boolean fail;
 
     @Test
     public void testFileOK() {
@@ -29,7 +29,7 @@ public class XmlFileValidateActionTest {
                 pass = true;
             }
             @Override
-            protected void showFailResults(Component who, String text) {
+            protected void showFailResults(Component who, String fileName, String text) {
                 fail = true;
             }
             @Override
@@ -41,9 +41,8 @@ public class XmlFileValidateActionTest {
         t.actionPerformed(null);
         
         Assert.assertTrue(pass);
-        Assert.assertTrue(!fail);
+        Assert.assertFalse(fail);
     }
-
 
     // should find a "Duplicate key value [LT1] declared" error on or about line 14 of java/test/jmri/configurexml/invalid/TurnoutDuplicateSystemName.xml
     @Test
@@ -54,7 +53,7 @@ public class XmlFileValidateActionTest {
                 pass = true;
             }
             @Override
-            protected void showFailResults(Component who, String text) {
+            protected void showFailResults(Component who, String fileName, String text) {
                 Assert.assertTrue("check message", text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1] declared for identity constraint \"turnoutName\""));
                 fail = true;
             }
@@ -67,7 +66,7 @@ public class XmlFileValidateActionTest {
         t.actionPerformed(null);
         
         Assert.assertTrue(fail);
-        Assert.assertTrue(!pass);
+        Assert.assertFalse(pass);
     }
 
     // The minimal setup for log4J

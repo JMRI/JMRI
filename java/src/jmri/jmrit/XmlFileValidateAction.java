@@ -48,11 +48,11 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
         super(Bundle.getMessage("XmlFileValidateAction")); // NOI18N
     }
 
-    JFileChooser fci;
+    private JFileChooser fci;
 
-    Component _who;
+    private Component _who;
 
-    XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
+    private XmlFile xmlfile = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -71,29 +71,27 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     protected void processFile(File file) {
-        if (log.isDebugEnabled()) {
-            log.debug("located file " + file + " for XML processing");
-        }
-        // handle the file (later should be outside this thread?)
+        log.debug("located file \"{}\" for XML processing", file);
+        // handle the file (TODO should be outside this thread?)
         try {
             xmlfile.setValidate(XmlFile.Validate.CheckDtdThenSchema);
             readFile(file);
         } catch (Exception ex) {
-            showFailResults(_who, ex.getMessage());
+            showFailResults(_who, file.getName(), ex.getMessage());
             return;
         }
-        showOkResults(_who, "OK");
-        if (log.isDebugEnabled()) {
-            log.debug("parsing complete");
-        }
+        showOkResults(_who, Bundle.getMessage("ValidatedOk", file.getName()));
+        log.debug("parsing xml complete");
     }
 
     protected void showOkResults(Component who, String text) {
         JOptionPane.showMessageDialog(who, text);
     }
 
-    protected void showFailResults(Component who, String text) {
-        JOptionPane.showMessageDialog(who, text);
+    protected void showFailResults(Component who, String fileName, String text) {
+        final int columnWidth = 70;
+        text = jmri.util.StringUtil.wrapLine(text, columnWidth);
+        JOptionPane.showMessageDialog(who, Bundle.getMessage("ValidationErrorInFile", fileName) + "\n" + text);
     }
 
     /**
@@ -123,8 +121,8 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             jmri.util.Log4JUtil.initLogging("default.lcf");
             new XmlFileValidateAction("", (Component) null) {
                 @Override
-                protected void showFailResults(Component who, String text) {
-                    System.out.println(text);
+                protected void showFailResults(Component who, String fileName, String text) {
+                    System.out.println(fileName + ": "  + text);
                 }
 
                 @Override
@@ -137,4 +135,5 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class);
+
 }
