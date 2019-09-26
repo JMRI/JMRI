@@ -1013,7 +1013,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         InstanceManager.setThrottleManager( tm );
         _cs = new CbusDummyCS(memo); // we are testing the tm, not the command station
         _cs.setDelay(0); // no need to simulate network delay
-        
     }
 
     @After
@@ -1021,8 +1020,12 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CbusThrottleManager dtm = (CbusThrottleManager)tm;
         dtm.dispose();
         tm=null;
+        dtm=null;
         _cs.dispose();
         _cs = null;
+        memo.dispose();
+        memo = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
