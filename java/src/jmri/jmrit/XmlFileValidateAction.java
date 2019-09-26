@@ -89,9 +89,10 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     protected void showFailResults(Component who, String fileName, String text) {
-        final int columnWidth = 70;
-        text = jmri.util.StringUtil.wrapLine(text, columnWidth);
-        JOptionPane.showMessageDialog(who, Bundle.getMessage("ValidationErrorInFile", fileName) + "\n" + text);
+        final String html = "<html><body style='width: %1spx'>%1s"; // reflow in dialog
+        final int dialogWidth = 300;
+        JOptionPane.showMessageDialog(who, String.format(html, dialogWidth,
+                Bundle.getMessage("ValidationErrorInFile", fileName) + "<br><br>" + text)); // html markup
     }
 
     /**

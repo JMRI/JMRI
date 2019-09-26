@@ -703,34 +703,6 @@ public class StringUtil {
         return result;
     }
 
-    /**
-     * Break up a string into lines of a given length, breaking at words/spaces.
-     *
-     * @param line          a single line of text
-     * @param lineLength    the max line width to apply
-     * @return              String of text with \n line breaks inserted
-     */
-    public static String wrapLine(String line, int lineLength) {
-        if (line.length() <= lineLength) {
-            return line;
-        }
-        String[] words = line.split(" ");
-        StringBuilder allLines = new StringBuilder();
-        StringBuilder trimmedLine = new StringBuilder();
-        for (String word : words) {
-            if (trimmedLine.length() + 1 + word.length() <= lineLength) {
-                trimmedLine.append(word).append(" ");
-            } else {
-                allLines.append(trimmedLine).append(LINEBREAK);
-                trimmedLine = new StringBuilder();
-                trimmedLine.append(word).append(" ");
-            }
-        }
-        if (trimmedLine.length() > 0) {
-            allLines.append(trimmedLine);
-        }
-        return allLines.toString();
-    }
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
+
 }
