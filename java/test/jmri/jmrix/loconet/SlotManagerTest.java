@@ -1150,8 +1150,6 @@ public class SlotManagerTest {
     @Test
     public void testMoreOpCode8a() {
 
-        LocoNetMessage m = new LocoNetMessage(new int[] {0x8a, 0x75});
-        
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS210;
         slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
         JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
@@ -1166,8 +1164,6 @@ public class SlotManagerTest {
     @Test
     public void testEvenMoreOpCode8a() {
 
-        LocoNetMessage m = new LocoNetMessage(new int[] {0x8a, 0x75});
-        
         slotmanager.commandStationType = LnCommandStationType.COMMAND_STATION_DCS052;
         slotmanager.message(new LocoNetMessage(new int[] {0x8a, 0x75}));
         JUnitUtil.waitFor(()->{return lnis.outbound.size() >126;},"testOpCode8a: slot managersent at least 127 LocoNet messages");
