@@ -50,6 +50,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     private static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
+    private final static String oblockPrefix = "OB";
+    private final static String portalPrefix = "IP";
 
     private JTable _oBlockTable;
     private OBlockTableModel _oBlockModel;
@@ -271,6 +273,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportNoBlocks"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
+        } else {
+            if (_showWarnings) {
+                int reply = JOptionPane.showOptionDialog(null,
+                        Bundle.getMessage("ImportBlockConfirm", oblockPrefix, blkList.size()),
+                        Bundle.getMessage("QuestionTitle"),
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        new Object[]{Bundle.getMessage("ButtonYes"),
+                                Bundle.getMessage("ButtonCancel")},
+                        Bundle.getMessage("ButtonYes")); // standard JOptionPane can't be found in Jemmy log4J
+                if (reply > 0) {
+                    return;
+                }
+            }
         }
         for (Block b : blkList) {
             try {
@@ -278,7 +293,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 String sName = b.getSystemName();
                 String uName = b.getUserName();
                 String blockNumber = sName.substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
-                String oBlockName = "OB" + blockNumber;
+                String oBlockName = oblockPrefix + blockNumber;
                 String sensor = "";
                 Sensor s = b.getSensor();
                 if (s != null) {
@@ -309,10 +324,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 for (Path pa : blockPaths) {
                     log.debug("Start loop: path {} on block {}", n, oBlockName);
                     String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
-                    toBlockName = "OB" + toBlockNumber;
+                    toBlockName = oblockPrefix + toBlockNumber;
                     boolean duplicate = false;
                     SortedSet<Portal> poList = pom.getNamedBeanSet();
-                    String portalName = "IP" + toBlockNumber + "-" + blockNumber;
+                    String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
                     for (Portal p : poList) {
                         log.debug("Checking existing portal {} for match", p.getName());
                         // check for portal as opposite pair; we need only one Portal/OBlock pair per OBlock connection
@@ -324,7 +339,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                         }
                     }
                     if (!duplicate) {
-                        portalName = "IP" + blockNumber + "-" + toBlockNumber; // normal name for new Portal
+                        portalName = portalPrefix + blockNumber + "-" + toBlockNumber; // normal name for new Portal
                         log.debug("new Portal {} on block {}, path #{}", portalName, toBlockName, n);
                         port = pom.providePortal(portalName); // normally, will create a new Portal
                         port.setFromBlock(oBlock, false);
@@ -1019,7 +1034,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     frame.getTitle(), name,
                     frame.getSize().getWidth(), frame.getSize().getHeight());
         }
-        if (name != null && name.startsWith("OB")) {
+        if (name != null && name.startsWith(oblockPrefix)) {
             WarrantTableAction.initPathPortalCheck();
             if (frame instanceof BlockPathFrame) {
                 WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
