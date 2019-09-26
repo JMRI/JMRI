@@ -103,12 +103,16 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         
         new JTextFieldOperator(jfo,1).typeText("1");
         Assert.assertTrue(getNewEventButtonEnabled(jfo));
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
         Assert.assertFalse(getClearFilterButtonEnabled(jfo));
         new JTextFieldOperator(jfo,0).typeText("1");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertTrue(getClearFilterButtonEnabled(jfo));
         
         new JButtonOperator(jfo, Bundle.getMessage("ClearFilter")).doClick();  // NOI18N
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse(getClearFilterButtonEnabled(jfo));
         
         jfo.requestClose();
