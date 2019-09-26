@@ -255,7 +255,7 @@ public class TrainSwitchLists extends TrainCommon {
                         }
                     } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     } else {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
