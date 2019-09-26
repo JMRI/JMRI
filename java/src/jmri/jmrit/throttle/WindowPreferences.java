@@ -103,7 +103,7 @@ public class WindowPreferences {
                 c.setVisible(e.getAttribute("isVisible").getBooleanValue());
             }
         } catch (org.jdom2.DataConversionException ex) {
-            System.out.println(ex);
+            log.warn("Exception setting preferences", ex);
         }
     }
 
