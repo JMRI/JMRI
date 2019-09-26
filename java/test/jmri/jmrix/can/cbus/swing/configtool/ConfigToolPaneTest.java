@@ -40,6 +40,7 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         super.tearDown();
         Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
         tcis = null;

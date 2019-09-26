@@ -45,6 +45,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
     public void tearDown() {
         tcis = null;
         memo = null;
+        JUnitUtil.resetWindows(false,false);
         super.tearDown();
     }
     
