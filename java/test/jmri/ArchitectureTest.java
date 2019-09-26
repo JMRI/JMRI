@@ -54,11 +54,18 @@ public class ArchitectureTest {
                                 // classes with permitted access
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole").and()
                                 .doNotHaveFullyQualifiedName("apps.FindBugsCheck").and()
+                                .doNotHaveFullyQualifiedName("apps.CheckerFrameworkCheck").and()
+                                .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.decoderdefn.DecoderIndexBuilder").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
                                 .doNotHaveFullyQualifiedName("jmri.Version").and()
-                                .doNotHaveFullyQualifiedName("jmri.util.JTextPaneAppender")
+                                .doNotHaveFullyQualifiedName("jmri.util.JTextPaneAppender").and()
+                                // generated code that we don't have enough control over
+                                .resideOutsideOfPackage("jmri.jmris.simpleserver..").and()
+                                .resideOutsideOfPackage("jmri.jmris.srcp..").and()
+                                .resideOutsideOfPackage("jmri.jmrix.srcp..")
                             .should(
                                 com.tngtech.archunit.library.GeneralCodingRules.
                                 ACCESS_STANDARD_STREAMS
