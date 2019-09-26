@@ -120,7 +120,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
-            notifyPropertyChangeListener("SpeedSetting", this.speedSetting, this.speedSetting = speed);
+            notifyPropertyChangeListener(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
         record(speed);
     }
@@ -154,7 +154,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     @Override
     public void setIsForward(boolean forward) {
         if (forward != this.isForward) {
-            notifyPropertyChangeListener("IsForward", this.isForward, this.isForward = forward);
+            notifyPropertyChangeListener(ISFORWARD, this.isForward, this.isForward = forward);
         }
     }
 
@@ -1748,7 +1748,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     public void setSpeedStepMode(SpeedStepMode Mode) {
         log.debug("Speed Step Mode Change from:{} to Mode:{}",this.speedStepMode,Mode);
         if (speedStepMode != Mode) {
-            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
+            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode,
                     this.speedStepMode = Mode);
         }
     }

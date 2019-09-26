@@ -6663,6 +6663,12 @@ public class LocoNetMessageInterpretTest {
 "	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
+    @Test
+    public void testLocoReset() {
+        LocoNetMessage l = new LocoNetMessage(new int[] {0x8a, 0x75});
+        Assert.assertEquals("check LocoReset", "Loco Reset mechanism triggered.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
+
     @Before
     @Test
     public void setUp() {

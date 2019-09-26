@@ -16,6 +16,7 @@ public class WarrantManagerTest {
     public void testCTor() {
         WarrantManager t = new WarrantManager();
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J
