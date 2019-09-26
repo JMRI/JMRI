@@ -294,14 +294,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             // The following washes out the extra notifications
             if ((state & OBlock.UNOCCUPIED) == (oldState & OBlock.UNOCCUPIED)
                     && (state & OBlock.OCCUPIED) == (oldState & OBlock.OCCUPIED)) {
-                //log.debug("Skip propertyChange of block \"{}\" from oldstate= {} to state= {}",block.getDisplayName(), oldState, state);
                 return;
-            /*} else {
-                if (log.isDebugEnabled()) {
-                    log.debug("propertyChange of block \"{}\" from oldstate= {} to state= {}", 
-                            block.getDisplayName(), oldState, state);
-                }*/
-                
             }
             ArrayList<Tracker> trackerListeners = _trackerBlocks.get(block);
             if (trackerListeners == null || trackerListeners.isEmpty()) {
@@ -334,7 +327,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                        try {
                            tracker.hasPathInto(block);
                        } catch (JmriException je) {
-                           log.error("No head or tail blocks for {}", tracker.getTrainName());
+                           log.error("{} {}", tracker.getTrainName(), je.getMessage());
                            return;
                        }
                    }
@@ -374,7 +367,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                             break;
                     }
                 } catch (JmriException je) {
-                    log.error("No head or tail blocks for {}", t.getTrainName());
+                    log.error("{} {}", t.getTrainName(), je.getMessage());
                 }
             }
             if (trackers.isEmpty()) {   // nobody has paths set.
@@ -437,7 +430,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         _frame._model.fireTableDataChanged();
     }
 
-    private class ChooseTracker extends JDialog implements ListSelectionListener {
+    class ChooseTracker extends JDialog implements ListSelectionListener {
         OBlock block;
         List<Tracker> trackers;
         int state;

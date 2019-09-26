@@ -150,7 +150,8 @@ public class Tracker {
      * blkA is the current Head or Tail block
      * blkB is a block from the headRange or tailRange, where entry may be possible
      */
-   private PathSet hasPathBetween(@Nonnull OBlock blkA, @Nonnull OBlock blkB, boolean recurse) {
+   private PathSet hasPathBetween(@Nonnull OBlock blkA, @Nonnull OBlock blkB, boolean recurse)
+           throws JmriException {
        // first check if there is an exit path set from blkA, to blkB
        PathSet pathset = PathSet.NO;
        boolean hasExitA = false;
@@ -160,6 +161,7 @@ public class Tracker {
        for (Portal portal : blkA.getPortals()) {
            OBlock block = portal.getOpposingBlock(blkA);
            if (blkB.equals(block)) {
+               adjacentBlock = true;
                if (!getPathsSet(blkA, portal).isEmpty()) { // set paths of blkA to portal
                    hasExitA = true;
                   if (!getPathsSet(blkB, portal).isEmpty()) { // paths of blkB to portal
@@ -170,7 +172,6 @@ public class Tracker {
                } else if (!getPathsSet(blkB, portal).isEmpty()) {
                    hasEnterB = true;
                }
-               adjacentBlock = true;
            } else if ((block.getState() & OBlock.UNDETECTED) != 0) {
                darkBlocks.add(block);
            }
@@ -181,12 +182,11 @@ public class Tracker {
            }
        }
        if (adjacentBlock || !recurse) {
-           //log.debug("hasPathBetween: {} path for \"{}\"--\"{}\"", pathset, blkA.getDisplayName(), blkB.getDisplayName());
            return pathset;
        }
        if (darkBlocks.isEmpty()) {
-           log.error("block \"{}\" and \"{}\" are NOT adjacent and have no intervening dark block!",
-                   blkA.getDisplayName(), blkB.getDisplayName());
+           throw new JmriException("Block \""+blkA.getDisplayName()+"\" and \""+blkB.getDisplayName()+
+                   "\" are NOT adjacent and have no intervening dark block!");
        }
        // blkA and blkB not adjacent, so look for a connecting dark block
        PathSet darkPathSet;
@@ -210,7 +210,8 @@ public class Tracker {
        return pathset;
    }
        
-   private PathSet hasDarkBlockPathBetween(OBlock blkA, OBlock block, OBlock blkB) {
+   private PathSet hasDarkBlockPathBetween(OBlock blkA, OBlock block, OBlock blkB)
+       throws JmriException {
        PathSet pathset = PathSet.NO;
        PathSet setA = hasPathBetween(blkA, block, false);
        PathSet setB = hasPathBetween(block, blkB, false);
@@ -219,7 +220,6 @@ public class Tracker {
        } else if (setA != PathSet.NO && setB != PathSet.NO) {
                pathset = PathSet.PARTIAL;
        }
-       //log.debug("hasDarkBlockPathBetween: {} path for \"{}\"-\"{}\"-\"{}\"", pathset, blkA.getDisplayName(), block.getDisplayName(), blkB.getDisplayName());
        return pathset;
    }
 
@@ -227,14 +227,11 @@ public class Tracker {
         _darkBlock = null;
         OBlock blk = getHeadBlock();
         if (blk != null) {
-            PathSet hasPathSet = hasPathBetween(blk, block, true);
-            if (hasPathSet != PathSet.NO) {
-                return hasPathSet;
-            }
+            return hasPathBetween(blk, block, true);
         }
         OBlock b = getTailBlock();
         if (b == null) {
-            throw new JmriException();
+            throw new JmriException("No tail block!");
         }
         if (!b.equals(blk)) {
             return  hasPathBetween(b, block, true);

@@ -15,7 +15,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JComponentOperator;
+import javax.swing.JDialog;
 
 /**
  *
@@ -44,41 +49,41 @@ public class TrackerTableActionTest {
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
         OBlock Middle = _OBlockMgr.getByUserName("Middle");
-        Sensor sMiddle = _sensorMgr.getSensor("IS24");
+        Sensor sMiddle = Middle.getSensor();
         Assert.assertNotNull("Senor sMiddle not found", sMiddle);
-        sMiddle.setState(Sensor.ACTIVE);
+        NXFrameTest.setAndConfirmSensorAction(sMiddle, Sensor.ACTIVE, Middle);
         jmri.util.JUnitUtil.waitFor(() -> {
             return (Middle.getState() & OBlock.OCCUPIED) != 0;
         }, "Middle occupied");
 
         tta.markNewTracker(Middle, "Tkr1", null);
         Tracker Tkr1 = tta.findTrackerIn(Middle);
-        Assert.assertNotNull("Tracker Tkr1 not found", tta);
+        Assert.assertNotNull("Tracker Tkr1 found", tta);
         List<OBlock> occupied = Tkr1.getBlocksOccupied();
         Assert.assertEquals("Tkr1 Blocks Occupied", 1, occupied.size());
         
-        Sensor sFarEast = _sensorMgr.getByUserName("FarEast");
+        OBlock FarEast = _OBlockMgr.getByUserName("FarEast");
+        Sensor sFarEast = FarEast.getSensor();
         Assert.assertNotNull("Senor FarEast not found", sFarEast);
-        sFarEast.setState(Sensor.ACTIVE);
+        NXFrameTest.setAndConfirmSensorAction(sFarEast, Sensor.ACTIVE, FarEast);
         occupied = Tkr1.getBlocksOccupied();
         Assert.assertEquals("Tkr1 2 Blocks Occupied", 2, occupied.size());
-        
-        Sensor sEast = _sensorMgr.getByUserName("block3");
-        Assert.assertNotNull("Senor East not found", sEast);
-        sEast.setState(Sensor.ACTIVE);
+
+        OBlock East = _OBlockMgr.getByUserName("East");
+        Sensor sEast = East.getSensor();
+        NXFrameTest.setAndConfirmSensorAction(sEast, Sensor.ACTIVE, East);
         occupied = Tkr1.getBlocksOccupied();
-        Assert.assertEquals("Tkr1 2 Blocks Occupied", 3, occupied.size());
+        Assert.assertEquals("Tkr1 3 Blocks Occupied", 3, occupied.size());
         
-        sMiddle.setState(Sensor.INACTIVE);
+        NXFrameTest.setAndConfirmSensorAction(sMiddle, Sensor.INACTIVE, Middle);
         occupied = Tkr1.getBlocksOccupied();
         Assert.assertEquals("Tkr1 2 Blocks Occupied", 2, occupied.size());
 
         
-        sFarEast.setState(Sensor.INACTIVE);
+        NXFrameTest.setAndConfirmSensorAction(sFarEast, Sensor.INACTIVE, FarEast);
         occupied = Tkr1.getBlocksOccupied();
         Assert.assertEquals("Tkr1 1 Blocks Occupied", 1, occupied.size());
 
-        OBlock East = _OBlockMgr.getByUserName("East");
         tta.stopTracker(Tkr1, East);
     }
 
@@ -91,9 +96,9 @@ public class TrackerTableActionTest {
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
         OBlock Main = _OBlockMgr.getByUserName("Main");
-        Sensor sMain = _sensorMgr.getByUserName("block2");
-        Assert.assertNotNull("Senor sMain not found", sMain);
-        sMain.setState(Sensor.ACTIVE);
+        Sensor sMain = Main.getSensor();
+        Assert.assertNotNull("Senor sMain found", sMain);
+        NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.ACTIVE, Main);
         tta.markNewTracker(Main, "Tkr1", null);
         Tracker TkrD = tta.findTrackerIn(Main);
         Assert.assertNotNull("Tracker TkrD not found", TkrD);
@@ -101,18 +106,63 @@ public class TrackerTableActionTest {
         Assert.assertEquals("TkrD Blocks Occupied", 1, occupied.size());
 
         // passes through dark block "West Yard"
-        Sensor sFarWest = _sensorMgr.getByUserName("FarWest");
-        Assert.assertNotNull("Senor sFarWest not found", sFarWest);
-        sFarWest.setState(Sensor.ACTIVE);
+        OBlock FarWest = _OBlockMgr.getByUserName("FarWest");
+        Sensor sFarWest = FarWest.getSensor();
+        NXFrameTest.setAndConfirmSensorAction(sFarWest, Sensor.ACTIVE, FarWest);
         occupied = TkrD.getBlocksOccupied();
         Assert.assertEquals("TkrD 3 Blocks Occupied", 3, occupied.size());
         
-        sFarWest.setState(Sensor.INACTIVE);
+        NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.INACTIVE, Main);
         occupied = TkrD.getBlocksOccupied();
         Assert.assertEquals("TkrD 1 Blocks Occupied", 1, occupied.size());
 
-        OBlock FarWest = _OBlockMgr.getByUserName("FarWest");
         tta.stopTracker(TkrD, FarWest);
+    }
+
+    @Test
+    public void testMultipleTrackers() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load and display
+        File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
+        Assert.assertNotNull("TrackerTableAction not found", tta);
+        OBlock West = _OBlockMgr.getByUserName("West");
+        Sensor sWest = West.getSensor();
+        Assert.assertNotNull("Senor sWest found", sWest);
+        NXFrameTest.setAndConfirmSensorAction(sWest, Sensor.ACTIVE, West);
+        tta.markNewTracker(West, "TkrW", null);
+        Tracker TkrW = tta.findTrackerIn(West);
+        Assert.assertNotNull("Tracker TkrW found", TkrW);
+        
+        OBlock East = _OBlockMgr.getByUserName("East");
+        Sensor sEast = East.getSensor();
+        Assert.assertNotNull("Senor sEast found", sEast);
+        NXFrameTest.setAndConfirmSensorAction(sEast, Sensor.ACTIVE, East);
+        tta.markNewTracker(East, "TkrE", null);
+        Tracker TkrE = tta.findTrackerIn(East);
+        Assert.assertNotNull("Tracker TkrE found", TkrE);
+
+        OBlock Main = _OBlockMgr.getByUserName("Main");
+        Sensor sMain = Main.getSensor();
+        Assert.assertNotNull("Senor sMain found", sMain);
+        NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.ACTIVE, Main);
+        
+        JFrameOperator nfo = new JFrameOperator(tta._frame);
+        JDialogOperator jdo = new JDialogOperator(nfo, Bundle.getMessage("TrackerTitle"));
+        Assert.assertNotNull("Dialog operator found", jdo);
+//      JComponentOperator jco = new JComponentOperator(jdo);
+        
+        TrackerTableAction.ChooseTracker dialog = (TrackerTableAction.ChooseTracker)jdo.getSource();
+        Assert.assertNotNull("JDialog found", dialog);
+        // first entry ought to be tracker "West"
+        dialog._jList.setSelectedIndex(0);
+
+        List<OBlock> occupied = TkrE.getBlocksOccupied();
+        Assert.assertEquals("TkrE Blocks Occupied", 1, occupied.size());
+        
+        occupied = TkrW.getBlocksOccupied();
+        Assert.assertEquals("TkrW Blocks Occupied", 2, occupied.size());
     }
 
     // The minimal setup for log4J
