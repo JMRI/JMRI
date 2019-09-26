@@ -40,9 +40,10 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
+        super.tearDown();
+        Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
         tcis = null;
         memo = null;
-        super.tearDown();
     }
     
     @Test
@@ -98,13 +99,8 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         ((ConfigToolPane)panel).reply(r);
         Assert.assertEquals("event in capture slot 2","+65337",getStringCaptureTwo(jfo) );
 
-        panel.dispose();
-        
         // Ask to close window
-        jfo.requestClose();
-       
-        Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
-        
+        jfo.requestClose(); 
     }
     
     private boolean getResetButtonEnabled( JFrameOperator jfo ){
