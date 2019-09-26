@@ -35,6 +35,17 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 public class ArchitectureTest {
 
+    // want these statics first in class, to initialize
+    // logging before various static items are constructed
+    @BeforeClass  // tests are static
+    static public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+    @AfterClass
+    static public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
     /**
      * No access to System.err and System.out except as specified
      */
@@ -46,7 +57,8 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
-                                .doNotHaveFullyQualifiedName("jmri.Version")
+                                .doNotHaveFullyQualifiedName("jmri.Version").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.JTextPaneAppender")
                             .should(
                                 com.tngtech.archunit.library.GeneralCodingRules.
                                 ACCESS_STANDARD_STREAMS
