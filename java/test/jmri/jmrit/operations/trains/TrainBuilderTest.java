@@ -5278,7 +5278,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 506, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 459, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5314,7 +5314,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 251, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 250, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5364,7 +5364,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 376, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 375, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
