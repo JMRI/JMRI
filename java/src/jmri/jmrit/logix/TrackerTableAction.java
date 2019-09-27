@@ -227,19 +227,11 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
                 _trackerBlocks.put(block, trackers);
                 block.addPropertyChangeListener(this);
             }
-            //log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
         } else {
             if (trackers.isEmpty()) {
                 if ((block.getState() & OBlock.UNDETECTED) == 0) {
                     block.addPropertyChangeListener(this);
                 }
-                /*if (log.isDebugEnabled()) {
-                    log.debug("\taddPropertyChangeListener for block {}", block.getDisplayName());
-                }
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("\tassumed block {} already has listener",block.getDisplayName());
-                }*/
             }
             if (!trackers.contains(tracker)) {
                 trackers.add(tracker);
@@ -267,7 +259,6 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     }
 
     protected void removeBlockListeners(Tracker tracker) {
-        //log.debug("removeBlockListeners for tracker= \"{}\"", tracker.getTrainName());
         for (OBlock block : _trackerBlocks.keySet()) {
             removeBlockListener(block, tracker);
         }
@@ -279,7 +270,6 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             trackers.remove(tracker);
             if (trackers.isEmpty()) {
                 block.removePropertyChangeListener(this);
-                //log.debug("remove BlockListener on block \"{}\" for tracker= {}", block.getDisplayName(), tracker.getTrainName());
             }
         }
     }
@@ -391,7 +381,6 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      * <p>
      */
     private void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
-        //log.debug("processTrackerStateChange for block= " + block.getDisplayName() + " state= " + state + " TrackerName= " + tracker.getTrainName());
         List<OBlock> oldRange = tracker.makeRange();// total range in effect when state change was detected
         if (tracker.move(block, state)) {   // new total range has been made after move was done.
             block._entryTime = System.currentTimeMillis();

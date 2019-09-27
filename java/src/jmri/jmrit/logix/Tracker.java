@@ -47,7 +47,7 @@ public class Tracker {
     private Color _markerBackground;
     private Font _markerFont;
     private OBlock _darkBlock = null;
-    enum PathSet {NO, PARTIAL, SET}
+    enum PathSet {NOWAY, NOTSET, PARTIAL, SET}
 
     /**
      *
@@ -153,7 +153,7 @@ public class Tracker {
    private PathSet hasPathBetween(@Nonnull OBlock blkA, @Nonnull OBlock blkB, boolean recurse)
            throws JmriException {
        // first check if there is an exit path set from blkA, to blkB
-       PathSet pathset = PathSet.NO;
+       PathSet pathset = PathSet.NOTSET;
        boolean hasExitA = false;
        boolean hasEnterB = false;
        boolean adjacentBlock = false;
@@ -185,8 +185,9 @@ public class Tracker {
            return pathset;
        }
        if (darkBlocks.isEmpty()) {
-           throw new JmriException("Block \""+blkA.getDisplayName()+"\" and \""+blkB.getDisplayName()+
-                   "\" are NOT adjacent and have no intervening dark block!");
+           return PathSet.NOWAY;
+//           throw new JmriException("Block \""+blkA.getDisplayName()+"\" and \""+blkB.getDisplayName()+
+//                   "\" are NOT adjacent and have no intervening dark block!");
        }
        // blkA and blkB not adjacent, so look for a connecting dark block
        PathSet darkPathSet;
@@ -212,12 +213,12 @@ public class Tracker {
        
    private PathSet hasDarkBlockPathBetween(OBlock blkA, OBlock block, OBlock blkB)
        throws JmriException {
-       PathSet pathset = PathSet.NO;
+       PathSet pathset = PathSet.NOTSET;
        PathSet setA = hasPathBetween(blkA, block, false);
        PathSet setB = hasPathBetween(block, blkB, false);
        if (setA == PathSet.SET && setB == PathSet.SET) {
            pathset = PathSet.SET;
-       } else if (setA != PathSet.NO && setB != PathSet.NO) {
+       } else if (setA != PathSet.NOTSET && setB != PathSet.NOTSET) {
                pathset = PathSet.PARTIAL;
        }
        return pathset;
@@ -227,16 +228,16 @@ public class Tracker {
         _darkBlock = null;
         OBlock blk = getHeadBlock();
         if (blk != null) {
-            return hasPathBetween(blk, block, true);
+            PathSet pathSet = hasPathBetween(blk, block, true);
+            if (pathSet != PathSet.NOWAY) {
+                return pathSet;
+            }
         }
-        OBlock b = getTailBlock();
-        if (b == null) {
+        blk = getTailBlock();
+        if (blk == null) {
             throw new JmriException("No tail block!");
         }
-        if (!b.equals(blk)) {
-            return  hasPathBetween(b, block, true);
-        }
-        return PathSet.NO;
+        return  hasPathBetween(blk, block, true);
     }
 
     /**
@@ -248,7 +249,6 @@ public class Tracker {
         for (OPath path : paths) {
             if (path.checkPathSet()) {
                 setPaths.add(path);
-                //log.debug("Path \"{}\" set to block {} through portal {}", path.getName(), block.getDisplayName(), portal.getUserName());
             }
         }
         return setPaths;
@@ -313,7 +313,6 @@ public class Tracker {
         _tailRange = new ArrayList<OBlock>();
         OBlock headBlock = getHeadBlock();
         OBlock tailBlock = getTailBlock();
-        //log.debug("Make range for \"{}\" head = {} tail = {}",_trainName, headBlock.getDisplayName(), tailBlock.getDisplayName());
         if (headBlock != null) {
             for (Portal portal : headBlock.getPortals()) {
                 OBlock block = portal.getOpposingBlock(headBlock);
@@ -348,13 +347,6 @@ public class Tracker {
                  }
             }
         }
-        /*if (log.isDebugEnabled()) {
-            log.debug("   _headRange.size()= " + _headRange.size());
-            log.debug("   _tailRange.size()= " + _tailRange.size());
-            log.debug("   _lostRange.size()= " + _lostRange.size());
-            log.debug("   _occupies.size()= " + _occupies.size());
-        }*/
-
         return buildRange();
     }
 
@@ -366,22 +358,13 @@ public class Tracker {
         }
         for (OBlock b : _occupies) {
             range.add(b);
-            //log.debug("   {} occupies \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
         }
         for (OBlock b : _headRange) {
             range.add(b);
-            //log.debug("   {} head range from {} includes \"{}\" value= {}",_trainName, getHeadBlock().getDisplayName(), b.getDisplayName(), b.getValue());
         }
         for (OBlock b : _tailRange) {
             range.add(b);
-            //log.debug("   {} tail range from {} includes \"{}\" value= {}",_trainName, getTailBlock().getDisplayName(), b.getDisplayName(), b.getValue());
         }
-        /*for (OBlock b : _lostRange) {
-            range.add(b);
-            if (log.isDebugEnabled()) {
-                log.debug("   {} lost range contains \"{}\" value= {}", _trainName, b.getDisplayName(), b.getValue());
-            }
-        }*/
         return range;
     }
 
@@ -407,10 +390,10 @@ public class Tracker {
             return;
         }
         removeFromOccupies(block);
-        // remove any adjacent dark block 
+        // remove any adjacent dark block or mid-range lost block
         for (Portal p : block.getPortals()) {
             OBlock b = p.getOpposingBlock(block);
-            if ((b.getState() & OBlock.UNDETECTED) != 0) {
+            if ((b.getState() & (OBlock.UNDETECTED | OBlock.UNOCCUPIED)) != 0) {
                 removeFromOccupies(b);
                 removeName(b);
             }
@@ -427,14 +410,14 @@ public class Tracker {
     }
 
     protected boolean move(OBlock block, int state) {
-        //log.debug("move( {}, {}) by {}", block.getDisplayName(), state, _trainName);
         _statusMessage = null;
         if ((state & OBlock.OCCUPIED) != 0) {
             if (_occupies.contains(block)) {
                 if (block.getValue() == null) { // must be a regained lost block
                     block.setValue(_trainName);
                     showBlockValue(block);
-                    _statusMessage = Bundle.getMessage("TrackerReentry", _trainName, block.getDisplayName());
+                    // don't use _statusMessage, so range listeners get adjusted
+                    _parent.setStatus(Bundle.getMessage("TrackerReentry", _trainName, block.getDisplayName()));
                     _lostRange.remove(block);
                 } else if (!block.getValue().equals(_trainName)) {
                     log.error("Block \"{}\" occupied by \"{}\", but block.getValue()= {}!",
@@ -442,7 +425,6 @@ public class Tracker {
                 }
             } else if (_lostRange.contains(block)) {
                 _lostRange.remove(block);
-                //log.debug("Block \"{}\" is occupied and was in lost range for train {}.", _trainName, block.getDisplayName());
             }
             Warrant w = block.getWarrant();
             if (w != null) {
@@ -452,7 +434,6 @@ public class Tracker {
                 // Was it the warranted train that entered the block?
                 // Can't tell who got notified first - tracker or warrant?
                 // is distance of 1 block OK?
-                //log.debug("Block \"{}\" allocated to warrant \"{}\" currentIndex= {} blockIndex= {}",block.getDisplayName(), w.getDisplayName(), w.getCurrentOrderIndex(), w.getIndexOfBlock(block, 0));
                 if (Math.abs(w.getIndexOfBlock(block, 0) - idx) < 2) {
                     _statusMessage = msg;
                 } else {  // otherwise claim it for tracker
@@ -501,13 +482,12 @@ public class Tracker {
         list.add(block);
 
         java.awt.Toolkit.getDefaultToolkit().beep();
-        TrackerTableAction parent = InstanceManager.getDefault(TrackerTableAction.class);
-        new ChooseRecoverBlock(block, list, this, parent);
+        new ChooseRecoverBlock(block, list, this, _parent);
         _statusMessage = Bundle.getMessage("TrackerNoCurrentBlock", _trainName,
                 block.getDisplayName()) + "\n" + Bundle.getMessage("TrackingStopped");
     }
 
-    private class ChooseStartBlock extends ChooseBlock {
+    class ChooseStartBlock extends ChooseBlock {
 
         ChooseStartBlock(OBlock b, List<OBlock> l, Tracker t, TrackerTableAction tta) {
             super(b, l, t, tta);

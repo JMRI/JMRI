@@ -3,11 +3,13 @@ package jmri.jmrit.logix;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.jmrit.display.EditorScaffold;
+import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
 
@@ -15,12 +17,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JComponentOperator;
-import javax.swing.JDialog;
 
 /**
  *
@@ -29,7 +28,6 @@ import javax.swing.JDialog;
 public class TrackerTableActionTest {
 
     OBlockManager _OBlockMgr;
-    SensorManager _sensorMgr;
 
     /**
      * Checks automatic creation
@@ -85,6 +83,8 @@ public class TrackerTableActionTest {
         Assert.assertEquals("Tkr1 1 Blocks Occupied", 1, occupied.size());
 
         tta.stopTracker(Tkr1, East);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        panel.dispose();
     }
 
     @Test
@@ -117,6 +117,8 @@ public class TrackerTableActionTest {
         Assert.assertEquals("TkrD 1 Blocks Occupied", 1, occupied.size());
 
         tta.stopTracker(TkrD, FarWest);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        panel.dispose();
     }
 
     @Test
@@ -163,6 +165,9 @@ public class TrackerTableActionTest {
         
         occupied = TkrW.getBlocksOccupied();
         Assert.assertEquals("TkrW Blocks Occupied", 2, occupied.size());
+
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        panel.dispose();
     }
 
     // The minimal setup for log4J
@@ -173,7 +178,6 @@ public class TrackerTableActionTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
     }
 
     @After
