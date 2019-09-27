@@ -491,9 +491,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     delayedAdd();
                 }
             } else {
-                setDirection(((LocoNetThrottle) t));
+                if (t instanceof LocoNetThrottle) {
+                    LocoNetThrottle lt = (LocoNetThrottle)t;
+                    setDirection(lt);
+                }
             }
-
         }
     }
 
