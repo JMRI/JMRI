@@ -319,7 +319,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 } else if (col == REPORTERCOL) {
                     @SuppressWarnings("unchecked")
                     String strReporter = (String) ((JComboBox<String>) value).getSelectedItem();
-                    Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter); 
+                    Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter);
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
                     return;
@@ -936,7 +936,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
     JComboBox<String> speeds = new JComboBox<String>();
 
-    JPanel additionalAddOption() {
+/*    JPanel additionalAddOption() {
 
         GridLayout additionLayout = new GridLayout(0, 2);
         JPanel mainPanel = new JPanel();
@@ -980,7 +980,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         });
 
         return mainPanel;
-    }
+    }*/
 
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
@@ -1026,10 +1026,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             user = null;
         }
         String uName = user; // keep result separate to prevent recursive manipulation
+        String system = "";
 
-        String system = sysName.getText();
+        if (!_autoSystemNameCheckBox.isSelected()) {
+            system = InstanceManager.getDefault(jmri.BlockManager.class).makeSystemName(sysName.getText());
+        }
         String sName = system; // keep result separate to prevent recursive manipulation
-        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
         // initial check for empty entry using the raw name
         if (sName.length() < 3 && !_autoSystemNameCheckBox.isSelected()) {  // Using 3 to catch a plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));

@@ -16,7 +16,7 @@
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="178" item="EMF Option 2" default="19">
     <qualifier>
-      <variableref>Decoder ID</variableref>
+      <variableref>Version ID</variableref>
       <relation>ge</relation>
       <value>90</value>
     </qualifier>
@@ -26,7 +26,7 @@
   </variable>
   <variable CV="179" item="EMF Option 3" default="15">
     <qualifier>
-      <variableref>Decoder ID</variableref>
+      <variableref>Version ID</variableref>
       <relation>ge</relation>
       <value>90</value>
     </qualifier>
@@ -36,7 +36,7 @@
   </variable>
   <variable CV="181" item="EMF Option 4" default="4">
     <qualifier>
-      <variableref>Decoder ID</variableref>
+      <variableref>Version ID</variableref>
       <relation>ge</relation>
       <value>90</value>
     </qualifier>

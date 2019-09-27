@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Base class for pane filling main frame (window) of traditional-style JMRI
  * applications
- * <P>
+ * <p>
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
@@ -175,7 +175,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         } else {
             cs.setForeground(Color.red);
             String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
-            cf = cf.toUpperCase();
             cs.setText(cf);
         }
 
@@ -268,17 +267,17 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
     /**
      * Set up the configuration file name at startup.
-     * <P>
+     * <p>
      * The Configuration File name variable holds the name used to load the
      * configuration file during later startup processing. Applications invoke
      * this method to handle the usual startup hierarchy:
-     * <UL>
-     * <LI>If an absolute filename was provided on the command line, use it
-     * <LI>If a filename was provided that's not absolute, consider it to be in
+     * <ul>
+     * <li>If an absolute filename was provided on the command line, use it
+     * <li>If a filename was provided that's not absolute, consider it to be in
      * the preferences directory
-     * <LI>If no filename provided, use a default name (that's application
+     * <li>If no filename provided, use a default name (that's application
      * specific)
-     * </UL>
+     * </ul>
      * This name will be used for reading and writing the preferences. It need
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em> and may not contain the equals sign (=).

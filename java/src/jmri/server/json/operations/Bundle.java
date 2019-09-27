@@ -3,7 +3,7 @@ package jmri.server.json.operations;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,8 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.server.json.Bundle {
 
-    @Nullable
-    private static final String name = null; // no local resources
+    @CheckForNull
+    private static final String name = "jmri.server.json.operations.Bundle";
 
     //
     // below here is boilerplate to be copied exactly
@@ -94,7 +94,7 @@ public class Bundle extends jmri.server.json.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

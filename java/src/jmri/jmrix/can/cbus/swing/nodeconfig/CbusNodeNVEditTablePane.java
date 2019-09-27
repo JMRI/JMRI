@@ -39,12 +39,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     private CbusNodeNVTableDataModel nodeNVModel;
-    private JScrollPane eventScroll;
-    private JPanel pane1;
     private int largerFont;
     private JTable nodeNvTable;
-    
-    NodeConfigToolPane mainpane;
 
     protected CbusNodeNVEditTablePane( CbusNodeNVTableDataModel nVModel ) {
         super();
@@ -58,30 +54,21 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         
     }
     
-    protected void setNode(CbusNode node, NodeConfigToolPane pane ) {
+    protected void setNode(CbusNode node ) {
         
         CbusNode nodeOfInterest = node;
-        mainpane = pane;
+       // mainpane = pane;
         nodeNvTable = null;
         nodeNvTable = new JTable(nodeNVModel);
         
         nodeNVModel.setNode( nodeOfInterest );
-        
-        nodeNVModel.setEditFrame();
-        init();
-    }
-
-    protected void init() {
-        
-        pane1 = null;
-        pane1 = new JPanel();
         
         TableColumnModel tableModel = nodeNvTable.getColumnModel();
         
         nodeNvTable.setRowSelectionAllowed(true);
         nodeNvTable.setColumnSelectionAllowed(false);
         nodeNvTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        
+        nodeNvTable.getTableHeader().setReorderingAllowed(true);
         nodeNvTable.setRowHeight(27);
         
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_NUMBER_COLUMN).setCellRenderer(getRenderer());
@@ -97,20 +84,12 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         JTextField f = new JTextField();
         largerFont = f.getFont().getSize()+2;
         
-        // configure items for GUI
-        nodeNVModel.configureTable(nodeNvTable);   
-        
         setLayout(new BorderLayout() );
         
-        pane1.setLayout(new BorderLayout());
-        
         // scroller for main table
-        eventScroll = new JScrollPane(nodeNvTable);
+        JScrollPane eventScroll = new JScrollPane(nodeNvTable);
 
-        pane1.add(eventScroll);
-        
-        add(pane1);
-        pane1.setVisible(true);
+        add(eventScroll);
         
     }
     
@@ -143,10 +122,7 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                 String string="";
                 if(arg1 != null){
                     string = arg1.toString();
-                    if (string.equals("0000 0000")) {
-                        string = "";
-                    }
-                    f.setText(string);
+                    f.setText(string.toUpperCase());
                 } else {
                     f.setText("");
                 }
@@ -170,7 +146,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                         }
                     }
                 }
-                
                 return f;
             }
         };
@@ -184,6 +159,7 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             spinner.addChangeListener(this);
         }
 
+        @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
             int row, int column) {
             spinner.setValue( value);
@@ -200,10 +176,12 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             return true;
         }
 
+        @Override
         public Object getCellEditorValue() {
             return spinner.getValue();
         }
         
+        @Override
         public void stateChanged(ChangeEvent eve) {
             stopCellEditing();
         }
@@ -216,18 +194,13 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
             setBorder(null);
         }
    
+        @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
             
             setModel(new SpinnerNumberModel( (int) value, -1, 255, 1) );
             return this;
         }
-    }
-
-    @Override
-    public void dispose() {
-        eventScroll = null;
-        super.dispose();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePane.class);

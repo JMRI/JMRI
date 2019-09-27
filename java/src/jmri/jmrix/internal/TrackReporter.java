@@ -9,7 +9,6 @@ import jmri.CollectingReporter;
  * Extension of the AbstractReporter class that implements CollectingReporter
  * and represents the contents of a track.  This is an internal construct that
  * does not correspond to a physical reporter.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2019
  */
@@ -18,12 +17,12 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     private Deque collection = null;
 
     public TrackReporter(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         collection = new ArrayDeque<Object>();
     }
 
     public TrackReporter(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         collection = new ArrayDeque<Object>();
     }
 
@@ -62,6 +61,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     /**
      * @return the collection of elements associated with this reporter.
      */
+    @Override
     public java.util.Collection getCollection(){
        return(collection);
     }

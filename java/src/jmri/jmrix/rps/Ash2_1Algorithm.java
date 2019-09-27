@@ -8,20 +8,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of 2.1th algorithm for reducing Readings
- * <P>
+ * <p>
  * This algorithm was provided by Robert Ashenfelter based in part on the work
  * of Ralph Bucher in his paper "Exact Solution for Three Dimensional Hyperbolic
  * Positioning Algorithm and Synthesizable VHDL Model for Hardware
  * Implementation".
- * <P>
+ * <p>
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
  *
- * <p>
- *
  * @author	Robert Ashenfelter Copyright (C) 2007
  * @author	Bob Jacobsen Copyright (C) 2007
-  */
+ */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
@@ -406,5 +404,3 @@ public class Ash2_1Algorithm extends AbstractCalculator {
     private final static Logger log = LoggerFactory.getLogger(Ash2_1Algorithm.class);
 
 }
-
-

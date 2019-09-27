@@ -560,13 +560,13 @@ public class DefaultConditional extends AbstractNamedBean
 
     /**
      * Compares action options, and takes action if appropriate
-     * <P>
+     * <p>
      * Only get here if a change in state has occurred when calculating this
      * Conditional
      */
     @SuppressWarnings({"deprecation", "fallthrough"})
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
-    // it's unfortunate that this is such a huge method, because these annotation
+    // it's unfortunate that this is such a huge method, because these annotations
     // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
         if (log.isTraceEnabled()) {
@@ -1283,7 +1283,7 @@ public class DefaultConditional extends AbstractNamedBean
             contentPanel.add(panel);
 
             panel = new JPanel();
-            panel.add(new JLabel(getUserName() + " (" + getSystemName() + ")"));
+            panel.add(new JLabel(getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));
             contentPanel.add(panel);
 
             panel = new JPanel();
@@ -1349,12 +1349,7 @@ public class DefaultConditional extends AbstractNamedBean
      * case
      */
     static private Memory getMemory(String name) {
-        Memory m = InstanceManager.memoryManagerInstance().getMemory(name);
-        if (m == null) {
-            String sName = name.toUpperCase().trim();  // N11N
-            m = InstanceManager.memoryManagerInstance().getMemory(sName);
-        }
-        return m;
+        return InstanceManager.memoryManagerInstance().getMemory(name);
     }
 
     /**

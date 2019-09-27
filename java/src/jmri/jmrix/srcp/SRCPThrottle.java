@@ -3,11 +3,13 @@ package jmri.jmrix.srcp;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 
 /**
  * An implementation of DccThrottle with code specific to an SRCP connection.
- * <P>
+ * <p>
  * Addresses of 99 and below are considered short addresses, and over 100 are
  * considered long addresses. This is not the NCE system standard, but is used
  * as an expedient here.
@@ -24,11 +26,11 @@ public class SRCPThrottle extends AbstractThrottle {
      */
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address) {
         // default to 128 speed steps with 28 functions and NMRA protocl.
-        this(memo, address, "N", SpeedStepMode128, 28);
+        this(memo, address, "N", SpeedStepMode.NMRA_DCC_128, 28);
     }
 
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
-            String protocol, int mode, int functions) {
+            String protocol, SpeedStepMode mode, int functions) {
         super(memo);
         if (!protocol.equals("N")) {
             throw new IllegalArgumentException("Protocol " + protocol + " not supported");
@@ -126,7 +128,7 @@ public class SRCPThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -138,7 +140,7 @@ public class SRCPThrottle extends AbstractThrottle {
         this.speedSetting = speed;
         sendUpdate();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
     }
 
@@ -148,7 +150,7 @@ public class SRCPThrottle extends AbstractThrottle {
         isForward = forward;
         sendUpdate();
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(Throttle.ISFORWARD, old, isForward);
         }
     }
 
@@ -208,23 +210,20 @@ public class SRCPThrottle extends AbstractThrottle {
         ((SRCPBusConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(m, null);
     }
 
-    @Override
-    public void setSpeedStepMode(int Mode) {
-        super.setSpeedStepMode(Mode);
-        switch (Mode) {
-            case SpeedStepMode14:
-                maxsteps = 14;
+    @Override	
+    public void setSpeedStepMode(SpeedStepMode Mode) {	
+        super.setSpeedStepMode(Mode);	
+        switch (Mode) {	
+            case NMRA_DCC_14:	
+            case NMRA_DCC_27:	
+            case NMRA_DCC_28:	
+            case NMRA_DCC_128:
+                maxsteps = Mode.numSteps;
+                break;	
+            default:	
+                maxsteps = 126;	
                 break;
-            case SpeedStepMode27:
-                maxsteps = 27;
-                break;
-            case SpeedStepMode28:
-                maxsteps = 28;
-                break;
-            case SpeedStepMode128:
-            default:
-                maxsteps = 126;
-        }
+        }	
     }
 
     @Override

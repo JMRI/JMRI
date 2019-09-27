@@ -10,7 +10,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2013
  */

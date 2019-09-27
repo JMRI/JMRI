@@ -36,6 +36,7 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
      */
     @Deprecated
     public static JsonThrottleManager getDefault() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getDefault");        
         return InstanceManager.getDefault(JsonThrottleManager.class);
     }
 
@@ -48,10 +49,7 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     }
 
     public void put(JsonThrottle throttle, JsonThrottleSocketService service) {
-        if (this.services.get(throttle) == null) {
-            this.services.put(throttle, new ArrayList<>());
-        }
-        this.services.get(throttle).add(service);
+        this.services.computeIfAbsent(throttle, v -> new ArrayList<>()).add(service);
     }
 
     public boolean containsKey(DccLocoAddress address) {
@@ -67,10 +65,7 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     }
 
     public List<JsonThrottleSocketService> getServers(JsonThrottle throttle) {
-        if (this.services.get(throttle) == null) {
-            this.services.put(throttle, new ArrayList<>());
-        }
-        return this.services.get(throttle);
+        return this.services.computeIfAbsent(throttle, v -> new ArrayList<>());
     }
 
     public void remove(JsonThrottle throttle, JsonThrottleSocketService server) {
@@ -90,10 +85,11 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     }
 
     public boolean requestThrottle(DccLocoAddress address, ThrottleListener listener) {
-        return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener);
+        return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener, false);
     }
 
     public void attachListener(DccLocoAddress address, JsonThrottle throttle) {
         InstanceManager.getDefault(ThrottleManager.class).attachListener(address, throttle);
     }
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonThrottleManager.class);
 }

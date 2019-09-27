@@ -25,13 +25,13 @@ public abstract class AbstractCalculator implements Calculator {
     public void prep(Reading r) {
 
         if (log.isDebugEnabled()) {
-            log.debug("Reading: " + r.toString());
-            log.debug("Sensors: " + sensors.length);
+            log.debug("Reading: {}", r.toString());
+            log.debug("Sensors: {}", sensors.length);
             if (sensors.length >= 1 && sensors[0] != null) {
-                log.debug("Sensor[0]: " + sensors[0].x + "," + sensors[0].y + "," + sensors[0].z);
+                log.debug("Sensor[0]: {},{},{}", sensors[0].x, sensors[0].y, sensors[0].z);
             }
             if (sensors.length >= 2 && sensors[1] != null) {
-                log.debug("Sensor[1]: " + sensors[1].x + "," + sensors[1].y + "," + sensors[1].z);
+                log.debug("Sensor[1]: {},{},{}", sensors[1].x, sensors[1].y, sensors[1].z);
             }
         }
 
@@ -39,7 +39,7 @@ public abstract class AbstractCalculator implements Calculator {
 
         // zero doesn't count in receivers
         if (nr != sensors.length - 1) {
-            log.error("Mismatch: " + nr + " readings, " + (sensors.length - 1) + " receivers");
+            log.error("Mismatch: {} readings, {} receivers", nr, (sensors.length - 1));
         }
         nr = Math.min(nr, sensors.length - 1); // accept the shortest
 
@@ -61,15 +61,13 @@ public abstract class AbstractCalculator implements Calculator {
         }
         nr = j;
 
-        if (log.isDebugEnabled()) {
-            summarize();
-        }
+        summarize();
     }
 
     void summarize() {
-        log.debug("nr is " + nr);
+        log.debug("nr is {}", nr);
         for (int j = 0; j < nr; j++) {
-            log.debug(" t: " + Tr[j] + " to " + Xr[j] + "," + Yr[j] + "," + Zr[j]);
+            log.debug(" t: {} to {},{},{}", Tr[j], Xr[j], Yr[j], Zr[j]);
         }
     }
 

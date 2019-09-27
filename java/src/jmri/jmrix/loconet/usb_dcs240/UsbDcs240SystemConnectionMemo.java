@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * implementation will require differentiation from the PR3 implementation.
  * <p>
  * Based on PR3SystemConnectionMemo
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author B. Milhaupt Copyright (C) 2017, 2019
  */

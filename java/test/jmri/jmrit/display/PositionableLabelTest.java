@@ -125,6 +125,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
         // find label within that
         JLabel jl = JLabelOperator.findJLabel(frame, new ComponentChooser() {
+            @Override
             public boolean checkComponent(Component comp) {
                 if (comp == null) {
                     return false;
@@ -133,6 +134,7 @@ public class PositionableLabelTest extends PositionableTestBase {
                 }
             }
 
+            @Override
             public String getDescription() {
                 return "find the first JLabel";
             }
@@ -548,6 +550,7 @@ public class PositionableLabelTest extends PositionableTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initConfigureManager();

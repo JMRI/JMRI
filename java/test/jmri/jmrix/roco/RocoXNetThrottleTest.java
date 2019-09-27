@@ -26,6 +26,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     // run the throttle through the initilization sequence, 
     // without assertions, so post initilization tests can be
     // performed.
+    @Override
     protected void initThrottle(XNetThrottle t,int n){
         // before we send any commands, make sure the hardware type is set
         // correctly (0x10 is a MultiMaus).

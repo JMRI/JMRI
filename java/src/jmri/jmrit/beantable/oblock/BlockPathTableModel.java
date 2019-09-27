@@ -4,18 +4,17 @@ package jmri.jmrit.beantable.oblock;
  * GUI to define the OPaths within an OBlock.  An OPath is the setting of turnouts 
  * from one Portal to another Portal within an OBlock.  It may also be assigned
  * a length.
- * <P>
+ * <p>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Pete Cressman (C) 2010
  */

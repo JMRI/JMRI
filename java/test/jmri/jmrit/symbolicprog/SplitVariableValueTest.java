@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,10 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SplitVariableValueTest.java
+ * Tests for the {@link SplitVariableValue} class.
  *
  * @todo need a check of the MIXED state model for long address
- * @author	Bob Jacobsen Copyright 2001, 2002, 2015
+ * @author Bob Jacobsen Copyright 2001, 2002, 2015
+ * @author Dave Heap Copyright 2019
  */
 public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -39,7 +39,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         v.put(highCV, cvNext);
         return new SplitVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, "XXXXVVVV", minVal, maxVal, v, status, item,
-                highCV, 1, 0, "VVVVVVVV");
+                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((SplitVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((SplitVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override
@@ -79,7 +79,6 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Test
     public void testVariableValueRead() {
     }	// due to multi-cv nature of SplitAddr
-    // public void testVariableReadOnly() {}	// due to multi-cv nature of SplitAddr
 
     @Override
     @Test
@@ -101,22 +100,22 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     // Local tests
     @Test
@@ -131,7 +130,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "VVVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV");
+                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
 
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -159,7 +158,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "XXXXVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV");
+                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
 
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -187,7 +186,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "VVVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "XXVVVVXX");
+                highCV, 1, 0, "XXVVVVXX", null, null, null, null);
 
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -215,7 +214,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "XVVVVVVX", 0, 255, v, null, null,
-                highCV, 1, 0, "XVVVVVXX");
+                highCV, 1, 0, "XVVVVVXX", null, null, null, null);
 
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -246,7 +245,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
                 lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV");
+                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
             @Override
@@ -257,7 +256,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         };
-        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
+        evtList = new ArrayList<>();
         var.addPropertyChangeListener(listen);
 
         // set to specific value
@@ -268,7 +267,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         var.readAll();
 
         // wait for reply (normally, done by callback; will check that later)
-        JUnitUtil.waitFor(()->{return !var.isBusy();}, "var.isBusy");
+        JUnitUtil.waitFor(() -> {
+            return !var.isBusy();
+        }, "var.isBusy");
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
@@ -297,13 +298,15 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
                 lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                highCV, 1, 0, "VVVVVVVV");
+                highCV, 1, 0, "VVVVVVVV", null, null, null, null);
         ((JTextField) var.getCommonRep()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
         var.writeAll();
         // wait for reply (normally, done by callback; will check that later)
-        JUnitUtil.waitFor(()->{return !var.isBusy();}, "var.isBusy");
+        JUnitUtil.waitFor(() -> {
+            return !var.isBusy();
+        }, "var.isBusy");
 
         Assert.assertEquals("CV 1 value ", 61, cv1.getValue());
         Assert.assertEquals("CV 2 value ", 74, cv2.getValue());
@@ -314,11 +317,13 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
-    
+
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

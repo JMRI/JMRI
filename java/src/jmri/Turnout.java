@@ -2,11 +2,11 @@ package jmri;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Represent a Turnout on the layout.
- * <P>
+ * <p>
  * A Turnout has two states:
  * <ul>
  * <li>The "commandedState" records the state that's been commanded in the
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * <li>The "knownState" is the program's best idea of the actual state on the
  * the layout.
  * </ul>
- * <P>
+ * <p>
  * There are a number of reasons that commandedState and knownState differ:
  * <ul>
  * <li>A change has been commanded, but it hasn't had time to happen yet
@@ -27,24 +27,24 @@ import javax.annotation.Nullable;
  * <li>For a bus-like system, e.g. LocoNet or XpressNet, some other device might
  * have sent a command to change the turnout.
  * </ul>
- * <P>
+ * <p>
  * Turnout feedback is involved in the connection between these two states; for
  * more information see the
  * <a href="http://jmri.org/help/en/html/doc/Technical/TurnoutFeedback.shtml">feedback
  * page</a>.
- * <P>
+ * <p>
  * The AbstractTurnout class contains a basic implementation of the state and
  * messaging code, and forms a useful start for a system-specific
  * implementation. Specific implementations in the jmrix package, e.g. for
  * LocoNet and NCE, will convert to and from the layout commands.
- * <P>
+ * <p>
  * The states and names are Java Bean parameters, so that listeners can be
  * registered to be notified of any changes.
- * <P>
+ * <p>
  * A sample use of the Turnout interface can be seen in the
  * jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame class, which provides a
  * simple GUI for controlling a single turnout.
- * <P>
+ * <p>
  * Each Turnout object has a two names. The "user" name is entirely free form,
  * and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
@@ -56,17 +56,16 @@ import javax.annotation.Nullable;
  * the advanced behaviors with the setBinaryOutput(true) method. This is a
  * configuration property; changing it on the fly may give unexpected results.
  * It's value is not persisted.
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.TurnoutManager
@@ -245,17 +244,22 @@ public interface Turnout extends DigitalIO {
      * @param toper TurnoutOperation subclass instance
      */
     @InvokeOnLayoutThread
-    public void setTurnoutOperation(@Nullable TurnoutOperation toper);
+    public void setTurnoutOperation(@CheckForNull TurnoutOperation toper);
 
     /**
-     * return the inverted state of the specified state
+     * Return the inverted state of the specified state
+     * Does NOT invert INCONSISTENT
      * @param inState the specified state
      * @return the inverted state
      */
     public static int invertTurnoutState(int inState) {
-        int result = CLOSED;
-        if (result == inState) {
+        int result = UNKNOWN;
+        if (inState == CLOSED) {
             result = THROWN;
+        } else if (inState == THROWN){
+            result = CLOSED;
+        } else if (inState == INCONSISTENT){
+            result = INCONSISTENT;
         }
         return result;
     }
@@ -265,18 +269,18 @@ public interface Turnout extends DigitalIO {
      *
      * Since we defined two feedback methods that require monitoring, we provide
      * these methods to define those sensors to the Turnout.
-     * <P>
+     * <p>
      * The second sensor can be null if needed.
-     * <P>
+     * <p>
      * Sensor-based feedback will not function until these sensors have been
      * provided.
      *
      * @param pName the user or system name of the sensor
      * @throws jmri.JmriException if unable to assign the feedback sensor
      */
-    public void provideFirstFeedbackSensor(@Nullable String pName) throws JmriException;
+    public void provideFirstFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
-    public void provideSecondFeedbackSensor(@Nullable String pName) throws JmriException;
+    public void provideSecondFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
     /**
      * Get the first feedback sensor.
@@ -313,10 +317,10 @@ public interface Turnout extends DigitalIO {
     /**
      * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
      * information, if appropriate.
-     * <P>
+     * <p>
      * This method is designed to be called only when Turnouts are loaded and
      * when a new Turnout is defined in the Turnout table.
-     * <P>
+     * <p>
      * No change to known state is made if feedback information is not
      * available. If feedback information is inconsistent, or if sensor
      * definition is missing in ONESENSOR and TWOSENSOR feedback, turnout state
@@ -472,7 +476,7 @@ public interface Turnout extends DigitalIO {
      *
      * @param decoderName the name of the decoder type
      */
-    public void setDecoderName(@Nullable String decoderName);
+    public void setDecoderName(@CheckForNull String decoderName);
 
     /**
      * Use a binary output for sending commands. This appears to expose a

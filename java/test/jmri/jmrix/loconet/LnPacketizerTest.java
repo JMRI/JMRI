@@ -2,12 +2,15 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.StringBufferInputStream;
 
 /**
+ * JUnit tests for the LnPacketizerTest class.
+ *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2018
  */
@@ -39,23 +42,21 @@ public class LnPacketizerTest {
             }
             @Override
             public java.io.DataInputStream getInputStream(){
-                return new DataInputStream(new StringBufferInputStream(""));
+                return new DataInputStream(new ByteArrayInputStream(new byte[0]));
             }
             @Override
             public java.io.DataOutputStream getOutputStream(){
                 return new DataOutputStream(new ByteArrayOutputStream());
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override

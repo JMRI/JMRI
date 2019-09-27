@@ -38,7 +38,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
 
     // Initialize a consist for the specific address
     // the Default consist type for LocoNet is a Command
-    // Station Consist. 
+    // Station Consist.
     public LocoNetConsist(int address, LocoNetSystemConnectionMemo lm) {
         super(address);
         this.slotManager = lm.getSlotManager();
@@ -47,12 +47,12 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = LEADREQUESTSTATE;
         consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<DccLocoAddress>();
-        throttleManager.requestThrottle(consistAddress, this);
+        throttleManager.requestThrottle(consistAddress, this, false);
     }
 
     // Initialize a consist for the specific address
     // the Default consist type for LocoNet is a Command
-    // Station Consist. 
+    // Station Consist.
     public LocoNetConsist(DccLocoAddress address, LocoNetSystemConnectionMemo lm) {
         super(address);
         this.slotManager = lm.getSlotManager();
@@ -61,13 +61,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = LEADREQUESTSTATE;
         consistType = Consist.CS_CONSIST;
         needToWrite = new ArrayList<DccLocoAddress>();
-        throttleManager.requestThrottle(consistAddress, this);
-    }
-
-    // Clean Up local storage
-    @Override
-    public void dispose() {
-        super.dispose();
+        throttleManager.requestThrottle(consistAddress, this, false);
     }
 
     // Set the Consist Type
@@ -85,7 +79,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     /* is this address allowed?
-     * On LocoNet systems, All addresses can be used in a Universal Consist 
+     * On LocoNet systems, All addresses can be used in a Universal Consist
      * and only 0 is not allowed in Advanced Consists.
      */
     @Override
@@ -100,7 +94,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     }
 
     /* is there a size limit for this consist?
-     * For LocoNet returns -1 (no limit) for 
+     * For LocoNet returns -1 (no limit) for
      * both CS and Advanced Consists
      * return 0 for any other consist type.
      */
@@ -186,7 +180,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
         } else if (consistType == ADVANCED_CONSIST) {
             if (consistList.contains(LocoAddress)) {
-                // we are changing the direction, so remove first, 
+                // we are changing the direction, so remove first,
                 // then add
                 removeFromAdvancedConsist(LocoAddress);
             }
@@ -198,7 +192,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
             }
         } else if (consistType == CS_CONSIST) {
             if (consistList.contains(LocoAddress)) {
-                // we are changing the direction, so remove first, 
+                // we are changing the direction, so remove first,
                 // then add
                 removeFromCSConsist(LocoAddress);
             }
@@ -281,8 +275,10 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " With Direction Normal " // NOI18N
                     + directionNormal + ".");
         }
+        //set the value in the roster entry for CV19
+        setRosterEntryCVValue(LocoAddress);
         consistRequestState = LINKSTAGEONESTATE;
-        throttleManager.requestThrottle(LocoAddress, this);
+        throttleManager.requestThrottle(LocoAddress, this, false);
     }
 
     /*
@@ -297,6 +293,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     + " from advanced consist " // NOI18N
                     + consistAddress.toString());
         }
+        //reset the value in the roster entry for CV19
+        resetRosterEntryCVValue(LocoAddress);
         slotManager.slotFromLocoAddress(LocoAddress.getNumber(), this);
         consistRequestState = UNLINKSTAGEONESTATE;
     }
@@ -304,7 +302,7 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
     /*
      *  Add a Locomotive to a LocoNet Universal Consist.
      *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling 
+     *  @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
@@ -321,8 +319,8 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
           notifyConsistListeners(LocoAddress,ConsistListener.OPERATION_SUCCESS);
           return;
         }
-        throttleManager.requestThrottle(LocoAddress, this);
-        // skip right to stage 2, we do not need to status edit. 
+        throttleManager.requestThrottle(LocoAddress, this, false);
+        // skip right to stage 2, we do not need to status edit.
         consistRequestState = LINKSTAGETWOSTATE;
     }
 
@@ -470,18 +468,22 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                 }
             } else {
                 LocoNetSlot tempSlot = ((LocoNetThrottle) t).getLocoNetSlot();
-                tempSlot.addSlotListener(this);
-                if (consistRequestState == LINKSTAGEONESTATE) {
-                    notifyChangedSlot(tempSlot);
-                    setDirection(((LocoNetThrottle) t));
-                    consistRequestState = LINKSTAGETWOSTATE;
+                if (tempSlot != null) {
+                    tempSlot.addSlotListener(this);
+                    if (consistRequestState == LINKSTAGEONESTATE) {
+                        notifyChangedSlot(tempSlot);
+                        setDirection(((LocoNetThrottle) t));
+                        consistRequestState = LINKSTAGETWOSTATE;
+                    } else {
+                        setDirection(((LocoNetThrottle) t));
+                    }
                 } else {
-                    setDirection(((LocoNetThrottle) t));
+                    log.error("Cannot notify a throttle's slot if the slot is null!");
                 }
             }
         } catch (java.lang.ClassCastException cce) {
             // if the simulator is in use, we will
-            // get a ClassCastException. 
+            // get a ClassCastException.
             if (consistRequestState == LEADREQUESTSTATE) {
                 t.setIsForward(true);
                 consistRequestState = IDLESTATE;
@@ -489,9 +491,11 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
                     delayedAdd();
                 }
             } else {
-                setDirection(((LocoNetThrottle) t));
+                if (t instanceof LocoNetThrottle) {
+                    LocoNetThrottle lt = (LocoNetThrottle)t;
+                    setDirection(lt);
+                }
             }
-
         }
     }
 
@@ -506,10 +510,23 @@ public class LocoNetConsist extends jmri.implementation.DccConsist implements Sl
         consistRequestState = IDLESTATE;
     }
 
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address){
-        // this is an automatically stealing impelementation.
-        throttleManager.stealThrottleRequest(address, this, true);
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetConsist.class);

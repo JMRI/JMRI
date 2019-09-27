@@ -4,9 +4,7 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * JMRIClientReporterTest.java
- *
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientReporter class
+ * Tests for the jmri.jmrix.jmriclient.JMRIClientReporter class
  *
  * @author	Bob Jacobsen
  */
@@ -32,6 +30,7 @@ public class JMRIClientReporterTest extends jmri.implementation.AbstractReporter
     }
 
     @After
+    @Override
     public void tearDown() {
 	r = null;
         JUnitUtil.tearDown();

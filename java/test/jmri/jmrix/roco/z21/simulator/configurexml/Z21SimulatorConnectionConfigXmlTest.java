@@ -3,6 +3,7 @@ package jmri.jmrix.roco.z21.simulator.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.roco.z21.simulator.Z21SimulatorConnectionConfig;
+import jmri.jmrix.roco.z21.simulator.Z21SimulatorAdapter;
 
 /**
  * Z21SimulatorConnectionConfigXmlTest.java
@@ -13,12 +14,9 @@ import jmri.jmrix.roco.z21.simulator.Z21SimulatorConnectionConfig;
  */
 public class Z21SimulatorConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractConnectionConfigXmlTestBase {
 
-    @Test
-    public void testCtor(){
-    }
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new Z21SimulatorConnectionConfigXml();
@@ -26,8 +24,12 @@ public class Z21SimulatorConnectionConfigXmlTest extends jmri.jmrix.configurexml
     }
 
     @After
+    @Override
     public void tearDown() {
         xmlAdapter = null;
+        if(cc.getAdapter()!=null) {
+           ((Z21SimulatorAdapter)cc.getAdapter()).terminateThread();
+        }
         cc = null;
         JUnitUtil.tearDown();
     }

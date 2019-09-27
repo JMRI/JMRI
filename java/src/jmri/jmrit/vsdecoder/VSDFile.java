@@ -1,23 +1,5 @@
 package jmri.jmrit.vsdecoder;
 
-/*
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
- *
- * @author   Mark Underwood Copyright (C) 2011
- * 
- */
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,9 +18,26 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ *
+ * @author   Mark Underwood Copyright (C) 2011
+ */
 public class VSDFile extends ZipFile {
 
     private static final String VSDXmlFileName = "config.xml"; // NOI18N
+    private String missedFileName;
 
     // Dummy class just used to instantiate
     private static class VSDXmlFile extends XmlFile {
@@ -66,11 +65,11 @@ public class VSDFile extends ZipFile {
     }
 
     public boolean isInitialized() {
-        return (initialized);
+        return initialized;
     }
 
     public String getStatusMessage() {
-        return (_statusMsg);
+        return _statusMsg;
     }
 
     protected boolean init() {
@@ -78,51 +77,50 @@ public class VSDFile extends ZipFile {
         initialized = false;
 
         try {
-            // Debug: List all the top-level contents in the file.
+            // Debug: List all the top-level contents in the file
             Enumeration<?> entries = this.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry z = (ZipEntry) entries.nextElement();
-                log.debug("Entry: " + z.getName());
+                log.debug("Entry: {}", z.getName());
             }
 
             ZipEntry config = this.getEntry(VSDXmlFileName);
             if (config == null) {
                 _statusMsg = "File does not contain " + VSDXmlFileName;
                 log.error(_statusMsg);
-                return (false);
+                return false;
             }
             File f2 = new File(this.getURL(VSDXmlFileName));
             root = xmlfile.rootFromFile(f2);
             ValidateStatus rv = this.validate(root);
             if (!rv.getValid()) {
-                // Need to make this one fancier right here.
+                // Need to make this one fancier right here
                 _statusMsg = rv.getMessage();
-                log.error("VALIDATE FAILED: File " + VSDXmlFileName);
+                log.error("VALIDATE FAILED: File {}", VSDXmlFileName);
             }
             initialized = rv.getValid();
-            return (initialized);
+            return initialized;
 
         } catch (java.io.IOException ioe) {
             _statusMsg = "IO Error auto-loading VSD File: " + VSDXmlFileName + " " + ioe.toString();
             log.warn(_statusMsg);
-            return (false);
+            return false;
         } catch (NullPointerException npe) {
             _statusMsg = "NP Error auto-loading VSD File: path = " + VSDXmlFileName + " " + npe.toString();
             log.warn(_statusMsg);
-            return (false);
+            return false;
         } catch (org.jdom2.JDOMException ex) {
             _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex.toString();
             log.error(_statusMsg);
-            return (false);
+            return false;
         }
     }
 
     public Element getRoot() {
-        return (root);
+        return root;
     }
 
     public java.io.InputStream getInputStream(String name) {
-
         java.io.InputStream rv;
         try {
             ZipEntry e = this.getEntry(name);
@@ -131,32 +129,30 @@ public class VSDFile extends ZipFile {
                 if (e == null) {
                     e = this.getEntry(name.toUpperCase());
                     if (e == null) {
-                        // I give up.  Return null.
-                        return (null);
+                        // I give up.  Return null
+                        return null;
                     }
                 }
             }
             rv = getInputStream(this.getEntry(name));
         } catch (IOException e) {
-            log.error("IOException caught " + e);
+            log.error("IOException caught", e);
             rv = null;
         } catch (NullPointerException ne) {
-            log.error("Null Pointer Exception caught. name=" + name, ne);
+            log.error("Null Pointer Exception caught. name: {}", name, ne);
             rv = null;
         }
-        return (rv);
+        return rv;
     }
 
     public java.io.File getFile(String name) {
         try {
             ZipEntry e = this.getEntry(name);
-
             File f = new File(e.getName());
-            return (f);
+            return f;
         } catch (NullPointerException e) {
-            return (null);
+            return null;
         }
-
     }
 
     public String getURL(String name) {
@@ -166,18 +162,18 @@ public class VSDFile extends ZipFile {
             File t = File.createTempFile(name, ".wav.tmp");
             t.deleteOnExit();
 
-            // Dump the file from the Zip into the tempfile.
+            // Dump the file from the Zip into the tempfile
             copyInputStream(this.getInputStream(e), new BufferedOutputStream(new FileOutputStream(t)));
 
-            // return the name of the tempfile.
-            return (t.getPath());
+            // return the name of the tempfile
+            return t.getPath();
 
         } catch (NullPointerException e) {
             log.warn("Null pointer exception", e);
-            return (null);
+            return null;
         } catch (IOException e) {
             log.warn("IO exception", e);
-            return (null);
+            return null;
         }
     }
 
@@ -195,7 +191,6 @@ public class VSDFile extends ZipFile {
     }
 
     static class ValidateStatus {
-
         String msg = "";
         Boolean valid = false;
 
@@ -217,181 +212,222 @@ public class VSDFile extends ZipFile {
         }
 
         public Boolean getValid() {
-            return (valid);
+            return valid;
         }
 
         public String getMessage() {
-            return (msg);
+            return msg;
         }
     }
 
     public ValidateStatus validate(Element xmlroot) {
         Element e, el;
-        // Iterate through all the profiles in the file.
+        // Iterate through all the profiles in the file
         // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
-        // returned from an Element is going to be a list of Elements.
+        // returned from an Element is going to be a list of Elements
         Iterator<Element> i = xmlroot.getChildren("profile").iterator();
-        // If no Profiles, file is invalid.
+        // If no Profiles, file is invalid
         if (!i.hasNext()) {
-
-            log.warn("Validate: No Profiles.");
-            return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoProfiles")));
+            log.warn("No Profile(s)");
+            return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoProfiles"));
         }
 
         // Iterate through Profiles
         while (i.hasNext()) {
-            e = i.next(); // e points to a profile.
-            log.debug("Validate: Profile " + e.getAttributeValue("name"));
+            e = i.next(); // e points to a profile
+            log.debug("Validate: Profile {}", e.getAttributeValue("name"));
             // Get the "Sound" children ... these are the ones that should have files
             // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
-            // returned from an Element is going to be a list of Elements.
+            // returned from an Element is going to be a list of Elements
             Iterator<Element> i2 = (e.getChildren("sound")).iterator();
             if (!i2.hasNext()) {
-                log.warn("Validate: Profile " + e.getAttributeValue("name") + " has no Sounds");
-                return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoSounds") + " : " + e.getAttributeValue("name")));
+                log.warn("Profile {} has no Sounds", e.getAttributeValue("name"));
+                return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoSounds") + ": " + e.getAttributeValue("name"));
             }
 
             // Iterate through Sounds
             while (i2.hasNext()) {
                 el = i2.next();
-                log.debug("Element: " + el.toString());
+                log.debug("Element: {}", el);
                 if (el.getAttribute("name") == null) {
-                    log.debug("Name missing.");
-                    return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoName") + " : " + e.getAttributeValue("name") + "(" + el.getName() + ")"));
+                    log.warn("Sound element without a name in profile {}", e.getAttributeValue("name"));
+                    return new ValidateStatus(false, "Sound-Element without a name"); //Bundle.getMessage("VSDFileStatusNoName")
                 }
                 String type = el.getAttributeValue("type");
-                log.debug("  Name: " + el.getAttributeValue("name"));
-                log.debug("   type: " + type);
+                log.debug("  Name: {}", el.getAttributeValue("name"));
+                log.debug("   type: {}", type);
                 if (type.equals("configurable")) {
                     // Validate a Configurable Sound
                     // All these elements are optional, so if the element is missing,
                     // that's OK.  But if there is an element, and the FILE is missing,
-                    // that's bad.
+                    // that's bad
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <start-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <start-file>");
                     }
                     if (!validateOptionalFile(el, "mid-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <mid-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <mid-file>");
                     }
                     if (!validateOptionalFile(el, "end-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <end-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <end-file>");
                     }
                     if (!validateOptionalFile(el, "short-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <short-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <short-file>");
                     }
                 } else if (type.equals("diesel")) {
-                    // Validate a Diesel sound
-                    // All these elements are optional, so if the element is missing,
-                    // that's OK.  But if there is an element, and the FILE is missing,
-                    // that's bad.
+                    // Validate a diesel sound
                     String[] file_elements = {"file"};
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <start-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <start-file>"));
                     }
                     if (!validateOptionalFile(el, "shutdown-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <shutdown-file>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <shutdown-file>"));
                     }
                     if (!validateFiles(el, "notch-sound", file_elements)) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-sound>"));
                     }
                     if (!validateFiles(el, "notch-transition", file_elements, false)) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-transition>"));
+                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-transition>"));
                     }
-                } else if (type.equals("diesel2")) {
-                    // Validate a diesel2 type sound
-                    // Validate a Diesel sound
-                    // All these elements are optional, so if the element is missing,
-                    // that's OK.  But if there is an element, and the FILE is missing,
-                    // that's bad.
+                } else if (type.equals("diesel3")) {
+                    // Validate a diesel3 sound
                     String[] file_elements = {"file", "accel-file", "decel-file"};
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <start-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <start-file>");
                     }
                     if (!validateOptionalFile(el, "shutdown-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <shutdown-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <shutdown-file>");
                     }
                     if (!validateFiles(el, "notch-sound", file_elements)) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-sound>");
                     }
                 } else if (type.equals("steam")) {
-                    // Validate a Steam sound
+                    // Validate a steam sound
                     String[] file_elements = {"file"};
                     if (!validateRequiredElement(el, "top-speed")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <top-speed>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <top-speed>");
                     }
                     if (!validateRequiredElement(el, "driver-diameter")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <driver-diameter>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <driver-diameter>");
                     }
                     if (!validateRequiredElement(el, "cylinders")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <cylinders>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <cylinders>");
                     }
                     if (!validateRequiredElement(el, "rpm-steps")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + " : <rpm-steps>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <rpm-steps>");
                     }
                     if (!validateFiles(el, "rpm-step", file_elements)) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-sound>");
                     }
+                } else if (type.equals("steam1")) {
+                    // Validate a steam1 sound
+                    String[] file_elements = {"notch-file", "notchfiller-file", "coast-file", "coastfiller-file"};
+                    if (!validateRequiredElement(el, "top-speed")) {
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <top-speed>");
+                    }
+                    if (!validateRequiredElement(el, "driver-diameter-float")) {
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <driver-diameter-float>");
+                    }
+                    if (!validateRequiredElement(el, "cylinders")) {
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <cylinders>");
+                    }
+                    if (!validateRequiredElement(el, "s1notch-sound")) {
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <s1notch-sound>");
+                    }
+                    if (!validateRequiredNotchElement(el, "s1notch-sound", "min-rpm")) {
+                        return new ValidateStatus(false, "Element min-rpm for Element s1notch-sound missing");
+                    }
+                    if (!validateRequiredNotchElement(el, "s1notch-sound", "max-rpm")) {
+                        return new ValidateStatus(false, "Element max-rpm for Element s1notch-sound missing");
+                    }
+                    if (!validateFiles(el, "s1notch-sound", file_elements)) {
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": " + missedFileName);
+                    }
+                } else {
+                    return new ValidateStatus(false, Bundle.getMessage("VSDFileError") + " - Unsupported sound type: " + type);
                 }
             }
         }
         log.debug("File Validation Successful.");
-        return (new ValidateStatus(true, Bundle.getMessage("ButtonOK"))); //  File Status = OK
+        return new ValidateStatus(true, Bundle.getMessage("ButtonOK")); // File Status = OK
     }
 
     protected boolean validateRequiredElement(Element el, String name) {
         if (el.getChild(name) == null) {
-            log.debug("Element " + name + " for Element " + el.getAttributeValue("name") + " missing.");
-            return (false);
+            log.warn("Element {} for Element {} missing", name, el.getAttributeValue("name"));
+            return false;
         }
-        return (true);
+        return true;
+    }
+
+    protected boolean validateRequiredNotchElement(Element el, String name1, String name2) {
+        // Get all notches
+        List<Element> elist = el.getChildren(name1);
+        Iterator<Element> ns_i = elist.iterator();
+        while (ns_i.hasNext()) {
+            Element ns_e = ns_i.next();
+            if (ns_e.getChild(name2) == null) {
+                log.warn("Element {} for Element {} missing", name2, name1);
+                return false;
+            }
+        }
+        return true;
     }
 
     protected boolean validateOptionalFile(Element el, String name) {
-        return (validateOptionalFile(el, name, true));
+        return validateOptionalFile(el, name, true);
     }
 
     protected boolean validateOptionalFile(Element el, String name, Boolean required) {
         String s = el.getChildText(name);
         if ((s != null) && (getFile(s) == null)) {
-            log.debug("File " + s + " for element " + name + " in Element " + el.getAttributeValue("name") + " not found.");
-            return (false);
+            log.warn("File {} for Element {} not found", s, name, el.getAttributeValue("name"));
+            return false;
         }
-        return (true);
+        return true;
     }
 
     protected boolean validateFiles(Element el, String name, String[] fnames) {
-        return (validateFiles(el, name, fnames, true));
+        return validateFiles(el, name, fnames, true);
     }
 
     protected boolean validateFiles(Element el, String name, String[] fnames, Boolean required) {
         List<Element> elist = el.getChildren(name);
         String s;
 
-        // First, check to see if any elements of this <name> exist.
-        if ((elist.size() == 0) && (required)) {
-            // Only fail if this type of element is required.
-            log.debug("No elements of name " + name);
-            return (false);
+        // First, check to see if any elements of this <name> exist
+        if ((elist.size() == 0) && required) {
+            // Only fail if this type of element is required
+            log.warn("No elements of name {}", name);
+            return false;
         }
 
-        // Now, if the elements exist, make sure the files they point to exist.
+        // Now, if the elements exist, make sure the files they point to exist
         // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
-        // returned from an Element is going to be a list of Elements.
+        // returned from an Element is going to be a list of Elements
+        log.debug("{}(s): {}", name, elist.size());
         Iterator<Element> ns_i = elist.iterator();
         while (ns_i.hasNext()) {
             Element ns_e = ns_i.next();
             for (String fn : fnames) {
-                s = ns_e.getChildText(fn);
-                if ((s == null) || (getFile(s) == null)) {
-                    log.debug("File " + s + " for element " + fn + " in Element " + ns_e.getAttributeValue("name") + " not found.");
-                    return (false);
+                List<Element> elistf = ns_e.getChildren(fn); // Handle more than one child
+                log.debug(" {}(s):", fn);
+                Iterator<Element> ns_if = elistf.iterator();
+                while (ns_if.hasNext()) {
+                    Element ns_ef = ns_if.next();
+                    s = ns_ef.getText();
+                    log.debug("  {}", s);
+                    if ((s == null) || (getFile(s) == null)) {
+                        log.warn("File {} for Element {} in Element {} not found", s, fn, name);
+                        missedFileName = s; // Pass missing file name to global variable
+                        return false;
+                    }
                 }
             }
         }
-        // Made it this far, all is well.
-        return (true);
+        // Made it this far, all is well
+        return true;
     }
-    // initialize logging
+
     private final static Logger log = LoggerFactory.getLogger(VSDFile.class);
 
 }

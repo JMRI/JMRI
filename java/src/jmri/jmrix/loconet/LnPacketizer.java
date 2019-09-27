@@ -48,6 +48,7 @@ public class LnPacketizer extends LnTrafficController {
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnPacketizer() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnPacketizer");  
     }
 
     public LnPacketizer(LocoNetSystemConnectionMemo m) {
@@ -63,7 +64,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     @Override
     public boolean status() {
-        return (ostream != null && istream != null);
+        return (ostream != null && istream != null && xmtThread != null && rcvThread != null);
     }
 
     /**
@@ -228,7 +229,7 @@ public class LnPacketizer extends LnTrafficController {
         public void run() {
 
             int opCode;
-            while (true) {   // loop permanently, program close will exit
+            while (!threadStopRequest) {   // loop until asked to stop
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
@@ -312,7 +313,7 @@ public class LnPacketizer extends LnTrafficController {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: {}", msg);
+                        log.warn("Ignore LocoNet packet with bad checksum: {}", msg);
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
@@ -376,7 +377,7 @@ public class LnPacketizer extends LnTrafficController {
         @Override
         public void run() {
 
-            while (true) {   // loop permanently
+            while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
@@ -507,6 +508,38 @@ public class LnPacketizer extends LnTrafficController {
         }
         super.dispose();
     }
+
+    /**
+     * Terminate the receive and transmit threads.
+     * <p>
+     * This is intended to be used only by testing subclasses.
+     */
+    public void terminateThreads() {
+        threadStopRequest = true;
+        if (xmtThread != null) {
+            xmtThread.interrupt();
+            try {
+                xmtThread.join();
+            } catch (InterruptedException ie){
+                // interrupted during cleanup.
+            }
+        }
+        
+        if (rcvThread != null) {
+            rcvThread.interrupt();
+            try {
+                rcvThread.join();
+            } catch (InterruptedException ie){
+                // interrupted during cleanup.
+            }
+        }    
+    }
+    
+    /**
+     * Flag that threads should terminate as soon as they can.
+     */
+    protected volatile boolean threadStopRequest = false;
+    
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 
 }

@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus.node;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -42,25 +43,145 @@ public class CbusNodeConstants {
      */
     public static void setTraits( CbusNode node ){
         
+        // defaults
+        node.setsendsWRACKonNVSET(true);
+        
         if ( node.getParameter(1) == 165 ) { // MERG MODULE
             if ( node.getParameter(3) == 29 ) { // CANPAN
-            
                 node.setsendsWRACKonNVSET(false);
-                
+            }
+            if ( node.getParameter(3) == 10 // CANCMD
+                || node.getParameter(3) ==  55 // or CANCSB 
+                || node.getParameter(3) == 12 // or CANBC
+            ) { 
+                if ( node.getParameter(7) == 4 ) { // v4 Firmware
+                    node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                    node.setStatResponseFlagsAccurate(false);
+                }
             }
         }
     }
-
+    
+    // reset a Dummy Node to its virgin condition
+    public static void setDummyNodeParameters( CbusDummyNode thisNode, int manu, int type ){
+        
+        if ( manu == 165 ) { // MERG MODULE
+            if ( type == 29 ) { // CANPAN
+                
+                int[] _params = new int[]{ 
+                20, /* 0 num parameters   */
+                165, /* 1 manufacturer ID   */
+                89, /* 2 Minor code version   */
+                29, /* 3 Manufacturer module identifier   */
+                128, /* 4 Number of supported events   */
+                13, /* 5 Number of Event Variables per event   */
+                1, /* 6 Number of Node Variables   */
+                1, /* 7 Major version   */
+                13, /* 8 Node flags   */ 
+                13, /* 9 Processor type   */
+                1, /* 10 Bus type   */
+                0, /* 11 load address, 1/4 bytes   */
+                8, /* 12 load address, 2/4 bytes   */
+                0, /* 13 load address, 3/4 bytes   */
+                0, /* 14 load address, 4/4 bytes   */
+                0, /* 15 CPU manufacturer's id 1/4  */
+                0, /* 16 CPU manufacturer's id 2/4  */
+                0, /* 17 CPU manufacturer's id 3/4  */
+                0, /* 18 CPU manufacturer's id 4/4  */
+                1, /* 19 CPU manufacturer code   */
+                1, /* 20 Beta revision   */
+                };
+                
+                thisNode.setParameters(_params);
+                thisNode.setNVs( new int[]{ 1 , 0 } ); // 1 NV, NV1 set at 0
+                thisNode.setNodeNameFromName("PAN");
+            }
+            
+            else if ( type == 255 ) {
+                
+                // 255 parameters could have unintended future
+                // consequences so staying with the standard 20
+                // for now
+                int[] _params = new int[]{ 
+                20, /* 0 num parameters   */
+                165, /* 1 manufacturer ID   */
+                89, /* 2 Minor code version   */
+                255, /* 3 Manufacturer module identifier   */
+                255, /* 4 Number of supported events   */
+                255, /* 5 Number of Event Variables per event   */
+                255, /* 6 Number of Node Variables   */
+                1, /* 7 Major version   */
+                13, /* 8 Node flags   */ 
+                13, /* 9 Processor type   */
+                1, /* 10 Bus type   */
+                0, /* 11 load address, 1/4 bytes   */
+                8, /* 12 load address, 2/4 bytes   */
+                0, /* 13 load address, 3/4 bytes   */
+                0, /* 14 load address, 4/4 bytes   */
+                0, /* 15 CPU manufacturer's id 1/4  */
+                0, /* 16 CPU manufacturer's id 2/4  */
+                0, /* 17 CPU manufacturer's id 3/4  */
+                0, /* 18 CPU manufacturer's id 4/4  */
+                1, /* 19 CPU manufacturer code   */
+                1, /* 20 Beta revision   */
+                };
+                
+                thisNode.setParameters(_params);
+                
+                int[] nvArray = new int[256];
+                nvArray[0]=255;
+                for (int i = 1; i < nvArray.length; i++) {
+                    nvArray[i] = i;
+                }
+                
+                // create array of event variables
+                int[] evVarArray = new int[255];
+                for (int i = 0; i < evVarArray.length; i++) {
+                    evVarArray[i] = i+1;
+                }
+                
+                for (int i = 1; i < 256; i++) {
+                    
+                    CbusNodeEvent singleEv = new CbusNodeEvent(i,i,-1,i,255);
+                    singleEv.setEvArr(evVarArray);
+                    thisNode.addNewEvent(singleEv);
+                    
+                }
+                
+                thisNode.setNVs( nvArray );
+                thisNode.setNodeNameFromName("TSTMAXND");
+                
+            }
+            
+            else {
+            
+                // default MERG module in SLiM mode
+                thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+                thisNode.setNVs( new int[]{ 0 } );
+            }
+        }
+        else {
+            thisNode.setParameters( new int[]{ 8,165,0,0,0,0,0,0,0 } );
+            thisNode.setNVs( new int[]{ 0 } );
+        }
+        
+        setTraits( thisNode );
+        
+    }
+    
     /**
      * Return a string representation of a decoded Module Manufacturer
      * @param man manufacturer int
      * @return decoded CBUS message
      */
     public static String getManu(int man) {
-        // look for the opcode
+        if (man < 1 ) {
+            return ("");
+        }
+        // look for the manufacturer
         String format = manMap.get(man);
         if (format == null) {
-            return "Manufacturer Unknown";
+            return "Manufacturer " + man;
         } else {
             return format; 
         }
@@ -69,7 +190,7 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Module Manufacturers
      */
-    public static final Map<Integer, String> manMap = createManMap();
+    private static final Map<Integer, String> manMap = createManMap();
 
     /*
      * Populate hashmap with format strings
@@ -101,7 +222,7 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Bus Type
      */
-    public static final Map<Integer, String> busMap = createBusMap();
+    private static final Map<Integer, String> busMap = createBusMap();
 
     /*
      * Populate hashmap with format strings
@@ -126,7 +247,7 @@ public class CbusNodeConstants {
      * manufacturer 165 MERG.
      * @param man int manufacturer
      * @param type module type int
-     * @return decoded String module type name
+     * @return decoded String module type name else empty string
      */
     public static String getModuleType(int man, int type) {
         String format="";
@@ -139,15 +260,21 @@ public class CbusNodeConstants {
         else if (man == 80) {
             format = type80Map.get(type);
         }
-        return format;
+        
+        if ( format == null ){
+            return ("");
+        }
+        else {
+            return format;
+        }
     }
     
     /**
      * Hashmap for decoding Module Names
      */
-    public static final Map<Integer, String> type165Map = createType165Map();
-    public static final Map<Integer, String> type70Map = createType70Map();
-    public static final Map<Integer, String> type80Map = createType80Map();
+    private static final Map<Integer, String> type165Map = createType165Map();
+    private static final Map<Integer, String> type70Map = createType70Map();
+    private static final Map<Integer, String> type80Map = createType80Map();
     
     /*
      * Populate hashmap with format strings for manufacturer 165 MERG
@@ -275,9 +402,9 @@ public class CbusNodeConstants {
     /**
      * Hashmap for decoding Module extra info
      */
-    public static final Map<Integer, String> extra165Map = createExtra165Map();
-    public static final Map<Integer, String> extra70Map = createExtra70Map();
-    public static final Map<Integer, String> extra80Map = createExtra80Map();
+    private static final Map<Integer, String> extra165Map = createExtra165Map();
+    private static final Map<Integer, String> extra70Map = createExtra70Map();
+    private static final Map<Integer, String> extra80Map = createExtra80Map();
     
     /*
      * Populate hashmap with format strings
@@ -385,7 +512,7 @@ public class CbusNodeConstants {
      * Return a string representation of Module Support Link
      * @param man int manufacturer ID
      * @param type int module type ID
-     * @return string module support link
+     * @return string module support link, else empty string
      */
     public static String getModuleSupportLink(int man, int type) {
         String format="";
@@ -395,11 +522,14 @@ public class CbusNodeConstants {
         else if (man == 70) {
             format = link70Map.get(type);
         }
+        if ( format == null ){
+            return ("");
+        }
         return format;
     }
     
-    public static final Map<Integer, String> link165Map = createLink165Map();
-    public static final Map<Integer, String> link70Map = createLink70Map();
+    private static final Map<Integer, String> link165Map = createLink165Map();
+    private static final Map<Integer, String> link70Map = createLink70Map();
     
     /*
      * Populate hashmap with merg module support links
@@ -510,7 +640,7 @@ public class CbusNodeConstants {
     /**
      * Hashmap for fixed Module Numbers
      */
-    public static final Map<Integer, String> resMod = createModMap();
+    private static final Map<Integer, String> resMod = createModMap();
 
     /*
      * Populate hashmap with format strings
@@ -550,6 +680,75 @@ public class CbusNodeConstants {
         result.put(65534, "Reserved for Command Station");
         result.put(65535, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
+    }
+    
+    private static final Map<String, BackupType> nameIndex =
+            new HashMap<String, BackupType>(BackupType.values().length);
+    static {
+        for (BackupType t : BackupType.values()) {
+            nameIndex.put(t.name(), t);
+        }
+    }
+    
+    private static final Map<BackupType, String> displayPhraseIndex =
+            new HashMap<BackupType, String>(BackupType.values().length);
+    static {
+        displayPhraseIndex.put(BackupType.INCOMPLETE, Bundle.getMessage("BackupIncomplete"));
+        displayPhraseIndex.put(BackupType.COMPLETE, Bundle.getMessage("BackupComplete"));
+        displayPhraseIndex.put(BackupType.COMPLETEDWITHERROR, Bundle.getMessage("BackupCompleteError"));
+        displayPhraseIndex.put(BackupType.NOTONNETWORK, Bundle.getMessage("BackupNotOnNetwork"));
+        displayPhraseIndex.put(BackupType.OUTSTANDING, Bundle.getMessage("BackupOutstanding"));
+        displayPhraseIndex.put(BackupType.SLIM, Bundle.getMessage("NodeInSlim"));
+    }
+    
+    /*
+     * Get the display phrase for an enum value
+     * <p>
+     * eg. displayPhrase(BackupType.INCOMPLETE) will return "Backup InComplete"
+     *
+     * @param type The enum to translate
+     * @return The phrase
+     *
+     */
+    public static String displayPhrase(BackupType type) {
+        return displayPhraseIndex.get(type);
+    }
+    
+    /*
+     * Get the enum type for a String value
+     * <p>
+     * eg. lookupByName("Complete") will return BackupType.COMPLETE
+     *
+     * @param name The String to lookup
+     * @return The BackupType enum, else null
+     *
+     */
+    public static BackupType lookupByName(String name) {
+        return nameIndex.get(name);
+    }
+    
+    /*
+     * enum to represent Node Backup Conditions in a CBUS Node XML File
+     *
+     */
+    public enum BackupType{
+        INCOMPLETE(0),
+        COMPLETE(1),
+        COMPLETEDWITHERROR(2),
+        NOTONNETWORK(3),
+        OUTSTANDING(4),
+        SLIM(5);
+        
+        private final int v;
+
+        private BackupType(final int v) {
+            this.v = v;
+        }
+    
+        public int getValue() {
+            return v;
+        }
+    
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeConstants.class);

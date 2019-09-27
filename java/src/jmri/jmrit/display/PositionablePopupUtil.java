@@ -25,12 +25,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
  * This class handles text attributes for Positionables. Font, size, style and
  * color. Margin size and color, Border size and color, Fixed sizes.
  * Justification.
- * </p>
- *
+ * <p>
  * moved from PositionableLabel
  *
  * @author Pete Cressman copyright (C) 2010
@@ -448,7 +446,6 @@ public class PositionablePopupUtil {
     }
 
     public void setFontSize(float newSize) {
-        //_textComponent.setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
         _textComponent.setFont(_textComponent.getFont().deriveFont(newSize));
         _parent.updateSize();
         ///_parent.getEditor().setAttributes(_self, _parent);

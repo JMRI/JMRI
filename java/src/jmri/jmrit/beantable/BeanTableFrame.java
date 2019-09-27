@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JFrame to display a table of NamedBeans.
- * <P>
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>
@@ -43,8 +43,6 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
     Box bottomBox;  // panel at bottom for extra buttons etc
     int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
-
-    ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
 
     public BeanTableFrame() {
         super();
@@ -85,7 +83,7 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
-        JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override

@@ -28,8 +28,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    public ObjectNode doGet(Memory memory, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(memory, name, type, locale);
+    public ObjectNode doGet(Memory memory, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = this.getNamedBean(memory, name, type, locale, id);
         ObjectNode data = root.with(DATA);
         if (memory != null) {
             if (memory.getValue() == null) {
@@ -42,8 +42,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Memory memory = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -51,20 +50,21 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                 memory.setValue(data.path(VALUE).asText());
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(memory, name, type, locale, id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case MEMORY:
             case MEMORIES:
                 return doSchema(type,
                         server,
                         "jmri/server/json/memory/memory-server.json",
-                        "jmri/server/json/memory/memory-client.json");
+                        "jmri/server/json/memory/memory-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -74,7 +74,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    protected ProvidingManager<Memory> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Memory> getManager() {
         return InstanceManager.getDefault(MemoryManager.class);
     }
 }

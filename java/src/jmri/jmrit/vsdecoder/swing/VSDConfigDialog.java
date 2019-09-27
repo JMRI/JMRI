@@ -39,17 +39,16 @@ import org.slf4j.LoggerFactory;
  * Configuration dialog for setting up a new VSDecoder
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
- * <P>
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
@@ -79,7 +78,6 @@ public class VSDConfigDialog extends JDialog {
     private javax.swing.JButton rosterSaveButton;
     private javax.swing.JComboBox<Object> profileComboBox;
     private javax.swing.JButton profileLoadButton;
-    private javax.swing.JLabel profileLabel;
     private javax.swing.JPanel rosterPanel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JPanel addressPanel;
@@ -137,8 +135,8 @@ public class VSDConfigDialog extends JDialog {
             locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Bundle.getMessage("LTPManualTabToolTip"));
             locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(Bundle.getMessage("LocoTabbedPaneManualTab")), Mnemonics.get("ManualTab"));
         } catch (IndexOutOfBoundsException iobe) {
-            log.debug("Index out of bounds setting up tabbed Pane: " + iobe);
-            // Ignore out-of-bounds exception.  We just won't have mnemonics or tool tips this go round.
+            log.debug("Index out of bounds setting up tabbed Pane: {}", iobe);
+            // Ignore out-of-bounds exception.  We just won't have mnemonics or tool tips this go round
         }
         // Roster Tab components
         rosterSelector = new RosterEntrySelectorPanel();
@@ -180,7 +178,6 @@ public class VSDConfigDialog extends JDialog {
         profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.PAGE_AXIS));
         profileComboBox = new javax.swing.JComboBox<>();
         profileComboBox.setToolTipText(Bundle.getMessage("ProfileComboBoxToolTip"));
-        profileLabel = new javax.swing.JLabel();
         profileLoadButton = new JButton(Bundle.getMessage("VSDecoderFileMenuLoadVSDFile"));
         profileLoadButton.setToolTipText(Bundle.getMessage("ProfileLoadButtonToolTip"));
         profileLoadButton.setMnemonic(Mnemonics.get("ProfileLoad"));
@@ -215,8 +212,6 @@ public class VSDConfigDialog extends JDialog {
                 profileLoadButtonActionPerformed(evt);
             }
         });
-
-        profileLabel.setText(Bundle.getMessage("SoundProfileLabel"));
 
         rosterSaveButton = new javax.swing.JButton();
         rosterSaveButton.setText(Bundle.getMessage("ConfigSaveButtonLabel"));
@@ -420,7 +415,7 @@ public class VSDConfigDialog extends JDialog {
         while (itr.hasNext()) {
             String st = itr.next();
             if (!ce_list.contains(st)) {
-                log.debug("added item " + st);
+                log.debug("added item {}", st);
                 profileComboBox.addItem(st);
             }
         }
@@ -433,7 +428,7 @@ public class VSDConfigDialog extends JDialog {
             if (rosterSelector.getSelectedRosterEntries().length > 0) {
                 RosterEntry r = rosterSelector.getSelectedRosterEntries()[0];
                 String profile = r.getAttribute("VSDecoder_Profile");
-                log.debug("Trying to set the ProfileComboBox to this Profile: " + profile);
+                log.debug("Trying to set the ProfileComboBox to this Profile: {}", profile);
                 if (profile != null) {
                     profileComboBox.setSelectedItem(profile);
                 }
@@ -458,7 +453,7 @@ public class VSDConfigDialog extends JDialog {
         vsd_path = rosterEntry.getAttribute("VSDecoder_Path");
         vsd_profile = rosterEntry.getAttribute("VSDecoder_Profile");
 
-        log.debug("Roster entry: profile = " + vsd_profile + " path = " + vsd_path);
+        log.debug("Roster entry: profile: {}, path: {}", vsd_profile, vsd_path);
 
         // If the roster entry has VSD info stored, load it.
         if ((vsd_path != null) && (vsd_profile != null)) {
@@ -493,7 +488,7 @@ public class VSDConfigDialog extends JDialog {
         }
 
         // id has to be set!
-        if (_rosterEntry.getId().equals("")) {
+        if (_rosterEntry.getId().isEmpty()) {
             log.debug("storeFile without a filename; issued dialog");
             return false;
         }

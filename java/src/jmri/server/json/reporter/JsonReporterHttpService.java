@@ -28,8 +28,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Reporter reporter = this.postNamedBean(InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name), data, name, type, locale);
+    public ObjectNode doPost(Reporter reporter, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
         if (data.path(JSON.USERNAME).isTextual()) {
             reporter.setUserName(data.path(JSON.USERNAME).asText());
         }
@@ -43,12 +42,12 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
                 reporter.setReport(data.path(REPORT).asText());
             }
         }
-        return this.doGet(reporter, name, type, locale);
+        return this.doGet(reporter, name, type, locale, id);
     }
 
     @Override
-    protected ObjectNode doGet(Reporter reporter, String name, String type, Locale locale) throws JsonException {
-        ObjectNode root = getNamedBean(reporter, name, type, locale); // throws JsonException if reporter == null
+    protected ObjectNode doGet(Reporter reporter, String name, String type, Locale locale, int id) throws JsonException {
+        ObjectNode root = getNamedBean(reporter, name, type, locale, id); // throws JsonException if reporter == null
         ObjectNode data = root.with(JSON.DATA);
         data.put(JSON.STATE, reporter.getState());
         if (reporter.getCurrentReport() != null) {
@@ -69,16 +68,22 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+    protected void doDelete(Reporter reporter, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+        super.deleteBean(reporter, name, type, data, locale, id);
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
         switch (type) {
             case REPORTER:
             case REPORTERS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/reporter/reporter-server.json",
-                        "jmri/server/json/reporter/reporter-client.json");
+                        "jmri/server/json/reporter/reporter-client.json",
+                        id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
     

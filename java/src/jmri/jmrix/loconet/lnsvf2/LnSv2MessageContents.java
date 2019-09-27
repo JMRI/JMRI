@@ -161,12 +161,12 @@ public class LnSv2MessageContents {
      * Check a LocoNet message to determine if it is a valid SV Programming Format 
      *      2 message.
      * @param m  LocoNet message to check
-     * @return true if Loconet message m is a supported SV Programming Format 2 
+     * @return true if LocoNet message m is a supported SV Programming Format 2
      *      message, else false.
      */
     public static boolean isSupportedSv2Message(LocoNetMessage m) {
         // must be OPC_PEER_XFER opcode
-        if (m.getElement(0) != LnConstants.OPC_PEER_XFER) { 
+        if (m.getOpCode() != LnConstants.OPC_PEER_XFER) { 
             log.debug ("cannot be SV2 message because not OPC_PEER_XFER");  // NOI18N
             return false;
         }
@@ -221,7 +221,7 @@ public class LnSv2MessageContents {
      */
     public static boolean isLnMessageASpecificSv2Command(LocoNetMessage m, Sv2Command svCmd) {
         // must be OPC_PEER_XFER opcode
-        if (m.getElement(0) != LnConstants.OPC_PEER_XFER) { 
+        if (m.getOpCode() != LnConstants.OPC_PEER_XFER) { 
             log.debug ("cannot be SV2 message because not OPC_PEER_XFER");  // NOI18N
             return false;
         }

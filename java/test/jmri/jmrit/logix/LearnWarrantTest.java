@@ -132,7 +132,7 @@ public class LearnWarrantTest {
             return m.endsWith("Cmd #3.");
         }, "Train starts to move at 3rd command");
 
-        sensor = runtimes(route);
+        sensor = NXFrameTest.runtimes(route, _OBlockMgr);
         Assert.assertNotNull("Sensor not null", sensor);
 
         // wait for done
@@ -216,27 +216,6 @@ public class LearnWarrantTest {
         return sensor;
     }
 
-    private Sensor runtimes(String[] route) throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
-        for (int i=1; i<route.length; i++) {
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
-            sensorNext.setState(Sensor.ACTIVE);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            final Sensor tsensor = sensor;
-            jmri.util.ThreadingUtil.runOnLayout(() -> {
-                try {
-                    tsensor.setState(Sensor.INACTIVE);
-                } catch (jmri.JmriException e) {
-                    Assert.fail("Unexpected Exception: " + e);
-                }
-            });
-            sensor = sensorNext;
-        }
-        return sensor;
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
@@ -259,6 +238,7 @@ public class LearnWarrantTest {
 
     @After
     public void tearDown() throws Exception {
+        InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.tearDown();
     }
 

@@ -15,23 +15,19 @@ import org.slf4j.LoggerFactory;
 public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager implements TamsListener {
 
     public TamsTurnoutManager(TamsSystemConnectionMemo memo) {
-        adaptermemo = memo;
-        prefix = adaptermemo.getSystemPrefix();
-        tc = adaptermemo.getTrafficController();
+        super(memo);
         //Request status of turnout changes
         TamsMessage m = TamsMessage.getXEvtTrn();
-        tc.sendTamsMessage(m, this);
-        tc.addPollMessage(m, this);
+        memo.getTrafficController().sendTamsMessage(m, this);
+        memo.getTrafficController().addPollMessage(m, this);
     }
 
-    TamsTrafficController tc;
-    TamsSystemConnectionMemo adaptermemo;
-
-    String prefix;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public TamsSystemConnectionMemo getMemo() {
+        return (TamsSystemConnectionMemo) memo;
     }
 
     @Override
@@ -43,7 +39,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
             log.error("failed to convert systemName " + systemName + " to a turnout address");
             return null;
         }
-        Turnout t = new TamsTurnout(addr, getSystemPrefix(), tc);
+        Turnout t = new TamsTurnout(addr, getSystemPrefix(), getMemo().getTrafficController());
         t.setUserName(userName);
         return t;
     }
@@ -58,24 +54,6 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     @Override
     public void message(TamsMessage m) {
         //TamsMessages are ignored
-    }
-
-    // to hear of changes - copied from PowerManager
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
     }
 
     @Override
@@ -95,7 +73,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                         tr.setElement(1, r.getElement(i + 1));
                         log.debug("Going to pass this to the decoder = " + tr.toString());
                         //The decodeTurnoutState will do the actual decoding of each individual turnout
-                        decodeTurnoutState(tr, prefix, tc);
+                        decodeTurnoutState(tr, getSystemPrefix(), getMemo().getTrafficController());
                     }
                 }
             } else {//xSR is an ASCII message

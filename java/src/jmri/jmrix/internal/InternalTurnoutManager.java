@@ -1,7 +1,5 @@
 package jmri.jmrix.internal;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.implementation.AbstractTurnout;
@@ -13,16 +11,16 @@ import jmri.implementation.AbstractTurnout;
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
-    public InternalTurnoutManager(String prefix) {
-        super();
-        this.prefix = prefix;
+    public InternalTurnoutManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    protected String prefix = "I";
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
 
     /**
@@ -52,18 +50,12 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**

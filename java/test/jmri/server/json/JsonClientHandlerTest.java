@@ -24,11 +24,14 @@ import org.junit.Test;
  */
 public class JsonClientHandlerTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(
                 new NullProfile("JsonClientHandlerTest", "12345678", FileUtil.getFile("program:test")));
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -121,7 +124,7 @@ public class JsonClientHandlerTest {
     @Test
     public void testOnMessage_JsonNode_Method_list_invalidType() throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        connection.setLocale(Locale.ENGLISH);
+        connection.setLocale(locale);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"non-existant-type\",\"method\":\"list\"}");
         instance.onMessage(node);
@@ -141,7 +144,7 @@ public class JsonClientHandlerTest {
     @Test
     public void testOnMessage_JsonNode_Method_get_invalidType() throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        connection.setLocale(Locale.ENGLISH);
+        connection.setLocale(locale);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"non-existant-type\",\"method\":\"get\"}");
         instance.onMessage(node);
@@ -161,7 +164,7 @@ public class JsonClientHandlerTest {
     @Test
     public void testOnMessage_JsonNode_Method_post_missingData() throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        connection.setLocale(Locale.ENGLISH);
+        connection.setLocale(locale);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"test\", \"method\":\"post\"}");
         instance.onMessage(node);
@@ -172,7 +175,7 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response is an error", JsonException.ERROR,
                 message.path(JSON.TYPE).asText());
         Assert.assertEquals("Response contains error code 400", 400, data.path(JsonException.CODE).asInt());
-        Assert.assertEquals("Response contains error message", "Data portion of JSON message missing.",
+        Assert.assertEquals("Response contains error message", "Data property of JSON message missing.",
                 data.path(JsonException.MESSAGE).asText());
     }
 
@@ -186,7 +189,7 @@ public class JsonClientHandlerTest {
     @Test
     public void testOnMessage_JsonNode_Method_service_throws_JmriException() throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        connection.setLocale(Locale.ENGLISH);
+        connection.setLocale(locale);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node =
                 connection.getObjectMapper().readTree("{\"type\":\"test\", \"data\":{\"throws\":\"JmriException\"}}");

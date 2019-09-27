@@ -239,7 +239,7 @@ public class TrainSwitchLists extends TrainCommon {
 
                     // add route comment
                     if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().equals("")) {
-                        newLine(fileOut, rl.getComment());
+                        newLine(fileOut, rl.getFormatedColorComment());
                     }
 
                     // now print out the work for this location
@@ -255,11 +255,11 @@ public class TrainSwitchLists extends TrainCommon {
                         }
                     } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsTwoColumn(fileOut, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     } else {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsByTrackNameTwoColumn(fileOut, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     }
                     if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {

@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of layout connections by persisting the XBeeAdapter
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the XBeeAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -206,7 +206,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                   String className = connect.getAttributeValue("class");
 
                   try {
-                        @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         XmlAdapter adapter = (XmlAdapter) Class.forName(className).getDeclaredConstructor().newInstance();
                         adapter.load(connect,connectedConfig);
                     } catch (ClassNotFoundException | 

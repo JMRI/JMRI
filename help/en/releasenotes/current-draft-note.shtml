@@ -39,6 +39,11 @@
                 <li></li>
             </ul>
 
+        <h4>Hornby</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -46,7 +51,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+                    Automatically refresh the slot information when the DCS240/DCS210/DCS52 
+                    "Loco Reset" feature is executed as a result of pressing the 
+                    "Loco Reset" button.  This feature is active only when the 
+                    JMRI connection is configured for DCS240, DCS210, or DCS52 
+                    acting as the command station.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -96,7 +106,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li><>/li>
+                <li></li>
             </ul>
 
         <h4>Secsi</h4>
@@ -155,6 +165,11 @@
             </ul>
 
         <h4>BNM Hobbies</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>CT Elektronik</h4>
             <ul>
                 <li></li>
             </ul>
@@ -345,6 +360,11 @@
         <ul>
             <li></li>
         </ul>
+        <h4>CTC Tool</h4>
+            <a id="PE-CTC" name="PE-CTC"></a>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -373,7 +393,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
+              Jython/Python scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -424,7 +445,6 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
-        <span class="since">since 4.13.4</span>
         <ul>
             <li></li>
         </ul>
@@ -456,6 +476,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added basic support for developer architecture checks via
+                <a href="https://www.archunit.org">ArchUnit</a>,
+                see the 
+                <a href="http://jmri.org/help/en/html/doc/Technical/IntroStructure.shtml">Introduction to JMRI Library Structure</a>
+                page.</li>
         </ul>
 

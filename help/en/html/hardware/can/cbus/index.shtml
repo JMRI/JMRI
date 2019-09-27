@@ -84,7 +84,8 @@
         <li><a href="../index.shtml">JMRI CAN Support</a></li>
         <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
         </ul>
-      
+
+    <a name="tools" id="tools"></a>
     <h3>JMRI MERG CBUS Tools Support Pages</h3>
       <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" align="right"
       width="206" height="145">
@@ -120,10 +121,14 @@
         Node Manager</a> - Node Table and node configuration tools.
         
         <ul>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#variables">Node Variables</a></li>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#events">Node Events</a></li>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodenumber">Node Numbers</a></li>
-        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#fcuimport">Restore node from MERG FCU xml file</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#variables"
+            >Node Variables</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#events"
+            >Node Events</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodenumber"
+            >Node Numbers</a></li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#fcuimport"
+            >Import MERG FCU xml file - Restore NV's and Events, Import CBUS event names</a></li>
         </ul>
         </li>
         
@@ -210,7 +215,7 @@
             <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback"
             >turnout feedback</a> set by this sensor.
             <br>
-            <a href="../../../apps/PanelPro/PanelPro.shtml">JMRI panel(s)</a> 
+            <a href="../../../apps/PanelPro/index.shtml">JMRI panel(s)</a>
             update to reflect the new point position.</li>
             <li><a href="../../../tools/signaling/SignalMastLogic.shtml"
             >JMRI Signalling Logic</a> recalculates, and on the JMRI panel, 
@@ -384,13 +389,86 @@
         MERG CBUS + JMRI for route setting, signalling and track occupancy purposes.
         </p>
       
-        <p>JMRI will send the DCC events over the MERG CBUS network and can be monitored within the MERG CBUS console</p>
+        <p>JMRI will send and receive the DCC instruction messages over the MERG CBUS network
+        and can be monitored within the MERG CBUS console</p>
 
         <p>Loco sessions are best viewed with the 
         <a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml" 
          >CBUS Command Station Monitor</a>, 
         which updates the sessions in a table format.</p>
+        
+        <p>There are a number of DC Command Stations which have been designed by MERG members
+        which use the standard CBUS protocol for requesting and controlling loco sessions.</p>
 
+        <h3>Throttles</h3>
+        
+        
+        <p>All of the programs within the JMRI suite ( including the JMRI WiThrottle server )
+        internally share the same command station slot for a given loco address,
+        so all of JMRI appears to the command station as a single CANCAB for any single address.</p>
+
+        <p>JMRI ( via the CBUS Node Manager ) can tell if a command station is available which 
+        supports the CBUS steal or share feature ( eg. supported with CANCMD v4 + ).</p>
+        
+        <p>The Steal / Share features are for when throttles are requested which are already in use 
+        by something external to JMRI.</p>
+        
+        <p>When a JMRI application requests a loco ( which is already in a CBUS session ), 
+        JMRI will check the main <a 
+        href="../../tools/throttle/ThrottlePreferencesPane.shtml">Throttles Preferences</a>.</p>
+        
+        <p>If Silent Steal or Silent Share has been selected, this will be the default action.</p>
+        
+        <p>If neither have been checked and you are using the main JMRI Throttle, you will be asked
+        if you want to Steal, Share, or cancel.</p>
+        
+        <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png"
+        width="322" height="128" alt="JMRI MERG CBUS Steal Share Dialogue">
+        
+        <p>If you are using an automation script and neither option is checked, the system will
+        attempt to acquire a Share on the session.</p>
+        
+        <p>The command station may disable or enable steal / share at any point, 
+        so even if you have a preferred option, an automation script may attempt to use
+        the non-preferred option to obtain the session.</p>
+        
+        <h4>Throttles Stolen from JMRI</h4>
+        
+        <p>When a Throttle session has been stolen / cancelled from outside of JMRI, 
+        any open JMRI throttle window for that loco
+        will cease to accept commands, ie throttle slider and function keys greyed out.</p>
+        
+        <p>If Silent Share is enabled in the Throttle Preferences, 
+        and share is available on the Command Station,
+        after a short delay JMRI will attempt to share the throttle.</p>
+        
+       <p>For most users, silent sharing enables most layouts to operate with minimum of fuss.</p>
+        
+        <p>If Silent Steal is enabled in the Throttle Preferences, 
+        and steal is available on the Command Station,
+        after a short delay JMRI will attempt to steal the throttle back.</p>
+        
+        <p>Beware of creating Steal loops if more than 1 CAB is capable of auto-stealback!
+        If you find this is happening, disable the Silent Stealing option to stop the loop.</p>
+        
+        <p>If neither option is enabled, or the steal / share is not possible, a notification will be displayed:</p>
+        
+        <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png"
+        width="278" height="138" alt="JMRI MERG CBUS Stolen Throttle Dialogue">
+        
+        <p>Ticking the checkbox before closing the popup will supress loco steal notifications for
+        the rest of the JMRI session, for all loco sessions.</p>
+        
+        <p>Relevant information can be viewed in the main JMRI Console log.</p>
+        
+        <p>Note that not all JMRI applications currently have a method for dealing with a stolen throttle.</p>
+        
+        <h4>Dispatch / Release</h4>
+        <p>Dispatch is available according to Command Station Firmware ( eg. supported with CANCMD v4 + )</p>
+        <p>Note that as dispatch availability for a single loco address may change, 
+        this will be reflected by button availability in the main JMRI Throttle.</p>
+
+        <h3>Consisting</h3>
         <p>The MERG system allows for advanced consisting to be set using CANCMD and CANCABs.</p>
         
         <p>Although the CBUS protocol and CANCMD support Advanced Consisting, 
@@ -399,7 +477,7 @@
         <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" 
         title="JMRI Consisting">JMRI Consisting</a> 
         : Advanced Decoder Consisting ( Decoder Assisted Consist) is currently unsupported,
-        hence this is set to Internal.</p>
+        hence this is set to Internal in the CBUS preferences.</p>
         
         <p>Primary Address Consists are supported however.</p>
       
@@ -426,10 +504,6 @@
 
         <p>Events do not need to be set up to connect a MERG DCC Command Station CANCMD.</p>
         
-        
-        
-        
-        
         <p>DCC Accessory Decoders can be controlled over MERG CBUS and a CANCMD 
         by creating turnouts with explicit RDCCx Opscode commands, 
         see <a href="Names.shtml#hex">MERG CBUS hex event naming</a>.
@@ -445,8 +519,6 @@
         
         <p>There are definitions within DecoderPro for the MERG CANACC5 and other MERG DCC decoders.</p>
         
-        
-
     </div>
     <h2><a id="signalling" name="signalling">Signalling</a></h2>
       <div>

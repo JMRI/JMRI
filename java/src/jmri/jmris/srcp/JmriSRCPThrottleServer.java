@@ -11,6 +11,7 @@ import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.ThrottleManager;
+import jmri.SpeedStepMode;
 import jmri.jmris.AbstractThrottleServer;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
@@ -71,9 +72,9 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             // address, so we need to convert the address to a DccLocoAddress
             // object first.
             DccLocoAddress addr = new DccLocoAddress(address, !(t.canBeShortAddress(address)));
-            Boolean isForward = (Boolean) t.getThrottleInfo(addr, "IsForward");
-            Float speedSetting = (Float) t.getThrottleInfo(addr, "SpeedSetting");
-            Integer speedStepMode = (Integer) t.getThrottleInfo(addr, "SpeedStepMode");
+            Boolean isForward = (Boolean) t.getThrottleInfo(addr, Throttle.ISFORWARD);
+            Float speedSetting = (Float) t.getThrottleInfo(addr, Throttle.SPEEDSETTING);
+            SpeedStepMode speedStepMode = (SpeedStepMode) t.getThrottleInfo(addr, Throttle.SPEEDSTEPMODE);
             Boolean f0 = (Boolean) t.getThrottleInfo(addr, "F0");
             Boolean f1 = (Boolean) t.getThrottleInfo(addr, "F1");
             Boolean f2 = (Boolean) t.getThrottleInfo(addr, "F2");
@@ -106,21 +107,22 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             // and now build the output string to send
             String StatusString = "100 INFO " + bus + " GL " + address + " ";
             StatusString += isForward ? "1 " : "0 ";
-            switch (speedStepMode) {
-                case DccThrottle.SpeedStepMode14:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 14) + " " + 14;
-                    break;
-                case DccThrottle.SpeedStepMode27:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 27) + " " + 27;
-                    break;
-                case DccThrottle.SpeedStepMode28:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 28) + " " + 28;
-                    break;
-                case DccThrottle.SpeedStepMode128:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 126) + " " + 126;
-                    break;
-                default:
-                    StatusString += (int) java.lang.Math.ceil(speedSetting * 100) + " " + 100;
+            {
+                int numSteps = 100;
+                // For NMRA DCC speed step modes, we use the number of steps from that mode.
+                // Non-NMRA modes are not supported, so for those, we fall back to 100 steps.
+                switch(speedStepMode) {
+                    case NMRA_DCC_128:
+                    case NMRA_DCC_28:
+                    case NMRA_DCC_27:
+                    case NMRA_DCC_14:
+                        numSteps = speedStepMode.numSteps;
+                        break;
+                    default:
+                        numSteps = 100;
+                        break;
+                }
+                StatusString += (int) java.lang.Math.ceil(speedSetting * numSteps) + " " + numSteps;
             }
             StatusString += f0 ? " 1" : " 0";
             StatusString += f1 ? " 1" : " 0";
@@ -224,7 +226,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             DccLocoAddress addr = new DccLocoAddress(address, isLong);
             busList.add(bus);
             addressList.add(addr);
-            t.requestThrottle(addr, this);
+            t.requestThrottle(addr, this, false);
         }
     }
 
@@ -388,8 +390,9 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
                 log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
             }
             switch (e.getPropertyName()) {
-                case "SpeedSetting":
-                case "SpeedSteps":
+                case Throttle.SPEEDSETTING:
+                case Throttle.SPEEDSTEPS:
+                case Throttle.ISFORWARD:
                     try {
                         clientServer.sendStatus(bus, address);
                     } catch (IOException ioe) {

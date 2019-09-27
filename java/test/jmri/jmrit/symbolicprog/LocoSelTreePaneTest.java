@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrit.progsupport.ProgModePane;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -24,16 +26,17 @@ public class LocoSelTreePaneTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.InstanceManager.setDefault(ProgrammerConfigManager.class,new ProgrammerConfigManager());
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.setDefault(ProgrammerConfigManager.class,new ProgrammerConfigManager());
     }
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
 
     }
 

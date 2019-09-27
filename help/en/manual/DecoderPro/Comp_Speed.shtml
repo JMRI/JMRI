@@ -64,7 +64,7 @@
       Vmid and Vhigh. They work together to make a very basic three
       point speed table. On some decoders these settings may be
       labeled differently and all three may not be available.
-      Decoder Pro will show the correct options for your selected
+      DecoderPro will show the correct options for your selected
       decoder.</p>
 
       <p><b>Vstart</b>(<strong>Start Voltage</strong>) is the
@@ -95,7 +95,7 @@
       particular, if the <strong>Vmid</strong> is lower than
       <strong>Vstart</strong> or higher than
       <strong>Vhigh</strong>, results can be highly unpredictable.
-      Decoder Pro will not let you make this mistake.</p>
+      DecoderPro will not let you make this mistake.</p>
 
       <p><b>Forward Trim</b> and <b>Reverse Trim</b> allow you to
       compensate for differences in the forward speed and reverse
@@ -165,12 +165,12 @@
         <p>There are no hard and fast rules for the exact numbers
         to use. Even identical locomotives with identical decoders
         will need different numbers, due to variances in motors and
-        drive trains. Experiment with the settings - Decoder Pro
+        drive trains. Experiment with the settings - DecoderPro
         makes it easy!</p>
 
         <p>Note: Not all decoders will have Start, Mid and Max
         Volts, but will have some version of this which will be
-        displayed by Decoder Pro for the specific decoder.</p>
+        displayed by DecoderPro for the specific decoder.</p>
       </div>
       <hr>
 

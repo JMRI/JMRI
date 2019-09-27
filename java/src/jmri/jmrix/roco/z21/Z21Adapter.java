@@ -24,8 +24,6 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public Z21Adapter() {
         super(new Z21SystemConnectionMemo());
-        // COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
-        // DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_UDP_PORT);
         allowConnectionRecovery = true; // all classes derived from this class
@@ -113,17 +111,20 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      */
     @Override
     protected void resetupConnection() {
+        // UDP connection is re-established for each message.
     }
 
     @Override
     public void dispose(){
        super.dispose();
-       socket.close();
+       if(opened) {
+          socket.close();
+       }
        opened = false;
        allowConnectionRecovery = false; // disposing of the object should 
                                         // result in not allowing reconnection.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21Adapter.class);
 
 }

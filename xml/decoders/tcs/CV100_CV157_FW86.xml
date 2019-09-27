@@ -13,8 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - 3-Feb-17 WestAust55 -Motor Pane Restructured plus CV182 for Special BEMF and Keep-Alive added -->
+<!-- version 1.1 - 3-Feb-17 WestAust55 -CV104 added for third Private User ID purposes -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <variable CV="105" item="User Id #1">
+  <variable CV="104" item="User Id #3">
+    <decVal/>
+    <label>User Private ID #0</label>
+    <label xml:lang="it">ID Utente privato #0</label>
+  </variable>
+    <variable CV="105" item="User Id #1">
     <decVal/>
     <label>User Private ID #1</label>
     <label xml:lang="it">ID Utente privato #1</label>
@@ -232,7 +239,7 @@
     <comment xml:lang="it">Valori 0-255</comment>
     <tooltip xml:lang="it">Imposta il Tasso di Accell.3, valori 0(default)-255</tooltip>
   </variable>
-  <variable CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255">
+  <variable CV="133" default="255" item="Motor Option 2" tooltip="If button control of motor is active, range 0-255">
     <decVal/>
     <label>Power to button controlled motor</label>
     <label xml:lang="it">Riduz.EMF per pulsante controllo Motore</label>
@@ -464,5 +471,24 @@
     <label>Reverse Light Dim Brightness</label>
     <label xml:lang="it">Luminosità Smorzam.Luci Retro</label>
     <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+  </variable>
+   <variable CV="182" mask="XXXXXXXV" default="0" item="EMF Dynamic Config" tooltip="Disable (Default)/Enable Special BEMF to Speed Step 3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Special BEMF for 3-Pole Motor</label>
+    <label xml:lang="it">BEMF speciale per 3-Pole Motor</label>
+    <tooltip xml:lang="it">Disabilita(default)/Abilita speciale BEMF di Speed ​​Step 3</tooltip>
+  </variable> 
+  <variable CV="182" mask="XXXXXXVX" default="1" item="Motor Option 5" tooltip="Enable Keep-Alive (default)/Disable running on DC ">
+    <enumVal>
+      <enumChoice choice="Stop on DC Enabled">
+        <choice xml:lang="it">BEMF automatico - Stop su DC Attivato</choice>
+      </enumChoice>
+      <enumChoice choice="Enable Keep-Alive">
+         <choice xml:lang="it">BEMF automatico - Abilita keep-alive</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Enable Keep-Alive</label>
+    <label xml:lang="it">Abilita Keep Alive</label>
+    <tooltip xml:lang="it">Abilita Keep-Alive (default) / Disabilita in esecuzione su DC</tooltip>
   </variable>
 </variables>

@@ -137,7 +137,7 @@ public class TrainManifest extends TrainCommon {
                         }
                         // add route location comment
                         if (!rl.getComment().trim().equals(RouteLocation.NONE)) {
-                            newLine(fileOut, rl.getComment());
+                            newLine(fileOut, rl.getFormatedColorComment());
                         }
 
                         // add location comment
@@ -187,10 +187,10 @@ public class TrainManifest extends TrainCommon {
                     }
                 } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
-                    blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
+                    blockCarsTwoColumn(fileOut, carList, routeList, rl, printHeader, IS_MANIFEST);
                 } else {
                     blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
-                    blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
+                    blockCarsByTrackNameTwoColumn(fileOut, carList, routeList, rl, printHeader, IS_MANIFEST);
                 }
 
                 if (rl != train.getRoute().getTerminatesRouteLocation()) {
@@ -236,7 +236,7 @@ public class TrainManifest extends TrainCommon {
                             if (rl.getComment().trim().length() > 0) {
                                 s = MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringNoScheduledWorkWithRouteComment(),
-                                        new Object[]{routeLocationName, rl.getComment(), train.getName(),
+                                        new Object[]{routeLocationName, rl.getFormatedColorComment(), train.getName(),
                                                 train.getDescription()});
                             }
                         }

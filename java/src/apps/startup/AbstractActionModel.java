@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.Action;
 import jmri.JmriException;
 import jmri.jmrix.SystemConnectionMemo;
@@ -42,7 +42,7 @@ public abstract class AbstractActionModel implements StartupModel {
     }
 
     @Override
-    public void setName(@Nonnull String n) {
+    public void setName(String n) {
         log.debug("setName(\"{}\")", n);
         // can set className to null if no class found for n
         this.className = StartupActionModelUtil.getDefault().getClassName(n);
@@ -59,7 +59,7 @@ public abstract class AbstractActionModel implements StartupModel {
         return this.systemPrefix;
     }
 
-    public void setSystemPrefix(@Nullable String prefix) {
+    public void setSystemPrefix(@CheckForNull String prefix) {
         if (prefix == null) {
             this.systemPrefix = ""; // NOI18N
         } else {

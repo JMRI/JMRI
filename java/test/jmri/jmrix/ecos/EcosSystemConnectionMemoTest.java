@@ -22,9 +22,12 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         scm = memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
         memo.setEcosTrafficController(new EcosInterfaceScaffold());
         memo.configureManagers();
@@ -33,6 +36,7 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import jmri.InstanceManager;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
@@ -170,10 +171,11 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
+        Profile project = ProfileManager.getDefault().getActiveProfile();
         RosterConfigManager manager = InstanceManager.getDefault(RosterConfigManager.class);
-        manager.setDefaultOwner(this.getDefaultOwner());
-        manager.setDirectory(this.getSelectedItem());
-        manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+        manager.setDefaultOwner(project, this.getDefaultOwner());
+        manager.setDirectory(project, this.getSelectedItem());
+        manager.savePreferences(project);
     }
 
     @Override

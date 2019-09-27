@@ -107,7 +107,8 @@
       these "system names". JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
-      <h2 id="format">System Name Format</h2>
+      <a name="format" id="format"></a>
+      <h2>System Name Format</h2>
       
       A system name is formed from a short "system prefix" representing
       the hardware system, followed by a single upper case "type letter"
@@ -164,8 +165,8 @@
       a system connection in the preferences to any other uppercase or lowercase
       letter. You can call your NCE connection "P" if you want to.
       If you have two of them, you can call one "X" and the other
-      "Y". You can also use an upper case letter followed by
-      digits, e.g. "N1" and "N2".</p>
+      "Y". You can also use a lower case or upper case letter followed by
+      digits, e.g. "N1" and "n2".</p>
 
       <h4>Default System Letters</h4>
       <p>Note that some of these are placeholders, and have no underlying
@@ -289,7 +290,7 @@
 
         <li>B Block - A software object that keeps track of the
         contents of a specific block of track.
-        Block system names are all upper case, have no trailing whitespace and start with IB.</li>
+        Block system names start with IB.</li>
 
         <li>D iDentity - A software object that holds information
         about an identity tag that is, typically, attached to a
@@ -308,20 +309,19 @@
         name is "IG12". For historical reasons, Groups were not required to have
         a system prefix or type letter until late;
         <span class="since">Since JMRI 4.13.4</span>Using only one single letter
-        in the system name is no longer compatible with system name normalization.
+        in the system name is no longer compatible with system name validation.
 
         <li>H signal Head - One part of a signal (which may have
         multiple heads). Also interpreted to include indicators on
         control panels that are acting to display signal
         aspects.
-        SignalHead system names are all upper case, have no trailing whitespace and mostly, 
-        but not always, start with IH.
+        SignalHead system names mostly, but not always, start with IH.
         </li>
 
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
         information temporarily and display it on panels, etc.
-        Memory system names are all upper case, have no trailing whitespace and start with IM.</li>
+        Memory system names start with IM.</li>
 
         <li>L Light - another form of output, used to e.g. control
         lights on a layout</li>
@@ -348,14 +348,14 @@
         commonly used for block occupancy detectors.</li>
 
         <li>Y Sections - holds a map of trackwork.
-        Section system names are all upper case, have no trailing whitespace and start with IY.</li>
+        Section system names start with IY.</li>
         
         <li>T Turnout - actually a general purpose output on the
         layout</li>
 
         <li>X logiX - a set of logic equations used to control the
         layout.
-        Logix system names are all upper case, have no trailing whitespace and start with IX.</li>
+        Logix system names start with IX.</li>
       </ul>
 
 
@@ -368,8 +368,7 @@
         implemented as three different outputs, LT1, LT2 and LT3, the
         signal head object might be called IH3. 
         
-     <a name="special" id=
-                "special"></a></p>
+     <a name="special" id="special"></a></p>
       <p>Each different hardware system
       can specify the "suffix string" that follows the system and type
       letters. Generally, these are small numbers, but their exact
@@ -513,18 +512,29 @@
           <td>int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71(?)</td>
+          <td>pin: 7</td>
         </tr>
         <tr>
           <td>DigiXbee</td>
           <td>o</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>DigiXbee</td>
+          <td>o (Turnouts)</td>
           <td>4:3:4</td>
           <td>ModuleAddress:Pin1:Pin2</td>
           <td>ZT4:3:4</td>
           <td>int : int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71(?)</td>
+          <td>pin: 7</td>
         </tr>
         <tr>
           <td>Grapevine</td>
@@ -624,6 +634,19 @@
           <td> </td>
           <td>101/201/301/401</td>
           <td>124/224/324/424</td>
+        </tr>
+        <tr>
+          <td>Internal</td>
+          <td>i/o</td>
+          <td>some string</td>
+          <td>whatever meaning the user wants to assign;<br>see 
+            <a href="#convention">below</a>
+            for special cases</td>
+          <td>ITsome string</td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
         </tr>
         <tr>
           <td>LocoNet</td>
@@ -790,7 +813,7 @@
           <td> </td>
           <td> </td>
           <td>1</td>
-          <td>511</td>
+          <td>99</td>
         </tr>
         <tr>
           <td>X10</td>
@@ -851,7 +874,9 @@
       <!-- this table is maintained on the help/en/html/doc/Technical/Names.shtml based on information from the
       Hardware help pages by Egbert Broerse @silverailscolo July 2017 -->
     
-      <h2>Naming Conventions For Automated Use</h2>Some
+      <a id="convention" name="convention"></a>
+      <h2>Naming Conventions For Automated Use</h2>
+      Some
       higher-level constructs create their own items. For example,
       a "Sensor Group" is really just a collection of Routes that
       implements the sensor group logic; there is no specific
@@ -868,9 +893,10 @@ SENSOR GROUP:my group:LS2
       <p>To make this possible, two informal rules are used:</p>
 
       <ul>
-        <li>Users should not use the : (colon, ASCII 0x3A), "
-        (double quote, ASCII 0x22), nor $ (dollar sign, ASCII 0x24
-        ) characters in their system or user names. Automatic tools
+        <li>Users should not use the <code>:</code> (colon,
+        ASCII 0x3A), <code>"</code> (double quote, ASCII
+        0x22), nor <code>$</code> (dollar sign, ASCII 0x24)
+        characters in their system or user names. Automatic tools
         should use at least one of these to make sure they don't
         collide with user-selected names. Quotes should always be
         used in pairs to allow nesting.</li>
@@ -914,7 +940,7 @@ SENSOR GROUP:my group:LS2
         <a href="http://jmri.org/JavaDoc/doc/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
         for more information.</li>
         
-        <li>The system name convention doesn't provide a specific
+        <li>The system name convention does not provide a specific
         way to identify more than one adapter of a given type. E.g.
         if you're connected to more than one LocoNet, or more than
         one command station of any single type, you can either give
@@ -933,11 +959,10 @@ SENSOR GROUP:my group:LS2
       
       <h3>Normalized form of Names, and how to work with it</h3>
       
-          After multiple long discussions, we decided that both system and user names 
+          After multiple long discussions, we decided that user names 
           should be kept in a "normal" form which enforces certain restrictions.
           For user names, that's that leading and trailing whitespace (spaces, tabs) 
-          are not allowed.  For system names, it depends on the system, but 
-          at least the system-prefix and type letter must be correct.
+          are not allowed.
           
           <p>
           The code to make sure that names are in normal form 
@@ -946,17 +971,33 @@ SENSOR GROUP:my group:LS2
 <pre style="font-family: monospace;">
           String userName = NamedBean.normalizeUserName(input);
 </pre><br>
+          Please use that, and only that, when creating a user name
+          from human input or other source. Do not explicitly
+          call <code>String#toUpper()</code>, <code>String#strip()</code>
+          or any other formatting operation; having those spread across the code is unmaintainable.
+          
+        <p>
           Because system names may vary from type to type 
-          and manager to manager, this is manager-specific for them:
-          <br>
-<pre style="font-family: monospace;">
-          String systemName = manager.normalizeSystemName(input);
-</pre><br>
+          and manager to manager, there are two manager-specific 
+          methods of interest: <code>manager.validateSystemNameFormat(input, locale)</code>
+          and <code>manager.makeSystemName(input)</code>.
+          Since most NamedBeans are created by managers, and 
+          managers know about the complete set of NamedBeans, that's the right place to
+          put them.  But it means that an individual NameBean, i.e. 
+          <code>jmri.jmrix.internal.InternalTurnout</code>, constructor can't
+          access it.  If one of those constructors discovers it can't parse a 
+          provided system name argument because it's invalid, it should throw
+          a <code>NamedBean.BadSystemNameException</code>. The constructor should
+          not in any way transform the system name that it was given. It has to use
+          it as given or, if it can not, throw the exception.
+        <p>
           For more information, see the Javadoc for
-            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>, 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#validateSystemName-java.lang.String-">validateSystemNameFormat</a>,
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#makeSystemName-java.lang.String-">makeSystemName</a>,
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadUserNameException.html">BadUserNameException</a>,
             and
-            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#normalizeSystemName-java.lang.String-">normalizeSystemName</a>
-      
+            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadSystemNameException.html">BadSystemNameException</a>.         
         <p>
         In general, it's better to use an input method that already handles all this.  Two are available
         now:
@@ -965,19 +1006,16 @@ SENSOR GROUP:my group:LS2
             <a href="images/ComboBox.png"><img src="images/ComboBox.png" align="right" height="50" width="75" alt="combobox"></a>
             
 <pre style="font-family: monospace;">
-        import jmri.util.swing.JmriBeanComboBox;
+        import jmri.swing.NamedBeanComboBox;
 
         // the first argument is the manager, the 2nd is a bean to select or null
         // the third determines how the beans are displayed
-        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.html">JmriBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
+        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/swing/NamedBeanComboBox.html">NamedBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
                                                     currentSensor, 
-                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/util/swing/JmriBeanComboBox.DisplayOptions.html">JmriBeanComboBox.DisplayOptions</a>.DISPLAYNAME)
+                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
         
-        // to get the selected item, depending on what you want:
-        selectComboBox.getNamedBean()                                       
-        selectComboBox.getSystemName()                                       
-        selectComboBox.getUserName()                                        
-        selectComboBox.getDisplayName()                                       
+        // to get the selected item:
+        selectComboBox.getSelectedItem()
 </pre>
 
         <li>Table format:
@@ -1016,8 +1054,8 @@ SENSOR GROUP:my group:LS2
         in selection boxes and lists, etc.  We have two <code>java.util.Comparator&lt;&gt;</code>
         implementations to handle this:
         <ul>
-            <li><code>SystemNameComparator</code> - a comparison on Strings
             <li><code>NamedBeanComparator</code> - a comparison on the NamedBeans themselves
+            <li><code>SystemNameComparator</code> - a comparison on Strings (deprecated)
         </ul>
         Please use one of these whenever you need to compare or sort by system names to keep the complexity in one place.
         <p>
@@ -1025,17 +1063,17 @@ SENSOR GROUP:my group:LS2
         If there are objects of multiple types, the type letter is put in alphabetical order next.
         Finally, the system-specific suffix is sorted.
         <p>
-        Because it works with String values, <code>SystemNameComparator</code> can only
-        do a default ordering of the system-specific suffix; it can't do anything that
+        <code>NamedBeanComparator</code> is the standard method going forward as it can 
+        do type-specific sorting of the suffix part of the names: 
+        It knows what the C/MRI suffixes in 
+        "CT2003" and "C2B2" mean and can take that into account.
+        <p>
+        Because it works with String values, <code>SystemNameComparator</code> could only
+        do a default ordering of the system-specific suffix; it couldn't do anything that
         uses any information about the system-specific meaning of that string. It therefore
         uses an alphanumeric-by-chunks sort.
         Because it's comparing on the actual NamedBean objects, <code>NamedBeanComparator</code>
-        can do more specific comparisons:  It knows what the C/MRI suffixes in 
-        "CT2003" and "C2B2" mean and can take that into account.
-        <p>
-        Therefore, if you can, do the sort/comparison with <code>NamedBeanComparator</code> and
-        then convert to Strings, rather than converting NamedBeans to Strings and using 
-        <code>SystemNameComparator</code>.
+        can do more specific comparisons.
         <p>
         Also, if you've created a system that has complex information in the suffix,
         please have your <code>NamedBean</code> subclasses implement a system-specific

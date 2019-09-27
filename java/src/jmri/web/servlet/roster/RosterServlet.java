@@ -500,7 +500,7 @@ public class RosterServlet extends HttpServlet {
                     return InstanceManager.setDefault(JsonRosterServiceFactory.class, new JsonRosterServiceFactory());
                 });
                 try {
-                    response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter));
+                    response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter, 0));
                 } catch (JsonException ex) {
                     response.sendError(ex.getCode(), mapper.writeValueAsString(ex.getJsonMessage()));
                 }

@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen
  */
-public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase<TurnoutManager, Turnout> {
+public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManagerTestBase<TurnoutManager, Turnout> {
 
     // implementing classes must implement to convert integer (count) to a system name
     abstract public String getSystemName(int i);
@@ -55,7 +55,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
         try {
             l.provideTurnout("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
           throw ex;
         }
     }
@@ -127,6 +127,16 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Test
+    public void testThrownText(){
+         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    }
+
+    @Test
+    public void testClosedText(){
+         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    }
+
     /**
      * Number of turnout to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
@@ -138,4 +148,5 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
     protected int getNumToTest2() {
         return 7;
     }
+
 }

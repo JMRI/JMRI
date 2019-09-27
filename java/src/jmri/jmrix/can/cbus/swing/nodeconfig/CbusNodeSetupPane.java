@@ -13,6 +13,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeSetupPane extends JPanel {
     
-    private JPanel infoPane = new JPanel();
+    private JScrollPane eventScroll;
     private CbusNodeTableDataModel nodeModel = null;
     private int _nodeNum;
     private CbusNode nodeOfInterest;
@@ -41,23 +42,25 @@ public class CbusNodeSetupPane extends JPanel {
     private ActionListener removeListener;
     private jmri.util.swing.BusyDialog busy_dialog;
     
-
     /**
      * Create a new instance of CbusNodeSetupPane.
      */
     protected CbusNodeSetupPane( NodeConfigToolPane main ) {
         super();
-
-        this.add(infoPane);
-      //  mainpane = main;
+        //  mainpane = main;
     }
 
     public void initComponents(int node) {
         
-        _nodeNum = node;
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
+        if (node == _nodeNum){
+            return;
         }
+        if (eventScroll != null ){ 
+            eventScroll.setVisible(false);
+        }
+        eventScroll = null;
+        
+        _nodeNum = node;
 
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
@@ -65,22 +68,20 @@ public class CbusNodeSetupPane extends JPanel {
             log.error("Unable to get Node Table from Instance Manager");
         }
         
-        infoPane = new JPanel();
         
         try {
 
             // Pane to hold Event
             JPanel evPane = new JPanel();
             evPane.setLayout(new BoxLayout(evPane, BoxLayout.Y_AXIS));
-       
             JLabel header;
-        
             nodeOfInterest = nodeModel.getNodeByNodeNum(_nodeNum);
             
-            String manufacturer = CbusNodeConstants.getManu(nodeOfInterest.getParameter(1));
-            String nodeTypeName = CbusNodeConstants.getModuleType(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3));
-            
-            header = new JLabel("<html><h2>" + manufacturer + " " + nodeTypeName + "</h2><p>" +
+            header = new JLabel("<html><h2>" 
+                + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
+                + " " 
+                + nodeOfInterest.getNodeTypeName()
+                + "<p>" +
                 CbusNodeConstants.getModuleTypeExtra(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3))
                 + "</p></html>");
 
@@ -132,12 +133,18 @@ public class CbusNodeSetupPane extends JPanel {
             
             evPane.add(headerPanel);
             evPane.add(namePanel);
-            
             evPane.add(canIdPanel);
             evPane.add(nodeEventsPanel);
             evPane.add(removePanel);
-    
-            infoPane.add(evPane);
+            
+            setLayout(new BorderLayout() );
+            
+            eventScroll = new JScrollPane(evPane);
+            
+            this.add(eventScroll);
+            
+            validate();
+            repaint();
             
             setNameListener = ae -> {
                 nodeModel.setValueAt( textFieldName.getText() , 
@@ -147,16 +154,21 @@ public class CbusNodeSetupPane extends JPanel {
             };
             setNameButton.addActionListener(setNameListener);
             
+            javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
+                    ("Remove node xml File"));
+            
+            Object[] params = {("Remove Node from Manager?"), checkbox};
+            
             removeListener = ae -> {
                 int option = JOptionPane.showOptionDialog(null, 
-                    "Remove Node from Manager?", 
+                    params, 
                     "Please Confirm", 
                     JOptionPane.OK_CANCEL_OPTION, 
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (option == JOptionPane.CANCEL_OPTION) {
                     return;
                 } else if (option == JOptionPane.OK_OPTION) {
-                    nodeModel.removeRow( nodeModel.getNodeRowFromNodeNum(_nodeNum) );
+                    nodeModel.removeRow( nodeModel.getNodeRowFromNodeNum(_nodeNum),checkbox.isSelected() );
                 }
             };
             removeNodeButton.addActionListener(removeListener);
@@ -233,11 +245,6 @@ public class CbusNodeSetupPane extends JPanel {
         catch( NullPointerException e ) {
             // on startup no node selected which will cause this
         }
-        
-        this.add(infoPane);
-        validate();
-        repaint();
-        
     }
     
     private boolean CANID_DIALOGUE_OPEN = false;
@@ -285,7 +292,7 @@ public class CbusNodeSetupPane extends JPanel {
         bottomrqNNpane.add(rqNNspinnerlabel);
         bottomrqNNpane.add(rqnnSpinner);
         
-        rqNNpane.add(bottomrqNNpane, BorderLayout.PAGE_END);
+        rqNNpane.add(bottomrqNNpane, BorderLayout.CENTER);
         
         // forces a value between 1-99
         updateSpinnerFeedback( Math.min(99,(Math.max(1,nodeOfInterest.getNodeCanId()))) );

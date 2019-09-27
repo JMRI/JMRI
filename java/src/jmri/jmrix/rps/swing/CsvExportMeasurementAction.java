@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to export the incoming raw data to a CSV-format file
+ * Action to export the incoming raw data to a CSV-format file.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
@@ -65,7 +65,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
 
     void startLogging(ActionEvent e) {
 
-        System.out.println("" + e);
+        log.debug("{}", e);
         ((JMenuItem) (e.getSource())).setText("Stop CSV Export Measurement...");
 
         // initialize chooser
@@ -113,4 +113,5 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
     }
 
     private final static Logger log = LoggerFactory.getLogger(CsvExportMeasurementAction.class);
+
 }

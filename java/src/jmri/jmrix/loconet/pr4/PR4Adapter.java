@@ -11,14 +11,14 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
- * switch settings on the Digitrax PR4
+ * Override {@link jmri.jmrix.loconet.locobuffer.LocoBufferAdapter} so that it refers to the
+ * (switch) settings on the Digitrax PR4.
  * <p>
  * Based on PR3Adapter.java
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
-  */
+ */
 public class PR4Adapter extends LocoBufferAdapter {
 
     public PR4Adapter() {
@@ -39,12 +39,7 @@ public class PR4Adapter extends LocoBufferAdapter {
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validBaudNumber().length; i++) {
-            if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumber()[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -56,8 +51,8 @@ public class PR4Adapter extends LocoBufferAdapter {
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
         log.info("PR4 adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
+                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
@@ -67,6 +62,9 @@ public class PR4Adapter extends LocoBufferAdapter {
      * port. This overrides the version in loconet.locobuffer, but it has to
      * duplicate much of the functionality there, so the code is basically
      * copied.
+     * 
+     * Note that the PR4 does not support "LocoNet Data Signal termination" when
+     * in LocoNet interface mode (i.e. MS100 mode).
      */
     @Override
     public void configure() {
@@ -77,10 +75,10 @@ public class PR4Adapter extends LocoBufferAdapter {
             // connect to a packetizing traffic controller
             // that does echoing
             //
-            // Note - already created a LocoNetSystemConnectionMemo, so re-use 
+            // Note - already created a LocoNetSystemConnectionMemo, so re-use
             // it when creating a PR2 Packetizer.  (If create a new one, will
             // end up with two "LocoNet" menus...)
-            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = 
+            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets =
                     new jmri.jmrix.loconet.pr2.LnPr2Packetizer(this.getSystemConnectionMemo());
             packets.connectPort(this);
 
@@ -127,9 +125,6 @@ public class PR4Adapter extends LocoBufferAdapter {
             msg.setOpCode(0xD3);
             msg.setElement(1, 0x10);
             msg.setElement(2, 0);  // set MS100, no power
-            if (commandStationType == LnCommandStationType.COMMAND_STATION_STANDALONE) {
-                msg.setElement(2, 3);  // set MS100, with power
-            }
             msg.setElement(3, 0);
             msg.setElement(4, 0);
             packets.sendLocoNetMessage(msg);
@@ -137,7 +132,7 @@ public class PR4Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return String[] containing the single valid baud rate, "57,600".
      */
@@ -147,32 +142,36 @@ public class PR4Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
-     * @return int[] containing the single valud baud rate, 57600.
+     * {@inheritDoc}
+     *
+     * @return int[] containing the single valid baud rate, 57600.
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{57600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
 
     /**
      * The PR4 can be used as a "Standalone Programmer", or with various LocoNet
-     * command stations, or as an interface to a "Standalone LocoNet".  Provide those
-     * options.
+     * command stations.  The PR4 does not support "LocoNet Data signal termination",
+     * so that is not added as a valid option (as it would be for the PR3).
      *
      * @return an array of strings containing the various command station names and
      *      name(s) of modes without command stations
      */
     public String[] commandStationOptions() {
-        String[] retval = new String[commandStationNames.length + 2];
+        String[] retval = new String[commandStationNames.length + 1];
         retval[0] = LnCommandStationType.COMMAND_STATION_PR4_ALONE.getName();
         for (int i = 0; i < commandStationNames.length; i++) {
             retval[i + 1] = commandStationNames[i];
         }
-        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
         return retval;
     }
 

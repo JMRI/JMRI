@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -35,6 +34,7 @@ public class CbusNodeEventVarPane extends JPanel {
     private CbusNodeEventTableDataModel nodeEvModel;
     protected JButton newEvButton;
     private NodeConfigToolPane mainpane;
+    private CbusNode nodeOfInterest;
 
     /**
      * Create a new instance of CbusEventHighlightPanel.
@@ -47,14 +47,27 @@ public class CbusNodeEventVarPane extends JPanel {
     public void initComponents(CanSystemConnectionMemo memo) {
         _memo = memo;
         this.add(infoPane);
+        nodeOfInterest = null;
     }
     
     public void setNode( CbusNode node ) {
         
-        nodeEvModel = new CbusNodeEventTableDataModel(_memo, 10,
-            CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
+        if ( node == nodeOfInterest){
+            return;
+        }
         
-        CbusNode nodeOfInterest= node;
+        if ( nodeEvModel != null ){
+            nodeEvModel.dispose();
+        }
+        
+        if ( node == null ){
+            return;
+        }
+        
+        nodeEvModel = new CbusNodeEventTableDataModel(  mainpane, _memo, 10,
+            CbusNodeEventTableDataModel.MAX_COLUMN); // mainpane, controller, row, column
+        
+        nodeOfInterest= node;
 
         if (infoPane != null ){ 
             infoPane.setVisible(false);
@@ -65,8 +78,6 @@ public class CbusNodeEventVarPane extends JPanel {
         infoPane.setLayout(new BorderLayout() );
         // Pane to hold Event
         JPanel evMenuPane = new JPanel();
-        
-        evMenuPane.setLayout(new BoxLayout(evMenuPane, BoxLayout.X_AXIS));
       
         newEvButton = new JButton(("Add Node Event"));
         newEvButton.setToolTipText(("Add Event and configure the event variables"));
@@ -84,20 +95,22 @@ public class CbusNodeEventVarPane extends JPanel {
         infoPane.add(evMenuPane, BorderLayout.PAGE_START);
         infoPane.add(genericEvTable, BorderLayout.CENTER);
         
+        setLayout(new BorderLayout() );
+        
         this.add(infoPane);
         
         validate();
         repaint();
         
         ActionListener newEvButtonClicked = ae -> {
-
+            if (nodeOfInterest == null){
+                return;
+            }
             CbusNodeEvent newevent = new CbusNodeEvent(
                 -1,-1,nodeOfInterest.getNodeNumber(),-1,nodeOfInterest.getParameter(5));
-                
-                java.util.Arrays.fill(newevent._evVarArr,0);
-                
-            CbusNodeEditEventFrame editEvFrame = new CbusNodeEditEventFrame(mainpane,newevent);
-            editEvFrame.initComponents(_memo);
+            java.util.Arrays.fill(newevent._evVarArr,0);
+            
+            mainpane.getEditEvFrame().initComponents(_memo,newevent);
 
         };
         newEvButton.addActionListener(newEvButtonClicked);

@@ -1,10 +1,8 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  *
@@ -36,6 +34,25 @@ public class SignalMastTableActionTest extends AbstractTableActionBase {
     @Test
     public void testIncludeAddButton() {
         Assert.assertTrue("Default include add button", a.includeAddButton());
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddSignalMast");
+    }
+
+    @Test
+    @Ignore("Signal Mast create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    @Override
+    public void testAddThroughDialog() {
+    }
+
+    @Test
+    @Ignore("Signal Mast create frame does not have a hardware address")
+    @ToDo("Re-write parent class test to use the right name")
+    @Override
+    public void testEditButton() {
     }
 
     // The minimal setup for log4J

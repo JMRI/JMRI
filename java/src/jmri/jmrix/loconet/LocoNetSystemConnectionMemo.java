@@ -19,6 +19,7 @@ import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -387,7 +388,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
         if (turnoutManager == null) {
-            turnoutManager = new LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix(), mTurnoutNoRetry);
+            turnoutManager = new LnTurnoutManager(this, tm, mTurnoutNoRetry);
         }
         return turnoutManager;
     }
@@ -411,7 +412,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
         if (reporterManager == null) {
-            reporterManager = new LnReporterManager(getLnTrafficController(), getSystemPrefix());
+            reporterManager = new LnReporterManager(this);
         }
         return reporterManager;
     }
@@ -423,7 +424,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
         if (sensorManager == null) {
-            sensorManager = new LnSensorManager(getLnTrafficController(), getSystemPrefix());
+            sensorManager = new LnSensorManager(this);
         }
         return sensorManager;
     }
@@ -435,7 +436,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return null;
         }
         if (lightManager == null) {
-            lightManager = new LnLightManager(getLnTrafficController(), getSystemPrefix());
+            lightManager = new LnLightManager(this);
         }
         return lightManager;
     }

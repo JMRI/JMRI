@@ -59,7 +59,7 @@ public class PanedTest {
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", true, true);
+        JUnitUtil.disposeFrame("DecoderPro Wizard", true, true);
     }
 
     // The minimal setup for log4J

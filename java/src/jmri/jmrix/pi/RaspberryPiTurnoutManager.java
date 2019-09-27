@@ -12,24 +12,22 @@ import jmri.Turnout;
  */
 public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    private String prefix = null;
-
     // ctor has to register for RaspberryPi events
-    public RaspberryPiTurnoutManager(String prefix) {
-        super();
-        this.prefix=prefix.toUpperCase();
+    public RaspberryPiTurnoutManager(RaspberryPiSystemConnectionMemo memo) {
+        super(memo);
     }
 
     /**
-     * Provides access to the system prefix string.
-     * This was previously called the "System letter"
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix(){ return prefix; }
+    public RaspberryPiSystemConnectionMemo getMemo() {
+        return (RaspberryPiSystemConnectionMemo) memo;
+    }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        Turnout t = new RaspberryPiTurnout(systemName,userName);
+        Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }
 

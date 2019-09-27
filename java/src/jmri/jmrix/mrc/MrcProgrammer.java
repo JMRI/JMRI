@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Convert the jmri.Programmer interface into commands for the MRC power house.
- * <P>
+ * <p>
  * This has two states: NOTPROGRAMMING, and COMMANDSENT. The transitions to and
  * from programming mode are now handled in the TrafficController code.
  *
@@ -22,10 +22,10 @@ import org.slf4j.LoggerFactory;
  */
 public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListener {
 
-    protected MrcTrafficController tc;
+    protected MrcSystemConnectionMemo memo;
 
-    public MrcProgrammer(MrcTrafficController tc) {
-        this.tc = tc;
+    public MrcProgrammer(MrcSystemConnectionMemo memo) {
+        this.memo = memo;
         super.SHORT_TIMEOUT = 15000;
         super.LONG_TIMEOUT = 700000;
     }
@@ -105,8 +105,8 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             // start the error timer
             startShortTimer();//we get no confirmation back that the packet has been read.
             // format and send the write message
-            tc.addTrafficListener(MrcInterface.PROGRAMMING, this);
-            tc.sendMrcMessage(progTaskStart(getMode(), _val, _cv));
+            memo.getMrcTrafficController().addTrafficListener(MrcInterface.PROGRAMMING, this);
+            memo.getMrcTrafficController().sendMrcMessage(progTaskStart(getMode(), _val, _cv));
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -140,8 +140,8 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             startLongTimer();
 
             // format and send the write message
-            tc.addTrafficListener(MrcInterface.PROGRAMMING, this);
-            tc.sendMrcMessage(progTaskStart(getMode(), -1, _cv));
+            memo.getMrcTrafficController().addTrafficListener(MrcInterface.PROGRAMMING, this);
+            memo.getMrcTrafficController().sendMrcMessage(progTaskStart(getMode(), -1, _cv));
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -261,7 +261,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         log.debug("notifyProgListenerEnd value {} status {}", value, status); //IN18N
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        tc.removeTrafficListener(MrcInterface.PROGRAMMING, this);
+        memo.getMrcTrafficController().removeTrafficListener(MrcInterface.PROGRAMMING, this);
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
         notifyProgListenerEnd(temp,value,status);

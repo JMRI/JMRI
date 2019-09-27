@@ -23,7 +23,8 @@ log4j.rootCategory= WARN, R, J
 log4j.category.jmri=WARN
 
 # The R appender writes all logging output to the tests.log
-# file. This is where your debug output will appear.
+# file. This includes messages that the tests have intentionally
+# suppressed, so it's quite verbose.
 
 # The J appender is a JMRI-specific one, configured so that JMRI tests
 # can examine their output. Changing the levels or 
@@ -127,5 +128,8 @@ log4j.category.jmri.util.JUnitAppenderTest = INFO
 
 # INFO is part of application tests
 log4j.category.apps.Apps = INFO
+log4j.category.apps.AppsBase = INFO
 log4j.category.apps.PanelPro.PanelPro = INFO
+log4j.category.apps.gui3.Apps3 = INFO
+log4j.category.apps.gui3.dp3.DecoderPro3 = INFO
 

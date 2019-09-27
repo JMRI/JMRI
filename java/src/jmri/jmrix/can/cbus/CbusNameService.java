@@ -9,7 +9,8 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
 /**
  * Class to lookup CBUS event names via the event table
- * <P>
+ * <p>
+ * Node names from the Node Manager
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNameService {
@@ -22,12 +23,12 @@ public class CbusNameService {
 
     /**
      * Return a formatted String attempting to use the event toString method
-     * <P>
+     * <p>
      * eg no event table  (123,456) will return NN:123 EN:456 
      * with event table instance would return   NN:123 Node Name EN:456 Event Name 
      * No node present returns just event (0,56) EN:56 
      * All with trailing space
-     * <P>
+     *
      * @param nn Node Number
      * @param en Event Number
      * @return Event and node number with event and node name if available
@@ -48,9 +49,9 @@ public class CbusNameService {
 
     /**
      * Return a formatted String attempting locate the event name
-     * <P>
+     * <p>
      * get the event name, empty string if event not on event table, or if event name is empty
-     * <P>
+     *
      * @param nn Node Number
      * @param en Event Number
      * @return Event name if available , else empty string
@@ -70,7 +71,7 @@ public class CbusNameService {
      * <p> 1st attempt - Node Username in node table ( eg. Control Panel West )
      * <p> 2nd attempt - Node Type Name ( eg. CANPAN )
      * <p> fallback empty string
-     * <P>
+     *
      * @param nn Node Number
      * @return Node name if available , else empty string
      */

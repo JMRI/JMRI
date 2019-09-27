@@ -32,7 +32,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
     }
 
     /**
-     * Default implementation for storing the contents of a MergSD2SignalHead
+     * Default implementation for storing the contents of a MergSD2SignalHead.
      *
      * @param o Object to store, of type MergSD2SignalHead
      * @return Element containing the complete info
@@ -170,7 +170,16 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        SignalHead existingBean =
+                InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBeanBySystemName(sys);
+
+        if ((existingBean != null) && (existingBean != h)) {
+            log.error("systemName is already registered: {}", sys);
+        } else {
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        }
+
         return true;
     }
 
@@ -187,7 +196,12 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             } else {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
             }
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            if (t != null) {
+                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+            } else {
+                log.warn("Failed to find turnout {}. Check connection and configuration", name);
+                return null;
+            }
         } else {
             String name = e.getText();
             try {
@@ -206,4 +220,5 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
     }
 
     private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class);
+
 }

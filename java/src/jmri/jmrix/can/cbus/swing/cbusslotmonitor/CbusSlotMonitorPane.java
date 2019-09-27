@@ -1,14 +1,11 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +24,6 @@ import javax.swing.JTable;
 import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -35,7 +31,6 @@ import javax.swing.UIManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -43,15 +38,14 @@ import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*Created with Notepad++*/
 /**
- * Pane for monitoring and configuring a MERG CBUS Command Station
- * Created with Notepad++
+ * Pane for monitoring and configuring a MERG CBUS Command Station.
+ *
  * @author Steve Young Copyright (C) 2018
  * @since 4.13.4
  */
 public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
-
-    TrafficController tc;
 
     private JScrollPane scrolltablefeedback;
     private JSplitPane split;
@@ -73,7 +67,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             CbusSlotMonitorDataModel.MAX_COLUMN); // controller, row, column
         init();
     }
-
 
     public void init() {
         JTable slotTable = new JTable(slotModel) {
@@ -137,21 +130,17 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         slotTable.setAutoCreateRowSorter(true);
         
         final TableRowSorter<CbusSlotMonitorDataModel> sorter = new TableRowSorter<CbusSlotMonitorDataModel>(slotModel);
-        slotTable.setRowSorter(sorter);        
+        slotTable.setRowSorter(sorter);
+        slotTable.setRowHeight(26); // to match estop button icon size
         
         // configure items for GUI
         slotModel.configureTable(slotTable);
         
-        slotTable.addMouseListener(new CbusSlotButtonMouseListener(slotTable));
-        
-        TableCellRenderer dataButtonRenderer = new DataButtonRenderer();
         TableColumn estopColumn = tcm.getColumnByModelIndex(CbusSlotMonitorDataModel.ESTOP_COLUMN);                
         estopColumn.setMinWidth(60);
-        //  estopColumn.setMaxWidth(80);        
-        estopColumn.setCellRenderer(dataButtonRenderer);
-        // needed ?? 
-        estopColumn.setCellEditor(new ButtonEditor(new JButton()));     
-        
+        estopColumn.setCellRenderer( new ButtonRenderer() );
+        estopColumn.setCellEditor( new ButtonEditor( new JButton() ) );    
+
         slotScroll = new JScrollPane(slotTable);
         slotScroll.setPreferredSize(new Dimension(400, 200));
         
@@ -198,48 +187,8 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         p1.setMinimumSize(p1size);
         
         p1.setVisible(true);
-        log.debug("class name {} ",CbusSlotMonitorPane.class.getName());
+        log.debug("class name {}", CbusSlotMonitorPane.class.getName());
     }
-    
-	private static class DataButtonRenderer implements TableCellRenderer {		
-		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton button = (JButton)value;
-            // if (slotTable.sessionidarr.get(i)) {
-            //    button.setIcon(new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "resources/icons/throttles/RedPowerLED.gif"));
-            // } else {
-            //    button.setIcon(null);
-            // }
-			if (isSelected){
-                button.setForeground(table.getSelectionForeground());
-                button.setBackground(table.getSelectionBackground());
-            }
-            else {
-                button.setForeground(table.getForeground());
-                button.setBackground(UIManager.getColor("Button.background"));
-                }
-			return button;	
-		}
-	}    
-    
-    private static class CbusSlotButtonMouseListener extends MouseAdapter {
-		private final JTable table;
-		public CbusSlotButtonMouseListener(JTable table) {
-			this.table = table;
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
-			int row    = e.getY()/table.getRowHeight(); 
-
-			if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
-			    Object value = table.getValueAt(row, column);
-			    if (value instanceof JButton) {
-			    	((JButton)value).doClick();
-			    }
-			}
-		}
-	}
     
     @Override
     public String getTitle() {
@@ -249,7 +198,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         return Bundle.getMessage("MenuItemCbusSlotMonitor");
     }
 
-    
     public CbusSlotMonitorPane() {
         super();
     }
@@ -260,10 +208,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
-
-        // cancmdMenu.setEnabled(false);        
-        // menuList.add(cancmdMenu);
-        
         menuList.add(colMenu);
         return menuList;
     }
@@ -295,7 +239,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             MenuSelectionManager.defaultManager().setSelectedPath(path);
         }
     }
-    
 
     /**
      * {@inheritDoc}

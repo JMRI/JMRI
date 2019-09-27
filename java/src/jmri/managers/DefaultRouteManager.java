@@ -1,12 +1,12 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.implementation.DefaultRoute;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 public class DefaultRouteManager extends AbstractManager<Route>
-        implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
+        implements RouteManager {
 
-    public DefaultRouteManager() {
-        super();
+    public DefaultRouteManager(InternalSystemConnectionMemo memo) {
+        super(memo);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
@@ -29,11 +29,6 @@ public class DefaultRouteManager extends AbstractManager<Route>
     @Override
     public int getXMLOrder() {
         return Manager.ROUTES;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -99,22 +94,6 @@ public class DefaultRouteManager extends AbstractManager<Route>
     int lastAutoRouteRef = 0;
 
     /**
-     * {@inheritDoc}
-     *
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IR prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        if (inputName.length() < 3 || !inputName.startsWith("IR")) {
-            inputName = "IR" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
      * Remove an existing route. Route must have been deactivated before
      * invoking this.
      */
@@ -147,18 +126,19 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return _tuser.get(key);
     }
 
-    static DefaultRouteManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of DefaultRouteManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultRouteManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultRouteManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultRouteManager.class);
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameRoute");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
     }
 
     @Override

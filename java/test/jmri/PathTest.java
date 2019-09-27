@@ -38,6 +38,7 @@ public class PathTest {
 
         Block b = new Block("IB1");
         p.setBlock(b);
+        Assert.assertEquals("block added",b,p.getBlock());
     }
 
     @Test
@@ -127,10 +128,10 @@ public class PathTest {
         Assert.assertEquals("East", "East", Path.decodeDirection(Path.EAST));
         Assert.assertEquals("West", "West", Path.decodeDirection(Path.WEST));
         Assert.assertEquals("South", "South", Path.decodeDirection(Path.SOUTH));
-        Assert.assertEquals("North-East", "North, East", Path.decodeDirection(Path.NORTH_EAST));
-        Assert.assertEquals("South-East", "South, East", Path.decodeDirection(Path.SOUTH_EAST));
-        Assert.assertEquals("South-West", "South, West", Path.decodeDirection(Path.SOUTH_WEST));
-        Assert.assertEquals("North-West", "North, West", Path.decodeDirection(Path.NORTH_WEST));
+        Assert.assertEquals("North-East", "Northeast", Path.decodeDirection(Path.NORTH_EAST));
+        Assert.assertEquals("South-East", "Southeast", Path.decodeDirection(Path.SOUTH_EAST));
+        Assert.assertEquals("South-West", "Southwest", Path.decodeDirection(Path.SOUTH_WEST));
+        Assert.assertEquals("North-West", "Northwest", Path.decodeDirection(Path.NORTH_WEST));
         Assert.assertEquals("Unknown", "Unknown: 0x100000", Path.decodeDirection(0x100000));
         Assert.assertEquals("South and Up", "South, Up", Path.decodeDirection(Path.SOUTH | Path.UP));
 

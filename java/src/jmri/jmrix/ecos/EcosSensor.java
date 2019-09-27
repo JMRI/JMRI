@@ -10,7 +10,7 @@ import jmri.implementation.AbstractSensor;
  * one Sensor object pointing to a single device is not allowed.
  *
  * @author Kevin Dickerson (C) 2009
-  */
+ */
 public class EcosSensor extends AbstractSensor {
 
     int objectNumber = 0;

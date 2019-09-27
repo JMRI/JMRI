@@ -9,9 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
  * Tests for RaspberryPiAdapter
- * </P>
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class RaspberryPiAdapterTest {
@@ -35,6 +34,5 @@ public class RaspberryPiAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

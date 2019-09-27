@@ -8,6 +8,9 @@ import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 
 import static org.hamcrest.core.StringContains.containsString;
+
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,11 +20,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DefaultSignalMastManagerTest {
+public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBase<jmri.SignalMastManager,SignalMast> {
 
     @Test
     public void testCTor() {
-        DefaultSignalMastManager t = new DefaultSignalMastManager();
+        DefaultSignalMastManager t = (DefaultSignalMastManager) l;
         Assert.assertNotNull("exists",t);
     }
 
@@ -39,7 +42,7 @@ public class DefaultSignalMastManagerTest {
 
     @Test
     public void testProvideCustomMast() throws Exception {
-        DefaultSignalMastManager mgr = new DefaultSignalMastManager();
+        DefaultSignalMastManager mgr = (DefaultSignalMastManager) l;
 
         SignalMast ma = mgr.provideCustomSignalMast("IM333", MastA.class);
         SignalMast mb = mgr.provideCustomSignalMast("IM444", MastB.class);
@@ -71,7 +74,7 @@ public class DefaultSignalMastManagerTest {
 
     @Test
     public void testProvideRepeater() throws Exception {
-        DefaultSignalMastManager mgr = new DefaultSignalMastManager();
+        DefaultSignalMastManager mgr = (DefaultSignalMastManager) l;
 
         SignalMast m1 = mgr.provideCustomSignalMast("IM331", MastA.class);
         SignalMast m2 = mgr.provideCustomSignalMast("IM332", MastA.class);
@@ -103,10 +106,12 @@ public class DefaultSignalMastManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        l = new DefaultSignalMastManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After
     public void tearDown() {
+        l = null;
         JUnitUtil.tearDown();
     }
 

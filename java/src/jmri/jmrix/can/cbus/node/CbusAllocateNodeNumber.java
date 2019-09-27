@@ -24,9 +24,6 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusSend;
-import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeConstants;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
 
@@ -35,26 +32,25 @@ import org.slf4j.LoggerFactory;
 
 public class CbusAllocateNodeNumber implements CanListener {
     
-    public CbusNodeTableDataModel nodeModel=null;    
+    private CbusNodeTableDataModel nodeModel=null;    
     private TrafficController tc;
-    CbusSend send;
+    private CbusSend send;
     
-    JLabel rqNNtext;
-    int baseNodeNum;
-    Boolean WAITINGRESPONSE_RQNN_PARAMS = false;
-    Boolean NODE_NUM_DIALOGUE_OPEN = false;
-    int[] _paramsArr;
+    private JLabel rqNNtext;
+    private int baseNodeNum;
+    private boolean WAITINGRESPONSE_RQNN_PARAMS = false;
+    private boolean NODE_NUM_DIALOGUE_OPEN = false;
+    private boolean WAITING_RESPONSE_NAME = false;
+    private int[] _paramsArr;
+    private String _tempNodeName;
     
     public CbusAllocateNodeNumber(CanSystemConnectionMemo memo, CbusNodeTableDataModel model) {
         
         nodeModel = model;
-        
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        if (tc != null ) {
-            tc.addCanListener(this);
-        }
         
+        tc.addCanListener(this);
         send = new CbusSend(memo);
         
         baseNodeNum = 256;
@@ -69,6 +65,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         }
         
         NODE_NUM_DIALOGUE_OPEN=true;
+        _tempNodeName="";
         
         JPanel rqNNpane = new JPanel();
         JPanel bottomrqNNpane = new JPanel();
@@ -193,6 +190,9 @@ public class CbusAllocateNodeNumber implements CanListener {
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN) {
             if (!NODE_NUM_DIALOGUE_OPEN) {
                 send.nodeRequestParamSetup();
@@ -206,6 +206,9 @@ public class CbusAllocateNodeNumber implements CanListener {
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
 
         if (opc==CbusConstants.CBUS_RQNN){ // node requesting a number, nn is existing number
@@ -215,13 +218,14 @@ public class CbusAllocateNodeNumber implements CanListener {
         
         if (opc==CbusConstants.CBUS_PARAMS) {
             
-            StringBuilder nodepropbuilder = new StringBuilder(40);
-            nodepropbuilder.append (CbusNodeConstants.getManu(m.getElement(1)));  
-            nodepropbuilder.append (" ");
-            nodepropbuilder.append( CbusNodeConstants.getModuleType(m.getElement(1),m.getElement(3)));
-            
             _paramsArr = new int[] { m.getElement(1),m.getElement(2),m.getElement(3),m.getElement(4),
                 m.getElement(5),m.getElement(6),m.getElement(7) };
+            
+            StringBuilder nodepropbuilder = new StringBuilder(40);
+            nodepropbuilder.append (CbusNodeConstants.getManu( _paramsArr[0] ));  
+            nodepropbuilder.append (" ");
+            nodepropbuilder.append( CbusNodeConstants.getModuleType( _paramsArr[0] , _paramsArr[2] ));
+            
             
             if (WAITINGRESPONSE_RQNN_PARAMS) {
                 rqNNtext.setText(nodepropbuilder.toString());
@@ -229,6 +233,11 @@ public class CbusAllocateNodeNumber implements CanListener {
             }
             else if (!NODE_NUM_DIALOGUE_OPEN) {
                 startnodeallocation( -1, nodepropbuilder.toString() );
+            }
+            
+            if ( CbusNodeConstants.getModuleType( _paramsArr[0] , _paramsArr[2] ).isEmpty() ) {
+                WAITING_RESPONSE_NAME = true;
+                send.rQmn(); // request node type name if not recognised
             }
         }
         
@@ -242,21 +251,40 @@ public class CbusAllocateNodeNumber implements CanListener {
                 
                 // provide will add to table
                 CbusNode nd = nodeModel.provideNodeByNodeNum( ( m.getElement(1) * 256 ) + m.getElement(2) );
-                
                 nd.setParamsFromSetup(_paramsArr);
-                
+                nd.setNodeNameFromName(_tempNodeName);
             }
             
             _paramsArr = null;
             
         }
         
+        if ( WAITING_RESPONSE_NAME && opc==CbusConstants.CBUS_NAME ){
+            WAITING_RESPONSE_NAME = false;
+            
+            StringBuilder rval = new StringBuilder(10);
+            rval.append("CAN");
+            rval.append(String.format("%c", m.getElement(1) ));
+            rval.append(String.format("%c", m.getElement(2) ));
+            rval.append(String.format("%c", m.getElement(3) ));
+            rval.append(String.format("%c", m.getElement(4) ));
+            rval.append(String.format("%c", m.getElement(5) ));
+            rval.append(String.format("%c", m.getElement(6) ));
+            rval.append(String.format("%c", m.getElement(7) ));
+            _tempNodeName = rval.toString().trim();
+            
+            StringBuilder nodepropbuilder = new StringBuilder(40);
+            nodepropbuilder.append (CbusNodeConstants.getManu( _paramsArr[0] ));  
+            nodepropbuilder.append (" ");
+            nodepropbuilder.append (_tempNodeName);
+            
+            rqNNtext.setText(nodepropbuilder.toString());
+            
+        }
     }
 
     public void dispose(){
-        if (tc != null ) {
-            tc.removeCanListener(this);
-        }
+        tc.removeCanListener(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusAllocateNodeNumber.class);

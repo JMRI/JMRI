@@ -4,10 +4,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeListenerProxy;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +43,7 @@ public class Beans extends java.beans.Beans {
      * @param index The element to use.
      * @param value The value to set.
      * @see jmri.beans.BeanInterface#setIndexedProperty(java.lang.String, int,
-     * java.lang.Object)
+     *      java.lang.Object)
      */
     public static void setIndexedProperty(Object bean, String key, int index, Object value) {
         if (implementsBeanInterface(bean)) {
@@ -76,20 +81,24 @@ public class Beans extends java.beans.Beans {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
-                        ((IndexedPropertyDescriptor) pd).getIndexedWriteMethod().invoke(bean, new Object[]{index, value});
+                        ((IndexedPropertyDescriptor) pd).getIndexedWriteMethod().invoke(bean,
+                                new Object[]{index, value});
                         return; // short circut, since there is nothing left to do at this point.
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
+            } catch (
+                    IllegalAccessException |
+                    IllegalArgumentException |
+                    InvocationTargetException |
+                    IntrospectionException ex) {
                 log.warn(ex.getMessage(), ex);
             }
         }
     }
 
     /**
-     * Get the item at index <i>index</i> of property <i>key</i> of
-     * <i>bean</i>.
+     * Get the item at index <i>index</i> of property <i>key</i> of <i>bean</i>.
      *
      * If the index <i>index</i> of property <i>key</i> does not exist, this
      * method returns null instead of throwing
@@ -110,8 +119,7 @@ public class Beans extends java.beans.Beans {
     }
 
     /**
-     * Get the item at index <i>index</i> of property <i>key</i> of
-     * <i>bean</i>.
+     * Get the item at index <i>index</i> of property <i>key</i> of <i>bean</i>.
      *
      * This should only be called from outside this class in an implementation
      * of
@@ -130,7 +138,8 @@ public class Beans extends java.beans.Beans {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
-                        return ((IndexedPropertyDescriptor) pd).getIndexedReadMethod().invoke(bean, new Object[]{index});
+                        return ((IndexedPropertyDescriptor) pd).getIndexedReadMethod().invoke(bean,
+                                new Object[]{index});
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
@@ -141,7 +150,10 @@ public class Beans extends java.beans.Beans {
                 } else {
                     log.error(ex.getMessage(), ex);
                 }
-            } catch (IllegalAccessException | IllegalArgumentException | IntrospectionException ex) {
+            } catch (
+                    IllegalAccessException |
+                    IllegalArgumentException |
+                    IntrospectionException ex) {
                 log.warn(ex.getMessage(), ex);
             }
         }
@@ -160,7 +172,7 @@ public class Beans extends java.beans.Beans {
      * @param key   The property to set.
      * @param value The value to set.
      * @see jmri.beans.BeanInterface#setProperty(java.lang.String,
-     * java.lang.Object)
+     *      java.lang.Object)
      */
     public static void setProperty(Object bean, String key, Object value) {
         if (implementsBeanInterface(bean)) {
@@ -200,7 +212,11 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
+            } catch (
+                    IllegalAccessException |
+                    IllegalArgumentException |
+                    InvocationTargetException |
+                    IntrospectionException ex) {
                 log.warn(ex.getMessage(), ex);
             }
         }
@@ -259,7 +275,11 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
+            } catch (
+                    IllegalAccessException |
+                    IllegalArgumentException |
+                    InvocationTargetException |
+                    IntrospectionException ex) {
                 log.warn(ex.getMessage(), ex);
             }
         }
@@ -423,5 +443,33 @@ public class Beans extends java.beans.Beans {
      */
     public static boolean implementsBeanInterface(Object bean) {
         return (null != bean && BeanInterface.class.isAssignableFrom(bean.getClass()));
+    }
+
+    /**
+     * Test that <i>listeners</i> contains <i>needle</i> even if listener is
+     * contained within a {@link PropertyChangeListenerProxy}.
+     * <p>
+     * This is intended to be used where action needs to be taken (or not taken)
+     * if <i>needle</i> is (or is not) listening for property changes. Note that
+     * if a listener was registered to listen for changes in a single property,
+     * it is wrapped by a PropertyChangeListenerProxy such that using
+     * {@code Arrays.toList(getPropertyChangeListeners()).contains(needle) } may
+     * return false when <i>needle</i> is listening to a specific property.
+     * 
+     * @param listeners the array of listeners to search through
+     * @param needle    the listener to search for
+     * @return true if <i>needle</i> is in <i>listeners</i>; false otherwise
+     */
+    public static boolean contains(PropertyChangeListener[] listeners, @Nonnull PropertyChangeListener needle) {
+        for (PropertyChangeListener listener : listeners) {
+            if (listener.equals(needle)) {
+                return true;
+            } else if (listener instanceof PropertyChangeListenerProxy) {
+                if (((PropertyChangeListenerProxy) listener).getListener().equals(needle)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

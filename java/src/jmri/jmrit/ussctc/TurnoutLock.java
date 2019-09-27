@@ -31,12 +31,11 @@ public class TurnoutLock implements Lock {
      */
     @Override
     public boolean isLockClear() {
-        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         if (turnout.getBean().getKnownState() != value) {
-            InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
-                .setValue("Locked due to turnout setting: "+turnout.getBean().getDisplayName());
+                lockLogger.setStatus(this, "Locked due to setting: "+turnout.getBean().getDisplayName());
             return false;
         }
+        lockLogger.setStatus(this, "");
         return true;
     }
     

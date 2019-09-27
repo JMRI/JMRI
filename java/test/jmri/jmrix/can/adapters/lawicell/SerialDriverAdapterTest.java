@@ -11,12 +11,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class SerialDriverAdapterTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
+      Assert.assertNotNull("SerialDriverAdapter constructor", new SerialDriverAdapter());
    }
 
    @Before

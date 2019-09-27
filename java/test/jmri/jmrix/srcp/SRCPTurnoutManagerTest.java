@@ -15,6 +15,8 @@ import org.junit.Test;
  */
 public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    private SRCPBusConnectionMemo memo;
+
     @Override
     public String getSystemName(int i){
         return "A1T"+i;
@@ -22,7 +24,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Test
     public void testCtor() {
-        SRCPTurnoutManager m = new SRCPTurnoutManager();
+        SRCPTurnoutManager m = new SRCPTurnoutManager(memo, memo.getBus());
         Assert.assertNotNull(m);
     }
 
@@ -36,7 +38,7 @@ public class SRCPTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+        memo = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }

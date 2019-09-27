@@ -47,7 +47,6 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
         mainpane = pane;
         
         singleEvTable = new JTable(singleEVModel);
-        singleEVModel.setEditFrame();
         init();
         
     }
@@ -129,7 +128,7 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
                     if (string.equals("0000 0000")) {
                         string = "";
                     }
-                    f.setText(string);
+                    f.setText(string.toUpperCase() );
                 } else {
                     f.setText("");
                 }

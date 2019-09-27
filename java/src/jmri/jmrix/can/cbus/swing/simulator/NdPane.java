@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class NdPane extends JPanel {
         _selectNd = new JComboBox<String>();
         _selectNd.setEditable(false);
         
-        SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
+        ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectNd.setRenderer(renderer);
         
         _node.setPane(this);
@@ -61,7 +62,7 @@ public class NdPane extends JPanel {
             String option = CbusNodeConstants.getModuleType(165,intoption);
             _selectNd.addItem(option);
             tooltips.add(CbusNodeConstants.getModuleTypeExtra(165,intoption));
-            if ( intoption == _node.getNodeType() ){
+            if ( intoption == _node.getParameter(3) ){ // module type
                 getSelected = option;
             }
         }
@@ -114,7 +115,7 @@ public class NdPane extends JPanel {
     }
     
     private void updateNode(){
-        if ( _node.getNodeType()>0 ) { 
+        if ( _node.getParameter(3)>0 ) { // module type set
             _resetNd.setEnabled(true); 
         } else {
             _resetNd.setEnabled(false); 

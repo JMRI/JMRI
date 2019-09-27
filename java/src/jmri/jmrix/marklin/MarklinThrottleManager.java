@@ -1,8 +1,8 @@
 package jmri.jmrix.marklin;
 
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
+import java.util.EnumSet;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,20 +23,6 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         super(memo);
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static private MarklinThrottleManager mInstance = null;
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public MarklinThrottleManager instance() {
-        return mInstance;
-    }
-
     @Override
     public void reply(MarklinReply m) {
         //We are not sending commands from here yet!
@@ -52,8 +38,8 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         /*Here we do not set notifythrottle, we simply create a new Marklin throttle.
          The Marklin throttle in turn will notify the throttle manager of a successful or
          unsuccessful throttle connection. */
-        log.debug("new MarklinThrottle for " + address);
-        notifyThrottleKnown(new MarklinThrottle((MarklinSystemConnectionMemo) adapterMemo, (DccLocoAddress) address), address);
+        log.debug("new MarklinThrottle for {}", address);
+        notifyThrottleKnown(new MarklinThrottle((MarklinSystemConnectionMemo) adapterMemo, address), address);
     }
 
     @Override
@@ -87,6 +73,11 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         return false;
     }
 
+    /**
+     * Returns false
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean singleUse() {
         return false;
@@ -116,16 +107,18 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
     }
 
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128, SpeedStepMode.NMRA_DCC_28);
     }
 
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
-            MarklinThrottle lnt = (MarklinThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof MarklinThrottle) {
+                MarklinThrottle lnt = (MarklinThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

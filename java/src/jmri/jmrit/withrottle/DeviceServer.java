@@ -95,6 +95,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -462,36 +463,38 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         ekgTask = new TimerTask() {
             @Override
             public void run() {  //  Drops on second pass
-                if (!heartbeat) {
-                    stopEKGCount++;
-                    //  Send eStop to each throttle
-                    if (log.isDebugEnabled()) {
-                        log.debug("Lost signal from: " + getName() + ", sending eStop");
-                    }
-                    if (throttleController != null) {
-                        throttleController.sort("X");
-                    }
-                    if (secondThrottleController != null) {
-                        secondThrottleController.sort("X");
-                    }
-                    if (multiThrottles != null) {
-                        for (char key : multiThrottles.keySet()) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("Sending eStop to MT key: " + key);
-                            }
-                            multiThrottles.get(key).eStop();
+                ThreadingUtil.runOnLayout(() -> {
+                    if (!heartbeat) {
+                        stopEKGCount++;
+                        //  Send eStop to each throttle
+                        if (log.isDebugEnabled()) {
+                            log.debug("Lost signal from: " + getName() + ", sending eStop");
                         }
+                        if (throttleController != null) {
+                            throttleController.sort("X");
+                        }
+                        if (secondThrottleController != null) {
+                            secondThrottleController.sort("X");
+                        }
+                        if (multiThrottles != null) {
+                            for (char key : multiThrottles.keySet()) {
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Sending eStop to MT key: " + key);
+                                }
+                                multiThrottles.get(key).eStop();
+                            }
 
+                        }
+                        if (stopEKGCount > 2) {
+                            closeThrottles();
+                        }
                     }
-                    if (stopEKGCount > 2) {
-                        closeThrottles();
-                    }
-                }
-                heartbeat = false;
+                    heartbeat = false;
+                });
             }
 
         };
-        jmri.util.TimerUtil.scheduleAtFixedRateOnLayoutThread(ekgTask, pulseInterval * 900L, pulseInterval * 900L);
+        jmri.util.TimerUtil.scheduleAtFixedRate(ekgTask, pulseInterval * 900L, pulseInterval * 900L);
     }
 
     public void stopEKG() {
@@ -592,6 +595,32 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return s.toString();
     }
 
+    /**
+     * since 4.15.4
+     */
+    public String getCurrentRosterIdString() {
+        StringBuilder s = new StringBuilder("");
+        if (throttleController != null) {
+            s.append(throttleController.getCurrentRosterIdString());
+            s.append(" ");
+        }
+        if (secondThrottleController != null) {
+            s.append(secondThrottleController.getCurrentRosterIdString());
+            s.append(" ");
+        }
+        if (multiThrottles != null) {
+            for (MultiThrottle mt : multiThrottles.values()) {
+                if (mt.throttles != null) {
+                    for (MultiThrottleController mtc : mt.throttles.values()) {
+                        s.append(mtc.getCurrentRosterIdString());
+                        s.append(" ");
+                    }
+                }
+            }
+        }
+        return s.toString();
+    }
+
     public static String getWiTVersion() {
         return VERSION_NUMBER;
     }
@@ -624,6 +653,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @param message 
      * Format: HMmessage
      */
+    @Override
     public void sendAlertMessage(String message) {        
         sendPacketToDevice("HM" + message);
     }
@@ -634,6 +664,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @param message 
      * Format: Hmmessage
      */
+    @Override
     public void sendInfoMessage(String message) {
         sendPacketToDevice("Hm" + message);
     }
@@ -703,7 +734,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         log.warn("notifyControllerAddressDeclined: "+ reason);
         sendAlertMessage(reason); // let the client know why the request failed
         if (multiThrottles != null) {   //  Should exist by this point
-            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
+            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, tc);
             multiThrottles.get(tc.whichThrottle).canceledThrottleRequest(tc.locoKey);
         }
     }

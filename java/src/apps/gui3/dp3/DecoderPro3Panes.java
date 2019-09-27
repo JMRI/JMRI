@@ -23,7 +23,7 @@ public class DecoderPro3Panes extends javax.swing.JPanel
     /**
      * Enable the read/write buttons.
      * <p>
-     * In addition, if a programming mode pane is present, it's "set" button is
+     * In addition, if a programming mode pane is present, its "set" button is
      * enabled.
      *
      * @param enable Are reads possible? If false, so not enable the read

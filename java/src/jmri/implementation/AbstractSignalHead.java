@@ -6,8 +6,6 @@ import jmri.Turnout;
 
 /**
  * Abstract class providing the basic logic of the SignalHead interface.
- * <p>
- * SignalHead system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -57,16 +55,16 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     /**
      * Determine whether this signal shows an aspect or appearance
      * that allows travel past it only at restricted speed.
-     * This might be a flashing red appearance, or a 
+     * This might be a flashing red appearance, or a
      * Restricting aspect.
      */
     @Override
     public boolean isShowingRestricting() { return getAppearance() == FLASHRED || getAppearance() == LUNAR || getAppearance() == FLASHLUNAR; }
-    
+
     /**
      * Determine whether this signal shows an aspect or appearance
      * that forbid travel past it.
-     * This might be a red appearance, or a 
+     * This might be a red appearance, or a
      * Stop aspect. Stop-and-Proceed or Restricting would return false here.
      */
     @Override
@@ -203,8 +201,6 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("not clear DoDelete operated? {}", getSystemName()); //NOI18N
         }
     }
 
@@ -213,5 +209,5 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
 }

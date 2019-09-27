@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Alain Carasso" version="1" lastUpdated="20130224"/>
   <decoder>
     <family name="Wekomm for LSM" mfg="Wekomm">
@@ -46,13 +47,9 @@
         <label>Manufacturer ID: </label>
       </variable>
       <!-- CV 19 Consist address  (can also use CV27-28 for Long Secondary address-->
-      <variable CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
-        <decVal min="0" max="127"/>
-        <label>Consist Address</label>
-       <label xml:lang="it">Indirizzo Consist Avanzato</label>
-       <label xml:lang="fr">Addresse UM</label>
-       <label xml:lang="de">Verbundadresse</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <!-- CV 27-28 managed as long address-->
       <variable CV="27" item="Secondary Address">
         <longAddressVal/>

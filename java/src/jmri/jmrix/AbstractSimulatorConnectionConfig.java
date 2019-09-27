@@ -9,6 +9,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -54,13 +55,15 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
         log.debug("init called for ()", name());
         if (init) {
             return;
         }
-
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.addActionListener(new ActionListener() {
                 @Override
@@ -106,14 +109,11 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 public void focusGained(FocusEvent e) {
                 }
             });
-            for (String i : options.keySet()) {
-                final String item = i;
-                if (options.get(i).getComponent() instanceof JComboBox) {
-                    ((JComboBox<?>) options.get(i).getComponent()).addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            adapter.setOptionState(item, options.get(item).getItem());
-                        }
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                final String item = entry.getKey();
+                if (entry.getValue().getComponent() instanceof JComboBox) {
+                    ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                        adapter.setOptionState(item, options.get(item).getItem());
                     });
                 }
             }
@@ -124,8 +124,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     @Override
     public void updateAdapter() {
-        for (String i : options.keySet()) {
-            adapter.setOptionState(i, options.get(i).getItem());
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
 
         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
@@ -138,8 +138,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> it's already been set.
+     * {@inheritDoc}
      */
     @Override
     abstract protected void setInstance();
@@ -156,6 +155,9 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         return Bundle.getMessage("none");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(final JPanel details) {
         _details = details;
@@ -198,6 +200,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+        justification = "Type is checked before casting")
     protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
@@ -210,8 +214,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         int i = 0;
 
         boolean incAdvancedOptions = false;
-        for (String item : options.keySet()) {
-            if (options.get(item).isAdvanced()) {
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            if (entry.getValue().isAdvanced()) {
                 incAdvancedOptions = true;
             }
         }
@@ -219,14 +223,14 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         i = addStandardDetails(adapter, incAdvancedOptions, i);
 
         if (showAdvanced.isSelected()) {
-            for (String item : options.keySet()) {
-                if (options.get(item).isAdvanced()) {
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                if (entry.getValue().isAdvanced()) {
                     cR.gridy = i;
                     cL.gridy = i;
-                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                    _details.add(options.get(item).getLabel());
-                    _details.add(options.get(item).getComponent());
+                    gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                    gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                    _details.add(entry.getValue().getLabel());
+                    _details.add(entry.getValue().getComponent());
                     i++;
                 }
             }

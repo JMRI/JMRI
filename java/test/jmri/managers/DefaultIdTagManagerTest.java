@@ -2,6 +2,8 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.junit.*;
 
 /**
@@ -9,11 +11,11 @@ import org.junit.*;
  *
  * @author	Matthew Harris Copyright (C) 2011
  */
-public class DefaultIdTagManagerTest {
+public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<IdTagManager,IdTag> {
 
     @Test
     public void testIdTagCreation() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.createNewIdTag("ID0413276BC1", "Test Tag");
 
         Assert.assertNotNull("IdTag is not null", t);
@@ -21,7 +23,7 @@ public class DefaultIdTagManagerTest {
 
     @Test
     public void testIdTagNames() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.createNewIdTag("ID0413276BC1", "Test Tag");
 
         Assert.assertEquals("IdTag system name is 'ID0413276BC1'", "ID0413276BC1", t.getSystemName());
@@ -31,7 +33,7 @@ public class DefaultIdTagManagerTest {
 
     @Test
     public void testIdTagSingleRetrieval() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.newIdTag("ID0413276BC1", "Test Tag");
 
         Assert.assertNotNull("Returned IdTag is not null", t);
@@ -55,7 +57,7 @@ public class DefaultIdTagManagerTest {
 
     @Test
     public void testIdTagMultiRetrieval() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t1 = m.newIdTag("ID0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("ID0413275FCA", "Test Tag 2");
 
@@ -80,7 +82,7 @@ public class DefaultIdTagManagerTest {
 
     @Test
     public void testIdTagProviderCreate() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.provideIdTag("0413276BC1");
 
         Assert.assertNotNull("IdTag is not null", t);
@@ -97,7 +99,7 @@ public class DefaultIdTagManagerTest {
 
     @Test
     public void testIdTagProviderGet() {
-        DefaultIdTagManager m = getManager();
+        DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t1 = m.newIdTag("ID0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("ID0413275FCA", "Test Tag 2");
 
@@ -121,17 +123,19 @@ public class DefaultIdTagManagerTest {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initIdTagManager();
+        l = getManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        l = null;
         jmri.util.JUnitUtil.tearDown();
     }
 
     // Override init method so as not to load file
     // nor register shutdown task during tests.
     protected DefaultIdTagManager getManager() {
-        return new DefaultIdTagManager() {
+        return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
             @Override
             public void init() {
             }

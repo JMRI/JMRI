@@ -213,7 +213,7 @@
 
             <p>Cet outil vous fournit un m&eacute;canisme pour
             examiner l'&eacute;tat de l'interface mat&eacute;rielle
-            Loconet.</p>
+            LocoNet.</p>
 
             <p>Pour plus d'information voir la <a href=
             "../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">
@@ -293,7 +293,7 @@
             d&eacute;crite comme ayant 16 canaux.</p>
 
             <p>Les canaux sont configur&eacute;s via les messages
-            Loconet,aussi vous n'aurez pas besoin d'acc&eacute;der
+            LocoNet,aussi vous n'aurez pas besoin d'acc&eacute;der
             &agrave; la cartepour la programmer (vous pouvez faire
             ceci sans pousser aucun bouton sur la carte ou de la
             rec&acirc;bler).</p>

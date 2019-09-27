@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Model for a simple Sensor JTable.
- * <P>
+ * <p>
  * Note that this has a very expensive way of handling
  * changes to the contents of the SensorManager: it recreates
  * an entire local array instead of using the Manager's accessors.

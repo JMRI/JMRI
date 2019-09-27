@@ -2,6 +2,9 @@ package jmri.jmrix.ecos;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+
+import java.beans.PropertyChangeListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * PowerManager implementation for controlling ECoS layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
-  */
+ */
 public class EcosPowerManager implements PowerManager, EcosListener {
 
     public EcosPowerManager(EcosTrafficController etc) {
@@ -85,6 +88,30 @@ public class EcosPowerManager implements PowerManager, EcosListener {
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     // to listen for status changes from Ecos system

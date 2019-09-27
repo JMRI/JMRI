@@ -41,14 +41,14 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delayed {
 
-    static private int _nRetries = 5;
+    private static int _nRetries = 5;
 
     /* According to the specification, DCC++ has a maximum timing 
      interval of 500 milliseconds during normal communications */
     // TODO: Note this timing interval is actually an XpressNet thing...
     // Need to find out what DCC++'s equivalent is.
-    static protected final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
-    static private int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
+    protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
+    private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
     
     //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
@@ -68,7 +68,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         setRetries(_nRetries);
         setTimeout(DCCppMessageTimeout);
         if (len > DCCppConstants.MAX_MESSAGE_SIZE || len < 0) {
-            log.error("Invalid length in ctor: " + len);
+            log.error("Invalid length in ctor: {}", len);
         }
         _nDataChars = len;
         myRegex = "";
@@ -416,6 +416,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     *
     * @return representation of the DCCpp as a string.
     */
+    @Override
    public String toMonitorString(){
         // Beautify and display
         String text;
@@ -632,7 +633,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         } else if (idx <= m.groupCount()) {
             return(m.group(idx));
         } else {
-            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this);
             return("");
         }
     }
@@ -645,13 +646,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         } else if (idx <= m.groupCount()) {
             return(Integer.parseInt(m.group(idx)));
         } else {
-            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this);
             return(0);
         }
     }
     
     public boolean getValueBool(int idx) {
-        log.debug("msg = {}, regex = {}", toString(), myRegex);
+        log.debug("msg = {}, regex = {}", this, myRegex);
         Matcher m = match(toString(), myRegex, "gvi");
         
         if (m == null) {
@@ -660,7 +661,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         } else if (idx <= m.groupCount()) {
             return(!m.group(idx).equals("0"));
         } else {
-            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this);
             return(false);
         }
     }
@@ -677,7 +678,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *
      * @param t number of retries to attempt
      */
-    static public void setDCCppMessageRetries(int t) {
+    public static void setDCCppMessageRetries(int t) {
         _nRetries = t;
     }
 
@@ -686,7 +687,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      *
      * @param t Timeout in milliseconds
      */
-    static public void setDCCppMessageTimeout(int t) {
+    public static void setDCCppMessageTimeout(int t) {
         DCCppMessageTimeout = t;
     }
 
@@ -733,19 +734,19 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             Pattern p = Pattern.compile(pat);
             Matcher m = p.matcher(s);
             if (!m.matches()) {
-                //log.warn("No Match {} Command: {} Pattern: {}",name, s, pat);
+                log.debug("No Match {} Command: {} Pattern: {}",name, s, pat);
                 return(null);
             }
             return(m);
 
         } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ message syntax! s = ", pat);
+            log.error("Malformed DCC++ message syntax! s = {}", pat);
             return(null);
         } catch (IllegalStateException e) {
-            log.error("Group called before match operation executed string= " + s);
+            log.error("Group called before match operation executed string= {}", s);
             return(null);
         } catch (IndexOutOfBoundsException e) {
-            log.error("Index out of bounds string= " + s);
+            log.error("Index out of bounds string= {}", s);
             return(null);
         }
     }
@@ -883,7 +884,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isOutputCmdMessage()) {
             return(getValueInt(2) != 0);
         } else {
-            log.error("Output Parser called on non-Output message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Output Parser called on non-Output message type {} message {}", this.getOpCodeChar(), this);
             return(false);
         }
     }
@@ -936,7 +937,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isSensorAddMessage()) {
             return(getValueInt(3));
         } else {
-            log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -945,7 +946,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isSensorAddMessage()) {
             return(getValueBool(3));
         } else {
-            log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this);
             return(false);
         }
     }
@@ -975,7 +976,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isAccessoryMessage()) {
             return(getValueString(2));
         } else {
-            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this);
             return("0");
         }
     }
@@ -984,7 +985,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isAccessoryMessage()) {
             return(getValueInt(2));
         } else {
-            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -1001,7 +1002,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isAccessoryMessage()) {
             return(getValueInt(3));
         } else {
-            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -1145,7 +1146,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutMessage()) {
             return(getValueString(1));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return("0");
         }
     }
@@ -1154,7 +1155,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutMessage()) {
             return(getValueInt(1));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -1171,7 +1172,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutMessage()) {
             return(getValueInt(2));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -1180,7 +1181,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutAddMessage()) {
             return(getValueString(2));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return("0");
         }
     }
@@ -1189,7 +1190,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutAddMessage()) {
             return(getValueInt(2));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -1198,7 +1199,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutAddMessage()) {
             return(getValueString(3));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return("0");
         }
     }
@@ -1207,7 +1208,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (this.isTurnoutAddMessage()) {
             return(getValueInt(3));
         } else {
-            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+            log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this);
             return(0);
         }
     }
@@ -1405,7 +1406,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
     public String getPacketString() {
        if ( this.isWriteDccPacketMessage() ) {
-            StringBuffer b = new StringBuffer();
+            StringBuilder b = new StringBuilder();
             for(int i = 2;i<=getGroupCount()-1;i++){
                 b.append(this.getValueString(i));
             }
@@ -1447,15 +1448,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 retv = false;
         }
         return(retv);
-    }
-
-    //private boolean responseExpected = true;
-
-    // Tell the traffic controller we expect this
-    // message to have a broadcast reply (or not).
-    //(Not really used)
-    void setResponseExpected(boolean v) {
-        //responseExpected = v;
     }
 
     // decode messages of a particular form
@@ -1890,8 +1882,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * Returns {@code <p1> (ON) or <p0> (OFF)}
      */
     public static DCCppMessage makeSetTrackPowerMsg(boolean on) {
-        //String s = new String(Character.toString((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF)));
-        //return(new DCCppMessage(s));
         return(new DCCppMessage((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF),
                                 DCCppConstants.TRACK_POWER_REGEX));
     }
@@ -2446,7 +2436,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     /**
      * Write DCC Packet to a specified Register on the Programming Track.
      */
-    public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte bytes[]) {
+    public static DCCppMessage makeWriteDCCPacketProgMsg( int register, int num_bytes, byte[] bytes) {
         // Sanity Check Inputs
         if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
         if (num_bytes < 2 || num_bytes > 5) return(null);
@@ -2588,6 +2578,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     
     // initialize logging    
-    private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppMessage.class);
 
 }

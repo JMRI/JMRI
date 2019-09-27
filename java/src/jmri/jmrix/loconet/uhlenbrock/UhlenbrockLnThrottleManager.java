@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.loconet.SlotManager
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class UhlenbrockLnThrottleManager extends LnThrottleManager implements ThrottleManager, SlotListener {
+public class UhlenbrockLnThrottleManager extends LnThrottleManager {
 
     public UhlenbrockLnThrottleManager(UhlenbrockSystemConnectionMemo memo) {
         super(memo);
@@ -40,6 +40,11 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
+        if (!(address instanceof DccLocoAddress)){
+            log.error("{} is not a DCCLocoAddress",address);
+            failedThrottleRequest(address, "Address" + address + " is not a DccLocoAddress");
+            return;
+        }
         slotManager.slotFromLocoAddress(((DccLocoAddress) address).getNumber(), this);
 
         class RetrySetup implements Runnable {
@@ -107,17 +112,16 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
      * Cancel a request for a throttle.
      *
      * @param address The decoder address desired.
-     * @param isLong  True if this is a request for a DCC long (extended)
-     *                address.
      * @param l       The ThrottleListener cancelling request for a throttle.
      */
     @Override
-    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
-        if (waitingForNotification.containsKey(address)) {
-            waitingForNotification.get(address).interrupt();
-            waitingForNotification.remove(address);
+    public void cancelThrottleRequest(LocoAddress address, ThrottleListener l) {
+        int loconumber = address.getNumber();
+        if (waitingForNotification.containsKey(loconumber)) {
+            waitingForNotification.get(loconumber).interrupt();
+            waitingForNotification.remove(loconumber);
         }
-        super.cancelThrottleRequest(address, isLong, l);
+        super.cancelThrottleRequest(address, l);
     }
 
     private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class);

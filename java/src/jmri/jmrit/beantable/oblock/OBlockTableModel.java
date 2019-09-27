@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
 import jmri.jmrit.logix.OBlock;
@@ -28,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define OBlocks
- * <P>
+ * <p>
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
  *
@@ -123,18 +122,18 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return OBlockTableModel.class.getName();
     }
 
-    protected List<NamedBean> getBeanList() {
-        TreeSet<NamedBean> ts = new TreeSet<>(new NamedBeanComparator());
+    protected List<OBlock> getBeanList() {
+        TreeSet<OBlock> ts = new TreeSet<>(new NamedBeanComparator<>());
 
         Iterator<String> iter = sysNameList.iterator();
         while (iter.hasNext()) {
             ts.add(getBySystemName(iter.next()));
         }
-        ArrayList<NamedBean> list = new ArrayList<>(sysNameList.size());
+        ArrayList<OBlock> list = new ArrayList<>(sysNameList.size());
 
-        Iterator<NamedBean> it = ts.iterator();
+        Iterator<OBlock> it = ts.iterator();
         while (it.hasNext()) {
-            NamedBean elt = it.next();
+            OBlock elt = it.next();
             list.add(elt);
         }
         return list;
@@ -680,7 +679,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (log.isDebugEnabled()) {
             log.debug("Delete with {} remaining listeners", count);
             //java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(bean);
-            PropertyChangeListener[] listener = ((jmri.implementation.AbstractNamedBean) bean).getPropertyChangeListeners();
+            PropertyChangeListener[] listener = bean.getPropertyChangeListeners();
             for (int i = 0; i < listener.length; i++) {
                 log.debug("{}) {}", i, listener[i].getClass().getName());
             }

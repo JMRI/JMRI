@@ -16,8 +16,8 @@ import jmri.util.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring VirtualSignalMast objects
- * <P>
+ * A pane for configuring VirtualSignalMast objects.
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
@@ -57,8 +57,7 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull
-            SignalAppearanceMap map, SignalSystem sigSystem) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map, @Nonnull SignalSystem sigSystem) {
         Enumeration<String> aspects = map.getAspects();
         // update immediately
         disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
@@ -68,10 +67,11 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             JCheckBox disabled = new JCheckBox(aspect);
             disabledAspects.put(aspect, disabled);
         }
-        for (String aspect : disabledAspects.keySet()) {
-            disabledAspectsPanel.add(disabledAspects.get(aspect));
+
+        for (Map.Entry<String, JCheckBox> entry : disabledAspects.entrySet()) {
+            disabledAspectsPanel.add(entry.getValue());
         }
-        
+
         disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
 
         disabledAspectsPanel.revalidate();
@@ -134,13 +134,13 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
             currentMast.setMastType(mastname.substring(11, mastname.length() - 4));
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
-        
+
         // load a new or existing mast
-        for (String aspect : disabledAspects.keySet()) {
-            if (disabledAspects.get(aspect).isSelected()) {
-                currentMast.setAspectDisabled(aspect);
+        for (Map.Entry<String, JCheckBox> entry : disabledAspects.entrySet()) {
+            if (entry.getValue().isSelected()) {
+                currentMast.setAspectDisabled(entry.getKey());
             } else {
-                currentMast.setAspectEnabled(aspect);
+                currentMast.setAspectEnabled(entry.getKey());
             }
         }
         currentMast.setAllowUnLit(allowUnLit.isSelected());
@@ -163,4 +163,5 @@ public class VirtualSignalMastAddPane extends SignalMastAddPane {
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VirtualSignalMastAddPane.class);
+
 }
