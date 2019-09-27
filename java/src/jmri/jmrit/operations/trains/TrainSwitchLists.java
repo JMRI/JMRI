@@ -255,11 +255,11 @@ public class TrainSwitchLists extends TrainCommon {
                         }
                     } else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsTwoColumn(fileOut, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     } else {
                         blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
-                        blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+                        blockCarsByTrackNameTwoColumn(fileOut, carList, routeList, rl, IS_PRINT_HEADER,
                                 !IS_MANIFEST);
                     }
                     if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
