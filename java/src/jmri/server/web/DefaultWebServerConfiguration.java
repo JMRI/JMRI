@@ -50,8 +50,8 @@ public final class DefaultWebServerConfiguration extends AbstractWebServerConfig
             Properties properties = new Properties();
             properties.load(in);
             properties.stringPropertyNames().forEach(path -> map.put(path, properties.getProperty(path)));
-        } catch (IOException ex) {
-            log.error(ex.getMessage());
+        } catch (IllegalArgumentException | NullPointerException | IOException ex) {
+            log.error("Unable to load {}", resource, ex);
         }
     }
 }
