@@ -58,18 +58,8 @@
     <!-- set any properties not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
 
-    <!-- The Jenkins official release builds force: -->
-    <!--    release.official=true                   -->
-    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
-    <!-- in their "invoke ant" step                 -->
-    <!-- The Packages build (dev downloads) forces: -->
-    <!--    release.official=false                  -->
-    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
-    <!-- in its "invoke ant" step                   -->
-
-    <property name="release.build_user" value="${user.name}"/>
-
-    <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
+    <!-- set global properties for this build -->
+    <property file="${basedir}/project.properties"/>
 
     <!-- Retrieve Git revision via 'git describe' -->
     <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
@@ -92,15 +82,6 @@
     <condition property="release.official" value="true" else="false">
       <isset property="RELEASED"/>
     </condition>
-
-    <!-- Should compiler warn of use of deprecated APIs? (on/off) -->
-    <!-- This is overridden in a number of targets -->
-    <property name="deprecation" value="off"/>
-
-    <!-- SDK version (1.8 as of JMRI 3.11.1 [3.12/4.0 pre-releases]) -->
-    <property name="sdk_version"    value="1.8"/>
-    <property name="source_version" value="${sdk_version}"/>
-    <property name="jre_version"    value="${sdk_version}"/>
 
     <condition property="nsis.home" value="">
         <not><isset property="nsis.home"/></not>
@@ -127,12 +108,6 @@
             <equals arg1="${os.name}" arg2="Linux"/>
         </and>
     </condition>
-
-    <!-- set global properties for this build -->
-
-    <property file="${basedir}/project.properties"/>
-    <property name="jacocoexec"     value="${maventarget}/jacoco.exec"/>
-    <property name="java.debugging" value="yes" />
 
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
@@ -281,9 +256,6 @@
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
-
-    <!-- PureJavaComm default log level - override in local.properties or Ant command line -->
-    <property name="purejavacomm.loglevel" value="0"/>
 
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
@@ -2188,7 +2160,6 @@
     <!--  Start for checker framework -->
 
     <property environment="env"/>
-    <property name="checkerframework" value="${libdir}/checker-framework/" />
     <!-- On Mac/Linux, use the javac shell script; on Windows, use javac.bat -->
     <condition property="cfJavac" value="javac.bat" else="javac">
         <os family="windows" />
@@ -2246,14 +2217,6 @@
             description="create all OS-specific release packages"
             depends="package-windows, package-macosx, package-linux">
     </target>
-
-    <property name="dist.release" value="${dist}/release"/>
-    <property name="dist.windows" value="${dist}/Windows"/>
-    <property name="dist.macosx"  value="${dist}/MacOSX"/>
-    <property name="dist.linux"   value="${dist}/Linux"/>
-
-    <property name="dist.scripts" value="${dist}/scripts"/>
-    <property name="dist.apps"    value="${dist}/apps"/>
 
     <target name="launchjmri.exe"
             description="recreate the LaunchJMRI.exe used by the Windows release package">
@@ -2526,12 +2489,6 @@
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
-
-    <!-- set this next to a standard remote, e.g. "origin", if you don't want to
-    go directly back to the main repo; direct JMRI/JMRI require write access -->
-    <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
-
-    <property name="branch-name" value="release-${release}" />
 
     <!-- several steps are involved in creating a new test release
     branch from the head of the master branch.  This target intends to manage as

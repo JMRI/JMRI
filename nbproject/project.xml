@@ -10,6 +10,8 @@
             <name>JMRI</name>
             <properties>
                 <property name="ant.script">build.xml</property>
+                <property-file>${basedir}/local.properties</property-file>
+                <property-file>${basedir}/release.properties</property-file>
                 <property-file>${basedir}/project.properties</property-file>
             </properties>
             <folders>
