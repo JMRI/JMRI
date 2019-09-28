@@ -677,8 +677,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
                 try {
                     eventInJmriFormat = (String) t.getTransferData(DataFlavor.stringFlavor);
                 } catch (Exception e) {
-                    log.error("unable to get dragged address");
-                    e.printStackTrace();
+                    log.error("unable to get dragged address", e);
                     return false;
                 }
                 

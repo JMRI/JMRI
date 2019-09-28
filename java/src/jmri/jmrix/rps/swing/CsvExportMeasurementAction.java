@@ -65,7 +65,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
 
     void startLogging(ActionEvent e) {
 
-        System.out.println("" + e);
+        log.debug("{}", e);
         ((JMenuItem) (e.getSource())).setText("Stop CSV Export Measurement...");
 
         // initialize chooser

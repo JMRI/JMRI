@@ -194,7 +194,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         File file = new File(filename);
         try (FileInputStream fis = new FileInputStream(file)) {
 
-            System.out.println("Total file size to read (in bytes) : "
+            log.info("Total file size to read (in bytes) : "
                     + fis.available());
             fdata = new byte[fis.available()];
             int i = 0;

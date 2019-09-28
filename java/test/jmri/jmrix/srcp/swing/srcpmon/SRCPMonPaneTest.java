@@ -38,6 +38,6 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void tearDown() {
         panel = pane = null;
         jmri.InstanceManager.deregister(memo, jmri.jmrix.srcp.SRCPSystemConnectionMemo.class);
-    	JUnitUtil.tearDown();
+    	super.tearDown();
     }
 }

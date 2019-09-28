@@ -81,6 +81,7 @@ public class CbusNameServiceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initShutDownManager();
         
         tcis = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();

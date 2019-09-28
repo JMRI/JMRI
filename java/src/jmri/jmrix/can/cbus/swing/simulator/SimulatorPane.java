@@ -35,7 +35,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel _csPanes;
     private JPanel _ndPanes;
     private JPanel _evPanes;
-    private Boolean _disposeSimOnWindowClose;
+    private Boolean _disposeSimOnWindowClose = Boolean.valueOf(false);
     private JScrollPane mainScroll;
 
     @Override

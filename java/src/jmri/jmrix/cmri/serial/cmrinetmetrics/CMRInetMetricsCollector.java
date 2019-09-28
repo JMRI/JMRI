@@ -29,7 +29,7 @@ public class CMRInetMetricsCollector implements SerialListener {
     }
 
     protected void init() {
-        System.out.println("CMRInetMetricsCollector - init");
+        log.info("CMRInetMetricsCollector - init");
     }
     
     /**
@@ -128,6 +128,6 @@ public class CMRInetMetricsCollector implements SerialListener {
        }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
 
 }
