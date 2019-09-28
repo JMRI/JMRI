@@ -142,6 +142,11 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_MASTER_BUSY");
             }
 
+            case LnConstants.OPC_RE_LOCORESET_BUTTON: {
+                return Bundle.getMessage("LN_MSG_RE_LOCO_RESET");
+
+            }
+
             /*
              * OPC_LOCO_ADR     0xBF   ; REQ loco ADR
              *                         ; Follow on message: <E7>SLOT READ

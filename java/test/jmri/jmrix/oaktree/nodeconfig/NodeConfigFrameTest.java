@@ -37,8 +37,8 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         memo.dispose();
-	memo = null;
-        JUnitUtil.tearDown();
+        memo = null;
+        super.tearDown();
     }
 
 }
