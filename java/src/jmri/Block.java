@@ -662,7 +662,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     public void goingInactive() {
         log.debug("Block {} goes UNOCCUPIED", getDisplayName());
-        int currPathCnt = paths.size();
         for (Path path : paths) {
             Block b = path.getBlock();
             if (b != null) {

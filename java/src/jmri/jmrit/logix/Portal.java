@@ -63,9 +63,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 && !this.equals(path.getToPortal())) {
             return false;
         }
-        if (_fromBlock != null && _fromBlock.equals(block)) {
+        if ((_fromBlock != null) && _fromBlock.equals(block)) {
             return addPath(_fromPaths, path);
-        } else if (_toBlock != null && _toBlock.equals(block)) {
+        } else if ((_toBlock != null) && _toBlock.equals(block)) {
             return addPath(_toPaths, path);
         }
         // portal is incomplete or path block not in this portal
@@ -107,7 +107,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             log.error("Path \"{}\" has no block.", path.getName());
             return;
         }
-        // log.debug("removePath: {}", toString());
+        log.debug("removePath: {}", toString());
         if (!this.equals(path.getFromPortal())
                 && !this.equals(path.getToPortal())) {
             return;
@@ -122,7 +122,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     /**
      * Set userName of this Portal. Checks if name is available.
      *
-     * @param newName Name for path
+     * @param newName name for path
      * @return return error message, null if name change is OK
      */
     public String setName(String newName) {
@@ -177,11 +177,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param block to be the new toBlock
      * @param changePaths if true, set block in paths. If false,
-     *  verify that all toPaths are contained in the block.
+     *                    verify that all toPaths are contained in the block.
      * @return false if paths are not in the block
      */
     public boolean setToBlock(OBlock block, boolean changePaths) {
-        if ((block != null && block.equals(_toBlock)) || (block == null && _toBlock == null)) {
+        if (((block != null) && block.equals(_toBlock)) || ((block == null) && (_toBlock == null))) {
             return true;
         }
         if (changePaths) {
@@ -222,7 +222,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param block to be the new fromBlock
      * @param changePaths if true, set block in paths. If false,
-     *  verify that all toPaths are contained in the block.
+     *                    verify that all toPaths are contained in the block.
      * @return false if paths are not in the block
      */
     public boolean setFromBlock(OBlock block, boolean changePaths) {
@@ -265,12 +265,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * Set a signal to protect an OBlock. Warrants look ahead for speed changes
      * and change the train speed accordingly.
      * 
-     * @param signal Either a SignalMast or a SignalHead
+     * @param signal either a SignalMast or a SignalHead
      * @param length offset length in millimeters. This is additional
-     * entrance space for the block. This distance 
-     * added to or subtracted from the calculation of the ramp distance when
-     *  a warrant must slow the train in response to the aspect or appearance 
-     *  of the signal.
+     * entrance space for the block. This distance added to or subtracted from the
+     *               calculation of the ramp distance when a warrant must slow the
+     *               train in response to the aspect or appearance of the signal.
      * @param protectedBlock OBlock the signal protects
      * @return true if signal is set.
      */
@@ -327,6 +326,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         return null;
     }
+
     public NamedBean getFromSignal() {
         return _fromSignal;
     }
@@ -456,7 +456,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param block is the direction of entry, "from" block
      * @return permissible speed, null if no signal
-     * @deprecated since 4.17.5 use {@link getPermissibleSpeed(OBlock, boolean)}
+     * @deprecated since 4.17.5 use getPermissibleSpeed(OBlock, boolean)
      */
     @Deprecated
     public String getPermissibleEntranceSpeed(@Nonnull OBlock block) {
@@ -509,7 +509,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param block is the direction of entry, "from" block
      * @return permissible speed, null if no signal
-     * @deprecated since 4.17.5 use {@link getPermissibleSpeed(OBlock, boolean)}
+     * @deprecated since 4.17.5 use getPermissibleSpeed(OBlock, boolean)
      */
     @Deprecated
     public String getPermissibleExitSpeed(@Nonnull OBlock block) {
@@ -517,7 +517,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     /**
-     * Check signals, if any, for speed into a given block. The signal that protects
+     * Check signals, if any, for speed into/out of a given block. The signal that protects
      * the "to" block is the signal facing the "from" Block, i.e. the "from"
      * signal. (and vice-versa)
      *
@@ -525,7 +525,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param entrance true for EntranceSpeed, false for ExitSpeed
      * @return permissible speed, null if no signal
      */
-    public String getPermissibleSpeed(OBlock block, boolean entrance) {
+    public String getPermissibleSpeed(@Nonnull OBlock block, boolean entrance) {
         String speed = null;
         String blockName = block.getDisplayName();
         if (block.equals(_toBlock)) {
@@ -553,26 +553,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         // no signals, proceed at recorded speed
         return speed;
-    }
-
-    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalHead signal, boolean entrance)}
-    static private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
-        return getPermissibleSignalSpeed(signal, true);
-    }
-
-    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalMast signal, boolean entrance)}
-    static private String getPermissibleSignalEntranceSpeed(SignalMast signal) {
-        return getPermissibleSignalSpeed(signal, true);
-    }
-
-    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalHead signal, boolean entrance)}
-    static private String getPermissibleSignalExitSpeed(SignalHead signal) {
-        return getPermissibleSignalSpeed(signal, false);
-    }
-
-    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalMast signal, boolean entrance)}
-    static private String getPermissibleSignalExitSpeed(SignalMast signal) {
-        return getPermissibleSignalSpeed(signal, false);
     }
 
     /**

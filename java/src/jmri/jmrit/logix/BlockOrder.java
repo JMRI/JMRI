@@ -85,10 +85,10 @@ public class BlockOrder {
     protected String getPermissibleExitSpeed() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal != null) {
-            return portal.getPermissibleExitSpeed(_block);
+            return portal.getPermissibleSpeed(_block, false);
         }
         // OK if this is first block
-//        log.warn("getPermissibleExitSpeed, no entry portal! "+this.toString());
+//        log.warn("getPermissibleSpeed (Exit), no entry portal! {}", this.toString());
         return null;
     }
 
@@ -163,10 +163,10 @@ public class BlockOrder {
     protected String getPermissibleEntranceSpeed() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal != null) {
-            return portal.getPermissibleEntranceSpeed(_block);
+            return portal.getPermissibleSpeed(_block, true);
         }
         // OK if this is first block
-        //log.warn("getPermissibleEntranceSpeed, no entry portal! "+this.toString());
+        //log.warn("getPermissibleSpeed (Entrance), no entry portal! {}", this.toString());
         return null;
     }
 

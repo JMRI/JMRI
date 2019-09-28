@@ -50,7 +50,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     private static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
-    private final static String oblockPrefix = "OB";
+    private static String oblockPrefix;
     private final static String portalPrefix = "IP";
 
     private JTable _oBlockTable;
@@ -257,6 +257,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         errorCheck();
     }
 
+    private String oblockPrefix() {
+        if (oblockPrefix == null) {
+            oblockPrefix = InstanceManager.getDefault(OBlockManager.class).getSystemNamePrefix();
+        }
+        return oblockPrefix;
+    }
+
     /**
      * Convert a copy of JMRI Blocks to OBlocks and connect them with Portals and Paths.
      *
@@ -276,7 +283,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         } else {
             if (_showWarnings) {
                 int reply = JOptionPane.showOptionDialog(null,
-                        Bundle.getMessage("ImportBlockConfirm", oblockPrefix, blkList.size()),
+                        Bundle.getMessage("ImportBlockConfirm", oblockPrefix(), blkList.size()),
                         Bundle.getMessage("QuestionTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"),
@@ -293,7 +300,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 String sName = b.getSystemName();
                 String uName = b.getUserName();
                 String blockNumber = sName.substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
-                String oBlockName = oblockPrefix + blockNumber;
+                String oBlockName = oblockPrefix() + blockNumber;
                 String sensor = "";
                 Sensor s = b.getSensor();
                 if (s != null) {
@@ -324,7 +331,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 for (Path pa : blockPaths) {
                     log.debug("Start loop: path {} on block {}", n, oBlockName);
                     String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
-                    toBlockName = oblockPrefix + toBlockNumber;
+                    toBlockName = oblockPrefix() + toBlockNumber;
                     boolean duplicate = false;
                     SortedSet<Portal> poList = pom.getNamedBeanSet();
                     String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
@@ -1034,7 +1041,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     frame.getTitle(), name,
                     frame.getSize().getWidth(), frame.getSize().getHeight());
         }
-        if (name != null && name.startsWith(oblockPrefix)) {
+        if (name != null && name.startsWith(oblockPrefix())) {
             WarrantTableAction.initPathPortalCheck();
             if (frame instanceof BlockPathFrame) {
                 WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
