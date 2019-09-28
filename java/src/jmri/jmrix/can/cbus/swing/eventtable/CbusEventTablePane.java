@@ -649,7 +649,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
     
     @Override
     public void dispose() {
-        eventModel.removeTableModelListener(this);
+        if(eventModel != null) {
+           eventModel.removeTableModelListener(this);
+        }
         eventTable = null;
         eventScroll = null;
         super.dispose();

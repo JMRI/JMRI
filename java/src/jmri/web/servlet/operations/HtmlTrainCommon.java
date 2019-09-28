@@ -74,7 +74,7 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     protected String setoutUtilityCars(List<Car> cars, Car car, boolean isManifest) {
-        boolean isLocal = isLocalMove(car);
+        boolean isLocal = car.isLocalMove();
         if (Setup.isSwitchListFormatSameAsManifest()) {
             isManifest = true;
         }
@@ -98,7 +98,7 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     protected String pickUpCar(Car car, int count, String[] format) {
-        if (isLocalMove(car)) {
+        if (car.isLocalMove()) {
             return ""; // print nothing local move, see dropCar
         }
         StringBuilder builder = new StringBuilder();
