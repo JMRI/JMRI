@@ -369,14 +369,14 @@ public class NXFrameTest {
             if (!dark) {
                 nextSensor = nextBlock.getSensor();
                 nextSensor.setState(Sensor.ACTIVE);
-                // May cause InvocationTargetException
-//                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
+                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
             } else {
                 nextSensor = null;
             }
             if (sensor != null) {
+                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
                 sensor.setState(Sensor.INACTIVE);
-//                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
+                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
             }
             if (!dark) {
                 sensor = nextSensor;
