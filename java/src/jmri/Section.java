@@ -367,7 +367,7 @@ public class Section extends AbstractNamedBean {
         if (s == null) {
             return null;
         }
-        if (!tempSensorName.equals(s.getUserName())) {
+        if (!tempSensorName.equals(s.getUserName()) && s.getUserName() != null) {
             tempSensorName = s.getUserName();
         }
         return s;
