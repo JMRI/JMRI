@@ -52,10 +52,10 @@
         <h4>LocoNet</h4>
             <ul>
                 <li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
-                    Automatically refresh the slot information when the DCS240/DCS210 
+                    Automatically refresh the slot information when the DCS240/DCS210/DCS52 
                     "Loco Reset" feature is executed as a result of pressing the 
                     "Loco Reset" button.  This feature is active only when the 
-                    JMRI connection is configured for either DCS240 or DCS210 
+                    JMRI connection is configured for DCS240, DCS210, or DCS52 
                     acting as the command station.</li>
             </ul>
 
