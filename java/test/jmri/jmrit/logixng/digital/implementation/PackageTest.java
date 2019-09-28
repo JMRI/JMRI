@@ -9,11 +9,11 @@ import org.junit.runners.Suite;
     BundleTest.class,
     DefaultFemaleDigitalActionSocketFactoryTest.class,
     DefaultFemaleDigitalActionSocketTest.class,
-    DefaultFemaleDigitalActionWithChangeSocketTest.class,
+    DefaultFemaleDigitalBooleanActionSocketTest.class,
     DefaultFemaleDigitalExpressionSocketFactoryTest.class,
     DefaultFemaleDigitalExpressionSocketTest.class,
     DefaultMaleDigitalActionSocketTest.class,
-    DefaultMaleDigitalActionWithChangeSocketTest.class,
+    DefaultMaleDigitalBooleanActionSocketTest.class,
     DefaultMaleDigitalExpressionSocketTest.class,
     DigitalExpressionPluginAdapterTest.class,
 })

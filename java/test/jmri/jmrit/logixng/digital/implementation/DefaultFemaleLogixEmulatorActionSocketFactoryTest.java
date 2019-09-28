@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.digital.implementation;
 
-import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionWithChangeSocketFactory;
+import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalBooleanActionSocketFactory;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,7 +16,7 @@ public class DefaultFemaleLogixEmulatorActionSocketFactoryTest {
 
     @Test
     public void testCtor() {
-        DefaultFemaleDigitalActionWithChangeSocketFactory b = new DefaultFemaleDigitalActionWithChangeSocketFactory();
+        DefaultFemaleDigitalBooleanActionSocketFactory b = new DefaultFemaleDigitalBooleanActionSocketFactory();
         Assert.assertNotNull("exists", b);
     }
     

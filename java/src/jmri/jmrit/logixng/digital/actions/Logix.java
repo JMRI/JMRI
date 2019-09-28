@@ -8,13 +8,13 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.DigitalActionWithChangeManager;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
-import jmri.jmrit.logixng.FemaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
+import jmri.jmrit.logixng.DigitalBooleanActionManager;
 
 /**
  * Emulates Logix.
@@ -30,22 +30,22 @@ public class Logix extends AbstractDigitalAction
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
     private final FemaleDigitalExpressionSocket _expressionSocket;
-    private final FemaleDigitalActionWithChangeSocket _actionSocket;
+    private final FemaleDigitalBooleanActionSocket _actionSocket;
     
     public Logix(String sys, String user) {
         super(sys, user);
         _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E");
-        _actionSocket = InstanceManager.getDefault(DigitalActionWithChangeManager.class)
+        _actionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class)
                 .createFemaleSocket(this, this, "A");
     }
     
     private Logix(Logix template) {
-        super(InstanceManager.getDefault(DigitalActionWithChangeManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getNewSystemName(), null);
         _template = template;
         _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._expressionSocket.getName());
-        _actionSocket = InstanceManager.getDefault(DigitalActionWithChangeManager.class)
+        _actionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class)
                 .createFemaleSocket(this, this, _template._actionSocket.getName());
     }
     
@@ -163,7 +163,7 @@ public class Logix extends AbstractDigitalAction
         _expressionSocketSystemName = systemName;
     }
 
-    public FemaleDigitalActionWithChangeSocket getActionSocket() {
+    public FemaleDigitalBooleanActionSocket getActionSocket() {
         return _actionSocket;
     }
 
@@ -208,7 +208,7 @@ public class Logix extends AbstractDigitalAction
                 _actionSocket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
-                            InstanceManager.getDefault(DigitalActionWithChangeManager.class)
+                            InstanceManager.getDefault(DigitalBooleanActionManager.class)
                                     .getBeanBySystemName(socketSystemName);
                     _actionSocket.disconnect();
                     if (maleSocket != null) {

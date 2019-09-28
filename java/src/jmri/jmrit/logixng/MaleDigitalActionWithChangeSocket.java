@@ -1,9 +1,9 @@
 package jmri.jmrit.logixng;
 
 /**
- * A LogixNG male DigitalActionWithChangeBean socket.
+ * A LogixNG male DigitalBooleanActionBean socket.
  */
 public interface MaleDigitalActionWithChangeSocket
-        extends MaleSocket, DigitalActionWithChangeBean {
+        extends MaleSocket, DigitalBooleanActionBean {
 
 }

@@ -52,7 +52,7 @@
       to set them up. The documentation is divided into sections;
       click below for easy access to a listed section. If you
       prefer to try before reading much, read <a href=
-      "#intro">Introduction to LogixNG and Conditionals</a>, then
+      "#intro">Introduction to LogixNG</a>, then
       click <a href="#start">Getting Started</a> and follow those
       instructions. Return here to read about what you did.</p>
 
@@ -78,6 +78,8 @@
         <li><a href="#start">Getting Started</a></li>
 
         <li><a href="#notes">Additional Notes</a></li>
+
+        <li><a href="#actions_expressions">List of actions and expressions</a></li>
       </ul><a name="intro" id="intro"></a>
 
       <p>Detail <strong>State Variable</strong> and <strong>Action</strong> Lists:</p>
@@ -319,8 +321,8 @@
       <p>The only time when the ConditionalNGs are evaluated in the
       order listed is when all of their states are UNKNOWN, such as
       when the LogixNG is being enabled. ConditionalNGs are evaluated
-      when one of their state variables changes its state. If an
-      entity is used as a state variable in more than one
+      when one of their expressions changes its state. If an
+      entity is used as a expression in more than one
       conditional, it is indeterminate which conditional is
       evaluated first.</p>
 
@@ -328,7 +330,7 @@
       LogixNG window, any change in the LogixNG User Name is checked
       and made. A check is made for inconsistencies in specifying
       that an entity (sensor, turnout, etc.) referenced in multiple
-      state variables is not monitored as a trigger for calculation
+      expressions is not monitored as a trigger for calculation
       of the LogixNG, and a warning message appears if any
       inconsistencies are found. Then the LogixNG is activated, the
       Edit LogixNG window is dismissed, and the user is returned to
@@ -393,22 +395,22 @@
       separately below.</p>
 
       <p>Logical expressions connect the states (true or false) of
-      "state variables". State variables test conditions on the
+      "expressions". State variables test conditions on the
       layout or in the program, for example, if a sensor is active
       or inactive, if a turnout is closed, if a signal head is red,
       if the fast clock time is between 10:00 and 11:00, etc. State
       variables are linked together in a logical expression by
-      logic operators. For a list of currently available state variables, see
+      logic operators. For a list of currently available expressions, see
       <a href="../../package/jmri/jmrit/beantable/ConditionalNGAddEdit.shtml#variable">State
       Variables</a></p>
 
       <p>Logic operators currently available are NOT, AND, AND
       NOT, OR and OR NOT. The AND operator is set up automatically 
       by the program.
-      For each state variable, the user selects whether the NOT
-      operator is to precede the state variable. If the NOT
-      operator precedes the state variable, the true/false value of
-      the state variable is reversed. For example, if "Sensor
+      For each expression, the user selects whether the NOT
+      operator is to precede the expression. If the NOT
+      operator precedes the expression, the true/false value of
+      the expression is reversed. For example, if "Sensor
       Active CS5" is true, "NOT Sensor Active CS5" will be false,
       and vice versa. Note that "Sensor Active CS5" is sometimes
       not the same as "NOT Sensor Inactive CS5", because Sensor CS5
@@ -430,7 +432,7 @@
       occupied (perhaps from a BDL168), sensor LS1021 is true when
       block 11 is occupied, and Turnout Thrown LT20 is true when
       turnout LT20 is thrown. This logical expression would
-      calculate to true if all three of the state variables are
+      calculate to true if all three of the expressions are
       true, i.e., if block 10 is occupied AND block 11 is occupied
       AND turnout 20 is thrown; otherwise it would calculate
       false.</p>
@@ -483,10 +485,10 @@
       AND's, OR's and NOT's. When this choice is made the logical expression
       requires parentheses in order to be unambiguous. So, when this choice
       is made, a text field is displayed so that parentheses can be
-      inserted and the expression modified. The state variables are
+      inserted and the expression modified. The expressions are
       represented in the expression by their row number.</p>
 
-      <p>The first column in the state variable table is the row
+      <p>The first column in the expression table is the row
       number of the variable. The next column displays the logic
       operation preceding the variable in the expression. In the
       case of "Mixed" a choice box allows the user to choose an
@@ -496,13 +498,13 @@
       column contains a choice box that allows the user to select
       the NOT operator as needed.</p>
 
-      <p>The fourth column is a description of state variable and
+      <p>The fourth column is a description of expression and
       the condition to be monitored to be for its state to be true.
       The next column shows the state that was last tested for the
       variable (true or false). The state displayed includes the
       effect of the NOT operator, if NOT is selected.</p>
 
-      <p>The "Trigger" column sets whether the state variable
+      <p>The "Trigger" column sets whether the expression
       should cause the ConditionalNG to perform its actions when this
       variable changes. Note that the current states of all the
       variables are <strong>always</strong> used in the calculation of the
@@ -512,26 +514,26 @@
       necessary condition, but not a sufficient one to cause any
       actions to take place.</p>
 
-      <p><strong>Note:</strong> Disabling state variable triggers should be
+      <p><strong>Note:</strong> Disabling expression triggers should be
       done with caution. Actions are performed only when the state
       of the logical expression changes. Disabling a trigger can
       prevent actions from be executed even when this state has
       changed.</p>
 
       <p>Next is a column of <strong>Edit</strong> button to modify an
-      existing state variable. The last column of the table
-      (<strong>Delete</strong> buttons) is used to delete a state variable if
+      existing expression. The last column of the table
+      (<strong>Delete</strong> buttons) is used to delete a expression if
       you decide it is no longer needed.</p>
 
       <a name="variable" id="variable"></a>
       <p>Press the <strong>Add State Variable</strong> to add a state
       variable (a row in the State Variable table). This brings up
       a window with a choice box for the user to select a state
-      variable type. Available state variables are documented at
+      variable type. Available expressions are documented at
       <a href="../../package/jmri/jmrit/beantable/ConditionalNGAddEdit.shtml#variable">State
       Variables</a>. When a type is chosen the Edit
       Variable window displays a text field for the name of the
-      entity to be used for the state variable. When a name (either
+      entity to be used for the expression. When a name (either
       System Name or user name) is entered, it must correspond to
       an existing entity (sensor, turnout, light, etc.). Depending on
       your <a href="../../package/jmri/jmrit/beantable/LogixNGTable.shtml#selectMethod">selection
@@ -539,9 +541,9 @@
       a single Pick List or a dropdown combo box will be displayed to
       aid in name selection.</p>
 
-      <p>At any time during the entry of state variable data, the
+      <p>At any time during the entry of expression data, the
       <strong>Check State Variables</strong> button may be clicked to check
-      the entered data and evaluate the state variables. When this
+      the entered data and evaluate the expressions. When this
       button is pressed, the checking and evaluation proceeds until
       the check completes successfully, or an error is detected. If
       an error is detected, the checking stops for the user to
@@ -614,7 +616,7 @@
       perform the action: 1) On Change to True, 2) On Change to
       False, and 3) On Change. These refer to the calculated state
       of the ConditionalNG, which is equal to the value of the
-      logical expression as specified in the state variable table.
+      logical expression as specified in the expression table.
       One of these options must be selected. When done, click
       either "Update" to install your changes, "Cancel" to close
       the window without any changes or "Delete" to remove the
@@ -629,7 +631,7 @@
       occur in the same order. If it is necessary to have actions
       take place in a specified order, use separate ConditionalNGs
       for each action and chain the ConditionalNGs such that a
-      preceding action's completed state is the state variable for
+      preceding action's completed state is the expression for
       the succeeding action.</p><a name="updateconditional" id=
       "updateconditional"></a>
 
@@ -695,7 +697,7 @@
         from the Variable State drop down.</li>
 
         <li>Click the <strong>Update</strong> button and note the row entries
-        that appear in the state variable table.</li>
+        that appear in the expression table.</li>
 
         <li>Click <strong>New State Variable</strong> to create another row
         in the table. Note that AND appears in the first column of
@@ -706,7 +708,7 @@
         <li>Click the third column entry of the second row to
         reveal the selection box for NOT. Select NOT, then click
         <strong>Check State Variables</strong> again. Note that the State of
-        the second state variable has reversed.</li>
+        the second expression has reversed.</li>
 
         <li>For an Action click <strong>Add Action</strong>.</li>
 
@@ -761,45 +763,6 @@
 
       <ul>
         <li>
-          <p><strong>Why have a "group" of ConditionalNGs instead of just
-          single ConditionalNGs?</strong></p>
-
-          <p>A group of ConditionalNGs was chosen for several
-          reasons, including:</p>
-
-          <ol>
-            <li>Grouping ConditionalNGs into a LogixNG, and focusing
-            the LogixNG on one task should end up being much more
-            user friendly. Think about one LogixNG with several
-            ConditionalNGs controlling one three-turnout signal head.
-            The first ConditionalNG could check conditions for a RED
-            appearance, and take appropriate action. The second
-            ConditionalNG could check on another allowed appearance
-            which, depending upon the rules of the railroad being
-            modeled could depend upon the calculated state of the
-            first ConditionalNG. Other ConditionalNGs would check for
-            other appearances according to the rules of the
-            railroad. So with only one LogixNG, a user should be able
-            to set up the required logic for setting appearances
-            for one signal head. Thus once the sensors, turnouts,
-            and signal heads are set up, only one new System Name,
-            the System Name of the LogixNG, need be defined and kept
-            track of.</li>
-
-            <li>Another reason for grouping multiple ConditionalNGs
-            is simpler operation. Fewer behind the scene listeners
-            are needed to accomplish the same task. Even though,
-            following the example above, the logic for each
-            appearance of the signal head (each ConditionalNG) may
-            depend upon a particular sensor (a block occupancy for
-            example), if the ConditionalNGs are combined into a
-            single LogixNG, only _one_ listener for that sensor is
-            required. This is simpler in implementation than having
-            multiple listeners.</li>
-          </ol>
-        </li>
-
-        <li>
           <p><strong>How is a LogixNG started?</strong></p>
 
           <p>Start of a LogixNG is similar to the way a light, a
@@ -807,84 +770,21 @@
           Internally a LogixNG has an "activate" method, that is
           called when the LogixNG is created, after it is edited, or
           when it is loaded from a configuration file. This method
-          starts listeners for items in the state variables of the
+          starts listeners for items in the expressions of the
           LogixNG's ConditionalNGs. When any of these listeners fires
-          (indicating that the watched property of a state variable
+          (indicating that the watched property of a expression
           has changed), the LogixNG is calculated, resulting in
           appropriate actions being taken, provided the LogixNG is
           enabled.</p>
         </li>
 
         <li>
-          <p><strong>What is the initial state of a LogixNG and its
-          ConditionalNGs?</strong></p>
-
-          <p>When a LogixNG is created or edited, the initial state
-          of each ConditionalNG is true or false as shown in the Edit
-          LogixNG window. When a LogixNG is loaded from a configuration
-          file, the initial state of each ConditionalNG is
-          UNKNOWN.</p>
-
-          <p>A LogixNG is enabled automatically when it is created. A
-          LogixNG may be disabled/enabled by unchecking/checking the
-          button in the Enable column in the LogixNG table. For
-          example, you might want to disable a LogixNG while you're
-          creating and debugging it, until you're certain that you
-          have it set up properly. A LogixNG may be enabled or
-          disabled dynamically by another LogixNG (see allowed
-          <a href=
-          "../../package/jmri/jmrit/beantable/ConditionalNGAddEdit.shtml#action">Actions</a>.
-          ).</p>
-
-          <p>When JMRI stores the layout configuration in a file,
-          e.g. a panel file, all LogixNG information, including the
-          enabled/disabled state of the LogixNG, is stored. When a
-          LogixNG is loaded from a configuration file, its enabled
-          or disabled status is set according to what was saved in
-          the configuration file. This is done so that people can
-          disable their LogixNG while debugging them, yet still save
-          and restore the configuration as needed.</p>
-        </li>
-
-        <li>
-          <strong>What happens when a JMRI program starts up or when a
-          configuration file is loaded by a JMRI program?</strong>
-
-          <p>This is a complex question that depends upon many
-          things, such as, how the user has set up for turnout
-          feedback, block detection, etc. When a configuration file
-          is read, the various entities (sensors, turnouts, signal
-          heads, etc.) are loaded in an almost random order. So
-          it's not reasonable, for example, to calculate each LogixNG
-          as it is loaded, since the needed state variable entities
-          might not be present when the LogixNG is loaded. And, since
-          most entities will load in UNKNOWN state, calculating a
-          LogixNG immediately after the entire configuration file is
-          loaded doesn't produce a clean start up either. So when a
-          LogixNG is loaded, the state of each ConditionalNG starts as
-          UNKNOWN. Immediately after the entire configuration file
-          is loaded, all LogixNG are activated, and then all the
-          LogixNG are calculated. The state of ConditionalNGs changes
-          from UNKNOWN to true or false. But will the calculated
-          state of the ConditionalNG be "correct" if one or more of
-          the state variables is evaluated from an entity in an
-          UNKNOWN state? For example, think of a turnout in an
-          UNKNOWN state--Turnout Thrown and Turnout Closed will
-          both evaluate to false. As listeners continue to fire for
-          state variables, eventually every entity has its correct
-          current state and the LogixNG will work fine. You can
-          monitor this action by watching states in the Sensor
-          Table, the Turnout Table, etc. Conditions at start up
-          certainly are something to keep in mind when setting up a
-          LogixNG.</p>
-        </li>
-
-        <li>
-          <strong>When should Triggers Calculation be unchecked in a
-          state variable?</strong>
+          <strong>When should Triggers Calculation be unchecked in an
+          expression?</strong>
 
           <p>Normally Triggers Calculation should be checked in all
-          state variables, so a change in any of its state variable
+          expressions that has this option, so a change in any of its
+          expression
           will trigger calculation of a LogixNG. This results in the
           LogixNG quickly reacting to changes on the layout, and
           maintaining the status of signals, turnouts, etc. as
@@ -896,14 +796,14 @@
 
           <p>Occasionally a "logic loop" can result if triggering
           is not suppressed. For example, if the state of a turnout
-          is tested in a state variable, and the same turnout is
+          is tested in a expression, and the same turnout is
           set in an action of the same or another ConditionalNG of
           the same LogixNG, continuous triggering (a logic loop)
           could result. The easiest way out of this dilemma is to
           test the turnout, without using it as a triggering
           entity. This is done by unchecking Triggers Calculation
-          in <strong>all</strong> state variables where the turnout is
-          specified. If the turnout is used in state variables of
+          in <strong>all</strong> expressions where the turnout is
+          specified. If the turnout is used in expressions of
           more than one ConditionalNG of the LogixNG, it must be
           unchecked everywhere it is used to suppress using it as a
           trigger.</p>
@@ -912,7 +812,7 @@
           action is used with an internal sensor to trigger a
           second LogixNG after the delay time has elapsed. If the
           second LogixNG is not to be triggered before the delay time
-          elapses, all of its state variables, except for the
+          elapses, all of its expressions, except for the
           delayed internal sensor, should be unchecked. This
           scenario might occur, for example, if a ConditionalNG turns
           on something as its first action, and sets a Delayed Set
@@ -932,7 +832,7 @@
           your logic to avoid such situations.</p>
 
           <p>A "logic loop" can result within a single LogixNG when a
-          state variable (sensor, turnout, etc.) that triggers the
+          expression (sensor, turnout, etc.) that triggers the
           LogixNG is also changed by that same LogixNG. The LogixNG
           editor will detect some situations that could result in a
           loop, and will issue a warning when you close the LogixNG.
@@ -963,7 +863,7 @@
           up, or slowed to a crawl as the loop uses up most of the
           available computer time. Fortunately JMRI provides tools
           to help in design and debugging. Unchecking "Triggers
-          Calculation" for a state variable (discussed above), can
+          Calculation" for a expression (discussed above), can
           help you design around loops when you have identified the
           LogixNG causing the looping problem. To get around the lock
           up or slow down problem, start with all your LogixNGs
@@ -1007,6 +907,314 @@
           deactivates the selected LogixNG before opening it for
           editing, offering a possible way to break into a logic
           loop without restarting the program.</p>
+        </li>
+      </ul>
+
+
+      <a name="digital_actions" id="digital_actions"></a>
+      <h2>List of digital actions</h2>
+
+      <p>This section lists all the digital actions that is currently
+	  available with LogixNG.</p>
+
+      <p>Digital actions do something. Example: Set sensor IS2 to ON.
+      Throw turnout LT52.</p>
+
+      <p>Digital actions have system names with the letters
+      <strong>DA</strong> (for <strong>D</strong>igital
+      <strong>A</strong>ction). Example: IQDA002 or IQDA:0053.
+      System names with colon are auto generated system names.</p>
+
+      <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
+	  sure if these ideas are worth keeping. /Daniel</p>
+
+      <p style="color:blue">Items in blue is not up to date with documentation.
+	  The documentation tells how they should work, but the code is not finished yet.
+	  /Daniel</p>
+
+      <ul>
+        <li>
+          <p><strong>Light</strong></p>
+
+          <p>The Light action sets a light.</p>
+        </li>
+
+        <li>
+          <p><strong>Sensor</strong></p>
+
+          <p>The Sensor action sets a sensor.</p>
+        </li>
+
+        <li>
+          <p><strong>Turnout</strong></p>
+
+          <p>The Turnout action sets a turnout.</p>
+        </li>
+
+        <li>
+          <p><strong>Throttle</strong></p>
+
+          <p>The Throttle action controls a throttle. It has child expressions
+		  for loco address, loco speed and loco direction. For now, an analog
+		  memory expression or an analog constant expression can be used to
+		  control the loco address and the loco speed, but once JMRI has
+		  support for AnalogIO devices, an AnalogIO may be used to control
+		  loco address and/or loco speed.</p>
+        </li>
+
+        <li>
+          <p><strong>Timer</strong></p>
+
+          <p>The Timer action executes a child action after some time.</p>
+        </li>
+
+        <li>
+          <p><strong>DoAnalogAction</strong></p>
+
+          <p>The DoAnalogAction reads an analog child expression and executes
+		  an analog child action.</p>
+        </li>
+
+        <li>
+          <p><strong>DoStringAction</strong></p>
+
+          <p>The DoStringAction reads an string child expression and executes
+		  an string child action.</p>
+        </li>
+
+        <li>
+          <p><strong style="color:red">HoldAnything</strong></p>
+
+          <p style="color:red">Remove this</strong></p>
+
+          <p>The HoldAnything can hold any type of action or expression.</p>
+        </li>
+
+        <li>
+          <p><strong>IfThenElse</strong></p>
+
+          <p>The IfThenElse reads a digital child expression and if the
+		  answer is <strong>true</strong> it executes the <strong>then</strong>
+		  child action, else it executes the <strong>else</strong> child action.
+        </li>
+
+        <li>
+          <p><strong>Logix</strong></p>
+
+          <p>The Logix action reads a digital child expression and then executes
+		  boolean actions. Each boolean action takes the result from the
+		  expression and takes action accordingly. The recommended child boolean
+		  actions for this action is the OnChange action. The Logix action, together
+		  with the OnChange child boolean actions, acts like the JMRI Logix, with
+		  explains the name of this action.</p>
+        </li>
+
+        <li>
+          <p><strong>Many</strong></p>
+
+          <p>The Many action executes many child actions.</p>
+        </li>
+
+        <li>
+          <p><strong>ShutdownComputer</strong></p>
+
+          <p>The ShutdownComputer action either shutdown or restarts the computer.
+		  This action is mainly included to demonstrate the possibilities of LogixNG,
+		  but it may be useful in some cases, for example when a Raspberry Pi computer
+		  runs the layout and there is no keyboard and mouse connected to the Raspberry
+		  Pi computer. It's then possible to use a sensor to shutdown the computer.</p>
+        </li>
+
+      </ul>
+
+
+      <a name="digital_boolean_actions" id="digital_boolean_actions"></a>
+      <h2>List of digital boolean actions</h2>
+
+      <p>This section lists all the digital boolean actions that is currently
+	  available with LogixNG.</p>
+
+      <p>Digital boolean actions takes a true/false value and do something.
+	  The most common use is the digital action Logix together with the digital
+	  boolean action OnChange.</p>
+
+      <p>Digital boolean actions have system names with the letters
+      <strong>DB</strong> (for <strong>D</strong>igital
+      <strong>B</strong>oolean action). Example: IQDB002 or IQDB:0053.
+      System names with colon are auto generated system names.</p>
+
+      <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
+	  sure if these ideas are worth keeping. /Daniel</p>
+
+      <p style="color:blue">Items in blue is not up to date with documentation.
+	  The documentation tells how they should work, but the code is not finished yet.
+	  /Daniel</p>
+
+      <ul>
+        <li>
+          <p><strong>OnChange</strong></p>
+
+          <p>Executes a child action if the parameter is changed and to the
+		  desired value.</p>
+        </li>
+
+      </ul>
+
+
+      <a name="digital_expressions" id="digital_expressions"></a>
+      <h2>List of digital expressions</h2>
+
+      <p>This section lists all the digital expressions that is currently
+	  available with LogixNG.</p>
+
+      <p>Digital expressions asks a question and gives a true/false
+      answer. Example: Is sensor IS2 on? Is turnout LT52 thrown?</p>
+
+      <p>Digital expressions have system names with the letters
+      <strong>DE</strong> (for <strong>D</strong>igital
+      <strong>E</strong>xpression). Example: IQDE002 or IQDE:0053.
+      System names with colon are auto generated system names.</p>
+
+      <p style="color:red">Items in red may need rethink or removal. I have ideas, but not always
+	  sure if these ideas are worth keeping. /Daniel</p>
+
+      <p style="color:blue">Items in blue is not up to date with documentation.
+	  The documentation tells how they should work, but the code is not finished yet.
+	  /Daniel</p>
+
+      <ul>
+        <li>
+          <p><strong>And</strong></p>
+
+          <p>The And expression has a number of child expressions and
+          answers <strong>true</strong> if and only if all of the child
+          expressions answers <strong>true</strong>. If any of the child
+          expressions answer <strong>false</strong>, the
+          <strong>And</strong> expression answers <strong>false</strong>.
+        </li>
+
+        <li>
+          <p><strong>Antecedent</strong></p>
+
+          <p>The Antecedent expression has a formula together with a
+          number of child expressions. It evaluates the formula with the
+          results from the child expressions. The Antecedent expression
+          follows the same rules as in a Conditional in Logix. A
+          Antecedent formula can have parentheses and the words
+          <strong>AND</strong> and <strong>OR</strong> to build the
+          formula.
+        </li>
+
+        <li>
+          <p><strong>Light</strong></p>
+
+          <p>The Light expression checks the state of a light and answers
+          <strong>true</strong> if the light has the desired state.
+        </li>
+
+        <li>
+          <p><strong>Sensor</strong></p>
+
+          <p>The Sensor expression checks the state of a sensor and answers
+          <strong>true</strong> if the sensor has the desired state.
+        </li>
+
+        <li>
+          <p><strong>Turnout</strong></p>
+
+          <p>The Turnout expression checks the state of a turnout and answers
+          <strong>true</strong> if the turnout has the desired state.
+        </li>
+
+        <li>
+          <p><strong>False</strong></p>
+
+          <p>The False expression always answers <strong>false</strong>.
+        </li>
+
+        <li>
+          <p><strong>True</strong></p>
+
+          <p>The True expression always answers <strong>true</strong>.
+        </li>
+
+        <li>
+          <p><strong style="color:red">Hold</strong></p>
+
+          <p>The Hold expression has two child expressions, one trigger
+          expression and one hold expression. For this expression to
+          become <strong>true</strong>, both the trigger expression and the
+          hold expression must answer <strong>true</strong>. But then it
+          stays <strong>true</strong> as long as the hold expression stays
+          <strong>true</strong>.
+        </li>
+
+        <li>
+          <p><strong>Or</strong></p>
+
+          <p>The Or expression has a number of child expressions and
+          answers <strong>true</strong> at least one the child
+          expressions answers <strong>true</strong>. If all of the child
+          expressions answer <strong>false</strong>, the
+          <strong>And</strong> expression answers <strong>false</strong>.
+        </li>
+
+        <li>
+          <p><strong>Not</strong></p>
+
+          <p><strong style="color:red">This expression does not exist yet.
+          Implement it.</strong></p>
+
+          <p>The Not expression has one child expression and
+          answers <strong>true</strong> if the child
+          expression answer <strong>false</strong>, and <strong>false</strong>
+          if the child expression answers <strong>true</strong>.
+        </li>
+
+        <li>
+          <p><strong style="color:blue">ResetOnTrue</strong></p>
+
+          <p><strong style="color:red">Update the code</strong></p>
+
+          <p>The ResetOnTrue expression has two child expressions, one
+          primary expression and one secondary expression. When the primary
+          expression becomes <strong>true</strong>, the secondary expression
+          is reset. This expression is primary designed to be used with a timer
+          expression as the secondary expression. The timer will then restart
+          when it's reset.</p>
+
+          <p>The user can select between four different ways on when this
+          expression answers <strong>true</strong>.</p>
+
+          <ul>
+            <li>The primary expression trigger, and until the secondary expression becomes true.</li>
+            <li>The primary expression trigger, and while the secondary expression is true.</li>
+            <li>The primary expression stays true, and until the secondary expression becomes true.</li>
+            <li>The primary expression stays true, and while the secondary expression is true.</li>
+          </ul>
+
+          <p>Example usages for this expression:</p>
+
+          <ul>
+            <li>Wait on a timer. For example, when turnout IT1 is thrown, wait 5 seconds until expression becomes true.</li>
+            <li>Wait on a timer. For example, when turnout IT1 is thrown, let the expression be true for 5 seconds.</li>
+          </ul>
+        </li>
+
+        <li>
+          <p><strong>Timer</strong></p>
+
+          <p>The Timer expression waits some time then it's reset.
+        </li>
+
+        <li>
+          <p><strong>TriggerOnce</strong></p>
+
+          <p>The TriggerOnce expression answers <strong>true</strong> one single
+          time and then <strong>false</strong> until JMRI is restarted. It's
+          designed to be used when something needs to be done exactly one time,
+          for example set some turnouts to a specified inital state or to set
+          some memories to some predefined values.
         </li>
       </ul>
 
