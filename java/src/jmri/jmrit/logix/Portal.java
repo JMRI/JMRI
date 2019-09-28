@@ -16,10 +16,12 @@ import org.slf4j.LoggerFactory;
 /**
  * A Portal is a boundary between two Blocks.
  * <p>
- * A Portal has Lists of the OPaths that connect through it. The direction of
- * trains passing through the portal is managed from the BlockOrders of the
- * Warrant the train is running under. The Portal fires a PropertyChangeEvent
- * that a PortIcon can listen for to set direction arrows for a given route.
+ * A Portal has Lists of the {@link OPath}s that connect through it.
+ * The direction of trains passing through the portal is managed from the
+ * BlockOrders of the Warrant the train is running under.
+ * The Portal fires a PropertyChangeEvent that a
+ * {@link jmri.jmrit.display.controlPanelEditor.PortalIcon} can listen
+ * for to set direction arrows for a given route.
  *
  * The Portal also supplies speed information from any signals set at its
  * location that the Warrant passes on the Engineer.
@@ -51,7 +53,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param path OPath to add
      * @return false if Path does not have a matching block for this Portal
      */
-    public boolean addPath(OPath path) {
+    public boolean addPath(@Nonnull OPath path) {
         Block block = path.getBlock();
         if (block == null) {
             log.error("Path \"{}\" has no block.", path.getName());
@@ -74,7 +76,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * Utility for both path lists.
      * Checks for duplicate name.
      */
-    private boolean addPath(List<OPath> list, OPath path) {
+    private boolean addPath(@Nonnull List<OPath> list, @Nonnull OPath path) {
         String pName = path.getName();
         for (OPath p : list) {
             if (p.equals(path)) {
@@ -99,7 +101,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param path the OPath to remove
      */
-    public void removePath(OPath path) {
+    public void removePath(@Nonnull OPath path) {
         Block block = path.getBlock();
         if (block == null) {
             log.error("Path \"{}\" has no block.", path.getName());
@@ -276,14 +278,14 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (protectedBlock == null) {
             return false;
         }
-        if (_fromBlock!=null && _fromBlock.equals(protectedBlock)) {
+        if ((_fromBlock != null) && _fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalOffset = length;
             log.debug("setProtectSignal: _toSignal= \"{}\", protectedBlock= {}",
                     signal.getDisplayName(), protectedBlock.getDisplayName());
             return true;
         }
-        if (_toBlock!=null && _toBlock.equals(protectedBlock)) {
+        if ((_toBlock != null) && _toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalOffset = length;
             log.debug("setProtectSignal: _fromSignal= \"{}\", protectedBlock= {}",
@@ -349,7 +351,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return _toSignalOffset;
     }
 
-    public void deleteSignal(NamedBean signal) {
+    public void deleteSignal(@Nonnull NamedBean signal) {
         if (signal.equals(_toSignal)) {
             _toSignal = null;
         } else if (signal.equals(_fromSignal)) {
@@ -391,7 +393,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param block OBlock
      * @return the opposite block
      */
-    public OBlock getOpposingBlock(OBlock block) {
+    public OBlock getOpposingBlock(@Nonnull OBlock block) {
         if (block.equals(_fromBlock)) {
             return _toBlock;
         } else if (block.equals(_toBlock)) {
@@ -407,7 +409,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param block OBlock
      * @return null if portal does not connect to block
      */
-    public List<OPath> getPathsFromOpposingBlock(OBlock block) {
+    public List<OPath> getPathsFromOpposingBlock(@Nonnull OBlock block) {
         if (block.equals(_fromBlock)) {
             return _toPaths;
         } else if (block.equals(_toBlock)) {
@@ -454,35 +456,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param block is the direction of entry, "from" block
      * @return permissible speed, null if no signal
+     * @deprecated since 4.17.5 use {@link getPermissibleSpeed(OBlock, boolean)}
      */
-    public String getPermissibleEntranceSpeed(OBlock block) {
-        String speed = null;
-        String blockName = block.getDisplayName();
-        if (block.equals(_toBlock)) {
-            if (_fromSignal != null) {
-                if (_fromSignal instanceof SignalHead) {
-                    speed = getPermissibleSignalEntranceSpeed((SignalHead) _fromSignal);
-                } else {
-                    speed = getPermissibleSignalEntranceSpeed((SignalMast) _fromSignal);
-                }
-            }
-        } else if (block.equals(_fromBlock)) {
-            if (_toSignal != null) {
-                if (_toSignal instanceof SignalHead) {
-                    speed = getPermissibleSignalEntranceSpeed((SignalHead) _toSignal);
-                } else {
-                    speed = getPermissibleSignalEntranceSpeed((SignalMast) _toSignal);
-                }
-            }
-        } else {
-            log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
-        }
-        if (speed != null) {
-            log.debug("Portal \"{}\" has ENTRANCE speed= {} into \"{}\" from signal.",
-                    getUserName(), speed, blockName);
-        }
-        // no signals, proceed at recorded speed
-        return speed;
+    @Deprecated
+    public String getPermissibleEntranceSpeed(@Nonnull OBlock block) {
+        return getPermissibleSpeed(block, true);
     }
 
     /**
@@ -492,7 +470,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param block a protected OBlock
      * @param distance length in millimeters
      */
-    public void setEntranceSpaceForBlock(OBlock block, float distance) {
+    public void setEntranceSpaceForBlock(@Nonnull OBlock block, float distance) {
         if (block.equals(_toBlock)) {
             if (_fromSignal != null) {
                 _fromSignalOffset = distance;
@@ -511,7 +489,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param block a protected OBlock
      * @return distance
      */
-    public float getEntranceSpaceForBlock(OBlock block) {
+    public float getEntranceSpaceForBlock(@Nonnull OBlock block) {
         if (block.equals(_toBlock)) {
             if (_fromSignal != null) {
                 return _fromSignalOffset;
@@ -531,86 +509,115 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      *
      * @param block is the direction of entry, "from" block
      * @return permissible speed, null if no signal
+     * @deprecated since 4.17.5 use {@link getPermissibleSpeed(OBlock, boolean)}
      */
-    public String getPermissibleExitSpeed(OBlock block) {
+    @Deprecated
+    public String getPermissibleExitSpeed(@Nonnull OBlock block) {
+        return getPermissibleSpeed(block, false);
+    }
+
+    /**
+     * Check signals, if any, for speed into a given block. The signal that protects
+     * the "to" block is the signal facing the "from" Block, i.e. the "from"
+     * signal. (and vice-versa)
+     *
+     * @param block is the direction of entry, "from" block
+     * @param entrance true for EntranceSpeed, false for ExitSpeed
+     * @return permissible speed, null if no signal
+     */
+    public String getPermissibleSpeed(OBlock block, boolean entrance) {
         String speed = null;
         String blockName = block.getDisplayName();
         if (block.equals(_toBlock)) {
             if (_fromSignal != null) {
                 if (_fromSignal instanceof SignalHead) {
-                    speed = getPermissibleSignalExitSpeed((SignalHead) _fromSignal);
+                    speed = getPermissibleSignalSpeed((SignalHead) _fromSignal, entrance);
                 } else {
-                    speed = getPermissibleSignalExitSpeed((SignalMast) _fromSignal);
+                    speed = getPermissibleSignalSpeed((SignalMast) _fromSignal, entrance);
                 }
             }
         } else if (block.equals(_fromBlock)) {
             if (_toSignal != null) {
                 if (_toSignal instanceof SignalHead) {
-                    speed = getPermissibleSignalExitSpeed((SignalHead) _toSignal);
+                    speed = getPermissibleSignalSpeed((SignalHead) _toSignal, entrance);
                 } else {
-                    speed = getPermissibleSignalExitSpeed((SignalMast) _toSignal);
+                    speed = getPermissibleSignalSpeed((SignalMast) _toSignal, entrance);
                 }
             }
         } else {
             log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
         }
         if (speed != null) {
-            log.debug("Portal \"{}\" has EXIT speed= {} into \"{}\" from signal.",
-                    getUserName(), speed,  blockName);
+            log.debug("Portal \"{}\" has {}} speed= {} into \"{}\" from signal.",
+                    getUserName(), (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
         }
         // no signals, proceed at recorded speed
         return speed;
     }
 
+    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalHead signal, boolean entrance)}
     static private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
-        int appearance = signal.getAppearance();
-        String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
-        if (speed == null) {
-            log.error("SignalHead \"{}\" has no speed specified for appearance \"{}\"! - Restricting Movement!",
-                    signal.getDisplayName(), signal.getAppearanceName(appearance));
-            speed = "Restricted";
-        }
-        log.debug("SignalHead \"{}\" has speed notch= {} from appearance \"{}\".",
-                signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
-        return speed;
+        return getPermissibleSignalSpeed(signal, true);
     }
 
+    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalMast signal, boolean entrance)}
     static private String getPermissibleSignalEntranceSpeed(SignalMast signal) {
-        String aspect = signal.getAspect();
-        String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, signal.getSignalSystem());
-        if (speed == null) {
-            log.error("SignalMast \"{}\" has no speed specified for aspect \"{}\"! - Restricting Movement!",
-                    signal.getDisplayName(), aspect);
-            speed = "Restricted";
-        }
-        log.debug("SignalMast {} has speed notch= {} from aspect \"{}\"",
-                signal.getDisplayName(), speed, aspect);
-        return speed;
+        return getPermissibleSignalSpeed(signal, true);
     }
 
+    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalHead signal, boolean entrance)}
     static private String getPermissibleSignalExitSpeed(SignalHead signal) {
+        return getPermissibleSignalSpeed(signal, false);
+    }
+
+    @Deprecated // since 4.17.5 replaced by getPermissibleSignalSpeed(SignalMast signal, boolean entrance)}
+    static private String getPermissibleSignalExitSpeed(SignalMast signal) {
+        return getPermissibleSignalSpeed(signal, false);
+    }
+
+    /**
+     * Get entrance or exit speed set on signal head.
+     *
+     * @param signal signal head to query
+     * @param entrance true for EntranceSpeed, false for ExitSpeed
+     * @return permissible speed, Restricted if no speed set on signal
+     */
+    static private @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalHead signal, boolean entrance) {
         int appearance = signal.getAppearance();
         String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
+        // on head, speed is the same for entry and exit
         if (speed == null) {
-            log.error("SignalHead \"{}\" has no (exit) speed specified for appearance \"{}\"! - Restricting Movement!",
-                    signal.getDisplayName(), signal.getAppearanceName(appearance));
+            log.error("SignalHead \"{}\" has no {} speed specified for appearance \"{}\"! - Restricting Movement!",
+                    signal.getDisplayName(), (entrance ? "entrance" : "exit"), signal.getAppearanceName(appearance));
             speed = "Restricted";
         }
-        log.debug("\"{}\" has exit speed notch= {} from appearance \"{}\"",
-                signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
+        log.debug("SignalHead \"{}\" has {} speed notch= {} from appearance \"{}\"",
+                signal.getDisplayName(), (entrance ? "entrance" : "exit"), speed, signal.getAppearanceName(appearance));
         return speed;
     }
 
-    static private String getPermissibleSignalExitSpeed(SignalMast signal) {
+    /**
+     * Get entrance or exit speed set on signal mast.
+     *
+     * @param signal signal mast to query
+     * @param entrance true for EntranceSpeed, false for ExitSpeed
+     * @return permissible speed, Restricted if no speed set on signal
+     */
+    static private @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalMast signal, boolean entrance) {
         String aspect = signal.getAspect();
-        String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(aspect, signal.getSignalSystem());
+        String speed;
+        if (entrance) {
+            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, signal.getSignalSystem());
+        } else {
+            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(aspect, signal.getSignalSystem());
+        }
         if (speed == null) {
-            log.error("SignalMast \"{}\" has no exit speed specified for aspect \"{}\"! - Restricting Movement!",
-                    signal.getDisplayName(), aspect);
+            log.error("SignalMast \"{}\" has no {} speed specified for aspect \"{}\"! - Restricting Movement!",
+                    signal.getDisplayName(), (entrance ? "entrance" : "exit"), aspect);
             speed = "Restricted";
         }
-        log.debug("\"{}\" has exit speed notch= {} from aspect \"{}\"",
-                signal.getDisplayName(), speed, aspect);
+        log.debug("SignalMast \"{}\" has {} speed notch= {} from aspect \"{}\"",
+                signal.getDisplayName(), (entrance ? "entrance" : "exit"), speed, aspect);
         return speed;
     }
 

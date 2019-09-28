@@ -353,7 +353,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     // create OPath from this Path
                     OPath opa = new OPath(oBlock, "IP" + n++); // only needs to be unique within oBlock
                     opa.setLength(oBlock.getLengthMm()); // simple assumption, works for default OBlock/OPath
-                    log.debug("new OPath {} - {} on OBlock {}", n, opa.getName(), opa.getBlock().getDisplayName());
+                    log.debug("new OPath #{} - {} on OBlock {}", n, opa.getName(), opa.getBlock().getDisplayName());
                     oBlock.addPath(opa); // checks for duplicates, will add OPath to any Portals on oBlock as well
                     log.debug("number of paths: {}", oBlock.getPaths().size());
 

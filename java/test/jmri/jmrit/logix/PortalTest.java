@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Tests for the Portal class.
  */
 public class PortalTest {
 
@@ -89,7 +89,7 @@ public class PortalTest {
         p.setToBlock(toBlk, false);
         p.setFromBlock(fromBlk, true);
         p.setProtectSignal(new VirtualSignalHead("IH1"),200,toBlk);
-        Assert.assertNotNull("portal has signal",p.getSignalProtectingBlock(toBlk));
+        Assert.assertNotNull("portal has signal", p.getSignalProtectingBlock(toBlk));
     }
 
     // from here down is testing infrastructure
