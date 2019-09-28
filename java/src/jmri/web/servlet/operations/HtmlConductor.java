@@ -292,7 +292,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                                 splitString(car.getDestinationTrackName())))) {
                     continue;
                 }
-                if (isLocalMove(car) == local
+                if (car.isLocalMove() == local
                         && (car.getRouteDestination() == location && car.getDestinationTrack() != null)) {
                     dropped.add(car.getId());
                     if (car.isUtility()) {

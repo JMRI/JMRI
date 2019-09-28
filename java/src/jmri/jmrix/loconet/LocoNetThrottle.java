@@ -165,13 +165,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Computes the integer speed value from a float.  
+     * Computes the integer speed value from a float.
      * <p>
      * Values of less than 0 indicate Emergency Stop.
      * <p>
      * Value of 0.0 indicates stop.
      * <p>
-     * Values between 0.0+ and 1.0 imply speed step values between 2 and the 
+     * Values between 0.0+ and 1.0 imply speed step values between 2 and the
      * maximum value allowed for the loco's speed step mode.
      *
      * @param fSpeed is the floating-point speed value to be converted
@@ -895,10 +895,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Sends a LocoNet message containing the specified direction of travel.
-     * 
+     *
      * LocoNet actually puts forward and backward in the same message as the
      * first function group.
-     * 
+     *
      * @param forward is true for forward movement, else false
      */
     @Override
@@ -917,10 +917,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Returns the LocoNetSlot which is used for controlling the loco assoicated 
+     * Returns the LocoNetSlot which is used for controlling the loco assoicated
      * with this throttle.
-     * 
-     * @return the LocoNetSlot 
+     *
+     * @return the LocoNetSlot
      */
     @CheckForNull
     public LocoNetSlot getLocoNetSlot() {
@@ -935,9 +935,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Dispose the LocoNetThrottle when finished with this object. 
-     * 
-     * After this is executed, further use of this Throttle object will 
+     * Dispose the LocoNetThrottle when finished with this object.
+     *
+     * After this is executed, further use of this Throttle object will
      * result in a JmriException.
      */
     @Override
@@ -949,14 +949,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // Release throttle connections
         if (slot != null) {
             if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
-                // Digitrax throttles do not set the slot speed to zero, so do 
+                // Digitrax throttles do not set the slot speed to zero, so do
                 // not do so here.
-                
+
                 // Make the slot common, after a little wait
                 log.debug("dispatchThrottle is dispatching slot {}", slot);
                 network.sendLocoNetMessage(slot.releaseSlot());
             }
-            // Can remove the slot listener at any time; any further messages 
+            // Can remove the slot listener at any time; any further messages
             // aren't needed.
             slot.removeSlotListener(this);
             // Stop the throttle speed refresh timer
@@ -980,7 +980,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Starts the "refresh" timer.  The "refresh" timer determines
      * when to send a new LocoNet message to "refresh" the slot's speed
      * setting, so that the slot does not get "purged".
-     * 
+     *
      */
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(50000, new java.awt.event.ActionListener() {
@@ -1013,7 +1013,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Get notified when underlying slot acquisition process fails.  Slot acquisition
      * failure is handled by @link LnThrottleManager, so no code is required here.
-     * 
+     *
      * @param addr Locomotive address
      * @param s reason the acquisition failed
      */
@@ -1024,7 +1024,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Get notified when underlying slot information changes
-     * 
+     *
      * @param pSlot the slot which was changed
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
@@ -1322,7 +1322,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 log.debug("getLocoAddress replying address {} for slot {}", address, slot.getSlot());
                 return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
             }
-        } 
+        }
         log.debug("getLocoAddress replying address {} for slot not in-use or for sub-consisted slot or for null slot", address);
         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
     }
@@ -1332,8 +1332,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * a slot move to slot 0.
      * <p>
      * The throttle being dispatched no longer has control of the loco, but other
-     * throttles may continue to control the loco. 
-     * 
+     * throttles may continue to control the loco.
+     *
      * @param t throttle being dispatched
      * @param l throttle listener to remove
      */
@@ -1344,11 +1344,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (t instanceof LocoNetThrottle){
             LocoNetThrottle lnt = (LocoNetThrottle) t;
             LocoNetSlot tSlot = lnt.getLocoNetSlot();
-            if (tSlot.slotStatus() != LnConstants.LOCO_COMMON) {
-                network.sendLocoNetMessage(tSlot.writeStatus(LnConstants.LOCO_COMMON));
+            if (tSlot != null) {
+                if (tSlot.slotStatus() != LnConstants.LOCO_COMMON) {
+                    network.sendLocoNetMessage(tSlot.writeStatus(LnConstants.LOCO_COMMON));
+                    log.debug("dispatchThrottle is dispatching slot {}", tSlot);
+                        network.sendLocoNetMessage(tSlot.dispatchSlot());
+                }
             }
-            log.debug("dispatchThrottle is dispatching slot {}", tSlot);
-                network.sendLocoNetMessage(tSlot.dispatchSlot());
         }
     }
 
