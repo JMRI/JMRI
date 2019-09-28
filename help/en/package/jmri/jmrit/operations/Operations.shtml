@@ -5192,6 +5192,14 @@
     route is examined. This continues until all locations in a train's route have been processed.</p>
 
    <p>
+    The program can build trains in one of two modes,
+    <a href="#SettingsOptions">Normal</a> or Aggressive. In normal mode, the program sends cars to
+    tracks that have physical space for the new cars. In aggressive, the program can send cars to
+    tracks that are full as long as one or more of the cars on that track is scheduled to be picked up.
+    A car can be scheduled to be picked up by a previously built train, or by the one being built.
+   </p>
+
+   <p>
     In <a href="#SettingsOptions">aggressive mode</a> , the program when figuring out destinations
     for cars, will perform multiple passes when determining where to place cars. Using the default
     value of two passes, the first pass uses 50% of the available moves for each location when

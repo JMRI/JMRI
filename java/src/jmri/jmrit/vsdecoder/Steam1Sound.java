@@ -599,7 +599,7 @@ class Steam1Sound extends EngineSound {
         S1Notch notch1;
         SoundBite _sound;
         float _throttle;
-
+        private float last_throttle;
         private boolean is_running = false;
         private boolean is_looping = false;
         private boolean is_dying = false;
@@ -650,6 +650,7 @@ class Steam1Sound extends EngineSound {
             rpm_dirfn = 0;
             timeOfLastSpeedCheck = 0;
             _throttle = 0.0f;
+            last_throttle = 0.0f;
             _notch = null;
             _sound = new SoundBite(s + "_QUEUE"); // Sound for queueing
             _sound.setGain(_parent.engine_gain); // All chuff sounds will have this gain
@@ -677,6 +678,7 @@ class Steam1Sound extends EngineSound {
                     updateRpm();
                 } else {
                     _throttle = t;
+                    last_throttle = t;
 
                     // handle half-speed
                     if (is_half_speed) {
@@ -824,6 +826,7 @@ class Steam1Sound extends EngineSound {
                     } else {
                         is_half_speed = false;
                     }
+                    setThrottle(last_throttle); // Trigger a speed update
                 }
             }
 

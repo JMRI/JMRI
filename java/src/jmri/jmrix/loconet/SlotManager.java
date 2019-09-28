@@ -322,6 +322,30 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void message(LocoNetMessage m) {
+        if (m.getOpCode() == LnConstants.OPC_RE_LOCORESET_BUTTON) {
+            if (commandStationType.getSupportsLocoReset()) {
+                // Command station LocoReset button was triggered.
+                //
+                // Note that sending a LocoNet message using this OpCode to the command
+                // station does _not_ seem to trigger the equivalent effect; only
+                // pressing the button seems to do so.
+                // If the OpCode is received by JMRI, regardless of its source,
+                // JMRI will simply trigger a re-read of all slots.  This will
+                // allow the JMRI slots to stay consistent with command station
+                // slot information, regardless of whether the command station
+                // just modified the slot information.
+                javax.swing.Timer t = new javax.swing.Timer(500, (java.awt.event.ActionEvent e) -> {
+                    log.debug("Updating slots account received opcode 0x8a message");   // NOI18N
+                    update();
+                });
+                t.stop();
+                t.setInitialDelay(500);
+                t.setRepeats(false);
+                t.start();
+            }
+            return;
+        }
+
         // LACK processing for resend of immediate command
         if (!mTurnoutNoRetry && immedPacket != null &&
                 m.getOpCode() == LnConstants.OPC_LONG_ACK &&

@@ -353,6 +353,7 @@ public class HardcopyWriter extends Writer {
      * @throws java.io.IOException if unable to write to printer
      */
     public void write(Color c, String s) throws IOException {
+        charoffset = 0;
         if (page != null) {
             page.setColor(c);
         }
