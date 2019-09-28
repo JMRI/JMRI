@@ -150,6 +150,7 @@ public class AddSignalMastPanelTest {
         } catch (Exception e) {
             log.error("exception deleting mock system", e);
         }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanelTest.class);
