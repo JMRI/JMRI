@@ -198,8 +198,9 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             switch (e.getPropertyName()) {
-                case "SpeedSetting":
-                case "SpeedSteps":
+                case Throttle.SPEEDSETTING:
+                case Throttle.SPEEDSTEPS:
+                case Throttle.ISFORWARD:
                     try {
                         clientserver.sendStatus(throttle.getLocoAddress());
                     } catch (IOException ioe) {

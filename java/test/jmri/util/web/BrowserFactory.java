@@ -69,7 +69,7 @@ public class BrowserFactory {
     }
 
     /**
-     * close all currently open beb browsers.
+     * close all currently open web browsers.
      */
     public static void CloseAllDriver() {
         for (String key : drivers.keySet()) {

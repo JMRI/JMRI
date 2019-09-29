@@ -6,15 +6,12 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
+
+import jmri.util.NamedBeanComparator;
+
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -22,7 +19,9 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,12 +51,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     // * The manager also maintains synchronized maps from SystemName -> NamedBean (_tsys) and UserName -> NamedBean (_tuser)
     //      These are not made available: get access through the manager calls
     //      These use regular HashMaps instead of some sorted form for efficiency
-    // * An unmodifiable ArrayList<String> in the original add order, _originalOrderList, remains available 
-    //      for the deprecated getSystemNameAddedOrderList
-    //      This is present so that ConfigureXML can still store in the original order
     // * Caches for the String[] getSystemNameArray(), List<String> getSystemNameList() and List<E> getNamedBeanList() calls
             
-    public AbstractManager() {
+    public AbstractManager(SystemConnectionMemo memo) {
+        this.memo = memo;
         registerSelf();
     }
 
@@ -72,6 +69,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             cm.registerConfig(this, getXMLOrder());
             log.debug("registering for config of type {}", getClass());
         });
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SystemConnectionMemo getMemo() {
+        return memo;
     }
 
     /** {@inheritDoc} */
@@ -104,11 +107,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _tuser.clear();
     }
 
+    protected final SystemConnectionMemo memo;
     protected TreeSet<E> _beans = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     protected Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected Hashtable<String, E> _tuser = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by user name
-    // Storage for getSystemNameOriginalList
-    protected ArrayList<String> _originalOrderList = new ArrayList<>();
+
     // caches
     private String[] cachedSystemNameArray = null;
     private ArrayList<String> cachedSystemNameList = null;
@@ -146,6 +149,23 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     public E getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
+    }
+
+    /**
+     * Protected method used by subclasses to over-ride the default behavior of
+     * getBeanBySystemName when a simple string lookup is not sufficient
+     *
+     * @param systemName the system name to check.
+     * @param comparator a Comparator encapsulating the system specific comparison behavior.
+     * @return A named bean of the appropriate type, or null if not found.
+     */
+    protected E getBySystemName(String systemName,Comparator<String> comparator){
+        for(Map.Entry<String,E> e:_tsys.entrySet()){
+            if(0==comparator.compare(e.getKey(),systemName)){
+                return e.getValue();
+            }
+        }
+        return null;
     }
 
     /** {@inheritDoc} */
@@ -195,7 +215,26 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 log.debug("the named bean is registered twice: {}", systemName);
             } else {
                 log.error("systemName is already registered: {}", systemName);
-                throw new IllegalArgumentException("systemName is already registered: " + systemName);
+                throw new DuplicateSystemNameException("systemName is already registered: " + systemName);
+            }
+        } else {
+            // Check if the manager already has a bean with a system name that is
+            // not equal to the system name of the new bean, but there the two
+            // system names are treated as the same. For example LT1 and LT01.
+            if (_beans.contains(s)) {
+                final AtomicReference<String> oldSysName = new AtomicReference<>();
+                NamedBeanComparator<NamedBean> c = new NamedBeanComparator<>();
+                _beans.forEach((NamedBean t) -> {
+                    if (c.compare(s, t) == 0) {
+                        oldSysName.set(t.getSystemName());
+                    }
+                });
+                if (!systemName.equals(oldSysName.get())) {
+                    String msg = String.format("systemName is already registered. Current system name: %s. New system name: %s",
+                            oldSysName, systemName);
+                    log.error(msg);
+                    throw new DuplicateSystemNameException(msg);
+                }
             }
         }
 
@@ -207,7 +246,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
-        _originalOrderList.add(systemName);
         registerUserName(s);
 
         // notifications
@@ -288,7 +326,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (userName != null) {
             _tuser.remove(userName);
         }
-        _originalOrderList.remove(systemName);
         
         // notifications
         fireDataListenersRemoved(position, position, s);
@@ -374,14 +411,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
             }
         }
         return Collections.unmodifiableList(cachedSystemNameList);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameAddedOrderList() {
-        //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
-        return Collections.unmodifiableList(_originalOrderList);
     }
 
     /** {@inheritDoc} */
@@ -584,6 +613,36 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                 }
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return {@link jmri.Manager.NameValidity#INVALID} if system name does not
+     *         start with
+     *         {@link #getSystemNamePrefix()}; {@link jmri.Manager.NameValidity#VALID_AS_PREFIX_ONLY}
+     *         if system name equals {@link #getSystemNamePrefix()}; otherwise
+     *         {@link jmri.Manager.NameValidity#VALID} to allow Managers that do
+     *         not perform more specific validation to be considered valid.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return getSystemNamePrefix().equals(systemName)
+                ? NameValidity.VALID_AS_PREFIX_ONLY
+                : systemName.startsWith(getSystemNamePrefix())
+                ? NameValidity.VALID
+                : NameValidity.INVALID;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The implementation in {@link AbstractManager} should be final, but is not
+     * for four managers that have arbitrary prefixes.
+     */
+    @Override
+    public final String getSystemPrefix() {
+        return memo.getSystemPrefix();
     }
 
     /** {@inheritDoc} */

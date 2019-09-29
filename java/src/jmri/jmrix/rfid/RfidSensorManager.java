@@ -14,16 +14,16 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class RfidSensorManager extends jmri.managers.AbstractSensorManager implements RfidListener {
 
-    private final String prefix;
-
-    public RfidSensorManager(String prefix) {
-        super();
-        this.prefix = prefix;
+    public RfidSensorManager(RfidSystemConnectionMemo memo) {
+        super(memo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public RfidSystemConnectionMemo getMemo() {
+        return (RfidSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used

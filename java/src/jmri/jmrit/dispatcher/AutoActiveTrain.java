@@ -798,6 +798,13 @@ public class AutoActiveTrain implements ThrottleListener {
                 stopInCurrentSection(NO_TASK);
                 _needSetSpeed = false;
             }
+            // see if we need to rescan as entering safe section.
+            if (ts != null &&
+                    ts.isSafe() &&
+                    _activeTrain.getAllocateMethod() == ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS) {
+                InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+            }
+
         }
     }
 
@@ -1412,8 +1419,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _autoEngineer.setHalt(true);
                 }
             } catch (Exception ex) {
-                log.error("setTargetSpeedByProfile crashed - Emergency Stop: " );
-                ex.printStackTrace();
+                log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
                 _autoEngineer.slowToStop(false);
                 _targetSpeed = -1.0f;
                 _autoEngineer.setHalt(true);

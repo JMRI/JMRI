@@ -160,7 +160,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudIndex(baudBox.getSelectedIndex()); // manage by index, not item value
+        adapter.configureBaudRateFromIndex(baudBox.getSelectedIndex()); // manage by index, not item value
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
@@ -347,7 +347,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         refreshPortBox();
 
-        baudList = adapter.validBaudRates(); // should not return null, empty String[] {} when not supported
+        baudList = adapter.validBaudRates(); // when not supported should not return null, but an empty String[] {}
         // need to remove ActionListener before addItem() or action event will occur
         if (baudBox.getActionListeners().length > 0) {
             baudBox.removeActionListener(baudBox.getActionListeners()[0]);
@@ -579,7 +579,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 boolean isSelected,
                 boolean cellHasFocus) {
 
-            String displayName = name;
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -589,14 +588,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 setBackground(list.getBackground());
             }
             if (invalidPort != null) {
-                String port = PortNameMapper.getPortFromName(displayName);
+                String port = PortNameMapper.getPortFromName(name);
                 if (port.equals(invalidPort)) {
                     list.setSelectionForeground(Color.red);
                     setForeground(Color.red);
                 }
             }
 
-            setText(displayName);
+            setText(name);
 
             return this;
         }

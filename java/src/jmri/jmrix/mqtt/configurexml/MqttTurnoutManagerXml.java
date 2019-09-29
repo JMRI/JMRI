@@ -1,6 +1,5 @@
 package jmri.jmrix.mqtt.configurexml;
 
-import jmri.jmrix.dcc.DccTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

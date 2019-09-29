@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -51,7 +51,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
+                    Automatically refresh the slot information when the DCS240/DCS210/DCS52 
+                    "Loco Reset" feature is executed as a result of pressing the 
+                    "Loco Reset" button.  This feature is active only when the 
+                    JMRI connection is configured for DCS240, DCS210, or DCS52 
+                    acting as the command station.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -268,7 +273,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -335,7 +340,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+	        <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -388,7 +393,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
+              Jython/Python scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -410,7 +416,7 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -460,7 +466,7 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -470,6 +476,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added basic support for developer architecture checks via
+                <a href="https://www.archunit.org">ArchUnit</a>,
+                see the 
+                <a href="http://jmri.org/help/en/html/doc/Technical/IntroStructure.shtml">Introduction to JMRI Library Structure</a>
+                page.</li>
         </ul>
 

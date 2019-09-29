@@ -39,7 +39,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     public TamsThrottle(TamsSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
         tc = memo.getTrafficController();
 
         // cache settings. It would be better to read the
@@ -213,7 +213,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tmq.add(tm);
 
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
     }
 
@@ -223,7 +223,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 
@@ -259,7 +259,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
             return 0.f;
         } else if (lSpeed == 1) {
             return -1.f;   // estop
-        } else if (super.speedStepMode == SpeedStepMode128) {
+        } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             return ((lSpeed - 1) / 126.f);
         } else {
             return (int) (lSpeed * 27.f + 0.5) + 1;
@@ -313,11 +313,11 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                         this.f0 = false;
                     }
                     if (((tr.getElement(3) & 0x80) == 0) && isForward) {
-                        notifyPropertyChangeListener("IsForward", isForward, false);
+                        notifyPropertyChangeListener(ISFORWARD, isForward, false);
                         isForward = false;
                     }
                     if (((tr.getElement(3) & 0x80) == 128) && !isForward) {
-                        notifyPropertyChangeListener("IsForward", isForward, true);
+                        notifyPropertyChangeListener(ISFORWARD, isForward, true);
                         isForward = true;
                     }
                     if (((tr.getElement(1) & 0x01) == 1) && !this.f1) {
@@ -425,10 +425,10 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                         this.f0 = false;
                     }
                     if (lines[4].equals("r") && isForward) {
-                        notifyPropertyChangeListener("IsForward", isForward, false);
+                        notifyPropertyChangeListener(ISFORWARD, isForward, false);
                         isForward = false;
                     } else if (lines[4].equals("f") && !isForward) {
-                        notifyPropertyChangeListener("IsForward", isForward, true);
+                        notifyPropertyChangeListener(ISFORWARD, isForward, true);
                         isForward = true;
                     }
                     if (lines[5].equals("1") && !this.f1) {

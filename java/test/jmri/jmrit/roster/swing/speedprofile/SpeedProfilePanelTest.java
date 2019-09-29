@@ -18,12 +18,12 @@ public class SpeedProfilePanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After

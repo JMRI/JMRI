@@ -8,6 +8,9 @@ import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 
 import static org.hamcrest.core.StringContains.containsString;
+
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,7 +106,7 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultSignalMastManager();
+        l = new DefaultSignalMastManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

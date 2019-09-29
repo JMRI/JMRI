@@ -15,8 +15,6 @@ import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An Warrant contains the operating permissions and directives needed for a
@@ -934,7 +932,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (tm != null) {
                 tm.releaseThrottle(throttle, this);
             } else {
-                log.error(Bundle.getMessage("noThrottle", throttle.getLocoAddress()));
+                log.error("{} on thread {}",Bundle.getMessage("noThrottle", throttle.getLocoAddress()),
+                        Thread.currentThread().getName());
             }
         }
     }
@@ -1082,6 +1081,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     fireRunStatus("SpeedChange", null, idx);
                     return ret;
                 default:
+                    return false;
             }
         }
         int state = runState;
@@ -1641,7 +1641,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         javax.swing.SwingUtilities.invokeAndWait(allocateBlocks);
                     }
                     catch (Exception e) {
-                        e.printStackTrace();
+                        log.error("Exception in allocateBlocks", e);
                     }
                 }
             };
@@ -2747,7 +2747,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         if (log.isDebugEnabled()) {
             log.debug(" waitTime= {}, availDist= {} waitSpeed= {}, rampLen= {}, ramp start speed= {}",
-                    waitTime, availDist, waitSpeed, rampLen);
+                    waitTime, availDist, waitSpeed, rampLen,speedSetting);
         }
         rampSpeedDelay(waitTime, speedType, endBlockIdx);
         return true;
@@ -2817,5 +2817,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return (getSystemName().concat(_speedUtil.getDccAddress().toString())).hashCode();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Warrant.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Warrant.class);
 }

@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -98,10 +99,10 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("SpeedSetting")) {
+        if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             currentThrottleVol = ((Float) e.getNewValue()).floatValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
-        } else if (e.getPropertyName().equals("IsForward")) {
+        } else if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
             currentIsForward = (boolean) e.getNewValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
         }

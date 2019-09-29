@@ -8,8 +8,10 @@ import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.NamedBean.BadSystemNameException;
+import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.beans.PropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -50,6 +52,15 @@ import jmri.beans.VetoableChangeProvider;
 public interface Manager<E extends NamedBean> extends PropertyChangeProvider, VetoableChangeProvider {
 
     /**
+     * Get the system connection for this manager.
+     * 
+     * @return the system connection for this manager
+     */
+    @CheckReturnValue
+    @Nonnull
+    public SystemConnectionMemo getMemo();
+
+    /**
      * Provides access to the system prefix string. This was previously called
      * the "System letter"
      *
@@ -86,7 +97,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
        *
      * @param name the item to make the system name for
      * @return A system name from a user input, typically a number.
-     * @throws IllegalArgumentException if a valid name can't be created
+     * @throws BadSystemNameException if a valid name can't be created
      */
     @Nonnull
     public default String makeSystemName(@Nonnull String name) {
@@ -108,7 +119,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param name      the item to make the system name for
      * @param logErrors true to log errors; false to not log errors
      * @return a valid system name
-     * @throws IllegalArgumentException if a valid name can't be created
+     * @throws BadSystemNameException if a valid name can't be created
      */
     @Nonnull
     public default String makeSystemName(@Nonnull String name, boolean logErrors) {
@@ -132,7 +143,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale    the locale for a localized exception; this is needed for
      *                      the JMRI web server, which supports multiple locales
      * @return a valid system name
-     * @throws IllegalArgumentException if a valid name can't be created
+     * @throws BadSystemNameException if a valid name can't be created
      */
     @Nonnull
     public default String makeSystemName(@Nonnull String name, boolean logErrors, Locale locale) {
@@ -160,7 +171,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param name      the system name to validate
      * @return the system name unchanged from its input so that this method can
      *         be chained or used as an parameter to another method
-     * @throws IllegalArgumentException if the name is not valid with error
+     * @throws BadSystemNameException if the name is not valid with error
      *                                      messages in the default locale
      */
     @Nonnull
@@ -188,7 +199,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale    the locale for a localized exception; this is needed for
      *                      the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
-     * @throws IllegalArgumentException if provided name is an invalid format
+     * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
     public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
@@ -208,7 +219,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale    the locale for a localized exception; this is needed for
      *                      the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
-     * @throws IllegalArgumentException if provided name is an invalid format
+     * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
     public default String validateSystemNamePrefix(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
@@ -235,7 +246,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
-     * @throws IllegalArgumentException if provided name is an invalid format
+     * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
     public default String validateTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
@@ -261,7 +272,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
-     * @throws IllegalArgumentException if provided name is an invalid format
+     * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
     public default String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
@@ -288,7 +299,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
-     * @throws IllegalArgumentException if provided name is an invalid format
+     * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
     public default String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, @Nonnull Locale locale) {
@@ -324,7 +335,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param locale the locale for a localized exception; this is needed for
      *               the JMRI web server, which supports multiple locales
      * @return the unchanged value of the name parameter
-     * @throws IllegalArgumentException if provided name is an invalid format
+     * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
     public default String validateNmraAccessorySystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
@@ -436,28 +447,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckReturnValue
     @Nonnull
     public List<String> getSystemNameList();
-
-    /**
-     * This provides an
-     * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
-     * system names.
-     * <p>
-     * Note: this is ordered by the original add order, used for ConfigureXML
-     * <p>
-     * Note: Access via {@link #getNamedBeanSet()} is faster.
-     * <p>
-     * Note: This is a live list, it will be updated as beans are added and
-     * removed.
-     *
-     * @return Unmodifiable access to a list of system names
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public default List<String> getSystemNameAddedOrderList() {
-        return getSystemNameList();
-    }
 
     /**
      * This provides an
@@ -599,9 +588,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * The non-system-specific SignalHeadManagers use this method extensively.
      *
      * @param n the bean
-     * @throws IllegalArgumentException if a different bean with the same system
-     *                                  name is already registered in the
-     *                                  manager
+     * @throws DuplicateSystemNameException if a different bean with the same system
+     *                                      name is already registered in the
+     *                                      manager
      */
     public void register(@Nonnull E n);
 

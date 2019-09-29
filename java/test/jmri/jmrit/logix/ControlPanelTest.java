@@ -10,7 +10,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ControlPanelTest {
 
@@ -20,16 +20,16 @@ public class ControlPanelTest {
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame f = new LearnThrottleFrame(wf);
         ControlPanel t = new ControlPanel(f);
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(wf);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
@@ -38,5 +38,4 @@ public class ControlPanelTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ControlPanelTest.class);
-
 }

@@ -201,10 +201,7 @@
         <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.2.1.jar"/>
-        <pathelement location="${libdir}/pi4j-core.jar"/>
-        <pathelement location="${libdir}/pi4j-device.jar"/>
-        <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
-        <pathelement location="${libdir}/pi4j-service.jar"/>
+        <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
         <pathelement location="${libdir}/commons-io-2.6.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
@@ -244,6 +241,8 @@
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/junit-4.12.jar"/>
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
+        <pathelement location="${libdir}/archunit-junit4-0.11.0.jar"/>
+        <pathelement location="${libdir}/archunit-0.11.0.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
@@ -297,6 +296,8 @@
         <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
         <pathelement location="${libdir}/spring-web-5.1.3.RELEASE.jar"/>
+        <!-- Assertj -->
+        <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
         <!-- include JMRI classes last -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
@@ -364,7 +365,7 @@
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
         <exclude name="jmri/server/json/reporter/JsonReporter.class" />
         <exclude name="jmri/server/json/roster/JsonRoster.class" />
-        <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
+        <exclude name="jmri/server/json/signalmast/JsonSignalMast.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
         <!-- Exclude files meant to check SpotBugs. -->
@@ -1548,38 +1549,6 @@
         </fail>
     </target>
 
-    <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
-        <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
-
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
-            <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-
-            <sysproperty key="user.language" value="en"/>
-            <sysproperty key="user.country" value="US"/>
-
-            <classpath refid="test.class.path"/>
-
-            <jvmarg value="-Xmx640m"/>
-            <jvmarg line="${jvm.args}"/>
-
-            <test name="apps.tests.AllTest">
-                <formatter usefile="no" type="brief"/>
-            </test>
-        </junit>
-        </jacoco:coverage>
-        <fail>
-            <condition>
-                <istrue value="${test.failed}" />
-            </condition>
-        </fail>
-    </target>
-
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
@@ -1602,10 +1571,9 @@
             <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
-
+            
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
-                <formatter usefile="no" type="brief"/>
             </test>
         </junit>
         </jacoco:coverage>
@@ -1707,8 +1675,6 @@
     <target name="alltest-coveragereport" depends="logalltest, coveragereport" description="Generate Test Coverage Report from logalltest" />
 
     <target name="alltest-coveragecheck" depends="logalltest, coveragecheck" description="Test Coverage check from logalltest" />
-
-    <target name="ci-test-travis-coveragecheck" depends="ci-test-travis, coveragecheck" description="Test Coverage check from ci-test-travis for Appveyor" />
 
     <target name="ci-test-appveyor-coveragecheck" depends="ci-test-appveyor, coveragecheck" description="Test Coverage check from ci-test-appveyor for Travis" />
 
@@ -1924,6 +1890,7 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
@@ -1995,6 +1962,7 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
@@ -2078,6 +2046,7 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />

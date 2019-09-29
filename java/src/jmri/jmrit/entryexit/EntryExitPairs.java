@@ -26,6 +26,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +46,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault {
+public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+        PropertyChangeListener {
 
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -54,6 +57,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
+    private final SystemConnectionMemo memo;
 
     private int settingTimer = 2000;
 
@@ -118,6 +122,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
@@ -246,8 +251,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    public SystemConnectionMemo getMemo() {
+        return memo;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
+        return memo.getSystemPrefix();
     }
 
     /** {@inheritDoc} */
@@ -649,10 +660,23 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return sourcePoint;
     }
 
+    /**
+     * @since 4.17.4
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        firePropertyChange("active", evt.getOldValue(), evt.getNewValue());
+    }
+
+
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel) {
         addNXDestination(source, destination, panel, null);
     }
 
+    /**
+     * @since 4.17.4
+     * Register in Property Change Listener.
+     */
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel, String id) {
         if (source == null) {
             log.error("no source Object provided");  // NOI18N
@@ -676,7 +700,10 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             destPoint.setRefObject(destination);
             destPoint.getSignal();
             if (!nxpair.containsKey(sourcePoint)) {
-                nxpair.put(sourcePoint, new Source(sourcePoint));
+                Source sp = new Source(sourcePoint) ;
+                nxpair.put(sourcePoint, sp);
+                sp.removePropertyChangeListener(this);
+                sp.addPropertyChangeListener(this);
             }
             nxpair.get(sourcePoint).addDestination(destPoint, id);
         }
@@ -841,6 +868,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Delete the pairs in the delete pair list.
      * @since 4.11.2
+     * @since 4.17.4
+     * Remove from Change Listener.
      */
     private void deleteNxPairs() {
         for (DeletePair dp : deletePairList) {
@@ -849,6 +878,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             nxpair.get(sourcePoint).removeDestination(destPoint);
             firePropertyChange("length", null, null);  // NOI18N
             if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
+                nxpair.get(sourcePoint).removePropertyChangeListener(this);
                 nxpair.remove(sourcePoint);
             }
         }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +23,12 @@ public class WarrantManager extends AbstractManager<Warrant>
     private HashMap<String, RosterSpeedProfile> _sessionProfiles;
 
     public WarrantManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @Override
     public int getXMLOrder() {
         return jmri.Manager.WARRANTS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -50,7 +46,7 @@ public class WarrantManager extends AbstractManager<Warrant>
      * @return an existing warrant if found or a new warrant
      */
     public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
-        log.debug("createNewWarrant " + systemName + " SCWa="+SCWa);
+        log.debug("createNewWarrant {} SCWa= {}",systemName,SCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -59,12 +55,12 @@ public class WarrantManager extends AbstractManager<Warrant>
                 r = getBySystemName(systemName);
             }
             if (r != null) {
-                log.warn("Warrant " + r.getDisplayName() + "  exits.");
+                log.warn("Warrant {}  exits.",r.getDisplayName());
                 return null;
             }
         }
         if (!systemName.startsWith("IW") || systemName.length() < 3) {
-            log.error("Warrant system name \"" + systemName + "\" must begin with \"IW\".");
+            log.error("Warrant system name \"{}\" must begin with \"IW\".",systemName);
             return null;
         }
         // Warrant does not exist, create a new Warrant
@@ -165,5 +161,13 @@ public class WarrantManager extends AbstractManager<Warrant>
         return _sessionProfiles;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class);
+    @Override
+    public void dispose(){
+        for(Warrant w:_beans){
+            w.stopWarrant(true);
+        }
+        super.dispose();
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(WarrantManager.class);
 }

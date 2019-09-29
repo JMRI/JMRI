@@ -1,7 +1,5 @@
 package jmri.server.json.time;
 
-import static jmri.server.json.JSON.TIME;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -59,16 +57,12 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
-            try {
-                Timebase manager = InstanceManager.getDefault(Timebase.class);
-                Date time = manager.getTime();
-                if (evt.getPropertyName().equals("time")) {
-                    time = (Date) evt.getNewValue();
-                }
-                this.connection.sendMessage(this.service.doGet(TIME, manager, time, this.connection.getLocale(), 0), 0);
-            } catch (JsonException ex) {
-                this.connection.sendMessage(ex.getJsonMessage(), 0);
+            Timebase manager = InstanceManager.getDefault(Timebase.class);
+            Date time = manager.getTime();
+            if (evt.getPropertyName().equals("time")) {
+                time = (Date) evt.getNewValue();
             }
+            this.connection.sendMessage(this.service.doGet(manager, time, 0), 0);
         } catch (IOException ex) {
             this.onClose();
         }

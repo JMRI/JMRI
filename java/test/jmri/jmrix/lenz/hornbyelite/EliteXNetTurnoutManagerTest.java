@@ -113,7 +113,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         // create and register the manager object
-        l = new EliteXNetTurnoutManager(lnis, "X");
+        l = new EliteXNetTurnoutManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

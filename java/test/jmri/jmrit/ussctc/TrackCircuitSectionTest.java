@@ -99,7 +99,7 @@ public class TrackCircuitSectionTest {
 
         sensor = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"); sensor.setUserName("Sec1 track input");
 
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {

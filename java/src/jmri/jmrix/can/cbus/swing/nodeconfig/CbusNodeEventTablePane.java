@@ -58,6 +58,11 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     public void setNode( CbusNode node) {
+        
+        if (node == null ){ 
+            pane1.setVisible(false);
+            return;
+        }
         nodeEventModel.setNode(node);
         nodeEventTable = new JTable(nodeEventModel);
         init();

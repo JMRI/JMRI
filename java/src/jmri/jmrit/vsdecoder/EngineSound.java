@@ -76,6 +76,7 @@ class EngineSound extends VSDSound {
 
     @Override
     public void stop() {
+        log.info("Emergency Stop called!");
         is_playing = false;
     }
 

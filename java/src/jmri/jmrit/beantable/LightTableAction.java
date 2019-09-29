@@ -57,7 +57,6 @@ import jmri.managers.ProxyLightManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 import jmri.util.table.ButtonEditor;
@@ -874,7 +873,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             if (addEntryToolTip != null) {
                 hardwareAddressTextField.setToolTipText(
                         Bundle.getMessage("AddEntryToolTipLine1",
-                                ConnectionNameFromSystemName.getConnectionName(systemPrefix),
+                                connectionChoice.getMemo().getUserName(),
                                 Bundle.getMessage("Lights"),
                                 addEntryToolTip));
                 hardwareAddressValidator.setToolTipText(hardwareAddressTextField.getToolTipText());
@@ -1739,7 +1738,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return;
         }
         lc = new LightControl();
-        if (setControlInformation(lc)) {
+        if (setControlInformation(lc,controlList)) {
             controlList.add(lc);
             lightControlChanged = true;
             lightControlTableModel.fireTableDataChanged();
@@ -1766,7 +1765,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             log.error("Incorrect value found in a FastClock Time: {}", pe);
             return;
         }
-        if (setControlInformation(lc)) {
+        if (setControlInformation(lc,controlList)) {
             lightControlChanged = true;
             lightControlTableModel.fireTableDataChanged();
             cancelControlPressed(e);
@@ -1808,7 +1807,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
      *
      * @return 'true' if no errors or warnings
      */
-    private boolean setControlInformation(LightControl g) {
+    private boolean setControlInformation(LightControl g, ArrayList<LightControl> currentList) {
         // Get control information
         if (sensorControl.equals(typeBox.getSelectedItem())) {
             // Set type of control
@@ -1856,13 +1855,20 @@ public class LightTableAction extends AbstractTableAction<Light> {
             int offHour = (Integer) fastHourSpinner2.getValue(); // hours
             int offMin = (Integer) fastMinuteSpinner2.getValue(); // minutes
 
-            // check for 2 x 00:00 entry
-            if ((onHour * 60 + onMin) == (offHour * 60 + offMin)) {
+            g.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
+            
+            if (g.onOffTimesFaulty()) {
                 status1.setText(Bundle.getMessage("LightWarn11"));
                 status1.setForeground(Color.red);
                 return false;
             }
-            g.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
+            
+            if (g.areFollowerTimesFaulty(currentList)) {
+                status1.setText(Bundle.getMessage("LightWarn12"));
+                status1.setForeground(Color.red);
+                return false;
+            }
+            
         } else if (turnoutStatusControl.equals(typeBox.getSelectedItem())) {
             boolean error = false;
             Turnout t = null;

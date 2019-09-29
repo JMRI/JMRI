@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -475,7 +475,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalA1Name(@Nullable String signalHead) {
+    public void setSignalA1Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalA1HeadNamed = null;
             return;
@@ -501,7 +501,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalA2Name(@Nullable String signalHead) {
+    public void setSignalA2Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalA2HeadNamed = null;
             return;
@@ -527,7 +527,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalA3Name(@Nullable String signalHead) {
+    public void setSignalA3Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalA3HeadNamed = null;
             return;
@@ -553,7 +553,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalB1Name(@Nullable String signalHead) {
+    public void setSignalB1Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalB1HeadNamed = null;
             return;
@@ -579,7 +579,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalB2Name(@Nullable String signalHead) {
+    public void setSignalB2Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalB2HeadNamed = null;
             return;
@@ -605,7 +605,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalC1Name(@Nullable String signalHead) {
+    public void setSignalC1Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalC1HeadNamed = null;
             return;
@@ -631,7 +631,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalC2Name(@Nullable String signalHead) {
+    public void setSignalC2Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalC2HeadNamed = null;
             return;
@@ -657,7 +657,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalD1Name(@Nullable String signalHead) {
+    public void setSignalD1Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalD1HeadNamed = null;
             return;
@@ -683,7 +683,7 @@ public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    public void setSignalD2Name(@Nullable String signalHead) {
+    public void setSignalD2Name(@CheckForNull String signalHead) {
         if (signalHead == null || signalHead.isEmpty()) {
             signalD2HeadNamed = null;
             return;
@@ -830,7 +830,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSignalAMast(@Nullable String signalMast) {
+    public void setSignalAMast(@CheckForNull String signalMast) {
         if (signalMast == null || signalMast.isEmpty()) {
             signalAMastNamed = null;
             return;
@@ -859,7 +859,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSignalBMast(@Nullable String signalMast) {
+    public void setSignalBMast(@CheckForNull String signalMast) {
         if (signalMast == null || signalMast.isEmpty()) {
             signalBMastNamed = null;
             return;
@@ -888,7 +888,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSignalCMast(@Nullable String signalMast) {
+    public void setSignalCMast(@CheckForNull String signalMast) {
         if (signalMast == null || signalMast.isEmpty()) {
             signalCMastNamed = null;
             return;
@@ -917,7 +917,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSignalDMast(@Nullable String signalMast) {
+    public void setSignalDMast(@CheckForNull String signalMast) {
         if (signalMast == null || signalMast.isEmpty()) {
             signalDMastNamed = null;
             return;
@@ -946,7 +946,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSensorA(@Nullable String sensorName) {
+    public void setSensorA(@CheckForNull String sensorName) {
         if (sensorName == null || sensorName.isEmpty()) {
             sensorANamed = null;
             return;
@@ -974,7 +974,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSensorB(@Nullable String sensorName) {
+    public void setSensorB(@CheckForNull String sensorName) {
         if (sensorName == null || sensorName.isEmpty()) {
             sensorBNamed = null;
             return;
@@ -1002,7 +1002,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSensorC(@Nullable String sensorName) {
+    public void setSensorC(@CheckForNull String sensorName) {
         if (sensorName == null || sensorName.isEmpty()) {
             sensorCNamed = null;
             return;
@@ -1030,7 +1030,7 @@ public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
-    public void setSensorD(@Nullable String sensorName) {
+    public void setSensorD(@CheckForNull String sensorName) {
         if (sensorName == null || sensorName.isEmpty()) {
             sensorDNamed = null;
             return;
@@ -1048,7 +1048,7 @@ public class LayoutTurnout extends LayoutTrack {
         return linkedTurnoutName;
     }
 
-    public void setLinkedTurnoutName(@Nullable String s) {
+    public void setLinkedTurnoutName(@CheckForNull String s) {
         linkedTurnoutName = s;
     }  //Could be done with changing over to a NamedBeanHandle
 
@@ -1103,7 +1103,7 @@ public class LayoutTurnout extends LayoutTrack {
         return getState() == continuingSense;
     }
 
-    public void setTurnout(@Nullable String tName) {
+    public void setTurnout(@CheckForNull String tName) {
         if (namedTurnout != null) {
             deactivateTurnout();
         }
@@ -1134,7 +1134,7 @@ public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
-    public void setSecondTurnout(@Nullable String tName) {
+    public void setSecondTurnout(@CheckForNull String tName) {
         if (tName != null && tName.equals(secondTurnoutName)) {
             return;
         }
@@ -1150,11 +1150,11 @@ public class LayoutTurnout extends LayoutTrack {
         }
         if (turnout != null) {
             secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(secondTurnoutName, turnout);
-            activateTurnout();
         } else {
             secondTurnoutName = "";
             secondNamedTurnout = null;
         }
+        activateTurnout(); // Even if secondary is null, the primary Turnout may still need to be re-activated
         if ((getTurnoutType() == RH_TURNOUT)
                 || (getTurnoutType() == LH_TURNOUT)
                 || (getTurnoutType() == WYE_TURNOUT)) {
@@ -2338,27 +2338,41 @@ public class LayoutTurnout extends LayoutTrack {
      * Activate/Deactivate turnout to redraw when turnout state changes
      */
     private void activateTurnout() {
+        deactivateTurnout();
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(
-                    mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
-                        if (secondNamedTurnout != null) {
-                            int new2ndState = secondNamedTurnout.getBean().getState();
-                            if (e.getSource().equals(secondNamedTurnout.getBean())
-                            && e.getNewValue().equals(new2ndState)) {
-                                int old1stState = namedTurnout.getBean().getState();
-                                int new1stState = new2ndState;
-                                if (secondTurnoutInverted) {
-                                    new1stState = Turnout.invertTurnoutState(new1stState);
-                                }
-                                if (old1stState != new1stState) {
-                                    namedTurnout.getBean().setCommandedState(new1stState);
-                                }
+                mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
+                    if ( e.getNewValue() == null) {
+                        return;
+                    }
+                    if (disableWhenOccupied && isOccupied()) {
+                        return;
+                    }
+                    if (secondNamedTurnout != null) {
+                        int t1state = namedTurnout.getBean().getCommandedState();
+                        int t2state = secondNamedTurnout.getBean().getCommandedState();
+                        if (e.getSource().equals(namedTurnout.getBean())
+                        && e.getNewValue().equals(t1state)) {
+                            if (secondTurnoutInverted) {
+                                t1state = Turnout.invertTurnoutState(t1state);
+                            }
+                            if (secondNamedTurnout.getBean().getCommandedState() != t1state) {
+                                secondNamedTurnout.getBean().setCommandedState(t1state);
+                            }
+                        } else if (e.getSource().equals(secondNamedTurnout.getBean())
+                        && e.getNewValue().equals(t2state)) {
+                            if (secondTurnoutInverted) {
+                                t2state = Turnout.invertTurnoutState(t2state);
+                            }
+                            if (namedTurnout.getBean().getCommandedState() != t2state) {
+                                namedTurnout.getBean().setCommandedState(t2state);
                             }
                         }
-                        layoutEditor.redrawPanel();
-                    },
-                    namedTurnout.getName(),
-                    "Layout Editor Turnout"
+                    }
+                    layoutEditor.redrawPanel();
+                },
+                namedTurnout.getName(),
+                "Layout Editor Turnout"
             );
         }
         if (secondNamedTurnout != null) {
@@ -2384,7 +2398,7 @@ public class LayoutTurnout extends LayoutTrack {
     public void toggleTurnout() {
         if (getTurnout() != null) {
             // toggle turnout
-            if (getTurnout().getKnownState() == Turnout.CLOSED) {
+            if (getTurnout().getCommandedState() == Turnout.CLOSED) {
                 setState(Turnout.THROWN);
             } else {
                 setState(Turnout.CLOSED);
@@ -2394,6 +2408,13 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * Set the LayoutTurnout state
+     * Used for sending the toggle command
+     * Checks not diabled, disable when occupied
+     * Also sets secondary Turnout commanded state
+     * @param state New state to set, eg Turnout.CLOSED
+     */
     public void setState(int state) {
         if ((getTurnout() != null) && !disabled) {
             if (disableWhenOccupied && isOccupied()) {
@@ -2415,10 +2436,25 @@ public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * Get the LayoutTurnout state
+     * 
+     * Ensures the secondary Turnout state matches the primary
+     * @return the state, eg Turnout.CLOSED or Turnout.INCONSISTENT
+     */
     public int getState() {
         int result = UNKNOWN;
         if (getTurnout() != null) {
             result = getTurnout().getKnownState();
+        }
+        if (getSecondTurnout() != null) {
+            int t2state = getSecondTurnout().getKnownState();
+            if (secondTurnoutInverted) {
+                t2state = Turnout.invertTurnoutState(getSecondTurnout().getKnownState());
+            }
+            if (result!=t2state) {
+                return INCONSISTENT;
+            }
         }
         return result;
     }
@@ -2581,7 +2617,7 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {

@@ -72,7 +72,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         to1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                log.info("actionevent");
+                log.debug("actionevent");
                 resetLightToCombo();
             }
         });

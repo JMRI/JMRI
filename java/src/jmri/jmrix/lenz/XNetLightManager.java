@@ -18,19 +18,18 @@ import jmri.managers.AbstractLightManager;
 public class XNetLightManager extends AbstractLightManager {
 
     private XNetTrafficController tc = null;
-    private String prefix = null;
 
-    public XNetLightManager(XNetTrafficController tc, String prefix) {
-        this.prefix = prefix;
-        this.tc = tc;
+    public XNetLightManager(XNetSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getXNetTrafficController();
     }
 
     /**
-     * Return the system letter for XpressNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public XNetSystemConnectionMemo getMemo() {
+        return (XNetSystemConnectionMemo) memo;
     }
 
     // XNet-specific methods
@@ -45,13 +44,13 @@ public class XNetLightManager extends AbstractLightManager {
     @Override
     public Light createNewLight(String systemName, String userName) {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
         Light lgt = null;
         // Normalize the System Name
-        String sName = prefix + typeLetter() + bitNum; // removes any leading zeros
+        String sName = getSystemNamePrefix() + bitNum; // removes any leading zeros
         // create the new Light object
         lgt = new XNetLight(tc, this, sName, userName);
         return lgt;
@@ -64,7 +63,7 @@ public class XNetLightManager extends AbstractLightManager {
      * @return index value for light, -1 if an error occurred
      */
     public int getBitFromSystemName(String systemName) {
-        return XNetAddress.getBitFromSystemName(systemName, prefix);
+        return XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
     }
 
     /**

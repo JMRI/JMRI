@@ -3,6 +3,7 @@ package jmri.jmrit.audio;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -71,7 +72,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName);
         AudioListener al = activeAudioFactory.getActiveAudioListener();
         if (al != null) {
-            metersPerUnit = al.getMetersPerUnit();
+            storeMetersPerUnit(al.getMetersPerUnit());
         }
     }
 
@@ -85,8 +86,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName, userName);
         AudioListener al = activeAudioFactory.getActiveAudioListener();
         if (al != null) {
-            metersPerUnit = al.getMetersPerUnit();
+            storeMetersPerUnit(al.getMetersPerUnit());
         }
+    }
+
+    private static void storeMetersPerUnit(float newVal) {
+        metersPerUnit = newVal;
     }
 
     public boolean isAudioAlive() {
@@ -845,6 +850,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     // which means things like tables and persistance 
     // might not behave properly.
     @Override
+    @Nonnull
     public String toString() {
         return "Pos: " + this.getPosition().toString()
                 + ", bound to: " + this.getAssignedBufferName()

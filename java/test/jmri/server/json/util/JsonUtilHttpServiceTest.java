@@ -273,7 +273,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JsonNode connection = result.get(0);
         assertEquals(JSON.SYSTEM_CONNECTION, connection.path(JSON.TYPE).asText());
         assertEquals("I", connection.path(JSON.DATA).path(JSON.PREFIX).asText());
-        assertTrue(connection.path(JSON.DATA).path(JSON.NAME).isNull());
+        assertEquals("Internal", connection.path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(connection.path(JSON.DATA).path(JSON.MFG).isNull());
     }
 
@@ -342,7 +342,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanel() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        ObjectNode result = service.getPanel(locale, editor, JSON.XML, 42);
+        ObjectNode result = service.getPanel(editor, JSON.XML, 42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -357,7 +357,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanels_Locale_String() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        JsonNode result = service.getPanels(locale, JSON.XML, 42);
+        JsonNode result = service.getPanels(JSON.XML, 42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -372,7 +372,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanels_Locale() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        JsonNode result = service.getPanels(locale, 42);
+        JsonNode result = service.getPanels(42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);

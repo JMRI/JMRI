@@ -170,6 +170,7 @@ public class LogixActionTest {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.tearDown();
     }
 }

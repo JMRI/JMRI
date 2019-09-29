@@ -3,6 +3,7 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 //import jmri.InstanceManager;
 //import jmri.NamedBeanHandleManager;
+import jmri.Throttle;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -150,11 +151,11 @@ public class MultiThrottleControllerTest {
     public void testSpeedStepsPropertyChange() {
        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
        controller.notifyThrottleFound(t);
-       t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode14);
+       t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_14);
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>s8",cis.getLastPacket() );
-       t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode28);
+       t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>s2",cis.getLastPacket() );
-       t.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
+       t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>s1",cis.getLastPacket() );
     }
 
@@ -211,20 +212,20 @@ public class MultiThrottleControllerTest {
        Assert.assertTrue("Continue after velocity",controller.sort("V7"));
        Assert.assertTrue("Continue after velocity",controller.sort("V15"));
        Assert.assertTrue("Continue after velocity",controller.sort("V25"));
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,7.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,0.0f,7.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
        Assert.assertTrue("Continue after velocity",controller.sort("V32"));
        Assert.assertTrue("Continue after velocity",controller.sort("V45"));
        Assert.assertTrue("Continue after velocity",controller.sort("V63"));
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",7.0f/126.0f,15.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,7.0f/126.0f,15.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",15.0f/126.0f,25.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,15.0f/126.0f,25.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",25.0f/126.0f,32.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,25.0f/126.0f,32.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",32.0f/126.0f,45.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,32.0f/126.0f,45.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
+       controller.propertyChange(new PropertyChangeEvent(this,Throttle.SPEEDSETTING,0.0f,63.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
        controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63",cis.getLastPacket() );
@@ -266,6 +267,7 @@ public class MultiThrottleControllerTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initRosterConfigManager();
         cis = new ControllerInterfaceScaffold();
         tcls = new ThrottleControllerListenerScaffold();
         controller = new MultiThrottleController('A',"test",tcls,cis);

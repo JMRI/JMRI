@@ -1,8 +1,10 @@
 package jmri.util.managers;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
+import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 
 /**
@@ -15,7 +17,7 @@ import jmri.jmrix.internal.InternalTurnoutManager;
 public class TurnoutManagerThrowExceptionScaffold extends InternalTurnoutManager {
 
     public TurnoutManagerThrowExceptionScaffold() {
-        super("I");
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */
@@ -50,7 +52,7 @@ public class TurnoutManagerThrowExceptionScaffold extends InternalTurnoutManager
     
     /** {@inheritDoc} */
     @Override
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

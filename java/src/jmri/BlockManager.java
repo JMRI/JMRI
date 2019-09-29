@@ -10,6 +10,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
 /**
@@ -38,7 +39,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     private final String powerManagerChangeName;
 
     public BlockManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
         InstanceManager.getList(PowerManager.class).forEach((pm) -> {
@@ -52,13 +53,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @CheckReturnValue
     public int getXMLOrder() {
         return Manager.BLOCKS;
-    }
-
-    @Override
-    @CheckReturnValue
-    @Nonnull
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -150,11 +144,13 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      *
      * @param name the system name or the user name for the block
      * @return a new or existing Block
-     * @throws IllegalArgumentException if cannot create block; never returns
-     *                                  null
+     * @throws IllegalArgumentException if cannot create block or no name supplied; never returns null
      */
     @Nonnull
     public Block provideBlock(@Nonnull String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("Could not create block, no name supplied");
+        }
         Block b = getBlock(name);
         if (b != null) {
             return b;
@@ -162,7 +158,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
             b = createNewBlock(name, null);
         } else {
-            b = createNewBlock(makeSystemName(name), null);
+            b = createNewBlock(name);
         }
         if (b == null) {
             throw new IllegalArgumentException("Could not create block \"" + name + "\"");

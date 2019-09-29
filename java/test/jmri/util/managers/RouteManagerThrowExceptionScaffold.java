@@ -1,6 +1,8 @@
 package jmri.util.managers;
 
+import jmri.InstanceManager;
 import jmri.Route;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.DefaultRouteManager;
 
 /**
@@ -13,7 +15,7 @@ import jmri.managers.DefaultRouteManager;
 public class RouteManagerThrowExceptionScaffold extends DefaultRouteManager {
 
     public RouteManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */

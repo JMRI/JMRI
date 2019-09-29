@@ -19,7 +19,7 @@ import java.util.Set;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -1114,7 +1114,7 @@ public class LayoutEditorTools {
             @Nonnull Turnout turnout,
             boolean requireDoubleXover,
             @Nonnull String str,
-            @Nullable JFrame theFrame) {
+            @CheckForNull JFrame theFrame) {
         for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
             if (t.getTurnout() == turnout) {
                 // have the layout turnout corresponding to the turnout
@@ -1181,7 +1181,7 @@ public class LayoutEditorTools {
     }
 
     @CheckReturnValue
-    public SignalHead getSignalHeadFromEntry(@Nullable String signalName,
+    public SignalHead getSignalHeadFromEntry(@CheckForNull String signalName,
             boolean requireEntry, @Nonnull JmriJFrame frame) {
         if ((signalName == null) || signalName.isEmpty()) {
             if (requireEntry) {
@@ -1205,7 +1205,7 @@ public class LayoutEditorTools {
      * Returns a SignalHead given a name
      */
     @CheckReturnValue
-    public SignalHead getHeadFromName(@Nullable String str) {
+    public SignalHead getHeadFromName(@CheckForNull String str) {
         SignalHead result = null;
         if ((str != null) && !str.isEmpty()) {
             result = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(str);
@@ -1486,7 +1486,7 @@ public class LayoutEditorTools {
      * Removes the SignalHead with the specified name from the panel and from
      * assignment to any turnout, positionable point, or level crossing
      */
-    public void removeSignalHeadFromPanel(@Nullable String signalName) {
+    public void removeSignalHeadFromPanel(@CheckForNull String signalName) {
         if ((signalName == null) || signalName.isEmpty()) {
             return;
         }
@@ -2424,7 +2424,7 @@ public class LayoutEditorTools {
     }
 
     @CheckReturnValue
-    private LayoutBlock getBlockFromEntry(@Nullable String theBlockName) {
+    private LayoutBlock getBlockFromEntry(@CheckForNull String theBlockName) {
         if ((theBlockName == null) || theBlockName.isEmpty()) {
             JOptionPane.showMessageDialog(setSignalsAtBlockBoundaryFrame, Bundle.getMessage("SignalsError9"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -2641,6 +2641,7 @@ public class LayoutEditorTools {
     private SignalHead d2Head = null;
 
     private int xoverType = LayoutTurnout.DOUBLE_XOVER;	 // changes to RH_XOVER or LH_XOVER as required
+    private int xoverCurr = LayoutTurnout.UNKNOWN;          // Controls creating the frame
     private String xoverTurnoutName = "";
     private final JLabel xoverTurnoutNameLabel = new JLabel("");
 
@@ -2695,8 +2696,9 @@ public class LayoutEditorTools {
             return;
         }
 
-        // Initialize if needed
-        if (setSignalsAtXoverTurnoutFrame == null) {
+        // Initialize if needed which can be the first time or the crossover type has changed.
+        if (setSignalsAtXoverTurnoutFrame == null || xoverCurr != xoverType) {
+            xoverCurr = xoverType;
             setSignalsAtXoverTurnoutOpenFlag = false;
             setSignalsAtXoverTurnoutFrame = new JmriJFrame(Bundle.getMessage("SignalsAtXoverTurnout"), false, true);
             oneFrameToRuleThemAll(setSignalsAtXoverTurnoutFrame);
@@ -7432,7 +7434,7 @@ public class LayoutEditorTools {
      * entered name is not found in the SensorTable.
      */
     @CheckReturnValue
-    public Sensor getSensorFromEntry(@Nullable String sensorName,
+    public Sensor getSensorFromEntry(@CheckForNull String sensorName,
             boolean requireEntry,
             @Nonnull JmriJFrame frame) {
         String str = sensorName;
@@ -8010,7 +8012,7 @@ public class LayoutEditorTools {
      * the entered name is not found in the SignalMastTable.
      */
     @CheckReturnValue
-    public SignalMast getSignalMastFromEntry(@Nullable String signalMastName,
+    public SignalMast getSignalMastFromEntry(@CheckForNull String signalMastName,
             boolean requireEntry,
             @Nonnull JmriJFrame frame) {
         String str = signalMastName;
@@ -8100,7 +8102,7 @@ public class LayoutEditorTools {
      * Removes the assignment of the specified SignalMast to either a turnout, a
      * positionable point, or a level crossing wherever it is assigned
      */
-    public void removeSignalMastAssignment(@Nullable SignalMast signalMast) {
+    public void removeSignalMastAssignment(@CheckForNull SignalMast signalMast) {
         if (signalMast == null) {
             return;
         }
@@ -9379,8 +9381,8 @@ public class LayoutEditorTools {
     }
 
     private int isMastAssignedHere(
-            @Nullable SignalMast mast,
-            @Nullable LayoutTurnout lTurnout) {
+            @CheckForNull SignalMast mast,
+            @CheckForNull LayoutTurnout lTurnout) {
         if ((mast == null) || (lTurnout == null)) {
             return NONE;
         }
@@ -13694,14 +13696,14 @@ public class LayoutEditorTools {
         return result;
     }
 
-    private void addInfoToMenu(@Nullable String title,
-            @Nullable String info, @Nonnull JMenu menu) {
+    private void addInfoToMenu(@CheckForNull String title,
+            @CheckForNull String info, @Nonnull JMenu menu) {
         if ((title != null) && !title.isEmpty() && (info != null) && !info.isEmpty()) {
             addInfoToMenu(title + ": " + info, menu);
         }
     }
 
-    private void addInfoToMenu(@Nullable String info, @Nonnull JMenu menu) {
+    private void addInfoToMenu(@CheckForNull String info, @Nonnull JMenu menu) {
         if ((info != null) && !info.isEmpty()) {
             JMenuItem jmi = new JMenuItem(info);
             jmi.setEnabled(false);
@@ -13727,7 +13729,7 @@ public class LayoutEditorTools {
         setSignalsAtXoverTurnoutFrame = closeIfNotFrame(goodFrame, setSignalsAtXoverTurnoutFrame);
     }
 
-    private JmriJFrame closeIfNotFrame(@Nonnull JmriJFrame goodFrame, @Nullable JmriJFrame badFrame) {
+    private JmriJFrame closeIfNotFrame(@Nonnull JmriJFrame goodFrame, @CheckForNull JmriJFrame badFrame) {
         JmriJFrame result = badFrame;
         if ((badFrame != null) && (goodFrame != badFrame)) {
             badFrame.setVisible(false);

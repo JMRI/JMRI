@@ -429,7 +429,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     InstanceManager.getDefault(jmri.ConditionalManager.class));
         }
         // register new one with InstanceManager
-        DefaultConditionalManager pManager = DefaultConditionalManager.instance();
+        DefaultConditionalManager pManager = InstanceManager.getDefault(DefaultConditionalManager.class);
         InstanceManager.store(pManager, ConditionalManager.class);
         InstanceManager.setDefault(ConditionalManager.class, pManager);
         // register new one for configuration

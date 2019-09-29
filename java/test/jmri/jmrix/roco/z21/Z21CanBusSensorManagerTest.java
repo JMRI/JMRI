@@ -41,6 +41,39 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
     }
 
     @Test
+    public void testDefaultSystemNameLowerCase() {
+        // create
+        Sensor t = l.provideSensor("ZSabcd:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZSabcd:5"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName(getSystemName(5)));
+    }
+
+    @Test
+    public void testDefaultSystemMixedDigit() {
+        // create
+        Sensor t = l.provideSensor("ZSa1c3:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct ", t,l.getBySystemName("ZSa1c3:5"));
+        Assert.assertEquals("system name same value correct ", t,l.getBySystemName("ZSA1C3:5"));
+    }
+
+    @Test
+    public void testDefaultSystemMixedCase() {
+        // create
+        Sensor t = l.provideSensor("ZSaBcD:5");
+        // check
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("system name same input correct",t,l.getBySystemName("ZSaBcD:5"));
+        Assert.assertEquals("system name opposite input correct", t, l.getBySystemName("ZSAbCd:5"));
+        Assert.assertEquals("system name same all lower", t,l.getBySystemName("ZSabcd:5"));
+        Assert.assertEquals("system name same all upper", t,l.getBySystemName("ZSABCD:5"));
+    }
+
+
+    @Test
     public void testZ21CanBusCTor() {
         Assert.assertNotNull(l);
     }
@@ -75,10 +108,10 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
         Z21Reply reply = new Z21Reply(msg,14);
         znis.sendTestMessage(reply);
 
-        // see if sensor exists
-        // note that name matches case of name sent
+        // see if sensor exists note that the node value is numeric,
+        // but in hex format.
         Assert.assertNotNull(l.getBySystemName("ZSabcd:1"));
-        Assert.assertNull(l.getBySystemName("ZSABCD:1"));
+        Assert.assertNotNull(l.getBySystemName("ZSABCD:1"));
     }
 
     @Test

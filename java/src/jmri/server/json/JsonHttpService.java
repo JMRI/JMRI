@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.Locale;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -183,7 +183,7 @@ public abstract class JsonHttpService {
      * @throws JsonException if an error occurs preparing schema; if type is is
      *                           not a type handled by this service, this must
      *                           be thrown with an error code of 500 and the
-     *                           localized message "ErrorUnknownType"
+     *                           localized message ERROR_UNKNOWN_TYPE
      */
     @Nonnull
     public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, int id)
@@ -266,7 +266,7 @@ public abstract class JsonHttpService {
      *         was made by client with a different or missing token since token
      *         was issued to client; false otherwise
      */
-    public final boolean acceptForceDeleteToken(@Nonnull String type, @Nonnull String name, @Nullable String token) {
+    public final boolean acceptForceDeleteToken(@Nonnull String type, @Nonnull String name, @CheckForNull String token) {
         return JsonDeleteTokenManager.getDefault().acceptToken(type, name, token);
     }
 
@@ -343,7 +343,7 @@ public abstract class JsonHttpService {
      * @see #message(ObjectMapper, ArrayNode, String, int)
      * @see #message(ObjectMapper, String, JsonNode, String, int)
      */
-    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
+    public final ObjectNode message(@Nonnull String type, @Nonnull JsonNode data, @CheckForNull String method, int id) {
         return message(mapper, type, data, method, id);
     }
 
@@ -363,7 +363,7 @@ public abstract class JsonHttpService {
      * @see #message(String, JsonNode, int)
      * @see #message(ObjectMapper, String, JsonNode, String, int)
      */
-    public static final JsonNode message(@Nonnull ObjectMapper mapper, @Nonnull ArrayNode data, @Nullable String method, int id) {
+    public static final JsonNode message(@Nonnull ObjectMapper mapper, @Nonnull ArrayNode data, @CheckForNull String method, int id) {
         return (id > 0) ? message(mapper, JSON.LIST, data, method, id) : data;
     }
 
@@ -384,7 +384,7 @@ public abstract class JsonHttpService {
      * @see #message(String, JsonNode, int)
      * @see #message(ObjectMapper, ArrayNode, String, int)
      */
-    public static final ObjectNode message(@Nonnull ObjectMapper mapper, @Nonnull String type, @Nonnull JsonNode data, @Nullable String method, int id) {
+    public static final ObjectNode message(@Nonnull ObjectMapper mapper, @Nonnull String type, @Nonnull JsonNode data, @CheckForNull String method, int id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(JSON.TYPE, type);
         root.set(JSON.DATA, data);

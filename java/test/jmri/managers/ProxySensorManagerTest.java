@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrix.internal.InternalSensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -223,7 +224,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("content at index 2", s3, l.getNamedBeanList().get(lastEvent0));
 
         // can add a manager and still get notifications
-        l.addManager(new InternalSensorManager() { {prefix = "Z";} });
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("Z", "Zulu")));
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
@@ -348,7 +349,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
         String[] sortedArray = l.getSystemNameArray();
         jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
-        List<String> orderedList = l.getSystemNameAddedOrderList();
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -367,19 +367,9 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
         Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
         
-        Assert.assertEquals("ordered list length", 2, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-
         // add and test (non) liveness
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
-
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
 
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -401,19 +391,12 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
         
         // update and test update
-        orderedList = l.getSystemNameAddedOrderList();
         sortedList = l.getSystemNameList();
         beanList = l.getNamedBeanList();
         beanSet = l.getNamedBeanSet();
         sortedArray = l.getSystemNameArray();
         jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
-
         Assert.assertEquals("sorted list length", 4, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
         Assert.assertEquals("sorted list 2nd", "IS2", sortedList.get(1));
@@ -480,12 +463,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"));
 
-        InternalSensorManager m = new InternalSensorManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalSensorManager m = new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setSensorManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class).provideSensor("JS1"));
@@ -540,9 +518,9 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         // create and register the manager object
         l = new ProxySensorManager();
         // initially has three systems: IS, JS, KS
-        l.addManager(new InternalSensorManager() { {prefix = "J";} });
-        l.addManager(new InternalSensorManager() { {prefix = "I";} }); // not in alpha order to make it exciting
-        l.addManager(new InternalSensorManager() { {prefix = "K";} });
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("J", "Juliet")));
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("I", "India"))); // not in alpha order to make it exciting
+        l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("K", "Kilo")));
 
         jmri.InstanceManager.setSensorManager(l);
         

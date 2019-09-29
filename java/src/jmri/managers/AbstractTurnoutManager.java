@@ -3,9 +3,10 @@ package jmri.managers;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,10 +18,10 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         implements TurnoutManager {
 
-    public AbstractTurnoutManager() {
-        //super(Manager.TURNOUTS);
+    public AbstractTurnoutManager(SystemConnectionMemo memo) {
+        super(memo);
         InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
     /** {@inheritDoc} */
@@ -74,7 +75,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         // add normalize? see AbstractSensor

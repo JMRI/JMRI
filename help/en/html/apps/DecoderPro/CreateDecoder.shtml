@@ -445,10 +445,49 @@
 
               <p class="example">    &lt;enumChoice choice="Blue"
               value="32"/&gt;</p>
+              
             </li>
           </ul>
         </dd>
 
+        <dt class="left">Including fragment files</dt>
+        <dd>
+          <p>Decoder definitions can include "fragment files"
+          which provide common definitions of some CVs.
+          This has the advantage that they're already created and 
+          tested, and often include tooltip text, translations 
+          and other nice features.  See the existing 
+          decoder definitions for 
+          <a href="http://jmri.org/xml/decoders/nmra">examples</a>.  
+          Some key ones:</p>
+
+              <ul>
+                <li>CV1, the primary or short address, 
+                    CV17 and 18, the extended or long address,
+                    and the corresponding CV29 bits can 
+                    be handled by one of these, depending
+                    on what the decode supports:
+                    <ul>
+                    <li>xml/decoders/nmra/shortAddressOnly.xml
+                    <li>xml/decoders/nmra/shortAndLongAddress.xml
+                    </ul>
+                <li>CV19, the consist address and direction, 
+                    can be handled by one of these:
+                    <ul>
+                    <li>xml/decoders/nmra/consistAddr.xml	
+                    <li>xml/decoders/nmra/consistAddrDirection.xml
+                    </ul>
+                 <li>The CV16/CV15 decoder lock feature can be 
+                    handled by the xml/decoders/nmra/decoderLockId16.xml
+                    fragment file. Note that only CV16 is included;
+                    CV15 should not be included in the definition
+                    to prevent it from being changed after decoder
+                    installation.   
+                </ul>
+         
+         <p>You can also use fragment files to include (hence simplify)
+         <a href="http://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
+        </dd>
         <dt class="left">Checking for syntax errors</dt>
 
         <dd>

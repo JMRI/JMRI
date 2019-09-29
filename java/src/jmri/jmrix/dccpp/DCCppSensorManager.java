@@ -21,27 +21,28 @@ import org.slf4j.LoggerFactory;
 public class DCCppSensorManager extends jmri.managers.AbstractSensorManager implements DCCppListener {
 
     protected DCCppTrafficController tc = null;
-    protected String prefix = null;
 
     /**
      * Create an new DCC++ SensorManager.
      * Has to register for DCC++ events.
      *
-     * @param controller the TrafficController to connect the SensorManager to
-     * @param prefix the system connection prefix string as set for this connection in SystemConnectionMemo
+     * @param memo the supporting system connection memo
      */
-    public DCCppSensorManager(DCCppTrafficController controller, String prefix) {
-        tc = controller;
+    public DCCppSensorManager(DCCppSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getDCCppTrafficController();
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
-        this.prefix = prefix;
         DCCppMessage msg = DCCppMessage.makeSensorListMsg();
         // then Send the version request to the controller
         tc.sendDCCppMessage(msg, this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public DCCppSystemConnectionMemo getMemo() {
+        return (DCCppSystemConnectionMemo) memo;
     }
 
     // to free resources when no longer used
@@ -63,7 +64,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
                     systemName.substring(getSystemPrefix().length() + 1) +
                     " to DCC++ sensor address"); // NOI18N
         }
-        Sensor s = new DCCppSensor(prefix + "S" + addr, userName, tc);
+        Sensor s = new DCCppSensor(getSystemNamePrefix() + addr, userName, tc);
         return s;
     }
 
@@ -91,7 +92,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             }
         }
         if (addr >= 0) {
-            String s = prefix + typeLetter() + (addr);
+            String s = getSystemNamePrefix() + (addr);
             if (null == getBySystemName(s)) {
                 // The sensor doesn't exist.  We need to create a 
                 // new sensor, and forward this message to it.

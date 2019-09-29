@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /* This class provides an interface between the JavaTree/JavaCC
  * parser for the SRCP protocol and the JMRI front end.
+ *
  * @author Paul Bender Copyright (C) 2011
  */
 public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {

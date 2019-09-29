@@ -42,19 +42,19 @@ public class CbusNodeSetupPane extends JPanel {
     private ActionListener removeListener;
     private jmri.util.swing.BusyDialog busy_dialog;
     
-
     /**
      * Create a new instance of CbusNodeSetupPane.
      */
     protected CbusNodeSetupPane( NodeConfigToolPane main ) {
         super();
-
-        
-      //  mainpane = main;
+        //  mainpane = main;
     }
 
     public void initComponents(int node) {
         
+        if (node == _nodeNum){
+            return;
+        }
         if (eventScroll != null ){ 
             eventScroll.setVisible(false);
         }
@@ -133,7 +133,6 @@ public class CbusNodeSetupPane extends JPanel {
             
             evPane.add(headerPanel);
             evPane.add(namePanel);
-            
             evPane.add(canIdPanel);
             evPane.add(nodeEventsPanel);
             evPane.add(removePanel);
@@ -143,7 +142,6 @@ public class CbusNodeSetupPane extends JPanel {
             eventScroll = new JScrollPane(evPane);
             
             this.add(eventScroll);
-            
             
             validate();
             repaint();
@@ -156,16 +154,21 @@ public class CbusNodeSetupPane extends JPanel {
             };
             setNameButton.addActionListener(setNameListener);
             
+            javax.swing.JCheckBox checkbox = new javax.swing.JCheckBox(
+                    ("Remove node xml File"));
+            
+            Object[] params = {("Remove Node from Manager?"), checkbox};
+            
             removeListener = ae -> {
                 int option = JOptionPane.showOptionDialog(null, 
-                    "Remove Node from Manager?", 
+                    params, 
                     "Please Confirm", 
                     JOptionPane.OK_CANCEL_OPTION, 
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (option == JOptionPane.CANCEL_OPTION) {
                     return;
                 } else if (option == JOptionPane.OK_OPTION) {
-                    nodeModel.removeRow( nodeModel.getNodeRowFromNodeNum(_nodeNum) );
+                    nodeModel.removeRow( nodeModel.getNodeRowFromNodeNum(_nodeNum),checkbox.isSelected() );
                 }
             };
             removeNodeButton.addActionListener(removeListener);
@@ -289,7 +292,7 @@ public class CbusNodeSetupPane extends JPanel {
         bottomrqNNpane.add(rqNNspinnerlabel);
         bottomrqNNpane.add(rqnnSpinner);
         
-        rqNNpane.add(bottomrqNNpane, BorderLayout.PAGE_END);
+        rqNNpane.add(bottomrqNNpane, BorderLayout.CENTER);
         
         // forces a value between 1-99
         updateSpinnerFeedback( Math.min(99,(Math.max(1,nodeOfInterest.getNodeCanId()))) );

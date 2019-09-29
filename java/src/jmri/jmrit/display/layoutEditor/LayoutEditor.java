@@ -507,7 +507,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             ENUM_MAP = Collections.unmodifiableMap(map);
         }
 
-        public static ToolBarSide getName(@Nullable String name) {
+        public static ToolBarSide getName(@CheckForNull String name) {
             return ENUM_MAP.get(name);
         }
 
@@ -1853,7 +1853,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     private void recursiveSetFont(
             @Nonnull Container inContainer,
-            @Nullable Font inFont) {
+            @CheckForNull Font inFont) {
         if (false) { //<<== disabled as per <https://github.com/JMRI/JMRI/pull/3145#issuecomment-283940658>
             for (Component c : inContainer.getComponents()) {
                 c.setFont(inFont);
@@ -4953,7 +4953,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc,
-            boolean requireUnconnected, @Nullable LayoutTrack avoid) {
+            boolean requireUnconnected, @CheckForNull LayoutTrack avoid) {
         boolean result = false; // assume failure (pessimist!)
 
         foundTrack = null;
@@ -6997,7 +6997,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public boolean validatePhysicalTurnout(
             @Nonnull String inTurnoutName,
-            @Nullable Component inOpenPane) {
+            @CheckForNull Component inOpenPane) {
         //check if turnout name was entered
         if (inTurnoutName.isEmpty()) {
             //no turnout entered
@@ -7080,6 +7080,26 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             }
         }
+
+        if (result) {   // only need to test Turntable turnouts if we haven't failed yet...
+            //ensure that this turntable turnout is unique among turnouts in this Layout
+            for (LayoutTurntable tt : getLayoutTurntables()) {
+                for (LayoutTurntable.RayTrack ray : tt.getRayList()) {
+                    t = ray.getTurnout();
+                    if (t != null) {
+                        String sname = t.getSystemName();
+                        String uname = t.getUserName();
+                        log.debug("{}: Turntable turnout tested '{}' and '{}'.", ray.getTurnoutName(), sname, uname);
+                        if ((sname.equals(inTurnoutName))
+                                || ((uname != null) && (uname.equals(inTurnoutName)))) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         if (!result && (inOpenPane != null)) {
             JOptionPane.showMessageDialog(inOpenPane,
                     MessageFormat.format(Bundle.getMessage("Error4"),
@@ -8293,7 +8313,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return sh;
     }
 
-    public boolean containsSignalHead(@Nullable SignalHead head) {
+    public boolean containsSignalHead(@CheckForNull SignalHead head) {
         if (head != null) {
             for (SignalHeadIcon h : signalList) {
                 if (h.getSignalHead() == head) {
@@ -8304,7 +8324,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return false;
     }
 
-    public void removeSignalHead(@Nullable SignalHead head) {
+    public void removeSignalHead(@CheckForNull SignalHead head) {
         if (head != null) {
             for (SignalHeadIcon h : signalList) {
                 if (h.getSignalHead() == head) {
@@ -9309,7 +9329,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlock the block
      * @return true if block was highlighted
      */
-    public boolean highlightBlock(@Nullable Block inBlock) {
+    public boolean highlightBlock(@CheckForNull Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
         blockIDComboBox.setSelectedItem(inBlock);
@@ -10662,9 +10682,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     class TurnoutComboBoxPopupMenuListener implements PopupMenuListener {
 
         private final NamedBeanComboBox<Turnout> comboBox;
+        private final List<Turnout> currentTurnouts;
 
-        public TurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
+        public TurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox, List<Turnout> currentTurnouts) {
             this.comboBox = comboBox;
+            this.currentTurnouts = currentTurnouts;
         }
 
         @Override
@@ -10673,8 +10695,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             log.debug("PopupMenuWillBecomeVisible");
             Set<Turnout> l = new HashSet<>();
             comboBox.getManager().getNamedBeanSet().forEach((turnout) -> {
-                if (!validatePhysicalTurnout(turnout.getDisplayName(), null)) {
-                    l.add(turnout);
+                if (!currentTurnouts.contains(turnout)) {
+                    if (!validatePhysicalTurnout(turnout.getDisplayName(), null)) {
+                        l.add(turnout);
+                    }
                 }
             });
             comboBox.setExcludedItems(l);
@@ -10693,8 +10717,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Create a listener that will exclude turnouts that are present in the current panel.
+     * @param comboBox The NamedBeanComboBox that contains the turnout list.
+     * @return A PopupMenuListener
+     */
     public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox) {
-        return new TurnoutComboBoxPopupMenuListener(comboBox);
+        return new TurnoutComboBoxPopupMenuListener(comboBox, new ArrayList<Turnout>());
+    }
+
+    /**
+     * Create a listener that will exclude turnouts that are present in the current panel.
+     * The list of current turnouts are not excluded.
+     * @param comboBox The NamedBeanComboBox that contains the turnout list.
+     * @param currentTurnouts The turnouts to be left in the turnout list.
+     * @return A PopupMenuListener
+     */
+    public TurnoutComboBoxPopupMenuListener newTurnoutComboBoxPopupMenuListener(NamedBeanComboBox<Turnout> comboBox, List<Turnout> currentTurnouts) {
+        return new TurnoutComboBoxPopupMenuListener(comboBox, currentTurnouts);
     }
 
     //initialize logging
