@@ -221,27 +221,28 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      * @param managerClass the implemented manager class for the current
      *                     mananger; this is the class used by
      *                     {@link InstanceManager#getDefault(Class)} to get the
-     *                     default manager, which may or may not be the current manager
+     *                     default manager, which may or may not be the current
+     *                     manager
      */
     protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
             Class<? extends Manager<E>> managerClass) {
         UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
         Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
+        // populate comboBox
         if (defaultManager instanceof ProxyManager) {
             ProxyManager<E> proxy = (ProxyManager<E>) defaultManager;
             comboBox.setManagers(proxy.getDisplayOrderManagerList());
-            if (manager instanceof ProxyManager) {
-                if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                    SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
-                            .getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                    comboBox.setSelectedItem(memo.get(managerClass));
-                }
-            } else {
-                comboBox.setSelectedItem(manager);
-            }
         } else {
             comboBox.setManagers(manager);
+        }
+        // set current selection
+        if (manager instanceof ProxyManager && p.getComboBoxLastSelection(systemSelectionCombo) != null) {
+            SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
+                    .getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
+            comboBox.setSelectedItem(memo.get(managerClass));
+        } else {
+            comboBox.setSelectedItem(manager);
         }
     }
 
