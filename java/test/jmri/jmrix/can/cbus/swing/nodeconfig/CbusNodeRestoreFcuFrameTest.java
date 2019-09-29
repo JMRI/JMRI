@@ -70,6 +70,7 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initShutDownManager();
 
         memo = new CanSystemConnectionMemo();
         if(!GraphicsEnvironment.isHeadless()){

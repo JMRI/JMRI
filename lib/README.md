@@ -258,6 +258,10 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ## For unit tests & development work only:
 
+##### ArchUnit: archunit-0.11.0.jar archunit-junit4-0.11.0.jar
+- See https://www.archunit.org
+- Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
+
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)
 - From http://types.cs.washington.edu/checker-framework/
