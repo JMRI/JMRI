@@ -11,7 +11,7 @@ checks:
       threshold: 250 # CodeClimate default
   method-complexity:
     config:
-      threshold: 15 # AKA Cognitive Complexity. 5 is CodeClimate default
+      threshold: 20 # AKA Cognitive Complexity. 5 is CodeClimate default
   method-count:
     config:
       threshold: 20 # CodeClimate default
