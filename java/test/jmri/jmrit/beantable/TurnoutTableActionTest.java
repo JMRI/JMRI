@@ -3,7 +3,6 @@ package jmri.jmrit.beantable;
 import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
@@ -181,7 +180,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         new JTextFieldOperator(hwAddressField).typeText("1");
 
         //and press create 
-	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         JTableOperator tbl = new JTableOperator(jfo, 0);

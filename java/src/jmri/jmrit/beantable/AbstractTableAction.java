@@ -9,14 +9,23 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
+
+import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.ProxyManager;
+import jmri.UserPreferencesManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
+import jmri.swing.ManagerComboBox;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a NamedBeanTable GUI.
  *
+ * @param <E> type of NamedBean supported in this table
  * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractTableAction<E extends NamedBean> extends AbstractAction {
@@ -71,7 +80,8 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
                 }
             }
         };
-        setMenuBar(f); // comes after the Help menu is added by f = new BeanTableFrame(etc.) in stand alone application
+        setMenuBar(f); // comes after the Help menu is added by f = new
+                       // BeanTableFrame(etc.) in stand alone application
         setTitle();
         addToFrame(f);
         f.pack();
@@ -87,7 +97,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
         f = frame;
     }
 
-    public BeanTableFrame getFrame() {
+    public BeanTableFrame<E> getFrame() {
         return f;
     }
 
@@ -140,10 +150,8 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
     }
 
     /**
-     * Increments trailing digits of a system/user name (string)
-     * I.E. "Geo7" returns "Geo8"
-     * 
-     * Note: preserves leading zeros: "Geo007" returns "Geo008"
+     * Increments trailing digits of a system/user name (string) I.E. "Geo7"
+     * returns "Geo8" Note: preserves leading zeros: "Geo007" returns "Geo008"
      * Also, if no trailing digits, appends "1": "Geo" returns "Geo1"
      * 
      * @param name the system or user name string
@@ -167,7 +175,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      *         JMRI Help
      */
     protected String helpTarget() {
-        return "index";  // by default, go to the top
+        return "index"; // by default, go to the top
     }
 
     public String getClassDescription() {
@@ -179,7 +187,8 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
         options.put(0x00, Bundle.getMessage("DeleteAsk"));
         options.put(0x01, Bundle.getMessage("DeleteNever"));
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(), "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(),
+                "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
     }
 
     protected abstract String getClassName();
@@ -203,6 +212,38 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
     }
 
     protected abstract void addPressed(ActionEvent e);
+
+    /**
+     * Configure the combo box listing managers.
+     * 
+     * @param comboBox     the combo box to configure
+     * @param manager      the current manager
+     * @param managerClass the implemented manager class for the current
+     *                     mananger; this is the class used by
+     *                     {@link InstanceManager#getDefault(Class)} to get the
+     *                     default manager, which may or may not be the current manager
+     */
+    protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
+            Class<? extends Manager<E>> managerClass) {
+        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
+        String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+        Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
+        if (defaultManager instanceof ProxyManager) {
+            ProxyManager<E> proxy = (ProxyManager<E>) defaultManager;
+            comboBox.setManagers(proxy.getDisplayOrderManagerList());
+            if (manager instanceof ProxyManager) {
+                if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
+                    SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
+                            .getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
+                    comboBox.setSelectedItem(memo.get(managerClass));
+                }
+            } else {
+                comboBox.setSelectedItem(manager);
+            }
+        } else {
+            comboBox.setManagers(manager);
+        }
+    }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
 }
