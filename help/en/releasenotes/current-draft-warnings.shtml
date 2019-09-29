@@ -6,5 +6,7 @@
         using UTF-8.</li>
     <li><strong>Windows Only</strong> The JMRI installer removes the existing
         <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
-        existing lib folder contents are retained in the backup folder.</li>
+        existing lib folder contents are retained in the backup folder.
+        <strong>This means that any files you have added to the <em>lib</em>
+            folder will be removed.</strong></li>
     <li></li>
