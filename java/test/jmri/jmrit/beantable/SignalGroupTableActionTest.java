@@ -88,6 +88,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         _sGroupTable.cancelPressed(null); // calling updatePressed() complains about duplicate group name
 
         // clean up
+        (new JFrameOperator(af)).requestClose();
         JUnitUtil.dispose(af);
         g.dispose();
         _sGroupTable.dispose();
@@ -149,7 +150,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
-	JUnitUtil.dispose(f1);
+	    JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
@@ -169,6 +170,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Override
     public void tearDown() {
         a = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }
