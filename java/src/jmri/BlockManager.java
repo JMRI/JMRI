@@ -156,8 +156,10 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
             return b;
         }
         if (name.startsWith(getSystemPrefix() + typeLetter())) {
+            log.debug("create block for systemname {}",name);
             b = createNewBlock(name, null);
         } else {
+            log.debug("create autoblock for username {}",name);
             b = createNewBlock(name);
         }
         if (b == null) {
