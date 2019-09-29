@@ -21,46 +21,41 @@ import org.netbeans.jemmy.operators.*;
  */
 public class LayoutTrackEditorsTest {
 
-    private static LayoutEditor layoutEditor = null;
+    private LayoutEditor layoutEditor = null;
 
-    private static LayoutTurnout dxo = null;
-    private static LayoutTurnout rhto = null;
-    private static LayoutSlip slip = null;
-    private static LayoutSlip sslip = null;
-    private static LevelXing xing = null;
-    private static TrackSegment segment = null;
-    private static LayoutTurntable turntable = null;
+    private LayoutTurnout dxo = null;
+    private LayoutTurnout rhto = null;
+    private LayoutSlip slip = null;
+    private LayoutSlip sslip = null;
+    private LevelXing xing = null;
+    private TrackSegment segment = null;
+    private LayoutTurntable turntable = null;
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor(); // create layout editor
-        LayoutTrackEditors t = new LayoutTrackEditors(e);
+        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
         Assert.assertNotNull("exists",t);
-        e.dispose();
     }
 
     @Test
     public void testHasNxSensorPairsNull(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor(); // create layout editor
-        LayoutTrackEditors t = new LayoutTrackEditors(e);
+        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
         Assert.assertFalse("null block NxSensorPairs",t.hasNxSensorPairs(null));
-        e.dispose();
     }
 
     @Test
     public void testHasNxSensorPairsDisconnectedBlock(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor e = new LayoutEditor(); // create layout editor
-        LayoutTrackEditors t = new LayoutTrackEditors(e);
+        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
         LayoutBlock b = new LayoutBlock("test", "test");
         Assert.assertFalse("disconnected block NxSensorPairs",t.hasNxSensorPairs(b));
-        e.dispose();
     }
 
     @Test
     public void testShowSensorMessage() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
         t.sensorList.add("Test");
         Assert.assertFalse(t.sensorList.isEmpty());
@@ -716,9 +711,10 @@ public class LayoutTrackEditorsTest {
         return t;
     }
 
-    @BeforeClass
-    public static void beforeClass() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             jmri.util.JUnitUtil.resetInstanceManager();
@@ -765,8 +761,8 @@ public class LayoutTrackEditorsTest {
         }
     }
 
-    @AfterClass
-    public static void afterClass() {
+    @After
+    public void tearDown() {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
@@ -814,18 +810,8 @@ public class LayoutTrackEditorsTest {
 
         layoutEditor = null;
 
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
-    }
-
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-    }
-
-    @After
-    public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
     }
 
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorsTest.class);
