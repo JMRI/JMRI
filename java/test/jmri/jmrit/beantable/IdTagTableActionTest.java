@@ -2,8 +2,9 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import jmri.IdTag;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -12,7 +13,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class IdTagTableActionTest extends AbstractTableActionBase {
+public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
 
     @Test
     public void testCTor() {

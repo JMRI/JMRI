@@ -22,7 +22,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class TurnoutTableActionTest extends AbstractTableActionBase {
+public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
 
     @Test
     public void testCTor() {

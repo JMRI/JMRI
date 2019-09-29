@@ -2,12 +2,10 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalHead;
-import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
@@ -19,7 +17,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author	Egbert Broerse Copyright 2017
  */
-public class SignalGroupTableActionTest extends AbstractTableActionBase {
+public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGroup> {
 
     @Test
     public void testCreate() {
