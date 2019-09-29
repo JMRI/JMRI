@@ -615,8 +615,8 @@
          compilation - normal code, generated code and tests -->
     <!-- Deprecated, use the java-compile macro instead -->
     <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
-        <java-compile 
-                javac.source="${java.source.directory}" 
+        <java-compile
+                javac.source="${java.source.directory}"
                 javac.target="${target}"
             />
     </target>
@@ -651,7 +651,7 @@
     <target name="compile-generated-source"
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
-        <java-compile 
+        <java-compile
                 javac.source="${genjavasrcdir}"
                 javac.deprecation="off"
         />
@@ -665,7 +665,7 @@
             description="compile source, omitting tests - identical to debug target"
             depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <java-compile 
+        <java-compile
                 javac.source="${source}"
                 javac.deprecation="on"
             />
@@ -682,9 +682,9 @@
             description="compile test classes"
             depends="debug">
         <!-- Compile the test java code from ${source} into ${target} -->
-        <java-compile 
-                javac.source="${test};${acceptancetest}" 
-                javac.target="${testtarget}" 
+        <java-compile
+                javac.source="${test};${acceptancetest}"
+                javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             />
@@ -844,7 +844,7 @@
     <target name="warnings"
             description="compile source with ECJ warning generation on, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile 
+        <ecj-compile
                 javac.source="${source}"
                 javac.deprecation="on"
             >
@@ -857,7 +857,7 @@
     <target name="warnings-check"
             description="compile source with ECJ warning generation on and fail if any warnings, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile 
+        <ecj-compile
                 javac.source="${source}"
                 javac.deprecation="on"
             >
@@ -870,9 +870,9 @@
     <target name="tests-warnings"
             description="compile test sources with ECJ warning generation on"
             depends="warnings">
-        <ecj-compile 
-                javac.source="${test}" 
-                javac.target="${testtarget}" 
+        <ecj-compile
+                javac.source="${test}"
+                javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             >
@@ -886,9 +886,9 @@
     <target name="tests-warnings-check"
             description="compile test sources with ECJ warning generation on and fail if any warnings"
             depends="warnings-check">
-        <ecj-compile 
-                javac.source="${test}" 
-                javac.target="${testtarget}" 
+        <ecj-compile
+                javac.source="${test}"
+                javac.target="${testtarget}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             >
@@ -1296,12 +1296,12 @@
                 <include name="messageformat check"/>
                 <include name="unicode check"/>
                 <include name="invalid char check"/> <!-- c.f. native2ascii -->
-                
+
                 <!-- someday want to get to these -->
                 <exclude name="placeholder check"/> <!-- Is this _global_ on name?  C.f. ConnectionName -->
                 <exclude name="upper lower check"/>
                 <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
-                
+
                 <!-- our usage may be inconsistent with these, needs further thought -->
                 <exclude name="empty value check"/>
                 <exclude name="cross bundle check"/>
@@ -1427,7 +1427,7 @@
 
             <jvmarg value="-Xmx512m"/><!-- checking that memory doesnt run away -->
             <jvmarg line="${jvm.args}"/>
-            
+
             <arg value="${antargline}"/>
         </java>
 
@@ -1557,7 +1557,7 @@
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
             <sysproperty key="wdm.forceCache" value="true"/>
             <!-- wdm.targetPath specifies the locaion of the web drivers on appveyor. -->
-            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/> 
+            <sysproperty key="wdm.targetPath" value="C:\Tools\WebDriver"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1571,7 +1571,7 @@
             <sysproperty key="user.country" value="US"/>
 
             <classpath refid="test.class.path"/>
-            
+
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
@@ -1877,8 +1877,8 @@
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                     <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
-                        <A href="http://www.tagadab.com"> 
-                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
+                        <A href="http://www.tagadab.com">
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A>
                 ]]>
             </bottom>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
@@ -1927,7 +1927,7 @@
             <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
-            
+
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1949,8 +1949,8 @@
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                     <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
-                        <A href="http://www.tagadab.com"> 
-                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
+                        <A href="http://www.tagadab.com">
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A>
                 ]]>
             </bottom>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
@@ -2001,7 +2001,7 @@
             <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
-            
+
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -2033,8 +2033,8 @@
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                     <br>Site hosted by:<br><!-- SSI require .shtml suffix, so this file can't include the following as Icon via SSI -->
-                        <A href="http://www.tagadab.com"> 
-                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A> 
+                        <A href="http://www.tagadab.com">
+                        <IMG src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab Logo"> </A>
                 ]]>
             </bottom>
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
@@ -2100,9 +2100,9 @@
               failonerror="true">
             <arg value="help/en/*/*"/>
         </exec>
-            
+
     </target>
-    
+
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
@@ -2215,6 +2215,8 @@
             classpath="${libdir}/checkstyle-8.24-all.jar" />
         <checkstyle config="checkstyle.xml">
             <fileset dir="${source}" />
+            <fileset dir="${test}" />
+            <fileset dir="${acceptancetest}" />
         </checkstyle>
     </target>
 
