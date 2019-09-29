@@ -3,9 +3,6 @@ package jmri;
 import org.junit.*;
 import org.junit.runner.*;
 
-import com.tngtech.archunit.*;
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;

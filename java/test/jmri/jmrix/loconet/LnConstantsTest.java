@@ -1,12 +1,5 @@
 package jmri.jmrix.loconet;
 
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_128;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_128A;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_14;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_28A;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_28TRI;
-import static jmri.jmrix.loconet.LnConstants.DEC_MODE_MASK;
-
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -2,17 +2,12 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import javax.swing.JTextField;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
 import org.junit.*;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
