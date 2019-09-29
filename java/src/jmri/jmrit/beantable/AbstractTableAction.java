@@ -226,21 +226,25 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
             Class<? extends Manager<E>> managerClass) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
-        String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
         Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
         // populate comboBox
         if (defaultManager instanceof ProxyManager) {
-            ProxyManager<E> proxy = (ProxyManager<E>) defaultManager;
-            comboBox.setManagers(proxy.getDisplayOrderManagerList());
+            comboBox.setManagers(defaultManager);
         } else {
             comboBox.setManagers(manager);
         }
         // set current selection
-        if (manager instanceof ProxyManager && p.getComboBoxLastSelection(systemSelectionCombo) != null) {
-            SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
-                    .getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-            comboBox.setSelectedItem(memo.get(managerClass));
+        if (manager instanceof ProxyManager) {
+            UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+            String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+            if (upm.getComboBoxLastSelection(systemSelectionCombo) != null) {
+                SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
+                        .getSystemConnectionMemoForUserName(upm.getComboBoxLastSelection(systemSelectionCombo));
+                comboBox.setSelectedItem(memo.get(managerClass));
+            } else {
+                ProxyManager<E> proxy = (ProxyManager<E>) manager;
+                comboBox.setSelectedItem(proxy.getDefaultManager());
+            }
         } else {
             comboBox.setSelectedItem(manager);
         }

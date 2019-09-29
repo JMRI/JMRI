@@ -7,6 +7,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.internal.InternalTurnoutManager;
+import jmri.swing.ManagerComboBox;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -191,6 +195,17 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testConfigureManagerComboBox() {
+        TurnoutManager j = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
+        InstanceManager.setTurnoutManager(j);
+        ManagerComboBox<Turnout> box = new ManagerComboBox<Turnout>();
+        Assert.assertEquals("empty box", 0, box.getItemCount());
+        a.configureManagerComboBox(box, j, TurnoutManager.class);
+        Assert.assertEquals("full box", 2, box.getItemCount());
+        Assert.assertEquals("selection", j, box.getSelectedItem());
     }
 
     @Override
