@@ -2,6 +2,8 @@ package jmri.web.servlet.panel;
 
 import java.awt.Color;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import jmri.InstanceManager;
@@ -24,8 +26,6 @@ import org.jdom2.output.XMLOutputter;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
@@ -177,7 +177,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      * @param attrName attribute name to replace
      * 
      */
-    private void replaceUserNameAttribute(@NonNull Element e, @NonNull String beanType, @NonNull String attrName) {
+    private void replaceUserNameAttribute(@Nonnull Element e, @Nonnull String beanType, @Nonnull String attrName) {
 
         String sn = "";
         Attribute a = e.getAttribute(attrName);
@@ -212,7 +212,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      * @param childName child element name whose text will be replaced
      * 
      */
-    private void replaceUserNameChild(@NonNull Element e, @NonNull String beanType, @NonNull String childName) {
+    private void replaceUserNameChild(@Nonnull Element e, @Nonnull String beanType, @Nonnull String childName) {
 
         String sn = "";
         Element c = e.getChild(childName);

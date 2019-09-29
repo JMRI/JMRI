@@ -30,6 +30,14 @@
     <module name="MissingOverride">
       <property name="severity" value="error"/>
     </module>
+    <module name="Regexp">
+      <!-- Flag uses of FindBugs NonNull that need to be javax.annotations.Nonnull -->
+      <property name="format" value="edu\.umd\.cs\.findbugs\.annotations\.NonNull"/>
+      <property name="illegalPattern" value="true"/>
+      <property name="severity" value="error"/>
+      <!-- message is appended to "Line matches the illegal pattern " -->
+      <property name="message" value="edu.umd.cs.findbugs.annotations.NonNull (replace with javax.annotations.Nonnull)" />
+    </module>
   </module>
   <module name="NewlineAtEndOfFile">
     <property name="severity" value="error"/>
