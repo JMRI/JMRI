@@ -9,11 +9,13 @@
   <!-- default severity is warning to not fail in CI -->
   <!-- individual checks that should fail in CI have error severity -->
   <property name="severity" value="warning"/>
+  <module name="SuppressWarningsFilter"/>
   <module name="BeforeExecutionExclusionFileFilter">
     <!-- do not check images -->
     <property name="fileNamePattern" value=".*(gif|png)$"/>
   </module>
   <module name="TreeWalker">
+    <module name="SuppressWarningsHolder"/>
     <module name="RedundantImport">
       <property name="severity" value="error"/>
     </module>
@@ -35,8 +37,9 @@
     <property name="fileExtensions" value="java, xml, py"/>
   </module>
   <!-- disable warnings for existing interfaces that are not types -->
+  <!-- serves as example of suppressing a check against a Regex of files -->
   <module name="SuppressionSingleFilter">
     <property name="checks" value="InterfaceIsType"/>
-    <property name="files" value="(ussctc\/|rps\/|Sdf)Constants.java$"/>
+    <property name="files" value="(\/ussctc\/|\/rps\/)Constants.java$"/>
   </module>
 </module>
