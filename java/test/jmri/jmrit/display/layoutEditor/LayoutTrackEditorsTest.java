@@ -715,6 +715,7 @@ public class LayoutTrackEditorsTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        InstanceManager.setDefault(BlockManager.class, new BlockManager());
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             jmri.util.JUnitUtil.resetInstanceManager();
