@@ -307,7 +307,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.24.1"                   ; Installer version
+!define INST_VER  "0.1.25.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -491,6 +491,14 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- users not to modify
     RMDir /R "$OUTDIR\lib"
 
+    ; -- Delete old USB library files
+    Delete "$OUTDIR\ch.ntb.usb.jar"
+
+    ; -- Delete old .jar & support files in destination directory
+    Delete "$OUTDIR\jh.1.1.2.jar"
+    Delete "$OUTDIR\jh.jar"
+    Delete "$OUTDIR\jdom-jdk11.jar"
+ 
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
