@@ -174,11 +174,9 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <consoleOutput>true</consoleOutput>
                                     <failOnViolation>true</failOnViolation>
-                                    <failsOnError>true</failsOnError>
                                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                                    <!-- only show errors, not warnings -->
+                                    <!-- only show errors, not warnings or infos -->
                                     <violationSeverity>error</violationSeverity>
                                 </configuration>
                             </execution>
@@ -717,7 +715,7 @@
                 <artifactId>ossindex-maven-plugin</artifactId>
                 <version>3.0.4</version>
                 <configuration>
-                    <failOnError>true</failOnError>
+                    <fail>true</fail>
                     <!-- List packages with vulnerabilities to ignore. -->
                     <!-- Include an issue in GitHub for each ignored package -->
                     <!-- documenting why the vulnerability is ignored. -->
@@ -750,6 +748,17 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <failOnViolation>true</failOnViolation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <!-- show errors, warnings, and infos -->
+                    <violationSeverity>info</violationSeverity>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -821,7 +830,7 @@
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     </configuration>
-                </plugin>        
+                </plugin>
                 <plugin>
                    <groupId>com.buschmais.jqassistant</groupId>
                    <artifactId>jqassistant-maven-plugin</artifactId>
@@ -1143,7 +1152,7 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-device</artifactId>
             <version>1.2</version>
-            <optional>true</optional> <!-- not used at compile time, 
+            <optional>true</optional> <!-- not used at compile time,
                                            may be used at runtime. -->
         </dependency>
         <dependency>
