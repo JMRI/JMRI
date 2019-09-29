@@ -1,6 +1,6 @@
 package jmri.jmrit.beantable;
 
-import jmri.RailCom;
+import jmri.IdTag;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,7 +11,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class RailComTableActionTest extends AbstractTableActionBase<RailCom> {
+public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
 
     @Test
     public void testCTor() {
