@@ -96,8 +96,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         }
         // Block does not exist, create a new Block
         r = new Block(systemName, userName);
-        // save in the maps
-        register(r);
         /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
@@ -111,6 +109,8 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
         }
+        // save in the maps
+        register(r);
         try {
             r.setBlockSpeed("Global"); // NOI18N
         } catch (JmriException ex) {
