@@ -160,8 +160,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     final public static Color HIGHLIGHT_COLOR = new Color(204, 207, 88);
 
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     public static final String POSITIONABLE_FLAVOR = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.display.Positionable";
 
@@ -1916,31 +1914,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    protected IconAdder getSignalHeadEditor() {
-        IconAdder editor = new IconAdder("SignalHead");
-        editor.setIcon(0, rbean.getString("SignalHeadStateRed"),
-                "resources/icons/smallschematics/searchlights/left-red-marker.gif");
-        editor.setIcon(1, rbean.getString("SignalHeadStateYellow"),
-                "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-        editor.setIcon(2, rbean.getString("SignalHeadStateGreen"),
-                "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-        editor.setIcon(3, rbean.getString("SignalHeadStateDark"),
-                "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-        editor.setIcon(4, rbean.getString("SignalHeadStateHeld"),
-                "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-        editor.setIcon(5, rbean.getString("SignalHeadStateLunar"),
-                "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
-        editor.setIcon(6, rbean.getString("SignalHeadStateFlashingRed"),
-                "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-        editor.setIcon(7, rbean.getString("SignalHeadStateFlashingYellow"),
-                "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-        editor.setIcon(8, rbean.getString("SignalHeadStateFlashingGreen"),
-                "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-        editor.setIcon(9, rbean.getString("SignalHeadStateFlashingLunar"),
-                "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
-        return editor;
-    }
-
     protected void addSignalHeadEditor() {
         IconAdder editor = getSignalHeadEditor();
         JFrameItem frame = makeAddIconFrame("SignalHead", true, true, editor);
@@ -1956,6 +1929,31 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         editor.makeIconPanel(true);
         editor.complete(addIconAction, true, false, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+
+    protected IconAdder getSignalHeadEditor() {
+        IconAdder editor = new IconAdder("SignalHead");
+        editor.setIcon(0, Bundle.getMessage("SignalHeadStateRed"),
+                "resources/icons/smallschematics/searchlights/left-red-marker.gif");
+        editor.setIcon(1, Bundle.getMessage("SignalHeadStateYellow"),
+                "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+        editor.setIcon(2, Bundle.getMessage("SignalHeadStateGreen"),
+                "resources/icons/smallschematics/searchlights/left-green-marker.gif");
+        editor.setIcon(3, Bundle.getMessage("SignalHeadStateDark"),
+                "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+        editor.setIcon(4, Bundle.getMessage("SignalHeadStateHeld"),
+                "resources/icons/smallschematics/searchlights/left-held-marker.gif");
+        editor.setIcon(5, Bundle.getMessage("SignalHeadStateLunar"),
+                "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
+        editor.setIcon(6, Bundle.getMessage("SignalHeadStateFlashingRed"),
+                "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+        editor.setIcon(7, Bundle.getMessage("SignalHeadStateFlashingYellow"),
+                "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+        editor.setIcon(8, Bundle.getMessage("SignalHeadStateFlashingGreen"),
+                "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+        editor.setIcon(9, Bundle.getMessage("SignalHeadStateFlashingLunar"),
+                "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
+        return editor;
     }
 
     protected void addSignalMastEditor() {
@@ -2669,9 +2667,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     @Override
     public void dispose() {
-        Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
-        while (iter.hasNext()) {
-            JFrameItem frame = iter.next();
+        for (JFrameItem frame : _iconEditorFrame.values()) {
             frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             frame.dispose();
         }

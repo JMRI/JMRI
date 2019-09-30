@@ -57,7 +57,7 @@ public class PreviewDialogTest {
             chooser.setCurrentDirectory(file);
         });
         new QueueTool().waitEmpty();
-        JUnitUtil.pressButton(chooser, "Open");
+        JUnitUtil.pressButton(chooser, "Open"); // on Mac the button is named Choose
         new QueueTool().waitEmpty();
         log.debug("Mid testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
 

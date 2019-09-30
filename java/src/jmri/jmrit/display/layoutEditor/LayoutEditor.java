@@ -8276,16 +8276,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //create and set up signal icon
         SignalHeadIcon l = new SignalHeadIcon(this);
         l.setSignalHead(newName);
-        l.setIcon(rbean.getString("SignalHeadStateRed"), signalIconEditor.getIcon(0));
-        l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
-        l.setIcon(rbean.getString("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
-        l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
-        l.setIcon(rbean.getString("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
-        l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
-        l.setIcon(rbean.getString("SignalHeadStateDark"), signalIconEditor.getIcon(6));
-        l.setIcon(rbean.getString("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
-        l.setIcon(rbean.getString("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
-        l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
+        l.setIcon(Bundle.getMessage("SignalHeadStateRed"), signalIconEditor.getIcon(0));
+        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
+        l.setIcon(Bundle.getMessage("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
+        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
+        l.setIcon(Bundle.getMessage("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
+        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
+        l.setIcon(Bundle.getMessage("SignalHeadStateDark"), signalIconEditor.getIcon(6));
+        l.setIcon(Bundle.getMessage("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
+        l.setIcon(Bundle.getMessage("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
+        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
         unionToPanelBounds(l.getBounds());
         setNextLocation(l);
         setDirty();

@@ -17,8 +17,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.MissingResourceException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -42,7 +47,6 @@ import javax.swing.tree.TreeNode;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -79,7 +83,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     private String _type;
     private boolean _userDefaults;
     protected JTextField _sysNameText; // is set in IconAdderTest
-    //Manager _manager;
     JTable _table;
     JButton _addButton;
     private JButton _addTableButton;
@@ -102,6 +105,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _allowDeletes = allowDeletes;
     }
 
+    public IconAdder(String type) {
+        this();
+        _type = type;
+        initDefaultIcons();
+    }
+
     public void reset() {
         if (_table != null) {
             _table.clearSelection();
@@ -114,12 +123,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.revalidate();
     }
 
-    public IconAdder(String type) {
-        this();
-        _type = type;
-        initDefaultIcons();
-    }
-
     public void initDefaultIcons() {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, default icon tree
@@ -130,32 +133,39 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             Enumeration<TreeNode> e = node.children();
 
             while (e.hasMoreElements()) {
-                CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
+                CatalogTreeNode nChild = (CatalogTreeNode) e.nextElement();
                 if (_type.equals(nChild.toString())) {
-                    _defaultIcons = nChild;
+                    _defaultIcons = nChild; // consists of set of a NOI18N appearance name elements,
+                    // each containing an icon URL path
                     _userDefaults = true;
+                    break;
                 }
             }
         }
         log.debug("initDefaultIcons: type= {}, defaultIcons= {}", _type, _defaultIcons);
     }
 
-    private CatalogTreeNode getDefaultIconNodeFromMap() {
+    /**
+     * Replace any existing _defaultIcons TreeSet with a new set,
+     * created from the current _iconMap set of icons. Note these might have I18N labels as keys.
+     * <p>
+     * The new _defaultIcons might be a null Node.
+     */
+    private void createDefaultIconNodeFromMap() {
         log.debug("getDefaultIconNodeFromMap for node= {}, _order.size()= {}", _type, _order.size());
         _defaultIcons = new CatalogTreeNode(_type);
         for (Map.Entry<String, JToggleButton> entry : _iconMap.entrySet()) {
             NamedIcon icon = (NamedIcon) entry.getValue().getIcon();
             _defaultIcons.addLeaf(new CatalogTreeLeaf(entry.getKey(), icon.getURL(), _order.indexOf(entry.getKey())));
         }
-        return _defaultIcons; // may return null Node
     }
 
     public CatalogTreeNode getDefaultIconNode() {
         log.debug("getDefaultIconNode for node= {}", _type);
         CatalogTreeNode defaultIcons = new CatalogTreeNode(_type);
-        ArrayList<CatalogTreeLeaf> list = _defaultIcons.getLeaves();
-        for (int i = 0; i < list.size(); i++) {
-            CatalogTreeLeaf leaf = list.get(i);
+        ArrayList<CatalogTreeLeaf> leafList = _defaultIcons.getLeaves();
+        for (int i = 0; i < leafList.size(); i++) {
+            CatalogTreeLeaf leaf = leafList.get(i);
             defaultIcons.addLeaf(new CatalogTreeLeaf(leaf.getName(), leaf.getPath(), i));
         }
         return defaultIcons;
@@ -168,15 +178,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      */
     protected void makeIcons(CatalogTreeNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("makeIcons from node= {}, numChildren= {}, NumLeaves= {}", n.toString(), n.getChildCount(), n.getNumLeaves());
+            log.debug("makeIcons from node= {}, numChildren= {}, NumLeaves= {}",
+                    n.toString(), n.getChildCount(), n.getNumLeaves());
         }
         _iconMap = new HashMap<>(10);
         _order = new ArrayList<>();
-        ArrayList<CatalogTreeLeaf> list = n.getLeaves();
+        ArrayList<CatalogTreeLeaf> leafList = n.getLeaves();
         // adjust order of icons
-        int k = list.size() - 1;
-        for (int i = list.size() - 1; i >= 0; i--) {
-            CatalogTreeLeaf leaf = list.get(i);
+        int k = leafList.size() - 1;
+        for (int i = leafList.size() - 1; i >= 0; i--) {
+            CatalogTreeLeaf leaf = leafList.get(i);
             String name = leaf.getName();
             String path = leaf.getPath();
             switch (name) {
@@ -195,10 +206,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     /**
-     * @param order the index to Sensor's name and the inverse order that icons
+     * @param order the index to icon's name and the inverse order that icons
      *              are drawn in doIconPanel()
-     * @param label the Sensor's name displayed in the icon panel and the key
-     *              to the icon button in _iconMap
+     * @param label the icon name displayed in the icon panel and the key
+     *              to the icon button in _iconMap, supplied as I18N string
      * @param icon  the icon displayed in the icon button
      */
     protected void setIcon(int order, String label, NamedIcon icon) {
@@ -273,7 +284,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (useDefaults && _userDefaults) {
             makeIcons(_defaultIcons);
         }
-        // log.debug("makeIconPanel updating");
+        log.debug("makeIconPanel updating");
         clearIconPanel();
         doIconPanel();
     }
@@ -295,14 +306,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
                 panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             }
-            String key = _order.get(i);
+            String key = _order.get(i); // NOI18N (except for SignalHeads!)
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             String labelName = key;
-            try {
-                labelName = Bundle.getMessage(key);
-            } catch (java.util.MissingResourceException mre) {
-                log.warn("doIconPanel() property key {} missing", key);
+            if (!_type.equals("SignalHead")) { // skip SignalHead keys as they're already I18N in _order
+                try {
+                    labelName = Bundle.getMessage(key); // I18N
+                } catch (java.util.MissingResourceException mre) {
+                    log.warn("doIconPanel() property key {} missing", key);
+                }
             }
             p.add(new JLabel(labelName));
             p.add(_iconMap.get(key));
@@ -382,7 +395,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 clearIconPanel();
                 doIconPanel();
             }
-
         } else {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
@@ -390,25 +402,24 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         validate();
     }
 
-    void makeIconMap(NamedBean bean) {
+    private void makeIconMap(NamedBean bean) {
         if (bean != null && _type != null && _type.equals("SignalHead")) {
             _order = new ArrayList<>();
             _iconMap = new HashMap<>(12);
             int k = 0;
-            ArrayList<CatalogTreeLeaf> list = _defaultIcons.getLeaves();
-            String[] states = ((SignalHead) bean).getValidStateNames();
-            for (int i = 0; i < list.size(); i++) {
-                CatalogTreeLeaf leaf = list.get(i);
-                String name = leaf.getName();
-                try {
-                    name = Bundle.getMessage(leaf.getName());
-                } catch (java.util.MissingResourceException mre) {
-                    // just silence?
-                }
+            ArrayList<CatalogTreeLeaf> leafList = _defaultIcons.getLeaves();
+            String[] states = ((SignalHead) bean).getValidStateNames(); // states contains I18N appearances
+            for (CatalogTreeLeaf leaf : leafList) {
+                String name = leaf.getName(); // NOI18N
+//                log.debug("SignalHead Appearance leaf name= {}", name);
+//                try {
+//                    name = Bundle.getMessage(leaf.getName()); // I18N
+//                } catch (MissingResourceException mre) {
+//                    log.warn("SignalHead makeIconMap() property key {} missing", name);
+//                }
                 log.debug("makeIconMap: leafName= {}, name= {}", leaf.getName(), name);
                 for (String state : states) {
-                    if (name.equals(state)
-                            || leaf.getName().equals(Bundle.getMessage("SignalHeadStateDark"))
+                    if (name.equals(state) || leaf.getName().equals(Bundle.getMessage("SignalHeadStateDark"))
                             || leaf.getName().equals(Bundle.getMessage("SignalHeadStateHeld"))) {
                         String path = leaf.getPath();
                         this.setIcon(k++, leaf.getName(), new NamedIcon(path, path));
@@ -422,7 +433,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         log.debug("makeIconMap: _iconMap.size()= {}", _iconMap.size());
     }
 
-    void checkIconSizes() {
+    private void checkIconSizes() {
         if (!_addButton.isEnabled()) {
             return;
         }
@@ -441,16 +452,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
             if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("IconSizeDiff"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
             lastWidth = nextWidth;
             lastHeight = nextHeight;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Size: width= {}, height= {}", lastWidth, lastHeight);
-        }
+        log.debug("Size: width= {}, height= {}", lastWidth, lastHeight);
     }
 
     /**
@@ -601,7 +610,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             this.add(_catalog);
         }
         if (_type != null /*&& _defaultIcons == null*/) {
-            getDefaultIconNodeFromMap();
+            createDefaultIconNodeFromMap();
         }
         // Allow initial row to be set without getting callback to valueChanged
         if (_table != null) {
