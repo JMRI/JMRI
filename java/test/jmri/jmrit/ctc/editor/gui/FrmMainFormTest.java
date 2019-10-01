@@ -13,7 +13,9 @@ public class FrmMainFormTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("FrmMainForm Constructor Return", new FrmMainForm());
+        javax.swing.JFrame frame = new FrmMainForm();
+        Assert.assertNotNull("FrmMainForm Constructor Return", frame);
+        JUnitUtil.dispose(frame);
     }
 
     @Before
@@ -25,6 +27,7 @@ public class FrmMainFormTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }
