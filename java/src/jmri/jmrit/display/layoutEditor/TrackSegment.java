@@ -3798,6 +3798,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelEntranceWidth(int newVal) {
         if (tunnelEntranceWidth != newVal) {
+            tunnelEntranceWidth = Math.max(1, newVal);   // don't let value be less than 1
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
