@@ -64,6 +64,7 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     public void tearDown() {
         tcis = null;
         memo = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
