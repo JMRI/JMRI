@@ -193,7 +193,11 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
+     * To get the current selection <em>without</em> potentially creating a
+     * NamedBean call {@link #getItemAt(int)} with {@link #getSelectedIndex()}
+     * as the index instead (as in {@code getItemAt(getSelectedIndex())}).
+     * 
      * @return the selected item as the supported type of NamedBean, creating a
      *         new NamedBean as needed if {@link #isEditable()} and
      *         {@link #isProviding()} are true, or null if there is no
@@ -211,7 +215,8 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                 if (text != null && !text.isEmpty()) {
                     if ((manager.isValidSystemNameFormat(text)) || text.equals(NamedBean.normalizeUserName(text))) {
                         ProvidingManager<B> pm = (ProvidingManager<B>) manager;
-                        item = pm.provide(jtc.getText());
+                        item = pm.provide(text);
+                        setSelectedItem(item);
                     }
                 }
             }
@@ -311,7 +316,9 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
     }
 
     private void sort() {
-        B selectedItem = getSelectedItem();
+        // use getItemAt instead of getSelectedItem to avoid
+        // possibility of creating a NamedBean in this method
+        B selectedItem = getItemAt(getSelectedIndex());
         Comparator<B> comparator = new NamedBeanComparator<>();
         if (displayOptions != DisplayOptions.SYSTEMNAME
                 && displayOptions != DisplayOptions.QUOTED_SYSTEMNAME) {
@@ -432,7 +439,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                                 B bean = manager.getNamedBean(text);
                                 if (bean != null) {
                                     setSelectedItem(bean); // won't change if bean is not in model
-                                    if (!bean.equals(getSelectedItem())) {
+                                    if (!bean.equals(getItemAt(getSelectedIndex()))) {
                                         jtc.setText(text);
                                         if (validatingInput) {
                                             return new Validation(Validation.Type.DANGER,
