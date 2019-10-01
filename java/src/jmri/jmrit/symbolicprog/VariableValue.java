@@ -124,7 +124,14 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     /**
      * Get the value as an Unsigned Long.
      * <p>
-     * In some cases this will result in complex behavior,
+     * Some subclasses (e.g. {@link SplitVariableValue}) store the value as a
+     * {@code long} rather than an {@code integer}. This method should be used
+     * in cases where such a class may be queried (e.g. by
+     * {@link ArithmeticQualifier}).
+     * <p>
+     * If not overriden by a subclass, it will return an
+     * {@link Integer#toUnsignedLong UnsignedLong} conversion of the value
+     * returned by {@link #getIntValue getIntValue()}.
      *
      * @return the value as a long
      */
