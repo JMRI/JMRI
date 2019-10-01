@@ -110,14 +110,27 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             log.debug("skipping set of non-integer value \"{}\"", value);
         }
     }
-    
+
     /**
-     * Get the value as a single number.
-     *
+     * Get the value as a single integer.
+     * <p>
      * In some cases, e.g. speed tables, this will result in complex behavior,
      * where setIntValue(getIntValue()) results in something unexpected.
+     *
+     * @return the value as an integer
      */
-    abstract public int getIntValue();
+    public abstract int getIntValue();
+
+    /**
+     * Get the value as an Unsigned Long.
+     * <p>
+     * In some cases this will result in complex behavior,
+     *
+     * @return the value as a long
+     */
+    public long getLongValue() {
+        return Integer.toUnsignedLong(getIntValue());
+    }
 
     void updatedTextField() {
         log.error("unexpected use of updatedTextField()", new Exception("traceback"));
@@ -475,6 +488,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             return (Cv/radix) % (maxVal+1);
         }
     }
+
     /**
      * Set a value into a CV, using the mask as needed.
      *

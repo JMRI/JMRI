@@ -75,9 +75,7 @@ public class SplitVariableValue extends VariableValue
         log.debug("Variable={};comment={};cvName={};cvNum={};stdname={}", _name, comment, cvName, _cvNum, stdname);
 
         // upper bit offset includes lower bit offset, and MSB bits missing from upper part
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; upper mask {} had offsetVal={} so upperbitoffset={}", _name, _uppermask, offsetVal(_uppermask), offsetVal(_uppermask));
-        }
+        log.debug("Variable={}; upper mask {} had offsetVal={} so upperbitoffset={}", _name, _uppermask, offsetVal(_uppermask), offsetVal(_uppermask));
 
         // set up array of used CVs
         cvList = new ArrayList<>();
@@ -292,7 +290,7 @@ public class SplitVariableValue extends VariableValue
      * Contains numeric-value specific code.
      * <br><br>
      * Calculates new value for _textField and invokes
-     * {@link #setValue(long) setValue(newVal)} to make and notify the change
+     * {@link #setLongValue(long) setLongValue(newVal)} to make and notify the change
      *
      * @param intVals array of new CV values
      */
@@ -304,7 +302,7 @@ public class SplitVariableValue extends VariableValue
             log.debug("Variable={}; i={}; newVal={}", _name, i, getTextFromValue(newVal));
         }
         log.debug("Variable={}; set value to {}", _name, newVal);
-        setValue(newVal);  // check for duplicate is done inside setValue
+        setLongValue(newVal);  // check for duplicate is done inside setLongValue
         log.debug("Variable={}; in property change after setValue call", _name);
     }
 
@@ -329,11 +327,11 @@ public class SplitVariableValue extends VariableValue
 //            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
 //                _textField.setText(oldContents);
 //            } else {
-                long newVal = (newFieldVal - mOffset) / mFactor;
-                long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
+            long newVal = (newFieldVal - mOffset) / mFactor;
+            long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
 //            log.debug("Enter updatedTextField from exitField");
-                updatedTextField();
-                prop.firePropertyChange("Value", oldVal, newVal);
+            updatedTextField();
+            prop.firePropertyChange("Value", oldVal, newVal);
 //            }
         }
     }
@@ -421,8 +419,8 @@ public class SplitVariableValue extends VariableValue
     @Override
     public void setValue(String value) {
         try {
-            long val = Long.parseLong(value);
-            setValue(val);
+            long val = Long.parseUnsignedLong(value);
+            setLongValue(val);
         } catch (NumberFormatException e) {
             log.debug("skipping set of non-long value \"{}\"", value);
         }
@@ -430,17 +428,32 @@ public class SplitVariableValue extends VariableValue
 
     @Override
     public void setIntValue(int i) {
-        setValue(i);
+        setLongValue(i);
     }
 
     @Override
     public int getIntValue() {
+        long x = getLongValue();
+        long y = x & intMask;
+        if ((Long.compareUnsigned(x, y) != 0)) {
+            log.error("Value {} cannot be converted to 'int'", x);
+        }
         return (int) ((getValueFromText(_textField.getText()) - mOffset) / mFactor);
+    }
+
+    /**
+     * Get the value as an unsigned long.
+     *
+     * @return the value as a long
+     */
+    @Override
+    public long getLongValue() {
+        return ((getValueFromText(_textField.getText()) - mOffset) / mFactor);
     }
 
     @Override
     public Object getValueObject() {
-        return Integer.valueOf(_textField.getText());
+        return getLongValue();
     }
 
     @Override
@@ -454,7 +467,7 @@ public class SplitVariableValue extends VariableValue
         }
     }
 
-    public void setValue(long value) {
+    public void setLongValue(long value) {
         log.debug("Variable={}; enter setValue {}", _name, value);
         long oldVal;
         try {
@@ -513,6 +526,7 @@ public class SplitVariableValue extends VariableValue
     private static final int READING_FIRST = 1;
     private static final int WRITING_FIRST = -1;
     private static final int bitCount = Long.bitCount(~0);
+    private static final long intMask = Integer.toUnsignedLong(~0);
 
     /**
      * Notify the connected CVs of a state change from above

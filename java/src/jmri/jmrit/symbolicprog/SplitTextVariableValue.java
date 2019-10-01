@@ -178,7 +178,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
      * Contains byte-value specific code.
      * <br><br>
      * Calculates new value for _textField and invokes
-     * {@link #setValue(String) setValue(newVal)} to make and notify the change
+     * {@link #setValue(String) setLongValue(newVal)} to make and notify the change
      *
      * @param intVals array of new CV values
      */
@@ -196,7 +196,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
             log.debug("Variable=" + _name + "; set value to " + newVal);
         }
         log.debug("setValue(newVal)to {}", newVal);
-        setValue(newVal);  // check for duplicate is done inside setValue
+        setValue(newVal);  // check for duplicate is done inside setLongValue
         log.debug("done setValue(newVal)to {}", newVal);
         if (log.isDebugEnabled()) {
             log.debug("Variable=" + _name + "; in property change after setValueFromString call");
@@ -248,7 +248,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
 
     @Override
     public int getIntValue() {
-        log.warn("getValue doesn't make sense for a split text value");
+        log.error("getValue doesn't make sense for a split text value");
         return 0;
     }
 

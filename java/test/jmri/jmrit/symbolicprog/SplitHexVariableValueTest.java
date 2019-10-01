@@ -19,12 +19,13 @@ import org.junit.Test;
  */
 public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
 
-    // Local tests version of makeVar with extra parameters.
+    // Local tests version of makeVar with extra parameters and cvList support.
     SplitHexVariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item,
-            String highCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
+            String highCV, int pFactor, int pOffset, String uppermask,
+            String extra1, String extra2, String extra3, String extra4) {
         ProgDebugger p = new ProgDebugger();
 
         if (!cvNum.equals("")) { // some variables have no CV per se
@@ -46,7 +47,9 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
             cvNext.setValue(0);
             v.put(highCV, cvNext);
         }
-        return new SplitHexVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+        return new SplitHexVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal, v, status, item,
+                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
     }
 
     // abstract members invoked by tests in parent AbstractVariableValueTestBase class
@@ -64,7 +67,9 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         String extra3 = null;
         String extra4 = null;
 
-        return makeVar(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        return makeVar(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal, v, status, item,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
     }
 
     @Override
@@ -75,7 +80,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((SplitVariableValue) var).setValue(Integer.parseInt(val));
+        ((SplitVariableValue) var).setLongValue(Long.parseUnsignedLong(val, 16));
     }
 
     @Override
