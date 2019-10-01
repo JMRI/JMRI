@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @param <E> type of NamedBean supported in this table
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractTableAction<E extends NamedBean> extends AbstractAction {
+public abstract class AbstractTableAction<E extends NamedBean> extends AbstractAction {
 
     public AbstractTableAction(String actionName) {
         super(actionName);
@@ -250,5 +250,5 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
 }
