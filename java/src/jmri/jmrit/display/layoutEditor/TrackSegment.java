@@ -25,8 +25,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -1367,51 +1367,6 @@ public class TrackSegment extends LayoutTrack {
                 );
                 setBumperLength(newValue);
             });
-
-            jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
-            jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bumperColor);
-                if ((newColor != null) && !newColor.equals(bumperColor)) {
-                    setBumperColor(newColor);
-                }
-            });
-            jmi.setForeground(bumperColor);
-            jmi.setBackground(ColorUtil.contrast(bumperColor));
-
-            jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bumperLineWidth));
-            jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                //prompt for width
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                        bumperLineWidth);
-                setBumperLineWidth(newValue);
-            });
-
-            jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage("DecorationLengthMenuItemTitle")) + bumperLength));
-            jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                //prompt for length
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
-                        Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                        bumperLength, new Predicate<Integer>() {
-                    @Override
-                    public boolean test(Integer t) {
-                        if (t < 0 || t > MAX_BUMPER_LENGTH) {
-                            throw new IllegalArgumentException(
-                                    Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
-                        }
-                        return true;
-                    }
-                }
-                );
-                setBumperLength(newValue);
-            });
         }
 
         //
@@ -2276,6 +2231,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+//        if (getName().equals("T5")) {
+//            log.debug("STOP");
+//        }
         if (!isBlock && isDashed() && getLayoutBlock() != null) {
             // Skip the dashed rail layer, the block layer will display the dashed track
             // This removes random rail fragments from between the block dashes
@@ -2316,6 +2274,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+//        if (getName().equals("T5")) {
+//            log.debug("STOP");
+//        }
         if (isDashed() && getLayoutBlock() != null) {
             // Skip the dashed rail layer, the block layer will display the dashed track
             // This removes random rail fragments from between the block dashes
@@ -2432,10 +2393,9 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     protected void drawDecorations(Graphics2D g2) {
-
-        if (getName().equals("T9")) {
-            log.debug("STOP");
-        }
+//        if (getName().equals("T5")) {
+//            log.debug("STOP");
+//        }
 
         // get end points and calculate start/stop angles (in radians)
         Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
@@ -2462,8 +2422,7 @@ public class TrackSegment extends LayoutTrack {
             startAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(cp0, ep1);
             stopAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep2, cpN);
         } else {
-            Point2D delta = MathUtil.subtract(ep2, ep1);
-            startAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(delta);
+            startAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(ep2, ep1);
             stopAngleRAD = startAngleRAD;
         }
 
@@ -2512,7 +2471,7 @@ public class TrackSegment extends LayoutTrack {
                 calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
                         getCX(), getCY(), getCW(), getCH());
-                double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
+                double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
                 if (bridgeSideLeft) {
                     Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
                     g2.draw(new Arc2D.Double(
@@ -2520,7 +2479,7 @@ public class TrackSegment extends LayoutTrack {
                             cLeftRectangle2D.getY(),
                             cLeftRectangle2D.getWidth(),
                             cLeftRectangle2D.getHeight(),
-                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                            startAdj, tmpAngle, Arc2D.OPEN));
                 }
                 if (bridgeSideRight) {
                     Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
@@ -2529,9 +2488,8 @@ public class TrackSegment extends LayoutTrack {
                             cLRightRectangle2D.getY(),
                             cLRightRectangle2D.getWidth(),
                             cLRightRectangle2D.getHeight(),
-                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                            startAdj, tmpAngle, Arc2D.OPEN));
                 }
-                trackRedrawn();
             } else if (isBezier()) {
                 int cnt = bezierControlPoints.size() + 2;
                 Point2D[] points = new Point2D[cnt];
@@ -2552,29 +2510,35 @@ public class TrackSegment extends LayoutTrack {
                 Point2D vector = MathUtil.normalize(delta, halfWidth);
                 vector = MathUtil.orthogonal(vector);
 
-                if (bridgeSideLeft) {
+                if (bridgeSideRight) {
                     Point2D ep1L = MathUtil.add(ep1, vector);
                     Point2D ep2L = MathUtil.add(ep2, vector);
                     g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
-                if (bridgeSideRight) {
+                if (bridgeSideLeft) {
                     Point2D ep1R = MathUtil.subtract(ep1, vector);
                     Point2D ep2R = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
                 }
             }   // if isArc() {} else if isBezier() {} else...
 
+            if (isFlip()) {
+                boolean temp = bridgeSideRight;
+                bridgeSideRight = bridgeSideLeft;
+                bridgeSideLeft = temp;
+            }
+
             if (bridgeHasEntry) {
                 if (bridgeSideRight) {
-                    p1 = new Point2D.Double(-bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
-                    p2 = new Point2D.Double(0.0, -halfWidth);
+                    p1 = new Point2D.Double(-bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
+                    p2 = new Point2D.Double(0.0, +halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
                 if (bridgeSideLeft) {
-                    p1 = new Point2D.Double(-bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
-                    p2 = new Point2D.Double(0.0, +halfWidth);
+                    p1 = new Point2D.Double(-bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
+                    p2 = new Point2D.Double(0.0, -halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
                     g2.draw(new Line2D.Double(p1P, p2P));
@@ -2582,29 +2546,33 @@ public class TrackSegment extends LayoutTrack {
             }
             if (bridgeHasExit) {
                 if (bridgeSideRight) {
-                    p1 = new Point2D.Double(+bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
-                    p2 = new Point2D.Double(0.0, -halfWidth);
-                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
-                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
-                    g2.draw(new Line2D.Double(p1P, p2P));
-                }
-                if (bridgeSideLeft) {
                     p1 = new Point2D.Double(+bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
                     p2 = new Point2D.Double(0.0, +halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
+                if (bridgeSideLeft) {
+                    p1 = new Point2D.Double(+bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
+                    p2 = new Point2D.Double(0.0, -halfWidth);
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
+                    g2.draw(new Line2D.Double(p1P, p2P));
+                }
             }
-        }   // if (bridgeValue != null)
+
+            // if necessary flip these back
+            if (isFlip()) {
+                boolean temp = bridgeSideRight;
+                bridgeSideRight = bridgeSideLeft;
+                bridgeSideLeft = temp;
+            }
+        }
 
         //
         //  end bumper decorations
         //
         if (bumperEndStart || bumperEndStop) {
-            if (getName().equals("T32")) {
-                log.debug("STOP");
-            }
             g2.setStroke(new BasicStroke(bumperLineWidth,
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(bumperColor);
@@ -2651,21 +2619,21 @@ public class TrackSegment extends LayoutTrack {
                         getCX(), getCY(), getCW(), getCH());
                 double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
                 if (tunnelSideRight) {
-                    Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
-                    g2.draw(new Arc2D.Double(
-                            cLeftRectangle2D.getX(),
-                            cLeftRectangle2D.getY(),
-                            cLeftRectangle2D.getWidth(),
-                            cLeftRectangle2D.getHeight(),
-                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
-                }
-                if (tunnelSideLeft) {
                     Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
                     g2.draw(new Arc2D.Double(
                             cLRightRectangle2D.getX(),
                             cLRightRectangle2D.getY(),
                             cLRightRectangle2D.getWidth(),
                             cLRightRectangle2D.getHeight(),
+                            startAngleDEG, extentAngleDEG, Arc2D.OPEN));
+                }
+                if (tunnelSideLeft) {
+                    Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
+                    g2.draw(new Arc2D.Double(
+                            cLeftRectangle2D.getX(),
+                            cLeftRectangle2D.getY(),
+                            cLeftRectangle2D.getWidth(),
+                            cLeftRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
                 trackRedrawn();
@@ -2679,10 +2647,10 @@ public class TrackSegment extends LayoutTrack {
                 points[cnt - 1] = ep2;
 
                 if (tunnelSideRight) {
-                    MathUtil.drawBezier(g2, points, -halfWidth);
+                    MathUtil.drawBezier(g2, points, +halfWidth);
                 }
                 if (tunnelSideLeft) {
-                    MathUtil.drawBezier(g2, points, +halfWidth);
+                    MathUtil.drawBezier(g2, points, -halfWidth);
                 }
             } else {
                 Point2D delta = MathUtil.subtract(ep2, ep1);
@@ -2705,10 +2673,19 @@ public class TrackSegment extends LayoutTrack {
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
             g2.setColor(tunnelColor);
 
+            // don't let tunnelEntranceWidth be less than tunnelFloorWidth + 6
+            tunnelEntranceWidth = Math.max(tunnelEntranceWidth, tunnelFloorWidth + 6);
+
             double halfEntranceWidth = tunnelEntranceWidth / 2.0;
             double halfFloorWidth = tunnelFloorWidth / 2.0;
             double halfDiffWidth = halfEntranceWidth - halfFloorWidth;
 
+            if (isFlip()) {
+                boolean temp = tunnelSideRight;
+                tunnelSideRight = tunnelSideLeft;
+                tunnelSideLeft = temp;
+            }
+            
             if (tunnelHasEntry) {
                 if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
@@ -2734,9 +2711,12 @@ public class TrackSegment extends LayoutTrack {
                     path.lineTo(p5P.getX(), p5P.getY());
                     path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
                     path.closePath();
-                    g2.fill(path);
+                    g2.draw(path);
                 }
                 if (tunnelSideRight) {
+//                    if (getName().equals("T5")) {
+//                        log.debug("STOP");
+//                    }
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, +halfFloorWidth);
                     p3 = new Point2D.Double(0.0, +halfEntranceWidth);
@@ -2760,7 +2740,7 @@ public class TrackSegment extends LayoutTrack {
                     path.lineTo(p5P.getX(), p5P.getY());
                     path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
                     path.closePath();
-                    g2.fill(path);
+                    g2.draw(path);
                 }
             }
             if (tunnelHasExit) {
@@ -2788,7 +2768,7 @@ public class TrackSegment extends LayoutTrack {
                     path.lineTo(p5P.getX(), p5P.getY());
                     path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
                     path.closePath();
-                    g2.fill(path);
+                    g2.draw(path);
                 }
                 if (tunnelSideRight) {
                     p1 = new Point2D.Double(0.0, 0.0);
@@ -2814,10 +2794,17 @@ public class TrackSegment extends LayoutTrack {
                     path.lineTo(p5P.getX(), p5P.getY());
                     path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
                     path.closePath();
-                    g2.fill(path);
+                    g2.draw(path);
                 }
             }
-        }   // if (tunnelValue != null)
+            
+            // if necessary, put these back
+            if (isFlip()) {
+                boolean temp = tunnelSideRight;
+                tunnelSideRight = tunnelSideLeft;
+                tunnelSideLeft = temp;
+            }
+        }
     }   // drawDecorations
 
     private int drawArrow(
@@ -2918,10 +2905,10 @@ public class TrackSegment extends LayoutTrack {
                     p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
                     p4 = new Point2D.Double(offset + (2 * arrowLength), +arrowLength);
                 } else {
-                    p1 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
-                    p2 = new Point2D.Double(offset, -arrowLength);
-                    p3 = new Point2D.Double(offset + arrowLength, 0.0);
-                    p4 = new Point2D.Double(offset, +arrowLength);
+                    p1 = new Point2D.Double(offset, 0.0);
+                    p2 = new Point2D.Double(offset + (4 * arrowLength), -arrowLength);
+                    p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p4 = new Point2D.Double(offset + (4 * arrowLength), +arrowLength);
                 }
                 p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
                 p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
@@ -2931,6 +2918,7 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Line2D.Double(p1, p3));
                 g2.draw(new Line2D.Double(p2, p3));
                 g2.draw(new Line2D.Double(p3, p4));
+
                 offset += (3 * arrowLength) + arrowGap;
                 break;
             }
@@ -2941,10 +2929,10 @@ public class TrackSegment extends LayoutTrack {
                     p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
                     p4 = new Point2D.Double(offset + (2 * arrowLength), +arrowLength);
                 } else {
-                    p1 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
-                    p2 = new Point2D.Double(offset, -arrowLength);
-                    p3 = new Point2D.Double(offset + arrowLength, 0.0);
-                    p4 = new Point2D.Double(offset, +arrowLength);
+                    p1 = new Point2D.Double(offset, 0.0);
+                    p2 = new Point2D.Double(offset + (4 * arrowLength), -arrowLength);
+                    p3 = new Point2D.Double(offset + (3 * arrowLength), 0.0);
+                    p4 = new Point2D.Double(offset + (4 * arrowLength), +arrowLength);
                 }
                 p1 = MathUtil.add(MathUtil.rotateRAD(p1, angleRAD), ep);
                 p2 = MathUtil.add(MathUtil.rotateRAD(p2, angleRAD), ep);
@@ -3243,9 +3231,9 @@ public class TrackSegment extends LayoutTrack {
                 //
                 else if (key.equals("bumper")) {
                     String bumperValue = entry.getValue();
-                    if (getName().equals("T15")) {
-                        log.debug("STOP");
-                    }
+//                    if (getName().equals("T15")) {
+//                        log.debug("STOP");
+//                    }
                     // <decoration name="bumper" value="double;linewidth=2;length=6;gap=2;flipped" />
                     int lineWidth = 1, length = 4;
                     boolean isFlipped = false, atStart = true, atStop = true;
@@ -3570,7 +3558,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBridgeDeckWidth(int newVal) {
         if (bridgeDeckWidth != newVal) {
-            bridgeDeckWidth = Math.max(0, newVal);   // don't let value be less than 0
+            bridgeDeckWidth = Math.max(6, newVal);   // don't let value be less than 6
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3596,7 +3584,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBridgeApproachWidth(int newVal) {
         if (bridgeApproachWidth != newVal) {
-            bridgeApproachWidth = Math.max(0, newVal);   // don't let value be less than 0
+            bridgeApproachWidth = Math.max(8, newVal);   // don't let value be less than 8
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3674,11 +3662,13 @@ public class TrackSegment extends LayoutTrack {
             railGap = ltdo.getMainRailGap();
         }
         bumperLineWidth = railWidth;
-        bumperLength = railGap + railWidth;
+        bumperLength = (5 * (railGap + railWidth)) / 2;
         if ((tieLength > 0) && (tieWidth > 0)) {
             bumperLineWidth = tieWidth;
             bumperLength = tieLength * 3 / 2;
         }
+        bumperLineWidth = Math.min(1, bumperLineWidth);
+        bumperLength = Math.min(10, bumperLength);
     }
 
     public int getBumperLength() {
@@ -3687,12 +3677,12 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBumperLength(int newVal) {
         if (bumperLength != newVal) {
-            bumperLength = Math.max(0, newVal);   // don't let value be less than 0
+            bumperLength = Math.max(8, newVal);   // don't let value be less than 8
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
     }
-    private int bumperLength = 6;
+    private int bumperLength = 10;
 
     public boolean isBumperFlipped() {
         return bumperFlipped;
@@ -3782,7 +3772,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelFloorWidth(int newVal) {
         if (tunnelFloorWidth != newVal) {
-            tunnelFloorWidth = Math.max(0, newVal);   // don't let value be less than 0
+            tunnelFloorWidth = Math.max(4, newVal);   // don't let value be less than 4
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3808,7 +3798,6 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelEntranceWidth(int newVal) {
         if (tunnelEntranceWidth != newVal) {
-            tunnelEntranceWidth = Math.max(0, newVal);   // don't let value be less than 0
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
