@@ -479,6 +479,257 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
 
     }
 
+    @Test
+    public void testTextMaxHexVal() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "275:8";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = "";
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 8, cv.length);
+
+        Assert.assertEquals("cv[0] is", "275", cv[0].number());
+        Assert.assertEquals("cv[1] is", "276", cv[1].number());
+        Assert.assertEquals("cv[2] is", "277", cv[2].number());
+        Assert.assertEquals("cv[3] is", "278", cv[3].number());
+        Assert.assertEquals("cv[4] is", "279", cv[4].number());
+        Assert.assertEquals("cv[5] is", "280", cv[5].number());
+        Assert.assertEquals("cv[6] is", "281", cv[6].number());
+        Assert.assertEquals("cv[7] is", "282", cv[7].number());
+
+        ((JTextField) var.getCommonRep()).setText("7FD2720F");  // to start with a random value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "7FD2720F", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+
+        // change to maximum unsigned value
+        ((JTextField) var.getCommonRep()).setText("FFFFFFFFFFFFFFFF");
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "FFFFFFFFFFFFFFFF", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0xFF, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xFF, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0xFF, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0xFF, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0xFF, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0xFF, cv[7].getValue());
+
+        // change to one less than maximum unsigned value
+        ((JTextField) var.getCommonRep()).setText("FFFFFFFFFFFFFFFE");
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "FFFFFFFFFFFFFFFE", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0xFE, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xFF, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0xFF, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0xFF, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0xFF, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0xFF, cv[7].getValue());
+
+        // change to last 63 bit unsigned value
+        ((JTextField) var.getCommonRep()).setText("7FFFFFFFFFFFFFFF");
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "7FFFFFFFFFFFFFFF", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0xFF, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xFF, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0xFF, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0xFF, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0xFF, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x7F, cv[7].getValue());
+
+        // change to first 64 bit unsigned value
+        ((JTextField) var.getCommonRep()).setText("8000000000000000");
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "8000000000000000", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x00, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x00, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0x00, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x00, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x80, cv[7].getValue());
+
+    }
+
+    @Test
+    public void testCvChangesMaxHexVal() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "275:8";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = "";
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 8, cv.length);
+
+        Assert.assertEquals("cv[0] is", "275", cv[0].number());
+        Assert.assertEquals("cv[1] is", "276", cv[1].number());
+        Assert.assertEquals("cv[2] is", "277", cv[2].number());
+        Assert.assertEquals("cv[3] is", "278", cv[3].number());
+        Assert.assertEquals("cv[4] is", "279", cv[4].number());
+        Assert.assertEquals("cv[5] is", "280", cv[5].number());
+        Assert.assertEquals("cv[6] is", "281", cv[6].number());
+        Assert.assertEquals("cv[7] is", "282", cv[7].number());
+
+        // start with a random value
+        cv[0].setValue(0x0F);
+        cv[1].setValue(0x72);
+        cv[2].setValue(0xD2);
+        cv[3].setValue(0x7F);
+        cv[4].setValue(0x00);
+        cv[5].setValue(0x00);
+        cv[6].setValue(0x00);
+        cv[7].setValue(0x00);
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+        Assert.assertEquals("set var text value", "7FD2720F", ((JTextField) var.getCommonRep()).getText());
+
+        // change to maximum unsigned value
+        cv[0].setValue(0xFF);
+        cv[1].setValue(0xFF);
+        cv[2].setValue(0xFF);
+        cv[3].setValue(0xFF);
+        cv[4].setValue(0xFF);
+        cv[5].setValue(0xFF);
+        cv[6].setValue(0xFF);
+        cv[7].setValue(0xFF);
+        Assert.assertEquals("set CV" + cv[0].number(), 0xFF, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xFF, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0xFF, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0xFF, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0xFF, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0xFF, cv[7].getValue());
+        Assert.assertEquals("set var text value", "FFFFFFFFFFFFFFFF", ((JTextField) var.getCommonRep()).getText());
+
+        // change to one less than maximum unsigned value
+        cv[0].setValue(0xFE);
+        cv[1].setValue(0xFF);
+        cv[2].setValue(0xFF);
+        cv[3].setValue(0xFF);
+        cv[4].setValue(0xFF);
+        cv[5].setValue(0xFF);
+        cv[6].setValue(0xFF);
+        cv[7].setValue(0xFF);
+        Assert.assertEquals("set CV" + cv[0].number(), 0xFE, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xFF, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0xFF, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0xFF, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0xFF, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0xFF, cv[7].getValue());
+        Assert.assertEquals("set var text value", "FFFFFFFFFFFFFFFE", ((JTextField) var.getCommonRep()).getText());
+
+        // change to last 63 bit unsigned value
+        cv[0].setValue(0xFF);
+        cv[1].setValue(0xFF);
+        cv[2].setValue(0xFF);
+        cv[3].setValue(0xFF);
+        cv[4].setValue(0xFF);
+        cv[5].setValue(0xFF);
+        cv[6].setValue(0xFF);
+        cv[7].setValue(0x7F);
+        Assert.assertEquals("set CV" + cv[0].number(), 0xFF, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xFF, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0xFF, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0xFF, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0xFF, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x7F, cv[7].getValue());
+        Assert.assertEquals("set var text value", "7FFFFFFFFFFFFFFF", ((JTextField) var.getCommonRep()).getText());
+
+        // change to first 64 bit unsigned value
+        cv[0].setValue(0x00);
+        cv[1].setValue(0x00);
+        cv[2].setValue(0x00);
+        cv[3].setValue(0x00);
+        cv[4].setValue(0x00);
+        cv[5].setValue(0x00);
+        cv[6].setValue(0x00);
+        cv[7].setValue(0x80);
+        Assert.assertEquals("set CV" + cv[0].number(), 0x00, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x00, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0x00, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x00, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x80, cv[7].getValue());
+        Assert.assertEquals("set var text value", "8000000000000000", ((JTextField) var.getCommonRep()).getText());
+
+    }
+
     // from here down is testing infrastructure
     @Before
     @Override
