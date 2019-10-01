@@ -278,22 +278,32 @@ public class LinkedWarrantTest {
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
-        final Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
+        // Tinker start block
+        Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         Assert.assertNotNull("Senor IS0 not found", sensor0);
         NXFrameTest.setAndConfirmSensorAction(sensor0, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB0"));
+
+        // Evers start block
+        Sensor sensor7 = _sensorMgr.getBySystemName("IS7");
+        Assert.assertNotNull("Senor IS7 not found", sensor7);
+        NXFrameTest.setAndConfirmSensorAction(sensor7, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB7"));
+
+        // Chance start block
+        Sensor sensor6 = _sensorMgr.getBySystemName("IS6");
+        Assert.assertNotNull("Senor IS6 not found", sensor6);
+        NXFrameTest.setAndConfirmSensorAction(sensor6, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB6"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
 
-        Warrant warrant = _warrantMgr.getWarrant("Tinker");
-        Assert.assertNotNull("warrant", warrant);
+        Warrant w = _warrantMgr.getWarrant("Tinker");
+        Assert.assertNotNull("warrant", w);
        
         // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
         Assert.assertNull("Warrant starts",
-              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
+              tableFrame.runTrain(w, Warrant.MODE_RUN)); // start run
 
-        Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  w.getRunningMessage();
             return m.endsWith("Cmd #8.");
@@ -308,18 +318,13 @@ public class LinkedWarrantTest {
                 block.getSensor().getDisplayName(), 
                 NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
 
-        Sensor sensor7 = _sensorMgr.getBySystemName("IS7");
-        Assert.assertNotNull("Senor IS7 not found", sensor7);
-        NXFrameTest.setAndConfirmSensorAction(sensor7, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB7"));
-
-        warrant = _warrantMgr.getWarrant("Evers");
+        Warrant ww = _warrantMgr.getWarrant("Evers");
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
             return (m.startsWith("Launching warrant"));
         }, "Tinker finished first leg");
 
-        Warrant ww = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  ww.getRunningMessage();
             return m.endsWith("Cmd #8.");
@@ -331,10 +336,6 @@ public class LinkedWarrantTest {
         Assert.assertEquals("Evers after second leg", 
                 block.getSensor().getDisplayName(), 
                 NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
-
-        Sensor sensor6 = _sensorMgr.getBySystemName("IS6");
-        Assert.assertNotNull("Senor IS6 not found", sensor6);
-        NXFrameTest.setAndConfirmSensorAction(sensor6, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB6"));
 
         Warrant www = _warrantMgr.getWarrant("Chance");
 
