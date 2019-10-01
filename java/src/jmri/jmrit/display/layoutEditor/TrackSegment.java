@@ -3350,6 +3350,8 @@ public class TrackSegment extends LayoutTrack {
                 if (!arrowDirIn && !arrowDirOut) {
                     arrowDirOut = true;
                 }
+            } else {
+                newVal = 0; // only positive styles allowed!
             }
             arrowStyle = newVal;
             layoutEditor.redrawPanel();
