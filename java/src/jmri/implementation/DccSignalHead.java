@@ -47,7 +47,7 @@ public class DccSignalHead extends AbstractSignalHead {
     }
 
     void configureHead(String sys) {
-        //Set the default appearances
+        // Set the default appearances
         appearanceToOutput.put(SignalHead.RED, getDefaultNumberForApperance(SignalHead.RED));
         appearanceToOutput.put(SignalHead.YELLOW, getDefaultNumberForApperance(SignalHead.YELLOW));
         appearanceToOutput.put(SignalHead.GREEN, getDefaultNumberForApperance(SignalHead.GREEN));
@@ -57,7 +57,7 @@ public class DccSignalHead extends AbstractSignalHead {
         appearanceToOutput.put(SignalHead.FLASHGREEN, getDefaultNumberForApperance(SignalHead.FLASHGREEN));
         appearanceToOutput.put(SignalHead.FLASHLUNAR, getDefaultNumberForApperance(SignalHead.FLASHLUNAR));
         appearanceToOutput.put(SignalHead.DARK, getDefaultNumberForApperance(SignalHead.DARK));
-        //New method seperates the system name and address using $
+        // New method separates the system name and address using $
         if (sys.contains("$")) {
             dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$") + 1, sys.length()));
             String commandStationPrefix = sys.substring(0, sys.indexOf("$") - 1);
@@ -72,7 +72,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
             if (c == null) {
                 c = InstanceManager.getNullableDefault(CommandStation.class);
-                log.error("No match against the command station for " + sys + ", so will use the default");
+                log.error("No match against the command station for {}, so will use the default", sys);
             }
         } else {
             c = InstanceManager.getNullableDefault(CommandStation.class);
@@ -86,7 +86,7 @@ public class DccSignalHead extends AbstractSignalHead {
         // now some systems don't support this whole range
         // also depending on how you view the NRMA spec, 1 - 2044 or 1 - 2048
         if (dccSignalDecoderAddress < NmraPacket.accIdLowLimit || dccSignalDecoderAddress > NmraPacket.accIdAltHighLimit) {
-            log.error("SignalHead decoder address out of range: " + dccSignalDecoderAddress);
+            log.error("SignalHead decoder address out of range: {}", dccSignalDecoderAddress);
             throw new IllegalArgumentException("SignalHead decoder address out of range: " + dccSignalDecoderAddress);
         }
     }
@@ -154,7 +154,7 @@ public class DccSignalHead extends AbstractSignalHead {
                  case SignalHead.FLASHGREEN:  aspect = 6 ; break;
                  case SignalHead.FLASHLUNAR:  aspect = 7 ; break;
                  default :                    aspect = 8;
-                 log.error("Unknown appearance " + mAppearance+" displays DARK");
+                 log.error("Unknown appearance {} displays DARK", mAppearance);
                  break;
                  }*/
             }
@@ -188,7 +188,7 @@ public class DccSignalHead extends AbstractSignalHead {
     public int getOutputForAppearance(int appearance) {
         Integer app = appearance;
         if (!appearanceToOutput.containsKey(app)) {
-            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            log.error("Trying to get appearance {} but it has not been configured", appearance);
             return -1;
         }
         return appearanceToOutput.get(app);
@@ -197,7 +197,7 @@ public class DccSignalHead extends AbstractSignalHead {
     public void setOutputForAppearance(int appearance, int number) {
         Integer app = appearance;
         if (appearanceToOutput.containsKey(app)) {
-            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(app));
+            log.debug("Appearance {} is already defined as {}", appearance, appearanceToOutput.get(app));
             appearanceToOutput.remove(app);
         }
         appearanceToOutput.put(app, number);

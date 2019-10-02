@@ -70,10 +70,13 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
 
 //  Fake for SignalHead support:
     @Override
-    public String[] getValidStateNames() { return new String[0]; }
+    public int[] getValidStates() { return new int[0]; }
 
     @Override
-    public int[] getValidStates() { return new int[0]; }
+    public String[] getValidStateKeys() { return new String[0]; }
+
+    @Override
+    public String[] getValidStateNames() { return new String[0]; }
 
     @Override
     public void setAppearance(int newAppearance) {}
@@ -117,4 +120,5 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
         if (_mNamedBeanHandleSignalMast == null) return;
         _mNamedBeanHandleSignalMast.getBean().removePropertyChangeListener(l);
     }
+
 }

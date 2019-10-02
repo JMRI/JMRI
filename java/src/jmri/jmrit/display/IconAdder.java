@@ -387,12 +387,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             for (CatalogTreeLeaf leaf : leafList) {
                 String name = leaf.getName(); // NOI18N
                 log.debug("SignalHead Appearance leaf name= {}", name);
-//                try {
-//                    name = Bundle.getMessage(leaf.getName()); // I18N
-//                } catch (MissingResourceException mre) {
-//                    log.warn("SignalHead makeIconMap() property key {} missing", name);
-//                }
-//                log.debug("makeIconMap: leafName= {}, name= {}", leaf.getName(), name);
                 for (String state : states) {
                     if (name.equals(state) || name.equals("SignalHeadStateDark")
                             || name.equals("SignalHeadStateHeld")) {

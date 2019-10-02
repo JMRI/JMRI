@@ -33,8 +33,9 @@ public abstract class NBHAbstractSignalCommon {
     abstract public boolean getHeld();
     abstract public void setHeld(boolean held);
     abstract public String getDisplayName();
-    abstract public String[] getValidStateNames();
     abstract public int[] getValidStates();
+    abstract public String[] getValidStateKeys();
+    abstract public String[] getValidStateNames();
     abstract public void setAppearance(int newAppearance);
     abstract public Object getBean();
     abstract public boolean isDanger();         // Signal head/mast displaying all SOLID red (all stop).

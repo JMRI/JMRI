@@ -172,26 +172,17 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHGREEN,
         FLASHLUNAR
     };
-//    private static final String[] validStateNames = new String[]{
-//        Bundle.getMessage("SignalHeadStateDark"),
-//        Bundle.getMessage("SignalHeadStateRed"),
-//        Bundle.getMessage("SignalHeadStateYellow"),
-//        Bundle.getMessage("SignalHeadStateGreen"),
-//        Bundle.getMessage("SignalHeadStateLunar"),
-//        Bundle.getMessage("SignalHeadStateFlashingRed"),
-//        Bundle.getMessage("SignalHeadStateFlashingYellow"),
-//        Bundle.getMessage("SignalHeadStateFlashingGreen"),
-//        Bundle.getMessage("SignalHeadStateFlashingLunar"),};
     private static final String[] validStateKeys = new String[]{
-            "SignalHeadStateDark",
-            "SignalHeadStateRed",
-            "SignalHeadStateYellow",
-            "SignalHeadStateGreen",
-            "SignalHeadStateLunar",
-            "SignalHeadStateFlashingRed",
-            "SignalHeadStateFlashingYellow",
-            "SignalHeadStateFlashingGreen",
-            "SignalHeadStateFlashingLunar",};
+        "SignalHeadStateDark",
+        "SignalHeadStateRed",
+        "SignalHeadStateYellow",
+        "SignalHeadStateGreen",
+        "SignalHeadStateLunar",
+        "SignalHeadStateFlashingRed",
+        "SignalHeadStateFlashingYellow",
+        "SignalHeadStateFlashingGreen",
+        "SignalHeadStateFlashingLunar"
+    };
 
     /**
      * @inheritDoc
@@ -241,4 +232,5 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
+
 }
