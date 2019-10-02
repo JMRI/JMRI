@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class implements a SignalHead the maps the various appearances values to
- * aspect values in the <B>Extended Accessory Decoder Control Packet Format</B>
+ * aspect values in the <b>Extended Accessory Decoder Control Packet Format</b>
  * and outputs that packet to the DCC System via the generic CommandStation
  * interface
  * <p>
@@ -48,23 +48,22 @@ public class DccSignalHead extends AbstractSignalHead {
 
     void configureHead(String sys) {
         //Set the default appearances
-        appearanceToOutput.put(Integer.valueOf(SignalHead.RED), getDefaultNumberForApperance(SignalHead.RED));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.YELLOW), getDefaultNumberForApperance(SignalHead.YELLOW));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.GREEN), getDefaultNumberForApperance(SignalHead.GREEN));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.LUNAR), getDefaultNumberForApperance(SignalHead.LUNAR));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHRED), getDefaultNumberForApperance(SignalHead.FLASHRED));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHYELLOW), getDefaultNumberForApperance(SignalHead.FLASHYELLOW));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHGREEN), getDefaultNumberForApperance(SignalHead.FLASHGREEN));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHLUNAR), getDefaultNumberForApperance(SignalHead.FLASHLUNAR));
-        appearanceToOutput.put(Integer.valueOf(SignalHead.DARK), getDefaultNumberForApperance(SignalHead.DARK));
+        appearanceToOutput.put(SignalHead.RED, getDefaultNumberForApperance(SignalHead.RED));
+        appearanceToOutput.put(SignalHead.YELLOW, getDefaultNumberForApperance(SignalHead.YELLOW));
+        appearanceToOutput.put(SignalHead.GREEN, getDefaultNumberForApperance(SignalHead.GREEN));
+        appearanceToOutput.put(SignalHead.LUNAR, getDefaultNumberForApperance(SignalHead.LUNAR));
+        appearanceToOutput.put(SignalHead.FLASHRED, getDefaultNumberForApperance(SignalHead.FLASHRED));
+        appearanceToOutput.put(SignalHead.FLASHYELLOW, getDefaultNumberForApperance(SignalHead.FLASHYELLOW));
+        appearanceToOutput.put(SignalHead.FLASHGREEN, getDefaultNumberForApperance(SignalHead.FLASHGREEN));
+        appearanceToOutput.put(SignalHead.FLASHLUNAR, getDefaultNumberForApperance(SignalHead.FLASHLUNAR));
+        appearanceToOutput.put(SignalHead.DARK, getDefaultNumberForApperance(SignalHead.DARK));
         //New method seperates the system name and address using $
         if (sys.contains("$")) {
             dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$") + 1, sys.length()));
             String commandStationPrefix = sys.substring(0, sys.indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
 
-            for (int x = 0; x < connList.size(); x++) {
-                jmri.CommandStation station = connList.get(x);
+            for (CommandStation station : connList) {
                 if (station.getSystemPrefix().equals(commandStationPrefix)) {
                     c = station;
                     break;
@@ -101,7 +100,7 @@ public class DccSignalHead extends AbstractSignalHead {
             updateOutput();
 
             // notify listeners, if any
-            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
+            firePropertyChange("Appearance", oldAppearance, newAppearance);
         }
     }
 
@@ -112,7 +111,7 @@ public class DccSignalHead extends AbstractSignalHead {
         if (oldLit != newLit) {
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
+            firePropertyChange("Lit", oldLit, newLit);
         }
     }
 
@@ -129,7 +128,7 @@ public class DccSignalHead extends AbstractSignalHead {
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
+            firePropertyChange("Held", oldHeld, newHeld);
         }
     }
 
@@ -138,11 +137,11 @@ public class DccSignalHead extends AbstractSignalHead {
             int aspect = getOutputForAppearance(SignalHead.DARK);
 
             if (getLit()) {
-                Integer app = Integer.valueOf(mAppearance);
+                Integer app = mAppearance;
                 if (appearanceToOutput.containsKey(app)) {
                     aspect = appearanceToOutput.get(app);
                 } else {
-                    log.error("Unknown appearance " + mAppearance + " displays DARK");
+                    log.error("Unknown appearance {} displays DARK", mAppearance);
                 }
                 /*        switch( mAppearance ){
                  case SignalHead.DARK:        aspect = 8 ; break;
@@ -172,9 +171,9 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
-    CommandStation c;
+    private CommandStation c;
 
-    boolean useAddressOffSet = false;
+    private boolean useAddressOffSet = false;
 
     public void useAddressOffSet(boolean boo) {
         useAddressOffSet = boo;
@@ -187,7 +186,7 @@ public class DccSignalHead extends AbstractSignalHead {
     protected HashMap<Integer, Integer> appearanceToOutput = new HashMap<Integer, Integer>();
 
     public int getOutputForAppearance(int appearance) {
-        Integer app = Integer.valueOf(appearance);
+        Integer app = appearance;
         if (!appearanceToOutput.containsKey(app)) {
             log.error("Trying to get appearance " + appearance + " but it has not been configured");
             return -1;
@@ -196,7 +195,7 @@ public class DccSignalHead extends AbstractSignalHead {
     }
 
     public void setOutputForAppearance(int appearance, int number) {
-        Integer app = Integer.valueOf(appearance);
+        Integer app = appearance;
         if (appearanceToOutput.containsKey(app)) {
             log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(app));
             appearanceToOutput.remove(app);
@@ -229,10 +228,10 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
-    int packetSendCount = 3;
+    private int packetSendCount = 3;
     /**
      * Set Number of times the packet should be sent to the track.
-     * @param count - less than 1 is treated as 1.
+     * @param count - less than 1 is treated as 1
      */
     public void setDccSignalHeadPacketSendCount(int count) {
         if (count > 0) {
@@ -243,18 +242,19 @@ public class DccSignalHead extends AbstractSignalHead {
     }
 
     /**
-     * get the number of times the packet should be sent to the track.
+     * Get the number of times the packet should be sent to the track.
      *
-     * @return the count.
+     * @return the count
      */
     public int getDccSignalHeadPacketSendCount() {
         return packetSendCount;
     }
 
-    int dccSignalDecoderAddress;
+    private int dccSignalDecoderAddress;
 
     @Override
     boolean isTurnoutUsed(Turnout t) {
         return false;
     }
+
 }

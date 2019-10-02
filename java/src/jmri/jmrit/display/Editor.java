@@ -1933,25 +1933,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected IconAdder getSignalHeadEditor() {
         IconAdder editor = new IconAdder("SignalHead");
-        editor.setIcon(0, Bundle.getMessage("SignalHeadStateRed"),
+        editor.setIcon(0, "SignalHeadStateRed",
                 "resources/icons/smallschematics/searchlights/left-red-marker.gif");
-        editor.setIcon(1, Bundle.getMessage("SignalHeadStateYellow"),
+        editor.setIcon(1, "SignalHeadStateYellow",
                 "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-        editor.setIcon(2, Bundle.getMessage("SignalHeadStateGreen"),
+        editor.setIcon(2, "SignalHeadStateGreen",
                 "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-        editor.setIcon(3, Bundle.getMessage("SignalHeadStateDark"),
+        editor.setIcon(3, "SignalHeadStateDark",
                 "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-        editor.setIcon(4, Bundle.getMessage("SignalHeadStateHeld"),
+        editor.setIcon(4, "SignalHeadStateHeld",
                 "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-        editor.setIcon(5, Bundle.getMessage("SignalHeadStateLunar"),
+        editor.setIcon(5, "SignalHeadStateLunar",
                 "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
-        editor.setIcon(6, Bundle.getMessage("SignalHeadStateFlashingRed"),
+        editor.setIcon(6, "SignalHeadStateFlashingRed",
                 "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-        editor.setIcon(7, Bundle.getMessage("SignalHeadStateFlashingYellow"),
+        editor.setIcon(7, "SignalHeadStateFlashingYellow",
                 "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-        editor.setIcon(8, Bundle.getMessage("SignalHeadStateFlashingGreen"),
+        editor.setIcon(8, "SignalHeadStateFlashingGreen",
                 "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-        editor.setIcon(9, Bundle.getMessage("SignalHeadStateFlashingLunar"),
+        editor.setIcon(9, "SignalHeadStateFlashingLunar",
                 "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
         return editor;
     }

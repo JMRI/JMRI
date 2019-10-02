@@ -165,6 +165,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         FLASHRED,
         FLASHYELLOW,
         FLASHGREEN,}; // No int for Lunar
+
     final static private String[] VALID_STATE_NAMES = new String[]{
         Bundle.getMessage("SignalHeadStateDark"),
         Bundle.getMessage("SignalHeadStateRed"),

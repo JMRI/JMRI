@@ -332,7 +332,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
                 case 4:
                     return Arrays.copyOf(validStates4Aspect, validStates4Aspect.length);
                 default:
-                    log.warn("Unexpected number of apsects: " + mAspects);
+                    log.warn("Unexpected number of aspects: {}", mAspects);
                     return Arrays.copyOf(validStates3Aspect, validStates3Aspect.length);
             }
         }
@@ -352,7 +352,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
                 case 4:
                     return Arrays.copyOf(validStateNames4Aspect, validStateNames3Aspect.length);
                 default:
-                    log.warn("Unexpected number of apsects: " + mAspects);
+                    log.warn("Unexpected number of aspects: {}", mAspects);
                     return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
             }
         }

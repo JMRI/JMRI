@@ -109,8 +109,27 @@ public interface SignalHead extends Signal {
     @Override
     public void setHeld(boolean newHeld);
 
+    /**
+     * Get an array of appearance indexes valid for the mast type.
+     *
+     * @return array of appearance state values available on this mast type
+     */
     public int[] getValidStates();
 
+    /**
+     * Get an array of non-localized appearance keys valid for the mast type.
+     * For GUI application consider using (capitalized) {@link #getValidStateNames()}
+     *
+     * @return array of translated appearance names available on this mast type
+     */
+    public String[] getValidStateKeys();
+
+    /**
+     * Get an array of localized appearance descriptions valid for the mast type.
+     * For persistance and comparison consider using {@link #getValidStateKeys()}
+     *
+     * @return array of translated appearance names
+     */
     public String[] getValidStateNames();
 
 }

@@ -1,8 +1,6 @@
 package jmri.jmrit.display;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -24,20 +22,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.MissingResourceException;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
@@ -147,7 +132,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     /**
      * Replace any existing _defaultIcons TreeSet with a new set,
-     * created from the current _iconMap set of icons. Note these might have I18N labels as keys.
+     * created from the current _iconMap set of icons. Note these might have I18N labels as their keys.
      * <p>
      * The new _defaultIcons might be a null Node.
      */
@@ -250,10 +235,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * Install the icons used to represent all the states of the entity being
      * edited.
      *
+     * @param order (reverse) order of display, (0 last, to N first)
      * @param label the state name to display. Must be unique from all other
      *              calls to this method
      * @param name  the resource name of the icon image to display
-     * @param order (reverse) order of display, (0 last, to N first)
      */
     public void setIcon(int order, String label, String name) {
         log.debug("setIcon: order= {}, label= {}, name= {}", order, label, name);
@@ -294,43 +279,33 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             this.remove(_iconPanel);
         }
         _iconPanel = new JPanel();
-        _iconPanel.setLayout(new BoxLayout(_iconPanel, BoxLayout.Y_AXIS));
+        _iconPanel.setLayout(new GridLayout(0,2));
     }
 
     protected void doIconPanel() {
         JPanel panel = null;
-        int cnt = 0;
         for (int i = _order.size() - 1; i >= 0; i--) {
-            if (panel == null) {
-                panel = new JPanel();
-                panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-                panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-            }
-            String key = _order.get(i); // NOI18N (except for SignalHeads!)
+            panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            String key = _order.get(i); // NOI18N
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             String labelName = key;
-            if (!_type.equals("SignalHead")) { // skip SignalHead keys as they're already I18N in _order
-                try {
-                    labelName = Bundle.getMessage(key); // I18N
-                } catch (java.util.MissingResourceException mre) {
-                    log.warn("doIconPanel() property key {} missing", key);
-                }
+            try {
+                labelName = Bundle.getMessage(key); // I18N
+            } catch (java.util.MissingResourceException mre) {
+                log.warn("doIconPanel() property key {} missing", key);
             }
-            p.add(new JLabel(labelName));
-            p.add(_iconMap.get(key));
+            JLabel name = new JLabel(labelName);
+            name.setAlignmentX(Component.CENTER_ALIGNMENT);
+            p.add(name);
+            JToggleButton button = _iconMap.get(key);
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            p.add(button);
             panel.add(p);
-            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-            if ((cnt & 1) != 0) {
-                _iconPanel.add(panel);
-                _iconPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-                panel = null;
-            }
-            cnt++;
-        }
-        if (panel != null) {
+            // TODO align button centered in GridLayout EBR
             _iconPanel.add(panel);
-            _iconPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         }
         this.add(_iconPanel, 0);
     }
@@ -391,7 +366,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
             if (_type != null && _type.equals("SignalHead")) {
-                makeIconMap(_pickListModel.getBeanAt(row));
+                makeIconMap(_pickListModel.getBeanAt(row)); // TODO EBR remove I18N from method so valid app'ce filter works
                 clearIconPanel();
                 doIconPanel();
             }
@@ -404,25 +379,25 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     private void makeIconMap(NamedBean bean) {
         if (bean != null && _type != null && _type.equals("SignalHead")) {
-            _order = new ArrayList<>();
             _iconMap = new HashMap<>(12);
-            int k = 0;
+            _order = new ArrayList<>();
             ArrayList<CatalogTreeLeaf> leafList = _defaultIcons.getLeaves();
-            String[] states = ((SignalHead) bean).getValidStateNames(); // states contains I18N appearances
+            int k = 0;
+            String[] states = ((SignalHead) bean).getValidStateKeys(); // states contains NOI18N appearances
             for (CatalogTreeLeaf leaf : leafList) {
                 String name = leaf.getName(); // NOI18N
-//                log.debug("SignalHead Appearance leaf name= {}", name);
+                log.debug("SignalHead Appearance leaf name= {}", name);
 //                try {
 //                    name = Bundle.getMessage(leaf.getName()); // I18N
 //                } catch (MissingResourceException mre) {
 //                    log.warn("SignalHead makeIconMap() property key {} missing", name);
 //                }
-                log.debug("makeIconMap: leafName= {}, name= {}", leaf.getName(), name);
+//                log.debug("makeIconMap: leafName= {}, name= {}", leaf.getName(), name);
                 for (String state : states) {
-                    if (name.equals(state) || leaf.getName().equals(Bundle.getMessage("SignalHeadStateDark"))
-                            || leaf.getName().equals(Bundle.getMessage("SignalHeadStateHeld"))) {
+                    if (name.equals(state) || name.equals("SignalHeadStateDark")
+                            || name.equals("SignalHeadStateHeld")) {
                         String path = leaf.getPath();
-                        this.setIcon(k++, leaf.getName(), new NamedIcon(path, path));
+                        this.setIcon(k++, name, new NamedIcon(path, path));
                         break;
                     }
                 }

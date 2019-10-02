@@ -213,10 +213,10 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         if (newState == 99) {
                             if (stateNameList.length == 0) {
                                 newState = SignalHead.DARK;
-                                log.warn("New signal state not found so setting to Dark " + s.getDisplayName());
+                                log.warn("New signal state not found so setting to Dark {}", s.getDisplayName());
                             } else {
                                 newState = validStateList[0];
-                                log.warn("New signal state not found so setting to the first available " + s.getDisplayName());
+                                log.warn("New signal state not found so setting to the first available {}", s.getDisplayName());
                             }
                         }
                         if (log.isDebugEnabled()) {

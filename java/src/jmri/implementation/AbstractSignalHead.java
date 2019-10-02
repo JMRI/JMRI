@@ -4,6 +4,8 @@ import java.util.Arrays;
 import jmri.SignalHead;
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Abstract class providing the basic logic of the SignalHead interface.
  *
@@ -135,7 +137,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
     public static String[] getDefaultValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        String[] stateNames = new String[validStateKeys.length];
+        int i = 0;
+        for (String stateKey : validStateKeys) {
+            stateNames[i++] = Bundle.getMessage(stateKey);
+        }
+        return stateNames;
     }
 
     /**
@@ -165,25 +172,49 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHGREEN,
         FLASHLUNAR
     };
-    private static final String[] validStateNames = new String[]{
-        Bundle.getMessage("SignalHeadStateDark"),
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateGreen"),
-        Bundle.getMessage("SignalHeadStateLunar"),
-        Bundle.getMessage("SignalHeadStateFlashingRed"),
-        Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen"),
-        Bundle.getMessage("SignalHeadStateFlashingLunar"),};
+//    private static final String[] validStateNames = new String[]{
+//        Bundle.getMessage("SignalHeadStateDark"),
+//        Bundle.getMessage("SignalHeadStateRed"),
+//        Bundle.getMessage("SignalHeadStateYellow"),
+//        Bundle.getMessage("SignalHeadStateGreen"),
+//        Bundle.getMessage("SignalHeadStateLunar"),
+//        Bundle.getMessage("SignalHeadStateFlashingRed"),
+//        Bundle.getMessage("SignalHeadStateFlashingYellow"),
+//        Bundle.getMessage("SignalHeadStateFlashingGreen"),
+//        Bundle.getMessage("SignalHeadStateFlashingLunar"),};
+    private static final String[] validStateKeys = new String[]{
+            "SignalHeadStateDark",
+            "SignalHeadStateRed",
+            "SignalHeadStateYellow",
+            "SignalHeadStateGreen",
+            "SignalHeadStateLunar",
+            "SignalHeadStateFlashingRed",
+            "SignalHeadStateFlashingYellow",
+            "SignalHeadStateFlashingGreen",
+            "SignalHeadStateFlashingLunar",};
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public int[] getValidStates() {
         return Arrays.copyOf(validStates, validStates.length); // includes int for Lunar
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public String[] getValidStateKeys() {
+        return Arrays.copyOf(validStateKeys, validStateKeys.length); // includes int for Lunar
+    }
+
+    /**
+     * @inheritDoc
+     */
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length); // includes Lunar
+        return getDefaultValidStateNames();
     }
 
     /**
@@ -205,7 +236,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
     @Override
-    public String getBeanType() {
+    public @Nonnull String getBeanType() {
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
