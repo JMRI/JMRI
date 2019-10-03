@@ -97,7 +97,11 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         // Block does not exist, create a new Block
         r = new Block(systemName, userName);
         // save in the maps
-        register(r);
+        try {
+            register(r);
+        } catch (Exception ex) {
+            log.warn("register exception: sys = {}, user = {}", systemName, userName, ex);
+        }
         /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
