@@ -34,8 +34,8 @@ public class DefaultConditionalNG extends AbstractBase
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleActionSocket;
     private boolean _enabled = false;
-    private boolean _currentlyExecuting = false;
-    private boolean _executeAgain = false;
+    private final ExecuteLock executeLock = new ExecuteLock();
+    
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
@@ -111,34 +111,27 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        // This method can be called from different threads and it can be
-        // called recursive from the same thread.
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
-            if (!_currentlyExecuting) {
-                _currentlyExecuting = true;
-                do {
-                    _executeAgain = false;
+        if (executeLock.get()) {
+            while (executeLock.loop()) {
+                ThreadingUtil.runOnGUI(() -> {
                     if (isEnabled()) {
                         _femaleActionSocket.execute();
                     }
-                } while (_executeAgain);
-                _currentlyExecuting = false;
-            } else {
-                _executeAgain = true;
+                });
             }
-        });
+        }
     }
-
+    
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameConditionalNG");
     }
-
+    
     @Override
     public void setState(int s) throws JmriException {
         log.warn("Unexpected call to setState in DefaultConditionalNG.");  // NOI18N
     }
-
+    
     @Override
     public int getState() {
         log.warn("Unexpected call to getState in DefaultConditionalNG.");  // NOI18N
