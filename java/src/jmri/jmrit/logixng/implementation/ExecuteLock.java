@@ -1,7 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 /**
- * Protect the ConditionalNG.execute() method.
+ * Protect the DefaultConditionalNG.execute() method.
  * That method may be called recursively from different threads.
  */
 public class ExecuteLock {
