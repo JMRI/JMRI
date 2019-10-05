@@ -15,7 +15,7 @@ public class ExecuteLock {
      * loop() returns true.
      * @return true if the caller gets the lock.
      */
-    public boolean get() {
+    public boolean once() {
         synchronized(this) {
             again = true;
             if (! lock) {

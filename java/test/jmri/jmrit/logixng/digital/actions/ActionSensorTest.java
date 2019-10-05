@@ -294,6 +294,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setEnabled(true);
+        conditionalNG.setRunOnGUIDelayed(false);
         actionSensor = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         actionSensor.setSensor(sensor);
         actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);

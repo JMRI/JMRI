@@ -40,7 +40,26 @@ public interface ConditionalNG extends Base, NamedBean {
      * 
      * @return true if the ConditionalNG is enabled, false otherwise
      */
+    @Override
     public boolean isEnabled();
+    
+    /**
+     * Set whenether execute() should run on the GUI thread at once or should
+     * dispatch the call until later.
+     * Most tests turns off the delay to simplify the tests.
+     * @param value true if execute() should run on GUI thread delayed,
+     * false otherwise.
+     */
+    public void setRunOnGUIDelayed(boolean value);
+    
+    /**
+     * Get whenether execute() should run on the GUI thread at once or should
+     * dispatch the call until later.
+     * Most tests turns off the delay to simplify the tests.
+     * @return true if execute() should run on GUI thread delayed,
+     * false otherwise.
+     */
+    public boolean getRunOnGUIDelayed();
     
     /**
      * Enables or disables execution for the digital action of this ConditionalNG.

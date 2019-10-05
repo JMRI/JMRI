@@ -326,6 +326,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         DoStringAction doStringAction = new DoStringAction("IQDA321", null);
         MaleSocket maleSocketDoStringAction =

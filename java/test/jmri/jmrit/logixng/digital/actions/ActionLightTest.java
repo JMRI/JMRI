@@ -294,6 +294,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setRunOnGUIDelayed(false);
         conditionalNG.setEnabled(true);
         actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
         actionLight.setLight(light);

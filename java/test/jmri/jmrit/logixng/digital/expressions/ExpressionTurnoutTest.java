@@ -63,6 +63,7 @@ public class ExpressionTurnoutTest {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
         

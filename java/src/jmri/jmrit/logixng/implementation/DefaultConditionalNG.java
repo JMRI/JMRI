@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import static jmri.NamedBean.UNKNOWN;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.ThreadingUtil;
@@ -35,6 +36,7 @@ public class DefaultConditionalNG extends AbstractBase
     private final FemaleDigitalActionSocket _femaleActionSocket;
     private boolean _enabled = false;
     private final ExecuteLock executeLock = new ExecuteLock();
+    private boolean _runOnGUIDelayed = true;
     
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -110,15 +112,35 @@ public class DefaultConditionalNG extends AbstractBase
     
     /** {@inheritDoc} */
     @Override
+    public void setRunOnGUIDelayed(boolean value) {
+        _runOnGUIDelayed = value;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean getRunOnGUIDelayed() {
+        return _runOnGUIDelayed;
+    }
+    
+    private void runOnGUI(@Nonnull ThreadingUtil.ThreadAction ta) {
+        if (_runOnGUIDelayed) {
+            ThreadingUtil.runOnGUIEventually(ta);
+        } else {
+            ThreadingUtil.runOnGUI(ta);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void execute() {
-        if (executeLock.get()) {
-            while (executeLock.loop()) {
-                ThreadingUtil.runOnGUI(() -> {
+        if (executeLock.once()) {
+            runOnGUI(() -> {
+                while (executeLock.loop()) {
                     if (isEnabled()) {
                         _femaleActionSocket.execute();
                     }
-                });
-            }
+                }
+            });
         }
     }
     
@@ -155,7 +177,7 @@ public class DefaultConditionalNG extends AbstractBase
             activateLogix();
             _isActivated = active;
             for (int i = _listeners.size() - 1; i >= 0; i--) {
-                _listeners.get(i).setEnabled(state);
+                _listeners.once(i).setEnabled(state);
             }
             firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));  // NOI18N
 */            
