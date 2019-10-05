@@ -43,7 +43,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     public AddNewHardwareDevicePanel(@Nonnull JTextField sysAddress,
             @Nonnull SystemNameValidator sysAddressValidator,
             @Nonnull JTextField userName,
-            @Nonnull ManagerComboBox prefixBox,
+            @Nonnull ManagerComboBox<?> prefixBox,
             JSpinner endRange,
             JCheckBox addRange,
             @Nonnull JButton addButton,
