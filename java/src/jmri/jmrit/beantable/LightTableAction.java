@@ -51,9 +51,6 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.LightControl;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemoManager;
-import jmri.managers.ProxyLightManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
@@ -633,7 +630,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            initializePrefixCombo();
+            configureManagerComboBox(prefixBox, lightManager, LightManager.class);
             panel1.add(systemLabel);
             panel1.add(prefixBox);
             panel1.add(new JLabel("   "));
@@ -826,20 +823,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
         addFrame.pack();
         addFrame.setVisible(true);
-    }
-
-    private void initializePrefixCombo() {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (lightManager instanceof ProxyLightManager) {
-            ProxyLightManager proxy = (ProxyLightManager) lightManager;
-            prefixBox.setManagers(proxy.getDisplayOrderManagerList());
-            if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                prefixBox.setSelectedItem(memo.get(LightManager.class));
-            }
-        } else {
-            prefixBox.setManagers(lightManager);
-        }
     }
 
     private String addEntryToolTip;

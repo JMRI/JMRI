@@ -10,6 +10,9 @@
             <name>JMRI</name>
             <properties>
                 <property name="ant.script">build.xml</property>
+                <property-file>${basedir}/local.properties</property-file>
+                <property-file>${basedir}/release.properties</property-file>
+                <property-file>${basedir}/project.properties</property-file>
             </properties>
             <folders>
                 <source-folder>
@@ -77,7 +80,7 @@
                     <target>compile-selected-files-in-src</target>
                     <context>
                         <property>files</property>
-                        <folder>java/src</folder>
+                        <folder>${source}</folder>
                         <pattern>\.java$</pattern>
                         <format>relative-path</format>
                         <arity>
@@ -90,7 +93,7 @@
                     <target>compile-selected-files-in-test</target>
                     <context>
                         <property>files</property>
-                        <folder>java/test</folder>
+                        <folder>${test}</folder>
                         <pattern>\.java$</pattern>
                         <format>relative-path</format>
                         <arity>
@@ -103,7 +106,7 @@
                     <target>compile-selected-files-in-tmp</target>
                     <context>
                         <property>files</property>
-                        <folder>java/tmp</folder>
+                        <folder>${genjavasrcdir}</folder>
                         <pattern>\.java$</pattern>
                         <format>relative-path</format>
                         <arity>
@@ -120,7 +123,7 @@
                     <target>test-single</target>
                     <context>
                         <property>test.includes</property>
-                        <folder>java/src</folder>
+                        <folder>${source}</folder>
                         <pattern>\.java$</pattern>
                         <format>java-name</format>
                         <arity>
@@ -133,7 +136,7 @@
                     <target>test-single</target>
                     <context>
                         <property>test.includes</property>
-                        <folder>java/test</folder>
+                        <folder>${test}</folder>
                         <pattern>\.java$</pattern>
                         <format>java-name</format>
                         <arity>
@@ -146,7 +149,7 @@
                     <target>test-single</target>
                     <context>
                         <property>test.includes</property>
-                        <folder>java/test</folder>
+                        <folder>${test}</folder>
                         <pattern>\.java$</pattern>
                         <format>java-name</format>
                         <arity>
@@ -159,7 +162,7 @@
                     <target>debug-test-single.nb</target>
                     <context>
                         <property>test.includes</property>
-                        <folder>java/test</folder>
+                        <folder>${test}</folder>
                         <pattern>\.java$</pattern>
                         <format>java-name</format>
                         <arity>
@@ -167,6 +170,47 @@
                         </arity>
                     </context>
                 </action>
+                <action name="debug.fix">
+                    <script>nbproject/nbjdk.xml</script>
+                    <target>debug-apply-fix-in-src</target>
+                    <context>
+                        <property>fix.file</property>
+                        <!--<folder>${src.dir}</folder>-->
+                        <folder>${source}</folder>
+                        <pattern>\.java$</pattern>
+                        <format>relative-path-noext</format>
+                        <arity>
+                            <one-file-only/>
+                        </arity>
+                  </context>
+                </action>            
+                <action name="debug.fix">
+                    <script>nbproject/nbjdk.xml</script>
+                    <target>debug-apply-fix-in-test</target>
+                    <context>
+                        <property>fix.file</property>
+                        <folder>${test}</folder>
+                        <pattern>\.java$</pattern>
+                        <format>relative-path-noext</format>
+                        <arity>
+                            <one-file-only/>
+                        </arity>
+                  </context>
+                </action>            
+                <action name="debug.fix">
+                    <script>nbproject/nbjdk.xml</script>
+                    <target>debug-apply-fix-in-tmp</target>
+                    <context>
+                        <property>fix.file</property>
+                        <!--<folder>${src.dir}</folder>-->
+                        <folder>${genjavasrcdir}</folder>
+                        <pattern>\.java$</pattern>
+                        <format>relative-path-noext</format>
+                        <arity>
+                            <one-file-only/>
+                        </arity>
+                  </context>
+                </action>            
             </ide-actions>
             <export>
                 <type>folder</type>
