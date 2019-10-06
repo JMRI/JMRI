@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract partial implementation of a MemoryManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author  Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
@@ -150,7 +150,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-	@GuardedBy("this")
+    @GuardedBy("this")
     int lastAutoMemoryRef = 0;
 
     /**

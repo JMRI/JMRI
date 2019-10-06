@@ -139,7 +139,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-	@GuardedBy("this")
+    @GuardedBy("this")
     int lastAutoGroupRef = 0;
 
     List<String> getListOfNames() {

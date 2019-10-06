@@ -118,7 +118,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-	@GuardedBy("this")
+    @GuardedBy("this")
     int lastAutoSectionRef = 0;
 
     /**

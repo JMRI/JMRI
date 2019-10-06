@@ -109,7 +109,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-	@GuardedBy("this")
+    @GuardedBy("this")
     int lastAutoLogixRef = 0;
 
     /**
