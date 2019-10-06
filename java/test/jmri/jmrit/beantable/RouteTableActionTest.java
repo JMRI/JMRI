@@ -2,9 +2,7 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 import jmri.Route;
 import jmri.util.JUnitUtil;
@@ -13,17 +11,15 @@ import org.junit.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007
  */
-public class RouteTableActionTest extends AbstractTableActionBase {
+public class RouteTableActionTest extends AbstractTableActionBase<Route> {
 
     @Test
     public void testCreate() {
