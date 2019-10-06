@@ -123,7 +123,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             new XmlFileValidateAction("", (Component) null) {
                 @Override
                 protected void showFailResults(Component who, String fileName, String text) {
-                    System.out.println(fileName + ": "  + text);
+                    log.error("{}: {}", Bundle.getMessage("ValidationErrorInFile", fileName), text);
                 }
 
                 @Override
