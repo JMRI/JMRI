@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import jmri.Audio;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -8,7 +9,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AudioTableActionTest extends AbstractTableActionBase {
+public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
     @Test
     public void testCTor() {
