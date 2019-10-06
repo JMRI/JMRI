@@ -58,18 +58,8 @@
     <!-- set any properties not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
 
-    <!-- The Jenkins official release builds force: -->
-    <!--    release.official=true                   -->
-    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
-    <!-- in their "invoke ant" step                 -->
-    <!-- The Packages build (dev downloads) forces: -->
-    <!--    release.official=false                  -->
-    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
-    <!-- in its "invoke ant" step                   -->
-
-    <property name="release.build_user" value="${user.name}"/>
-
-    <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
+    <!-- set global properties for this build -->
+    <property file="${basedir}/project.properties"/>
 
     <!-- Retrieve Git revision via 'git describe' -->
     <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
@@ -92,15 +82,6 @@
     <condition property="release.official" value="true" else="false">
       <isset property="RELEASED"/>
     </condition>
-
-    <!-- Should compiler warn of use of deprecated APIs? (on/off) -->
-    <!-- This is overridden in a number of targets -->
-    <property name="deprecation" value="off"/>
-
-    <!-- SDK version (1.8 as of JMRI 3.11.1 [3.12/4.0 pre-releases]) -->
-    <property name="sdk_version"    value="1.8"/>
-    <property name="source_version" value="${sdk_version}"/>
-    <property name="jre_version"    value="${sdk_version}"/>
 
     <condition property="nsis.home" value="">
         <not><isset property="nsis.home"/></not>
@@ -127,31 +108,6 @@
             <equals arg1="${os.name}" arg2="Linux"/>
         </and>
     </condition>
-
-    <!-- set global properties for this build -->
-    <property name="dist"           value="${basedir}/dist"/>
-    <property name="jartarget"      value="${basedir}"/>
-    <property name="libdir"         value="${basedir}/lib"/>
-    <property name="resourcedir"    value="${basedir}/resources"/>
-    <property name="scriptdir"      value="${basedir}/scripts"/>
-    <property name="javadir"        value="${basedir}/java"/>
-    <property name="doctarget"      value="${javadir}/doc"/>
-    <property name="coveragetarget" value="${basedir}/coveragereport"/>
-    <property name="source"         value="${javadir}/src"/>
-    <property name="maventarget"    value="${basedir}/target"/>
-    <property name="target"         value="${maventarget}/classes"/>
-    <property name="testtarget"     value="${maventarget}/test-classes"/>
-    <property name="test"           value="${javadir}/test"/>
-    <property name="acceptancetest" value="${javadir}/acceptancetest"/>
-    <property name="templatedir"    value="${javadir}/template"/>
-    <property name="tmptarget"      value="${javadir}/tmp"/>
-    <property name="lineendtmp"     value="${tmptarget}/lineend"/>
-    <property name="tempdir"        value="${basedir}/temp"/>    <!-- actual tmp files -->
-    <property name="jacocoexec"     value="${maventarget}/jacoco.exec"/>
-    <property name="java.debugging" value="yes" />
-
-    <!-- location for all generated java code -->
-    <property name="genjavasrcdir" value="${tmptarget}/"/>
 
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
@@ -221,7 +177,7 @@
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
         <pathelement location="${libdir}/json-schema-validator-1.0.10.jar"/>
-        <pathelement location="${libdir}/jinputvalidator-0.6.0.jar"/>
+        <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
     </path>
@@ -302,9 +258,6 @@
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
     </path>
-
-    <!-- PureJavaComm default log level - override in local.properties or Ant command line -->
-    <property name="purejavacomm.loglevel" value="0"/>
 
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
@@ -677,7 +630,7 @@
             description="compile source with debugging on, omitting tests - identical to compile target"
             depends="compile">
     </target>
-
+    
     <target name="tests"
             description="compile test classes"
             depends="debug">
@@ -1894,7 +1847,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
@@ -1966,7 +1919,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
@@ -2050,7 +2003,7 @@
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
@@ -2211,7 +2164,6 @@
     <!--  Start for checker framework -->
 
     <property environment="env"/>
-    <property name="checkerframework" value="${libdir}/checker-framework/" />
     <!-- On Mac/Linux, use the javac shell script; on Windows, use javac.bat -->
     <condition property="cfJavac" value="javac.bat" else="javac">
         <os family="windows" />
@@ -2269,14 +2221,6 @@
             description="create all OS-specific release packages"
             depends="package-windows, package-macosx, package-linux">
     </target>
-
-    <property name="dist.release" value="${dist}/release"/>
-    <property name="dist.windows" value="${dist}/Windows"/>
-    <property name="dist.macosx"  value="${dist}/MacOSX"/>
-    <property name="dist.linux"   value="${dist}/Linux"/>
-
-    <property name="dist.scripts" value="${dist}/scripts"/>
-    <property name="dist.apps"    value="${dist}/apps"/>
 
     <target name="launchjmri.exe"
             description="recreate the LaunchJMRI.exe used by the Windows release package">
@@ -2549,12 +2493,6 @@
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
-
-    <!-- set this next to a standard remote, e.g. "origin", if you don't want to
-    go directly back to the main repo; direct JMRI/JMRI require write access -->
-    <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
-
-    <property name="branch-name" value="release-${release}" />
 
     <!-- several steps are involved in creating a new test release
     branch from the head of the master branch.  This target intends to manage as
