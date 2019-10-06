@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
@@ -64,8 +65,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
         if (systemName.startsWith("IR:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoRouteRef) {
-                    lastAutoRouteRef = autoNumber;
+                synchronized(this) {
+                    if (autoNumber > lastAutoRouteRef) {
+                        lastAutoRouteRef = autoNumber;
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
@@ -82,7 +85,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Override
     public Route newRoute(String userName) {
-        int nextAutoRouteRef = lastAutoRouteRef + 1;
+        int nextAutoRouteRef;
+        synchronized(this) {
+            nextAutoRouteRef = ++lastAutoRouteRef;
+        }
         StringBuilder b = new StringBuilder("IR:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoRouteRef);
         b.append(nextNumber);
@@ -91,6 +97,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
+	@GuardedBy("this")
     int lastAutoRouteRef = 0;
 
     /**

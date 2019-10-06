@@ -5,10 +5,9 @@ import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.InstanceManager;
-
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
@@ -94,8 +93,10 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         if (systemName.startsWith("IG:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoGroupRef) {
-                    lastAutoGroupRef = autoNumber;
+                synchronized(this) {
+                    if (autoNumber > lastAutoGroupRef) {
+                        lastAutoGroupRef = autoNumber;
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
@@ -125,7 +126,10 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Nonnull
     @Override
     public SignalGroup newSignaGroupWithUserName(String userName) {
-        int nextAutoGroupRef = lastAutoGroupRef + 1;
+        int nextAutoGroupRef;
+        synchronized(this) {
+            nextAutoGroupRef = ++lastAutoGroupRef;
+        }
         StringBuilder b = new StringBuilder("IG:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoGroupRef);
         b.append(nextNumber);
@@ -135,6 +139,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
+	@GuardedBy("this")
     int lastAutoGroupRef = 0;
 
     List<String> getListOfNames() {

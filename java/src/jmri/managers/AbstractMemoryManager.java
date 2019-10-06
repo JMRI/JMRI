@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -122,8 +123,10 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         if (systemName.startsWith("IM:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoMemoryRef) {
-                    lastAutoMemoryRef = autoNumber;
+                synchronized(this) {
+                    if (autoNumber > lastAutoMemoryRef) {
+                        lastAutoMemoryRef = autoNumber;
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
@@ -135,7 +138,10 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     /** {@inheritDoc} */
     @Override
     public @Nonnull Memory newMemory(@Nonnull String userName) {
-        int nextAutoMemoryRef = lastAutoMemoryRef + 1;
+        int nextAutoMemoryRef;
+        synchronized(this) {
+            nextAutoMemoryRef = ++lastAutoMemoryRef;
+        }
         StringBuilder b = new StringBuilder("IM:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoMemoryRef);
         b.append(nextNumber);
@@ -144,6 +150,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
+	@GuardedBy("this")
     int lastAutoMemoryRef = 0;
 
     /**

@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -82,8 +83,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         if (systemName.startsWith("IX:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoLogixRef) {
-                    lastAutoLogixRef = autoNumber;
+                synchronized(this) {
+                    if (autoNumber > lastAutoLogixRef) {
+                        lastAutoLogixRef = autoNumber;
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
@@ -94,7 +97,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     @Override
     public Logix createNewLogix(String userName) {
-        int nextAutoLogixRef = lastAutoLogixRef + 1;
+        int nextAutoLogixRef;
+        synchronized(this) {
+            nextAutoLogixRef = ++lastAutoLogixRef;
+        }
         StringBuilder b = new StringBuilder("IX:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoLogixRef);
         b.append(nextNumber);
@@ -103,6 +109,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
+	@GuardedBy("this")
     int lastAutoLogixRef = 0;
 
     /**
