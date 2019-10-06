@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -102,8 +103,10 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (systemName.startsWith("IB:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoBlockRef) {
-                    lastAutoBlockRef = autoNumber;
+                synchronized(this) {
+                    if (autoNumber > lastAutoBlockRef) {
+                        lastAutoBlockRef = autoNumber;
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
@@ -129,7 +132,10 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      */
     @CheckForNull
     public Block createNewBlock(@Nonnull String userName) {
-        int nextAutoBlockRef = lastAutoBlockRef + 1;
+        int nextAutoBlockRef;
+        synchronized(this) {
+            nextAutoBlockRef = ++lastAutoBlockRef;
+        }
         StringBuilder b = new StringBuilder("IB:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
         b.append(nextNumber);
@@ -168,6 +174,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
+    @GuardedBy("this")
     int lastAutoBlockRef = 0;
 
     /**
