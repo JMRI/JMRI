@@ -48,7 +48,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         if (t != null) {
             return t;
         }
-        if (sName.startsWith("" + getSystemPrefix() + typeLetter())) {
+        if (sName.startsWith(getSystemPrefix() + typeLetter())) {
             return newMemory(sName, null);
         } else {
             return newMemory(makeSystemName(sName), null);
@@ -120,7 +120,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         /*The following keeps trace of the last created auto system name.  
          currently we do not reuse numbers, although there is nothing to stop the 
          user from manually recreating them*/
-        if (systemName.startsWith("IM:AUTO:")) {
+        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
                 synchronized(this) {
@@ -142,7 +142,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         synchronized(this) {
             nextAutoMemoryRef = ++lastAutoMemoryRef;
         }
-        StringBuilder b = new StringBuilder("IM:AUTO:");
+        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoMemoryRef);
         b.append(nextNumber);
         return newMemory(b.toString(), userName);

@@ -90,7 +90,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         /* The following keeps track of the last created auto system name.
          Currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them. */
-        if (systemName.startsWith("IG:AUTO:")) {
+        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
                 synchronized(this) {
@@ -130,7 +130,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         synchronized(this) {
             nextAutoGroupRef = ++lastAutoGroupRef;
         }
-        StringBuilder b = new StringBuilder("IG:AUTO:");
+        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoGroupRef);
         b.append(nextNumber);
         log.debug("SignalGroupManager - new autogroup with sName: {}", b);

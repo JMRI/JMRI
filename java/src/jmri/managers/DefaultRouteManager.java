@@ -62,7 +62,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
         /* The following keeps track of the last created auto system name.
          Currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them. */
-        if (systemName.startsWith("IR:AUTO:")) {
+        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
                 synchronized(this) {
@@ -89,7 +89,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
         synchronized(this) {
             nextAutoRouteRef = ++lastAutoRouteRef;
         }
-        StringBuilder b = new StringBuilder("IR:AUTO:");
+        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoRouteRef);
         b.append(nextNumber);
         return provideRoute(b.toString(), userName);

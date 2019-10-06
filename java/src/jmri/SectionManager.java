@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  * This doesn't have a "new" interface, since Sections are independently
  * implemented, instead of being system-specific.
  * <p>
- * Note that Section system names must begin with IY, and be followed by a
- * string, usually, but not always, a number. This is enforced when a Section is
- * created.
+ * Note that Section system names must begin with system prefix and type character,
+ * usually IY, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Section is created.
  * <br>
  * <hr>
  * This file is part of JMRI.
@@ -68,8 +68,8 @@ public class SectionManager extends AbstractManager<Section> implements Instance
             return null;
         }
         String sysName = systemName;
-        if ((sysName.length() < 2) || (!sysName.substring(0, 2).equals("IY"))) {
-            sysName = "IY" + sysName;
+        if (!sName.startsWith(getSystemPrefix() + typeLetter())) {
+            sysName = getSystemPrefix() + typeLetter() + sysName;
         }
         // Check that Section does not already exist
         Section y;
@@ -90,7 +90,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         /*The following keeps trace of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
-        if (systemName.startsWith("IY:AUTO:")) {
+        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
                 synchronized(this) {
@@ -110,7 +110,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         synchronized(this) {
             nextAutoSectionRef = ++lastAutoSectionRef;
         }
-        StringBuilder b = new StringBuilder("IY:AUTO:");
+        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoSectionRef);
         b.append(nextNumber);
         return createNewSection(b.toString(), userName);

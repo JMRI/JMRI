@@ -15,8 +15,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Basic Implementation of a LogixManager.
  * <p>
- * Note that Logix system names must begin with IX, and be followed by a string,
- * usually, but not always, a number. This is enforced when a Logix is created.
+ * Note that Logix system names must begin with system prefix and type character,
+ * usually IX, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Logix is created.
  * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
@@ -80,7 +81,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
-        if (systemName.startsWith("IX:AUTO:")) {
+        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
                 synchronized(this) {
@@ -101,7 +102,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         synchronized(this) {
             nextAutoLogixRef = ++lastAutoLogixRef;
         }
-        StringBuilder b = new StringBuilder("IX:AUTO:");
+        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoLogixRef);
         b.append(nextNumber);
         return createNewLogix(b.toString(), userName);
