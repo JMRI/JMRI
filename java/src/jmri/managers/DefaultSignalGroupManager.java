@@ -5,8 +5,8 @@ import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalGroup;
@@ -90,14 +90,10 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         /* The following keeps track of the last created auto system name.
          Currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them. */
-        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                synchronized(this) {
-                    if (autoNumber > lastAutoGroupRef) {
-                        lastAutoGroupRef = autoNumber;
-                    }
-                }
+                lastAutoGroupRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
@@ -126,11 +122,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Nonnull
     @Override
     public SignalGroup newSignaGroupWithUserName(String userName) {
-        int nextAutoGroupRef;
-        synchronized(this) {
-            nextAutoGroupRef = ++lastAutoGroupRef;
-        }
-        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
+        int nextAutoGroupRef = lastAutoGroupRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoGroupRef);
         b.append(nextNumber);
         log.debug("SignalGroupManager - new autogroup with sName: {}", b);
@@ -139,8 +132,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    @GuardedBy("this")
-    int lastAutoGroupRef = 0;
+    AtomicInteger lastAutoGroupRef = new AtomicInteger(0);
 
     List<String> getListOfNames() {
         List<String> retval = new ArrayList<String>();

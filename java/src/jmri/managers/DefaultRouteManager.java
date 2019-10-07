@@ -1,7 +1,7 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import javax.annotation.concurrent.GuardedBy;
+import java.util.concurrent.atomic.AtomicInteger;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
@@ -62,14 +62,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
         /* The following keeps track of the last created auto system name.
          Currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them. */
-        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                synchronized(this) {
-                    if (autoNumber > lastAutoRouteRef) {
-                        lastAutoRouteRef = autoNumber;
-                    }
-                }
+                lastAutoRouteRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
@@ -85,11 +81,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Override
     public Route newRoute(String userName) {
-        int nextAutoRouteRef;
-        synchronized(this) {
-            nextAutoRouteRef = ++lastAutoRouteRef;
-        }
-        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
+        int nextAutoRouteRef = lastAutoRouteRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoRouteRef);
         b.append(nextNumber);
         return provideRoute(b.toString(), userName);
@@ -97,8 +90,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    @GuardedBy("this")
-    int lastAutoRouteRef = 0;
+    AtomicInteger lastAutoRouteRef = new AtomicInteger(0);
 
     /**
      * Remove an existing route. Route must have been deactivated before

@@ -2,9 +2,9 @@ package jmri.managers;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
-import javax.annotation.concurrent.GuardedBy;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -48,7 +48,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         if (t != null) {
             return t;
         }
-        if (sName.startsWith(getSystemPrefix() + typeLetter())) {
+        if (sName.startsWith(getSystemNamePrefix())) {
             return newMemory(sName, null);
         } else {
             return newMemory(makeSystemName(sName), null);
@@ -120,14 +120,10 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         /*The following keeps trace of the last created auto system name.  
          currently we do not reuse numbers, although there is nothing to stop the 
          user from manually recreating them*/
-        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                synchronized(this) {
-                    if (autoNumber > lastAutoMemoryRef) {
-                        lastAutoMemoryRef = autoNumber;
-                    }
-                }
+                lastAutoMemoryRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
             }
@@ -138,11 +134,8 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     /** {@inheritDoc} */
     @Override
     public @Nonnull Memory newMemory(@Nonnull String userName) {
-        int nextAutoMemoryRef;
-        synchronized(this) {
-            nextAutoMemoryRef = ++lastAutoMemoryRef;
-        }
-        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
+        int nextAutoMemoryRef = lastAutoMemoryRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoMemoryRef);
         b.append(nextNumber);
         return newMemory(b.toString(), userName);
@@ -150,8 +143,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    @GuardedBy("this")
-    int lastAutoMemoryRef = 0;
+    AtomicInteger lastAutoMemoryRef = new AtomicInteger(0);
 
     /**
      * Internal method to invoke the factory, after all the logic for returning

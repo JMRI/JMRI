@@ -1,7 +1,7 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-import javax.annotation.concurrent.GuardedBy;
+import java.util.concurrent.atomic.AtomicInteger;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -81,14 +81,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
-        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                synchronized(this) {
-                    if (autoNumber > lastAutoLogixRef) {
-                        lastAutoLogixRef = autoNumber;
-                    }
-                }
+                lastAutoLogixRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
             }
@@ -98,11 +94,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     @Override
     public Logix createNewLogix(String userName) {
-        int nextAutoLogixRef;
-        synchronized(this) {
-            nextAutoLogixRef = ++lastAutoLogixRef;
-        }
-        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
+        int nextAutoLogixRef = lastAutoLogixRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoLogixRef);
         b.append(nextNumber);
         return createNewLogix(b.toString(), userName);
@@ -110,8 +103,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    @GuardedBy("this")
-    int lastAutoLogixRef = 0;
+    AtomicInteger lastAutoLogixRef = new AtomicInteger(0);
 
     /**
      * Remove an existing Logix and delete all its conditionals. Logix must have

@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.concurrent.GuardedBy;
+import java.util.concurrent.atomic.AtomicInteger;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
@@ -68,8 +68,8 @@ public class SectionManager extends AbstractManager<Section> implements Instance
             return null;
         }
         String sysName = systemName;
-        if (!sName.startsWith(getSystemPrefix() + typeLetter())) {
-            sysName = getSystemPrefix() + typeLetter() + sysName;
+        if (!sysName.startsWith(getSystemNamePrefix())) {
+            sysName = getSystemNamePrefix() + sysName;
         }
         // Check that Section does not already exist
         Section y;
@@ -90,14 +90,10 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         /*The following keeps trace of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
-        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                synchronized(this) {
-                    if (autoNumber > lastAutoSectionRef) {
-                        lastAutoSectionRef = autoNumber;
-                    }
-                }
+                lastAutoSectionRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
             }
@@ -106,11 +102,8 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
 
     public Section createNewSection(String userName) {
-        int nextAutoSectionRef;
-        synchronized(this) {
-            nextAutoSectionRef = ++lastAutoSectionRef;
-        }
-        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
+        int nextAutoSectionRef = lastAutoSectionRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoSectionRef);
         b.append(nextNumber);
         return createNewSection(b.toString(), userName);
@@ -118,8 +111,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    @GuardedBy("this")
-    int lastAutoSectionRef = 0;
+    AtomicInteger lastAutoSectionRef = new AtomicInteger(0);
 
     /**
      * Remove an existing Section.
