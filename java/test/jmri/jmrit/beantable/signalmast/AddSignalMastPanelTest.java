@@ -108,7 +108,7 @@ public class AddSignalMastPanelTest {
                 // constructor for d will wait until the dialog is visible
                 JDialogOperator d = new JDialogOperator(Bundle.getMessage("WarningTitle"));
                 JButtonOperator bo = new JButtonOperator(d,"OK");
-                jmri.util.ThreadingUtil.runOnGUI(() -> {bo.push();});
+                bo.push();
             }).start();
         }
         Assert.assertFalse(a.checkUserName("user name"));
@@ -121,7 +121,7 @@ public class AddSignalMastPanelTest {
                 // constructor for d will wait until the dialog is visible
                 JDialogOperator d = new JDialogOperator(Bundle.getMessage("WarningTitle"));
                 JButtonOperator bo = new JButtonOperator(d,"OK");
-                jmri.util.ThreadingUtil.runOnGUI(() -> {bo.push();});
+                bo.push();
             }).start();
         }
         Assert.assertFalse(a.checkUserName("IF$vsm:basic:one-searchlight($1)"));
@@ -150,6 +150,7 @@ public class AddSignalMastPanelTest {
         } catch (Exception e) {
             log.error("exception deleting mock system", e);
         }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanelTest.class);

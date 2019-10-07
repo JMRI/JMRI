@@ -13,15 +13,20 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
 public class TrainsTableFrameTest extends OperationsTestCase {
+
+    @Rule
+    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
+
+    @Rule
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3); // first, plus three retries
 
     @Test
     public void testCTor() {

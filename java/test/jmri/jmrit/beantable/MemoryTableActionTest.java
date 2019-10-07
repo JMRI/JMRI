@@ -2,8 +2,9 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import jmri.Memory;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -13,7 +14,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author	Bob Jacobsen Copyright 2004
  */
-public class MemoryTableActionTest extends AbstractTableActionBase {
+public class MemoryTableActionTest extends AbstractTableActionBase<Memory> {
 
     @Test
     public void testCreate() {
