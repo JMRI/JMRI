@@ -80,6 +80,7 @@ public class OperationsTestCase {
                 // ignore.
             }
         }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
