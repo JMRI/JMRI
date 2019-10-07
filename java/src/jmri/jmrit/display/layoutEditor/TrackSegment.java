@@ -1222,12 +1222,12 @@ public class TrackSegment extends LayoutTrack {
         addNumericMenuItem(bridgeMenu,
                 "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
                 this::getBridgeLineWidth, this::setBridgeLineWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
+                QuickPromptUtil.checkIntRange(10, MAX_BRIDGE_LINE_WIDTH, null));
 
         addNumericMenuItem(bridgeMenu,
                 "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip",
                 this::getBridgeApproachWidth, this::setBridgeApproachWidth,
-                QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_APPROACH_WIDTH, null));
+                QuickPromptUtil.checkIntRange(4, MAX_BRIDGE_APPROACH_WIDTH, null));
 
         addNumericMenuItem(bridgeMenu,
                 "BridgeDeckWidthMenuItemTitle", "BridgeDeckWidthMenuItemToolTip",
