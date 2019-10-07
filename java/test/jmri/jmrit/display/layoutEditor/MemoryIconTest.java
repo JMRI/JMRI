@@ -48,6 +48,7 @@ public class MemoryIconTest extends jmri.jmrit.display.MemoryIconTest {
            to = null;
            p = null;
         }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
