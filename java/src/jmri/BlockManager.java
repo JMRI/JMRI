@@ -101,7 +101,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
-        if (systemName.startsWith(getSystemPrefix() + typeLetter() + ":AUTO:")) {
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
                 if (autoNumber > lastAutoBlockRef) {
@@ -130,7 +130,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @CheckForNull
     public Block createNewBlock(@Nonnull String userName) {
         int nextAutoBlockRef = lastAutoBlockRef + 1;
-        StringBuilder b = new StringBuilder(getSystemPrefix() + typeLetter() + ":AUTO:");
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
         b.append(nextNumber);
         return createNewBlock(b.toString(), userName);
@@ -155,7 +155,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (b != null) {
             return b;
         }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
+        if (name.startsWith(getSystemNamePrefix())) {
             b = createNewBlock(name, null);
         } else {
             b = createNewBlock(name);
