@@ -5,10 +5,10 @@ import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -103,11 +103,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (systemName.startsWith("IB:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
-                synchronized(this) {
-                    if (autoNumber > lastAutoBlockRef) {
-                        lastAutoBlockRef = autoNumber;
-                    }
-                }
+                lastAutoBlockRef.accumulateAndGet(autoNumber, Math::max);
             } catch (NumberFormatException e) {
                 log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
@@ -132,10 +128,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      */
     @CheckForNull
     public Block createNewBlock(@Nonnull String userName) {
-        int nextAutoBlockRef;
-        synchronized(this) {
-            nextAutoBlockRef = ++lastAutoBlockRef;
-        }
+        int nextAutoBlockRef = lastAutoBlockRef.incrementAndGet();
         StringBuilder b = new StringBuilder("IB:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
         b.append(nextNumber);
@@ -174,8 +167,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
-    @GuardedBy("this")
-    int lastAutoBlockRef = 0;
+    AtomicInteger lastAutoBlockRef = new AtomicInteger(0);
 
     /**
      * Method to get an existing Block. First looks up assuming that name is a
