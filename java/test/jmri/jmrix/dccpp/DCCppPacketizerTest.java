@@ -1,4 +1,3 @@
-package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -139,7 +138,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
     public void tearDown() {
         tc.terminateThreads();
         tc = null;
-        JUnitUtil.reseteWindows(false,false);
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
