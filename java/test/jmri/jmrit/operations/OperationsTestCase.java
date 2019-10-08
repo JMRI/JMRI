@@ -80,6 +80,9 @@ public class OperationsTestCase {
                 // ignore.
             }
         }
+        // make sure no pending shutdown actions
+        JUnitUtil.initShutDownManager();
+
         JUnitUtil.tearDown();
     }
 

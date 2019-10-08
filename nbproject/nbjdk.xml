@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir=".." name="JMRI">
+<project basedir=".." name="JMRI-NBJDK">
     <property file="nbproject/nbjdk.properties"/>
     <property location="${netbeans.user}/build.properties" name="user.properties.file"/>
     <property file="${user.properties.file}"/>
@@ -30,6 +30,15 @@
     </target>
     <target depends="-jdk-init" name="compile-selected-files-in-tmp">
         <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="compile-selected-files-in-tmp"/>
+    </target>
+    <target depends="-jdk-init" name="debug-apply-fix-in-src">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="debug-apply-fix-in-src"/>
+    </target>
+    <target depends="-jdk-init" name="debug-apply-fix-in-test">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="debug-apply-fix-in-test"/>
+    </target>
+    <target depends="-jdk-init" name="debug-apply-fix-in-tmp">
+        <ant antfile="nbproject/ide-file-targets.xml" inheritall="false" target="debug-apply-fix-in-tmp"/>
     </target>
     <target depends="-jdk-init" name="ci-test">
         <ant inheritall="false" target="ci-test"/>
