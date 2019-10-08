@@ -129,7 +129,7 @@ class Decoration {
         var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
         this.ep1 = [Number($ep1.x), Number($ep1.y)];
         this.ep2 = [Number($ep2.x), Number($ep2.y)];
-        jmri.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
+        //jmri.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
     }
     getAngles() {
         var $widget = this.$widget;
@@ -143,18 +143,15 @@ class Decoration {
             this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, this.ep1);
             this.stopAngleRAD = this.startAngleRAD;
         }
-        jmri.log("startAngleDEG: " + $toDegrees(this.startAngleRAD) + ", stopAngleDEG: " + $toDegrees(this.stopAngleRAD) + ".");
+        //jmri.log("startAngleDEG: " + $toDegrees(this.startAngleRAD) + ", stopAngleDEG: " + $toDegrees(this.stopAngleRAD) + ".");
     }
     getBezierAngles() {
         var $widget = this.$widget;
         var $cps = $widget.controlpoints;   // get the control points
-
         var $cp0 = $cps[0];
         var $cpN = $cps[$cps.length - 1];
-
         var cp0 = [Number($cp0.attributes.x.value), Number($cp0.attributes.y.value)];
         var cpN = [Number($cpN.attributes.x.value), Number($cpN.attributes.y.value)];
-
         this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(cp0, this.ep1);
         this.stopAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, cpN);
     }
@@ -164,23 +161,17 @@ class Decoration {
         if (extentAngleDEG == 0) {
             extentAngleDEG = 90;
         }
-
         var startAngleRAD, stopAngleRAD;
-
         // Convert angle to radiants in order to speed up math
         var halfAngleRAD = $toRadians(extentAngleDEG) / 2;
-
         // Compute arc's chord
         var a = this.ep2[0] - this.ep1[0];
         var o = this.ep2[1] - this.ep1[1];
         var chord = Math.hypot(a, o);
-
         // Make sure chord is not null
         // In such a case (ep1 == ep2), there is no arc to draw
         if (chord > 0) {
-            ///var radius = (chord / 2) / Math.sin(halfAngleRAD);
             var midAngleRAD = Math.atan2(a, o);
-            //jmri.log("midAngleDEG: " + $toDegrees(midAngleRAD));
             startAngleRAD = (Math.PI / 2) - (midAngleRAD + halfAngleRAD);
             stopAngleRAD = (Math.PI / 2) - (midAngleRAD - halfAngleRAD);
         }
@@ -204,7 +195,6 @@ class Decoration {
         this.startAngleRAD = startAngleRAD; this.stopAngleRAD = stopAngleRAD;
     }
     draw() {
-        //jmri.log("Decoration.draw()");
         this.getEndPoints();
         this.getAngles();
     }
@@ -212,7 +202,6 @@ class Decoration {
 
 class ArrowDecoration extends Decoration {
     constructor($widget, $arrow) {
-        //jmri.log("ArrowDecoration.constructor(...)");
         super($widget);
         //<arrow style="4" end="stop" direction="out" color="#000000" linewidth="4" length="16" gap="1" />
         this.style = Number($arrow.attr('style'));
@@ -226,28 +215,19 @@ class ArrowDecoration extends Decoration {
     }
     draw() {
         super.draw();
-
-        //jmri.log("ArrowDecoration.draw()");
-
-        // save current line width and color
-        $gCtx.save();
-
+        $gCtx.save();   // save current line width and color
         // set color and width
         $gCtx.strokeStyle = this.color;
         $gCtx.fillStyle = this.color;
         $gCtx.lineWidth = this.linewidth;
-
         var $widget = this.$widget;
         var isIn = (this.direction == "in") || (this.direction == "both");
         var isOut = (this.direction == "out") || (this.direction == "both");
-
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
         if ($widget.flip == "yes") {
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-
-        // draw the start arrows
-        this.offset = 1;
+        this.offset = 1;        // draw the start arrows
         if ((this.end == "start") || (this.end == "both")) {
             if (isIn) {
                 this.drawArrowIn(this.ep1, Math.PI + startAngleRAD);
@@ -256,9 +236,7 @@ class ArrowDecoration extends Decoration {
                 this.drawArrowOut(this.ep1, Math.PI + startAngleRAD);
             }
         }
-
-        // draw the stop arrows
-        this.offset = 1;
+        this.offset = 1;        // draw the stop arrows
         if ((this.end == "stop") || (this.end == "both")) {
             if (isIn) {
                 this.drawArrowIn(this.ep2, stopAngleRAD);
@@ -267,20 +245,14 @@ class ArrowDecoration extends Decoration {
                 this.drawArrowOut(this.ep2, stopAngleRAD);
             }
         }
-
-        // restore color and width back to default
-        $gCtx.restore();
-        }
+        $gCtx.restore();        // restore color and width back to default
+    }
     drawArrowIn(ep, angleRAD) {
-        //jmri.log("drawArrowIn(ep: {" + ep[0] + "," + ep[1] + "}, angleDEG: " + $toDegrees(angleRAD) + ")");
-
         var $widget = this.$widget;
-
         // someday we'll try this instead...
         // $gCtx.save();
         // $gCtx.translate(-ep[0], -ep[1]);
         // $gCtx.rotate(angleRAD);
-
         switch (this.style) {
             default: {
                 this.style = 0;
@@ -310,21 +282,15 @@ class ArrowDecoration extends Decoration {
                 break;
             }
         }
-
         // $gCtx.restore();
-
     }   // drawArrowIn
 
     drawArrowOut(ep, angleRAD) {
-        //jmri.log("drawArrowOut(ep: {" + ep[0] + "," + ep[1] + "}, angleDEG: " + $toDegrees(angleRAD) + ")");
-
         var $widget = this.$widget;
-
         // someday we'll try this instead...
         // $gCtx.save();
         // $gCtx.translate(-ep[0], -ep[1]);
         // $gCtx.rotate(angleRAD);
-
         switch (this.style) {
             default: {
                 this.style = 0;
@@ -354,23 +320,18 @@ class ArrowDecoration extends Decoration {
                 break;
             }
         }
-
         // $gCtx.restore();
-
     }   // drawArrowIn
 
     drawArrow1In(ep, angleRAD) {
         var p1 = [this.offset + this.length, -this.length];
         var p2 = [this.offset, 0.0];
         var p3 = [this.offset + this.length, +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
-
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
-
         this.offset += this.length + this.gap;
     }
 
@@ -378,14 +339,11 @@ class ArrowDecoration extends Decoration {
         var p1 = [this.offset, -this.length];
         var p2 = [this.offset + this.length, 0.0];
         var p3 = [this.offset, +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
-
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
-
         this.offset += this.length + this.gap;
     }
 
@@ -396,19 +354,16 @@ class ArrowDecoration extends Decoration {
         var p4 = [this.offset + this.linewidth + this.gap + this.length, -this.length];
         var p5 = [this.offset + this.linewidth + this.gap, 0.0];
         var p6 = [this.offset + this.linewidth + this.gap + this.length, +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
         p4 = $point_add($point_rotate(p4, angleRAD), ep);
         p5 = $point_add($point_rotate(p5, angleRAD), ep);
         p6 = $point_add($point_rotate(p6, angleRAD), ep);
-
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
         $drawLineP(p4, p5);
         $drawLineP(p5, p6);
-
         this.offset += this.length + (2 * (this.linewidth + this.gap));
     }
 
@@ -419,19 +374,16 @@ class ArrowDecoration extends Decoration {
         var p4 = [this.offset + this.linewidth + this.gap, -this.length];
         var p5 = [this.offset + this.linewidth + this.gap + this.length, 0.0];
         var p6 = [this.offset + this.linewidth + this.gap, +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
         p4 = $point_add($point_rotate(p4, angleRAD), ep);
         p5 = $point_add($point_rotate(p5, angleRAD), ep);
         p6 = $point_add($point_rotate(p6, angleRAD), ep);
-
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
         $drawLineP(p4, p5);
         $drawLineP(p5, p6);
-
         this.offset += this.length + (2 * (this.linewidth + this.gap));
     }
 
@@ -439,23 +391,19 @@ class ArrowDecoration extends Decoration {
         var p1 = [this.offset + this.length, -this.length];
         var p2 = [this.offset, 0.0];
         var p3 = [this.offset + this.length, +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
-
         $gCtx.beginPath();
         $gCtx.moveTo(p1[0], p1[1]);
         $gCtx.lineTo(p2[0], p2[1]);
         $gCtx.lineTo(p3[0], p3[1]);
         $gCtx.closePath();
-
         if (this.linewidth > 1) {
             $gCtx.fill();
         } else {
             $gCtx.stroke();
         }
-
         this.offset += this.length + this.gap;
     }
 
@@ -463,23 +411,19 @@ class ArrowDecoration extends Decoration {
         var p1 = [this.offset, -this.length];
         var p2 = [this.offset + this.length, 0.0];
         var p3 = [this.offset, +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
-
         $gCtx.beginPath();
         $gCtx.moveTo(p1[0], p1[1]);
         $gCtx.lineTo(p2[0], p2[1]);
         $gCtx.lineTo(p3[0], p3[1]);
         $gCtx.closePath();
-
         if (this.linewidth > 1) {
             $gCtx.fill();
         } else {
             $gCtx.stroke();
         }
-
         this.offset += this.length + this.gap;
     }
 
@@ -488,16 +432,13 @@ class ArrowDecoration extends Decoration {
         var p2 = [this.offset + (4 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (4 * this.length), +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
         p4 = $point_add($point_rotate(p4, angleRAD), ep);
-
         $drawLineP(p1, p3);
         $drawLineP(p2, p3);
         $drawLineP(p3, p4);
-
         this.offset += (3 * this.length) + this.gap;
     }
 
@@ -506,16 +447,13 @@ class ArrowDecoration extends Decoration {
         var p2 = [this.offset + (2 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (2 * this.length), +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
         p4 = $point_add($point_rotate(p4, angleRAD), ep);
-
         $drawLineP(p1, p3);
         $drawLineP(p2, p3);
         $drawLineP(p3, p4);
-
         this.offset += (3 * this.length) + this.gap;
     }
 
@@ -524,63 +462,51 @@ class ArrowDecoration extends Decoration {
         var p2 = [this.offset + (4 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (4 * this.length), +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
         p4 = $point_add($point_rotate(p4, angleRAD), ep);
-
         $gCtx.beginPath();
         $gCtx.moveTo(p4[0], p4[1]);
         $gCtx.lineTo(p2[0], p2[1]);
         $gCtx.lineTo(p3[0], p3[1]);
         $gCtx.closePath();
-
         if (this.linewidth > 1) {
             $gCtx.fill();
         } else {
             $gCtx.stroke();
         }
         $drawLineP(p1, p3);
-
         this.offset += (3 * this.length) + this.gap;
     }
 
     drawArrow5Out(ep, angleRAD) {
-        //jmri.log("drawArrow5Out(ep: {" + ep[0] + "," + ep[1] + "}, angleRAD: " + angleRAD + ")");
-
         var p1 = [this.offset, 0.0];
         var p2 = [this.offset + (2 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (2 * this.length), +this.length];
-
         p1 = $point_add($point_rotate(p1, angleRAD), ep);
         p2 = $point_add($point_rotate(p2, angleRAD), ep);
         p3 = $point_add($point_rotate(p3, angleRAD), ep);
         p4 = $point_add($point_rotate(p4, angleRAD), ep);
-
         $gCtx.beginPath();
         $gCtx.moveTo(p4[0], p4[1]);
         $gCtx.lineTo(p2[0], p2[1]);
         $gCtx.lineTo(p3[0], p3[1]);
         $gCtx.closePath();
-
         if (this.linewidth > 1) {
             $gCtx.fill();
         } else {
             $gCtx.stroke();
         }
         $drawLineP(p1, p3);
-
         this.offset += (3 * this.length) + this.gap;
     }
 }   // class ArrowDecoration
 
 class BridgeDecoration extends Decoration {
     constructor($widget, $bridge) {
-        jmri.log("BridgeDecoration.constructor(...)");
         super($widget);
-
         //<bridge side="both" end="both" color="#000000" linewidth="1" approachwidth="8" deckwidth="10" />
         this.side = $bridge.attr('side');
         this.end = $bridge.attr('end');
@@ -591,22 +517,12 @@ class BridgeDecoration extends Decoration {
     }
     draw() {
         super.draw();
-
         var $widget = this.$widget;
-
-        jmri.log("BridgeDecoration.draw(), widget.ident: " + $widget.ident);
-
-        // save current line width and color
-        $gCtx.save();
-
-        // jmri.log("  color: " + this.color);
-        // jmri.log("  linewidth: " + this.linewidth);
-
+        $gCtx.save();   // save current line width and color
         // set color and width
         $gCtx.strokeStyle = this.color;
         $gCtx.fillStyle = this.color;
         $gCtx.lineWidth = this.linewidth;
-
         if ($widget.circle == "yes") {
             this.drawBridgeCircle();
         } else if ($widget.arc == "yes") {
@@ -616,42 +532,29 @@ class BridgeDecoration extends Decoration {
         } else {
             this.drawBridgeStrait();
         }
-
         this.drawBridgeEnds();
-
         // restore color and width back to default
         $gCtx.restore();
     }   // draw()
 
     drawBridgeCircle() {
-        jmri.log("drawBridgeCircle()");
         var $widget = this.$widget;
-
         var isRight = ((this.side == "right") || (this.side == "both"));
         var isLeft = ((this.side == "left") || (this.side == "both"));
-
-        var bridgeApproachWidth = this.approachwidth;
-        var bridgeDeckWidth = this.deckwidth;
-        var halfWidth = bridgeDeckWidth / 2;
-
+        var halfWidth = this.deckwidth / 2;
         var ep1 = this.ep1, ep2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-
         var v = [0, +halfWidth];
         if ($widget.flip == "yes") {
             v = [0, -halfWidth];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-
-        //draw curved line
         if (isRight) {
             var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
             var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
             if ($widget.flip == "yes") {
-                jmri.log("drawBridgeCircle(), right, flip");
                 $drawArcP(tp2, tp1, $widget.angle);
             } else {
-                jmri.log("drawBridgeCircle(), right");
                 $drawArcP(tp1, tp2, $widget.angle);
             }
         }
@@ -659,22 +562,16 @@ class BridgeDecoration extends Decoration {
             var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
             var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
             if ($widget.flip == "yes") {
-                jmri.log("drawBridgeCircle(), left, flip");
                 $drawArcP(tp2, tp1, $widget.angle);
             } else {
-                jmri.log("drawBridgeCircle(), left");
                 $drawArcP(tp1, tp2, $widget.angle);
             }
          }
      }
-
-    drawBridgeArc() {   //draw arc of ellipse
-        jmri.log("drawBridgeArc()");
+     drawBridgeArc() {   //draw arc of ellipse
         var $widget = this.$widget;
-
 //         if ($widget.ident == "T34")
 //             jmri.log("T34!");   //TODO: disable these debugging lines
-
         var tp1 = this.ep1, tp2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
         if ($widget.flip == "yes") {
@@ -682,16 +579,10 @@ class BridgeDecoration extends Decoration {
             startAngleRAD += Math.PI;
             stopAngleRAD += Math.PI;
         }
-
-        var bridgeDeckWidth = this.deckwidth;
-        var halfWidth = bridgeDeckWidth / 2;
-
+        var halfWidth = this.deckwidth / 2;
         var x, y;
-
         var deltaP = $point_subtract(tp2, tp1);
-
         var rw = deltaP[0], rh = deltaP[1];
-
         if (rw < 0) {
             rw = -rw;
             if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
@@ -708,22 +599,17 @@ class BridgeDecoration extends Decoration {
                 x = tp1[0]; y = tp2[1];
             }
         }
-
         rw -= halfWidth;    rh -= halfWidth;
-
         if ((this.side == "right") || (this.side == "both")) {
             $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
         }
-
         rw += bridgeDeckWidth;  rh += bridgeDeckWidth;
-
         if ((this.side == "left") || (this.side == "both")) {
             $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
         }
     }   // drawBridgeArc()
 
     drawBridgeBezier() {
-        jmri.log("drawBridgeBezier()");
         var $widget = this.$widget;
         var ep1 = this.ep1, ep2 = this.ep2;
         var points = [[ep1[0], ep1[1]]];    // first point
@@ -732,10 +618,7 @@ class BridgeDecoration extends Decoration {
             points.push([elem.attributes.x.value, elem.attributes.y.value]);
         });
         points.push([ep2[0], ep2[1]]);  // last point
-
-        var bridgeDeckWidth = this.deckwidth;
-        var halfWidth = bridgeDeckWidth / 2;
-
+        var halfWidth = this.deckwidth / 2;
         if (((this.side == "left") || (this.side == "both"))) {
             $drawBezier(points, this.color, this.linewidth, -halfWidth);
         }
@@ -744,15 +627,10 @@ class BridgeDecoration extends Decoration {
         }
     }
     drawBridgeStrait() {
-        jmri.log("drawBridgeStrait()");
         var $widget = this.$widget;
         var ep1 = this.ep1, ep2 = this.ep2;
-
-        var bridgeDeckWidth = this.deckwidth;
-        var halfWidth = bridgeDeckWidth / 2;
-
+        var halfWidth = this.deckwidth / 2;
         var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
-
         if ((this.side == "right") || (this.side == "both")) {
             $drawLineP($point_add(ep1, vector), $point_add(ep2, vector));
         }
@@ -761,7 +639,6 @@ class BridgeDecoration extends Decoration {
         }
     }
     drawBridgeEnds() {
-        jmri.log("drawBridgeEnds()");
         if ((this.end == "entry") || (this.end == "both")) {
             this.drawBridgeEntry();
         }
@@ -770,38 +647,26 @@ class BridgeDecoration extends Decoration {
        }
     }
     drawBridgeEntry() {
-        jmri.log("drawBridgeEntry()");
         var $widget = this.$widget;
         var ep1 = this.ep1;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-
-        var bridgeApproachWidth = this.approachwidth;
-        var bridgeDeckWidth = this.deckwidth;
-        var halfWidth = bridgeDeckWidth / 2;
-
-        jmri.log("this.side: " + this.side);
-
+        var halfWidth = this.deckwidth / 2;
         var isRight = ((this.side == "right") || (this.side == "both"));
         var isLeft = ((this.side == "left") || (this.side == "both"));
-
         if ($widget.flip == "yes") {
             [isRight, isLeft] = [isLeft, isRight];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-
         var p1, p2, p1P, p2P;
-
         if (isRight) {
-            jmri.log("drawBridgeEntry() isRight!");
-            p1 = [-bridgeApproachWidth, +bridgeApproachWidth + halfWidth];
+            p1 = [-this.approachwidth, +this.approachwidth + halfWidth];
             p2 = [0, +halfWidth];
             p1P = $point_add($point_rotate(p1, startAngleRAD), ep1);
             p2P = $point_add($point_rotate(p2, startAngleRAD), ep1);
             $drawLineP(p1P, p2P);
         }
         if (isLeft) {
-            jmri.log("drawBridgeEntry() isLeft!");
-            p1 = [-bridgeApproachWidth, -bridgeApproachWidth - halfWidth];
+            p1 = [-this.approachwidth, -this.approachwidth - halfWidth];
             p2 = [0.0, -halfWidth];
             p1P = $point_add($point_rotate(p1, startAngleRAD), ep1);
             p2P = $point_add($point_rotate(p2, startAngleRAD), ep1);
@@ -809,35 +674,26 @@ class BridgeDecoration extends Decoration {
         }
     }
     drawBridgeExit() {
-        jmri.log("drawBridgeExit()");
-
         var $widget = this.$widget;
         var ep2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-
-        var bridgeApproachWidth = this.approachwidth;
-        var bridgeDeckWidth = this.deckwidth;
-        var halfWidth = bridgeDeckWidth / 2;
-
+        var halfWidth = this.deckwidth / 2;
         var isRight = ((this.side == "right") || (this.side == "both"));
         var isLeft = ((this.side == "left") || (this.side == "both"));
-
         if ($widget.flip == "yes") {
             [isRight, isLeft] = [isLeft, isRight];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-
         var p1, p2, p1P, p2P;
-
         if (isRight) {
-            p1 = [+bridgeApproachWidth, +bridgeApproachWidth + halfWidth];
+            p1 = [+this.approachwidth, +this.approachwidth + halfWidth];
             p2 = [0.0, +halfWidth];
             p1P = $point_add($point_rotate(p1, stopAngleRAD), ep2);
             p2P = $point_add($point_rotate(p2, stopAngleRAD), ep2);
             $drawLineP(p1P, p2P);
         }
         if (isLeft) {
-            p1 = [+bridgeApproachWidth, -bridgeApproachWidth - halfWidth];
+            p1 = [+this.approachwidth, -this.approachwidth - halfWidth];
             p2 = [0.0, -halfWidth];
             p1P = $point_add($point_rotate(p1, stopAngleRAD), ep2);
             p2P = $point_add($point_rotate(p2, stopAngleRAD), ep2);
@@ -848,7 +704,6 @@ class BridgeDecoration extends Decoration {
 
 class BumperDecoration extends Decoration {
     constructor($widget, $bumper) {
-        //jmri.log("BumperDecoration.constructor(...)");
         super($widget);
         //<bumper end="stop" color="#000000" linewidth="2" length="16" />
         this.end = $bumper.attr('end');
@@ -856,48 +711,32 @@ class BumperDecoration extends Decoration {
         this.linewidth = Number($bumper.attr('linewidth'));
         this.length = Number($bumper.attr('length'));
     }
-draw() {
+    draw() {
         super.draw();
-
-        //jmri.log("BumperDecoration.draw()");
-
-        // save current line width and color
-        $gCtx.save();
-
+        $gCtx.save();   // save current line width and color
         // set color and width
         $gCtx.strokeStyle = this.color;
         $gCtx.fillStyle = this.color;
         $gCtx.lineWidth = this.linewidth;
-
         var $widget = this.$widget;
-
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
         if ($widget.flip == "yes") {
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-
         var bumperLength = this.length;
         var halfLength = bumperLength / 2;
-
         // common points
         var p1 = [0, -halfLength], p2 = [0, +halfLength];
-
         if ((this.end == "start") || (this.end == "both")) {
             var p1P = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
             var p2P = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
-
-            // draw cross tie
-            $drawLineP(p1P, p2P);
+            $drawLineP(p1P, p2P);   // draw cross tie
         }
-
         if ((this.end == "stop") || (this.end == "both")) {
             var p1P = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
             var p2P = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
-
-            // draw cross tie
-            $drawLineP(p1P, p2P);
+            $drawLineP(p1P, p2P);   // draw cross tie
         }
-
         // restore color and width back to default
         $gCtx.restore();
     }
@@ -1841,8 +1680,7 @@ function $drawTrackSegment($widget) {
     //     $logProperties($widget, true);
     // }
 
-    // save current track color and line width
-    $gCtx.save();
+    $gCtx.save();   // save current line width and color
 
     //set trackcolor based on blockcolor
     var $color = $gPanel.defaulttrackcolor;
@@ -1968,7 +1806,6 @@ function $drawDecorations($widget) {
     var startAngleRAD, stopAngleRAD;
 
     if ($widget.bezier == "yes") {
-        //jmri.log("**** tracksegment bezier ****");
         var $cps = $widget.controlpoints;   // get the control points
 
         var $cp0 = $cps[0];
@@ -2006,7 +1843,6 @@ function $drawDecorations($widget) {
         if (chord > 0) {
             ///var radius = (chord / 2) / Math.sin(halfAngleRAD);
             var midAngleRAD = Math.atan2(a, o);
-            //jmri.log("midAngleDEG: " + $toDegrees(midAngleRAD));
             startAngleRAD = midAngleRAD + halfAngleRAD;
             stopAngleRAD = midAngleRAD - halfAngleRAD;
         }
@@ -2049,16 +1885,13 @@ function $drawDecorations($widget) {
     //jmri.log("startAngleDEG: " + $toDegrees(startAngleRAD) + ", stopAngleDEG: " + $toDegrees(stopAngleRAD) + ".");
 
     if (typeof $widget.tunnelside != 'undefined') {
-        //jmri.log("**** got Tunnel decoration! $widget.tunnelside: " + $widget.tunnelside);
         $drawTunnel($widget, ep1, ep2, startAngleRAD, stopAngleRAD);
     }
 }   // $drawDecorations
 
 function $drawTunnel($widget, ep1, ep2, startAngleRAD, stopAngleRAD) {
-    //jmri.log("$drawTunnel");
 
-    // save current line width and color
-    $gCtx.save();
+    $gCtx.save();   // save current line width and color
 
     var $color = $widget.tunnelcolor;
     var $width = $widget.tunnellinewidth;
@@ -2125,21 +1958,17 @@ function $drawTunnel($widget, ep1, ep2, startAngleRAD, stopAngleRAD) {
 
         if (rw < 0) {
             rw = -rw;
-            if (rh < 0) {
-                //jmri.log("**** QUAD ONE ****");
+            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
                 x = tp1[0]; y = tp2[1];
                 rh = -rh;
-            } else {
-                //jmri.log("**** QUAD TWO ****");
+            } else {                        //jmri.log("**** QUAD TWO ****");
                 x = tp2[0]; y = tp1[1];
             }
         } else {
-            if (rh < 0) {
-                //jmri.log("**** QUAD THREE ****");
+            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
                 x = tp2[0]; y = tp1[1];
                 rh = -rh;
-            } else {
-                //jmri.log("**** QUAD FOUR ****");
+            } else {                        //jmri.log("**** QUAD FOUR ****");
                 x = tp1[0]; y = tp2[1];
             }
         }
@@ -2836,8 +2665,7 @@ function $storeLevelXingPoints($widget) {
 
 //drawLine, passing in values from xml
 function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
-    // save current line width and color
-    $gCtx.save();
+    $gCtx.save();   // save current line width and color
 
     if (typeof $color != "undefined") {
         $gCtx.strokeStyle = $color;
@@ -2866,9 +2694,6 @@ function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
 }
 
 function $drawLineP($p1, $p2, $color, $width) {
-    //jmri.log("•••• $drawLineP ••••");
-    // $point_log("$p1", $p1);
-    // $point_log("$p2", $p2);
     $drawLine($p1[0], $p1[1], $p2[0], $p2[1], $color, $width);
 }
 
@@ -2878,43 +2703,12 @@ function $drawDashedLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
 }
 
 function $drawDashedLineP($p1, $p2, $color, $width, dashArray) {
-    //jmri.log("•••• $drawDashedLineP ••••");
-    // $point_log("$p1", $p1);
-    // $point_log("$p2", $p2);
     $drawDashedLine($p1[0], $p1[1], $p2[0], $p2[1], $color, $width, dashArray);
 }
 
-//dashed line code copied from: http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
-// var CP = window.CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
-// if (CP.lineTo) {
-//     CP.dashedLine = function(x, y, x2, y2, da) {
-//         if (!da)
-//             da = [10, 5];
-//         this.save();
-//         var dx = (x2 - x), dy = (y2 - y);
-//         var len = Math.sqrt(dx * dx + dy * dy);
-//         var rot = Math.atan2(dy, dx);
-//         this.translate(x, y);
-//         this.moveTo(0, 0);
-//         this.rotate(rot);
-//         var dc = da.length;
-//         var di = 0, draw = true;
-//         x = 0;
-//         while (len > x) {
-//             x += da[di++ % dc];
-//             if (x > len)
-//                 x = len;
-//             draw ? this.lineTo(x, 0) : this.moveTo(x, 0);
-//             draw = !draw;
-//         }
-//         this.restore();
-//     }
-// }
-
 //draw a Circle (color and width are optional)
 function $drawCircle($px, $py, $radius, $color, $width) {
-    // save current track color and line width
-    $gCtx.save();
+    $gCtx.save();   // save current line width and color
 
     // set color and width
     if (typeof $color != "undefined") {
@@ -2940,8 +2734,7 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
     var chord = Math.sqrt(((a * a) + (o * o))); //in pixels
 
     if (chord > 0.0) {  //don't bother if no length
-        //save track settings for restore
-        $gCtx.save();
+        $gCtx.save();   // save current line width and color
 
         // set color and width
         if (typeof $color != "undefined") {
@@ -2978,9 +2771,7 @@ function $drawArcP(pt1, pt2, degrees, $color, $width) {
 }
 function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD, $color, $width)
 {
-    //jmri.log("#### drawEllipse(" + x + ", " + y + ", " + rw + ", " + rh + ", " + startAngleRAD + ", " + stopAngleRAD + ", " + $color + ", " + $width + ")");
-
-    $gCtx.save();
+    $gCtx.save();   // save current line width and color
 
     $gCtx.strokeStyle = $color;
     $gCtx.lineWidth = $width;
@@ -2998,8 +2789,7 @@ function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD, $color, $width)
 //
 var bezier1st = true;
 function $drawBezier(points, $color, $width, displacement = 0) {
-    // save current track color and line width
-    $gCtx.save();
+    $gCtx.save();   // save current line width and color
 
     // set color and width
     if (typeof $color != "undefined") {
@@ -3036,9 +2826,6 @@ function $drawBezier(points, $color, $width, displacement = 0) {
 function $plotBezier(points, depth = 0, displacement = 0) {
     var len = points.length, idx, jdx;
 
-    //jmri.log("points: " + points);
-    //jmri.log("  $plotBezier depth: " + depth);
-
     // calculate flatness to determine if we need to recurse...
     var outer_distance = 0;
     for (var idx = 1; idx < len; idx++) {
@@ -3052,7 +2839,6 @@ function $plotBezier(points, depth = 0, displacement = 0) {
     // the flatness comparison value is somewhat arbitrary.
     // (I just kept moving it closer to 1 until I got good results. ;-)
     if ((depth > 12) || (flatness <= 1.001)) {
-        //jmri.log("  $plotBezier... FLAT!");
         var p0 = points[0], pN = points[len - 1];
 
         var vO = $point_normalizeTo($point_orthogonal($point_subtract(pN, p0)), displacement);
@@ -3065,10 +2851,8 @@ function $plotBezier(points, depth = 0, displacement = 0) {
             bezier1st = false;
         }
         var pNP = $point_add(pN, vO);
-        //$point_log("pNP", pNP);
         $gCtx.lineTo(pNP[0], pNP[1]);
     } else {
-        //jmri.log("  $plotBezier... NOT FLAT!");
         // calculate (len - 1) order of points
         // (zero'th order are the input points)
         var orderPoints = [];
@@ -3085,7 +2869,6 @@ function $plotBezier(points, depth = 0, displacement = 0) {
         }
 
         // collect left points
-        //jmri.log("  $plotBezier... collect left!");
         var leftPoints = [];
         leftPoints.push(points[0]);
         for (idx = 0; idx < len - 1; idx++) {
@@ -3095,7 +2878,6 @@ function $plotBezier(points, depth = 0, displacement = 0) {
         $plotBezier(leftPoints, depth + 1, displacement);
 
         // collect right points
-        //jmri.log("  $plotBezier... collect right!");
         var rightPoints = [];
         for (idx = 0; idx < len - 1; idx++) {
             rightPoints.push(orderPoints[len - 2 - idx][idx]);
