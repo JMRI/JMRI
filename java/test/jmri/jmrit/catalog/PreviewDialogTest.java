@@ -67,7 +67,12 @@ public class PreviewDialogTest {
         });
         new QueueTool().waitEmpty();
         
-        JUnitUtil.pressButton(chooser, "Choose");
+        // instead of locating the activate button, which can change, via
+        //   JUnitUtil.pressButton(chooser, "Choose");
+        // we directly fire the dialog
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            chooser.approveSelection();
+        });        
         new QueueTool().waitEmpty();
         log.debug("Mid testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
 
