@@ -62,9 +62,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     private HashMap<String, NamedIcon> _saveMap;
 
     /**
-     * Attach a signalhead element to this display item.
+     * Attach a SignalHead element to this display item by bean.
      *
-     * @param sh Specific SignalHead object
+     * @param sh the specific SignalHead object to attach
      */
     public void setSignalHead(NamedBeanHandle<SignalHead> sh) {
         if (namedHead != null) {
@@ -80,7 +80,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * Attach a numbered element to this display item.
+     * Attach a SignalHead element to this display item by name.
      * Taken from the Layout Editor.
      *
      * @param pName Used as a system/user name to lookup the SignalHead object
@@ -296,8 +296,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     /**
-     * ************* popup AbstractAction.actionPerformed method overrides
-     * ***********
+     * ************* popup AbstractAction.actionPerformed method overrides ***********
      */
     @Override
     protected void rotateOrthogonal() {
