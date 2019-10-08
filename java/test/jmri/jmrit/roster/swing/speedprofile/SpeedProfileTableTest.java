@@ -1,6 +1,7 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.GraphicsEnvironment;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.JUnitUtil;
@@ -23,6 +24,7 @@ public class SpeedProfileTableTest {
         re.setSpeedProfile(new RosterSpeedProfile(re));
         SpeedProfileTable t = new SpeedProfileTable(re.getSpeedProfile(), re.getId());
         Assert.assertNotNull("exists",t);
+        new JFrameOperator("Speed Table for ").requestClose();        
     }
 
     // The minimal setup for log4J
@@ -34,6 +36,7 @@ public class SpeedProfileTableTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
