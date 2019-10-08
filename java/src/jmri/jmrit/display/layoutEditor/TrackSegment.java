@@ -2248,17 +2248,7 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
                 trackRedrawn();
             } else if (isBezier()) {
-                Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-                int cnt = bezierControlPoints.size();
-                Point2D[] points = new Point2D[cnt + 2];
-                points[0] = pt1;
-                for (int idx = 0; idx < cnt; idx++) {
-                    points[idx + 1] = bezierControlPoints.get(idx);
-                }
-                points[cnt + 1] = pt2;
-
+                Point2D[] points = getBezierPoints();
                 MathUtil.drawBezier(g2, points);
             } else {
                 Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
@@ -2304,17 +2294,7 @@ public class TrackSegment extends LayoutTrack {
                         startAdj, tmpAngle, Arc2D.OPEN));
                 trackRedrawn();
             } else if (isBezier()) {
-                Point2D pt1 = LayoutEditor.getCoords(getConnect1(), getType1());
-                Point2D pt2 = LayoutEditor.getCoords(getConnect2(), getType2());
-
-                int cnt = bezierControlPoints.size();
-                Point2D[] points = new Point2D[cnt + 2];
-                points[0] = pt1;
-                for (int idx = 0; idx < cnt; idx++) {
-                    points[idx + 1] = bezierControlPoints.get(idx);
-                }
-                points[cnt + 1] = pt2;
-
+                Point2D[] points = getBezierPoints();
                 MathUtil.drawBezier(g2, points, -railDisplacement);
                 MathUtil.drawBezier(g2, points, +railDisplacement);
             } else {
@@ -2491,14 +2471,7 @@ public class TrackSegment extends LayoutTrack {
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
             } else if (isBezier()) {
-                int cnt = bezierControlPoints.size() + 2;
-                Point2D[] points = new Point2D[cnt];
-                points[0] = ep1;
-                for (int idx = 0; idx < cnt - 2; idx++) {
-                    points[idx + 1] = bezierControlPoints.get(idx);
-                }
-                points[cnt - 1] = ep2;
-
+                Point2D[] points = getBezierPoints();
                 if (bridgeSideLeft) {
                     MathUtil.drawBezier(g2, points, -halfWidth);
                 }
@@ -2638,14 +2611,7 @@ public class TrackSegment extends LayoutTrack {
                 }
                 trackRedrawn();
             } else if (isBezier()) {
-                int cnt = bezierControlPoints.size() + 2;
-                Point2D[] points = new Point2D[cnt];
-                points[0] = ep1;
-                for (int idx = 0; idx < cnt - 2; idx++) {
-                    points[idx + 1] = bezierControlPoints.get(idx);
-                }
-                points[cnt - 1] = ep2;
-
+                Point2D[] points = getBezierPoints();
                 if (tunnelSideRight) {
                     MathUtil.drawBezier(g2, points, +halfWidth);
                 }
@@ -2806,6 +2772,23 @@ public class TrackSegment extends LayoutTrack {
             }
         }
     }   // drawDecorations
+
+    /*
+     * getBezierPoints
+     * @return the points to pass to MathUtil.drawBezier(...)
+     */
+    private Point2D[] getBezierPoints() {
+        Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+        Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
+        int cnt = bezierControlPoints.size() + 2;
+        Point2D[] points = new Point2D[cnt];
+        points[0] = ep1;
+        for (int idx = 0; idx < cnt - 2; idx++) {
+            points[idx + 1] = bezierControlPoints.get(idx);
+        }
+        points[cnt - 1] = ep2;
+        return points;
+    }
 
     private int drawArrow(
             Graphics2D g2,

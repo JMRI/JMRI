@@ -220,107 +220,92 @@ class ArrowDecoration extends Decoration {
         $gCtx.strokeStyle = this.color;
         $gCtx.fillStyle = this.color;
         $gCtx.lineWidth = this.linewidth;
-        var $widget = this.$widget;
-        var isIn = (this.direction == "in") || (this.direction == "both");
-        var isOut = (this.direction == "out") || (this.direction == "both");
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        if ($widget.flip == "yes") {
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        this.drawArrowStart();
+        this.drawArrowStop();
+        $gCtx.restore();        // restore color and width back to default
+    }
+    drawArrowStart() {
+        var angleRAD = this.startAngleRAD;
+        if (this.$widget.flip == "yes") {
+            angleRAD = this.stopAngleRAD;
         }
         this.offset = 1;        // draw the start arrows
         if ((this.end == "start") || (this.end == "both")) {
-            if (isIn) {
-                this.drawArrowIn(this.ep1, Math.PI + startAngleRAD);
+            if ((this.direction == "in") || (this.direction == "both")) {
+                this.drawArrowIn(this.ep1, Math.PI + angleRAD);
             }
-            if (isOut) {
-                this.drawArrowOut(this.ep1, Math.PI + startAngleRAD);
+            if ((this.direction == "out") || (this.direction == "both")) {
+                this.drawArrowOut(this.ep1, Math.PI + angleRAD);
             }
+        }
+    }
+    drawArrowStop() {
+        var angleRAD = this.stopAngleRAD;
+        if (this.$widget.flip == "yes") {
+            angleRAD = this.startAngleRAD;
         }
         this.offset = 1;        // draw the stop arrows
         if ((this.end == "stop") || (this.end == "both")) {
-            if (isIn) {
-                this.drawArrowIn(this.ep2, stopAngleRAD);
+            if ((this.direction == "in") || (this.direction == "both")) {
+                this.drawArrowIn(this.ep2, angleRAD);
             }
-            if (isOut) {
-                this.drawArrowOut(this.ep2, stopAngleRAD);
+            if ((this.direction == "out") || (this.direction == "both")) {
+                this.drawArrowOut(this.ep2, angleRAD);
             }
         }
-        $gCtx.restore();        // restore color and width back to default
     }
     drawArrowIn(ep, angleRAD) {
-        var $widget = this.$widget;
-
         $gCtx.save();
         $gCtx.translate(ep[0], ep[1]);
         $gCtx.rotate(angleRAD);
 
         switch (this.style) {
-            default: {
+            default:
                 this.style = 0;
+            case 0:
                 break;
-            }
-            case 0: {
-                break;
-            }
-            case 1: {
+            case 1:
                 this.drawArrow1In();
                 break;
-            }
-            case 2: {
+            case 2:
                 this.drawArrow2In();
                 break;
-            }
-            case 3: {
+            case 3:
                 this.drawArrow3In();
                 break;
-            }
-            case 4: {
+            case 4:
                 this.drawArrow4In();
                 break;
-            }
-            case 5: {
+            case 5:
                 this.drawArrow5In();
-                break;
-            }
         }
         $gCtx.restore();
     }   // drawArrowIn
 
     drawArrowOut(ep, angleRAD) {
-        var $widget = this.$widget;
-
         $gCtx.save();
         $gCtx.translate(ep[0], ep[1]);
         $gCtx.rotate(angleRAD);
 
         switch (this.style) {
-            default: {
+            default:
                 this.style = 0;
+            case 0:
                 break;
-            }
-            case 0: {
-                break;
-            }
-            case 1: {
+            case 1:
                 this.drawArrow1Out();
                 break;
-            }
-            case 2: {
+            case 2:
                 this.drawArrow2Out();
                 break;
-            }
-            case 3: {
+            case 3:
                 this.drawArrow3Out();
                 break;
-            }
-            case 4: {
+            case 4:
                 this.drawArrow4Out();
                 break;
-            }
-            case 5: {
+            case 5:
                 this.drawArrow5Out();
-                break;
-            }
         }
         $gCtx.restore();
     }   // drawArrowIn
@@ -510,8 +495,6 @@ class BridgeDecoration extends Decoration {
 
     drawBridgeCircle() {
         var $widget = this.$widget;
-        var isRight = ((this.side == "right") || (this.side == "both"));
-        var isLeft = ((this.side == "left") || (this.side == "both"));
         var halfWidth = this.deckwidth / 2;
         var ep1 = this.ep1, ep2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
@@ -520,7 +503,7 @@ class BridgeDecoration extends Decoration {
             v = [0, -halfWidth];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-        if (isRight) {
+        if ((this.side == "right") || (this.side == "both")) {
             var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
             var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
             if ($widget.flip == "yes") {
@@ -529,7 +512,7 @@ class BridgeDecoration extends Decoration {
                 $drawArcP(tp1, tp2, $widget.angle);
             }
         }
-        if (isLeft) {
+        if ((this.side == "left") || (this.side == "both")) {
             var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
             var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
             if ($widget.flip == "yes") {
@@ -541,8 +524,6 @@ class BridgeDecoration extends Decoration {
      }
      drawBridgeArc() {   //draw arc of ellipse
         var $widget = this.$widget;
-//         if ($widget.ident == "T34")
-//             jmri.log("T34!");   //TODO: disable these debugging lines
         var tp1 = this.ep1, tp2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
         if ($widget.flip == "yes") {
@@ -749,8 +730,6 @@ class TunnelDecoration extends Decoration {
 
     drawTunnelCircle() {
         var $widget = this.$widget;
-        var isRight = ((this.side == "right") || (this.side == "both"));
-        var isLeft = ((this.side == "left") || (this.side == "both"));
         var halfWidth = this.floorwidth / 2;
         var ep1 = this.ep1, ep2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
@@ -759,7 +738,7 @@ class TunnelDecoration extends Decoration {
             v = [0, -halfWidth];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-        if (isRight) {
+        if ((this.side == "right") || (this.side == "both")) {
             var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
             var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
             if ($widget.flip == "yes") {
@@ -768,7 +747,7 @@ class TunnelDecoration extends Decoration {
                 $drawArcP(tp1, tp2, $widget.angle);
             }
         }
-        if (isLeft) {
+        if ((this.side == "left") || (this.side == "both")) {
             var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
             var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
             if ($widget.flip == "yes") {
@@ -780,8 +759,6 @@ class TunnelDecoration extends Decoration {
      }
      drawTunnelArc() {   //draw arc of ellipse
         var $widget = this.$widget;
-//         if ($widget.ident == "T34")
-//             jmri.log("T34!");   //TODO: disable these debugging lines
         var tp1 = this.ep1, tp2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
         if ($widget.flip == "yes") {
@@ -859,72 +836,81 @@ class TunnelDecoration extends Decoration {
     drawTunnelEntry() {
         var $widget = this.$widget;
         var ep1 = this.ep1;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var angleRAD = this.startAngleRAD;
         var isRight = ((this.side == "right") || (this.side == "both"));
         var isLeft = ((this.side == "left") || (this.side == "both"));
         if ($widget.flip == "yes") {
-            [isRight, isLeft] = [isLeft, isRight];
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+            [isRight, isLeft] = [isLeft, isRight];  // swap left and right
+            angleRAD = this.stopAngleRAD;
         }
 
+        $gCtx.save();
+        $gCtx.translate(ep1[0], ep1[1]);
+        $gCtx.rotate(angleRAD);
+
+        if (isRight) {
+            this.drawTunnelEntryRight();
+        }
+        if (isLeft) {
+            this.drawTunnelEntryLeft();
+        }
+        $gCtx.restore();
+    }
+    drawTunnelEntryRight() {
         var halfWidth = this.floorwidth / 2;
         var halfEntranceWidth = this.entrancewidth / 2;
         var halfFloorWidth = this.floorwidth / 2;
         var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-
         var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, +halfFloorWidth];
+        p3 = [0, +halfEntranceWidth];
+        p4 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth];
+        p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p7 = [-halfDiffWidth, 0];
 
-        $gCtx.save();
-        $gCtx.translate(ep1[0], ep1[1]);
-        $gCtx.rotate(startAngleRAD);
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
+    }
+    drawTunnelEntryLeft() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, -halfFloorWidth];
+        p3 = [0, -halfEntranceWidth];
+        p4 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth];
+        p5 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p7 = [-halfDiffWidth, 0];
 
-        if (isRight) {
-            p1 = [0, 0];
-            p2 = [0, +halfFloorWidth];
-            p3 = [0, +halfEntranceWidth];
-            p4 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth];
-            p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p7 = [-halfDiffWidth, 0];
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1[0], p1[1]);
-            $gCtx.lineTo(p2[0], p2[1]);
-            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-            $gCtx.lineTo(p5[0], p5[1]);
-            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
-        }
-        if (isLeft) {
-            p1 = [0, 0];
-            p2 = [0, -halfFloorWidth];
-            p3 = [0, -halfEntranceWidth];
-            p4 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth];
-            p5 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p7 = [-halfDiffWidth, 0];
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1[0], p1[1]);
-            $gCtx.lineTo(p2[0], p2[1]);
-            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-            $gCtx.lineTo(p5[0], p5[1]);
-            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
-        }
-        $gCtx.restore();
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
     }
     drawTunnelExit() {
         var $widget = this.$widget;
         var ep2 = this.ep2;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var angleRAD = this.stopAngleRAD;
         var isRight = ((this.side == "right") || (this.side == "both"));
         var isLeft = ((this.side == "left") || (this.side == "both"));
         if ($widget.flip == "yes") {
             [isRight, isLeft] = [isLeft, isRight];
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+            angleRAD = this.startAngleRAD;
         }
 
         var halfWidth = this.floorwidth / 2;
@@ -936,45 +922,61 @@ class TunnelDecoration extends Decoration {
 
         $gCtx.save();
         $gCtx.translate(ep2[0], ep2[1]);
-        $gCtx.rotate(stopAngleRAD);
+        $gCtx.rotate(angleRAD);
 
         if (isRight) {
-            p1 = [0, 0];
-            p2 = [0, +halfFloorWidth];
-            p3 = [0, +halfEntranceWidth];
-            p4 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth];
-            p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p7 = [halfDiffWidth, 0];
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1[0], p1[1]);
-            $gCtx.lineTo(p2[0], p2[1]);
-            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-            $gCtx.lineTo(p5[0], p5[1]);
-            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
+            this.drawTunnelExitRight();
         }
         if (isLeft) {
-            p1 = [0, 0];
-            p2 = [0, -halfFloorWidth];
-            p3 = [0, -halfEntranceWidth];
-            p4 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth];
-            p5 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p7 = [halfDiffWidth, 0];
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1[0], p1[1]);
-            $gCtx.lineTo(p2[0], p2[1]);
-            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-            $gCtx.lineTo(p5[0], p5[1]);
-            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
+            this.drawTunnelExitLeft();
         }
         $gCtx.restore();
+    }
+    drawTunnelExitRight() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, +halfFloorWidth];
+        p3 = [0, +halfEntranceWidth];
+        p4 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth];
+        p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p7 = [halfDiffWidth, 0];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
+    }
+    drawTunnelExitLeft() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, -halfFloorWidth];
+        p3 = [0, -halfEntranceWidth];
+        p4 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth];
+        p5 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p7 = [halfDiffWidth, 0];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
     }
 }
 //process the response returned for the requestPanelXML command
