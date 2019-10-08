@@ -194,9 +194,31 @@ class Decoration {
         }
         this.startAngleRAD = startAngleRAD; this.stopAngleRAD = stopAngleRAD;
     }
+
     draw() {
         this.getEndPoints();
         this.getAngles();
+    }
+
+    getArcParams(rw, rh, tp1, tp2) {
+        var x, y;
+        if (rw < 0) {
+            rw = -rw;
+            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
+                x = tp1[0]; y = tp2[1];
+                rh = -rh;
+            } else {                        //jmri.log("**** QUAD TWO ****");
+                x = tp2[0]; y = tp1[1];
+            }
+        } else {
+            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
+                x = tp2[0]; y = tp1[1];
+                rh = -rh;
+            } else {                        //jmri.log("**** QUAD FOUR ****");
+                x = tp1[0]; y = tp2[1];
+            }
+        }
+        return [x, y, rw, rh];
     }
 }   // class Decoration
 
@@ -520,9 +542,9 @@ class BridgeDecoration extends Decoration {
             } else {
                 $drawArcP(tp1, tp2, $widget.angle);
             }
-         }
-     }
-     drawBridgeArc() {   //draw arc of ellipse
+        }
+    }
+    drawBridgeArc() {   //draw arc of ellipse
         var $widget = this.$widget;
         var tp1 = this.ep1, tp2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
@@ -535,22 +557,9 @@ class BridgeDecoration extends Decoration {
         var x, y;
         var deltaP = $point_subtract(tp2, tp1);
         var rw = deltaP[0], rh = deltaP[1];
-        if (rw < 0) {
-            rw = -rw;
-            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
-                x = tp1[0]; y = tp2[1];
-                rh = -rh;
-            } else {                        //jmri.log("**** QUAD TWO ****");
-                x = tp2[0]; y = tp1[1];
-            }
-        } else {
-            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
-                x = tp2[0]; y = tp1[1];
-                rh = -rh;
-            } else {                        //jmri.log("**** QUAD FOUR ****");
-                x = tp1[0]; y = tp2[1];
-            }
-        }
+
+        [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
+
         rw -= halfWidth;    rh -= halfWidth;
         if ((this.side == "right") || (this.side == "both")) {
             $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
@@ -770,22 +779,9 @@ class TunnelDecoration extends Decoration {
         var x, y;
         var deltaP = $point_subtract(tp2, tp1);
         var rw = deltaP[0], rh = deltaP[1];
-        if (rw < 0) {
-            rw = -rw;
-            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
-                x = tp1[0]; y = tp2[1];
-                rh = -rh;
-            } else {                        //jmri.log("**** QUAD TWO ****");
-                x = tp2[0]; y = tp1[1];
-            }
-        } else {
-            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
-                x = tp2[0]; y = tp1[1];
-                rh = -rh;
-            } else {                        //jmri.log("**** QUAD FOUR ****");
-                x = tp1[0]; y = tp2[1];
-            }
-        }
+
+        [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
+
         rw -= halfWidth;    rh -= halfWidth;
         if ((this.side == "right") || (this.side == "both")) {
             $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
@@ -1950,66 +1946,11 @@ function $drawTrackSegment($widget) {
     }
 
     if ($widget.bezier == "yes") {
-        //jmri.log("drawing bezier tracksegment " + $widget.ident + ".");
-
-        var $cps = $widget.controlpoints;   // get the control points
-
-        var points = [[$ep1.x, $ep1.y]];    // first point
-        $cps.each(function( idx, elem ) {   // control points
-            points.push([elem.attributes.x.value, elem.attributes.y.value]);
-        });
-        points.push([$ep2.x, $ep2.y]);  // last point
-
-        //$point_log("points[0]", points[0]);
-
-        $drawBezier(points, $color, $width);
+        $drawTrackSegmentBezier($widget);
     } else if ($widget.circle == "yes") {
-        if ((typeof $widget.angle == "undefined") || ($widget.angle == 0)) {
-            $widget['angle'] = "90";
-        }
-        //draw curved line
-        if ($widget.flip == "yes") {
-            $drawArc($ep2.x, $ep2.y, $ep1.x, $ep1.y, $widget.angle, $color, $width);
-        } else {
-            $drawArc($ep1.x, $ep1.y, $ep2.x, $ep2.y, $widget.angle, $color, $width);
-        }
+        $drawTrackSegmentCircle($widget);
     } else if ($widget.arc == "yes") {  //draw arc of ellipse
-        var ep1x = Number($ep1.x), ep1y = Number($ep1.y), ep2x = Number($ep2.x), ep2y = Number($ep2.y);
-        if ($widget.flip == "yes") {
-            [ep1x, ep1y, ep2x, ep2y] = [ep2x, ep2y, ep1x, ep1y];
-        }
-
-        var x, y;
-
-        var rw = ep2x - ep1x, rh = ep2y - ep1y;
-
-        var startAngleRAD, stopAngleRAD;
-        if (rw < 0) {
-            rw = -rw;
-            if (rh < 0) {                       //jmri.log("**** QUAD ONE ****");
-                x = ep1x; y = ep2y;
-                rh = -rh;
-                startAngleRAD = Math.PI / 2;
-                stopAngleRAD = Math.PI;
-            } else {                            //jmri.log("**** QUAD TWO ****");
-                x = ep2x; y = ep1y;
-                startAngleRAD = 0;
-                stopAngleRAD = Math.PI / 2;
-            }
-        } else {
-            if (rh < 0) {                       //jmri.log("**** QUAD THREE ****");
-                x = ep2x; y = ep1y;
-                rh = -rh;
-                startAngleRAD = Math.PI;
-                stopAngleRAD = -Math.PI / 2;
-            } else {                            //jmri.log("**** QUAD FOUR ****");
-                x = ep1x; y = ep2y;
-                startAngleRAD = -Math.PI / 2;
-                stopAngleRAD = 0;
-            }
-        }
-
-        $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD, $color, $width);
+        $drawTrackSegmentArc($widget);
     } else {
         $drawLine($ep1.x, $ep1.y, $ep2.x, $ep2.y, $color, $width);
     }
@@ -2023,6 +1964,79 @@ function $drawTrackSegment($widget) {
 
     $gCtx.restore();        // restore color and width back to default
 }   // $drawTrackSegment
+
+function $drawTrackSegmentBezier($widget) {
+    //get the endpoints by name
+    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
+    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
+
+    var $cps = $widget.controlpoints;   // get the control points
+    var points = [[$ep1.x, $ep1.y]];    // first point
+    $cps.each(function( idx, elem ) {   // control points
+        points.push([elem.attributes.x.value, elem.attributes.y.value]);
+    });
+    points.push([$ep2.x, $ep2.y]);  // last point
+
+    //$point_log("points[0]", points[0]);
+
+    $drawBezier(points);
+}
+
+function $drawTrackSegmentCircle($widget) {
+    //get the endpoints by name
+    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
+    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
+    if ((typeof $widget.angle == "undefined") || ($widget.angle == 0)) {
+        $widget['angle'] = "90";
+    }
+    //draw curved line
+    if ($widget.flip == "yes") {
+        $drawArc($ep2.x, $ep2.y, $ep1.x, $ep1.y, $widget.angle);
+    } else {
+        $drawArc($ep1.x, $ep1.y, $ep2.x, $ep2.y, $widget.angle);
+    }
+}
+
+function $drawTrackSegmentArc($widget) {
+    //get the endpoints by name
+    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
+    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
+    var ep1x = Number($ep1.x), ep1y = Number($ep1.y), ep2x = Number($ep2.x), ep2y = Number($ep2.y);
+    if ($widget.flip == "yes") {
+        [ep1x, ep1y, ep2x, ep2y] = [ep2x, ep2y, ep1x, ep1y];
+    }
+
+    var x, y;
+    var rw = ep2x - ep1x, rh = ep2y - ep1y;
+
+    var startAngleRAD, stopAngleRAD;
+    if (rw < 0) {
+        rw = -rw;
+        if (rh < 0) {                       //jmri.log("**** QUAD ONE ****");
+            x = ep1x; y = ep2y;
+            rh = -rh;
+            startAngleRAD = Math.PI / 2;
+            stopAngleRAD = Math.PI;
+        } else {                            //jmri.log("**** QUAD TWO ****");
+            x = ep2x; y = ep1y;
+            startAngleRAD = 0;
+            stopAngleRAD = Math.PI / 2;
+        }
+    } else {
+        if (rh < 0) {                       //jmri.log("**** QUAD THREE ****");
+            x = ep2x; y = ep1y;
+            rh = -rh;
+            startAngleRAD = Math.PI;
+            stopAngleRAD = -Math.PI / 2;
+        } else {                            //jmri.log("**** QUAD FOUR ****");
+            x = ep1x; y = ep2y;
+            startAngleRAD = -Math.PI / 2;
+            stopAngleRAD = 0;
+        }
+    }
+
+    $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD);
+}
 
 //
 //draw decorations
@@ -2595,9 +2609,9 @@ function $drawDashedLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
     $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray);
 }
 
-function $drawDashedLineP($p1, $p2, $color, $width, dashArray) {
-    $drawDashedLine($p1[0], $p1[1], $p2[0], $p2[1], $color, $width, dashArray);
-}
+// function $drawDashedLineP($p1, $p2, $color, $width, dashArray) {
+//     $drawDashedLine($p1[0], $p1[1], $p2[0], $p2[1], $color, $width, dashArray);
+// }
 
 //draw a Circle (color and width are optional)
 function $drawCircle($px, $py, $radius, $color, $width) {
@@ -2657,21 +2671,15 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
     }
 }   //$drawArc
 
-function $drawArcP(pt1, pt2, degrees, $color, $width) {
-    $drawArc(pt1[0], pt1[1], pt2[0], pt2[1], degrees, $color, $width);
+function $drawArcP(pt1, pt2, degrees) {
+    $drawArc(pt1[0], pt1[1], pt2[0], pt2[1], degrees);
 }
-function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD, $color, $width)
+
+function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD)
 {
-    $gCtx.save();   // save current line width and color
-
-    $gCtx.strokeStyle = $color;
-    $gCtx.lineWidth = $width;
-
     $gCtx.beginPath();
     $gCtx.ellipse(x, y, rw, rh, 0, startAngleRAD, stopAngleRAD);
     $gCtx.stroke();
-
-    $gCtx.restore();        // restore color and width back to default
 }
 
 //

@@ -2277,20 +2277,20 @@ public class TrackSegment extends LayoutTrack {
                 calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
                         getCX(), getCY(), getCW(), getCH());
-                Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
+                Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
                 double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
                 g2.draw(new Arc2D.Double(
-                        cLeftRectangle2D.getX(),
-                        cLeftRectangle2D.getY(),
-                        cLeftRectangle2D.getWidth(),
-                        cLeftRectangle2D.getHeight(),
+                        tRectangle2D.getX(),
+                        tRectangle2D.getY(),
+                        tRectangle2D.getWidth(),
+                        tRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
-                Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +railDisplacement);
+                tRectangle2D = MathUtil.inset(cRectangle2D, +railDisplacement);
                 g2.draw(new Arc2D.Double(
-                        cLRightRectangle2D.getX(),
-                        cLRightRectangle2D.getY(),
-                        cLRightRectangle2D.getWidth(),
-                        cLRightRectangle2D.getHeight(),
+                        tRectangle2D.getX(),
+                        tRectangle2D.getY(),
+                        tRectangle2D.getWidth(),
+                        tRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
                 trackRedrawn();
             } else if (isBezier()) {
@@ -2453,21 +2453,21 @@ public class TrackSegment extends LayoutTrack {
                         getCX(), getCY(), getCW(), getCH());
                 double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
                 if (bridgeSideLeft) {
-                    Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
+                    Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
                     g2.draw(new Arc2D.Double(
-                            cLeftRectangle2D.getX(),
-                            cLeftRectangle2D.getY(),
-                            cLeftRectangle2D.getWidth(),
-                            cLeftRectangle2D.getHeight(),
+                            tRectangle2D.getX(),
+                            tRectangle2D.getY(),
+                            tRectangle2D.getWidth(),
+                            tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
                 if (bridgeSideRight) {
-                    Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
+                    Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
                     g2.draw(new Arc2D.Double(
-                            cLRightRectangle2D.getX(),
-                            cLRightRectangle2D.getY(),
-                            cLRightRectangle2D.getWidth(),
-                            cLRightRectangle2D.getHeight(),
+                            tRectangle2D.getX(),
+                            tRectangle2D.getY(),
+                            tRectangle2D.getWidth(),
+                            tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
             } else if (isBezier()) {
@@ -2592,21 +2592,21 @@ public class TrackSegment extends LayoutTrack {
                         getCX(), getCY(), getCW(), getCH());
                 double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
                 if (tunnelSideRight) {
-                    Rectangle2D cLRightRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
+                    Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
                     g2.draw(new Arc2D.Double(
-                            cLRightRectangle2D.getX(),
-                            cLRightRectangle2D.getY(),
-                            cLRightRectangle2D.getWidth(),
-                            cLRightRectangle2D.getHeight(),
+                            tRectangle2D.getX(),
+                            tRectangle2D.getY(),
+                            tRectangle2D.getWidth(),
+                            tRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
                 if (tunnelSideLeft) {
-                    Rectangle2D cLeftRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
+                    Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
                     g2.draw(new Arc2D.Double(
-                            cLeftRectangle2D.getX(),
-                            cLeftRectangle2D.getY(),
-                            cLeftRectangle2D.getWidth(),
-                            cLeftRectangle2D.getHeight(),
+                            tRectangle2D.getX(),
+                            tRectangle2D.getY(),
+                            tRectangle2D.getWidth(),
+                            tRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
                 trackRedrawn();
