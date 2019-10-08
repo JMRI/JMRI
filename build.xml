@@ -177,7 +177,7 @@
         <pathelement location="${libdir}/hid4java-0.5.0.jar"/>
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
         <pathelement location="${libdir}/json-schema-validator-1.0.10.jar"/>
-        <pathelement location="${libdir}/jinputvalidator-0.6.0.jar"/>
+        <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
     </path>
@@ -1843,12 +1843,13 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linkined -->
+            <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
         </javadoc>
     </target>
 
@@ -1915,12 +1916,13 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linkined -->
+            <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
         </javadoc>
     </target>
 
@@ -1999,13 +2001,14 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
-            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.6.0" packagelistLoc="lib/jinputvalidator-0.6.0-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
-        </javadoc>
+            <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linkined -->
+            <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
+   </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
             <arg value="-o"/>
