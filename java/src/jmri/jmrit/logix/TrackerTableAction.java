@@ -54,7 +54,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This singleton class displays a table of the occupancy detection trackers. It does
+ * This class displays a table of the occupancy detection trackers. It does
  * the listening of block sensors for all the Trackers and chooses the tracker most
  * likely to have entered a block becoming active or leaving a block when it 
  * becomes inactive.
