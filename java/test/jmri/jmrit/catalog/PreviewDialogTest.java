@@ -50,14 +50,24 @@ public class PreviewDialogTest {
         });
         JFileChooser chooser = JFileChooserOperator.waitJFileChooser();
         Assert.assertNotNull(" JFileChooser not found", chooser);
-        File file = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons"));
-        Assert.assertTrue(file.getPath()+" File does not exist", file.exists());
+
+        File dir = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons"));
+        Assert.assertTrue(dir.getPath()+" Test directory does not exist", dir.exists());
         new QueueTool().waitEmpty();
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
-            chooser.setCurrentDirectory(file);
+            chooser.setCurrentDirectory(dir);
         });
         new QueueTool().waitEmpty();
-        JUnitUtil.pressButton(chooser, "Open");
+
+        File file = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:resources/icons/misc"));
+        Assert.assertTrue(file.getPath()+" Test file does not exist", file.exists());
+        new QueueTool().waitEmpty();
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            chooser.setSelectedFile(file);
+        });
+        new QueueTool().waitEmpty();
+        
+        JUnitUtil.pressButton(chooser, "Choose");
         new QueueTool().waitEmpty();
         log.debug("Mid testPreviewDialog: elapsed time = {}ms",(System.currentTimeMillis()-time));
 
