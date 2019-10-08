@@ -1644,18 +1644,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['tunnel'] = new TunnelDecoration($widget, $tunnel);
                                 }
 
-                                //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
-//                                 var $tunnel = $decorations.find('tunnel');
-//                                 var $tunnelside = $tunnel.attr('side');
-//                                 $widget['tunnelside'] = $tunnelside;
-//                                 if (typeof $tunnelside != "undefined") {
-//                                     $widget['tunnelend'] = $tunnel.attr('end');
-//                                     $widget['tunnelcolor'] = $tunnel.attr('color');
-//                                     $widget['tunnellinewidth'] = Number($tunnel.attr('linewidth'));
-//                                     $widget['tunnelentrancewidth'] = Number($tunnel.attr('entrancewidth'));
-//                                     $widget['tunnelfloorwidth'] = Number($tunnel.attr('floorwidth'));
-//                                 }
-
                                 if ($widget["occupancysensor"])
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
 

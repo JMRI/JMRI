@@ -190,8 +190,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 1
      *
-     * @param connectTrack    the track we want to connect to
-     * @param connectionType  where on that track we want to be connected
+     * @param connectTrack   the track we want to connect to
+     * @param connectionType where on that track we want to be connected
      */
     protected void setNewConnect1(@CheckForNull LayoutTrack connectTrack, int connectionType) {
         connect1 = connectTrack;
@@ -201,8 +201,8 @@ public class TrackSegment extends LayoutTrack {
     /**
      * set a new connection 2
      *
-     * @param connectTrack    the track we want to connect to
-     * @param connectionType  where on that track we want to be connected
+     * @param connectTrack   the track we want to connect to
+     * @param connectionType where on that track we want to be connected
      */
     protected void setNewConnect2(@CheckForNull LayoutTrack connectTrack, int connectionType) {
         connect2 = connectTrack;
@@ -512,7 +512,6 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
-
     /**
      * Scale this LayoutTrack's coordinates by the x and y factors
      *
@@ -1597,12 +1596,24 @@ public class TrackSegment extends LayoutTrack {
 
         if (type == POS_POINT && conn instanceof PositionablePoint) {
             PositionablePoint pt = (PositionablePoint) conn;
-            if (!pt.getEastBoundSignal().isEmpty()) items.add(pt.getEastBoundSignal());
-            if (!pt.getWestBoundSignal().isEmpty()) items.add(pt.getWestBoundSignal());
-            if (!pt.getEastBoundSignalMastName().isEmpty()) items.add(pt.getEastBoundSignalMastName());
-            if (!pt.getWestBoundSignalMastName().isEmpty()) items.add(pt.getWestBoundSignalMastName());
-            if (!pt.getEastBoundSensorName().isEmpty()) items.add(pt.getEastBoundSensorName());
-            if (!pt.getWestBoundSensorName().isEmpty()) items.add(pt.getWestBoundSensorName());
+            if (!pt.getEastBoundSignal().isEmpty()) {
+                items.add(pt.getEastBoundSignal());
+            }
+            if (!pt.getWestBoundSignal().isEmpty()) {
+                items.add(pt.getWestBoundSignal());
+            }
+            if (!pt.getEastBoundSignalMastName().isEmpty()) {
+                items.add(pt.getEastBoundSignalMastName());
+            }
+            if (!pt.getWestBoundSignalMastName().isEmpty()) {
+                items.add(pt.getWestBoundSignalMastName());
+            }
+            if (!pt.getEastBoundSensorName().isEmpty()) {
+                items.add(pt.getEastBoundSensorName());
+            }
+            if (!pt.getWestBoundSensorName().isEmpty()) {
+                items.add(pt.getWestBoundSensorName());
+            }
             if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
                 items.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
             }
@@ -1611,25 +1622,43 @@ public class TrackSegment extends LayoutTrack {
 
         if ((type == TURNOUT_A || type == TURNOUT_B || type == TURNOUT_C || type == TURNOUT_D) && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
-            if (type == TURNOUT_A) return lt.getBeanReferences("A");  // NOI18N
-            if (type == TURNOUT_B) return lt.getBeanReferences("B");  // NOI18N
-            if (type == TURNOUT_C) return lt.getBeanReferences("C");  // NOI18N
+            if (type == TURNOUT_A) {
+                return lt.getBeanReferences("A");  // NOI18N
+            }
+            if (type == TURNOUT_B) {
+                return lt.getBeanReferences("B");  // NOI18N
+            }
+            if (type == TURNOUT_C) {
+                return lt.getBeanReferences("C");  // NOI18N
+            }
             return lt.getBeanReferences("D");  // NOI18N
         }
 
         if ((type == LEVEL_XING_A || type == LEVEL_XING_B || type == LEVEL_XING_C || type == LEVEL_XING_D) && conn instanceof LevelXing) {
             LevelXing lx = (LevelXing) conn;
-            if (type == LEVEL_XING_A) return lx.getBeanReferences("A");  // NOI18N
-            if (type == LEVEL_XING_B) return lx.getBeanReferences("B");  // NOI18N
-            if (type == LEVEL_XING_C) return lx.getBeanReferences("C");  // NOI18N
+            if (type == LEVEL_XING_A) {
+                return lx.getBeanReferences("A");  // NOI18N
+            }
+            if (type == LEVEL_XING_B) {
+                return lx.getBeanReferences("B");  // NOI18N
+            }
+            if (type == LEVEL_XING_C) {
+                return lx.getBeanReferences("C");  // NOI18N
+            }
             return lx.getBeanReferences("D");  // NOI18N
         }
 
         if ((type == SLIP_A || type == SLIP_B || type == SLIP_C || type == SLIP_D) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
-            if (type == SLIP_A) return ls.getBeanReferences("A");  // NOI18N
-            if (type == SLIP_B) return ls.getBeanReferences("B");  // NOI18N
-            if (type == SLIP_C) return ls.getBeanReferences("C");  // NOI18N
+            if (type == SLIP_A) {
+                return ls.getBeanReferences("A");  // NOI18N
+            }
+            if (type == SLIP_B) {
+                return ls.getBeanReferences("B");  // NOI18N
+            }
+            if (type == SLIP_C) {
+                return ls.getBeanReferences("C");  // NOI18N
+            }
             return ls.getBeanReferences("D");  // NOI18N
         }
 
@@ -2279,18 +2308,12 @@ public class TrackSegment extends LayoutTrack {
                         getCX(), getCY(), getCW(), getCH());
                 Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
                 double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
-                g2.draw(new Arc2D.Double(
-                        tRectangle2D.getX(),
-                        tRectangle2D.getY(),
-                        tRectangle2D.getWidth(),
-                        tRectangle2D.getHeight(),
+                g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
+                        tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
                 tRectangle2D = MathUtil.inset(cRectangle2D, +railDisplacement);
-                g2.draw(new Arc2D.Double(
-                        tRectangle2D.getX(),
-                        tRectangle2D.getY(),
-                        tRectangle2D.getWidth(),
-                        tRectangle2D.getHeight(),
+                g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
+                        tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
                 trackRedrawn();
             } else if (isBezier()) {
@@ -2454,11 +2477,8 @@ public class TrackSegment extends LayoutTrack {
                 double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
                 if (bridgeSideLeft) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
-                    g2.draw(new Arc2D.Double(
-                            tRectangle2D.getX(),
-                            tRectangle2D.getY(),
-                            tRectangle2D.getWidth(),
-                            tRectangle2D.getHeight(),
+                    g2.draw(new Arc2D.Double(tRectangle2D.getX(),tRectangle2D.getY(),
+                            tRectangle2D.getWidth(),tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
                 if (bridgeSideRight) {
@@ -2651,7 +2671,7 @@ public class TrackSegment extends LayoutTrack {
                 tunnelSideRight = tunnelSideLeft;
                 tunnelSideLeft = temp;
             }
-            
+
             if (tunnelHasEntry) {
                 if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
@@ -2763,7 +2783,7 @@ public class TrackSegment extends LayoutTrack {
                     g2.draw(path);
                 }
             }
-            
+
             // if necessary, put these back
             if (isFlip()) {
                 boolean temp = tunnelSideRight;
@@ -4038,5 +4058,4 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrackSegment.class);
-
 }
