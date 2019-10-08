@@ -21,7 +21,7 @@ public class ProgDeferredServiceModePaneTest {
         ProgDeferredServiceModePane t = new ProgDeferredServiceModePane();
         Assert.assertNotNull("exists", t);
         jmri.util.JUnitAppender.assertErrorMessage("This is missing code to listen to the programmer and update the mode display");
-        new JFrameOperator(t).requestClose();        
+        new JFrameOperator("Set programming mode").requestClose();        
         t.dispose();
     }
 

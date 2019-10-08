@@ -70,6 +70,7 @@ public class MDITest {
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
