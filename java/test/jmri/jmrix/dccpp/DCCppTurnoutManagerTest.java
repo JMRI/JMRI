@@ -62,6 +62,7 @@ public class DCCppTurnoutManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false); // shouldn't be necessary, can't see where windows are created
         JUnitUtil.tearDown();
     }
 
