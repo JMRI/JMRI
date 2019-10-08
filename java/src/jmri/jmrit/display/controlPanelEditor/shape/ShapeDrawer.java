@@ -210,7 +210,7 @@ public class ShapeDrawer {
                     Point pt = ((DrawPolygon)_drawFrame).getStartPoint();
                     shape.setLocation(pt.x, pt.y);
                     shape.updateSize();
-                    _drawFrame.closingEvent(true);       // close opening create prompt frame
+                    _drawFrame.closingEvent(false);       // close opening create prompt frame
                     _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
                     ed.putItem(shape);
                     return true;
