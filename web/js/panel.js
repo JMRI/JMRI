@@ -249,10 +249,11 @@ class ArrowDecoration extends Decoration {
     }
     drawArrowIn(ep, angleRAD) {
         var $widget = this.$widget;
-        // someday we'll try this instead...
-        // $gCtx.save();
-        // $gCtx.translate(-ep[0], -ep[1]);
-        // $gCtx.rotate(angleRAD);
+
+        $gCtx.save();
+        $gCtx.translate(ep[0], ep[1]);
+        $gCtx.rotate(angleRAD);
+
         switch (this.style) {
             default: {
                 this.style = 0;
@@ -262,35 +263,36 @@ class ArrowDecoration extends Decoration {
                 break;
             }
             case 1: {
-                this.drawArrow1In(ep, angleRAD);
+                this.drawArrow1In();
                 break;
             }
             case 2: {
-                this.drawArrow2In(ep, angleRAD);
+                this.drawArrow2In();
                 break;
             }
             case 3: {
-                this.drawArrow3In(ep, angleRAD);
+                this.drawArrow3In();
                 break;
             }
             case 4: {
-                this.drawArrow4In(ep, angleRAD);
+                this.drawArrow4In();
                 break;
             }
             case 5: {
-                this.drawArrow5In(ep, angleRAD);
+                this.drawArrow5In();
                 break;
             }
         }
-        // $gCtx.restore();
+        $gCtx.restore();
     }   // drawArrowIn
 
     drawArrowOut(ep, angleRAD) {
         var $widget = this.$widget;
-        // someday we'll try this instead...
-        // $gCtx.save();
-        // $gCtx.translate(-ep[0], -ep[1]);
-        // $gCtx.rotate(angleRAD);
+
+        $gCtx.save();
+        $gCtx.translate(ep[0], ep[1]);
+        $gCtx.rotate(angleRAD);
+
         switch (this.style) {
             default: {
                 this.style = 0;
@@ -300,66 +302,57 @@ class ArrowDecoration extends Decoration {
                 break;
             }
             case 1: {
-                this.drawArrow1Out(ep, angleRAD);
+                this.drawArrow1Out();
                 break;
             }
             case 2: {
-                this.drawArrow2Out(ep, angleRAD);
+                this.drawArrow2Out();
                 break;
             }
             case 3: {
-                this.drawArrow3Out(ep, angleRAD);
+                this.drawArrow3Out();
                 break;
             }
             case 4: {
-                this.drawArrow4Out(ep, angleRAD);
+                this.drawArrow4Out();
                 break;
             }
             case 5: {
-                this.drawArrow5Out(ep, angleRAD);
+                this.drawArrow5Out();
                 break;
             }
         }
-        // $gCtx.restore();
+        $gCtx.restore();
     }   // drawArrowIn
 
-    drawArrow1In(ep, angleRAD) {
+    drawArrow1In() {
         var p1 = [this.offset + this.length, -this.length];
         var p2 = [this.offset, 0.0];
         var p3 = [this.offset + this.length, +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
+
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
         this.offset += this.length + this.gap;
     }
 
-    drawArrow1Out(ep, angleRAD) {
+    drawArrow1Out() {
         var p1 = [this.offset, -this.length];
         var p2 = [this.offset + this.length, 0.0];
         var p3 = [this.offset, +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
+
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
         this.offset += this.length + this.gap;
     }
 
-    drawArrow2In(ep, angleRAD) {
+    drawArrow2In() {
         var p1 = [this.offset + this.length, -this.length];
         var p2 = [this.offset, 0.0];
         var p3 = [this.offset + this.length, +this.length];
         var p4 = [this.offset + this.linewidth + this.gap + this.length, -this.length];
         var p5 = [this.offset + this.linewidth + this.gap, 0.0];
         var p6 = [this.offset + this.linewidth + this.gap + this.length, +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
-        p4 = $point_add($point_rotate(p4, angleRAD), ep);
-        p5 = $point_add($point_rotate(p5, angleRAD), ep);
-        p6 = $point_add($point_rotate(p6, angleRAD), ep);
+
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
         $drawLineP(p4, p5);
@@ -367,19 +360,14 @@ class ArrowDecoration extends Decoration {
         this.offset += this.length + (2 * (this.linewidth + this.gap));
     }
 
-    drawArrow2Out(ep, angleRAD) {
+    drawArrow2Out() {
         var p1 = [this.offset, -this.length];
         var p2 = [this.offset + this.length, 0.0];
         var p3 = [this.offset, +this.length];
         var p4 = [this.offset + this.linewidth + this.gap, -this.length];
         var p5 = [this.offset + this.linewidth + this.gap + this.length, 0.0];
         var p6 = [this.offset + this.linewidth + this.gap, +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
-        p4 = $point_add($point_rotate(p4, angleRAD), ep);
-        p5 = $point_add($point_rotate(p5, angleRAD), ep);
-        p6 = $point_add($point_rotate(p6, angleRAD), ep);
+
         $drawLineP(p1, p2);
         $drawLineP(p2, p3);
         $drawLineP(p4, p5);
@@ -387,13 +375,11 @@ class ArrowDecoration extends Decoration {
         this.offset += this.length + (2 * (this.linewidth + this.gap));
     }
 
-    drawArrow3In(ep, angleRAD) {
+    drawArrow3In() {
         var p1 = [this.offset + this.length, -this.length];
         var p2 = [this.offset, 0.0];
         var p3 = [this.offset + this.length, +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
+
         $gCtx.beginPath();
         $gCtx.moveTo(p1[0], p1[1]);
         $gCtx.lineTo(p2[0], p2[1]);
@@ -407,13 +393,11 @@ class ArrowDecoration extends Decoration {
         this.offset += this.length + this.gap;
     }
 
-    drawArrow3Out(ep, angleRAD) {
+    drawArrow3Out() {
         var p1 = [this.offset, -this.length];
         var p2 = [this.offset + this.length, 0.0];
         var p3 = [this.offset, +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
+
         $gCtx.beginPath();
         $gCtx.moveTo(p1[0], p1[1]);
         $gCtx.lineTo(p2[0], p2[1]);
@@ -427,45 +411,36 @@ class ArrowDecoration extends Decoration {
         this.offset += this.length + this.gap;
     }
 
-    drawArrow4In(ep, angleRAD) {
+    drawArrow4In() {
         var p1 = [this.offset, 0.0];
         var p2 = [this.offset + (4 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (4 * this.length), +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
-        p4 = $point_add($point_rotate(p4, angleRAD), ep);
+
         $drawLineP(p1, p3);
         $drawLineP(p2, p3);
         $drawLineP(p3, p4);
         this.offset += (3 * this.length) + this.gap;
     }
 
-    drawArrow4Out(ep, angleRAD) {
+    drawArrow4Out() {
         var p1 = [this.offset, 0.0];
         var p2 = [this.offset + (2 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (2 * this.length), +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
-        p4 = $point_add($point_rotate(p4, angleRAD), ep);
+
         $drawLineP(p1, p3);
         $drawLineP(p2, p3);
         $drawLineP(p3, p4);
         this.offset += (3 * this.length) + this.gap;
     }
 
-    drawArrow5In(ep, angleRAD) {
+    drawArrow5In() {
         var p1 = [this.offset, 0.0];
         var p2 = [this.offset + (4 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (4 * this.length), +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
-        p4 = $point_add($point_rotate(p4, angleRAD), ep);
+
         $gCtx.beginPath();
         $gCtx.moveTo(p4[0], p4[1]);
         $gCtx.lineTo(p2[0], p2[1]);
@@ -480,15 +455,12 @@ class ArrowDecoration extends Decoration {
         this.offset += (3 * this.length) + this.gap;
     }
 
-    drawArrow5Out(ep, angleRAD) {
+    drawArrow5Out() {
         var p1 = [this.offset, 0.0];
         var p2 = [this.offset + (2 * this.length), -this.length];
         var p3 = [this.offset + (3 * this.length), 0.0];
         var p4 = [this.offset + (2 * this.length), +this.length];
-        p1 = $point_add($point_rotate(p1, angleRAD), ep);
-        p2 = $point_add($point_rotate(p2, angleRAD), ep);
-        p3 = $point_add($point_rotate(p3, angleRAD), ep);
-        p4 = $point_add($point_rotate(p4, angleRAD), ep);
+
         $gCtx.beginPath();
         $gCtx.moveTo(p4[0], p4[1]);
         $gCtx.lineTo(p2[0], p2[1]);
@@ -902,6 +874,10 @@ class TunnelDecoration extends Decoration {
 
         var p1, p2, p3, p4, p5, p6, p7;
 
+        $gCtx.save();
+        $gCtx.translate(ep1[0], ep1[1]);
+        $gCtx.rotate(startAngleRAD);
+
         if (isRight) {
             p1 = [0, 0];
             p2 = [0, +halfFloorWidth];
@@ -910,14 +886,6 @@ class TunnelDecoration extends Decoration {
             p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
             p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
             p7 = [-halfDiffWidth, 0];
-
-            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            p3 = $point_add($point_rotate(p3, startAngleRAD), ep1);
-            p4 = $point_add($point_rotate(p4, startAngleRAD), ep1);
-            p5 = $point_add($point_rotate(p5, startAngleRAD), ep1);
-            p6 = $point_add($point_rotate(p6, startAngleRAD), ep1);
-            p7 = $point_add($point_rotate(p7, startAngleRAD), ep1);
 
             $gCtx.beginPath();
             $gCtx.moveTo(p1[0], p1[1]);
@@ -937,14 +905,6 @@ class TunnelDecoration extends Decoration {
             p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
             p7 = [-halfDiffWidth, 0];
 
-            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            p3 = $point_add($point_rotate(p3, startAngleRAD), ep1);
-            p4 = $point_add($point_rotate(p4, startAngleRAD), ep1);
-            p5 = $point_add($point_rotate(p5, startAngleRAD), ep1);
-            p6 = $point_add($point_rotate(p6, startAngleRAD), ep1);
-            p7 = $point_add($point_rotate(p7, startAngleRAD), ep1);
-
             $gCtx.beginPath();
             $gCtx.moveTo(p1[0], p1[1]);
             $gCtx.lineTo(p2[0], p2[1]);
@@ -954,6 +914,7 @@ class TunnelDecoration extends Decoration {
             $gCtx.closePath();
             $gCtx.stroke();
         }
+        $gCtx.restore();
     }
     drawTunnelExit() {
         var $widget = this.$widget;
@@ -973,6 +934,10 @@ class TunnelDecoration extends Decoration {
 
         var p1, p2, p3, p4, p5, p6, p7;
 
+        $gCtx.save();
+        $gCtx.translate(ep2[0], ep2[1]);
+        $gCtx.rotate(stopAngleRAD);
+
         if (isRight) {
             p1 = [0, 0];
             p2 = [0, +halfFloorWidth];
@@ -981,14 +946,6 @@ class TunnelDecoration extends Decoration {
             p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
             p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
             p7 = [halfDiffWidth, 0];
-
-            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            p3 = $point_add($point_rotate(p3, stopAngleRAD), ep2);
-            p4 = $point_add($point_rotate(p4, stopAngleRAD), ep2);
-            p5 = $point_add($point_rotate(p5, stopAngleRAD), ep2);
-            p6 = $point_add($point_rotate(p6, stopAngleRAD), ep2);
-            p7 = $point_add($point_rotate(p7, stopAngleRAD), ep2);
 
             $gCtx.beginPath();
             $gCtx.moveTo(p1[0], p1[1]);
@@ -1008,14 +965,6 @@ class TunnelDecoration extends Decoration {
             p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
             p7 = [halfDiffWidth, 0];
 
-            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            p3 = $point_add($point_rotate(p3, stopAngleRAD), ep2);
-            p4 = $point_add($point_rotate(p4, stopAngleRAD), ep2);
-            p5 = $point_add($point_rotate(p5, stopAngleRAD), ep2);
-            p6 = $point_add($point_rotate(p6, stopAngleRAD), ep2);
-            p7 = $point_add($point_rotate(p7, stopAngleRAD), ep2);
-
             $gCtx.beginPath();
             $gCtx.moveTo(p1[0], p1[1]);
             $gCtx.lineTo(p2[0], p2[1]);
@@ -1025,6 +974,7 @@ class TunnelDecoration extends Decoration {
             $gCtx.closePath();
             $gCtx.stroke();
         }
+        $gCtx.restore();
     }
 }
 //process the response returned for the requestPanelXML command
