@@ -555,9 +555,7 @@ class BridgeDecoration extends Decoration {
         }
         var halfWidth = this.deckwidth / 2;
         var x, y;
-        var deltaP = $point_subtract(tp2, tp1);
-        var rw = deltaP[0], rh = deltaP[1];
-
+        var rw = ep2x - ep1x, rh = ep2y - ep1y;
         [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
 
         rw -= halfWidth;    rh -= halfWidth;
@@ -764,9 +762,9 @@ class TunnelDecoration extends Decoration {
             } else {
                 $drawArcP(tp1, tp2, $widget.angle);
             }
-         }
-     }
-     drawTunnelArc() {   //draw arc of ellipse
+        }
+    }
+    drawTunnelArc() {   //draw arc of ellipse
         var $widget = this.$widget;
         var tp1 = this.ep1, tp2 = this.ep2;
         var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
@@ -777,9 +775,7 @@ class TunnelDecoration extends Decoration {
         }
         var halfWidth = this.floorwidth / 2;
         var x, y;
-        var deltaP = $point_subtract(tp2, tp1);
-        var rw = deltaP[0], rh = deltaP[1];
-
+        var rw = ep2x - ep1x, rh = ep2y - ep1y;
         [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
 
         rw -= halfWidth;    rh -= halfWidth;
@@ -975,6 +971,7 @@ class TunnelDecoration extends Decoration {
         $gCtx.stroke();
     }
 }
+
 //process the response returned for the requestPanelXML command
 function processPanelXML($returnedData, $success, $xhr) {
 
