@@ -533,8 +533,7 @@ class BridgeDecoration extends Decoration {
             this.drawBridgeStrait();
         }
         this.drawBridgeEnds();
-        // restore color and width back to default
-        $gCtx.restore();
+        $gCtx.restore();        // restore color and width back to default
     }   // draw()
 
     drawBridgeCircle() {
@@ -603,7 +602,7 @@ class BridgeDecoration extends Decoration {
         if ((this.side == "right") || (this.side == "both")) {
             $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
         }
-        rw += bridgeDeckWidth;  rh += bridgeDeckWidth;
+        rw += this.deckwidth;  rh += this.deckwidth;
         if ((this.side == "left") || (this.side == "both")) {
             $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
         }
@@ -657,20 +656,20 @@ class BridgeDecoration extends Decoration {
             [isRight, isLeft] = [isLeft, isRight];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-        var p1, p2, p1P, p2P;
+        var p1, p2;
         if (isRight) {
             p1 = [-this.approachwidth, +this.approachwidth + halfWidth];
             p2 = [0, +halfWidth];
-            p1P = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2P = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            $drawLineP(p1P, p2P);
+            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
+            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
+            $drawLineP(p1, p2);
         }
         if (isLeft) {
             p1 = [-this.approachwidth, -this.approachwidth - halfWidth];
             p2 = [0.0, -halfWidth];
-            p1P = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2P = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            $drawLineP(p1P, p2P);
+            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
+            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
+            $drawLineP(p1, p2);
         }
     }
     drawBridgeExit() {
@@ -684,20 +683,20 @@ class BridgeDecoration extends Decoration {
             [isRight, isLeft] = [isLeft, isRight];
             [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
         }
-        var p1, p2, p1P, p2P;
+        var p1, p2;
         if (isRight) {
             p1 = [+this.approachwidth, +this.approachwidth + halfWidth];
             p2 = [0.0, +halfWidth];
-            p1P = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2P = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            $drawLineP(p1P, p2P);
+            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
+            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
+            $drawLineP(p1, p2);
         }
         if (isLeft) {
             p1 = [+this.approachwidth, -this.approachwidth - halfWidth];
             p2 = [0.0, -halfWidth];
-            p1P = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2P = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            $drawLineP(p1P, p2P);
+            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
+            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
+            $drawLineP(p1, p2);
         }
     }
 }   // BridgeDecoration
@@ -728,20 +727,306 @@ class BumperDecoration extends Decoration {
         // common points
         var p1 = [0, -halfLength], p2 = [0, +halfLength];
         if ((this.end == "start") || (this.end == "both")) {
-            var p1P = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
-            var p2P = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
-            $drawLineP(p1P, p2P);   // draw cross tie
+            var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
+            var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
+            $drawLineP(p1, p2);   // draw cross tie
         }
         if ((this.end == "stop") || (this.end == "both")) {
-            var p1P = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
-            var p2P = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
-            $drawLineP(p1P, p2P);   // draw cross tie
+            var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
+            var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
+            $drawLineP(p1, p2);   // draw cross tie
         }
-        // restore color and width back to default
-        $gCtx.restore();
+        $gCtx.restore();        // restore color and width back to default
     }
 }   //  class BumperDecoration
 
+class TunnelDecoration extends Decoration {
+    constructor($widget, $tunnel) {
+        super($widget);
+        //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
+        this.side = $tunnel.attr('side');
+
+        this.end = $tunnel.attr('end');
+        this.color = $tunnel.attr('color');
+        this.linewidth = Number($tunnel.attr('linewidth'));
+        this.entrancewidth = Number($tunnel.attr('entrancewidth'));
+        this.floorwidth = Number($tunnel.attr('floorwidth'));
+    }
+    draw() {
+        super.draw();
+        var $widget = this.$widget;
+        $gCtx.save();   // save current line width and color
+        // set color and width
+        $gCtx.strokeStyle = this.color;
+        $gCtx.fillStyle = this.color;
+        $gCtx.lineWidth = this.linewidth;
+        $gCtx.setLineDash([6, 4]);
+        if ($widget.circle == "yes") {
+            this.drawTunnelCircle();
+        } else if ($widget.arc == "yes") {
+            this.drawTunnelArc();
+        } else if ($widget.bezier == "yes") {
+            this.drawTunnelBezier();
+        } else {
+            this.drawTunnelStrait();
+        }
+        $gCtx.setLineDash([]);
+        this.drawTunnelEnds();
+        $gCtx.restore();        // restore color and width back to default
+    }   // draw()
+
+    drawTunnelCircle() {
+        var $widget = this.$widget;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        var halfWidth = this.floorwidth / 2;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var v = [0, +halfWidth];
+        if ($widget.flip == "yes") {
+            v = [0, -halfWidth];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+        if (isRight) {
+            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
+            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
+            if ($widget.flip == "yes") {
+                $drawArcP(tp2, tp1, $widget.angle);
+            } else {
+                $drawArcP(tp1, tp2, $widget.angle);
+            }
+        }
+        if (isLeft) {
+            var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
+            var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
+            if ($widget.flip == "yes") {
+                $drawArcP(tp2, tp1, $widget.angle);
+            } else {
+                $drawArcP(tp1, tp2, $widget.angle);
+            }
+         }
+     }
+     drawTunnelArc() {   //draw arc of ellipse
+        var $widget = this.$widget;
+//         if ($widget.ident == "T34")
+//             jmri.log("T34!");   //TODO: disable these debugging lines
+        var tp1 = this.ep1, tp2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        if ($widget.flip == "yes") {
+            [tp1, tp2] = [tp2, tp1];
+            startAngleRAD += Math.PI;
+            stopAngleRAD += Math.PI;
+        }
+        var halfWidth = this.floorwidth / 2;
+        var x, y;
+        var deltaP = $point_subtract(tp2, tp1);
+        var rw = deltaP[0], rh = deltaP[1];
+        if (rw < 0) {
+            rw = -rw;
+            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
+                x = tp1[0]; y = tp2[1];
+                rh = -rh;
+            } else {                        //jmri.log("**** QUAD TWO ****");
+                x = tp2[0]; y = tp1[1];
+            }
+        } else {
+            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
+                x = tp2[0]; y = tp1[1];
+                rh = -rh;
+            } else {                        //jmri.log("**** QUAD FOUR ****");
+                x = tp1[0]; y = tp2[1];
+            }
+        }
+        rw -= halfWidth;    rh -= halfWidth;
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
+        }
+        rw += this.floorwidth;  rh += this.floorwidth;
+        if ((this.side == "left") || (this.side == "both")) {
+            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
+        }
+    }   // drawTunnelArc()
+
+    drawTunnelBezier() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var points = [[ep1[0], ep1[1]]];    // first point
+        var $cps = $widget.controlpoints;   // get the control points
+        $cps.each(function( idx, elem ) {   // control points
+            points.push([elem.attributes.x.value, elem.attributes.y.value]);
+        });
+        points.push([ep2[0], ep2[1]]);  // last point
+        var halfWidth = this.floorwidth / 2;
+        if (((this.side == "left") || (this.side == "both"))) {
+            $drawBezier(points, this.color, this.linewidth, -halfWidth);
+        }
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawBezier(points, this.color, this.linewidth, +halfWidth);
+        }
+    }
+    drawTunnelStrait() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var halfWidth = this.floorwidth / 2;
+        var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawLineP($point_add(ep1, vector), $point_add(ep2, vector));
+        }
+        if (((this.side == "left") || (this.side == "both"))) {
+            $drawLineP($point_subtract(ep1, vector), $point_subtract(ep2, vector));
+        }
+    }
+    drawTunnelEnds() {
+        if ((this.end == "entry") || (this.end == "both")) {
+            this.drawTunnelEntry();
+        }
+        if ((this.end == "exit") || (this.end == "both")) {
+            this.drawTunnelExit();
+       }
+    }
+    drawTunnelEntry() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        if ($widget.flip == "yes") {
+            [isRight, isLeft] = [isLeft, isRight];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+
+        var p1, p2, p3, p4, p5, p6, p7;
+
+        if (isRight) {
+            p1 = [0, 0];
+            p2 = [0, +halfFloorWidth];
+            p3 = [0, +halfEntranceWidth];
+            p4 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth];
+            p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+            p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+            p7 = [-halfDiffWidth, 0];
+
+            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
+            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
+            p3 = $point_add($point_rotate(p3, startAngleRAD), ep1);
+            p4 = $point_add($point_rotate(p4, startAngleRAD), ep1);
+            p5 = $point_add($point_rotate(p5, startAngleRAD), ep1);
+            p6 = $point_add($point_rotate(p6, startAngleRAD), ep1);
+            p7 = $point_add($point_rotate(p7, startAngleRAD), ep1);
+
+            $gCtx.beginPath();
+            $gCtx.moveTo(p1[0], p1[1]);
+            $gCtx.lineTo(p2[0], p2[1]);
+            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+            $gCtx.lineTo(p5[0], p5[1]);
+            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+            $gCtx.closePath();
+            $gCtx.stroke();
+        }
+        if (isLeft) {
+            p1 = [0, 0];
+            p2 = [0, -halfFloorWidth];
+            p3 = [0, -halfEntranceWidth];
+            p4 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth];
+            p5 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+            p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+            p7 = [-halfDiffWidth, 0];
+
+            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
+            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
+            p3 = $point_add($point_rotate(p3, startAngleRAD), ep1);
+            p4 = $point_add($point_rotate(p4, startAngleRAD), ep1);
+            p5 = $point_add($point_rotate(p5, startAngleRAD), ep1);
+            p6 = $point_add($point_rotate(p6, startAngleRAD), ep1);
+            p7 = $point_add($point_rotate(p7, startAngleRAD), ep1);
+
+            $gCtx.beginPath();
+            $gCtx.moveTo(p1[0], p1[1]);
+            $gCtx.lineTo(p2[0], p2[1]);
+            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+            $gCtx.lineTo(p5[0], p5[1]);
+            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+            $gCtx.closePath();
+            $gCtx.stroke();
+        }
+    }
+    drawTunnelExit() {
+        var $widget = this.$widget;
+        var ep2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        if ($widget.flip == "yes") {
+            [isRight, isLeft] = [isLeft, isRight];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+
+        var p1, p2, p3, p4, p5, p6, p7;
+
+        if (isRight) {
+            p1 = [0, 0];
+            p2 = [0, +halfFloorWidth];
+            p3 = [0, +halfEntranceWidth];
+            p4 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth];
+            p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+            p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+            p7 = [halfDiffWidth, 0];
+
+            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
+            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
+            p3 = $point_add($point_rotate(p3, stopAngleRAD), ep2);
+            p4 = $point_add($point_rotate(p4, stopAngleRAD), ep2);
+            p5 = $point_add($point_rotate(p5, stopAngleRAD), ep2);
+            p6 = $point_add($point_rotate(p6, stopAngleRAD), ep2);
+            p7 = $point_add($point_rotate(p7, stopAngleRAD), ep2);
+
+            $gCtx.beginPath();
+            $gCtx.moveTo(p1[0], p1[1]);
+            $gCtx.lineTo(p2[0], p2[1]);
+            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+            $gCtx.lineTo(p5[0], p5[1]);
+            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+            $gCtx.closePath();
+            $gCtx.stroke();
+        }
+        if (isLeft) {
+            p1 = [0, 0];
+            p2 = [0, -halfFloorWidth];
+            p3 = [0, -halfEntranceWidth];
+            p4 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth];
+            p5 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+            p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+            p7 = [halfDiffWidth, 0];
+
+            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
+            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
+            p3 = $point_add($point_rotate(p3, stopAngleRAD), ep2);
+            p4 = $point_add($point_rotate(p4, stopAngleRAD), ep2);
+            p5 = $point_add($point_rotate(p5, stopAngleRAD), ep2);
+            p6 = $point_add($point_rotate(p6, stopAngleRAD), ep2);
+            p7 = $point_add($point_rotate(p7, stopAngleRAD), ep2);
+
+            $gCtx.beginPath();
+            $gCtx.moveTo(p1[0], p1[1]);
+            $gCtx.lineTo(p2[0], p2[1]);
+            $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+            $gCtx.lineTo(p5[0], p5[1]);
+            $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+            $gCtx.closePath();
+            $gCtx.stroke();
+        }
+    }
+}
 //process the response returned for the requestPanelXML command
 function processPanelXML($returnedData, $success, $xhr) {
 
@@ -1408,17 +1693,23 @@ function processPanelXML($returnedData, $success, $xhr) {
 
                                 //copy tunnel decoration
                                 //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
-
                                 var $tunnel = $decorations.find('tunnel');
                                 var $tunnelside = $tunnel.attr('side');
-                                $widget['tunnelside'] = $tunnelside;
                                 if (typeof $tunnelside != "undefined") {
-                                    $widget['tunnelend'] = $tunnel.attr('end');
-                                    $widget['tunnelcolor'] = $tunnel.attr('color');
-                                    $widget['tunnellinewidth'] = Number($tunnel.attr('linewidth'));
-                                    $widget['tunnelentrancewidth'] = Number($tunnel.attr('entrancewidth'));
-                                    $widget['tunnelfloorwidth'] = Number($tunnel.attr('floorwidth'));
+                                    $widget['tunnel'] = new TunnelDecoration($widget, $tunnel);
                                 }
+
+                                //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
+//                                 var $tunnel = $decorations.find('tunnel');
+//                                 var $tunnelside = $tunnel.attr('side');
+//                                 $widget['tunnelside'] = $tunnelside;
+//                                 if (typeof $tunnelside != "undefined") {
+//                                     $widget['tunnelend'] = $tunnel.attr('end');
+//                                     $widget['tunnelcolor'] = $tunnel.attr('color');
+//                                     $widget['tunnellinewidth'] = Number($tunnel.attr('linewidth'));
+//                                     $widget['tunnelentrancewidth'] = Number($tunnel.attr('entrancewidth'));
+//                                     $widget['tunnelfloorwidth'] = Number($tunnel.attr('floorwidth'));
+//                                 }
 
                                 if ($widget["occupancysensor"])
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
@@ -1778,8 +2069,7 @@ function $drawTrackSegment($widget) {
     //draw its decorations
     $drawDecorations($widget);
 
-    // restore color and width back to default
-    $gCtx.restore();
+    $gCtx.restore();        // restore color and width back to default
 }   // $drawTrackSegment
 
 //
@@ -1795,358 +2085,10 @@ function $drawDecorations($widget) {
     if (typeof $widget.bumper != "undefined") {
         $widget.bumper.draw();
     }
-
-    //get the endpoints by name
-    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
-    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
-
-    // get end points and calculate start/stop angles (in radians)
-    var p1, p2, p3, p4, p5, p6, p7;
-    var ep1 = [Number($ep1.x), Number($ep1.y)], ep2 = [Number($ep2.x), Number($ep2.y)], p3P, p4P, p5P, p6P, p7P;
-    var startAngleRAD, stopAngleRAD;
-
-    if ($widget.bezier == "yes") {
-        var $cps = $widget.controlpoints;   // get the control points
-
-        var $cp0 = $cps[0];
-        var $cpN = $cps[$cps.length - 1];
-
-        var cp0 = [Number($cp0.attributes.x.value), Number($cp0.attributes.y.value)];
-        var cpN = [Number($cpN.attributes.x.value), Number($cpN.attributes.y.value)];
-
-        // $point_log("cp0", cp0);
-        // $point_log("cpN", cpN);
-
-        startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(cp0, ep1);
-        stopAngleRAD = (Math.PI / 2) - $computeAngleRAD2(ep2, cpN);
-    } else if ($widget.circle == "yes") {
-        var tp1 = ep1, tp2 = ep2;
-        if ($widget.flip == "yes") {
-            [tp1, tp2] = [tp2, tp1];    // swap tp1 and tp2
-        }
-
-        var extentAngleDEG = $widget.angle;
-        if (extentAngleDEG == 0) {
-            extentAngleDEG = 90;
-        }
-
-        // Convert angle to radiants in order to speed up math
-        var halfAngleRAD = $toRadians(extentAngleDEG) / 2;
-
-        // Compute arc's chord
-        var a = tp2[0] - tp1[0];
-        var o = tp2[1] - tp1[1];
-        var chord = Math.hypot(a, o);
-
-        // Make sure chord is not null
-        // In such a case (ep1 == ep2), there is no arc to draw
-        if (chord > 0) {
-            ///var radius = (chord / 2) / Math.sin(halfAngleRAD);
-            var midAngleRAD = Math.atan2(a, o);
-            startAngleRAD = midAngleRAD + halfAngleRAD;
-            stopAngleRAD = midAngleRAD - halfAngleRAD;
-        }
-
-        startAngleRAD = (Math.PI / 2) - startAngleRAD;
-        stopAngleRAD = (Math.PI / 2) - stopAngleRAD;
-        if ($widget.flip == "yes") {
-            // swap start/stop angles
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
-            startAngleRAD += Math.PI;
-            stopAngleRAD += Math.PI;
-        }
-    } else if ($widget.arc == "yes") {
-        var tp1 = ep1, tp2 = ep2;
-        if ($widget.flip == "yes") {
-            [tp1, tp2] = [tp2, tp1];    // swap tp1 and tp2
-        }
-        if (tp1[0] < tp2[0]) {
-            if (tp1[1] < tp2[1]) {              //jmri.log("#### QUAD ONE ####");
-                startAngleRAD = 0; stopAngleRAD = Math.PI / 2;
-            } else {                            //jmri.log("#### QUAD TWO ####");
-                startAngleRAD = -Math.PI / 2; stopAngleRAD = 0;
-            }
-        } else {
-            if (tp1[1] < tp2[1]) {              //jmri.log("#### QUAD THREE ####");
-                startAngleRAD = Math.PI / 2; stopAngleRAD = Math.PI;
-            } else {                            //jmri.log("#### QUAD FOUR ####");
-                startAngleRAD = Math.PI; stopAngleRAD = -Math.PI / 2;
-            }
-        }
-
-        if ($widget.flip == "yes") {
-            // swap startAngleRAD and stopAngleRAD and offset by 180°
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD + Math.PI, startAngleRAD + Math.PI];
-        }
-    } else {    //jmri.log("**** tracksegment LINE ****");
-        startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(ep2, ep1);
-        stopAngleRAD = startAngleRAD;
-    }
-    //jmri.log("startAngleDEG: " + $toDegrees(startAngleRAD) + ", stopAngleDEG: " + $toDegrees(stopAngleRAD) + ".");
-
-    if (typeof $widget.tunnelside != 'undefined') {
-        $drawTunnel($widget, ep1, ep2, startAngleRAD, stopAngleRAD);
+    if (typeof $widget.tunnel != "undefined") {
+        $widget.tunnel.draw();
     }
 }   // $drawDecorations
-
-function $drawTunnel($widget, ep1, ep2, startAngleRAD, stopAngleRAD) {
-
-    $gCtx.save();   // save current line width and color
-
-    var $color = $widget.tunnelcolor;
-    var $width = $widget.tunnellinewidth;
-
-    // set color and width
-    if (typeof $color != "undefined") {
-        $gCtx.strokeStyle = $color;
-    }
-    if (typeof $width != "undefined") {
-        $gCtx.lineWidth = $width;
-    }
-
-    var tunnelEntranceWidth = $widget.tunnelentrancewidth;
-    var tunnelFloorWidth = $widget.tunnelfloorwidth;
-
-    var isRight = (($widget.tunnelside == "right") || ($widget.tunnelside == "both"));
-    var isLeft = (($widget.tunnelside == "left") || ($widget.tunnelside == "both"));
-
-    var halfWidth = tunnelFloorWidth / 2;
-
-    $gCtx.setLineDash([6, 4]);
-
-    if ($widget.circle == "yes") {
-        //draw curved line
-        if (isRight) {
-            var v = [0, +halfWidth];
-            if ($widget.flip == "yes") {
-                v = [0, -halfWidth];
-            }
-            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
-            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
-            if ($widget.flip == "yes") {
-                $drawArcP(tp2, tp1, $widget.angle, $color, $width);
-            } else {
-                $drawArcP(tp1, tp2, $widget.angle, $color, $width);
-            }
-        }
-        if (isLeft) {
-            var v = [0, -halfWidth];
-            if ($widget.flip == "yes") {
-                v = [0, +halfWidth];
-            }
-            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
-            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
-            if ($widget.flip == "yes") {
-                $drawArcP(tp2, tp1, $widget.angle, $color, $width);
-            } else {
-                $drawArcP(tp1, tp2, $widget.angle, $color, $width);
-            }
-         }
-   } else if ($widget.arc == "yes") {
-        //draw arc of ellipse
-        var tp1 = ep1, tp2 = ep2;
-        if ($widget.flip == "yes") {
-            [tp1, tp2] = [tp2, tp1];
-        }
-
-        var x, y;
-
-        var deltaP = $point_subtract(tp2, tp1);
-
-        var rw = deltaP[0];
-        var rh = deltaP[1];
-
-        if (rw < 0) {
-            rw = -rw;
-            if (rh < 0) {                   //jmri.log("**** QUAD ONE ****");
-                x = tp1[0]; y = tp2[1];
-                rh = -rh;
-            } else {                        //jmri.log("**** QUAD TWO ****");
-                x = tp2[0]; y = tp1[1];
-            }
-        } else {
-            if (rh < 0) {                   //jmri.log("**** QUAD THREE ****");
-                x = tp2[0]; y = tp1[1];
-                rh = -rh;
-            } else {                        //jmri.log("**** QUAD FOUR ****");
-                x = tp1[0]; y = tp2[1];
-            }
-        }
-
-        rw -= halfWidth;
-        rh -= halfWidth;
-
-        if (isRight) {
-            if ($widget.flip == "yes") {
-                $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD - Math.PI, $color, $width);
-            } else {
-                $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD, $color, $width);
-            }
-        }
-
-        rw += tunnelFloorWidth;
-        rh += tunnelFloorWidth;
-
-        if (isLeft) {
-            if ($widget.flip == "yes") {
-                $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD - Math.PI, $color, $width);
-            } else {
-                $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD, $color, $width);
-            }
-        }
-    } else if ($widget.bezier == "yes") {
-
-        var $cps = $widget.controlpoints;   // get the control points
-
-        var points = [[ep1[0], ep1[1]]];    // first point
-        $cps.each(function( idx, elem ) {   // control points
-            points.push([elem.attributes.x.value, elem.attributes.y.value]);
-        });
-        points.push([ep2[0], ep2[1]]);  // last point
-
-        if (isLeft) {
-            $drawBezier(points, $color, $width, -halfWidth);
-        }
-        if (isRight) {
-            $drawBezier(points, $color, $width, +halfWidth);
-        }
-    } else {
-        var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
-
-        if (isRight) {
-            var ep1L = $point_add(ep1, vector);
-            var ep2L = $point_add(ep2, vector);
-            $drawLineP(ep1L, ep2L);
-        }
-        if (isLeft) {
-            var ep1R = $point_subtract(ep1, vector);
-            var ep2R = $point_subtract(ep2, vector);
-            $drawLineP(ep1R, ep2R);
-        }
-    }
-
-    $gCtx.setLineDash([]);
-
-    if ($widget.flip == "yes") {
-        [isRight, isLeft] = [isLeft, isRight];
-    }
-
-    var halfEntranceWidth = tunnelEntranceWidth / 2;
-    var halfFloorWidth = tunnelFloorWidth / 2;
-    var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-
-    if (($widget.tunnelend == "entry") || ($widget.tunnelend == "both")) {
-        if (isLeft) {
-            p1 = [0, 0];
-            p2 = [0, -halfFloorWidth];
-            p3 = [0, -halfEntranceWidth];
-            p4 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth];
-            p5 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p7 = [-halfDiffWidth, 0];
-
-            p1P = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2P = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            p3P = $point_add($point_rotate(p3, startAngleRAD), ep1);
-            p4P = $point_add($point_rotate(p4, startAngleRAD), ep1);
-            p5P = $point_add($point_rotate(p5, startAngleRAD), ep1);
-            p6P = $point_add($point_rotate(p6, startAngleRAD), ep1);
-            p7P = $point_add($point_rotate(p7, startAngleRAD), ep1);
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1P[0], p1P[1]);
-            $gCtx.lineTo(p2P[0], p2P[1]);
-            $gCtx.quadraticCurveTo(p3P[0], p3P[1], p4P[0], p4P[1]);
-            $gCtx.lineTo(p5P[0], p5P[1]);
-            $gCtx.quadraticCurveTo(p6P[0], p6P[1], p7P[0], p7P[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
-        }
-        if (isRight) {
-            p1 = [0, 0];
-            p2 = [0, +halfFloorWidth];
-            p3 = [0, +halfEntranceWidth];
-            p4 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth];
-            p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p7 = [-halfDiffWidth, 0];
-
-            p1P = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2P = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            p3P = $point_add($point_rotate(p3, startAngleRAD), ep1);
-            p4P = $point_add($point_rotate(p4, startAngleRAD), ep1);
-            p5P = $point_add($point_rotate(p5, startAngleRAD), ep1);
-            p6P = $point_add($point_rotate(p6, startAngleRAD), ep1);
-            p7P = $point_add($point_rotate(p7, startAngleRAD), ep1);
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1P[0], p1P[1]);
-            $gCtx.lineTo(p2P[0], p2P[1]);
-            $gCtx.quadraticCurveTo(p3P[0], p3P[1], p4P[0], p4P[1]);
-            $gCtx.lineTo(p5P[0], p5P[1]);
-            $gCtx.quadraticCurveTo(p6P[0], p6P[1], p7P[0], p7P[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
-        }
-    }
-    if (($widget.tunnelend == "exit") || ($widget.tunnelend == "both")) {
-        if (isLeft) {
-            p1 = [0, 0];
-            p2 = [0, -halfFloorWidth];
-            p3 = [0, -halfEntranceWidth];
-            p4 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth];
-            p5 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-            p7 = [halfDiffWidth, 0];
-
-            p1P = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2P = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            p3P = $point_add($point_rotate(p3, stopAngleRAD), ep2);
-            p4P = $point_add($point_rotate(p4, stopAngleRAD), ep2);
-            p5P = $point_add($point_rotate(p5, stopAngleRAD), ep2);
-            p6P = $point_add($point_rotate(p6, stopAngleRAD), ep2);
-            p7P = $point_add($point_rotate(p7, stopAngleRAD), ep2);
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1P[0], p1P[1]);
-            $gCtx.lineTo(p2P[0], p2P[1]);
-            $gCtx.quadraticCurveTo(p3P[0], p3P[1], p4P[0], p4P[1]);
-            $gCtx.lineTo(p5P[0], p5P[1]);
-            $gCtx.quadraticCurveTo(p6P[0], p6P[1], p7P[0], p7P[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
-        }
-        if (isRight) {
-            p1 = [0, 0];
-            p2 = [0, +halfFloorWidth];
-            p3 = [0, +halfEntranceWidth];
-            p4 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth];
-            p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-            p7 = [halfDiffWidth, 0];
-
-            p1P = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2P = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            p3P = $point_add($point_rotate(p3, stopAngleRAD), ep2);
-            p4P = $point_add($point_rotate(p4, stopAngleRAD), ep2);
-            p5P = $point_add($point_rotate(p5, stopAngleRAD), ep2);
-            p6P = $point_add($point_rotate(p6, stopAngleRAD), ep2);
-            p7P = $point_add($point_rotate(p7, stopAngleRAD), ep2);
-
-            $gCtx.beginPath();
-            $gCtx.moveTo(p1P[0], p1P[1]);
-            $gCtx.lineTo(p2P[0], p2P[1]);
-            $gCtx.quadraticCurveTo(p3P[0], p3P[1], p4P[0], p4P[1]);
-            $gCtx.lineTo(p5P[0], p5P[1]);
-            $gCtx.quadraticCurveTo(p6P[0], p6P[1], p7P[0], p7P[1]);
-            $gCtx.closePath();
-            $gCtx.stroke();
-        }
-    }
-
-    // restore color and width back to default
-    $gCtx.restore();
-}   //$drawTunnel
 
 //draw the analog clock (pass in widget), called on each update of clock
 function $drawClock($widget) {
@@ -2689,8 +2631,7 @@ function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
         $gCtx.setLineDash([]);
     }
 
-    // restore color and width back to default
-    $gCtx.restore();
+    $gCtx.restore();        // restore color and width back to default
 }
 
 function $drawLineP($p1, $p2, $color, $width) {
@@ -2722,8 +2663,7 @@ function $drawCircle($px, $py, $radius, $color, $width) {
     $gCtx.arc($px, $py, $radius, 0, 2 * Math.PI, false);
     $gCtx.stroke();
 
-    // restore color and width back to default
-    $gCtx.restore();
+    $gCtx.restore();        // restore color and width back to default
 }   // $drawCircle
 
 //drawArc, passing in values from xml
@@ -2761,8 +2701,7 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
         $gCtx.stroke();
 
-    // restore color and width back to default
-      $gCtx.restore();
+        $gCtx.restore();        // restore color and width back to default
     }
 }   //$drawArc
 
@@ -2780,8 +2719,7 @@ function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD, $color, $width)
     $gCtx.ellipse(x, y, rw, rh, 0, startAngleRAD, stopAngleRAD);
     $gCtx.stroke();
 
-    // restore color and width back to default
-    $gCtx.restore();
+    $gCtx.restore();        // restore color and width back to default
 }
 
 //
@@ -2816,8 +2754,7 @@ function $drawBezier(points, $color, $width, displacement = 0) {
         }
     }
 
-    // restore color and width back to default
-    $gCtx.restore();
+    $gCtx.restore();        // restore color and width back to default
 }   // $drawBezier
 
 //
