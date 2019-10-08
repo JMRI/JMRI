@@ -74,7 +74,6 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             // notify listeners, if any
             firePropertyChange("Lit", oldLit, newLit);
         }
-
     }
 
     /**

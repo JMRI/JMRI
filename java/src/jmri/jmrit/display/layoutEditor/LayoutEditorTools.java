@@ -179,7 +179,7 @@ public class LayoutEditorTools {
         LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, false, true);
         LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true);
 
-        //TODO: Set combobox exclude lists for turnouts, blocks and signal heads
+        // TODO: Set combobox exclude lists for turnouts, blocks and signal heads
         // that are not part of the current layout
     }
 

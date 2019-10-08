@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class implements a SignalHead the maps the various appearances values to
+ * This class implements a SignalHead that maps the various appearances values to
  * aspect values in the <b>Extended Accessory Decoder Control Packet Format</b>
  * and outputs that packet to the DCC System via the generic CommandStation
  * interface
@@ -33,12 +33,9 @@ import org.slf4j.LoggerFactory;
  */
 public class DccSignalHead extends AbstractSignalHead {
 
-    private final static Logger log = LoggerFactory.getLogger(DccSignalHead.class);
-
     public DccSignalHead(String sys, String user) {
         super(sys, user);
         configureHead(sys);
-
     }
 
     public DccSignalHead(String sys) {
@@ -46,20 +43,11 @@ public class DccSignalHead extends AbstractSignalHead {
         configureHead(sys);
     }
 
-    void configureHead(String sys) {
-        // Set the default appearances
-        appearanceToOutput.put(SignalHead.RED, getDefaultNumberForApperance(SignalHead.RED));
-        appearanceToOutput.put(SignalHead.YELLOW, getDefaultNumberForApperance(SignalHead.YELLOW));
-        appearanceToOutput.put(SignalHead.GREEN, getDefaultNumberForApperance(SignalHead.GREEN));
-        appearanceToOutput.put(SignalHead.LUNAR, getDefaultNumberForApperance(SignalHead.LUNAR));
-        appearanceToOutput.put(SignalHead.FLASHRED, getDefaultNumberForApperance(SignalHead.FLASHRED));
-        appearanceToOutput.put(SignalHead.FLASHYELLOW, getDefaultNumberForApperance(SignalHead.FLASHYELLOW));
-        appearanceToOutput.put(SignalHead.FLASHGREEN, getDefaultNumberForApperance(SignalHead.FLASHGREEN));
-        appearanceToOutput.put(SignalHead.FLASHLUNAR, getDefaultNumberForApperance(SignalHead.FLASHLUNAR));
-        appearanceToOutput.put(SignalHead.DARK, getDefaultNumberForApperance(SignalHead.DARK));
+    private void configureHead(String sys) {
+        setDefaultOutputs();
         // New method separates the system name and address using $
         if (sys.contains("$")) {
-            dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$") + 1, sys.length()));
+            dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$") + 1));
             String commandStationPrefix = sys.substring(0, sys.indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
 
@@ -118,9 +106,9 @@ public class DccSignalHead extends AbstractSignalHead {
     /**
      * Set the held parameter.
      * <p>
-     * Note that this does not directly effect the output on the layout; the
-     * held parameter is a local variable which effects the aspect only via
-     * higher-level logic
+     * Note that this does not directly affect the output on the layout; the
+     * held parameter is a local variable which affects the aspect only via
+     * higher-level logic.
      */
     @Override
     public void setHeld(boolean newHeld) {
@@ -203,7 +191,31 @@ public class DccSignalHead extends AbstractSignalHead {
         appearanceToOutput.put(app, number);
     }
 
+    /**
+     * Create hashmap of default appearance output values.
+     */
+    private void setDefaultOutputs() {
+        appearanceToOutput.put(SignalHead.RED, getDefaultNumberForAppearance(SignalHead.RED));
+        appearanceToOutput.put(SignalHead.YELLOW, getDefaultNumberForAppearance(SignalHead.YELLOW));
+        appearanceToOutput.put(SignalHead.GREEN, getDefaultNumberForAppearance(SignalHead.GREEN));
+        appearanceToOutput.put(SignalHead.LUNAR, getDefaultNumberForAppearance(SignalHead.LUNAR));
+        appearanceToOutput.put(SignalHead.FLASHRED, getDefaultNumberForAppearance(SignalHead.FLASHRED));
+        appearanceToOutput.put(SignalHead.FLASHYELLOW, getDefaultNumberForAppearance(SignalHead.FLASHYELLOW));
+        appearanceToOutput.put(SignalHead.FLASHGREEN, getDefaultNumberForAppearance(SignalHead.FLASHGREEN));
+        appearanceToOutput.put(SignalHead.FLASHLUNAR, getDefaultNumberForAppearance(SignalHead.FLASHLUNAR));
+        appearanceToOutput.put(SignalHead.DARK, getDefaultNumberForAppearance(SignalHead.DARK));
+    }
+
+    /**
+     * Replaced by {@link #getDefaultNumberForAppearance} for misspelling
+     * @deprecated since 4.5.17
+     */
+    @Deprecated
     public static int getDefaultNumberForApperance(int i) {
+        return getDefaultNumberForAppearance(i);
+    }
+
+    public static int getDefaultNumberForAppearance(int i) {
         switch (i) {
             case SignalHead.DARK:
                 return 8;
@@ -256,5 +268,7 @@ public class DccSignalHead extends AbstractSignalHead {
     boolean isTurnoutUsed(Turnout t) {
         return false;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(DccSignalHead.class);
 
 }

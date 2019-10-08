@@ -386,7 +386,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
 
             /**
              * Clear the old appearance comboboxes and force them to be rebuilt.
-             * Used with the Single Output Signal Head to capture reconguration.
+             * Used with the Single Output Signal Head to capture reconfiguration.
              *
              * @param row Index of the signal mast (in TableDataModel) to be
              *            rebuilt in the Hashtables
@@ -418,8 +418,8 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<>();
 
             /**
-             * returns a list of all the valid appearances that have not been
-             * disabled
+             * Get a list of all the valid appearances that have not been
+             * disabled.
              *
              * @param head the name of the signal head
              * @return List of valid signal head appearance names

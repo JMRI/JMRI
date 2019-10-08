@@ -79,6 +79,10 @@ public interface SignalHead extends Signal {
      */
     public void setAppearance(int newAppearance);
 
+    public String getAppearanceKey();
+
+    public String getAppearanceKey(int appearance);
+
     public String getAppearanceName();
 
     public String getAppearanceName(int appearance);

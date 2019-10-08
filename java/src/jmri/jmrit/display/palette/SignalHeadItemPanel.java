@@ -94,17 +94,13 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 }
                 // use current images for as many of the fullMap's members as possible
                 HashMap<String, NamedIcon> iconMap = new HashMap<>();
-                Iterator<Entry<String, NamedIcon>> it = fullmap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, NamedIcon> entry = it.next();
+                for (Entry<String, NamedIcon> entry : fullmap.entrySet()) {
                     String key = entry.getKey();
                     String newKey = ItemPalette.convertText(key);
-                    if (log.isDebugEnabled()) {
-                        log.debug("fullmap key = {}, converts to {}", key, newKey);
-                    }
+                    log.debug("fullmap key = {}, converts to {}", key, newKey);
                     NamedIcon icon = currentmap.get(newKey);
                     if (icon != null) {
-                        iconMap.put(newKey, icon);                        
+                        iconMap.put(newKey, icon);
                     } else {
                         iconMap.put(newKey, entry.getValue());
                     }
@@ -141,30 +137,20 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 return allIconsMap;
             }
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
-            Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : allIconsMap.entrySet()) {
                 String name = entry.getKey();
                 String borderName = ItemPalette.convertText(name);
-                for (int j = 0; j < states.length; j++) {
-                    if (borderName.equals(states[j])
-                            || name.equals("SignalHeadStateDark")
-                            || name.equals(ItemPalette.convertText("SignalHeadStateDark"))
-                            || name.equals("SignalHeadStateHeld")
-                            || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
+                for (String state : states) {
+                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") || name.equals(ItemPalette.convertText("SignalHeadStateDark")) || name.equals("SignalHeadStateHeld") || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
                         iconMap.put(name, entry.getValue());
                         break;
                     }
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("filteredMap size= {}",iconMap.size());
-            }
+            log.debug("filteredMap size= {}", iconMap.size());
             return iconMap;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Map NOT filtered, size= {}",allIconsMap.size());
-        }
+        log.debug("Map NOT filtered, size= {}", allIconsMap.size());
         return allIconsMap;
     }
 

@@ -28,14 +28,28 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 appearance, getValidStates(), getValidStateNames());
         if (ret != null) {
             return ret;
-        } else {
-            return ("");
         }
+        return ("");
     }
 
     @Override
     public String getAppearanceName() {
         return getAppearanceName(getAppearance());
+    }
+
+    @Override
+    public String getAppearanceKey(int appearance) {
+        String ret = jmri.util.StringUtil.getNameFromState(
+                appearance, getValidStates(), getValidStateKeys());
+        if (ret != null) {
+            return ret;
+        }
+        return ("");
+    }
+
+    @Override
+    public String getAppearanceKey() {
+        return getAppearanceKey(getAppearance());
     }
 
     protected int mAppearance = DARK;

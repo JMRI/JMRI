@@ -608,7 +608,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             int hnew = Math.max(this.h, c.getLocation().y + c.getSize().height);
             int wnew = Math.max(this.w, c.getLocation().x + c.getSize().width);
             if (hnew > h || wnew > w) {
-//                log.debug("size was {},{} - i =", w, h, i);
+//                log.debug("size was {},{} - i ={}", w, h, i);
                 setSize(wnew, hnew);
             }
             return super.add(c, i);
@@ -753,7 +753,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         vertScroll.setValue(vScroll);
     }
 
-    /**
+    /*
      * ********************** Options setup *********************
      */
     /**
@@ -932,7 +932,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Control whether target panel items will show their coordinates in their
      * popup menu.
      *
-     * @param state true for show coodinates.
+     * @param state true for show coordinates.
      */
  /*
      public void setShowCoordinates(boolean state) {
@@ -1033,10 +1033,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         return value;
     }
-
     /*
      * *********************** end Options setup **********************
      */
+
     /**
      * Handle closing the target window.
      * <p>
@@ -1098,7 +1098,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected Editor changeView(String className) {
-
         JFrame frame = getTargetFrame();
 
         try {
@@ -1143,11 +1142,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * *********************** Popup Item Methods **********************
      *
-     *
      * These methods are to be called from the editor view's showPopUp method
      */
     /**
-     * Add a checkbox to lock the position of the Positionable item
+     * Add a checkbox to lock the position of the Positionable item.
      *
      * @param p     the item
      * @param popup the menu to add the lock menu item to
@@ -1932,6 +1930,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected IconAdder getSignalHeadEditor() {
+        // note that all these icons will be refreshed when user clicks a specific signal head in the table
         IconAdder editor = new IconAdder("SignalHead");
         editor.setIcon(0, "SignalHeadStateRed",
                 "resources/icons/smallschematics/searchlights/left-red-marker.gif");
@@ -1974,7 +1973,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    SpinnerNumberModel _spinCols = new SpinnerNumberModel(3, 1, 100, 1);
+    private SpinnerNumberModel _spinCols = new SpinnerNumberModel(3, 1, 100, 1);
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("Memory") {
@@ -2488,14 +2487,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
         }
-        Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
-        while (iter.hasNext()) {
-            JFrameItem frame = iter.next();
+        for (JFrameItem frame : _iconEditorFrame.values()) {
             frame.setTitle(frame.getName() + " (" + name + ")");
         }
         setName(name);
     }
 
+    /**
+     * Create a frame showing all images in the set used for an icon.
+     * Opened when editItemInPanel button is clicked in the Edit Icon Panel,
+     * shown after icon's context menu Edit Icon... item is selected.
+     *
+     * @param name bean type name
+     * @param add true when used to add a new item on panel, false when used to edit an item already on the panel
+     * @param table true for bean types presented as table instead of icons
+     * @param editor parent frame of the image frame
+     * @return JFrame connected to the editor,  to be filled with icons
+     */
     protected JFrameItem makeAddIconFrame(String name, boolean add, boolean table, IconAdder editor) {
         log.debug("makeAddIconFrame for {}, add= {}, table= {}", name, add, table);
         String txt;

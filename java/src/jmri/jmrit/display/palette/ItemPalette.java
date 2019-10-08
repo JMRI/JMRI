@@ -147,9 +147,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     protected static JTabbedPane _tabPane;
     private static HashMap<String, ItemPanel> _tabIndex;
 
-    static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
+    private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
-    static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    private static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     private ItemPanel _currentItemPanel;
 
     /**
@@ -169,31 +169,21 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         tree = manager.newCatalogTree("NXPI", "Item Palette");
         CatalogTreeNode root = tree.getRoot();
 
-        Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
+        for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : _iconMaps.entrySet()) {
             root.add(store3levelMap(entry.getKey(), entry.getValue()));
             if (log.isDebugEnabled()) {
                 log.debug("Add type node " + entry.getKey());
             }
         }
 
-        Iterator<Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>> its = _indicatorTOMaps.entrySet().iterator();
-        while (its.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry = its.next();
+        for (Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry : _indicatorTOMaps.entrySet()) {
             CatalogTreeNode typeNode = new CatalogTreeNode(entry.getKey());
-            Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent = iter.next();
+            for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent : entry.getValue().entrySet()) {
                 typeNode.add(store3levelMap(ent.getKey(), ent.getValue()));
-                if (log.isDebugEnabled()) {
-                    log.debug("Add IndicatorTO node " + ent.getKey());
-                }
+                log.debug("Add IndicatorTO node {}", ent.getKey());
             }
             root.add(typeNode);
-            if (log.isDebugEnabled()) {
-                log.debug("Add IndicatorTO node " + entry.getKey());
-            }
+            log.debug("Add IndicatorTO node {}", entry.getKey());
         }
     }
 
@@ -281,8 +271,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<>();
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
         Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
@@ -334,10 +323,8 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 List<Element> families = typeList.get(i).getChildren();
                 loadFamilies(typeName, families, ed);
             }
-        } catch (org.jdom2.JDOMException e) {
+        } catch (org.jdom2.JDOMException | java.io.IOException e) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
-        } catch (java.io.IOException ioe) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + ioe);
         }
     }
 
@@ -380,19 +367,19 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<>();
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
         for (int k = 0; k < families.size(); k++) {
             String familyName = families.get(k).getName();
-            HashMap<String, NamedIcon> iconMap
-                    = new HashMap<>();     // Map of all icons of in family, familyName
+            HashMap<String, NamedIcon> iconMap = new HashMap<>();
+            // Map of all icons of in family, familyName
             List<Element> iconfiles = families.get(k).getChildren();
             for (int j = 0; j < iconfiles.size(); j++) {
                 String iconName = iconfiles.get(j).getName();
                 String fileName = iconfiles.get(j).getText().trim();
                 if (fileName.length() == 0) {
                     fileName = "resources/icons/misc/X-red.gif";
-                    log.warn("loadDefaultFamilyMap: iconName = {} in family {} has no image file.", iconName, familyName);
+                    log.warn("loadDefaultFamilyMap: iconName = {} in family {} has no image file.",
+                            iconName, familyName);
                 }
                 NamedIcon icon = NamedIcon.getIconByName(fileName);
                 if (icon == null) {
@@ -415,8 +402,8 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed) {
-        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                = new HashMap<>(); // Map of all families of type, typeName
+        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap = new HashMap<>();
+        // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
             List<Element> types = typeList.get(k).getChildren();
