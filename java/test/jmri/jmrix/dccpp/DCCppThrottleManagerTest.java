@@ -25,6 +25,7 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

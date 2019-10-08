@@ -36,6 +36,7 @@ public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     @After
     public void tearDown() {
 	    programmer = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 
