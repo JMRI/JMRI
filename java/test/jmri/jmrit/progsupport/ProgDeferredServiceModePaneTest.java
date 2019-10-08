@@ -1,7 +1,6 @@
 package jmri.jmrit.progsupport;
 
 import java.awt.GraphicsEnvironment;
-import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,7 +20,6 @@ public class ProgDeferredServiceModePaneTest {
         ProgDeferredServiceModePane t = new ProgDeferredServiceModePane();
         Assert.assertNotNull("exists", t);
         jmri.util.JUnitAppender.assertErrorMessage("This is missing code to listen to the programmer and update the mode display");
-        new JFrameOperator("Set programming mode").requestClose();        
         t.dispose();
     }
 
