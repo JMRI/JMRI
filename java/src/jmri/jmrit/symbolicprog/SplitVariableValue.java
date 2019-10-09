@@ -53,11 +53,11 @@ public class SplitVariableValue extends VariableValue
             HashMap<String, CvValue> v, JLabel status, String stdname,
             String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        _minVal = 0;
+        _maxVal = ~0;
         stepOneActions(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         _name = name;
         _mask = mask;
-        _maxVal = maxVal;
-        _minVal = minVal;
         _cvNum = cvNum;
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
@@ -134,6 +134,12 @@ public class SplitVariableValue extends VariableValue
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String stdname,
             String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
+        if (extra3 != null) {
+            _minVal = getValueFromText(extra3);
+        }
+        if (extra4 != null) {
+            _maxVal = getValueFromText(extra4);
+        }
     }
 
     /**
@@ -246,8 +252,8 @@ public class SplitVariableValue extends VariableValue
     }
 
     // the connection is to cvNum and cvNum+1
-    int _maxVal;
-    int _minVal;
+    long _minVal;
+    long _maxVal;
 
     @Override
     public Object rangeVal() {
@@ -290,7 +296,8 @@ public class SplitVariableValue extends VariableValue
      * Contains numeric-value specific code.
      * <br><br>
      * Calculates new value for _textField and invokes
-     * {@link #setLongValue(long) setLongValue(newVal)} to make and notify the change
+     * {@link #setLongValue(long) setLongValue(newVal)} to make and notify the
+     * change
      *
      * @param intVals array of new CV values
      */
@@ -323,16 +330,15 @@ public class SplitVariableValue extends VariableValue
         if (_textField != null && !oldContents.equals(_textField.getText())) {
             long newFieldVal = getValueFromText(_textField.getText());
             log.debug("_minVal = {},_maxVal = {},newFieldVal = {}", _minVal, _maxVal, newFieldVal);
-//            disable recently-added _minVal, _maxVal checking for now
-//            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
-//                _textField.setText(oldContents);
-//            } else {
-            long newVal = (newFieldVal - mOffset) / mFactor;
-            long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
-//            log.debug("Enter updatedTextField from exitField");
-            updatedTextField();
-            prop.firePropertyChange("Value", oldVal, newVal);
-//            }
+            if (newFieldVal < _minVal || newFieldVal > _maxVal) {
+                _textField.setText(oldContents);
+            } else {
+                long newVal = (newFieldVal - mOffset) / mFactor;
+                long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
+                log.debug("Enter updatedTextField from exitField");
+                updatedTextField();
+                prop.firePropertyChange("Value", oldVal, newVal);
+            }
         }
     }
 
@@ -480,8 +486,13 @@ public class SplitVariableValue extends VariableValue
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
             actionPerformed(null);
         }
+        // PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
+        // but 'oldValue' was converted back using mOffset / mFactor making those two (new / old) 
+        // using different scales. Probably a bug, but it has been there from well before
+        // the extended spltVal. Because of the risk of breaking existing
+        // behaviour somewhere, deferring correction until at least the next test release.
         prop.firePropertyChange("Value", oldVal, value * mFactor + mOffset);
-        log.debug("Variable={}; exit setValue {}", _name, value);
+        log.debug("Variable={}; exit setLongValue old={} new={}", _name, oldVal, value);
     }
 
     Color _defaultColor;

@@ -71,7 +71,7 @@ public abstract class ArithmeticQualifier extends AbstractQualifier {
         if (now instanceof Integer) {
             nowVal = Integer.toUnsignedLong((int) now);
         } else if (now instanceof Long) {
-            nowVal = (long) now;
+            nowVal = (Long) now;
         }
 
         int compare = Long.compareUnsigned(nowVal, value);
