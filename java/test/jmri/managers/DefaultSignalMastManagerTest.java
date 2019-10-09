@@ -4,7 +4,6 @@ import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
 import jmri.implementation.SignalMastRepeater;
-import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -14,6 +13,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -100,6 +100,12 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
             Assert.assertThat(s, containsString("repeater already exists the wrong way"));
         }
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
+    }
+
+    @Ignore("DefaultSignalMastManager doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     // The minimal setup for log4J
