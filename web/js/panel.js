@@ -124,11 +124,7 @@ class Decoration {
         this.$widget = $widget;
     }
     getEndPoints() {
-        var $widget = this.$widget;
-        var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
-        var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
-        this.ep1 = [Number($ep1.x), Number($ep1.y)];
-        this.ep2 = [Number($ep2.x), Number($ep2.y)];
+        [this.ep1, this.ep2] = $getEndPoints(this.$widget);
         //jmri.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
     }
     getAngles() {
@@ -1888,12 +1884,12 @@ function $drawTrackSegment($widget) {
     }
 
     //get the endpoints by name
-    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
+    var $ep1, $ep2;
+    [$ep1, $ep2] = $getEndPoints$($widget);
     if (typeof $ep1 == "undefined") {
         jmri.log("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
         return;
     }
-    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
     if (typeof $ep2 == "undefined") {
         jmri.log("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
         return;
@@ -1952,15 +1948,14 @@ function $drawTrackSegment($widget) {
 
 function $drawTrackSegmentBezier($widget) {
     //get the endpoints by name
-    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
-    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
-
+    var ep1, ep2;
+    [ep1, ep2] = $getEndPoints($widget);
     var $cps = $widget.controlpoints;   // get the control points
-    var points = [[$ep1.x, $ep1.y]];    // first point
+    var points = [[ep1[0], ep1[1]]];    // first point
     $cps.each(function( idx, elem ) {   // control points
         points.push([elem.attributes.x.value, elem.attributes.y.value]);
     });
-    points.push([$ep2.x, $ep2.y]);  // last point
+    points.push([ep2[0], ep2[1]]);  // last point
 
     //$point_log("points[0]", points[0]);
 
@@ -1969,8 +1964,8 @@ function $drawTrackSegmentBezier($widget) {
 
 function $drawTrackSegmentCircle($widget) {
     //get the endpoints by name
-    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
-    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
+    var $ep1, $ep2;
+    [$ep1, $ep2] = $getEndPoints$($widget);
     if ((typeof $widget.angle == "undefined") || ($widget.angle == 0)) {
         $widget['angle'] = "90";
     }
@@ -1984,8 +1979,8 @@ function $drawTrackSegmentCircle($widget) {
 
 function $drawTrackSegmentArc($widget) {
     //get the endpoints by name
-    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
-    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
+    var $ep1, $ep2;
+    [$ep1, $ep2] = $getEndPoints$($widget);
     var ep1x = Number($ep1.x), ep1y = Number($ep1.y), ep2x = Number($ep2.x), ep2y = Number($ep2.y);
     if ($widget.flip == "yes") {
         [ep1x, ep1y, ep2x, ep2y] = [ep2x, ep2y, ep1x, ep1y];
@@ -2021,6 +2016,20 @@ function $drawTrackSegmentArc($widget) {
     }
 
     $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD);
+}
+
+function $getEndPoints$($widget) {
+    var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
+    var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
+    return [$ep1, $ep2];
+}
+
+function $getEndPoints($widget) {
+    var $ep1, $ep2;
+    [$ep1, $ep2] = $getEndPoints$($widget);
+    var ep1 = [Number($ep1.x), Number($ep1.y)];
+    var ep2 = [Number($ep2.x), Number($ep2.y)];
+    return [ep1, ep2];
 }
 
 //
