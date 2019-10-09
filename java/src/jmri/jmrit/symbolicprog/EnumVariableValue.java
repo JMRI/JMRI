@@ -219,7 +219,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     @Override
     public void setIntValue(int i) {
-        selectValue(i);
+        // needs to fire Value property as well
+        setValue(i);
     }
 
     @Override

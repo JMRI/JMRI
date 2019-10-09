@@ -291,6 +291,8 @@ public class CompositeVariableValue extends EnumVariableValue {
 
     @Override
     public void setValue(int value) {
+        // PENDING: exactly duplicates superclass' processing.
+        // Maybe some leftover code ?
         int oldVal = getIntValue();
         selectValue(value);
 

@@ -85,8 +85,8 @@ public class ConstantValue extends VariableValue {
 
     @Override
     public void setIntValue(int i) {
-        _value.setSelectedIndex(i);  // automatically fires a change event
-    }
+        // need to fire "Value" property as well.
+        setValue(i);    }
 
     @Override
     public int getIntValue() {

@@ -341,10 +341,18 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             default:
                 log.error("Inconsistent state: " + _state);
         }
-        if (_state != state || _state == UNKNOWN) {
-            prop.firePropertyChange("State", Integer.valueOf(_state), Integer.valueOf(state));
-        }
+        int oldState = _state;
+        // cannot leave _state with old value: clients will receive Event informing that state has
+        // changed, but var.getState() would still produce an old value - inconsistent.
         _state = state;
+
+        // FIXME: potential bug - in case of UNKNOWN -> UNKNOWN transition, the change will not be fired despite
+        // the OR condition: firePropertyChange checks values for equals() internally. If the oldState == UNKNOWN is
+        // really intended to execute property fire, it must be done differently. Replicated on many other places
+        // in subclasses.
+        if (oldState != state || oldState == UNKNOWN) {
+            prop.firePropertyChange("State", Integer.valueOf(oldState), Integer.valueOf(state));
+        }
     }
     private int _state = UNKNOWN;
 
