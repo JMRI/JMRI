@@ -334,7 +334,7 @@ class ArrowDecoration extends Decoration {
 
     drawArrow1In() {
         var p1 = [this.offset + this.length, -this.length];
-        var p2 = [this.offset, 0.0];
+        var p2 = [this.offset, 0];
         var p3 = [this.offset + this.length, +this.length];
 
         $drawLineP(p1, p2);
@@ -344,7 +344,7 @@ class ArrowDecoration extends Decoration {
 
     drawArrow1Out() {
         var p1 = [this.offset, -this.length];
-        var p2 = [this.offset + this.length, 0.0];
+        var p2 = [this.offset + this.length, 0];
         var p3 = [this.offset, +this.length];
 
         $drawLineP(p1, p2);
@@ -354,10 +354,10 @@ class ArrowDecoration extends Decoration {
 
     drawArrow2In() {
         var p1 = [this.offset + this.length, -this.length];
-        var p2 = [this.offset, 0.0];
+        var p2 = [this.offset, 0];
         var p3 = [this.offset + this.length, +this.length];
         var p4 = [this.offset + this.linewidth + this.gap + this.length, -this.length];
-        var p5 = [this.offset + this.linewidth + this.gap, 0.0];
+        var p5 = [this.offset + this.linewidth + this.gap, 0];
         var p6 = [this.offset + this.linewidth + this.gap + this.length, +this.length];
 
         $drawLineP(p1, p2);
@@ -369,10 +369,10 @@ class ArrowDecoration extends Decoration {
 
     drawArrow2Out() {
         var p1 = [this.offset, -this.length];
-        var p2 = [this.offset + this.length, 0.0];
+        var p2 = [this.offset + this.length, 0];
         var p3 = [this.offset, +this.length];
         var p4 = [this.offset + this.linewidth + this.gap, -this.length];
-        var p5 = [this.offset + this.linewidth + this.gap + this.length, 0.0];
+        var p5 = [this.offset + this.linewidth + this.gap + this.length, 0];
         var p6 = [this.offset + this.linewidth + this.gap, +this.length];
 
         $drawLineP(p1, p2);
@@ -384,7 +384,7 @@ class ArrowDecoration extends Decoration {
 
     drawArrow3In() {
         var p1 = [this.offset + this.length, -this.length];
-        var p2 = [this.offset, 0.0];
+        var p2 = [this.offset, 0];
         var p3 = [this.offset + this.length, +this.length];
 
         $gCtx.beginPath();
@@ -402,7 +402,7 @@ class ArrowDecoration extends Decoration {
 
     drawArrow3Out() {
         var p1 = [this.offset, -this.length];
-        var p2 = [this.offset + this.length, 0.0];
+        var p2 = [this.offset + this.length, 0];
         var p3 = [this.offset, +this.length];
 
         $gCtx.beginPath();
@@ -419,9 +419,9 @@ class ArrowDecoration extends Decoration {
     }
 
     drawArrow4In() {
-        var p1 = [this.offset, 0.0];
+        var p1 = [this.offset, 0];
         var p2 = [this.offset + (4 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0.0];
+        var p3 = [this.offset + (3 * this.length), 0];
         var p4 = [this.offset + (4 * this.length), +this.length];
 
         $drawLineP(p1, p3);
@@ -431,9 +431,9 @@ class ArrowDecoration extends Decoration {
     }
 
     drawArrow4Out() {
-        var p1 = [this.offset, 0.0];
+        var p1 = [this.offset, 0];
         var p2 = [this.offset + (2 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0.0];
+        var p3 = [this.offset + (3 * this.length), 0];
         var p4 = [this.offset + (2 * this.length), +this.length];
 
         $drawLineP(p1, p3);
@@ -443,9 +443,9 @@ class ArrowDecoration extends Decoration {
     }
 
     drawArrow5In() {
-        var p1 = [this.offset, 0.0];
+        var p1 = [this.offset, 0];
         var p2 = [this.offset + (4 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0.0];
+        var p3 = [this.offset + (3 * this.length), 0];
         var p4 = [this.offset + (4 * this.length), +this.length];
 
         $gCtx.beginPath();
@@ -463,9 +463,9 @@ class ArrowDecoration extends Decoration {
     }
 
     drawArrow5Out() {
-        var p1 = [this.offset, 0.0];
+        var p1 = [this.offset, 0];
         var p2 = [this.offset + (2 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0.0];
+        var p3 = [this.offset + (3 * this.length), 0];
         var p4 = [this.offset + (2 * this.length), +this.length];
 
         $gCtx.beginPath();
@@ -555,7 +555,7 @@ class BridgeDecoration extends Decoration {
         }
         var halfWidth = this.deckwidth / 2;
         var x, y;
-        var rw = ep2x - ep1x, rh = ep2y - ep1y;
+        var rw = tp2[0] - tp1[0], rh = tp2[1] - tp1[1];
         [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
 
         rw -= halfWidth;    rh -= halfWidth;
@@ -626,7 +626,7 @@ class BridgeDecoration extends Decoration {
         }
         if (isLeft) {
             p1 = [-this.approachwidth, -this.approachwidth - halfWidth];
-            p2 = [0.0, -halfWidth];
+            p2 = [0, -halfWidth];
             p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
             p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
             $drawLineP(p1, p2);
@@ -646,14 +646,14 @@ class BridgeDecoration extends Decoration {
         var p1, p2;
         if (isRight) {
             p1 = [+this.approachwidth, +this.approachwidth + halfWidth];
-            p2 = [0.0, +halfWidth];
+            p2 = [0, +halfWidth];
             p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
             p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
             $drawLineP(p1, p2);
         }
         if (isLeft) {
             p1 = [+this.approachwidth, -this.approachwidth - halfWidth];
-            p2 = [0.0, -halfWidth];
+            p2 = [0, -halfWidth];
             p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
             p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
             $drawLineP(p1, p2);
@@ -775,7 +775,7 @@ class TunnelDecoration extends Decoration {
         }
         var halfWidth = this.floorwidth / 2;
         var x, y;
-        var rw = ep2x - ep1x, rh = ep2y - ep1y;
+        var rw = tp2[0] - tp1[0], rh = tp2[1] - tp1[1];
         [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
 
         rw -= halfWidth;    rh -= halfWidth;
@@ -1020,8 +1020,8 @@ function processPanelXML($returnedData, $success, $xhr) {
             function() {
                 var $widget = new Array();
                 $widget['widgetType'] = this.nodeName;
-                $widget['scale'] = "1.0"; //default to no scale
-                $widget['degrees'] = 0.00; //default to no rotation
+                $widget['scale'] = "1"; //default to no scale
+                $widget['degrees'] = 0; //default to no rotation
                 $widget['rotation'] = 0; // default to no rotation
                 //convert attributes to an object array
                 $(this.attributes).each(function() {
@@ -1308,7 +1308,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
                                 $widget.styles['background-image'] = "url('" + $widget['icon' + UNKNOWN] + "')";
                                 $widget['scale'] = $(this).find('icon').attr('scale');
-                                if ($widget.scale != 1.0) {
+                                if ($widget.scale != 1) {
                                     $widget.styles['background-size'] = $widget.scale * 100 + "%";
                                     $widget.styles['line-height'] = $widget.scale * 20 + "px";  //center vertically
                                 }
@@ -2086,7 +2086,7 @@ function $drawIcon($widget) {
         //add overlay text if specified, one layer above, and copy attributes (except background-color)
         if (typeof $widget.text !== "undefined") {
             $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
-			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1.0 + 1, pointerEvents: 'none'};
+			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
 			$.extend(ovlCSS, $widget.styles); //append the styles from the widget
 			delete ovlCSS['background-color'];  //clear the background color
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
@@ -2102,13 +2102,13 @@ function $drawTurntable($widget) {
     //from jmri.jmrit.display.layoutEditor.layoutTurntable
     $drawCircle($widget.xcen, $widget.ycen, $widget.radius);
     var $raytracks = $(this).find('raytrack');
-    var $txcen = $widget.xcen*1.0;
-    var $tycen = $widget.ycen*1.0;
+    var $txcen = $widget.xcen * 1;
+    var $tycen = $widget.ycen * 1;
     $raytracks.each(function(i, item) {  //loop thru raytracks, calc and store end of ray point for each
         var $t = [];
         //note: .5 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
         $t['ident'] = $widget.ident + ".5" + item.attributes['index'].value * 1;
-        $angle = (item.attributes['angle'].value/180.0)*Math.PI;
+        $angle = $toRadians(item.attributes['angle'].value);
         $t['x'] = $txcen + (($widget.radius*1.25)*Math.sin($angle)); //from getRayCoordsIndexed()
         $t['y'] = $tycen - (($widget.radius*1.25)*Math.cos($angle));
         $gPts[$t.ident] = $t; //store the endpoint of this ray
@@ -2179,8 +2179,8 @@ function $drawTurnout($widget) {
 //    } else {
 //       jmri.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
     }
-    var cenx = $widget.xcen * 1.0;
-    var ceny = $widget.ycen * 1.0;
+    var cenx = $widget.xcen * 1;
+    var ceny = $widget.ycen * 1;
     var ax = $gPts[$widget.ident + PT_A].x;
     var ay = $gPts[$widget.ident + PT_A].y;
     var bx = $gPts[$widget.ident + PT_B].x;
@@ -2464,14 +2464,14 @@ function $third(value1, value2) {
 function $storeTurnoutPoints($widget) {
     var $t = [];
     $t['ident'] = $widget.ident + PT_B;  //store B endpoint
-    $t['x'] = $widget.xb * 1.0;
-    $t['y'] = $widget.yb * 1.0;
+    $t['x'] = $widget.xb * 1;
+    $t['y'] = $widget.yb * 1;
     $gPts[$t.ident] = $t;
 
     $t = [];
     $t['ident'] = $widget.ident + PT_C;  //store C endpoint
-    $t['x'] = $widget.xc * 1.0;
-    $t['y'] = $widget.yc * 1.0;
+    $t['x'] = $widget.xc * 1;
+    $t['y'] = $widget.yc * 1;
     $gPts[$t.ident] = $t;
 
     if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT) {
@@ -2483,8 +2483,8 @@ function $storeTurnoutPoints($widget) {
     } else if ($widget.type == WYE_TURNOUT) {
         $t = [];
         $t['ident'] = $widget.ident + PT_A;  //store A endpoint
-        $t['x'] = $widget.xa * 1.0;
-        $t['y'] = $widget.ya * 1.0;
+        $t['x'] = $widget.xa * 1;
+        $t['y'] = $widget.ya * 1;
         $gPts[$t.ident] = $t;
     } else if ($widget.type == LH_XOVER || $widget.type == RH_XOVER || $widget.type == DOUBLE_XOVER) {
         $t = [];
@@ -2505,14 +2505,14 @@ function $storeTurnoutPoints($widget) {
 function $storeSlipPoints($widget) {
     var $t = [];
     $t['ident'] = $widget.ident + SLIP_A;  //store A endpoint
-    $t['x'] = $widget.xa * 1.0;
-    $t['y'] = $widget.ya * 1.0;
+    $t['x'] = $widget.xa * 1;
+    $t['y'] = $widget.ya * 1;
     $gPts[$t.ident] = $t;
 
     $t = [];
     $t['ident'] = $widget.ident + SLIP_B;  //store B endpoint
-    $t['x'] = $widget.xb * 1.0;
-    $t['y'] = $widget.yb * 1.0;
+    $t['x'] = $widget.xb * 1;
+    $t['y'] = $widget.yb * 1;
     $gPts[$t.ident] = $t;
 
     $t = [];
@@ -2533,14 +2533,14 @@ function $storeSlipPoints($widget) {
 function $storeLevelXingPoints($widget) {
     var $t = [];
     $t['ident'] = $widget.ident + LEVEL_XING_A;  //store A endpoint
-    $t['x'] = $widget.xa * 1.0;
-    $t['y'] = $widget.ya * 1.0;
+    $t['x'] = $widget.xa * 1;
+    $t['y'] = $widget.ya * 1;
     $gPts[$t.ident] = $t;
 
     $t = [];
     $t['ident'] = $widget.ident + LEVEL_XING_B;  //store B endpoint
-    $t['x'] = $widget.xb * 1.0;
-    $t['y'] = $widget.yb * 1.0;
+    $t['x'] = $widget.xb * 1;
+    $t['y'] = $widget.yb * 1;
     $gPts[$t.ident] = $t;
 
     $t = [];
@@ -2622,9 +2622,8 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
     // Compute arc's chord
     var a = pt2x - pt1x;
     var o = pt2y - pt1y;
-    var chord = Math.sqrt(((a * a) + (o * o))); //in pixels
-
-    if (chord > 0.0) {  //don't bother if no length
+    var chord = Math.hypot(a, o);   //in pixels
+    if (chord > 0) {  //don't bother if no length
         $gCtx.save();   // save current line width and color
 
         // set color and width
@@ -2635,21 +2634,20 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
             $gCtx.lineWidth = $width;
         }
 
-        var halfAngle = (degrees / 2) * Math.PI / 180; //in radians
-        var radius = (chord / 2) / (Math.sin(halfAngle));  //in pixels
-        // Circle
-        var startRad = Math.atan2(a, o) - halfAngle; //in radians
+        var halfAngleRAD = $toRadians(degrees / 2);
+        var radius = (chord / 2) / (Math.sin(halfAngleRAD));  //in pixels
+        var startRAD = Math.atan2(a, o) - halfAngleRAD; //in radians
+
         // calculate center of circle
-        var cx = (pt2x * 1.0) - Math.cos(startRad) * radius;
-        var cy = (pt2y * 1.0) + Math.sin(startRad) * radius;
+        var cx = (pt2x * 1.0) - Math.cos(startRAD) * radius;
+        var cy = (pt2y * 1.0) + Math.sin(startRAD) * radius;
 
         //calculate start and end angle
-        var startAngle = Math.atan2(pt1y - cy, pt1x - cx); //in radians
-        var endAngle = Math.atan2(pt2y - cy, pt2x - cx); //in radians
-        var counterClockwise = false;
+        var startAngleRAD = Math.atan2(pt1y - cy, pt1x - cx); //in radians
+        var endAngleRAD = Math.atan2(pt2y - cy, pt2x - cx); //in radians
 
         $gCtx.beginPath();
-        $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
+        $gCtx.arc(cx, cy, radius, startAngleRAD, endAngleRAD, false);
         $gCtx.stroke();
 
         $gCtx.restore();        // restore color and width back to default
@@ -2777,7 +2775,7 @@ function $point_log(prefix, p) {
 function $point_length(p) {
     var dx = p[0];
     var dy = p[1];
-    return Math.sqrt((dx * dx) + (dy * dy));
+    return Math.hypot(dx, dy);
 }
 
 function $point_add(p1, p2) {
@@ -2816,12 +2814,12 @@ function $computeAngleRAD2(p1, p2) {
 
 // Converts from degrees to radians.
 function $toRadians(degrees) {
-  return degrees * Math.PI / 180;
+    return degrees * Math.PI / 180;
 };
 
 // Converts from radians to degrees.
 function $toDegrees(radians) {
-  return radians * 180 / Math.PI;
+    return radians * 180 / Math.PI;
 };
 
 // rotate a point vector
@@ -2938,12 +2936,12 @@ var $setWidgetPosition = function(e) {
 
         // calculate x and y adjustment needed to keep upper left of bounding box in the same spot
         // adapted to match JMRI's NamedIcon.rotate(). Note: transform-origin set in .css file
-        var tx = 0.0;
-        var ty = 0.0;
+        var tx = 0;
+        var ty = 0;
 
-        if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1.0)) { // only calc offset if needed
+        if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1)) { // only calc offset if needed
 
-            var $rad = $widget.degrees * Math.PI / 180.0;
+            var $rad = $toRadians($widget.degrees);
 
             if (0 <= $widget.degrees && $widget.degrees < 90
                     || -360 < $widget.degrees && $widget.degrees <= -270) {
