@@ -622,27 +622,24 @@ public class TrackSegment extends LayoutTrack {
     }
 
     private LayoutBlock getBlock(LayoutTrack connect, int type) {
-        if (connect == null) {
-            return null;
-        }
-        if (type == POS_POINT) {
-            PositionablePoint p = (PositionablePoint) connect;
-            if (p.getConnect1() != this) {
-                if (p.getConnect1() != null) {
-                    return (p.getConnect1().getLayoutBlock());
+        LayoutBlock result = null;
+        if (connect != null) {
+            if (type == POS_POINT) {
+                PositionablePoint p = (PositionablePoint) connect;
+                if (p.getConnect1() != this) {
+                    if (p.getConnect1() != null) {
+                        result = p.getConnect1().getLayoutBlock();
+                    }
                 } else {
-                    return null;
+                    if (p.getConnect2() != null) {
+                        result = p.getConnect2().getLayoutBlock();
+                    }
                 }
             } else {
-                if (p.getConnect2() != null) {
-                    return (p.getConnect2().getLayoutBlock());
-                } else {
-                    return null;
-                }
+                result = layoutEditor.getAffectedBlock(connect, type);
             }
-        } else {
-            return (layoutEditor.getAffectedBlock(connect, type));
         }
+        return result;
     }
 
     /**
@@ -1592,77 +1589,82 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public ArrayList<String> getPointReferences(int type, LayoutTrack conn) {
-        ArrayList<String> items = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
 
         if (type == POS_POINT && conn instanceof PositionablePoint) {
             PositionablePoint pt = (PositionablePoint) conn;
             if (!pt.getEastBoundSignal().isEmpty()) {
-                items.add(pt.getEastBoundSignal());
+                result.add(pt.getEastBoundSignal());
             }
             if (!pt.getWestBoundSignal().isEmpty()) {
-                items.add(pt.getWestBoundSignal());
+                result.add(pt.getWestBoundSignal());
             }
             if (!pt.getEastBoundSignalMastName().isEmpty()) {
-                items.add(pt.getEastBoundSignalMastName());
+                result.add(pt.getEastBoundSignalMastName());
             }
             if (!pt.getWestBoundSignalMastName().isEmpty()) {
-                items.add(pt.getWestBoundSignalMastName());
+                result.add(pt.getWestBoundSignalMastName());
             }
             if (!pt.getEastBoundSensorName().isEmpty()) {
-                items.add(pt.getEastBoundSensorName());
+                result.add(pt.getEastBoundSensorName());
             }
             if (!pt.getWestBoundSensorName().isEmpty()) {
-                items.add(pt.getWestBoundSensorName());
+                result.add(pt.getWestBoundSensorName());
             }
             if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
-                items.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
+                result.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
             }
-            return items;
         }
 
         if ((type == TURNOUT_A || type == TURNOUT_B || type == TURNOUT_C || type == TURNOUT_D) && conn instanceof LayoutTurnout) {
             LayoutTurnout lt = (LayoutTurnout) conn;
             if (type == TURNOUT_A) {
-                return lt.getBeanReferences("A");  // NOI18N
+                result = lt.getBeanReferences("A");  // NOI18N
             }
             if (type == TURNOUT_B) {
-                return lt.getBeanReferences("B");  // NOI18N
+                result = lt.getBeanReferences("B");  // NOI18N
             }
             if (type == TURNOUT_C) {
-                return lt.getBeanReferences("C");  // NOI18N
+                result = lt.getBeanReferences("C");  // NOI18N
             }
-            return lt.getBeanReferences("D");  // NOI18N
+            if (type == TURNOUT_D) {
+                result = lt.getBeanReferences("D");  // NOI18N
+            }
         }
 
         if ((type == LEVEL_XING_A || type == LEVEL_XING_B || type == LEVEL_XING_C || type == LEVEL_XING_D) && conn instanceof LevelXing) {
             LevelXing lx = (LevelXing) conn;
             if (type == LEVEL_XING_A) {
-                return lx.getBeanReferences("A");  // NOI18N
+                result = lx.getBeanReferences("A");  // NOI18N
             }
             if (type == LEVEL_XING_B) {
-                return lx.getBeanReferences("B");  // NOI18N
+                result = lx.getBeanReferences("B");  // NOI18N
             }
             if (type == LEVEL_XING_C) {
-                return lx.getBeanReferences("C");  // NOI18N
+                result = lx.getBeanReferences("C");  // NOI18N
             }
-            return lx.getBeanReferences("D");  // NOI18N
+            if (type == LEVEL_XING_D) {
+                result = lx.getBeanReferences("D");  // NOI18N
+            }
         }
 
         if ((type == SLIP_A || type == SLIP_B || type == SLIP_C || type == SLIP_D) && conn instanceof LayoutSlip) {
             LayoutSlip ls = (LayoutSlip) conn;
             if (type == SLIP_A) {
-                return ls.getBeanReferences("A");  // NOI18N
+                result = ls.getBeanReferences("A");  // NOI18N
             }
             if (type == SLIP_B) {
-                return ls.getBeanReferences("B");  // NOI18N
+                result = ls.getBeanReferences("B");  // NOI18N
             }
             if (type == SLIP_C) {
-                return ls.getBeanReferences("C");  // NOI18N
+                result = ls.getBeanReferences("C");  // NOI18N
             }
-            return ls.getBeanReferences("D");  // NOI18N
+            if (type == SLIP_D) {
+                result = ls.getBeanReferences("D");  // NOI18N
+            }
         }
 
-        return items;
+        return result;
     }
 
     /**
@@ -1889,11 +1891,8 @@ public class TrackSegment extends LayoutTrack {
     public int showConstructionLine = SHOWCON;
 
     public boolean isShowConstructionLines() {
-        if ((showConstructionLine & HIDECON) == HIDECON
-                || (showConstructionLine & HIDECONALL) == HIDECONALL) {
-            return false;
-        }
-        return true;
+        return (((showConstructionLine & HIDECON) != HIDECON)
+                && ((showConstructionLine & HIDECONALL) != HIDECONALL));
     }
 
     //Methods used by Layout Editor
@@ -1914,11 +1913,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public boolean hideConstructionLines() {
-        if ((showConstructionLine & SHOWCON) == SHOWCON) {
-            return false;
-        } else {
-            return true;
-        }
+        return ((showConstructionLine & SHOWCON) != SHOWCON);
     }
 
     /**
@@ -2477,17 +2472,14 @@ public class TrackSegment extends LayoutTrack {
                 double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
                 if (bridgeSideLeft) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
-                    g2.draw(new Arc2D.Double(tRectangle2D.getX(),tRectangle2D.getY(),
-                            tRectangle2D.getWidth(),tRectangle2D.getHeight(),
+                    g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
+                            tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
                 if (bridgeSideRight) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
-                    g2.draw(new Arc2D.Double(
-                            tRectangle2D.getX(),
-                            tRectangle2D.getY(),
-                            tRectangle2D.getWidth(),
-                            tRectangle2D.getHeight(),
+                    g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
+                            tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
             } else if (isBezier()) {
@@ -2613,20 +2605,14 @@ public class TrackSegment extends LayoutTrack {
                 double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
                 if (tunnelSideRight) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
-                    g2.draw(new Arc2D.Double(
-                            tRectangle2D.getX(),
-                            tRectangle2D.getY(),
-                            tRectangle2D.getWidth(),
-                            tRectangle2D.getHeight(),
+                    g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
+                            tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
                 if (tunnelSideLeft) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
-                    g2.draw(new Arc2D.Double(
-                            tRectangle2D.getX(),
-                            tRectangle2D.getY(),
-                            tRectangle2D.getWidth(),
-                            tRectangle2D.getHeight(),
+                    g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
+                            tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
                 trackRedrawn();
