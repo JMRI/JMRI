@@ -102,12 +102,6 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
 
-    @Ignore("DefaultSignalMastManager doesn't support auto system names")
-    @Test
-    @Override
-    public void testAutoSystemNames() {
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() {
