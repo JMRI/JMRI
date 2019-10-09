@@ -34,5 +34,8 @@ public class PacketGenFrameTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
+    }
 }
