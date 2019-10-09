@@ -14,8 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Basic Implementation of a LogixManager.
  * <p>
- * Note that Logix system names must begin with IX, and be followed by a string,
- * usually, but not always, a number. This is enforced when a Logix is created.
+ * Note that Logix system names must begin with system prefix and type character,
+ * usually IX, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Logix is created.
  * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
@@ -76,34 +77,16 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         // save in the maps
         register(x);
 
-        /*The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IX:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoLogixRef) {
-                    lastAutoLogixRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return x;
     }
 
     @Override
     public Logix createNewLogix(String userName) {
-        int nextAutoLogixRef = lastAutoLogixRef + 1;
-        StringBuilder b = new StringBuilder("IX:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoLogixRef);
-        b.append(nextNumber);
-        return createNewLogix(b.toString(), userName);
+        return createNewLogix(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoLogixRef = 0;
 
     /**
      * Remove an existing Logix and delete all its conditionals. Logix must have
