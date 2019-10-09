@@ -604,7 +604,6 @@
     JUnitUtil.resetInstanceManager();
     JUnitUtil.resetProfileManager();
     JUnitUtil.initConfigureManager();
-    JUnitUtil.initShutDownManager();
 
     JUnitUtil.initDebugCommandStation();
     
@@ -624,6 +623,31 @@
     JUnitUtil.tearDown();
 </pre>
 
+      <h4>Some special cases</h4>
+      
+      During testing, your code might need a ShutDownManager.  There
+      are several points to consider:
+      <ul>
+      <li>If you leave any ShutDownActions in the ShutDownManager at the end
+            of your test, warnings will be issued during the @After
+            processing.  You should remove (and check for correctness)
+            any items that where queued as shutdown items.
+      <li>As a temporary bypass when that check was added, the
+            JUnitUtil.clearShutDownManager() method was added.
+            This clears the ShutDownManager without issuing warnings,
+            but also without doing any checks.
+            You should only use this temporarily, hence it's marked
+            as deprecated to flag that.
+      <li>When running JUnit tests within the JMRI build infrastructure,
+            a request via InstanceManager.getDefault(..) for a 
+            ShutDownManager will get a mock one for testing.
+            A request via InstanceManager.getNullableDefault(..)
+            will get a null.  If you want InstanceManager.getNullableDefault(..)
+            to return a manager, you must call
+            JUnitUtil.initShutDownManager() in the @Before routine
+            to create the mock manager before the getNullableDefault(..) request.
+      </ul>
+      
       <h3><a name="RunningListeners" id="RunningListeners">Working
       with Listeners</a></h3>
       JMRI is a multi-threaded application.

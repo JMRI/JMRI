@@ -876,9 +876,17 @@ public class JUnitUtil {
     
     /**
      * Leaves ShutDownManager, if any, in place,
-     * but removes its contents.
+     * but removes its contents.  Instead of using this,
+     * it's better to have your test code remove _and_ _check_
+     * for specific items; this just suppresses output from the 
+     * {@link #checkShutDownManager()} check down as part of the 
+     * default end-of-test code.
+     *
+     * @see #checkShutDownManager()
      * @see #initShutDownManager()
+     * @deprecated 4.17.4 because tests should directly test and remove queued items
      */
+    @Deprecated // 4.17.4 because tests should directly test and remove queued items
     public static void clearShutDownManager() {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         if (sm == null) return;
@@ -891,10 +899,14 @@ public class JUnitUtil {
     }
 
     /**
-     * Warns if the {@link jmri.ShutDownManager} was not left empty
+     * Warns if the {@link jmri.ShutDownManager} was not left empty. Normally
+     * run as part of the 
+     * default end-of-test code.
+     *
+     * @see #clearShutDownManager()
      * @see #initShutDownManager()
      */
-    public static void checkShutDownManager() {
+    static void checkShutDownManager() {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         if (sm == null) return;
         List<ShutDownTask> list = sm.tasks();
@@ -909,6 +921,11 @@ public class JUnitUtil {
     /**
      * Creates a new ShutDownManager.
      * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
+     * Normally, this is not needed for tests, as 
+     * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
+     * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
+     * If you're testing code that uses {@link InstanceManager#getNullableDefault()}, you need to call this
+     * method first.
      * @see #clearShutDownManager()
      */
     public static void initShutDownManager() {
