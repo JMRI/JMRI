@@ -37,7 +37,6 @@ public class ImageIndexEditorTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

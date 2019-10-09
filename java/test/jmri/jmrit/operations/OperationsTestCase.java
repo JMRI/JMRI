@@ -35,7 +35,6 @@ public class OperationsTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
-        JUnitUtil.initShutDownManager();
     }
     
     private final boolean checkEventQueueEmpty = false;
