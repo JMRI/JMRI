@@ -51,7 +51,7 @@ public class TableFramesTest {
         b2.setLength(100);
         b1.addPath(new Path(b2, 64, 128));
         b2.addPath(new Path(b1, 128, 64));
-        Sensor s1 = new AbstractSensor("IS1") {
+        s1 = new AbstractSensor("IS1") {
             @Override
             public void requestUpdateFromLayout() {
             }
