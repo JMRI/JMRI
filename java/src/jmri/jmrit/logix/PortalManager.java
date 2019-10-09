@@ -73,10 +73,10 @@ public class PortalManager extends AbstractManager<Portal>
         } else {
             if (log.isDebugEnabled()) log.debug("createNewPortal called with system name \"{}\"", sName);
         }
-        if (!sName.startsWith("IP")) {
-            sName = "IP" + sName;
+        if (!sName.startsWith(getSystemNamePrefix())) {
+            sName = getSystemNamePrefix() + sName;
         }
-        if (sName.length() < 3) {
+        if (sName.length() < getSystemNamePrefix().length()+1) {
             return null;
         }
         portal = getBySystemName(sName);
