@@ -137,7 +137,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         m.updateAutoNumber(sysPrefix+":AUT:0203");
         Assert.assertEquals(sysPrefix+":AUTO:0102", m.getAutoSystemName());
         m.updateAutoNumber("12"+":AUT:0203");   // Bad system name prefix
-        Assert.assertEquals(sysPrefix+":AUTO:0102", m.getAutoSystemName());
+        Assert.assertEquals(sysPrefix+":AUTO:0103", m.getAutoSystemName());
     }
     
     //private final static Logger log = LoggerFactory.getLogger(AbstractManagerTestBase.class);
