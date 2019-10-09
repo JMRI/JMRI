@@ -26,7 +26,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
    @Override
    public void tearDown(){
         cc = null;
-        resetWindows(false,false);
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
    }
 
