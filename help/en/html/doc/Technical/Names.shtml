@@ -290,7 +290,7 @@
 
         <li>B Block - A software object that keeps track of the
         contents of a specific block of track.
-        Block system names start with IB.</li>
+        Block system names mostly, but not always, start with IB.</li>
 
         <li>D iDentity - A software object that holds information
         about an identity tag that is, typically, attached to a
@@ -324,7 +324,7 @@
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
         information temporarily and display it on panels, etc.
-        Memory system names start with IM.</li>
+        Memory system names mostly, but not always, start with IM.</li>
 
         <li>N eNtry/exit destination points</li>
 
@@ -352,10 +352,14 @@
         
         <li>X logiX - a set of logic equations used to control the
         layout.
-        Logix system names start with IX.</li>
+        Logix system names mostly, but not always, start with IX.</li>
 
         <li>Y Sections - holds a map of trackwork.
-        Section system names start with IY.</li>
+        Section system names mostly, but not always, start with IY.</li>
+
+        <li>Z Transit - a group of Sections representing a specified
+		path through a layout.
+        Transit system names mostly, but not always, start with IZ.</li>
       </ul>
 
 
