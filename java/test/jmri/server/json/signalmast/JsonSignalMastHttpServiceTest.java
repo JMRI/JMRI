@@ -18,8 +18,6 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
-import jmri.server.json.signalmast.JsonSignalMast;
-import jmri.server.json.signalmast.JsonSignalMastHttpService;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
