@@ -318,13 +318,13 @@
         SignalHead system names mostly, but not always, start with IH.
         </li>
 
+        <li>L Light - another form of output, used to e.g. control
+        lights on a layout</li>
+
         <li>M Memory - As yet, this has no real equivalent in the
         layout hardware, but is used as a place to store
         information temporarily and display it on panels, etc.
         Memory system names start with IM.</li>
-
-        <li>L Light - another form of output, used to e.g. control
-        lights on a layout</li>
 
         <li>N eNtry/exit destination points</li>
 
@@ -347,15 +347,15 @@
         generally be either ACTIVE or INACTIVE. This is most
         commonly used for block occupancy detectors.</li>
 
-        <li>Y Sections - holds a map of trackwork.
-        Section system names start with IY.</li>
-        
         <li>T Turnout - actually a general purpose output on the
         layout</li>
-
+        
         <li>X logiX - a set of logic equations used to control the
         layout.
         Logix system names start with IX.</li>
+
+        <li>Y Sections - holds a map of trackwork.
+        Section system names start with IY.</li>
       </ul>
 
 
