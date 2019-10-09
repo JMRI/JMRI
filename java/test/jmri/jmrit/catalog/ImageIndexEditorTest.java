@@ -43,6 +43,7 @@ public class ImageIndexEditorTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.initShutDownManager();
         JUnitUtil.tearDown();
     }
 
