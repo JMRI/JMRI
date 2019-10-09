@@ -653,7 +653,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("min")) != null) {
             extra3 = a.getValue();
         }
-        String extra4 = Long.toUnsignedString((long) ~0);
+        String extra4 = Long.toUnsignedString(~0);
         if ((a = child.getAttribute("max")) != null) {
             extra4 = a.getValue();
         }
@@ -692,7 +692,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("min")) != null) {
             extra3 = a.getValue();
         }
-        String extra4 = Long.toUnsignedString((long) ~0,16);
+        String extra4 = Long.toUnsignedString(~0,16);
         if ((a = child.getAttribute("max")) != null) {
             extra4 = a.getValue();
         }
