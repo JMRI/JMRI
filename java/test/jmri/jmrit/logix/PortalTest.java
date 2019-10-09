@@ -105,7 +105,7 @@ public class PortalTest {
                 p.setProtectSignal(sh2, 100, _blkMgr.provideOBlock("OB3")));
 
         // a (static) method in Portal acting on signals
-        Assert.assertNull("get signal head", p.getSignal("IH1")); // would not expect null
+        Assert.assertNull("get signal head", Portal.getSignal("IH1")); // would not expect null
         Assert.assertEquals("block protected by IH1", "OB1", p.getProtectedBlock(sh1).getDisplayName());
         p.deleteSignal(sh1);
         Assert.assertNull("ToSignal deleted from portal", p.getFromSignal());
