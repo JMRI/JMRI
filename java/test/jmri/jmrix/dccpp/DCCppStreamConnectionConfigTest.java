@@ -20,7 +20,7 @@ public class DCCppStreamConnectionConfigTest extends jmri.jmrix.AbstractConnecti
     @Override
     public void tearDown() {
         cc = null;
-        JUnitUtil.resetWindows(false,false);
+        jmri.util.JUnitUtil.resetWindows(false,false);
         jmri.util.JUnitUtil.tearDown();
     }
 
