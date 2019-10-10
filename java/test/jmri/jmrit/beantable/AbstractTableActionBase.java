@@ -3,6 +3,8 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import jmri.NamedBean;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -21,11 +23,12 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  * from AbstractTableAction. This contains a base level of testing for these
  * objects. Derived classes should set the "a" variable in their setUp method.
  *
+ * @param <B> supported type of NamedBean
  * @author Paul Bender Copyright (C) 2017
  */
-public abstract class AbstractTableActionBase {
+public abstract class AbstractTableActionBase<B extends NamedBean> {
 
-    protected AbstractTableAction a = null;
+    protected AbstractTableAction<B> a = null;
     protected String helpTarget = "index"; // index is default value specified in AbstractTableAction.
 
     @Test
@@ -90,10 +93,10 @@ public abstract class AbstractTableActionBase {
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
-	JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-	JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
+        JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }

@@ -2,6 +2,8 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+
+import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -10,7 +12,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ReporterTableActionTest extends AbstractTableActionBase {
+public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
 
     @Test
     public void testCTor() {

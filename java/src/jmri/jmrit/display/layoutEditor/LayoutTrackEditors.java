@@ -888,8 +888,6 @@ public class LayoutTrackEditors {
     private LayoutSlip layoutSlip = null;
 
     private JmriJFrame editLayoutSlipFrame = null;
-    private JButton editLayoutSlipDoneButton;
-    private JButton editLayoutSlipCancelButton;
     private JButton editLayoutSlipBlockButton;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutAComboBox;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutBComboBox;
@@ -1312,8 +1310,6 @@ public class LayoutTrackEditors {
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private NamedBeanComboBox<Block> editLevelXingBlock2NameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private JButton editLevelXingDoneButton;
-    private JButton editLevelXingCancelButton;
     private JButton editLevelXingBlock1Button;
     private JButton editLevelXingBlock2Button;
 
@@ -1523,8 +1519,6 @@ public class LayoutTrackEditors {
     private JmriJFrame editLayoutTurntableFrame = null;
     private JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
     private JTextField editLayoutTurntableAngleTextField = new JTextField(8);
-    private JButton editLayoutTurntableDoneButton;
-    private JButton editLayoutTurntableCancelButton;
 
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;

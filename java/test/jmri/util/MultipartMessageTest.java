@@ -27,7 +27,6 @@ public class MultipartMessageTest {
         // and clean it up in teardown.
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initShutDownManager();
         jmri.util.JUnitUtil.initDebugPowerManager();
         server = new WebServer(); // a webserver using default preferences.
         server.start();

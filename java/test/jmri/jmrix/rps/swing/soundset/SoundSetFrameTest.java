@@ -18,10 +18,11 @@ public class SoundSetFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         memo = new RpsSystemConnectionMemo();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SoundSetFrame(memo);
-	}
+	    }
     }
 
     @After
