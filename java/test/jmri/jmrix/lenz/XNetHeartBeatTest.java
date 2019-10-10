@@ -38,9 +38,10 @@ public class XNetHeartBeatTest {
   
     @After
     public void tearDown(){
-       hb.dispose();
-       hb = null;
-       jmri.util.JUnitUtil.tearDown();
+        hb.dispose();
+        hb = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

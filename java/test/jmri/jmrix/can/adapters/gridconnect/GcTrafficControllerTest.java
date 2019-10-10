@@ -22,7 +22,9 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+ 
     }
 
 }

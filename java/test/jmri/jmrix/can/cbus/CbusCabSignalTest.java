@@ -45,7 +45,9 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusCabSignalTest.class);

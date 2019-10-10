@@ -46,6 +46,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
         tcis = null;
         memo = null;
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
     
