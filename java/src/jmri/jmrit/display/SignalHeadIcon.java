@@ -126,7 +126,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     /**
      * Check that device supports the state.
-     * Valid state names returned by the bean are non-localized.
+     * Valid state names returned by the bean are (non-localized) property key names.
      */
     private boolean isValidState(String key) {
         if (key == null) {
