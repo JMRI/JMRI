@@ -2,7 +2,7 @@ package jmri.configurexml;
 
 import java.awt.GraphicsEnvironment;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.configurexml.swing.DialogErrorHandler;
 import org.jdom2.Element;
 
@@ -49,7 +49,7 @@ public interface XmlAdapter {
     /**
      * Create a set of configured objects from their XML description, using an
      * auxiliary object.
-     * <P>
+     * <p>
      * For example, the auxilary object o might be a manager or GUI of some type
      * that needs to be informed as each object is created.
      *
@@ -63,7 +63,7 @@ public interface XmlAdapter {
     /**
      * Create a set of configured objects from their XML description, using an
      * auxiliary object.
-     * <P>
+     * <p>
      * For example, the auxilary object o might be a manager or GUI of some type
      * that needs to be informed as each object is created.
      *
@@ -100,34 +100,6 @@ public interface XmlAdapter {
     public int loadOrder();
 
     /**
-     * Invoke common handling of errors that happen during the "load" process.
-     *
-     * This is part of the interface to ensure that all the necessary classes
-     * provide it; eventually it will be coupled to a reporting mechanism of
-     * some sort.
-     *
-     * @param description description of error encountered
-     * @param systemName  System name of bean being handled, may be null
-     * @param userName    used name of the bean being handled, may be null
-     * @param exception   Any exception being handled in the processing, may be
-     *                    null
-     * @throws JmriConfigureXmlException in place for later expansion; should be
-     *                                   propagated upward to higher-level error
-     *                                   handling
-     * @deprecated since 4.7.2; use
-     * {@link #handleException(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Exception)}
-     * instead
-     */
-    @Deprecated // 4.7.2
-    public default void creationErrorEncountered(
-            String description,
-            String systemName,
-            String userName,
-            Exception exception) throws JmriConfigureXmlException {
-        this.handleException(description, null, systemName, userName, exception);
-    }
-
-    /**
      * Provide a simple handler for errors.
      *
      * Calls the configured {@link jmri.configurexml.ErrorHandler} with an
@@ -146,10 +118,10 @@ public interface XmlAdapter {
      */
     public void handleException(
             @Nonnull String description,
-            @Nullable String operation,
-            @Nullable String systemName,
-            @Nullable String userName,
-            @Nullable Exception exception) throws JmriConfigureXmlException;
+            @CheckForNull String operation,
+            @CheckForNull String systemName,
+            @CheckForNull String userName,
+            @CheckForNull Exception exception) throws JmriConfigureXmlException;
 
     /**
      * Set the error handler that will handle any errors encountered while

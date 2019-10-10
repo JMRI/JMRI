@@ -123,10 +123,16 @@ log4j.category.jmri.util.I18NTest=DEBUG
 # Needed for jmri.util.Log4JUtilTest
 log4j.category.jmri.util.Log4JUtilTest = WARN
 
+# Force version info into early log
+log4j.category.jmri.VersionTest = INFO
+
 # Needed for jmri.util.JUnitAppenderTest
 log4j.category.jmri.util.JUnitAppenderTest = INFO
 
 # INFO is part of application tests
 log4j.category.apps.Apps = INFO
+log4j.category.apps.AppsBase = INFO
 log4j.category.apps.PanelPro.PanelPro = INFO
+log4j.category.apps.gui3.Apps3 = INFO
+log4j.category.apps.gui3.dp3.DecoderPro3 = INFO
 

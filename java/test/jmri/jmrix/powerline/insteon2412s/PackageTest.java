@@ -16,7 +16,8 @@ import org.junit.runners.Suite;
    SpecificReplyTest.class,
    SpecificSystemConnectionMemoTest.class,
    SpecificTrafficControllerTest.class,
-   ConstantsTest.class
+   ConstantsTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.powerline.insteon2412s package.

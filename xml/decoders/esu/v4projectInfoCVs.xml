@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: v4standardCVs.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,14 +20,28 @@
         <!--     <splitTextVal match=".+"/> -->
         <!--     <splitTextVal match="[a-zA-Z0-9]*"/> -->
         <label>Loco Name</label>
+        <label xml:lang="de">Lokname</label>
     </variable>
     <variable CV="1.0.257" mask="VVXXXXXX" readOnly="no" item="Project Loco Type">
-        <enumVal>
-            <enumChoice choice="Steam"/>
-            <enumChoice choice="Diesel"/>
-            <enumChoice choice="Electric"/>
-            <enumChoice choice="Miscellaneous"/>
-        </enumVal>
+         <enumVal>
+            <enumChoice choice="Steam">
+             <choice>Steam</choice>
+             <choice xml:lang="de">Dampf</choice>
+            </enumChoice>
+            <enumChoice choice="Diesel">
+             <choice>Diesel</choice>
+             <choice xml:lang="de">Diesel</choice>
+            </enumChoice>
+            <enumChoice choice="Electric">
+             <choice>Electric</choice>
+             <choice xml:lang="de">Elok</choice>
+            </enumChoice>
+            <enumChoice choice="Miscellaneous">
+             <choice>Miscellaneous</choice>
+             <choice xml:lang="de">Verschiedene</choice>
+            </enumChoice>
+         </enumVal>
         <label>Loco Type</label>
+        <label xml:lang="de">Loktyp</label>
     </variable>
 </variables>

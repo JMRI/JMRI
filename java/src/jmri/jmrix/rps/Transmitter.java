@@ -92,7 +92,8 @@ public class Transmitter implements ThrottleListener {
             return false;
         }
         // request throttle
-        InstanceManager.throttleManagerInstance().requestThrottle(address, longAddress, this);
+        InstanceManager.throttleManagerInstance().requestThrottle(
+            new jmri.DccLocoAddress(address, longAddress), this, false);
         return false;
     }
 
@@ -105,11 +106,24 @@ public class Transmitter implements ThrottleListener {
     @Override
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
-    public void notifyStealThrottleRequired(jmri.LocoAddress address){
-        // this is an automatically stealing impelementation.
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
 }

@@ -34,13 +34,13 @@ public class CodeButtonHandler {
     private final IndicationLockingSignals _mIndicationLockingSignals;
     private final CodeButtonSimulator _mCodeButtonSimulator;
     private LockedRoute _mLockedRoute = null;
-    
+
     public CodeButtonHandler(   boolean turnoutLockingOnlyEnabled,                              // If this is NOT an O.S. section, but only a turnout lock, then this is true.
                                 LockedRoutesManager lockedRoutesManager,
                                 String userIdentifier,
                                 int uniqueID,
                                 String codeButtonInternalSensor,                                // Required
-                                int codeButtonDelayInMilliseconds,                              // If 0, REAL code button, if > 0, tower operations (simulated code button).                   
+                                int codeButtonDelayInMilliseconds,                              // If 0, REAL code button, if > 0, tower operations (simulated code button).
                                 String osSectionOccupiedExternalSensor,                         // Required, if ACTIVE prevents turnout, lock or call on from occuring.
                                 String osSectionOccupiedExternalSensor2,                        // Optional, if ACTIVE prevents turnout, lock or call on from occuring.
                                 SignalDirectionIndicatorsInterface signalDirectionIndicators,   // Required
@@ -70,16 +70,16 @@ public class CodeButtonHandler {
         _mCodeButtonInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCodeButtonInternalSensorPropertyChangeListener = (PropertyChangeEvent e) -> { codeButtonStateChange(e); };
         _mCodeButtonInternalSensor.addPropertyChangeListener(_mCodeButtonInternalSensorPropertyChangeListener);
-        
+
         _mOSSectionOccupiedExternalSensorPropertyChangeListener = (PropertyChangeEvent e) -> { osSectionPropertyChangeEvent(e); };
         _mOSSectionOccupiedExternalSensor = new NBHSensor("CodeButtonHandler", userIdentifier, "osSectionOccupiedExternalSensor", osSectionOccupiedExternalSensor, false);
         _mOSSectionOccupiedExternalSensor.addPropertyChangeListener(_mOSSectionOccupiedExternalSensorPropertyChangeListener);
 
-// NO property change for this, only used for turnout locking:        
+// NO property change for this, only used for turnout locking:
         _mOSSectionOccupiedExternalSensor2 = new NBHSensor("CodeButtonHandler", userIdentifier, "osSectionOccupiedExternalSensor2", osSectionOccupiedExternalSensor2, true);
-        
+
         if (codeButtonDelayInMilliseconds > 0) { // SIMULATED code button:
-            _mCodeButtonSimulator = new CodeButtonSimulator(codeButtonDelayInMilliseconds, 
+            _mCodeButtonSimulator = new CodeButtonSimulator(codeButtonDelayInMilliseconds,
                                                             _mCodeButtonInternalSensor,
                                                             _mSwitchDirectionLever,
                                                             _mSignalDirectionLever,
@@ -88,12 +88,12 @@ public class CodeButtonHandler {
             _mCodeButtonSimulator = null;
         }
     }
-    
+
     public void removeAllListeners() {
 //  Remove our registered listeners first:
         _mCodeButtonInternalSensor.removePropertyChangeListener(_mCodeButtonInternalSensorPropertyChangeListener);
         _mOSSectionOccupiedExternalSensor.removePropertyChangeListener(_mOSSectionOccupiedExternalSensorPropertyChangeListener);
-//  Give each object a chance to remove theirs also:        
+//  Give each object a chance to remove theirs also:
         if (_mSignalDirectionIndicators != null) _mSignalDirectionIndicators.removeAllListeners();
         if (_mSignalDirectionLever != null) _mSignalDirectionLever.removeAllListeners();
         if (_mSwitchDirectionIndicators != null) _mSwitchDirectionIndicators.removeAllListeners();
@@ -105,17 +105,17 @@ public class CodeButtonHandler {
         if (_mIndicationLockingSignals != null) _mIndicationLockingSignals.removeAllListeners();
         if (_mCodeButtonSimulator != null) _mCodeButtonSimulator.removeAllListeners();
     }
-    
+
 /**
  * SignalDirectionIndicators calls us here when time locking is done:
- */    
+ */
     public void cancelLockedRoute() {
         _mLockedRoutesManager.cancelLockedRoute(_mLockedRoute);
         _mLockedRoute = null;       // Not valid anymore.
     }
-    
+
     public boolean uniqueIDMatches(int uniqueID) { return _mUniqueID == uniqueID; }
-    public NBHSensor getOSSectionOccupiedExternalSensor() { return _mOSSectionOccupiedExternalSensor; }    
+    public NBHSensor getOSSectionOccupiedExternalSensor() { return _mOSSectionOccupiedExternalSensor; }
 
     private void osSectionPropertyChangeEvent(PropertyChangeEvent e) {
         if (isPrimaryOSSectionOccupied()) { // MUST ALWAYS process PRIMARY OS occupied state change to ACTIVE (It's the only one that comes here anyways!)
@@ -125,7 +125,7 @@ public class CodeButtonHandler {
             _mSignalDirectionIndicators.osSectionBecameOccupied();
         }
     }
-    
+
     public void externalLockTurnout() {
         if (_mTurnoutLock != null) _mTurnoutLock.externalLockTurnout();
     }
@@ -143,8 +143,8 @@ public class CodeButtonHandler {
             }
         }
     }
-    
-// Returns true if call on was actually done, else false    
+
+// Returns true if call on was actually done, else false
     private boolean possiblyAllowCallOn() {
         boolean returnStatus = false;
         if (allowCallOnChange()) {
@@ -163,7 +163,7 @@ public class CodeButtonHandler {
         if (_mCallOn != null) _mCallOn.resetToggle();
         return returnStatus;
     }
-    
+
 /*
 Rules from http://www.ctcparts.com/about.htm
     "An important note though for programming logic is that the interlocking limits
@@ -171,7 +171,7 @@ must be clear and all power switches within the interlocking limits aligned
 appropriately for the back to train route for this feature to activate."
 */
     private boolean allowCallOnChange() {
-// Safety checks:        
+// Safety checks:
         if (_mCallOn == null) return false;
 // Rules:
         if (isPrimaryOSSectionOccupied()) return false;
@@ -180,23 +180,24 @@ appropriately for the back to train route for this feature to activate."
         if (!areTurnoutsAvailableInRoutes()) return false;
         return true;
     }
-    
+
     private int getCurrentSignalDirectionLever() {
         if (_mSignalDirectionLever == null) return CTCConstants.OUTOFCORRESPONDENCE;
         return _mSignalDirectionLever.getPresentSignalDirectionLeverState();
     }
-    
+
     private void possiblyAllowTurnoutChange() {
         if (allowTurnoutChange()) {
             int requestedState = getSwitchDirectionLeverRequestedState();
-            _mSwitchDirectionIndicators.codeButtonPressed(requestedState);  // Also sends commmands to move the points
             notifyTurnoutLockObjectOfNewAlignment(requestedState);          // Tell lock object this is new alignment
+            if (_mSwitchDirectionIndicators != null) { // Safety:
+                _mSwitchDirectionIndicators.codeButtonPressed(requestedState);  // Also sends commmands to move the points
+            }
         }
     }
 
     private boolean allowTurnoutChange() {
 // Safety checks:
-        if (_mSwitchDirectionIndicators == null) return false;
 // Rules:
         if (!_mSignalDirectionIndicators.signalsNormal()) return false;
         if (routeClearedAcross()) return false;               // Something was cleared thru, NO CHANGE
@@ -207,23 +208,23 @@ appropriately for the back to train route for this feature to activate."
         if (!areTurnoutsAvailableInRoutes()) return false;
         return true;
     }
-    
+
     private void notifyTurnoutLockObjectOfNewAlignment(int requestedState) {
         if (_mTurnoutLock != null) _mTurnoutLock.dispatcherCommandedState(requestedState);
     }
-    
+
 // If it doesn't exist, this returns OUTOFCORRESPONDENCE, else return it's present state:
     private int getSwitchDirectionLeverRequestedState() {
         if (_mSwitchDirectionLever != null) return _mSwitchDirectionLever.getPresentState();
         return CTCConstants.OUTOFCORRESPONDENCE;
     }
-    
+
 // If it doesn't exist, this returns true.
     private boolean switchDirectionIndicatorsInCorrespondence() {
         if (_mSwitchDirectionIndicators != null) return _mSwitchDirectionIndicators.inCorrespondence();
         return true;
     }
-    
+
     private void possiblyAllowSignalDirectionChange() {
         if (allowSignalDirectionChangePart1()) {
             int presentSignalDirectionLever = getCurrentSignalDirectionLever(); // Safety
@@ -238,7 +239,7 @@ appropriately for the back to train route for this feature to activate."
                 presentSignalDirectionLever = CTCConstants.SIGNALSNORMAL;
             else if (presentSignalDirectionLever == CTCConstants.RIGHTTRAFFIC && presentSignalDirectionIndicatorsDirection == CTCConstants.LEFTTRAFFIC)
                 presentSignalDirectionLever = CTCConstants.SIGNALSNORMAL;
-            
+
             if (allowSignalDirectionChangePart2(presentSignalDirectionLever)) {
 // Tell SignalDirectionIndicators what the current requested state is:
                 _mSignalDirectionIndicators.setPresentSignalDirectionLever(presentSignalDirectionLever);
@@ -246,7 +247,7 @@ appropriately for the back to train route for this feature to activate."
             }
         }
     }
-    
+
     private boolean allowSignalDirectionChangePart1() {
 // Safety Checks:
         if (_mSignalDirectionLever == null) return false;
@@ -256,7 +257,7 @@ appropriately for the back to train route for this feature to activate."
         if (!turnoutPresentlyLocked()) return false;
         return true;                                    // Allowed "so far".
     }
-    
+
     private boolean allowSignalDirectionChangePart2(int presentSignalDirectionLever) {
 // Safety Checks: (none so far)
 // Rules:
@@ -266,7 +267,7 @@ appropriately for the back to train route for this feature to activate."
         }
         return true;                                    // Allowed
     }
-    
+
     private boolean trafficLockingValid(int presentSignalDirectionLever) {
 // If asking for a route and it indicates an error (a conflict), DO NOTHING!
         if (_mTrafficLocking != null) {
@@ -276,11 +277,11 @@ appropriately for the back to train route for this feature to activate."
         }
         return true;        // Valid
     }
-    
+
     private void possiblyAllowLockChange() {
         if (allowLockChange()) _mTurnoutLock.codeButtonPressed();
     }
-    
+
     private boolean allowLockChange() {
 // Safety checks:
         if (_mTurnoutLock == null) return false;
@@ -305,28 +306,28 @@ appropriately for the back to train route for this feature to activate."
         if (!areTurnoutsAvailableInRoutes()) return false;
         return true;
     }
-    
+
     private boolean routeClearedAcross() {
         if (_mIndicationLockingSignals != null) return _mIndicationLockingSignals.routeClearedAcross();
         return false; // Default: Nothing to evaluate, nothing cleared thru!
     }
-    
+
     private boolean turnoutPresentlyLocked() {
         if (_mTurnoutLock == null) return true;     // Doesn't exist, assume locked so that anything can be done to it.
         return _mTurnoutLock.turnoutPresentlyLocked();
     }
-    
+
 //  For "isEitherOSSectionOccupied" and "isPrimaryOSSectionOccupied" below,
 //  INCONSISTENT, UNKNOWN and OCCUPIED are all considered OCCUPIED(ACTIVE).
     private boolean isEitherOSSectionOccupied() {
         return _mOSSectionOccupiedExternalSensor.getKnownState() != Sensor.INACTIVE || _mOSSectionOccupiedExternalSensor2.getKnownState() != Sensor.INACTIVE;
     }
-    
-//  See "isEitherOSSectionOccupied" comment.    
+
+//  See "isEitherOSSectionOccupied" comment.
     private boolean isPrimaryOSSectionOccupied() {
         return _mOSSectionOccupiedExternalSensor.getKnownState() != Sensor.INACTIVE;
     }
-    
+
     private boolean areTurnoutsAvailableInRoutes() {
         HashSet<Sensor> sensors = new HashSet<>();
         sensors.add(_mOSSectionOccupiedExternalSensor.getBean());

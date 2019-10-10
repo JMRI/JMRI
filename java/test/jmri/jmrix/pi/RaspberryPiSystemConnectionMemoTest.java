@@ -9,9 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for RaspberryPiSystemConnectionMemo
- * </P>
+ * Tests for RaspberryPiSystemConnectionMemo.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -58,7 +56,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
     @Test
     public void setAndGetSensorManager() {
         RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        RaspberryPiSensorManager sm = new RaspberryPiSensorManager(m.getSystemPrefix());
+        RaspberryPiSensorManager sm = new RaspberryPiSensorManager(m);
         m.setSensorManager(sm);
         Assert.assertSame("Sensor Manager", sm, m.getSensorManager());
     }
@@ -66,7 +64,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
     @Test
     public void setAndGetTurnoutManager() {
         RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        RaspberryPiTurnoutManager sm = new RaspberryPiTurnoutManager(m.getSystemPrefix());
+        RaspberryPiTurnoutManager sm = new RaspberryPiTurnoutManager(m);
         m.setTurnoutManager(sm);
         Assert.assertSame("Turnout Manager", sm, m.getTurnoutManager());
     }
@@ -76,7 +74,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
         RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
         //RaspberryPiLightManager sm = new RaspberryPiLightManager(m.getSystemPrefix());
         //m.setTurnoutManager(sm);
-        //Assert.assertSame("Light Manager",sm,m.getLightManager());
+        //Assert.assertSame("Light Manager", sm, m.getLightManager());
         Assert.assertNull("Light Manager", m.getLightManager());
     }
 
@@ -137,6 +135,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -150,8 +149,10 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
     }
 
     @After
+    @Override
     public void tearDown() {
         scm = null;
         JUnitUtil.tearDown();
     }
+
 }

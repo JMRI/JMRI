@@ -62,7 +62,7 @@ public class Z21Message extends AbstractMRMessage {
         super(m);
         setBinary(true);
         // gather bytes in result
-        byte b[] = jmri.util.StringUtil.bytesFromHexString(m);
+        byte[] b = jmri.util.StringUtil.bytesFromHexString(m);
         if (b.length == 0) {
             // no such thing as a zero-length message
             _nDataChars = 0;
@@ -112,7 +112,7 @@ public class Z21Message extends AbstractMRMessage {
      *         values in _dataChars.
      */
     byte[] getBuffer() {
-        byte byteData[] = new byte[_dataChars.length];
+        byte[] byteData = new byte[_dataChars.length];
         for (int i = 0; i < _dataChars.length; i++) {
             byteData[i] = (byte) (0x00ff & _dataChars[i]);
         }
@@ -179,27 +179,27 @@ public class Z21Message extends AbstractMRMessage {
     /**
      * Set the broadcast flags as described in section 2.16 of the 
      * Roco Z21 Protocol Manual.
-     * <P>
+     * <p>
      * Brief descriptions of the flags are as follows (losely 
      * translated from German with the aid of google translate).
-     * <UL>
-     * <LI>0x00000001 send XpressNet related information (track
+     * <ul>
+     * <li>0x00000001 send XpressNet related information (track
      * power on/off, programming mode, short circuit, broadcast stop, 
-     * locomotive information, turnout information).</LI>
-     * <LI>0x00000002 send data changes that occur on the RMBUS.</LI>
-     * <LI>0x00000004 (deprecated by Roco) send Railcom Data</LI>
-     * <LI>0x00000100 send changes in system state (such as track voltage)
-     * <LI>0x00010000 send changes to locomotives on XpressNet (must also have
-     * 0x00000001 set.</LI>
-     * <LI>0x01000000 forward LocoNet data to the client.  Does not send 
-     * Locomotive or turnout data.</LI>
-     * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
-     * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
-     * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI> 
-     * <LI>0x00040000 Automatically send updates for Railcom data to the client</LI> 
-     * <LI>0x00080000 send can detector messages to the client</LI> 
-     * </UL>
-     * <P>
+     * locomotive information, turnout information).</li>
+     * <li>0x00000002 send data changes that occur on the RMBUS.</li>
+     * <li>0x00000004 (deprecated by Roco) send Railcom Data</li>
+     * <li>0x00000100 send changes in system state (such as track voltage)
+     * <li>0x00010000 send changes to locomotives on XpressNet (must also have
+     * 0x00000001 set.</li>
+     * <li>0x01000000 forward LocoNet data to the client.  Does not send
+     * Locomotive or turnout data.</li>
+     * <li>0x02000000 send Locomotive specific LocoNet data to the client.</li>
+     * <li>0x04000000 send Turnout specific LocoNet data to the client.</li>
+     * <li>0x08000000 send Occupancy information from LocoNet to the client</li>
+     * <li>0x00040000 Automatically send updates for Railcom data to the client</li>
+     * <li>0x00080000 send can detector messages to the client</li>
+     * </ul>
+     *
      * @param flags integer representing the flags (32 bits).
      * @return z21 message for LAN_SET_BROADCAST_FLAGS request.
      */
@@ -247,6 +247,7 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
+    @Override
     public String toMonitorString() {
         switch(getOpCode()){
            case 0x0010:
@@ -255,6 +256,10 @@ public class Z21Message extends AbstractMRMessage {
                return Bundle.getMessage("Z21MessageStringVersionRequest");
            case 0x0040:
                return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
+           case 0x0050:
+               return Bundle.getMessage("Z21MessageSetBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(_dataChars));
+           case 0x0051:
+               return Bundle.getMessage("Z21MessageRequestBroadcastFlags");
            case 0x00A2:
                return Bundle.getMessage("Z21LocoNetLanMessage", getLocoNetMessage().toMonitorString());
            case 0x0081:
@@ -351,6 +356,6 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21Message.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21Message.class);
 
 }

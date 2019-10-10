@@ -208,6 +208,18 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
             box.addItem(automation);
         }
     }
+    
+    /**
+     * Restarts all automations that were running when the operations program
+     * was last saved.
+     */
+    public void resumeAutomations() {
+        for (Automation automation : getAutomationsByNameList()) {
+            if (!automation.isActionRunning() && !automation.isReadyToRun()) {
+                automation.resume();
+            }
+        }
+    }
 
     /**
      * Makes a new copy of automation

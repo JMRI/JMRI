@@ -13,7 +13,7 @@ import jmri.util.FileUtil;
  * 
  * Primarily provides file checking services to the specific subclasses that
  * load/store particular types of data.
- * <P>
+ * <p>
  * Also used to hold common information, specifically common instances of the
  * JFileChooser. These bring the user back to the same place in the file system
  * each time an action is invoked.

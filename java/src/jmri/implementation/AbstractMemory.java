@@ -1,24 +1,25 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Memory;
+import jmri.NamedBean;
 
 /**
  * Base for the Memory interface.
- * <P>
- * Implements the parameter binding support.
  * <p>
- * Memory system names are always upper case.
+ * Implements the parameter binding support.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory {
 
     public AbstractMemory(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractMemory(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -40,6 +41,17 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
         _current = v;
         // notify
         firePropertyChange("value", old, _current);
+    }
+    
+    /**
+     * {@inheritDoc} 
+     * 
+     * Do a string comparison.
+     */
+    @CheckReturnValue
+    @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        return suffix1.compareTo(suffix2);
     }
 
     // internal data members

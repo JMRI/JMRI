@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the abstract base and store functionality for configuring
  * TurnoutManagers, working with AbstractTurnoutManagers.
- * <P>
+ * <p>
  * Typically, a subclass will just implement the load(Element turnouts) class,
  * relying on implementation here to load the individual turnouts. Note that
  * these are stored explicitly, so the resolution mechanism doesn't need to see
@@ -48,9 +48,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
             Element opElem = tomx.store(InstanceManager.getDefault(TurnoutOperationManager.class));
             turnouts.addContent(opElem);
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameAddedOrderList().iterator();
+            java.util.Iterator<Turnout> iter
+                    = tm.getNamedBeanSet().iterator();
 
             // don't return an element if there are not turnouts to include
             if (!iter.hasNext()) {
@@ -64,9 +63,9 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
             // store the turnouts
             while (iter.hasNext()) {
-                String sname = iter.next();
+                Turnout t = iter.next();
+                String sname = t.getSystemName();
                 log.debug("system name is " + sname);
-                Turnout t = tm.getBySystemName(sname);
                 Element elem = new Element("turnout");
                 elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store turnout " + sname);

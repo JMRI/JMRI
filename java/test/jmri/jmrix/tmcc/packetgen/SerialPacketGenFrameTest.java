@@ -18,13 +18,13 @@ public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SerialPacketGenFrame(new TmccSystemConnectionMemo("T", "TMCC via Serial"));
-	}
+        }
     }
 
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown(); 
+        super.tearDown(); 
     }
 
 }

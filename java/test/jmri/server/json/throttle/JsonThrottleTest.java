@@ -9,6 +9,7 @@ import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.roster.JsonRoster;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -33,20 +34,20 @@ public class JsonThrottleTest {
 
         // get with tested long address
         JsonNode data = connection.getObjectMapper().createObjectNode().put(JSON.ADDRESS, 1234);
-        JsonThrottle t = JsonThrottle.getThrottle("42", data, service);
+        JsonThrottle t = JsonThrottle.getThrottle("42", data, service, 42);
         Assert.assertNotNull("exists", t);
 
         // get with tested short address
         data = connection.getObjectMapper().createObjectNode().put(JSON.ADDRESS, 42);
         service = new JsonThrottleSocketService(connection);
-        t = JsonThrottle.getThrottle("42", data, service);
+        t = JsonThrottle.getThrottle("42", data, service, 42);
         Assert.assertNotNull("exists", t);
 
         // get with tested unusable address
         data = connection.getObjectMapper().createObjectNode().put(JSON.ADDRESS, 100);
         service = new JsonThrottleSocketService(connection);
         try {
-            t = JsonThrottle.getThrottle("42", data, service);
+            t = JsonThrottle.getThrottle("42", data, service, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());
@@ -55,10 +56,10 @@ public class JsonThrottleTest {
         JUnitAppender.assertWarnMessage("Address \"100\" is not a valid address.");
 
         // get with non-existent roster entry
-        data = connection.getObjectMapper().createObjectNode().put(JSON.ID, 100);
+        data = connection.getObjectMapper().createObjectNode().put(JsonRoster.ROSTER_ENTRY, 100);
         service = new JsonThrottleSocketService(connection);
         try {
-            t = JsonThrottle.getThrottle("42", data, service);
+            t = JsonThrottle.getThrottle("42", data, service, 42);
             Assert.fail("Expected exception not thrown");
         } catch (JsonException ex) {
             Assert.assertEquals("Error code is HTTP Not Found", 404, ex.getCode());
@@ -80,7 +81,7 @@ public class JsonThrottleTest {
 
         // get with tested long address
         JsonNode data = connection.getObjectMapper().createObjectNode().put(JSON.ADDRESS, 1234);
-        JsonThrottle jsonThrottle = JsonThrottle.getThrottle("42", data, service);
+        JsonThrottle jsonThrottle = JsonThrottle.getThrottle("42", data, service, 42);
         Assert.assertNotNull("JsonThrottle exists", jsonThrottle);
         Throttle throttle = jsonThrottle.getThrottle();
         Assert.assertNotNull("has Throttle", throttle);
@@ -207,6 +208,7 @@ public class JsonThrottleTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugCommandStation();
         InstanceManager.store(new TestThrottleManager(), ThrottleManager.class);
     }

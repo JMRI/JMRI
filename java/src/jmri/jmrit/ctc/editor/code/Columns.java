@@ -290,7 +290,9 @@ public class Columns {
             if (!isModify || index != indexModifying) {  // If add, check all, if modify, check all but indexModifying.
                 CodeButtonHandlerData codeButtonHandlerData = codeButtonHandlerDataList.get(index);
                 if (codeButtonHandlerData._mSwitchNumber == newSwitchNumber) return "Switch #" + newSwitchNumber + " already used";
-                if (codeButtonHandlerData._mGUIColumnNumber == newGUIColumnNumber) return "GUI Column #" + newGUIColumnNumber + " already used";
+                if (newGUIColumnNumber > 0) { // Multiple 0's are allowed here:
+                    if (codeButtonHandlerData._mGUIColumnNumber == newGUIColumnNumber) return "GUI Column #" + newGUIColumnNumber + " already used";
+                }
             }
         }
         return null;

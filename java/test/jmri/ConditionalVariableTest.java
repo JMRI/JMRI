@@ -202,16 +202,10 @@ public class ConditionalVariableTest {
 
         // OPERATOR_AND = 1;
         Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(1) == Operator.AND);
-        // OPERATOR_NOT = 2;
-        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(2) == Operator.NONE);
-        // OPERATOR_AND_NOT = 3;
-        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(3) == Operator.AND);
         // OPERATOR_NONE = 4;
         Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(4) == Operator.NONE);
         // OPERATOR_OR = 5;
         Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(5) == Operator.OR);
-        // OPERATOR_OR_NOT = 6;
-        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(6) == Operator.OR);
 
         // Test illegal operator
         boolean exceptionThrown = false;

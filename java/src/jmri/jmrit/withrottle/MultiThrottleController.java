@@ -3,9 +3,8 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import jmri.LocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
+
+import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,15 +71,15 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSteps")) {
+        if (eventName.matches(Throttle.SPEEDSTEPS)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("s");
-            message.append(event.getNewValue().toString());
+            message.append(encodeSpeedStepMode((SpeedStepMode)event.getNewValue()));
             for (ControllerInterface listener : controllerListeners) {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("IsForward")) {
+        if (eventName.matches(Throttle.ISFORWARD)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("R");
             message.append((Boolean) event.getNewValue() ? "1" : "0");
@@ -88,7 +87,7 @@ public class MultiThrottleController extends ThrottleController {
                listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSetting")) {
+        if (eventName.matches(Throttle.SPEEDSETTING)) {
             float currentSpeed = ((Float) event.getNewValue()).floatValue();
             log.debug("Speed Setting: {} head of queue {}",currentSpeed, lastSentSpeed.peek());
             if(lastSentSpeed.isEmpty()) { 
@@ -193,7 +192,7 @@ public class MultiThrottleController extends ThrottleController {
     protected void sendSpeedStepMode(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("s");
-        message.append(throttle.getSpeedStepMode());
+        message.append(encodeSpeedStepMode(throttle.getSpeedStepMode()));
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
@@ -252,25 +251,79 @@ public class MultiThrottleController extends ThrottleController {
             listener.sendPacketToDevice(message.toString());
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
+    @Override
+    @Deprecated
+    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
+        notifyDecisionRequired(address, DecisionType.STEAL);
+    }
 
     /**
+     * A decision is required for Throttle creation to continue.
+     * <p>
+     * Steal / Cancel, Share / Cancel, or Steal / Share Cancel
+     * <p>
      * Callback of a request for an address that is in use.
      * Will initiate a steal only if this MTC is flagged to do so.
      * Otherwise, it will remove the request for the address.
      *
-     * @param address of DCC locomotive involved in the steal
+     * {@inheritDoc}
      */
     @Override
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        if (isStealAddress) {
-            //  Address is now staged in ThrottleManager and has been requested as a steal
-            //  Complete the process
-            InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
-            isStealAddress = false;
-        } else {
-            //  Address has not been requested as a steal yet
-            sendStealAddress();
-            notifyFailedThrottleRequest(address, "Steal Required");
+    public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+        if ( question == DecisionType.STEAL ){
+            if (isStealAddress) {
+                //  Address is now staged in ThrottleManager and has been requested as a steal
+                //  Complete the process
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
+                isStealAddress = false;
+            } else {
+                //  Address has not been requested as a steal yet
+                sendStealAddress();
+                notifyFailedThrottleRequest(address, "Steal Required");
+            }
+        }
+        else if ( question == DecisionType.STEAL_OR_SHARE ){ // using the same process as a Steal
+            if (isStealAddress) {
+                //  Address is now staged in ThrottleManager and has been requested as a steal
+                //  Complete the process
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
+                isStealAddress = false;
+            } else {
+                //  Address has not been requested as a steal yet
+                sendStealAddress();
+                notifyFailedThrottleRequest(address, "Steal Required");
+            }
+        }
+        else { // if encountered likely to be DecisionType.SHARE
+            log.info("{} question not supported by WiThrottle.",question );
+        }
+        
+        
+    }
+
+    // Encode a SpeedStepMode to a string.
+    private static String encodeSpeedStepMode(SpeedStepMode mode) {
+        switch(mode) {
+            // NOTE: old speed step modes use the original numeric values
+            // from when speed step modes were in DccThrottle. New speed step
+            // modes use the mode name.
+            case NMRA_DCC_128:
+                return "1";
+            case NMRA_DCC_28:
+                 return "2";
+            case NMRA_DCC_27:
+                return "4";
+            case NMRA_DCC_14:
+                return "8";
+            case MOTOROLA_28:
+                return "16";
+            default:
+                return mode.name;
         }
     }
 

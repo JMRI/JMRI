@@ -3,6 +3,7 @@ package jmri.jmrix;
 import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -15,7 +16,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  *
  * @author Randall Wood Copyright 2017
  */
-public class SystemConnectionMemoManager extends Bean {
+public class SystemConnectionMemoManager extends Bean implements InstanceManagerAutoDefault {
 
     /**
      * Property name change fired when a connection is registered. The fired
@@ -55,7 +56,6 @@ public class SystemConnectionMemoManager extends Bean {
     }
 
     public void deregister(SystemConnectionMemo memo) {
-        // removeFromActionList();
         InstanceManager.deregister(memo, SystemConnectionMemo.class);
         log.trace("fire CONNECTION_REMOVED for {}", memo);
         firePropertyChange(CONNECTION_REMOVED, memo, null);
@@ -115,9 +115,7 @@ public class SystemConnectionMemoManager extends Bean {
      * @return the default instance, created if needed
      */
     public static SystemConnectionMemoManager getDefault() {
-        return InstanceManager.getOptionalDefault(SystemConnectionMemoManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(SystemConnectionMemoManager.class, new SystemConnectionMemoManager());
-        });
+        return InstanceManager.getDefault(SystemConnectionMemoManager.class);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemoManager.class);

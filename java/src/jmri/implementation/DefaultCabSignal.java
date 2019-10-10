@@ -43,6 +43,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * A method for cleaning up the cab signal 
      */
+    @Override
     public void dispose(){
         if (_nextMast != null) {
             _nextMast.removePropertyChangeListener(_cconSignalMastListener);
@@ -60,6 +61,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return the cab signal address
      */
+    @Override
     public LocoAddress getCabSignalAddress(){
         return _address;
     }
@@ -69,6 +71,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param position is a Block the locomotive is in.
      */
+    @Override
     synchronized public void setBlock(Block position){
         log.debug("CabSignal for {} set block {}",getCabSignalAddress(),position);
         Block oldCurrentBlock = _currentBlock;
@@ -95,6 +98,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Set the Block of the locomotive by searching the block list.
      */
+    @Override
     synchronized public void setBlock(){
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         Set<Block> blockSet = bmgr.getNamedBeanSet();
@@ -103,7 +107,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
             if ( blockVal.getValue() != null ) {
                 Object val = blockVal.getValue();
                 log.debug("CabSignal for {} searching block {} value {}",
-                           addr,blockVal,val.toString());
+                           addr,blockVal,val);
                 if (val instanceof jmri.AddressedIdTag) {
                     if( ((jmri.AddressedIdTag)val).getLocoAddress().toString().equals( 
                          addr.toString())){
@@ -127,6 +131,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The current Block position
      */
+    @Override
     synchronized public Block getBlock(){
         return _currentBlock;
     }
@@ -138,6 +143,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The next Block position
      */
+    @Override
     public Block getNextBlock(){
         Block oldNextBlock = _nextBlock;
         if(getBlock()==null){
@@ -180,7 +186,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
                     blockTest.setDirection(dirtoTest);
                     return blockTest;
                 }
-                if (((fromdirection & dirftTest)) == 0) { // less reliable
+                if ((fromdirection & dirftTest) == 0) { // less reliable
                     blockTest.setDirection(dirtoTest);
                     return blockTest;
                 }
@@ -200,6 +206,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The next SignalMast position
      */
+    @Override
     public SignalMast getNextMast(){
         SignalMast oldNextMast = _nextMast;
         if (_nextMast != null) {
@@ -246,6 +253,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Forward the current cab signal value to the layout.
      */
+    @Override
     public void forwardCabSignalToLayout() {
         if (!isCabSignalActive() ) {
             return;
@@ -269,6 +277,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * aspect for this address
      */
     protected void forwardAspectToLayout(){
+        // this method is to be over-written by subclasses that actually
+        // talk to layout hardware.
     }
 
 
@@ -277,6 +287,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return true if on, false if off
      */
+    @Override
     public boolean isCabSignalActive(){
         return _cabSignalActive;
     }
@@ -286,6 +297,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param active true if on, false if off
      */
+    @Override
     public void setCabSignalActive(boolean active){
         _cabSignalActive = active;
         if(_cabSignalActive) {
@@ -301,6 +313,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @param active true if paused, false if resumed
      */
+    @Override
     public void setMasterCabSigPauseActive (boolean active) {
         _masterPausedButtonActive = active;
         if ( !isCabSignalActive() ){
@@ -321,6 +334,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * for this address
      */
     protected void resetLayoutCabSignal(){
+        // this method is to be over-written by subclasses that actually
+        // talk to layout hardware.
     }
 
 
@@ -371,7 +386,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultCabSignal.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultCabSignal.class);
 
 
 }

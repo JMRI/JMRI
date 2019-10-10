@@ -10,7 +10,9 @@ import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -54,23 +56,27 @@ public class CbusNodeTest {
         Assert.assertTrue("default getNodeTypeName ",t.getNodeTypeName().isEmpty() );
         Assert.assertEquals("default getNodeInFLiMMode",true,t.getNodeInFLiMMode() );
         Assert.assertEquals("default getNodeInSetupMode",false,t.getNodeInSetupMode() );
-        Assert.assertEquals("default getNodeNumberName","256 ",t.getNodeNumberName() );
+        Assert.assertEquals("default getNodeNumberName","256",t.getNodeNumberName() );
         Assert.assertEquals("default getsendsWRACKonNVSET",true,t.getsendsWRACKonNVSET() );
         Assert.assertTrue("default totalNodeBytes ",-1 == t.totalNodeBytes() );
         Assert.assertTrue("default totalRemainingNodeBytes",-1 == t.totalRemainingNodeBytes() );
-        Assert.assertEquals("default toString ","256 ",t.toString() );
+        Assert.assertEquals("default toString ","256",t.toString() );
         Assert.assertTrue("default getNodeFlags ",t.getNodeFlags() == -1 );
         Assert.assertTrue("default getOutstandingEvVars",t.getOutstandingEvVars() == -1);
         Assert.assertFalse("default hasActiveTimers",t.hasActiveTimers());
         Assert.assertFalse("default isEventIndexValid",t.isEventIndexValid());
-        
+        Assert.assertNull("No First Backup Timestamp",t.getFirstBackupTime());
+        Assert.assertNull("No Last Backup Timestamp",t.getLastBackupTime());
+        Assert.assertEquals("Backups Uninitialised",-1,t.getNumBackups());
+        Assert.assertEquals("Backup Outstanding",
+            t.getSessionBackupStatus(),CbusNodeConstants.BackupType.OUTSTANDING);
         
         t.dispose();
         t = null;
     }
     
     @Test
-    public void testInOutLearnMode() {
+    public void testInOutLearnModeExtendedRtr() {
         CbusNode t = new CbusNode(memo,1234);
         
         Assert.assertEquals("default getNodeInLearnMode ",false,t.getNodeInLearnMode() );
@@ -116,8 +122,45 @@ public class CbusNodeTest {
         m.setNumDataElements(1);
         m.setElement(0, CbusConstants.CBUS_RTOF); // request track off
         t.message(m);
-        Assert.assertEquals("still in learn mode ",false,t.getNodeInLearnMode() );
-
+        Assert.assertEquals("not in learn mode ",false,t.getNodeInLearnMode() );
+        
+        
+        m = new CanMessage( tcis.getCanid() );
+        m.setElement(0, CbusConstants.CBUS_NNLRN); // enter learn mode
+        m.setElement(1, 0x04);
+        m.setElement(2, 0xd2);
+        
+        m.setExtended(true);
+        
+        t.message(m);
+        Assert.assertEquals("no change ext",false,t.getNodeInLearnMode() );
+        
+        m.setExtended(false);
+        m.setRtr(true);
+        t.message(m);
+        Assert.assertEquals("no change rtr",false,t.getNodeInLearnMode() );
+        
+        m.setRtr(false);
+        t.message(m);
+        Assert.assertEquals("message enter learn mode ",true,t.getNodeInLearnMode() );
+        
+        
+        r = new CanReply();
+        r.setHeader(tcis.getCanid());
+        r.setNumDataElements(3);
+        r.setElement(0, CbusConstants.CBUS_NNULN); 
+        r.setElement(1, 0x04);
+        r.setElement(2, 0xd2);
+        
+        r.setExtended(true);
+        t.reply(r);
+        Assert.assertEquals("no change ext",true,t.getNodeInLearnMode() );
+        
+        r.setExtended(false);
+        r.setRtr(true);
+        t.reply(r);
+        Assert.assertEquals("no change rtr",true,t.getNodeInLearnMode() );
+        
         m = null;
         r = null;
         
@@ -553,6 +596,8 @@ public class CbusNodeTest {
         t.reply(r);
         Assert.assertEquals(0.875 ,t.floatPercentageRemaining(), 0.0001f );
         
+        Assert.assertEquals("0 Backups in middle of fetch",0,t.getNumBackups());
+        
         tModel.sendNextBackgroundFetch();
         Assert.assertEquals("Node has sent a message via model", 6 ,tcis.outbound.size() );
         r.setElement(4, 0x02); // ev var index
@@ -573,6 +618,14 @@ public class CbusNodeTest {
         
         Assert.assertEquals("Node has NOT sent a message via model", 7 ,tcis.outbound.size() );
         Assert.assertFalse("No active timer after event fetch complete",t.hasActiveTimers() );
+        
+        // check if node has loaded an xml file
+        Assert.assertNotNull("First Backup Timestamp exists",t.getFirstBackupTime());
+        Assert.assertNotNull("Last Backup Timestamp exists",t.getLastBackupTime());
+        
+        Assert.assertEquals("Backup Complete",
+            t.getSessionBackupStatus(),CbusNodeConstants.BackupType.COMPLETE);
+        Assert.assertTrue(t.getNodeBackupFile().removeNode(false));
         
         r = null;
         tModel.dispose();
@@ -635,7 +688,7 @@ public class CbusNodeTest {
         
         r.setElement(3, 0x04); // error code 4
         t.reply(r);
-        JUnitAppender.assertErrorMessageStartsWith("Node 12345 Reporting Too Many Events");
+        JUnitAppender.assertErrorMessageStartsWith("Node 12345 reporting ERROR : Too Many Events");
         
         r = null;
         t.dispose();
@@ -666,10 +719,16 @@ public class CbusNodeTest {
         
     }
     
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+    
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
@@ -678,10 +737,10 @@ public class CbusNodeTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         
         tcis = null;
         memo = null;
+        JUnitUtil.tearDown();
         
     }
 

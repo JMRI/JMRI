@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.simulator;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusSend;
@@ -12,17 +11,17 @@ import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.swing.simulator.NdPane;
 import jmri.jmrix.can.TrafficController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing a MERG CBUS Node
+ * Simulating a MERG CBUS Node.
+ *
  * @author Steve Young Copyright (C) 2018 2019
  * @see CbusSimulator
  * @since 4.15.2
  */
-public class CbusDummyNode extends CbusNode implements CanListener {
+public class CbusDummyNode extends CbusNode {
     
     private TrafficController tc;
     private CanSystemConnectionMemo memo;
@@ -155,10 +154,10 @@ public class CbusDummyNode extends CbusNode implements CanListener {
      */
     @Override
     public void addNewEvent( CbusNodeEvent newEvent ) {
-        if (_nodeEvents == null) {
+        if (getTotalNodeEvents() == -1) {
             resetNodeEvents();
         }
-        _nodeEvents.add(newEvent);
+        super.addNewEvent(newEvent);
     }
     
     private void sendENRSP(){
@@ -189,6 +188,14 @@ public class CbusDummyNode extends CbusNode implements CanListener {
             sendCMDERR(7);
             return;
         }
+        
+        // for future sim. of CMDERR5 support
+        // if (varIndex>40) {
+        //    
+        //    sendCMDERR(5);
+        //    return;
+        // }
+        
         try {
             CanReply r = new CanReply(6);
             r.setElement(0, CbusConstants.CBUS_NEVAL);
@@ -306,7 +313,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     // sim of FiLM Button
     public void flimButton() {
         // send request for node number
-        if ( getNodeType() >0 ) {
+        if ( getParameter(3) >0 ) { // module type set
             setNodeInSetupMode(true);
             CanReply r = new CanReply(3);
             r.setElement(0, CbusConstants.CBUS_RQNN);
@@ -347,7 +354,7 @@ public class CbusDummyNode extends CbusNode implements CanListener {
 
     private void passMessage(CanMessage m) {
         // log.debug("dummy node canMessage {}",m);
-        if ( getNodeType() == 0 ) {
+        if ( getParameter(3) == 0 ) { // module type unset
             return;
         }
         int opc = m.getElement(0);
@@ -429,6 +436,9 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         if ( _processOut ) {
             passMessage(m);
         }
@@ -436,6 +446,9 @@ public class CbusDummyNode extends CbusNode implements CanListener {
 
     @Override
     public void reply(CanReply r) {
+        if ( r.isExtended() || r.isRtr() ) {
+            return;
+        }
         if ( _processIn ) {
             CanMessage msg = new CanMessage(r);
             passMessage(msg);
@@ -451,4 +464,5 @@ public class CbusDummyNode extends CbusNode implements CanListener {
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyNode.class);
+
 }

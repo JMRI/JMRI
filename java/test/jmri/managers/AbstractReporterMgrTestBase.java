@@ -17,7 +17,7 @@ import org.junit.*;
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBase<ReporterManager, Reporter> {
+public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManagerTestBase<ReporterManager, Reporter> {
 
     /**
      * Max number of Reporters supported.  Override to return 1 if
@@ -80,7 +80,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractManagerTestBas
         try {
             l.provideReporter("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for reporter: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
           throw ex;
         }
     }

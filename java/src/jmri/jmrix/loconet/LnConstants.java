@@ -14,7 +14,7 @@ package jmri.jmrix.loconet;
  *  <li>STAT1 - bits in status byte 1
  *  <li>STAT2 - bits in status byte 2
  *  </ul>
- *<p>
+ * <p>
  * Slot Status byte definitions and macros
  * <ul>
  * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)
@@ -69,8 +69,8 @@ package jmri.jmrix.loconet;
  * Those parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
  * permission of the copyright holder.
  * <p>
- * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
- * SUMMARY found in the Loconet(r) Personal Edition 1.
+ * Most major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
+ * SUMMARY found in the LocoNet(r) Personal Edition 1.
  * <p>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
@@ -183,7 +183,7 @@ public final class LnConstants {
 
     /**
      * Encode consisting status as a string
-     * <p>
+     *
      * @param s  consist status bits
      * @return string contaning a description of the consisting state
      */
@@ -210,7 +210,7 @@ public final class LnConstants {
 
     /**
      * Encode loco status as a string
-     * <p>
+     *
      * @param s  integer containing loco "status"
      * @return string containing a description of the loco "status"
      */
@@ -263,7 +263,7 @@ public final class LnConstants {
 
     /** Fast CLock valid **/
     public final static int FC_VALID = 0X40;
- 
+
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
@@ -337,22 +337,12 @@ public final class LnConstants {
 
     public final static int CVH_D7 = 0x02;      /* MSbit for data value      */
 
-// The following two are commented out pending some decisions as to (a) whether
-// they belong here or in the parser and (b) understanding what they say about
-// a data format; note use of a pointer dereference
-
-    /* build data byte from programmer message */
-//public final static int PROG_DATA(ptr)      (((ptr->cvh & CVH_D7) << 6) | (ptr->data7 & 0x7f))
-
-    /* build CV # from programmer message */
-//public final static int PROG_CV_NUM(ptr)    (((((ptr->cvh & CVH_CV8_CV9) >> 3) | (ptr->cvh & CVH_CV7)) * 128)   \
-//                            + (ptr->cvl & 0x7f))
-
     /* LocoNet opcodes */
     public final static int OPC_GPBUSY = 0x81;
     public final static int OPC_GPOFF = 0x82;
     public final static int OPC_GPON = 0x83;
     public final static int OPC_IDLE = 0x85;
+    public final static int OPC_RE_LOCORESET_BUTTON = 0x8A; // Undocumented name
     public final static int OPC_LOCO_SPD = 0xa0;
     public final static int OPC_LOCO_DIRF = 0xa1;
     public final static int OPC_LOCO_SND = 0xa2;
@@ -411,7 +401,7 @@ public final class LnConstants {
 
     /**
      * Encode LocoNet Opcode as a string
-     * <p>
+     *
      * @param opcode  a LocoNet opcode value
      * @return string containing the opcode "name"
      */
@@ -421,6 +411,7 @@ public final class LnConstants {
             case OPC_GPOFF      : return "OPC_GPOFF"; // NOI18N
             case OPC_GPON       : return "OPC_GPON"; // NOI18N
             case OPC_IDLE       : return "OPC_IDLE"; // NOI18N
+            case OPC_RE_LOCORESET_BUTTON:   return "OPC_RE_LOCORESET_BUTTON"; // NOI18N
             case OPC_LOCO_SPD   : return "OPC_LOCO_SPD"; // NOI18N
             case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF"; // NOI18N
             case OPC_LOCO_SND   : return "OPC_LOCO_SND"; // NOI18N

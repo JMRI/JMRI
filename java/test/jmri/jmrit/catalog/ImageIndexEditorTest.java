@@ -36,11 +36,13 @@ public class ImageIndexEditorTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.initShutDownManager();
         JUnitUtil.tearDown();
     }
 

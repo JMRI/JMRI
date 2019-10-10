@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.Arrays;
+
 import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
@@ -37,8 +39,8 @@ import org.slf4j.LoggerFactory;
  * range '!'= command completed successfully
  * <p>
  * For a complete description of Binary Commands see:
- * www.ncecorporation.com/pdf/ bincmds.pdf
- * <br><br>
+ * www.ncecorporation.com/pdf/bincmds.pdf
+ * <br>
  * <pre>{@literal
  * Command Description (#bytes rtn) Responses
  * 0x80 NOP, dummy instruction (1) !
@@ -94,8 +96,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class SimulatorAdapter extends NcePortController implements
-        jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends NcePortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -137,7 +138,7 @@ public class SimulatorAdapter extends NcePortController implements
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: ", e);
         }
         opened = true;
         return null; // indicates OK return
@@ -207,14 +208,24 @@ public class SimulatorAdapter extends NcePortController implements
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return null
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override
@@ -233,9 +244,7 @@ public class SimulatorAdapter extends NcePortController implements
         // and writes an appropriate response to the output pipe. This is the heart
         // of the NCE command station simulation.
         // report status?
-        if (log.isInfoEnabled()) {
-            log.info("NCE Simulator Started");
-        }
+        log.info("NCE Simulator Started");
         while (true) {
             NceMessage m = readMessage();
             if (log.isDebugEnabled()) {
@@ -421,7 +430,7 @@ public class SimulatorAdapter extends NcePortController implements
         }
         int nceMemoryAddress = getNceAddress(m);
         if (nceMemoryAddress >= NceTurnoutMonitor.CS_ACCY_MEMORY && nceMemoryAddress < NceTurnoutMonitor.CS_ACCY_MEMORY + 256) {
-            log.debug("Reading turnout memory: " + Integer.toHexString(nceMemoryAddress));
+            log.debug("Reading turnout memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = m.getElement(2);
             for (int i = 0; i < num; i++) {
                 reply.setElement(i, turnoutMemory[offset + i]);
@@ -429,7 +438,7 @@ public class SimulatorAdapter extends NcePortController implements
             return reply;
         }
         if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + 256 * 6) {
-            log.debug("Reading consist memory: " + Integer.toHexString(nceMemoryAddress));
+            log.debug("Reading consist memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
             for (int i = 0; i < num; i++) {
                 reply.setElement(i, consistMemory[offset + i]);
@@ -437,9 +446,9 @@ public class SimulatorAdapter extends NcePortController implements
             return reply;
         }
         if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM + 256 * 20) {
-            log.debug("Reading macro memory: " + Integer.toHexString(nceMemoryAddress));
+            log.debug("Reading macro memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
-            log.debug("offset:" + offset);
+            log.debug("offset: {}", offset);
             for (int i = 0; i < num; i++) {
                 reply.setElement(i, macroMemory[offset + i]);
             }
@@ -462,23 +471,23 @@ public class SimulatorAdapter extends NcePortController implements
             byteDataBegins++;
         }
         if (nceMemoryAddress >= NceTurnoutMonitor.CS_ACCY_MEMORY && nceMemoryAddress < NceTurnoutMonitor.CS_ACCY_MEMORY + 256) {
-            log.debug("Writing turnout memory: " + Integer.toHexString(nceMemoryAddress));
+            log.debug("Writing turnout memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = m.getElement(2);
             for (int i = 0; i < num; i++) {
                 turnoutMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
         if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + 256 * 6) {
-            log.debug("Writing consist memory: " + Integer.toHexString(nceMemoryAddress));
+            log.debug("Writing consist memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
             for (int i = 0; i < num; i++) {
                 consistMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
         if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM + 256 * 20) {
-            log.debug("Writing macro memory: " + Integer.toHexString(nceMemoryAddress));
+            log.debug("Writing macro memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
-            log.debug("offset:" + offset);
+            log.debug("offset: {}", offset);
             for (int i = 0; i < num; i++) {
                 macroMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
@@ -507,9 +516,9 @@ public class SimulatorAdapter extends NcePortController implements
                 operation = "throw";
             }
             int nceAccessoryAddress = getNceAddress(m);
-            log.debug("Accessory command " + operation + " NT" + nceAccessoryAddress);
+            log.debug("Accessory command {} NT {}", operation, nceAccessoryAddress);
             if (nceAccessoryAddress > 2044) {
-                log.error("Turnout address greater than 2044, address: " + nceAccessoryAddress);
+                log.error("Turnout address greater than 2044, address: {}", nceAccessoryAddress);
                 return null;
             }
             int bit = (nceAccessoryAddress - 1) & 0x07;
@@ -518,7 +527,7 @@ public class SimulatorAdapter extends NcePortController implements
                 setMask = setMask << 1;
             }
             int clearMask = 0x0FFF - setMask;
-            //log.debug("setMask:"+Integer.toHexString(setMask)+" clearMask:"+Integer.toHexString(clearMask));
+            // log.debug("setMask: {} clearMask: {}", Integer.toHexString(setMask), Integer.toHexString(clearMask));
             int offset = (nceAccessoryAddress - 1) >> 3;
             int read = turnoutMemory[offset];
             byte write = (byte) (read & clearMask & 0xFF);
@@ -527,13 +536,12 @@ public class SimulatorAdapter extends NcePortController implements
                 write = (byte) (write + setMask); // set bit if closed
             }
             turnoutMemory[offset] = write;
-            //log.debug("wrote:"+Integer.toHexString(write));
+            // log.debug("wrote: {}", Integer.toHexString(write));
         }
         reply.setElement(0, NCE_OKAY);   // Nce okay reply!
         return reply;
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class);
+    private final static Logger log = LoggerFactory.getLogger(SimulatorAdapter.class);
 
 }

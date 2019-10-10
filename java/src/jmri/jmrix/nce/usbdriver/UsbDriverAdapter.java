@@ -19,11 +19,9 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements UsbPortAdapter for the NCE system.
- * <P>
+ * <p>
  * This connects an NCE PowerCab or PowerPro via a USB port. Normally
  * controlled by the UsbDriverFrame class.
- * <P>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
@@ -37,9 +35,9 @@ public class UsbDriverAdapter extends NcePortController {
     public UsbDriverAdapter() {
         super(new NceSystemConnectionMemo());
         option1Name = "System"; // NOI18N
-        options.put(option1Name, new Option("System:", option1Values, false));
-        option2Name = "USB Version";
-        options.put(option2Name, new Option("USB Version", option2Values, false));
+        options.put(option1Name, new Option(Bundle.getMessage("SystemLabel"), option1Values, false));
+        option2Name = "USB Version"; // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("UsbVersionLabel"), option2Values, false));
         // Set default USB version to V7.x.x
         setOptionState(option2Name, getOptionChoices(option2Name)[1]);
     }
@@ -58,16 +56,10 @@ public class UsbDriverAdapter extends NcePortController {
 
             // try to set it for communication via SerialDriver
             try {
-                // find the baud rate value, configure comm options
-                int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < validSpeeds.length; i++) {
-                    if (validSpeeds[i].equals(mBaudRate)) {
-                        baud = validSpeedValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -77,7 +69,7 @@ public class UsbDriverAdapter extends NcePortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+            log.debug("Serial timeout was observed as: {}", activeSerialPort.getReceiveTimeout()
                     + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
@@ -88,8 +80,7 @@ public class UsbDriverAdapter extends NcePortController {
 
             // report status
             if (log.isInfoEnabled()) {
-                log.info("NCE USB " + portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud");
+                log.info("NCE USB {}  port opened at {} baud", portName, activeSerialPort.getBaudRate());
             }
             opened = true;
 
@@ -101,15 +92,14 @@ public class UsbDriverAdapter extends NcePortController {
         }
 
         return null; // indicates OK return
-
     }
 
-    String[] option1Values = new String[]{"PowerCab", "SB3/SB3a", "Power Pro", "Twin", "SB5"};
-    String[] option2Values = new String[]{"V6.x.x", "V7.x.x"};
+    String[] option1Values = new String[]{"PowerCab", "SB3/SB3a", "Power Pro", "Twin", "SB5"}; // NOI18N
+    String[] option2Values = new String[]{"V6.x.x", "V7.x.x"}; // NOI18N
 
     /**
-     * set up all of the other objects to operate with an NCE command station
-     * connected to this port
+     * Set up all of the other objects to operate with an NCE command station
+     * connected to this port.
      */
     @Override
     public void configure() {
@@ -205,6 +195,7 @@ public class UsbDriverAdapter extends NcePortController {
     }
 
     // base class methods for the NcePortController interface
+
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -232,13 +223,29 @@ public class UsbDriverAdapter extends NcePortController {
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    private String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    private String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200")};
     private int[] validSpeedValues = new int[]{9600, 19200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

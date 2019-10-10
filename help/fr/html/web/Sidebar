@@ -15,14 +15,13 @@
 		    </UL>
 		</dd>
 
-		<dt><h3>Serlets</h3></dt>
+		<dt><h3>Servlets</h3></dt>
 		<dd> D&#233;tails des composants web de JMRI.
 		 <UL>
-		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
-		    <LI><dfn><a href="RosterServlet.shtml">Liste servlet</a></dfn></li>
-		    <LI><dfn><a href="PanelServlet.shtml">Panneau servlet</a></dfn></li>
-		    <LI><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
-		    <LI><dfn><a href="JsonServlet.shtml">Json servlet</a></dfn></li>
+		    <LI><dfn><a href="FrameServlet.shtml">Frames</a></dfn></li>
+		    <LI><dfn><a href="JsonServlet.shtml">JSON</a></dfn></li>
+		    <LI><dfn><a href="RosterServlet.shtml">Liste</a></dfn></li>
+		    <LI><dfn><a href="PanelServlet.shtml">Panneau</a></dfn></li>
 		    </UL>
 		</dd>
 

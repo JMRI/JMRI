@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the AcelaTrafficController class
+ * Stands in for the AcelaTrafficController class.
  *
  * @author	Bob Coleman Copyright 2008
  */
@@ -27,9 +27,7 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 
     @Override
     public void sendAcelaMessage(AcelaMessage m, AcelaListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendAcelaMessage [" + m + "]");
-        }
+        log.debug("sendAcelaMessage [{}]", m);
         // save a copy
         outbound.addElement(m);
         // we don't return an echo so that the processing before the echo can be
@@ -37,23 +35,20 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
     }
 
     // test control member functions
+
     /**
      * forward a message to the listeners, e.g. test receipt
      */
     protected void sendTestMessage(AcelaMessage m, AcelaListener l) {
         // forward a test message to NceListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage  [" + m + "]");
-        }
+        log.debug("sendTestMessage  [{}]", m);
         notifyMessage(m, l);
         return;
     }
 
     protected void sendTestMessage(AcelaReply m) {
         // forward a test message to NceListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage  [" + m + "]");
-        }
+        log.debug("sendTestMessage  [{}]", m);
         //notifyMessage(m, l);
         return;
     }

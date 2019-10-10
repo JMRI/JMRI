@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * UsbNode represents the USB controllers or component.
- * <P>
+ * <p>
  * Generally accessed via the TreeModel.
- * <P>
+ * <p>
  * Can be connected to a JMRI Sensor or Memory.
  *
  * @author Bob Jacobsen Copyright 2008

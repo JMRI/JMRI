@@ -5,8 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * Description:	Stands in for the QsiTrafficController class
+ * Stands in for the QsiTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
  */
@@ -47,7 +46,6 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
             log.debug("sendTestMessage    [" + m + "]");
         }
         notifyMessage(m, l);
-        return;
     }
 
     /*

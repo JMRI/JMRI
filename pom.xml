@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.15.6-SNAPSHOT</version>
+    <version>4.17.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -16,22 +16,24 @@
         <!-- dependency versions (its easier to include version in dependency
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
-        <cucumber.version>2.0.1</cucumber.version>
+        <cucumber.version>4.3.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
         <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.9.8</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.23</openlcb.version>
-        <netbeans.version>RELEASE82</netbeans.version>
+        <openlcb.version>0.7.26</openlcb.version>
+        <netbeans.version>RELEASE110</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
+        <jqassistant.version>1.6.0</jqassistant.version>
     </properties>
     <scm>
         <connection>scm:git:https://github.com/JMRI/JMRI.git</connection>
@@ -163,6 +165,74 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>test-warnings-check</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.1</version>
+                        <configuration>
+                            <compilerId>eclipse</compilerId>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                            <properties>${basedir}/java/ecj.warning.options-ci</properties>
+                            <compilerArgs>
+                                <arg>-sourcepath</arg>
+                                <arg>${basedir}/java/src:${basedir}/target/generated-sources</arg>
+                            </compilerArgs>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-compiler-eclipse</artifactId>
+                                <version>2.8.5</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.eclipse.jdt</groupId>
+                                <artifactId>ecj</artifactId>
+                                <version>3.19.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis-scanhelp</id>
+            <build>
+                <plugins>
+                    <!-- prevent surefire (maven default test harness) from running tests -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>scripts/tidy-check.sh</executable>
+                            <arguments>
+                                <argument>help/en/*/*</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
@@ -257,7 +327,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -323,6 +393,7 @@
                     <systemPropertyVariables>
                         <jmri.path.program>${basedir}</jmri.path.program>
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
+                        <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
                         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
@@ -335,13 +406,6 @@
                     <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
                     -->
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>${surefire.version}</version>
-                        </dependency>
-                    </dependencies>
                 </configuration>
             </plugin>
             <plugin>
@@ -426,16 +490,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.1.0</version>
                 <configuration>
                     <!-- differs from ant-produced Javadocs by including JMRI version -->
                     <maxmemory>512m</maxmemory>
                     <overview>${basedir}/java/src/jmri/overview.html</overview>
                     <sourcepath>${basedir}/java/src:${project.build.directory}/generated-sources/javacc:${project.build.directory}/generated-sources/jjtree</sourcepath>
                     <show>package</show>
-                    <!-- remove -Xdoclint:-missing to get warnings about missing Javadoc tags -->
-                    <!-- change from default 100 warnings -->
-                    <additionalparam>-breakiterator -Xdoclint:all -Xdoclint:-missing -Xmaxwarns 2300</additionalparam>
+                    <!-- change from default 100 warnings; keep number synced with ant javadoc-lint target -->
+                    <additionalJOption>-breakiterator -Xmaxwarns 1650</additionalJOption>
+                    <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
+                    <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -555,7 +620,7 @@
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
                                 <File>jmri/server/json/roster/JsonRoster.class</File>
                                 <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
+                                <File>jmri/server/json/signalmast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -603,38 +668,50 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- don't run  jqassistant (yet) on every build.
             <plugin>
-                <groupId>net.ossindex</groupId>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+            </plugin>
+            -->
+            <plugin>
+                <groupId>org.sonatype.ossindex.maven</groupId>
                 <artifactId>ossindex-maven-plugin</artifactId>
-                <version>2.3.7</version>
+                <version>3.0.4</version>
                 <configuration>
                     <failOnError>true</failOnError>
                     <!-- List packages with vulnerabilities to ignore. -->
                     <!-- Include an issue in GitHub for each ignored package -->
                     <!-- documenting why the vulnerability is ignored. -->
-                    <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
-                    <ignore>org.python:jython-standalone:2.7.0</ignore>
+                    <excludeCoordinates>
+                        <exclude>
+                            <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
+                            <groupId>org.python</groupId>
+                            <artifactId>jython-standalone</artifactId>
+                            <version>2.7.0</version>
+                        </exclude>
+                    </excludeCoordinates>
                 </configuration>
             </plugin>
             <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-enforcer-plugin</artifactId>
-	            <version>3.0.0-M2</version>
-	            <executions>
-	                <execution>
-	                    <id>enforce-maven</id>
-	                    <goals>
-	                        <goal>enforce</goal>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
                         </goals>
-	                    <configuration>
-	                        <rules>
-	                            <requireMavenVersion>
-	                                <version>[3.3.9,)</version>
-	                            </requireMavenVersion>
-	                        </rules>
-	                    </configuration>
-	                </execution>
-	            </executions>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3.9,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -707,6 +784,23 @@
                         <autoReleaseAfterClose>false</autoReleaseAfterClose>
                     </configuration>
                 </plugin>        
+                <plugin>
+                   <groupId>com.buschmais.jqassistant</groupId>
+                   <artifactId>jqassistant-maven-plugin</artifactId>
+                   <version>${jqassistant.version}</version>
+                   <executions>
+                        <execution>
+                            <goals>
+                                <goal>scan</goal>
+                                <goal>analyze</goal>
+                            </goals>
+                            <configuration>
+                                <warnOnSeverity>MINOR</warnOnSeverity>
+                                <failOnSeverity>MAJOR</failOnSeverity>
+                            </configuration>
+                        </execution>
+                   </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -747,6 +841,17 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            <plugin>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -781,6 +886,18 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit4</artifactId>
+            <version>0.11.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.12.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -965,7 +1082,21 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-device</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time, 
+                                           may be used at runtime. -->
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-gpio-extension</artifactId>
+            <version>1.2</version>
+            <optional>true</optional> <!-- not used at compile time,
+                                           may be used at runtime. -->
         </dependency>
         <dependency>
             <groupId>net.sf.bluecove</groupId>
@@ -1101,17 +1232,22 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.10</version>
         </dependency>
         <dependency>
-	         <groupId>org.eclipse.paho</groupId>
-	         <artifactId>mqtt-client</artifactId>
-	         <version>0.4.0</version>
-	    </dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
         <dependency>
-             <groupId>com.alexandriasoftware.swing</groupId>
-             <artifactId>jsplitbutton</artifactId>
-             <version>1.3.1</version>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jsplitbutton</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alexandriasoftware.swing</groupId>
+            <artifactId>jinputvalidator</artifactId>
+            <version>0.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -1142,16 +1278,6 @@
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
-        </repository>
-        <!--
-        Repository hosting NetBeans modules, especially APIs.
-        Versions are based on IDE releases, e.g.: RELEASE691
-        To create your own repository, use: nbm:populate-repository
-        -->
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/nexus/content/groups/netbeans/</url>
         </repository>
         <!--
         Repository hosting libraries not available through maven.org

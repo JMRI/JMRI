@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
     PowerlineComponentFactoryTest.class,
     PowerlineMenuTest.class,
     PowerlineNamedPaneActionTest.class,
-    BundleTest.class
+    BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.powerline.swing package.

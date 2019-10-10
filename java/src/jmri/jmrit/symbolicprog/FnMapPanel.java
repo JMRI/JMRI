@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Uses data from the "model" element from the decoder definition file to
  * configure the number of rows and columns and set up any custom column
- * names:</p>
+ * names:
  * <dl>
  * <dt>numOuts</dt>
  * <dd>Number of physical outputs.</dd>

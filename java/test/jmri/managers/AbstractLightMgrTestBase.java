@@ -7,18 +7,17 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * Abstract Base Class for LightManager tests in specific jmrix packages.
- *<p>
+ * <p>
  * This is not itself a test class, e.g. should not be added to a suite.
  * Instead, this forms the base for test classes, including providing some
  * common tests
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
- * @author      Paul Bender Copyright (C) 2016
+ * @author  Paul Bender Copyright (C) 2016
  */
-public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<LightManager, Light> {
+public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerTestBase<LightManager, Light> {
 
     // implementing classes must provide these abstract members:
     //
@@ -76,16 +75,14 @@ public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<L
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideLight("");
-            Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
     }
 
     @Test
@@ -111,7 +108,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractManagerTestBase<L
 
     @Test
     public void testUpperLower() {
-        Light t = l.provideLight("" + getNumToTest2());
+        Light t = l.provideLight(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }

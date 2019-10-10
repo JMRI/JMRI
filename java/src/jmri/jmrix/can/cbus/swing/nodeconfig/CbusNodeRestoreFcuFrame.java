@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -33,7 +34,7 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeFromFcu;
+import jmri.jmrix.can.cbus.node.CbusNodeFromBackup;
 import jmri.jmrix.can.cbus.node.CbusNodeFromFcuTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.util.JmriJFrame;
@@ -59,11 +60,9 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     private JTabbedPane tabbedPane;
     private CbusNodeTableDataModel nodeModel = null;
     private CanSystemConnectionMemo _memo;
-    private CbusNodeNVTableDataModel nodeNVModel;
     private NodeConfigToolPane mainpane;
     private CbusNodeNVTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
-    private jmri.util.swing.BusyDialog busy_dialog;
     public JSplitPane split;
     private CbusNodeInfoPane nodeinfoPane;
     private JTable nodeTable;
@@ -94,10 +93,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         try {
             nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            
-            nodeNVModel = new CbusNodeNVTableDataModel(memo, 5,
-            CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
-            
         } catch (NullPointerException e) {
             log.error("Unable to get Node Table from Instance Manager");
         }
@@ -109,7 +104,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         mainpane.setRestoreFcuActive(true);
         infoPane = new JPanel();
         infoPane.setLayout(new BorderLayout() );
-        
         
         JPanel nvMenuPane = new JPanel();
         nvMenuPane.setLayout(new BoxLayout(nvMenuPane, BoxLayout.Y_AXIS));
@@ -150,9 +144,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         ArrayList<String> nodeTableNodeArr = new ArrayList<String>();
         
         for (String ref : nodeModel.getListOfNodeNumberNames()) {
-          //  if (!nodeTableNodeArr.contains(ref)) {
-                nodeTableNodeArr.add(ref);
-          //  }
+            nodeTableNodeArr.add(ref);
         }
         
         if ( nodeTableNodeArr.size()==0 ){
@@ -203,11 +195,12 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         nodeinfoPane = new CbusNodeInfoPane();
         
+        CbusNodeNVTableDataModel nodeNVModel = new CbusNodeNVTableDataModel(_memo, 5,
+            CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
         nodevarPane = new CbusNodeNVTablePane(nodeNVModel);
         
         CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, _memo, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column
-        
         nodeEventPane = new CbusNodeEventTablePane(nodeEvModel);
         
         nodeEventPane.setHideEditButton();
@@ -215,11 +208,16 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         nodeEventPane.initComponents(_memo);
         
         tabbedPane.addTab(("Node Info"), nodeinfoPane);
-        tabbedPane.addTab(("Node Variables "), nodevarPane);
+        tabbedPane.addTab(("Node Variables"), nodevarPane);
         tabbedPane.addTab(("Node Events"), nodeEventPane);
         
+        tabbedPane.addChangeListener((ChangeEvent e) -> {
+            updateTabs();
+        });
+        
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fcuPane, tabbedPane);
-        split.setDividerLocation(0.5);
+        
+        // not processor intensive
         split.setContinuousLayout(true);
         
         infoPane.add(nvMenuPane, BorderLayout.PAGE_START);
@@ -256,7 +254,13 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         ActionListener save = ae -> {
             // pre-validation checks, ie same nv's and same ev vars should be by button enabled
-            showConfirmThenSave();
+            mainpane.showConfirmThenSave(nodeFromSelectedRow(),nodeFromSelectedList(),
+                teachNvsCheckBox.isSelected(),resetEventsBeforeTeach.isSelected(),
+                teachEventsCheckBox.isSelected(), this );
+            if (teachEventsCheckBox.isSelected()){
+                teachJmriEventNamesFromNode( nodeFromSelectedRow() );
+            }
+                
         };
         nodeToBeTaughtButton.addActionListener(save);
         
@@ -285,9 +289,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         };
         importNodeNamesButton.addActionListener(importNodeNames);
         
-        
-        
         nodeTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if ( !e.getValueIsAdjusting() ) {
                     updateTabs();
@@ -297,6 +300,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         });
         
         list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
             public void valueChanged(ListSelectionEvent e) {
                 if ( !e.getValueIsAdjusting() ) {
                     updateRestoreNodeButton();
@@ -331,17 +335,20 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         String listSelected = obj.toString();
         int _targetnodenum =  jmri.util.StringUtil.getFirstIntFromString(listSelected);
         return nodeModel.getNodeByNodeNum(_targetnodenum);
-        
-        
     }
     
     private void updateTabs() {
 
         if ( nodeTable.getSelectedRow() > -1 ) {
             
-            nodeinfoPane.initComponents( nodeFromSelectedRow() );
-            nodevarPane.setNode( nodeFromSelectedRow() );
-            nodeEventPane.setNode( nodeFromSelectedRow() );
+            if ( tabbedPane.getSelectedIndex() == 1 ){ // nv pane
+                nodevarPane.setNode( nodeFromSelectedRow() );
+            }
+            else if ( tabbedPane.getSelectedIndex() == 2 ) { // ev pane
+                nodeEventPane.setNode( nodeFromSelectedRow() );
+            } else {
+                nodeinfoPane.initComponents( nodeFromSelectedRow() );
+            }
         }
         else {
             nodeinfoPane.initComponents( null );
@@ -433,7 +440,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                 int nodenum = Integer.parseInt(nodeNum);
                 int nodetype = Integer.parseInt(moduleIdNum);
                 if ( nodenum>0 ) {
-                    CbusNodeFromFcu actualnode = cbusNodeFcuDataModel.provideNodeByNodeNum( nodenum );
+                    CbusNodeFromBackup actualnode = cbusNodeFcuDataModel.provideNodeByNodeNum( nodenum );
                     actualnode.setNameIfNoName( nodeName );
                     actualnode.resetNodeEvents();
                     
@@ -448,7 +455,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                         // log.info("node {} has {} nvs",actualnode,numNvs);
                         actualnode.setNVs( nvArray );
                     }
-                    
                 }
             }
             
@@ -473,7 +479,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                     int eventNodeNum = Integer.parseInt(eventNode);
                     log.debug("event host {} event {} event node {} vars {}",hostNodeNum,eventNum,eventNodeNum,eventVars);
                     
-                    CbusNodeFromFcu hostNode = cbusNodeFcuDataModel.provideNodeByNodeNum( hostNodeNum );
+                    CbusNodeFromBackup hostNode = cbusNodeFcuDataModel.provideNodeByNodeNum( hostNodeNum );
                     
                     if ( !eventVars.isEmpty() ) {
                         int[] evVarArray = StringUtil.intBytesWithTotalFromNonSpacedHexString(eventVars,false);
@@ -485,7 +491,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
                         ev.setName(eventName);
                         ev.setTempFcuNodeName(cbusNodeFcuDataModel.getNodeName( eventNodeNum ) );
                         hostNode.addNewEvent(ev);
-                        
                     }
                 }
             }
@@ -506,10 +511,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             } catch (NullPointerException e) {
                 importEventNamesButton.setToolTipText("CBUS Event Table not running.");
             }
-            
-            
-            
-            
         }
         catch (RuntimeException e) {
             log.warn("Error importing xml file ", e);
@@ -538,110 +539,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
             if ( !evList.get(i).getName().isEmpty() ){
                 eventModel.provideEvent(evList.get(i).getNn(),evList.get(i).getEn()).setName(evList.get(i).getName());
             }
-        }        
-    }
-    
-    private void showConfirmThenSave(){
-        
-        StringBuffer buf = new StringBuffer();
-        buf.append("<html> ");
-
-        buf.append( ("Please Confirm Write from<br>File: ") );
-        buf.append( nodeFromSelectedRow().getNodeNumberName() );
-        buf.append( ("<br>to actual node<br>") );
-        
-        buf.append ( nodeFromSelectedList().toString() );
-        
-        buf.append("<hr>");
-        
-        if ( teachNvsCheckBox.isSelected() ){
-            buf.append("Teaching " + nodeFromSelectedRow().getTotalNVs() + " NV's<br>");
-        }       
-        if ( resetEventsBeforeTeach.isSelected() ){
-            buf.append("Clearing " + Math.max( 0,nodeFromSelectedList().getTotalNodeEvents() ) + " Events<br>");
-        } 
-        if ( teachEventsCheckBox.isSelected() ){
-            buf.append("Teaching " + Math.max( 0,nodeFromSelectedRow().getTotalNodeEvents() ) + " Events<br>");
-        }         
-        buf.append("</html>");
-        
-        int response = JOptionPane.showConfirmDialog(null,
-                ( buf.toString() ),
-                ( ("Please Confirm Write to Node")),
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if ( response != JOptionPane.OK_OPTION ) {
-            
-            return;
-        } else {
-            busy_dialog = new jmri.util.swing.BusyDialog(this, "Write NVs "+nodeFromSelectedRow().toString(), false);
-            busy_dialog.start();
-            // update main node name from fcu name
-            nodeFromSelectedList().setNameIfNoName( nodeFromSelectedRow().getUserName() );
-            // request the local nv model pass the nv update request to the CbusNode
-            if ( teachNvsCheckBox.isSelected() ){
-                nodeFromSelectedList().sendNvsToNode( nodeFromSelectedRow().getNvArray() ,null,this);
-            }
-            else {
-                nVTeachComplete(0);
-            }
         }
-    }
-    
-    public void nVTeachComplete(int numErrors){
-        if ( numErrors > 0 ) {
-            JOptionPane.showMessageDialog(null, 
-                Bundle.getMessage("NVSetFailTitle",numErrors), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
-        }
-        
-        if ( resetEventsBeforeTeach.isSelected() ){
-        
-            busy_dialog.setTitle("Clear Events");
-            
-            // node enter learn mode
-            nodeFromSelectedList().send.nodeEnterLearnEvMode( nodeFromSelectedList().getNodeNumber() ); 
-            // no response expected but we add a mini delay for other traffic
-            
-            ThreadingUtil.runOnLayoutDelayed( () -> {
-                nodeFromSelectedList().send.nNCLR(nodeFromSelectedList().getNodeNumber());// no response expected
-            }, 150 );
-            ThreadingUtil.runOnLayoutDelayed( () -> {
-                // node exit learn mode
-                nodeFromSelectedList().send.nodeExitLearnEvMode( nodeFromSelectedList().getNodeNumber() ); // no response expected
-            }, CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME );
-            ThreadingUtil.runOnGUIDelayed( () -> {
-                
-                clearEventsComplete();
-            
-            }, ( CbusNode.SINGLE_MESSAGE_TIMEOUT_TIME + 150 ) );
-        }
-        else {
-            clearEventsComplete();
-        }
-    }
-    
-    public void clearEventsComplete() {
-        if ( teachEventsCheckBox.isSelected() ){
-            busy_dialog.setTitle("Teach Events");
-            nodeFromSelectedList().sendNewEvSToNode( nodeFromSelectedRow().getEventArray(), null, this);
-            
-            teachJmriEventNamesFromNode( nodeFromSelectedRow() );
-            
-        }
-        else {
-            teachEventsComplete(0);
-        }
-    }
-    
-    public void teachEventsComplete( int numErrors ) {
-        busy_dialog.finish();
-        busy_dialog = null;
-        if (numErrors != 0 ) {
-            JOptionPane.showMessageDialog(null, 
-            Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
-            JOptionPane.ERROR_MESSAGE);
-        }
+        eventModel.fireTableDataChanged();
     }
     
     @Override

@@ -1,6 +1,8 @@
 package jmri;
 
 import java.util.*;
+import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
@@ -194,17 +196,12 @@ public class ManagerTest {
         // create reporter manager
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
-        ReporterManager m = new jmri.jmrix.internal.InternalReporterManager(){
-            @Override
-            public String getSystemPrefix() {
-                return "M";
-            }
-        };
+        ReporterManager m = new InternalReporterManager(new InternalSystemConnectionMemo("M", "Mike"));
         InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.REPORTERS);
         InstanceManager.setDefault(ReporterManager.class,m);
 
-        Assert.assertTrue(null != InstanceManager.getDefault(ReporterManager.class).provideReporter("MR2"));
-        Assert.assertTrue(null != InstanceManager.getDefault(ReporterManager.class).getReporter("MR2"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("MR2"));
+        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).getReporter("MR2"));
 
         // load up
         Manager.getSystemPrefixLength("DCCPPT2");
@@ -305,12 +302,14 @@ public class ManagerTest {
         
     /**
      * Service routine
+     * 
+     * @param iter set of entries
      * @return true when all entries are in correct order, false otherwise
      */
     boolean checkOrderNamedBeans(Iterator<NamedBean> iter) {
         NamedBean first = iter.next();
         NamedBean next;
-        jmri.util.NamedBeanComparator comp = new jmri.util.NamedBeanComparator();
+        jmri.util.NamedBeanComparator<NamedBean> comp = new jmri.util.NamedBeanComparator<>();
         while (iter.hasNext()) {
             next = iter.next();
             if (comp.compare(first, next) >= 0) return false;
@@ -321,6 +320,8 @@ public class ManagerTest {
     
     /**
      * Service routine
+     * 
+     * @param iter set of entries
      * @return true when all entries are in correct order, false otherwise
      */
     boolean checkOrderStrings(Iterator<String> iter) {
@@ -336,8 +337,11 @@ public class ManagerTest {
     
     static class BogusBean extends jmri.implementation.AbstractNamedBean {
         public BogusBean(String n) { super(n); }
+        @Override
         public int getState() { return -1; }
+        @Override
         public String getBeanType() { return "";}
+        @Override
         public void setState(int i) {}
     }
     

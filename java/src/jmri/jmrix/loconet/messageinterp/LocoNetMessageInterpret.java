@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * Reverse-engineering of device-specific OpSw messages, throttle text message,
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
- * <p>
+ *
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
@@ -140,6 +140,11 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_GPBUSY: {
                 return Bundle.getMessage("LN_MSG_MASTER_BUSY");
+            }
+
+            case LnConstants.OPC_RE_LOCORESET_BUTTON: {
+                return Bundle.getMessage("LN_MSG_RE_LOCO_RESET");
+
             }
 
             /*
@@ -2270,7 +2275,7 @@ public class LocoNetMessageInterpret {
     private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
         int slot = l.getElement(2); // slot number for this request
         String mode;
-        int command = l.getElement(0);
+        int command = l.getOpCode();
         int id1 = l.getElement(11); // ls 7 bits of ID code
         int id2 = l.getElement(12); // ms 7 bits of ID code
         /*
@@ -3651,10 +3656,11 @@ public class LocoNetMessageInterpret {
             int[] packetInt = new int[len];
             packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
             packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-            if (len >= 2) {
-                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-            }
+
+            // len >= 2 always true at this point
+            packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+
             if (len >= 3) {
                 packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
                 packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
@@ -4336,7 +4342,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
-     * <p>
+     *
      * @param l LocoNet Message to interpret
      * @return String containing interpreted message or empty string if
      *      message is not interpretable.
@@ -4460,7 +4466,7 @@ public class LocoNetMessageInterpret {
                     return "routes unknown\n";
                 default:
                     return Bundle.getMessage(
-                            ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
+                            ((l.getOpCode() == LnConstants.OPC_ALM_WRITE)
                             ? "LN_MSG_ALM_WRITE"
                             : "LN_MSG_ALM_WRITE_REPLY"),
                             l.getElement(2),
@@ -4662,7 +4668,7 @@ public class LocoNetMessageInterpret {
                 detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
                 break;
             case 251:
-                // Loconet stats
+                // LocoNet stats
                 // Identifying information
                 baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
                 detailInfo = interpretExtendedSlot_StatusData_LocoNet(l,slot);
@@ -4809,7 +4815,7 @@ public class LocoNetMessageInterpret {
      * @return formated message
      */
     private static String interpretExtendedSlot_StatusData_Slots(LocoNetMessage l, int slot) {
-        //TOD there is still more data in this slot.
+        //TODO there is still more data in this slot.
         double msgInUse;
         double msgIdle;
         double msgFree;

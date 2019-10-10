@@ -25,7 +25,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 * Re-created using JUnit4 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017
  */
-public class LogixTableActionTest extends AbstractTableActionBase {
+public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
@@ -207,12 +207,14 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     @Test
     @Ignore("Logix create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name")
+    @Override
     public void testAddThroughDialog() {
     }
 
     @Test
     @Ignore("Logix create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name, or add without dialog")
+    @Override
     public void testEditButton() {
     }
 

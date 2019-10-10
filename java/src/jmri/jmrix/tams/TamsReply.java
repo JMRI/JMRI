@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to a TamsMessage
- * <P>
+ * <p>
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *

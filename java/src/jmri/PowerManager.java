@@ -9,13 +9,13 @@ import jmri.beans.PropertyChangeProvider;
 
 /**
  * Provide controls for layout power.
- * <P>
+ * <p>
  * The PowerManager handles three states:
- * <UL>
- * <LI>On/Off which controls electrical power to the track
- * <LI>an optional "Idle" state, where track power is alive but track-connected
+ * <ul>
+ * <li>On/Off which controls electrical power to the track
+ * <li>an optional "Idle" state, where track power is alive but track-connected
  *     decoders may be un-controllable
- * </UL>
+ * </ul>
  * A layout may not have control over these, in which case attempts to change
  * them should return an exception. If the state cannot be sensed, that should
  * also return an exception.
@@ -27,15 +27,15 @@ import jmri.beans.PropertyChangeProvider;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface PowerManager extends PropertyChangeProvider {

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -21,7 +21,7 @@ public class NceThrottle extends AbstractThrottle {
      * to the NCE command station.  Now it always sends the A2 loco
      * commands if the command station eprom was built after 2004. 
      */
-    public boolean sendA2command = true;
+    private boolean sendA2command = true;
 
     private NceTrafficController tc = null;
 
@@ -33,7 +33,7 @@ public class NceThrottle extends AbstractThrottle {
     public NceThrottle(NceSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getNceTrafficController();
-        setSpeedStepMode(SpeedStepMode128);
+        setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -274,7 +274,7 @@ public class NceThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
@@ -306,7 +306,7 @@ public class NceThrottle extends AbstractThrottle {
                                 : NceBinaryCommand.LOCO_CMD_REV_ESTOP),
                         (byte) 0);
 
-            } else if (super.speedStepMode == SpeedStepMode128) {
+            } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
                 bl = NceBinaryCommand.nceLocoCmd(locoAddr,
                         (isForward ? NceBinaryCommand.LOCO_CMD_FWD_128SPEED
                                 : NceBinaryCommand.LOCO_CMD_REV_128SPEED),
@@ -326,7 +326,7 @@ public class NceThrottle extends AbstractThrottle {
             byte[] bl;
             int value;
 
-            if (super.speedStepMode == SpeedStepMode128) {
+            if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
                 value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
                 if (value > 0) {
                     value = value + 1;  // skip estop
@@ -377,7 +377,7 @@ public class NceThrottle extends AbstractThrottle {
 
         }
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -391,7 +391,7 @@ public class NceThrottle extends AbstractThrottle {
             log.debug("setIsForward= " + forward);
         }
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

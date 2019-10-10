@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import jmri.Sensor;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 import org.slf4j.Logger;
@@ -17,14 +16,9 @@ import org.slf4j.LoggerFactory;
 
 public class TrafficLocking {
     private final static Logger log = LoggerFactory.getLogger(TrafficLocking.class);
-    
+
     private static class TrafficLockingRecord {
         private final SwitchIndicatorsRoute _mSwitchIndicatorsRoute;
-        private final SignalDirectionIndicatorsInterface _mOSSignalDirectionIndicatorsInterfaceInterface1;
-        private final SignalDirectionIndicatorsInterface _mOSSignalDirectionIndicatorsInterfaceInterface2;
-        private final SignalDirectionIndicatorsInterface _mOSSignalDirectionIndicatorsInterfaceInterface3;
-        private final SignalDirectionIndicatorsInterface _mOSSignalDirectionIndicatorsInterfaceInterface4;
-        private final SignalDirectionIndicatorsInterface _mOSSignalDirectionIndicatorsInterfaceInterface5;
         private final NBHSensor _mOccupancyExternalSensor1;
         private final NBHSensor _mOccupancyExternalSensor2;
         private final NBHSensor _mOccupancyExternalSensor3;
@@ -37,7 +31,7 @@ public class TrafficLocking {
         private final NBHSensor _mOptionalSensor1;
         private final NBHSensor _mOptionalSensor2;
         private final boolean _mRuleEnabled;
-        
+
         public TrafficLockingRecord(String userIdentifier,
                                     String parameter,
                                     NBHSensor switchIndicator1,
@@ -45,11 +39,6 @@ public class TrafficLocking {
                                     NBHSensor switchIndicator3,
                                     NBHSensor switchIndicator4,
                                     NBHSensor switchIndicator5,
-                                    SignalDirectionIndicatorsInterface osSignalDirectionIndicatorsInterface1,
-                                    SignalDirectionIndicatorsInterface osSignalDirectionIndicatorsInterface2,
-                                    SignalDirectionIndicatorsInterface osSignalDirectionIndicatorsInterface3,
-                                    SignalDirectionIndicatorsInterface osSignalDirectionIndicatorsInterface4,
-                                    SignalDirectionIndicatorsInterface osSignalDirectionIndicatorsInterface5,
                                     String occupancyExternalSensor1,
                                     String occupancyExternalSensor2,
                                     String occupancyExternalSensor3,
@@ -63,11 +52,6 @@ public class TrafficLocking {
                                     String optionalSensor2,
                                     String ruleEnabled) {
             _mSwitchIndicatorsRoute = new SwitchIndicatorsRoute(switchIndicator1, switchIndicator2, switchIndicator3, switchIndicator4, switchIndicator5, null);
-            _mOSSignalDirectionIndicatorsInterfaceInterface1 = osSignalDirectionIndicatorsInterface1;
-            _mOSSignalDirectionIndicatorsInterfaceInterface2 = osSignalDirectionIndicatorsInterface2;
-            _mOSSignalDirectionIndicatorsInterfaceInterface3 = osSignalDirectionIndicatorsInterface3;
-            _mOSSignalDirectionIndicatorsInterfaceInterface4 = osSignalDirectionIndicatorsInterface4;
-            _mOSSignalDirectionIndicatorsInterfaceInterface5 = osSignalDirectionIndicatorsInterface5;
             _mOccupancyExternalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor1", occupancyExternalSensor1, true);  // NOI18N
             _mOccupancyExternalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor2", occupancyExternalSensor2, true);  // NOI18N
             _mOccupancyExternalSensor3 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor3", occupancyExternalSensor3, true);  // NOI18N
@@ -81,9 +65,9 @@ public class TrafficLocking {
             _mOptionalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor2", optionalSensor2, true); // NOI18N
             _mRuleEnabled = !ruleEnabled.equals(Bundle.getMessage("TLE_RuleDisabled")); // NOI18N  Any problem, default is ENABLED!
         }
-        
+
         public boolean isEnabled() { return _mRuleEnabled; }
-        public boolean isValid(int directionRequested) {
+        public boolean isValid() {
             if (!_mRuleEnabled) return false;    // If disabled, treat as invalid so we skip this rule and try the next rule.
 //  For all of these, ONLY unoccupied(INACTIVE) is "valid".  ACTIVE, INCONSISTENT and UNKNOWN all are considered occupied (ACTIVE):
             if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE) return false;
@@ -98,28 +82,10 @@ public class TrafficLocking {
             if (!_mSwitchIndicatorsRoute.isRouteSelected()) return false;
             if (!isOptionalSensorActive(_mOptionalSensor1)) return false;
             if (!isOptionalSensorActive(_mOptionalSensor2)) return false;
-            
-//  Check for any opposing direction or running time O.S. sections.  If so, return "false" immediately:
-            ArrayList<SignalDirectionIndicatorsInterface> sidiCheckList = new ArrayList<>();
-            sidiCheckList.add(_mOSSignalDirectionIndicatorsInterfaceInterface1);
-            sidiCheckList.add(_mOSSignalDirectionIndicatorsInterfaceInterface2);
-            sidiCheckList.add(_mOSSignalDirectionIndicatorsInterfaceInterface3);
-            sidiCheckList.add(_mOSSignalDirectionIndicatorsInterfaceInterface4);
-            sidiCheckList.add(_mOSSignalDirectionIndicatorsInterfaceInterface5);
-            for (SignalDirectionIndicatorsInterface signalDirectionIndicatorsInterface : sidiCheckList) {
-                if (signalDirectionIndicatorsInterface != null) { // Safety: Work only with valid ones:
-                    int presentDirection = signalDirectionIndicatorsInterface.getPresentDirection();
-                    if (presentDirection == CTCConstants.OUTOFCORRESPONDENCE) return false; // If running time, or other error, NO!  Fail Safe!
-                    if (presentDirection == CTCConstants.LEFTTRAFFIC || presentDirection == CTCConstants.RIGHTTRAFFIC) { // Need to check.  All Stop always OK.
-                        if (directionRequested == CTCConstants.LEFTTRAFFIC && presentDirection == CTCConstants.RIGHTTRAFFIC) return false;
-                        if (directionRequested == CTCConstants.RIGHTTRAFFIC && presentDirection == CTCConstants.LEFTTRAFFIC) return false;
-                    }
-                }
-            }
             return true;
         }
-        
-//  Put all non null and valid OCCUPANCY NBHSensor's in a HashSet and return it (the "ROUTE"!) for use by LockedRoutesManager.        
+
+//  Put all non null and valid OCCUPANCY NBHSensor's in a HashSet and return it (the "ROUTE"!) for use by LockedRoutesManager.
         public HashSet<Sensor> getOccupancySensors() {
             HashSet<Sensor> returnValue = new HashSet<>();
             if (_mOccupancyExternalSensor1 != null && _mOccupancyExternalSensor1.valid()) returnValue.add(_mOccupancyExternalSensor1.getBean());
@@ -134,46 +100,45 @@ public class TrafficLocking {
             returnValue.remove(null);   // Safety: Remove null entry if it exists (There will ONLY be one in a set!)
             return returnValue;
         }
-        
+
 //  Quick and Dirty Routine: If it doesn't exist, it's lit.  If it exists, ACTIVE = lit.  Can't use CTCMain.getSensorKnownState() because of this.
         private boolean isOptionalSensorActive(NBHSensor sensor) {
             if (sensor.valid()) return sensor.getKnownState() == Sensor.ACTIVE;
             return true;    // Doesn't exist.
         }
-        
+
     }
-    
+
     private final ArrayList<TrafficLockingRecord> _mLeftTrafficLockingRulesArrayList = new ArrayList<>();
     private final ArrayList<TrafficLockingRecord> _mRightTrafficLockingRulesArrayList = new ArrayList<>();
     private final String _mUserIdentifier;
     private final String _mLeftTrafficLockingRulesSSVList;
     private final String _mRightTrafficLockingRulesSSVList;
     private final LockedRoutesManager _mLockedRoutesManager;
-    
+
     public TrafficLocking(String userIdentifier, String leftTrafficLockingRulesSSVList, String rightTrafficLockingRulesSSVList, LockedRoutesManager lockedRoutesManager)
     {
-        _mUserIdentifier = userIdentifier;                                      // Squirrel it 
+        _mUserIdentifier = userIdentifier;                                      // Squirrel it
         _mLeftTrafficLockingRulesSSVList = leftTrafficLockingRulesSSVList;      // away for later
         _mRightTrafficLockingRulesSSVList = rightTrafficLockingRulesSSVList;    // "fileReadComplete"
         _mLockedRoutesManager = lockedRoutesManager;
     }
-    
+
     public void removeAllListeners() {}   // None done.
-    
+
 //  Since the user may specify "forward referenced" O/S sections (i.e. an entry references an O.S. section that hasn't been read in and created yet),
-//  we delay processing of everything until after the file has been completely read in.  Here we do the real work:    
-    public void fileReadComplete(HashMap<Integer, CodeButtonHandler> cbHashMap, HashMap<Integer, SignalDirectionIndicatorsInterface> sidiHashMap, HashMap<Integer, SwitchDirectionIndicators> swdiHashMap) {
-        addAllTrafficLockingEntries(_mUserIdentifier, _mLeftTrafficLockingRulesSSVList, "leftTrafficLockingRulesSSVList", cbHashMap, sidiHashMap, swdiHashMap, _mLeftTrafficLockingRulesArrayList);     // NOI18N
-        addAllTrafficLockingEntries(_mUserIdentifier, _mRightTrafficLockingRulesSSVList, "rightTrafficLockingRulesSSVList", cbHashMap, sidiHashMap, swdiHashMap, _mRightTrafficLockingRulesArrayList);  // NOI18N
+//  we delay processing of everything until after the file has been completely read in.  Here we do the real work:
+    public void fileReadComplete(HashMap<Integer, CodeButtonHandler> cbHashMap, HashMap<Integer, SwitchDirectionIndicators> swdiHashMap) {
+        addAllTrafficLockingEntries(_mUserIdentifier, _mLeftTrafficLockingRulesSSVList, "leftTrafficLockingRulesSSVList", cbHashMap, swdiHashMap, _mLeftTrafficLockingRulesArrayList);     // NOI18N
+        addAllTrafficLockingEntries(_mUserIdentifier, _mRightTrafficLockingRulesSSVList, "rightTrafficLockingRulesSSVList", cbHashMap, swdiHashMap, _mRightTrafficLockingRulesArrayList);  // NOI18N
     }
-    
+
     private void addAllTrafficLockingEntries(   String                                                  userIdentifier,
                                                 String                                                  trafficLockingRulesSSVList,
                                                 String                                                  parameter,
                                                 HashMap<Integer, CodeButtonHandler>                     cbHashMap,
-                                                HashMap<Integer, SignalDirectionIndicatorsInterface>    sidiHashMap,
                                                 HashMap<Integer, SwitchDirectionIndicators>             swdiHashMap,
-                                                ArrayList<TrafficLockingRecord>                         trafficLockingRulesArrayList) {  // <- Output
+                                                ArrayList<TrafficLockingRecord>                         trafficLockingRecordsArrayList) {  // <- Output
         ArrayList<String> arrayListOfSSVEntries;
         arrayListOfSSVEntries = ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList);
         for (String csvEntry : arrayListOfSSVEntries) {
@@ -192,11 +157,6 @@ public class TrafficLocking {
                                             getSwitchDirectionIndicatorSensor(osSection3UniqueID, trafficLockingEntry._mSwitchAlignment3, swdiHashMap),
                                             getSwitchDirectionIndicatorSensor(osSection4UniqueID, trafficLockingEntry._mSwitchAlignment4, swdiHashMap),
                                             getSwitchDirectionIndicatorSensor(osSection5UniqueID, trafficLockingEntry._mSwitchAlignment5, swdiHashMap),
-                                            sidiHashMap.get(osSection1UniqueID),
-                                            sidiHashMap.get(osSection2UniqueID),
-                                            sidiHashMap.get(osSection3UniqueID),
-                                            sidiHashMap.get(osSection4UniqueID),
-                                            sidiHashMap.get(osSection5UniqueID),
                                             trafficLockingEntry._mOccupancyExternalSensor1,
                                             trafficLockingEntry._mOccupancyExternalSensor2,
                                             trafficLockingEntry._mOccupancyExternalSensor3,
@@ -209,34 +169,36 @@ public class TrafficLocking {
                                             trafficLockingEntry._mOptionalExternalSensor1,
                                             trafficLockingEntry._mOptionalExternalSensor2,
                                             trafficLockingEntry._mRuleEnabled);
-            trafficLockingRulesArrayList.add(trafficLockingRecord);
+            if (!trafficLockingRecord.getOccupancySensors().isEmpty()) {
+                trafficLockingRecordsArrayList.add(trafficLockingRecord);
+            }
         }
     }
 
     public TrafficLockingInfo valid(int presentSignalDirectionLever) {
-        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(presentSignalDirectionLever, _mLeftTrafficLockingRulesArrayList);
-        return validForTraffic(presentSignalDirectionLever, _mRightTrafficLockingRulesArrayList);
+        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList);
+        return validForTraffic(_mRightTrafficLockingRulesArrayList);
     }
-    
-    private TrafficLockingInfo validForTraffic(int presentSignalDirectionLever, ArrayList<TrafficLockingRecord> trafficLockingEntryArrayList) {
+
+    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList) {
         TrafficLockingInfo returnValue = new TrafficLockingInfo(true);          // ASSUME valid return status
-        if (trafficLockingEntryArrayList.isEmpty()) return returnValue; // No rules, OK all of the time.
+        if (trafficLockingRecordArrayList.isEmpty()) return returnValue; // No rules, OK all of the time.
 //  If ALL are disabled, then treat as if nothing in there, always allow, otherwise NONE would be valid!
         boolean anyEnabled = false;
-        for (int index = 0; index < trafficLockingEntryArrayList.size(); index++) {
-            if (trafficLockingEntryArrayList.get(index).isEnabled()) { anyEnabled = true; break; }
+        for (int index = 0; index < trafficLockingRecordArrayList.size(); index++) {
+            if (trafficLockingRecordArrayList.get(index).isEnabled()) { anyEnabled = true; break; }
         }
         if (!anyEnabled) return returnValue; // None enabled, always allow.
-        
-        for (int index = 0; index < trafficLockingEntryArrayList.size(); index++) {
-            TrafficLockingRecord trafficLockingRecord = trafficLockingEntryArrayList.get(index);
-            if (trafficLockingRecord.isValid(presentSignalDirectionLever)) {
+
+        for (int index = 0; index < trafficLockingRecordArrayList.size(); index++) {
+            TrafficLockingRecord trafficLockingRecord = trafficLockingRecordArrayList.get(index);
+            if (trafficLockingRecord.isValid()) {
 //  Ah, we found a rule that matches the route, and is not occupied.  See if that route
 //  is in conflict with any other routes presently in effect:
                 String ruleNumber = Integer.toString(index+1);
                 returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(trafficLockingRecord.getOccupancySensors(), _mUserIdentifier, "Rule #" + ruleNumber);
                 if (returnValue._mLockedRoute != null) { // OK:
-                    if (CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) log.info("Rule {} valid", ruleNumber);
+                    if (jmri.InstanceManager.getDefault(CTCMain.class)._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) log.info("Rule {} valid", ruleNumber);
                     return returnValue;
                 }
             }
@@ -244,7 +206,7 @@ public class TrafficLocking {
         returnValue._mReturnStatus = false;
         return returnValue;
     }
-    
+
     private NBHSensor getSwitchDirectionIndicatorSensor(int uniqueID, String switchAlignment, HashMap<Integer, SwitchDirectionIndicators> swdiHashMap) {
         if (uniqueID < 0) return null;
         boolean isNormalAlignment = !switchAlignment.equals(Bundle.getMessage("TLE_Reverse"));  // NOI18N
@@ -252,12 +214,12 @@ public class TrafficLocking {
         if (switchDirectionIndicators == null) return null;     // Safety, technically shouldn't happen....
         return switchDirectionIndicators.getProperIndicatorSensor(isNormalAlignment);
     }
-    
+
     private int getUniqueID(String aString) {
         return ProjectsCommonSubs.getIntFromStringNoThrow(aString, -1); // If a problem, -1!
     }
 
-/*    
+/*
     private NBHSensor getOSSectionOccupancySensor(int uniqueID, HashMap<Integer, CodeButtonHandler> cbHashMap) {
         if (uniqueID < 0) return null;
         CodeButtonHandler codeButtonHandler = cbHashMap.get(uniqueID);

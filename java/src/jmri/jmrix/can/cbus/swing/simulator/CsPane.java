@@ -10,8 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
-import jmri.jmrix.can.cbus.swing.simulator.DirectionPane;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +49,7 @@ public class CsPane extends JPanel {
         _selectCs = new JComboBox<String>();
         _selectCs.setEditable(false);
         
-        SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
+        ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectCs.setRenderer(renderer);
         
         updateSessionTotal();
@@ -59,10 +58,10 @@ public class CsPane extends JPanel {
         tooltips = new ArrayList<String>();
         String getSelected="";
         
-        for (int i = 0; i < CbusDummyCS.csTypes.size(); i++) {
-            String option = CbusDummyCS.csTypes.get(i);
+        for (int i = 0; i < _cs.csTypes.size(); i++) {
+            String option = _cs.csTypes.get(i);
             _selectCs.addItem(option);
-            tooltips.add(CbusDummyCS.csTypesTip.get(i));
+            tooltips.add(_cs.csTypesTip.get(i));
             if ( i == _type ){
                 getSelected = option;
             }
@@ -74,8 +73,8 @@ public class CsPane extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String chosen = (String)_selectCs.getSelectedItem();
                 
-                for (int i = 0; i < CbusDummyCS.csTypes.size(); i++) {
-                    String option = CbusDummyCS.csTypes.get(i);
+                for (int i = 0; i < _cs.csTypes.size(); i++) {
+                    String option = _cs.csTypes.get(i);
                     if (option.equals(chosen)) {
                         log.debug("chosen {} {}",i,chosen);
                         _cs.setDummyType(i);

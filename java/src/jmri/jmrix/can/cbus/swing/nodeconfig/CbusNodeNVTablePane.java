@@ -48,10 +48,10 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         nodeNVModel.setNode( node );
         if ( node == null ) {
+            pane1.setVisible(false);
             return;
         }
         nodeNvTable = new JTable(nodeNVModel);
-        nodeNVModel.setViewFrame();
         init();
     }
 
@@ -63,16 +63,16 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
         pane1 = null;
         
+        if ( nodeNvTable == null ){
+            return;
+        }
+        
         TableColumnModel tableModel = nodeNvTable.getColumnModel();
         
-
-        // configure items for GUI
-        nodeNVModel.configureTable(nodeNvTable);  
-
+        nodeNvTable.getTableHeader().setReorderingAllowed(true);
         nodeNvTable.setRowSelectionAllowed(true);
         nodeNvTable.setColumnSelectionAllowed(false);
         nodeNvTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        
         nodeNvTable.setRowHeight(26);
         
         // hide the editable columns, they're used in CbusNodeNVEditTablePane
@@ -93,12 +93,6 @@ public class CbusNodeNVTablePane extends jmri.jmrix.can.swing.CanPanel {
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_VAL_COLUMN).setCellRenderer(getRenderer());
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN).setCellRenderer(getRenderer());
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN).setCellRenderer(getRenderer());
-        
-
-        tableModel.getColumn(0).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(0)*2 );
-        tableModel.getColumn(1).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(1)*2 );
-        tableModel.getColumn(2).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(2)*2 );
-        tableModel.getColumn(3).setPreferredWidth( CbusNodeNVTableDataModel.getPreferredWidth(3)*2 );
         
         JTextField f = new JTextField();
         largerFont = f.getFont().getSize()+2;

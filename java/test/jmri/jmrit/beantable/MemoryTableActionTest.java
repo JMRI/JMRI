@@ -2,8 +2,9 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import jmri.Memory;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -13,7 +14,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author	Bob Jacobsen Copyright 2004
  */
-public class MemoryTableActionTest extends AbstractTableActionBase {
+public class MemoryTableActionTest extends AbstractTableActionBase<Memory> {
 
     @Test
     public void testCreate() {
@@ -47,6 +48,7 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
+    @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
@@ -69,11 +71,13 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Ignore("no Edit button in memory Table")
+    @Override
     public void testEditButton() {
     }
 
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -83,6 +87,7 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         a = null;

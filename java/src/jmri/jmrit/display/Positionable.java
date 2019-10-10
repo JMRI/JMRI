@@ -13,14 +13,14 @@ import javax.swing.border.Border;
 
 /**
  * Defines display objects.
- * <P>
+ * <p>
  * These are capable of:
- * </p><UL>
- * <LI>Being positioned by being dragged around on the screen. (See
+ * <ul>
+ * <li>Being positioned by being dragged around on the screen. (See
  * {@link #setPositionable})
- * <LI>Being hidden. (See {@link #setHidden})
- * <LI>Controlling the layout. (See {@link #setControlling})
- * </UL><p>
+ * <li>Being hidden. (See {@link #setHidden})
+ * <li>Controlling the layout. (See {@link #setControlling})
+ * </ul><p>
  * These are manipulated externally, for example by a subclass of
  * {@link Editor}. They are generally not stored directly as part of the state
  * of the object, though they could be, but as part of the state of the external

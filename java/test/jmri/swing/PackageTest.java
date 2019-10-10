@@ -22,7 +22,10 @@ import jmri.util.swing.DedupingPropertyChangeListenerTest;
     RowSorterUtilTest.class,
     JTitledSeparatorTest.class,
     DefaultListCellEditorTest.class,
-    DedupingPropertyChangeListenerTest.class
+    DedupingPropertyChangeListenerTest.class,
+    ManagerComboBoxTest.class,
+    NamedBeanComboBoxTest.class,
+    SystemNameValidatorTest.class
 })
 public class PackageTest {
 }

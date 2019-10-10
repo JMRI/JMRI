@@ -15,11 +15,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.util.ThreadingUtil;
 
 /**
  * Provides methods for locating various interface implementations. These form
@@ -60,15 +63,15 @@ import org.slf4j.LoggerFactory;
  * references to the default instance during initialization to work as expected.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
@@ -253,10 +256,9 @@ public final class InstanceManager {
     @CheckForNull
     public <T> T getInstance(@Nonnull Class<T> type) {
         log.trace("getOptionalDefault of type {}", type.getName());
-        List<T> l = getInstances(type);
-        if (l.isEmpty()) {
-            synchronized (type) {
-
+        synchronized (type) {
+            List<T> l = getInstances(type);
+            if (l.isEmpty()) {
                 // example of tracing where something is being initialized
                 // log.error("jmri.implementation.SignalSpeedMap init", new Exception());
                 if (traceFileActive) {
@@ -269,13 +271,15 @@ public final class InstanceManager {
                 Exception except = getInitializationException(type);
                 setInitializationState(type, InitializationState.STARTED);
                 if (working == InitializationState.STARTED) {
-                    log.error("Proceeding to initialize {} while already in initialization", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+                    log.error("Proceeding to initialize {} while already in initialization", type,
+                            new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
                     log.error("    Prior initialization:", except);
                     if (traceFileActive) {
                         traceFilePrint("*** Already in process ***");
                     }
                 } else if (working == InitializationState.DONE) {
-                    log.error("Proceeding to initialize {} but initialization is marked as complete", type, new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
+                    log.error("Proceeding to initialize {} but initialization is marked as complete", type,
+                            new Exception("Thread \"" + Thread.currentThread().getName() + "\""));
                 }
 
                 // see if can autocreate
@@ -289,7 +293,11 @@ public final class InstanceManager {
                             ((InstanceManagerAutoInitialize) obj).initialize();
                         }
                         log.debug("      auto-created default of {}", type.getName());
-                    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    } catch (
+                            NoSuchMethodException |
+                            InstantiationException |
+                            IllegalAccessException |
+                            InvocationTargetException e) {
                         log.error("Exception creating auto-default object for {}", type.getName(), e); // unexpected
                         setInitializationState(type, InitializationState.FAILED);
                         if (traceFileActive) {
@@ -324,7 +332,8 @@ public final class InstanceManager {
                         }
                         return l.get(l.size() - 1);
                     } catch (IllegalArgumentException ex) {
-                        log.error("Known initializer for {} does not provide a default instance for that class", type.getName());
+                        log.error("Known initializer for {} does not provide a default instance for that class",
+                                type.getName());
                     }
                 } else {
                     log.debug("        no initializer registered for {}", type.getName());
@@ -338,8 +347,8 @@ public final class InstanceManager {
                 }
                 return null;
             }
+            return l.get(l.size() - 1);
         }
-        return l.get(l.size() - 1);
     }
 
     /**
@@ -551,71 +560,6 @@ public final class InstanceManager {
     }
 
     /* ****************************************************************************
-     *                   Primary Accessors - Deprecated for removal
-     *
-     *                      Please don't create any more of these
-     * ****************************************************************************/
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default block manager. May not be the only instance. 
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public BlockManager blockManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "blockManagerInstance");        
-        return getDefault(BlockManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default power manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public PowerManager powerManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "powerManagerInstance");        
-        return getDefault(PowerManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default reporter manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public ReporterManager reporterManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "reporterManagerInstance");        
-        return getDefault(ReporterManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default route manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public RouteManager routeManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "routeManagerInstance");        
-        return getDefault(RouteManager.class);
-    }
-
-    /**
-     * Deprecated, use @{link #getDefault} directly.
-     *
-     * @return the default section manager. May not be the only instance.
-     * @deprecated 4.5.1 to be removed in 4.17.1
-     */
-    @Deprecated
-    static public SectionManager sectionManagerInstance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "sectionManagerInstance");        
-        return getDefault(SectionManager.class);
-    }
-
-    /* ****************************************************************************
      *                   Old Style Setters - To be migrated
      *
      *                   Migrate away the JMRI uses of these.
@@ -629,8 +573,8 @@ public final class InstanceManager {
     static public void setTurnoutManager(TurnoutManager p) {
         log.debug(" setTurnoutManager");
         TurnoutManager apm = getDefault(TurnoutManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Turnout>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Turnout>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: TurnoutManager default isn't an AbstractProxyManager<Turnout>");
         }
@@ -638,16 +582,6 @@ public final class InstanceManager {
 
     static public void setThrottleManager(ThrottleManager p) {
         store(p, ThrottleManager.class);
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setCommandStation(CommandStation p) {
-        store(p, CommandStation.class);
     }
 
     /**
@@ -669,22 +603,11 @@ public final class InstanceManager {
     static public void setLightManager(LightManager p) {
         log.debug(" setLightManager");
         LightManager apm = getDefault(LightManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Light>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Light>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: LightManager default isn't an AbstractProxyManager<Light>");
         }
-    }
-
-    /**
-     * @param p CommandStation to make default
-     * @deprecated Since 4.9.5, use
-     * {@link #store(java.lang.Object,java.lang.Class)} directly.
-     */
-    @Deprecated
-    static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setAddressedProgrammerManager");        
-        store(p, AddressedProgrammerManager.class);
     }
 
     // Needs to have proxy manager converted to work
@@ -695,8 +618,8 @@ public final class InstanceManager {
     static public void setReporterManager(ReporterManager p) {
         log.debug(" setReporterManager");
         ReporterManager apm = getDefault(ReporterManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Reporter>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Reporter>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: ReporterManager default isn't an AbstractProxyManager<Reporter>");
         }
@@ -710,8 +633,8 @@ public final class InstanceManager {
     static public void setSensorManager(SensorManager p) {
         log.debug(" setSensorManager");
         SensorManager apm = getDefault(SensorManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<Sensor>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<Sensor>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
         }
@@ -725,8 +648,8 @@ public final class InstanceManager {
     static public void setIdTagManager(IdTagManager p) {
         log.debug(" setIdTagManager");
         IdTagManager apm = getDefault(IdTagManager.class);
-        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
-            ((jmri.managers.AbstractProxyManager<IdTag>) apm).addManager(p);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<IdTag>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
         }
@@ -800,8 +723,8 @@ public final class InstanceManager {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
         
-        // replace the instance manager, so future calls will invoke the new one
-        LazyInstanceManager.instanceManager = new InstanceManager();
+        // reset the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.resetInstanceManager();
         
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
@@ -842,11 +765,31 @@ public final class InstanceManager {
 
     /**
      * A class for lazy initialization of the singleton class InstanceManager.
-     * https://www.ibm.com/developerworks/library/j-jtp03304/
+     *
+     * See https://www.ibm.com/developerworks/library/j-jtp03304/
      */
     private static class LazyInstanceManager {
 
-        public static InstanceManager instanceManager = new InstanceManager();
+        private static InstanceManager instanceManager = new InstanceManager();
+
+        /**
+         * Get the InstanceManager.
+         */
+        public static InstanceManager getInstanceManager() {
+            return instanceManager;
+        }
+
+        /**
+         * Replace the (static) InstanceManager.
+         */
+        public synchronized static void resetInstanceManager() {
+            try {
+                instanceManager = new InstanceManager();
+            } catch (Exception e) {
+                log.error("can't create new InstanceManager");
+            }
+        }
+
     }
 
     /**
@@ -858,7 +801,7 @@ public final class InstanceManager {
      */
     @Nonnull
     public static InstanceManager getDefault() {
-        return LazyInstanceManager.instanceManager;
+        return LazyInstanceManager.getInstanceManager();
     }
 
     // support checking for overlapping intialization

@@ -11,8 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the functionality for configuring LogixManagers
- * <P>
+ * Provides the functionality for configuring LogixManagers.
  *
  * @author Dave Duchamp Copyright (c) 2007
  */
@@ -209,7 +208,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         }
 
         // register new one with InstanceManager
-        DefaultLogixManager pManager = DefaultLogixManager.instance();
+        DefaultLogixManager pManager = InstanceManager.getDefault(DefaultLogixManager.class);
         InstanceManager.store(pManager, LogixManager.class);
         // register new one for configuration
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);

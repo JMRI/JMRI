@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class RowComboBoxPanel
         extends    DefaultCellEditor
-        implements TableCellEditor, TableCellRenderer {
+        implements TableCellRenderer {
 
     /**
      * The surrounding panel for the combobox.

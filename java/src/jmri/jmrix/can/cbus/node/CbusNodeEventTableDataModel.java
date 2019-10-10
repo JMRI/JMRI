@@ -66,7 +66,6 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -98,7 +97,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
                 return ("Edit");
             case NODE_NAME_COLUMN:
-                return ("Node Name");
+                return ("Producer Node");
             case EVENT_NAME_COLUMN:
                 return ("Event Name");
             case EV_VARS_COLUMN:
@@ -227,8 +226,11 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     
     public void setNode( CbusNode node){
         
+        if (node == nodeOfInterest){
+            return;
+        }
         if ( nodeOfInterest != null ){
-            nodeOfInterest.setNodeEventTable(null);
+            nodeOfInterest.removeNodeEventTable(this);
         }
         nodeOfInterest = node;
         if ( nodeOfInterest != null ){
@@ -239,14 +241,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
     
     /**
-     * To close window after testing
+     * Receive update from CbusNode that table has changed
      */  
-    protected void disposeEvFrame(){
-        if ( _mainpane.getEditEvFrame() != null ) {
-            _mainpane.getEditEvFrame().dispose();
-        }
-    }
-    
     public void updateFromNode( int arrayid, int col){
         
         ThreadingUtil.runOnGUI( ()->{

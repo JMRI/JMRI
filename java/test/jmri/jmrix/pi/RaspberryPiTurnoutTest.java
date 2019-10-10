@@ -2,6 +2,7 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +11,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -23,14 +24,17 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
     @Override
     public void checkClosedMsgSent() throws InterruptedException {}
 
-    // The minimal setup for log4J
+    private GpioProvider myProvider;
+
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        GpioProvider myprovider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myprovider);
-        jmri.util.JUnitUtil.resetInstanceManager();
-        t = new RaspberryPiTurnout("PiT2"){
+        JUnitUtil.resetInstanceManager();
+        myProvider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myProvider);
+
+        t = new RaspberryPiTurnout("PT2"){
             @Override
             protected void forwardCommandChangeToLayout(int s){}
         };
@@ -38,7 +42,14 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
 
     @After
     public void tearDown() {
-	t.dispose();
+        if (t != null) {
+            t.dispose(); // is supposed to unprovisionPin 2
+        }
+        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        myProvider.shutdown();
+
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

@@ -11,7 +11,7 @@ import jmri.util.JUnitUtil;
  * Tests for Follower classes in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class FollowerTest {
 
     @Test
@@ -47,4 +47,5 @@ public class FollowerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

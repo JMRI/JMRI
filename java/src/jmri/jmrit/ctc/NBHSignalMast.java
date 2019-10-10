@@ -33,8 +33,6 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
 //  The "thing" we're protecting:
     private final NamedBeanHandle<SignalMast> _mNamedBeanHandleSignalMast;
 
@@ -44,14 +42,16 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     protected NBHSignalMast(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal.trim());
+            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal);
             if (signalMast != null) {
-                _mNamedBeanHandleSignalMast = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalMast);
-                _mDangerAppearance = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                _mNamedBeanHandleSignalMast = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalMast);
+                String temp = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                if (temp == null) temp = "Stop"; // Safety
+                _mDangerAppearance = temp;
                 return;
             }
         }
-        _mDangerAppearance = "";                // Never used, just required for "final"
+        _mDangerAppearance = "Stop";            // Never used, just required for "final"
         _mNamedBeanHandleSignalMast = null;
     }
 
@@ -80,9 +80,27 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
     @Override
     public void setAppearance(int newAppearance) {}
 
+/**
+ *
+ * Function to insure that a non null aspect value is always returned to the caller.
+ *
+ * Background (regarding the value contained in "_mDangerAppearance"):
+ * In this objects constructor, "_mDangerAppearance" is set to getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER).
+ * If "...getSpecificAppearance..." returns "null" (undocumented in JMRI documents as of 9/18/2019),
+ * "_mDangerAppearance" is set to "Stop" for safety.
+ * So "_mDangerAppearance" will NEVER be null for use as follows:
+ *
+ * SignalMast.getAspect() can return "null" (undocumented in JMRI documents as of 9/18/2019) if (for instance) the signal has no
+ * rules (i.e. no "Discover" done yet, or the signal is shown on the screen as a big red "X").
+ * In this case, we return "_mDangerAppearance".
+ *
+ * @return  Return a guaranteed non null aspect name.
+ */
     public String getAspect() {
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getAspect();
+        String returnAspect = _mNamedBeanHandleSignalMast.getBean().getAspect();
+        if (returnAspect == null) return _mDangerAppearance;    // Safety
+        return returnAspect;
     }
 
     public SignalAppearanceMap getAppearanceMap() {

@@ -45,7 +45,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 5) {
-            nextLine("Truncated message of length " + l.getNumDataElements() + "\n", // TOD I18N
+            nextLine("Truncated message of length " + l.getNumDataElements() + "\n", // TODO I18N
                     l.toString());
         } else if (l.isPoll()) {
             nextLine("Poll addr=" + l.getAddr() + "\n", l.toString());

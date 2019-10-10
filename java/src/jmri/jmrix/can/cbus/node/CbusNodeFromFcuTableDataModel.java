@@ -15,12 +15,12 @@ import jmri.util.ThreadingUtil;
  * Table data model for display of Cbus Nodes imported from MERG FCU
  *
  * @author Steve Young (c) 2019
- * @see CbusNodeFromFcu
+ * @see CbusNodeFromBackup
  * 
  */
 public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
 
-    private ArrayList<CbusNodeFromFcu> _mainArray;
+    private ArrayList<CbusNodeFromBackup> _mainArray;
     private CanSystemConnectionMemo _memo;
     
     // column order needs to match list in column tooltips
@@ -35,7 +35,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     public CbusNodeFromFcuTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         super (memo, row, column);
         
-        _mainArray = new ArrayList<CbusNodeFromFcu>();
+        _mainArray = new ArrayList<CbusNodeFromBackup>();
         _memo = memo;
         
     }
@@ -73,7 +73,6 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     @Override
     public void configureTable(JTable eventTable) {
@@ -232,9 +231,9 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
     
     /**
-     * Register new CbusNodeFromFcu node to table
+     * Register new CbusNodeFromBackup node to table
      */
-    public void addNode(CbusNodeFromFcu node ) {
+    public void addNode(CbusNodeFromBackup node ) {
         _mainArray.add(node);
         node.setTableModel(this);
         // notify the JTable object that a row has changed; do that in the Swing thread!
@@ -246,7 +245,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     // returns a new or existing node by node number
     // node number must be > 0
     @Override
-    public CbusNodeFromFcu provideNodeByNodeNum( int nodenum ) {
+    public CbusNodeFromBackup provideNodeByNodeNum( int nodenum ) {
         if ( nodenum < 1 ) {
             return null;
         }
@@ -255,7 +254,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
                 return _mainArray.get(i);
             }
         }
-        CbusNodeFromFcu cs = new CbusNodeFromFcu(_memo, nodenum);
+        CbusNodeFromBackup cs = new CbusNodeFromBackup(_memo, nodenum);
         // cs.startParamsLookup();
         addNode(cs);
         return cs;        
@@ -264,7 +263,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     // returns an existing node by node number
     // null if not found
     @Override
-    public CbusNodeFromFcu getNodeByNodeNum( int nodenum ) {
+    public CbusNodeFromBackup getNodeByNodeNum( int nodenum ) {
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
                 return _mainArray.get(i);

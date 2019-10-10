@@ -11,14 +11,15 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
     // ctor has to register for ECoS events
     public EcosReporterManager(EcosSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
     }
 
-    EcosSystemConnectionMemo memo;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public EcosSystemConnectionMemo getMemo() {
+        return (EcosSystemConnectionMemo) memo;
     }
 
     @Override

@@ -19,6 +19,7 @@ public class MrcThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();

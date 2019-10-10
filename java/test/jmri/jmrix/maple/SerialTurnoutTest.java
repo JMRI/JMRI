@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the jmri.jmrix.maple.SerialTurnout class
+ * JUnit tests for the jmri.jmrix.maple.SerialTurnout class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;

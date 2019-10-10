@@ -92,7 +92,6 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 @enduml
  */
 
-
 abstract public class AbstractMRTrafficController {
 
     private Thread shutdownHook = null; // retain shutdown hook for 
@@ -122,6 +121,7 @@ abstract public class AbstractMRTrafficController {
     protected void setSynchronizeRx(boolean val) {
         synchronizeRx = val;
     }
+
     protected boolean getSynchronizeRx() {
         return synchronizeRx;
     }
@@ -332,7 +332,7 @@ abstract public class AbstractMRTrafficController {
      * Permanent loop for the transmit thread.
      */
     protected void transmitLoop() {
-        log.debug("transmitLoop starts");
+        log.debug("transmitLoop starts in {}", this);
 
         // loop forever
         while (!connectionError && !threadStopRequest) {
@@ -863,7 +863,7 @@ abstract public class AbstractMRTrafficController {
      * Each turn of the loop is the receipt of a single message.
      */
     public void receiveLoop() {
-        log.debug("receiveLoop starts");
+        log.debug("receiveLoop starts in {}", this);
         int errorCount = 0;
         while (errorCount < maxRcvExceptionCount && !threadStopRequest) { // stream close will exit via exception
             try {

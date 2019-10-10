@@ -305,7 +305,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * new speed is actually sent to the hardware.
      *
      */
-    public void setSpeed(int mode, DccLocoAddress address, int spd, boolean isForward) {
+    public void setSpeed(jmri.SpeedStepMode mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
         if (s != null) { // May need an error here - if all slots are full!
             s.setSpeed(mode, address.getNumber(), address.isLongAddress(), spd, isForward);
@@ -357,17 +357,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         log.debug("Estop slot: {} for address: {}", s.getSlotNumber(), s.getAddr());
         s.eStop();
         notifySlotListeners(s);
-    }
-
-    /**
-     * Method to find the existing SlotManager object, if need be creating one.
-     *
-     * @return the SlotManager object
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    public final SprogCommandStation instance() {
-        return null;
     }
 
     // data members to hold contact with the slot listeners
@@ -499,6 +488,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      *
      * @return byte[] null if no packet
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by Sprog docs")
     private byte[] getNextPacket() {
         SprogSlot s;
 

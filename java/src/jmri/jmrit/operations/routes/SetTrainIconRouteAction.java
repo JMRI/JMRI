@@ -2,6 +2,7 @@ package jmri.jmrit.operations.routes;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 /**
@@ -16,12 +17,12 @@ public class SetTrainIconRouteAction extends AbstractAction {
         super(s);
     }
 
-    String routeName;
+    Route route;
 
-    public SetTrainIconRouteAction(String s, String routeName) {
+    public SetTrainIconRouteAction(String s, Route route) {
         super(s);
-        this.routeName = routeName;
-        setEnabled(routeName != null);
+        this.route = route;
+        setEnabled(route != null);
     }
 
     SetTrainIconRouteFrame f = null;
@@ -29,11 +30,9 @@ public class SetTrainIconRouteAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
-            f = new SetTrainIconRouteFrame(routeName);
+            f = new SetTrainIconRouteFrame(route);
         }
         f.setExtendedState(Frame.NORMAL);
         f.setVisible(true); // this also brings the frame into focus
     }
 }
-
-

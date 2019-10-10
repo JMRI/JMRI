@@ -40,16 +40,28 @@
       networks in two basic forms: downstream connections and
       upstream connections.
 
-      <p>A downstream connection allows JMRI to connect to a layout
-      via a network for operations and control. This uses a network
-      connection to do the same kinds of things that are often done
-      via serial RS232 and USB links.</p>
+      <p>A downstream connection allows JMRI to connect to a layout via a
+        network for operations and control. This uses a network connection to
+        do the same kinds of things that are often done via serial RS232 and
+        USB links. In the client-server architecture, JMRI is usually one of
+        potentially many clients connecting to a server in this case.
+      </p>
 
-      <p>An upstream connection allows other devices to command
-      JMRI over a network connection. In this case, the network
-      connection allows other devices and/or programs to do things
-      that are normally done via scripts and the graphical user
-      interface.</p>
+      <p>An upstream connection allows other devices to command JMRI over a
+        network connection. In this case, the network connection allows other
+        devices and/or programs to do things that are normally done via scripts
+        and the graphical user interface. In the client-server architecture,
+        JMRI is usually a server with one or more clients connecting to it in
+        this case.
+      </p>
+
+      <p>Note that the JMRI JSON and Web servers can be used by other
+        layout-connected devices such that both the JMRI application and the
+        other device can be simultaneously "downstream" and "upstream" of each
+        other for specific aspects of layout control. In this case, although
+        JMRI is functionally the server (in a client-server architectural
+        sense), it is receiving layout updates from the client device.
+      </p>
 
       <p>In the rest of this page, we provide links to the various
       examples of those two general areas.</p>
@@ -66,18 +78,20 @@
               RMI client server connection</a>
 
               <p>This uses Java RMI to provide client-server access
-              to the LocoNet message stream.</p>
+              to the LocoNet message stream on another JMRI
+              instance.</p>
             </li>
 
             <li>
               <a href=
-              "../../hardware/loconet/LbServer.shtml">LocoNetOverTcp
-              to LbServer</a>
+              "../../hardware/loconet/LbServer.shtml">LocoNet over TCP</a>
 
-              <p>This uses Java RMI to provides access to the
-              LocoNet message stream via the <a href=
-              "http://loconetovertcp.sourceforge.net/">LbServer
-              protocol</a>.</p>
+              <p>This uses <a href=
+              "http://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>
+              to provide client-server access to the LocoNet message stream
+              from
+              <a href="http://loconetovertcp.sourceforge.net/Server/index.html">various
+                servers</a>.</p>
             </li>
           </ul>
         </li>
@@ -173,12 +187,11 @@
           <p>This is advertised on Bonjour/Zeroconf as a
           "_http._tcp.local." service. In particular, this contains
           the <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
-          JMRI XMLIO support</a>, which allows web browsers (with
-          or without AJAX) to monitor and control a layout by
+          "http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">
+          JMRI JSON protocol</a>, which allows web browsers to monitor and control a layout by
           accessing a <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
-          JMRI XMLIO Servlet</a> via the web. It also includes
+          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/json/JsonServlet.html">
+          JMRI JSON Servlet</a>. It also includes
           facilities for displaying and clicking on any <a href=
           "http://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
           open JMRI window</a>.</p>
@@ -213,7 +226,7 @@
         </li>
 
         <li>Via providing a <a href=
-        "http://loconetovertcp.sourceforge.net/">LbServer</a>
+        "http://loconetovertcp.sourceforge.net/">LocoNet over TCP</a>
         implementation.
 
           <p>This is advertised on Bonjour/Zeroconf as a
@@ -231,7 +244,7 @@
         </li>
 
         <li>Via providing a <a href=
-        "../../hardware/jmriclient/index.shtml">JMRI Server</a>
+        "../../hardware/jmriclient/index.shtml">JMRI Simple Server</a>
         implementation.</li>
       </ul>
 

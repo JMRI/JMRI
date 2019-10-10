@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="sip@euronet.nl" version="1.1" lastUpdated="20031008"/>
   <!-- Based on the contribution of many others -->
   <!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->
@@ -100,15 +101,9 @@
         <comment xml:lang="it">Valori 0-252</comment>
       </variable>
       <!-- Deleted all CV 11 thru 16 references-->
-      <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="fr">Addresse UM</label>
-        <label xml:lang="de">Verbundadresse</label>
-        <comment>Allows permanent storage of consist address. Range 0-127</comment>
-        <comment xml:lang="it">Valori ammessi 0-127</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>

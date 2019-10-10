@@ -108,7 +108,7 @@
           of other Routes.</p>
 
           <p>By convention, System Names usually start with "IR"
-          for Internal Route.</p>
+          for <u>I</u>nternal <u>R</u>oute.</p>
         </li>
 
         <li>
@@ -306,23 +306,26 @@
 
       <h3>Saving Routes to disk</h3>
 
-      <p>Routes are saved in your layout configuration file, along
-      with Turnouts, Sensors, Signal Heads, Lights, etc. To store
-      this information on disk, use <b>Store Configuration...</b>
-      in the <b>File</b> menu at the top of the Routes Table (or
+      <p>Routes are kept in your <i>layout configuration</i>, along
+      with Turnouts, Sensors, Signal Heads, Lights, control panel
+      setup etc. To store this information on disk, allowing to
+      <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
+      it</a> next time you run JMRI, use <b>Store Configuration...</b>
+      in the <b>File</b> menu at the top of the Route Table (or
       other tables from the Tools menu), or select <b>Store
       Panel...</b> in the <b>Panel</b> menu. Note that the
       enabled/disabled state of each Route is not saved in the
       configuration file. When Routes are loaded from a
-      configuration file, they are all enabled. <a name=
-      "sensorlogic" id="sensorlogic"></a></p>
+      configuration file, they are all enabled.</p>
 
-      <h3>Controlling Routes from Sensors</h3>The operation of a
+      <a name="sensorlogic" id="sensorlogic"></a>
+      <h3>Controlling Routes from Sensors</h3>
+      <p>The operation of a
       Route can be controlled by up to three Sensors. These can be
       connected to occupancy detectors or switches on the layout,
       or even just used to operate the Route from a control Panel
       on the computer. These Sensors can be real sensors or
-      internal sensors.
+      internal sensors.</p>
 
       <p>By default, when any one of the defined Sensors goes to
       the Active state, the Route will be set. This could be used
@@ -373,9 +376,9 @@
       'veto' Sensors and the 'veto' Turnout, if there is one, must
       be in their non-veto state _and_ at least one of the
       triggering Sensors or a triggering Turnout must see the
-      appropriate change for the Route to be set.</p><a name=
-      "turnoutlogic" id="turnoutlogic"></a>
+      appropriate change for the Route to be set.</p>
 
+      <a name="turnoutlogic" id="turnoutlogic"></a>
       <h3>Controlling Routes from a Turnout</h3>
 
       <p>The setting (triggering) of a Route can be controlled from
@@ -455,7 +458,8 @@
       'veto' Turnout, if there is one, must be in their non-veto
       state _and_ at least one of the triggering Sensors or a
       triggering Turnout must see the appropriate change for the
-      Route to be set.</p><!--#include virtual="/Footer" -->
+      Route to be set.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -17,8 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
-import jmri.jmrix.can.cbus.swing.simulator.DirectionPane;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane;
+import jmri.util.swing.ComboBoxToolTipRenderer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,16 +58,16 @@ public class EvResponderPane extends JPanel {
         _selectMode = new JComboBox<String>();
         _selectMode.setEditable(false);
         
-        SimulatorPane.ComboboxToolTipRenderer renderer = new SimulatorPane.ComboboxToolTipRenderer();
+        ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectMode.setRenderer(renderer);
     
         tooltips = new ArrayList<String>();
         String getSelected="";
         
-        for (int i = 0; i < CbusEventResponder.evModes.size(); i++) {
-            String option = CbusEventResponder.evModes.get(i);
+        for (int i = 0; i < _evr.evModes.size(); i++) {
+            String option = _evr.evModes.get(i);
             _selectMode.addItem(option);
-            tooltips.add(CbusEventResponder.evModesTip.get(i));
+            tooltips.add(_evr.evModesTip.get(i));
             if ( i == _mode ){
                 getSelected = option;
             }
@@ -80,8 +79,8 @@ public class EvResponderPane extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String chosen = (String)_selectMode.getSelectedItem();
                 
-                for (int i = 0; i < CbusEventResponder.evModes.size(); i++) {
-                    String option = CbusEventResponder.evModes.get(i);
+                for (int i = 0; i < _evr.evModes.size(); i++) {
+                    String option = _evr.evModes.get(i);
                     if (option.equals(chosen)) {
                         log.debug("chosen {} {}",i,chosen);
                         _evr.setMode(i);

@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the MatrixSignalMast implementation
+ * Tests for the MatrixSignalMast implementation.
  *
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author	Egbert Broerse Copyright (C) 2016, 2019
  */
 public class MatrixSignalMastTest {
 
@@ -45,7 +45,7 @@ public class MatrixSignalMastTest {
 
         Assert.assertEquals("system name", "IF$xsm:basic:one-low($0001)-3t", m.getSystemName());
         Assert.assertEquals("user name", "user", m.getUserName());
-        //System.out.println(it11.getFullyFormattedDisplayName()); //debug
+        //System.out.println(it11.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)); //debug
         Assert.assertEquals("output2", "IT12", m.outputsToBeans.get("output2").getName());
     }
 
@@ -53,13 +53,13 @@ public class MatrixSignalMastTest {
     public void testHeld() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
-        Assert.assertTrue(!m.getHeld());
+        Assert.assertFalse(m.getHeld());
 
         m.setHeld(true);
         Assert.assertTrue(m.getHeld());
 
         m.setHeld(false);
-        Assert.assertTrue(!m.getHeld());
+        Assert.assertFalse(m.getHeld());
     }
 
     @Test
@@ -123,17 +123,19 @@ public class MatrixSignalMastTest {
         m.setAspectEnabled("Unlit");
 
         m.aspect = "Stop"; // define some initial aspect before setting any aspect
+        m.setMatrixMastCommandDelay(0);
         // wait for outputs and outputbits to be set
 
-        log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
-        Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        //log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        Assert.assertEquals("check bitarray for Stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         m.setAspect("Clear");
-        Assert.assertEquals("check clear", "Clear", m.getAspect());
-        Assert.assertEquals("it12 for Clear", Turnout.CLOSED, it12.getCommandedState());
+        Assert.assertEquals("check Clear", "Clear", m.getAspect());
+        JUnitUtil.waitFor( ()->{ return it11.getCommandedState() == Turnout.CLOSED; }, "it11 for Clear" );
         m.setAspect("Stop");
-        Assert.assertEquals("check stop", "Stop", m.getAspect());
-        Assert.assertEquals("it12 for Stop", Turnout.THROWN, it12.getCommandedState());
+        Assert.assertEquals("check Stop", "Stop", m.getAspect());
+        JUnitUtil.waitFor( ()->{ return it12.getCommandedState() == Turnout.THROWN; }, "it12 for Stop" );
+        // it12 state is more fragile
     }
 
     public void testAspectAttributes() {
@@ -151,6 +153,16 @@ public class MatrixSignalMastTest {
         Assert.assertNull("check null", m.getAspect());
     }
 
+    @Test
+    public void testSetDelay() {
+        MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+
+        Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(150);
+        Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(0);
+    }
+
     // from here down is testing infrastructure
 
     // The minimal setup for log4J
@@ -165,5 +177,6 @@ public class MatrixSignalMastTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+    //private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+
 }

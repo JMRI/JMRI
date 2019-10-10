@@ -238,6 +238,7 @@ public class LearnWarrantTest {
 
     @After
     public void tearDown() throws Exception {
+        InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.tearDown();
     }
 

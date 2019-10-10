@@ -3,7 +3,7 @@ package jmri.util.swing;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.util.Bundle {
 
-    @Nullable
+    @CheckForNull
     private static final String name = "jmri.util.swing.UtilBundle"; // NOI18N
 
     //
@@ -80,7 +80,7 @@ public class Bundle extends jmri.util.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -40,11 +40,11 @@ import org.slf4j.LoggerFactory;
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
  * to allow trains to change from one straight track to the other, as well as
  * going straight across.
- * <P>
+ * <p>
  * A LayoutSlip has four connection points, designated A, B, C, and D. A train
  * may proceed between A and D, A and C, B and D and in the case of
  * double-slips, B and C.
- * <P>
+ * <p>
  * {@literal
  * \\      //
  *   A==-==D
@@ -54,15 +54,15 @@ import org.slf4j.LoggerFactory;
  *   B==-==C
  *  //      \\
  * literal}
- * <P>
+ * <p>
  * For drawing purposes, each LayoutSlip carries a center point and
  * displacements for A and B. The displacements for C = - the displacement for
  * A, and the displacement for D = - the displacement for B. The center point
  * and these displacements may be adjusted by the user when in edit mode.
- * <P>
+ * <p>
  * When LayoutSlips are first created, there are no connections. Block
  * information and connections are added when available.
- * <P>
+ * <p>
  * SignalHead names are saved here to keep track of where signals are.
  * LayoutSlip only serves as a storage place for SignalHead names. The names are
  * placed here by Set Signals at Level Crossing in Tools menu.
@@ -150,7 +150,7 @@ public class LayoutSlip extends LayoutTurnout {
         return result;
     }
 
-    public void setTurnoutB(@Nullable String tName) {
+    public void setTurnoutB(@CheckForNull String tName) {
         boolean reactivate = false;
         if (namedTurnoutB != null) {
             deactivateTurnout();
@@ -199,7 +199,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(int connectionType, @Nullable LayoutTrack o, int type) throws jmri.JmriException {
+    public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
             log.error("unexpected type of connection to layoutslip - " + type);
             throw new jmri.JmriException("unexpected type of connection to layoutslip - " + type);
@@ -712,7 +712,7 @@ public class LayoutSlip extends LayoutTurnout {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -881,7 +881,7 @@ public class LayoutSlip extends LayoutTurnout {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
+                    if (canRemove() && layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
                         // Returned true if user did not cancel
                         remove();
                         dispose();
@@ -1120,8 +1120,8 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Check if either turnout is inconsistent.
-     * This is used to create an alternate slip image.
+     * Check if either turnout is inconsistent. This is used to create an
+     * alternate slip image.
      *
      * @return true if either turnout is inconsistent.
      */
@@ -1527,12 +1527,61 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
-        // drawHidden left/right turnout control circles
-        Point2D leftCircleCenter = getCoordsLeft();
-        g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+        if (!disabled && !(disableWhenOccupied && isOccupied())) {
+            // TODO: query user base if this is "acceptable" (can obstruct state)
+            if (false) {
+                int stateA = UNKNOWN;
+                Turnout toA = getTurnout();
+                if (toA != null) {
+                    stateA = toA.getKnownState();
+                }
 
-        Point2D rightCircleCenter = getCoordsRight();
-        g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                Color foregroundColor = g2.getColor();
+                Color backgroundColor = g2.getBackground();
+
+                if (stateA == Turnout.THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateA != Turnout.CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                Point2D rightCircleCenter = getCoordsRight();
+                if (layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                } else {
+                    g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                }
+                if (stateA != Turnout.CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+
+                int stateB = UNKNOWN;
+                Turnout toB = getTurnoutB();
+                if (toB != null) {
+                    stateB = toB.getKnownState();
+                }
+
+                if (stateB == Turnout.THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateB != Turnout.CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                // drawHidden left/right turnout control circles
+                Point2D leftCircleCenter = getCoordsLeft();
+                if (layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                } else {
+                    g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                }
+                if (stateB != Turnout.CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+            } else {
+                Point2D rightCircleCenter = getCoordsRight();
+                g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                Point2D leftCircleCenter = getCoordsLeft();
+                g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+            }
+        }
     }   // drawTurnoutControls
 
     static class TurnoutState {
@@ -1625,9 +1674,9 @@ public class LayoutSlip extends LayoutTurnout {
      */
     @Override
     protected int getConnectivityStateForLayoutBlocks(
-            @Nullable LayoutBlock thisLayoutBlock,
-            @Nullable LayoutBlock prevLayoutBlock,
-            @Nullable LayoutBlock nextLayoutBlock,
+            @CheckForNull LayoutBlock thisLayoutBlock,
+            @CheckForNull LayoutBlock prevLayoutBlock,
+            @CheckForNull LayoutBlock nextLayoutBlock,
             boolean suppress) {
         int result = Turnout.UNKNOWN;
         LayoutBlock layoutBlockA = ((TrackSegment) getConnectA()).getLayoutBlock();

@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the SignalAppearanceMap interface
+ * Tests for the SignalAppearanceMap interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  */
@@ -79,7 +79,7 @@ public class DefaultSignalAppearanceMapTest {
         Assert.assertEquals("Approach", e.nextElement());
         Assert.assertEquals("Clear", e.nextElement());
 
-        Assert.assertTrue(!e.hasMoreElements());
+        Assert.assertFalse(e.hasMoreElements());
     }
 
     @Test
@@ -160,4 +160,5 @@ public class DefaultSignalAppearanceMapTest {
         l2 = null;
         JUnitUtil.tearDown();
     }
+    
 }

@@ -6,15 +6,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +26,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009, 2018
  */
 public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
-        implements SignalGroupManager, java.beans.PropertyChangeListener {
+        implements SignalGroupManager {
 
-    public DefaultSignalGroupManager() {
-        super();
+    public DefaultSignalGroupManager(InternalSystemConnectionMemo memo) {
+        super(memo);
 
         // load when created, which will generally
         // be the first time referenced
@@ -40,11 +39,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALGROUPS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -70,23 +64,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Override
     public SignalGroup getByUserName(String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IG prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid system connection prefix, hence doesn't throw NamedBean.BadSystemNameException
-        if (inputName.length() < 3 || !inputName.startsWith("IG")) {
-            inputName = "IG" + inputName;
-        }
-        return inputName.toUpperCase().trim();
     }
 
     /**
@@ -188,13 +165,14 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return retval;
     }
 
-    static DefaultSignalGroupManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of DefaultSignalGroupManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultSignalGroupManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultSignalGroupManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultSignalGroupManager.class);
     }
 
     @Override
@@ -203,8 +181,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalGroup");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalGroups" : "BeanNameSignalGroup");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);

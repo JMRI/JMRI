@@ -11,8 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     BundleTest.class,
-    CmdStnConfigPaneTest.class,
-    XmlConfigTest.class
+    CmdStnConfigPaneTest.class
 })
 public class PackageTest {
 }

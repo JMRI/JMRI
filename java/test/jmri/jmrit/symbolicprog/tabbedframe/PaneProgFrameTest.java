@@ -16,10 +16,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test PaneProgFrame
+ * Tests for PaneProgFrame.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class PaneProgFrameTest {
 
     // test creating a pane in config file
@@ -34,12 +34,12 @@ public class PaneProgFrameTest {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return new JPanel();
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return new JPanel();
+            }
+        };
 
         // invoke
         result = null;
@@ -60,12 +60,12 @@ public class PaneProgFrameTest {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
 
         // ugly, temporary way to load the decoder info
         jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
@@ -150,14 +150,13 @@ public class PaneProgFrameTest {
                         )
                 )
         ); // end of adding contents
-
-        return;
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

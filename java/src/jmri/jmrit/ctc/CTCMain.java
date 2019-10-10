@@ -1,20 +1,16 @@
 /**
  *  @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ *  Comment to force another CI build
  */
 
 package jmri.jmrit.ctc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
@@ -23,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CTCMain {
-    private final static Logger LOG = LoggerFactory.getLogger(CTCMain.class);
+    private final static Logger log = LoggerFactory.getLogger(CTCMain.class);
     private final CTCSerialData _mCTCSerialData = new CTCSerialData();
     private final ArrayList<CodeButtonHandler> _mCodeButtonHandlersArrayList = new ArrayList<>();       // "Const" after initialization completes.
     private NBHSensor _mCTCDebugSystemReloadInternalSensor = null;
@@ -35,45 +31,45 @@ public class CTCMain {
     private final HashMap<Integer, CodeButtonHandler> _mCBHashMap = new HashMap<>();                    // "Const" after initialization completes.
     private final LockedRoutesManager _mLockedRoutesManager = new LockedRoutesManager();
     private javax.swing.Timer _mLockTurnoutsTimer = null;
-    
-//  So that external python script can set locks on all of the lockable turnouts:    
+
+//  So that external python script can set locks on all of the lockable turnouts:
     public void externalLockTurnout() {
         for (CodeButtonHandler codeButtonHandler : _mCodeButtonHandlersArrayList) {
             codeButtonHandler.externalLockTurnout();
         }
     }
-    
+
     private String _mFilenameRead = null;
     public CTCMain() {}
     public void readDataFromXMLFile(String filename) {
         _mFilenameRead = filename;
         startup();
     }
-    
+
     private void handleCTCDebugSystemReload(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {    // NOI18N
             rereadXMLFile();
         }
     }
-    
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "There's only one!")
+
+    public boolean _mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = false;
     private void handleLogging(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {         // NOI18N
-            CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;
-            if (CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dump();
+            _mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;
+            if (_mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dump();
         }
     }
-    
+
     public void rereadXMLFile() {
         if (_mFilenameRead != null) { // Safety check that someone loaded a file before.
-            LOG.info(Bundle.getMessage("CTCMainSuttingDown"));          // NOI18N
+            log.info(Bundle.getMessage("CTCMainSuttingDown"));          // NOI18N
             shutdown();
             startup();
-            LOG.info("CTC " + CTCSerialData.CTCVersion + " " + Bundle.getMessage("CTCMainReloadedFile") + " {}", _mFilenameRead);   // NOI18N
+            log.info("CTC {} {} {}", CTCSerialData.CTCVersion, Bundle.getMessage("CTCMainReloadedFile"), _mFilenameRead);   // NOI18N
         }
         else
         {
-            LOG.warn(Bundle.getMessage("CTCMainNoFileLoaded")); // NOI18N
+            log.warn(Bundle.getMessage("CTCMainNoFileLoaded")); // NOI18N
         }
     }
 
@@ -86,7 +82,7 @@ public class CTCMain {
         _mCTCDebugSystemReloadInternalSensor.removePropertyChangeListener(_mCTCDebugSystemReloadInternalSensorPropertyChangeListener);
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.removePropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
     }
-     
+
     private void startup() {
         _mLockedRoutesManager.clearAllLockedRoutes();
         SignalDirectionIndicators.resetSignalsUsed();
@@ -94,31 +90,31 @@ public class CTCMain {
             CTCException e = new CTCException("CTCMain", "", "readDataFromXMLFile", Bundle.getMessage("CTCMainFailedToRead") + " " + _mFilenameRead);   // NOI18N
             e.logError();
         }
-        
-//  One of's:        
+
+//  One of's:
         OtherData otherData = _mCTCSerialData.getOtherData();
         Fleeting fleeting = new Fleeting(   otherData._mFleetingToggleInternalSensor,
                                             otherData._mDefaultFleetingEnabled);
-        
+
         ArrayList <CodeButtonHandlerData> codeButtonHandlerDataList = _mCTCSerialData.getCodeButtonHandlerDataArrayList();
         LinkedList <TrafficLocking> trafficLockingFileReadComplete = new LinkedList<>();
-        
-//  For each code button defined:        
+
+//  For each code button defined:
         codeButtonHandlerDataList.forEach((codeButtonHandlerData) -> {
-            
+
             boolean slavedSwitch = codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID != -1;
             String userIdentifier = codeButtonHandlerData.myShortStringNoComma() + ": ";
             boolean turnoutLockingOnlyEnabled
                     = !codeButtonHandlerData._mSIDI_Enabled
-                    && !codeButtonHandlerData._mSIDL_Enabled 
-                    && !codeButtonHandlerData._mSWDI_Enabled 
-                    && !codeButtonHandlerData._mSWDL_Enabled 
+                    && !codeButtonHandlerData._mSIDL_Enabled
+                    && !codeButtonHandlerData._mSWDI_Enabled
+                    && !codeButtonHandlerData._mSWDL_Enabled
                     && !codeButtonHandlerData._mCO_Enabled
                     && !codeButtonHandlerData._mTRL_Enabled
                     && codeButtonHandlerData._mTUL_Enabled
                     && !codeButtonHandlerData._mIL_Enabled;
-            
-// Slave Switch: null            
+
+// Slave Switch: null
             SignalDirectionIndicatorsInterface signalDirectionIndicators = (codeButtonHandlerData._mSIDI_Enabled && !slavedSwitch) ?
                 new SignalDirectionIndicators(  userIdentifier,
                                                 codeButtonHandlerData._mSIDI_LeftInternalSensor,
@@ -131,15 +127,15 @@ public class CTCMain {
                                                 fleeting)
                 : new SignalDirectionIndicatorsNull();
             _mSIDIHashMap.put(codeButtonHandlerData._mUniqueID, signalDirectionIndicators);
-            
-// Slave Switch: null            
+
+// Slave Switch: null
             SignalDirectionLever signalDirectionLever = (codeButtonHandlerData._mSIDL_Enabled && !slavedSwitch) ?
                 new SignalDirectionLever(   userIdentifier,
                                             codeButtonHandlerData._mSIDL_LeftInternalSensor,
                                             codeButtonHandlerData._mSIDL_NormalInternalSensor,
                                             codeButtonHandlerData._mSIDL_RightInternalSensor)
                 : null;
-            
+
 // Slave Switch: Valid
             SwitchDirectionIndicators switchDirectionIndicators = codeButtonHandlerData._mSWDI_Enabled ?
                 new SwitchDirectionIndicators(  userIdentifier,
@@ -150,14 +146,14 @@ public class CTCMain {
                                                 codeButtonHandlerData._mSWDI_FeedbackDifferent)
                 : null;
             if (switchDirectionIndicators != null) _mSWDIHashMap.put(codeButtonHandlerData._mUniqueID, switchDirectionIndicators);
-            
+
 // Slave Switch: Valid
             SwitchDirectionLever switchDirectionLever = codeButtonHandlerData._mSWDL_Enabled ?
                 new SwitchDirectionLever(   userIdentifier,
                                             codeButtonHandlerData._mSWDL_InternalSensor)
                 : null;
 
-// Slave Switch: null            
+// Slave Switch: null
             CallOn callOn = (codeButtonHandlerData._mCO_Enabled && !slavedSwitch) ?
                 new CallOn( _mLockedRoutesManager,
                             userIdentifier,
@@ -165,7 +161,7 @@ public class CTCMain {
                             codeButtonHandlerData._mCO_GroupingsListString,
                             otherData._mSignalSystemType)
                 : null;
-            
+
 // Slave Switch: Valid
             TurnoutLock turnoutLock = codeButtonHandlerData._mTUL_Enabled ?
                 new TurnoutLock(userIdentifier,
@@ -184,21 +180,25 @@ public class CTCMain {
                                 codeButtonHandlerData._mTUL_AdditionalExternalTurnout3,
                                 codeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent)
                 : null;
-            
-// Slave Switch: duplicate other referenced entry
+
+// Slave Switch: duplicate other referenced entry, otherwise handle IL normally:
             IndicationLockingSignals indicationLockingSignals = null;   // Default if not enabled
-            if (codeButtonHandlerData._mIL_Enabled) {
-                String stringToUse = codeButtonHandlerData._mIL_ListOfCSVSignalNames;   // By default if a problem looking up the reference.
-                if (slavedSwitch) { // Slaved, substitute it if it exists:
-                    CodeButtonHandlerData slavedSwitchCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
-                    if (slavedSwitchCodeButtonHandlerData != null)  { // Safety check
-                        stringToUse = slavedSwitchCodeButtonHandlerData._mIL_ListOfCSVSignalNames;  // Substitute this data.
-                    }
+            if (slavedSwitch) {
+                CodeButtonHandlerData slavedSwitchCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
+                if (slavedSwitchCodeButtonHandlerData != null)  { // Safety check
+                    indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
+                                                                            slavedSwitchCodeButtonHandlerData._mIL_ListOfCSVSignalNames,
+                                                                            codeButtonHandlerData._mSWDI_ExternalTurnout,
+                                                                            otherData._mSignalSystemType);
                 }
-                indicationLockingSignals = new IndicationLockingSignals(userIdentifier, stringToUse);
+            } else if (codeButtonHandlerData._mIL_Enabled) {
+                indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
+                                                                        codeButtonHandlerData._mIL_ListOfCSVSignalNames,
+                                                                        codeButtonHandlerData._mSWDI_ExternalTurnout,
+                                                                        otherData._mSignalSystemType);
             }
-            
-// Slave Switch: null            
+
+// Slave Switch: null
             TrafficLocking trafficLocking = (codeButtonHandlerData._mTRL_Enabled && !slavedSwitch) ?
                 new TrafficLocking( userIdentifier,
                                     codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList,
@@ -206,7 +206,7 @@ public class CTCMain {
                                     _mLockedRoutesManager)
                     : null;
             if (trafficLocking != null) trafficLockingFileReadComplete.add(trafficLocking);
-                        
+
             CodeButtonHandler codeButtonHandler = new CodeButtonHandler(turnoutLockingOnlyEnabled,
                                                                         _mLockedRoutesManager,
                                                                         userIdentifier,
@@ -233,11 +233,11 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor", otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, true); // NOI18N
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
-        
+
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
-            trafficLocking.fileReadComplete(_mCBHashMap, _mSIDIHashMap, _mSWDIHashMap);
+            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
         }
-        
+
 /*  As a final item, if the developer wants us to lock all of the lockable
     turnouts after a time period, create a GUI timer to do that, so that
     when we call the objects, they are called on the GUI thread for safety.
@@ -251,16 +251,17 @@ public class CTCMain {
             _mLockTurnoutsTimer.start();
         }
     }
-    
+
 //  One shot routine:
     private final java.awt.event.ActionListener lockTurnoutsTimerTicked = new java.awt.event.ActionListener() {
         @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-//  Shut down this timer so this doesn't happen again:            
+//  Shut down this timer so this doesn't happen again:
             _mLockTurnoutsTimer.stop();
             _mLockTurnoutsTimer.removeActionListener(lockTurnoutsTimerTicked);
-            _mLockTurnoutsTimer = null; 
+            _mLockTurnoutsTimer = null;
             externalLockTurnout();
         }
     };
+
 }

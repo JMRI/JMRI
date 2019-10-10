@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an Mx1 connection.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001
@@ -28,7 +28,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     public Mx1Throttle(Mx1SystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getMx1TrafficController();
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -184,7 +184,6 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
@@ -195,7 +194,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         this.speedSetting = speed;
         sendSpeedCmd();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); //IN18N
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); //IN18N
         }
         record(speed);
     }
@@ -205,7 +204,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         int value = 0;
         int cData1 = (isForward ? 0x20 : 0x00);
         cData1 = cData1 + (f0 ? 0x10 : 0x00);
-        if (super.speedStepMode == SpeedStepMode128) {
+        if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             //m = Mx1Message.getSendSpeed128(addressLo, addressHi, value);
             value = (int) ((127 - 1) * speedSetting);     // -1 for rescale to avoid estop
             if (value > 0) {
@@ -219,7 +218,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
             }
             value = (value & 0x7F);
             cData1 = cData1 + 0xc;
-        } else if (super.speedStepMode == SpeedStepMode28) {
+        } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_28) {
             value = (int) ((28) * speedSetting); // -1 for rescale to avoid estop
             if (value > 0) {
                 value = value + 3; // skip estop
@@ -273,7 +272,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward); //IN18N
+            notifyPropertyChangeListener(ISFORWARD, old, isForward); //IN18N
         }
     }
 

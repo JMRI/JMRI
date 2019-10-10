@@ -20,12 +20,12 @@ import purejavacomm.SerialPortEvent;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Zimo's MX-1 on an attached serial comm port. Adapted for
+ * Provide access to Zimo's MX-1 on an attached serial com port. Adapted for
  * use with Zimo MX-1 by Sip Bosch.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  */
-public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+public class Mx1Adapter extends Mx1PortController {
 
     public Mx1Adapter() {
         super(new Mx1SystemConnectionMemo());
@@ -169,12 +169,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // find and configure flow control
@@ -185,14 +180,32 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    protected String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
-        "9,600 baud", "19,200 baud", "38,400 baud"};
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
+    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
+            Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud4800"),
+            Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
+            Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};

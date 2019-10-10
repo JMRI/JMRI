@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -58,17 +58,17 @@ import org.slf4j.LoggerFactory;
  * PositionablePoint is a Point defining a node in the Track that can be dragged
  * around the inside of the enclosing LayoutEditor panel using a right-drag
  * (drag with meta key).
- * <P>
+ * <p>
  * Three types of Positionable Point are supported: Anchor - point on track -
  * two track connections End Bumper - end of track point - one track connection
  * Edge Connector - This is used to link track segments between two different
  * panels
- * <P>
+ * <p>
  * Note that a PositionablePoint exists for specifying connectivity and drawing
  * position only. The Track Segments connected to a PositionablePoint may belong
  * to the same block or to different blocks. Since each Track Segment may only
  * belong to one block, a PositionablePoint may function as a Block Boundary.
- * <P>
+ * <p>
  * Signal names are saved here at a Block Boundary anchor point by the tool Set
  * Signals at Block Boundary. PositionablePoint does nothing with these signal
  * head names; it only serves as a place to store them.
@@ -191,15 +191,6 @@ public class PositionablePoint extends LayoutTrack {
 
     private PositionablePoint linkedPoint;
 
-    /**
-     * @return the name of the linked editor
-     * @deprecated since 4.9.4 use @link{getLinkedEditorName()} instead.
-     */
-    @Deprecated
-    public String getLinkEditorName() {
-        return getLinkedEditorName();
-    }
-
     public String getLinkedEditorName() {
         if (getLinkedEditor() != null) {
             return getLinkedEditor().getLayoutName();
@@ -222,7 +213,7 @@ public class PositionablePoint extends LayoutTrack {
         if (p == linkedPoint) {
             return;
         }
-        if (linkedPoint != null && linkedPoint != p) {
+        if (linkedPoint != null) {
             PositionablePoint oldLinkedPoint = linkedPoint;
             linkedPoint = null;
             if (oldLinkedPoint.getLinkedPoint() != null) {
@@ -670,7 +661,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@Nullable TrackSegment oldTrack, @Nullable TrackSegment newTrack) {
+    public boolean replaceTrackConnection(@CheckForNull TrackSegment oldTrack, @CheckForNull TrackSegment newTrack) {
         boolean result = false; // assume failure (pessimist!)
         // trying to replace old track with null?
         if (newTrack == null) {
@@ -892,7 +883,7 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(connectionsMenu);
         }
 
-        if ((type == EDGE_CONNECTOR) || (type == END_BUMPER)) {
+        if (connect1 != null && (type == EDGE_CONNECTOR || type == END_BUMPER)) {
             //
             // decorations menu
             //
@@ -1281,7 +1272,7 @@ public class PositionablePoint extends LayoutTrack {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (layoutEditor.removePositionablePoint(PositionablePoint.this)) {
+                if (canRemove() && layoutEditor.removePositionablePoint(PositionablePoint.this)) {
                     // user is serious about removing this point from the panel
                     remove();
                     dispose();
@@ -1424,6 +1415,69 @@ public class PositionablePoint extends LayoutTrack {
 
         return popup;
     }   // showPopup
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        List<String> itemList = new ArrayList<>();
+        // A has two track segments, EB has one, EC has one plus optional link
+
+        TrackSegment ts1 = getConnect1();
+        TrackSegment ts2 = getConnect2();
+
+        if (ts1 != null) {
+            itemList.addAll(getSegmentReferences(ts1));
+        }
+        if (ts2 != null) {
+            for (String item : getSegmentReferences(ts2)) {
+                // Do not add duplicates
+                if (!itemList.contains(item)) {
+                    itemList.add(item);
+                }
+            }
+        }
+
+        if (!itemList.isEmpty()) {
+            String typeName = "";
+            switch (type) {
+                case ANCHOR:
+                    typeName = "Anchor";  // NOI18N
+                    break;
+                case END_BUMPER:
+                    typeName = "EndBumper";  // NOI18N
+                    break;
+                case EDGE_CONNECTOR:
+                    typeName = "EdgeConnector";  // NOI18N
+                    break;
+                default:
+                    typeName = "Unknown type (" + type + ")";  // NOI18N
+                    break;
+            }
+            displayRemoveWarningDialog(itemList, typeName);
+        }
+        return itemList.isEmpty();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a connection point.
+     * @param ts The track segment to be checked.
+     * @return a list of bean reference names.
+     */
+    public ArrayList<String> getSegmentReferences(TrackSegment ts) {
+        ArrayList<String> items = new ArrayList<>();
+
+        int type1 = ts.getType1();
+        LayoutTrack conn1 = ts.getConnect1();
+        items.addAll(ts.getPointReferences(type1, conn1));
+
+        int type2 = ts.getType2();
+        LayoutTrack conn2 = ts.getConnect2();
+        items.addAll(ts.getPointReferences(type2, conn2));
+
+        return items;
+    }
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
@@ -1836,7 +1890,7 @@ public class PositionablePoint extends LayoutTrack {
             eastBoundSignalMastNamed = null;
             setWestBoundSensor("");
             setEastBoundSensor("");
-            //TODO: May want to look at a method to remove the assigned mast 
+            //TODO: May want to look at a method to remove the assigned mast
             //from the panel and potentially any SignalMast logics generated
         }
     }   // reCheckBlockBoundary
@@ -1961,7 +2015,7 @@ public class PositionablePoint extends LayoutTrack {
         // this should never be null... but just in case...
         if (ts1 != null) {
             blk1 = ts1.getBlockName();
-            if (blk1 != null) {
+            if (!blk1.isEmpty()) {
                 TrackNameSets = blockNamesToTrackNameSetsMap.get(blk1);
                 if (TrackNameSets != null) { // (#1)
                     for (Set<String> checkTrackNameSet : TrackNameSets) {
@@ -1993,7 +2047,7 @@ public class PositionablePoint extends LayoutTrack {
             // this should never be null... but just in case...
             if (ts2 != null) {
                 String blk2 = ts2.getBlockName();
-                if (blk2 != null) {
+                if (!blk2.isEmpty()) {
                     TrackNameSet = null;    // assume not found (pessimist!)
                     TrackNameSets = blockNamesToTrackNameSetsMap.get(blk2);
                     if (TrackNameSets != null) { // (#1)
@@ -2076,6 +2130,6 @@ public class PositionablePoint extends LayoutTrack {
         // nothing to see here, move along...
     }
 
-    private final static Logger log
-            = LoggerFactory.getLogger(PositionablePoint.class);
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class);
+
 }

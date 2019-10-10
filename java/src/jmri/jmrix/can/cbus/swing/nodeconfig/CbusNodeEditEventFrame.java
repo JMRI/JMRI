@@ -116,7 +116,7 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         DefaultFormatter formatterNd = (DefaultFormatter) fieldNd.getFormatter();
         formatterNd.setCommitsOnValidEdit(true);
 
-        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(1,_ndEv.getEn()), 1, 65535, 1));
+        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getEn()), 0, 65535, 1));
         JComponent compEv = numberSpinnerEv.getEditor();
         JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
@@ -190,6 +190,7 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         updateButtons();
         
         frameResetButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 singleEVModel.resetnewEVs();
                 numberSpinnernd.setValue(Integer.valueOf( Math.max(0,_ndEv.getNn() ) ) );

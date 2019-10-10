@@ -13,7 +13,12 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
@@ -35,9 +40,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train and creates the train's manifest.
@@ -482,7 +484,7 @@ public class TrainBuilder extends TrainCommon {
         if (_train.isAllowLocalMovesEnabled()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("AllowLocalMoves"));
         }
-        if (_train.isAllowThroughCarsEnabled()) {
+        if (_train.isAllowThroughCarsEnabled() && _departLocation != _terminateLocation) {
             addLine(_buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
         }
         if (_train.isServiceAllCarsWithFinalDestinationsEnabled()) {
@@ -5249,40 +5251,41 @@ public class TrainBuilder extends TrainCommon {
         log.debug(msg);
 
         if (trainManager.isBuildMessagesEnabled()) {
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
-                    JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                            new Object[]{_train.getName(), _train.getDescription()}), JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // build error, could not find destinations for cars departing staging
-                    Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
-                    int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
-                            .getMessage("buildErrorMsg"), new Object[]{_train.getName(), _train.getDescription()}),
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
-                    if (results == 0) {
-                        log.debug("User requested that cars be removed from staging track");
-                        removeCarsFromStaging();
-                    }
+            // don't pass the object _train to the GUI, can cause thread lock
+            String trainName = _train.getName();
+            String trainDescription = _train.getDescription();
+            if (e.getExceptionType().equals(BuildFailedException.NORMAL)) {
+                JOptionPane.showMessageDialog(null, msg, MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
+                        new Object[]{trainName, trainDescription}), JOptionPane.ERROR_MESSAGE);
+            } else {
+                // build error, could not find destinations for cars departing staging
+                Object[] options = {Bundle.getMessage("buttonRemoveCars"), Bundle.getMessage("ButtonOK")};
+                int results = JOptionPane.showOptionDialog(null, msg, MessageFormat.format(Bundle
+                        .getMessage("buildErrorMsg"), new Object[]{trainName, trainDescription}),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+                if (results == 0) {
+                    log.debug("User requested that cars be removed from staging track");
+                    removeCarsFromStaging();
                 }
-                int size = carManager.getList(_train).size();
-                if (size > 0) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
-                                    new Object[]{size, _train.getName()}),
-                            Bundle.getMessage("buildResetTrain"),
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        _train.reset();
-                    }
-                } else if ((size = engineManager.getList(_train).size()) > 0) {
-                    if (JOptionPane.showConfirmDialog(null,
-                            MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
-                                    new Object[]{size, _train.getName()}),
-                            Bundle.getMessage("buildResetTrain"),
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        _train.reset();
-                    }
+            }
+            int size = carManager.getList(_train).size();
+            if (size > 0) {
+                if (JOptionPane.showConfirmDialog(null,
+                        MessageFormat.format(Bundle.getMessage("buildCarsResetTrain"),
+                                new Object[]{size, trainName}),
+                        Bundle.getMessage("buildResetTrain"),
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    _train.reset();
                 }
-            });
+            } else if ((size = engineManager.getList(_train).size()) > 0) {
+                if (JOptionPane.showConfirmDialog(null,
+                        MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
+                                new Object[]{size, trainName}),
+                        Bundle.getMessage("buildResetTrain"),
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    _train.reset();
+                }
+            }
         }
         if (_buildReport != null) {
             addLine(_buildReport, ONE, msg);

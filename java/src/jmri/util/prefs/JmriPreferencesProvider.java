@@ -15,7 +15,7 @@ import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.Version;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -59,7 +59,7 @@ public final class JmriPreferencesProvider {
     //private static final String INVALID_KEY_CHARACTERS = "_.";
     
     /**
-     * Get the JmriPreferencesProvider for the specified profile path. Use of
+     * Get the JmriPreferencesProvider for the specified profile path.
      *
      * @param path   The root path of a {@link jmri.profile.Profile}. This is
      *               most frequently the path returned by
@@ -71,7 +71,7 @@ public final class JmriPreferencesProvider {
      *         path.
      */
     @Nonnull
-    static synchronized JmriPreferencesProvider findProvider(@Nullable File path, boolean shared) {
+    static synchronized JmriPreferencesProvider findProvider(@CheckForNull File path, boolean shared) {
         if (shared) {
             if (SHARED_PROVIDERS.get(path) == null) {
                 SHARED_PROVIDERS.put(path, new JmriPreferencesProvider(path, shared));
@@ -105,7 +105,7 @@ public final class JmriPreferencesProvider {
      *         clazz for project.
      */
     @Nonnull
-    public static Preferences getPreferences(@Nullable final Profile project, @Nullable final Class<?> clazz, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final Class<?> clazz, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(clazz);
         } else {
@@ -135,7 +135,7 @@ public final class JmriPreferencesProvider {
      */
     @Nonnull
     @Deprecated
-    public static Preferences getPreferences(@Nullable final Profile project, @Nullable final String pkg, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final String pkg, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(pkg);
         } else {
@@ -164,7 +164,7 @@ public final class JmriPreferencesProvider {
      * of a Profile object.
      */
     @Deprecated
-    public static Preferences getPreferences(@Nullable final File path, @Nullable final Class<?> clazz, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final File path, @CheckForNull final Class<?> clazz, final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);
     }
 
@@ -176,7 +176,7 @@ public final class JmriPreferencesProvider {
      * @return The shared or private Preferences node for the package containing
      *         clazz.
      */
-    Preferences getPreferences(@Nullable final Class<?> clazz) {
+    Preferences getPreferences(@CheckForNull final Class<?> clazz) {
         if (clazz == null) {
             return this.root;
         }
@@ -189,14 +189,14 @@ public final class JmriPreferencesProvider {
      * @param pkg The package for which preferences are needed.
      * @return The shared or private Preferences node for the package.
      */
-    Preferences getPreferences(@Nullable final String pkg) {
+    Preferences getPreferences(@CheckForNull final String pkg) {
         if (pkg == null) {
             return this.root;
         }
         return this.root.node(pkg);
     }
 
-    JmriPreferencesProvider(@Nullable File path, boolean shared) {
+    JmriPreferencesProvider(@CheckForNull File path, boolean shared) {
         this.path = path;
         this.shared = shared;
         this.firstUse = !this.getPreferencesFile().exists();

@@ -15,6 +15,7 @@ public class MonitorActionTest {
     @Test
     public void testCTor() {
         MonitorAction t = new MonitorAction(){
+            @Override
             void connect(DataListener l){
             }
         };

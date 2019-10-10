@@ -19,25 +19,25 @@ import org.slf4j.LoggerFactory;
 
 /**
  * NCE Consist Roster manages and manipulates a roster of consists.
- * <P>
+ * <p>
  * It works with the "consist-roster-config" XML DTD to load and store its
  * information.
- * <P>
+ * <p>
  * This is an in-memory representation of the roster xml file (see below for
  * constants defining name and location). As such, this class is also
  * responsible for the "dirty bit" handling to ensure it gets written. As a
  * temporary reliability enhancement, all changes to this structure are now
  * being written to a backup file, and a copy is made when the file is opened.
- * <P>
+ * <p>
  * Multiple Roster objects don't make sense, so we use an "instance" member to
  * navigate to a single one.
- * <P>
+ * <p>
  * This predates the "XmlFile" base class, so doesn't use it. Not sure whether
  * it should...
- * <P>
+ * <p>
  * The only bound property is the list of s; a PropertyChangedEvent is fired
  * every time that changes.
- * <P>
+ * <p>
  * The entries are stored in an ArrayList, sorted alphabetically. That sort is
  * done manually each time an entry is added.
  *
@@ -70,8 +70,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
         }
         int i = _list.size() - 1;// Last valid index
         while (i >= 0) {
-            // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(_list.get(i).getId().toUpperCase()) > 0) {
+            if (e.getId().compareTo(_list.get(i).getId())> 0) {
                 break; // I can never remember whether I want break or continue here
             }
             i--;
@@ -105,7 +104,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
 
     /**
      * Return a combo box containing the entire ConsistRoster.
-     * <P>
+     * <p>
      * This is based on a single model, so it can be updated when the
      * ConsistRoster changes.
      * @return combo box of whole roster

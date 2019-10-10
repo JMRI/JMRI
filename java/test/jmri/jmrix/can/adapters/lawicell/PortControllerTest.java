@@ -6,8 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * JUnit tests for the PortController class
- * <p>
+ * JUnit tests for the PortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
@@ -35,16 +34,14 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
                 return null;
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override

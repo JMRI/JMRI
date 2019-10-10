@@ -14,12 +14,12 @@ import org.slf4j.LoggerFactory;
  * LayoutEditorAuxTools provides tools making use of layout connectivity
  * available in Layout Editor panels. (More tools are in
  * LayoutEditorTools.java.)
- * <P>
+ * <p>
  * This module manages block connectivity for its associated LayoutEditor.
- * <P>
+ * <p>
  * The tools in this module are accessed via the Tools menu in Layout Editor, or
  * directly from LayoutEditor or LayoutEditor specific modules.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2008
  * @author George Warner Copyright (c) 2017-2018
  */
@@ -44,7 +44,7 @@ public class LayoutEditorAuxTools {
 
     /**
      * Get Connectivity involving a specific Layout Block
-     * <P>
+     * <p>
      * This routine returns an ArrayList of BlockConnectivity objects involving
      * the specified LayoutBlock.
      */
@@ -67,17 +67,17 @@ public class LayoutEditorAuxTools {
     /**
      * Initializes the block connectivity (block boundaries) for a Layout Editor
      * panel.
-     * <P>
+     * <p>
      * This routine sets up the LayoutConnectivity objects needed to show the
      * current connectivity. It gets its information from arrays contained in
      * LayoutEditor.
-     * <P>
+     * <p>
      * One LayoutConnectivity object is created for each block boundary --
      * connection points where two blocks join. Block boundaries can occur where
      * ever a track segment in one block joins with: 1) a track segment in
      * another block -OR- 2) a connection point in a layout turnout in another
      * block -OR- 3) a connection point in a level crossing in another block.
-     * <P>
+     * <p>
      * The first block is always a track segment. The direction set in the
      * LayoutConnectivity is the direction of the track segment alone for cases
      * 2) and 3) above. For case 1), two track segments, the direction reflects
@@ -217,7 +217,7 @@ public class LayoutEditorAuxTools {
 
     /**
      * Searches for and adds BeanSetting's to a Path as needed.
-     * <P>
+     * <p>
      * This method starts at the entry point to the LayoutBlock given in the
      * Path at the block boundary specified in the LayoutConnectivity. It
      * follows the track looking for turnout settings that are required for a
@@ -226,7 +226,7 @@ public class LayoutEditorAuxTools {
      * used to create a BeanSetting, which is added to the Path. Such a setting
      * can occur, for example, if a track enters a right-handed turnout from
      * either the diverging track or the continuing track.
-     * <P>
+     * <p>
      * If the track branches into two tracks (for example, by entering a
      * right-handed turnout via the throat track), the search is stopped. The
      * search is also stopped when the track reaches a different block (or an
@@ -662,7 +662,7 @@ public class LayoutEditorAuxTools {
                             curConnection = lt.getConnectA();
                             typeCurConnection = LayoutTrack.TRACK;
                         }
-                    } else if (typeCurConnection == LayoutTrack.TURNOUT_D) {
+                    } else { // typeCurConnection == LayoutTrack.TURNOUT_D
                         // entry is at continuing track of turnout
                         if (lt.getLayoutBlockD() != layoutBlock) {
                             // cross-over block different, end of current block

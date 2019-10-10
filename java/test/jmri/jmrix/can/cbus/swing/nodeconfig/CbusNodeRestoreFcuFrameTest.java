@@ -44,7 +44,7 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
         
         JFrameOperator jfo = new JFrameOperator( t.getTitle() );
         
-        Assert.assertFalse(getTeachNodeButtonEnabled(jfo));
+        Assert.assertFalse("can find button so frame has opened ok",getTeachNodeButtonEnabled(jfo));
         
         // Ask to close window
         jfo.requestClose();
@@ -70,6 +70,7 @@ public class CbusNodeRestoreFcuFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initShutDownManager();
 
         memo = new CanSystemConnectionMemo();
         if(!GraphicsEnvironment.isHeadless()){

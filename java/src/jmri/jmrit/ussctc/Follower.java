@@ -10,8 +10,6 @@ import jmri.implementation.DefaultRoute;
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a Follower.
- * <P>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
