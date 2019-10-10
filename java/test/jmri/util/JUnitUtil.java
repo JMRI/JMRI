@@ -943,7 +943,7 @@ public class JUnitUtil {
      * Normally, this is not needed for tests, as 
      * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
      * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
-     * If you're testing code that uses {@link InstanceManager#getNullableDefault()}, you need to call this
+     * If you're testing code that uses {@link InstanceManager#getNullableDefault(Class<T>)}, you need to call this
      * method first.
      * @see #clearShutDownManager()
      */
