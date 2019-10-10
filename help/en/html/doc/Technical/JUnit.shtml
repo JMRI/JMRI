@@ -635,7 +635,7 @@
       <li>If you leave any ShutDownActions in the ShutDownManager at the end
             of your test, warnings will be issued during the @After
             processing.  You should remove (and check for correctness)
-            any items that where queued as shutdown items.
+            any items that were queued as shutdown items.
       <li>As a temporary bypass when that check was added, the
             JUnitUtil.clearShutDownManager() method was added.
             This clears the ShutDownManager without issuing warnings,
