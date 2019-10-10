@@ -920,7 +920,8 @@ public class JUnitUtil {
         List<ShutDownTask> list = sm.tasks();
         while (list != null && !list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.warn("Test {} left ShutDownTask registered: {}}", getTestClassName(), task.getName());
+            log.warn("Test {} left ShutDownTask registered: {}}", getTestClassName(), task.getName(), 
+                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
