@@ -31,6 +31,7 @@ public class AlignTablePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
