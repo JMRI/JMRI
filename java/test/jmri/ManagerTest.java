@@ -355,6 +355,8 @@ public class ManagerTest {
     public void tearDown() {
         // clear to avoid report at end of test
         Manager.legacyNameSet.clear();
+        
+        JUnitUtil.clearShutDownManager();
 
         JUnitUtil.tearDown();
     }
