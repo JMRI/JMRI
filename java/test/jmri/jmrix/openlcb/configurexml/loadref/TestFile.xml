@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+    </turnout>
+  </turnouts>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH1</systemName>
+      <userName>Head 1</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2</systemName>
+      <userName>Head 2</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH3</systemName>
+      <userName>Head 3</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH4</systemName>
+      <userName>Head 4</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH5</systemName>
+      <userName>Head 5</userName>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:PL-2-high($0001)</systemName>
+      <userName>Mast 1</userName>
+      <comment>Approach Medium disabled</comment>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <olcbsignalmast class="jmri.jmrix.openlcb.configurexml.OlcbSignalMastXml">
+      <systemName>MF$olm:AAR-1946:PL-2-high($0001)</systemName>
+      <userName>Olcb 1</userName>
+      <lit>
+        <lit>00.00.00.00.00.00.01.00</lit>
+        <notlit>00.00.00.00.00.00.02.00</notlit>
+      </lit>
+      <held>
+        <held>00.00.00.00.00.00.03.00</held>
+        <notheld>00.00.00.00.00.00.04.00</notheld>
+      </held>
+      <aspect defines="Clear">
+        <event>00.00.00.00.00.00.00.01</event>
+      </aspect>
+      <aspect defines="Approach Medium">
+        <event>00.00.00.00.00.00.00.02</event>
+      </aspect>
+      <aspect defines="Advance Approach">
+        <event>00.00.00.00.00.00.00.03</event>
+      </aspect>
+      <aspect defines="Medium Clear">
+        <event>01.00.00.00.00.00.00.04</event>
+      </aspect>
+      <aspect defines="Approach">
+        <event>00.00.00.00.00.00.00.05</event>
+      </aspect>
+      <aspect defines="Slow Approach">
+        <event>01.00.00.00.00.00.00.06</event>
+      </aspect>
+      <aspect defines="Permissive">
+        <event>00.00.00.00.00.00.00.07</event>
+      </aspect>
+      <aspect defines="Restricting">
+        <event>00.00.00.00.00.00.00.08</event>
+      </aspect>
+      <aspect defines="Stop and Proceed">
+        <event>00.00.00.00.00.00.00.09</event>
+      </aspect>
+      <aspect defines="Stop">
+        <event>00.00.00.00.00.00.00.0A</event>
+      </aspect>
+      <disabledAspects>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Slow Approach</disabledAspect>
+      </disabledAspects>
+    </olcbsignalmast>
+  </signalmasts>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Sep 10 23:02:31 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Sep 10 23:03:20 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/jmrix/openlcb/configurexml/load/TestFile.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Thu Jun 21 11:04:48 PDT 2018</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Jun 21 11:04:50 PDT 2018</date>
+          <filename>/Users/jake/Library/Preferences/JMRI/OlcbSignalMast/TestFile.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Thu Jun 21 11:03:34 PDT 2018</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Jun 21 11:03:37 PDT 2018</date>
+              <filename>/Users/jake/Library/Preferences/JMRI/OlcbSignalMast/TestFile.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Wed Jun 20 17:48:19 PDT 2018</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Wed Jun 20 17:48:21 PDT 2018</date>
+                  <filename>/Users/jake/Library/Preferences/JMRI/OlcbSignalMast/TestFile.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Wed Jun 20 11:35:25 PDT 2018</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Wed Jun 20 11:35:29 PDT 2018</date>
+                      <filename>/Users/jake/Library/Preferences/JMRI/OlcbSignalMast/TestFile.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Wed Jun 20 08:45:52 PDT 2018</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Wed Jun 20 08:47:02 PDT 2018</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Wed Jun 20 11:45:35 PDT 2018</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Wed Jun 20 17:49:35 PDT 2018</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Jun 21 11:04:35 PDT 2018</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Jun 21 11:05:44 PDT 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Sep 10 23:03:41 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.5ish+egbertbroerse+20190910T2048Z+R9620aafed4 on Tue Sep 10 23:03:41 CEST 2019-->
+</layout-config>
