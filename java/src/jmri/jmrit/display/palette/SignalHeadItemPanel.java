@@ -78,9 +78,8 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= {}, {}({})", row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
-        }
+        log.debug("Table valueChanged: row= {}, {}({})",
+                row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
         if (row >= 0) {
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
@@ -89,9 +88,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 HashMap<String, NamedIcon> fullmap = getFilteredIconMap(ItemPanel.makeNewIconMap(_itemType));
                 // icon map of appearances for type of current bean.
                 HashMap<String, NamedIcon> currentmap = (getIconMap());
-                if (log.isDebugEnabled()) {
-                    log.debug("currentmap keys = {}", currentmap.keySet().toString());
-                }
+                log.debug("currentmap keys = {}", currentmap.keySet().toString());
                 // use current images for as many of the fullMap's members as possible
                 HashMap<String, NamedIcon> iconMap = new HashMap<>();
                 for (Entry<String, NamedIcon> entry : fullmap.entrySet()) {
@@ -105,9 +102,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                         iconMap.put(newKey, entry.getValue());
                     }
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
-                }
+                log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
                 setIconMap(iconMap);
             }
         } else {

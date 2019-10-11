@@ -412,7 +412,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         setFamily(_itemPanel.getFamilyName());
         HashMap<String, NamedIcon> map1 = _itemPanel.getIconMap();
         if (map1 != null) {
-            // map1 may be keyed with NamedBean names.  Convert to local name keys.
+            // map1 may be keyed with NamedBean names. Convert to local name keys.
             Hashtable<String, NamedIcon> map2 = new Hashtable<>();
             for (Entry<String, NamedIcon> entry : map1.entrySet()) {
                 // TODO I18N using existing NamedBeanBundle keys before calling convertText(entry.getKey())?
