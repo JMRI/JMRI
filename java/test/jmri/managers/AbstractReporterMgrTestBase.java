@@ -185,6 +185,12 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Ignore("Reporter managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+    }
+
     /**
      * Number of Reporter to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers

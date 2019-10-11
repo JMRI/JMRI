@@ -13,8 +13,6 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
-import jmri.server.json.signalmast.JsonSignalMast;
-import jmri.server.json.signalmast.JsonSignalMastSocketService;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
