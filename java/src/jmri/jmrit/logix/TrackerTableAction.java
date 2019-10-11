@@ -174,6 +174,11 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         return false;
     }
 
+    /**
+     * Stop a Tracker from tracking and remove from list
+     * @param t Tracker to be stopped
+     * @param b Block Tracker of its last move. Optional, for display purpose only.
+     */
    public void stopTracker(Tracker t, OBlock b) {
         if (_frame == null) {
             _frame = new TableFrame();
