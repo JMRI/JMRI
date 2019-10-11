@@ -948,10 +948,10 @@ public class JUnitUtil {
      * Normally, this is not needed for tests, as 
      * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
      * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
-     * If you're testing code that uses {@link InstanceManager#getNullableDefault(Class)}, you need to call this
-     * method first.
      * @see #clearShutDownManager()
+     * @deprecated 4.17.5 should not be needed in new test code
      */
+    @Deprecated // 4.17.5 should not be needed in new test code
     public static void initShutDownManager() {
         ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
         List<ShutDownTask> tasks = manager.tasks();
