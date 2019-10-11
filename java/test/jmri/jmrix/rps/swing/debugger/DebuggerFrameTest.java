@@ -17,12 +17,13 @@ public class DebuggerFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         jmri.util.JUnitUtil.resetProfileManager();
 
         memo = new RpsSystemConnectionMemo();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new DebuggerFrame(memo);
-	}
+	    }
     }
 
     @After
