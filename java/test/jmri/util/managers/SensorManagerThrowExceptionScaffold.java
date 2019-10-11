@@ -28,6 +28,7 @@ public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Sensor provideSensor(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
@@ -46,12 +47,13 @@ public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
     
     /** {@inheritDoc} */
     @Override
-    public Sensor getByUserName(String key) {
+    public Sensor getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }

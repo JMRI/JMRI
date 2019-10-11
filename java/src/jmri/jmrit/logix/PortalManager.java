@@ -34,8 +34,6 @@ import org.slf4j.LoggerFactory;
 public class PortalManager extends AbstractManager<Portal>
         implements jmri.InstanceManagerAutoDefault {
 
-    private int _nextSName = 1;
-
     public PortalManager() {
         super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
@@ -69,14 +67,14 @@ public class PortalManager extends AbstractManager<Portal>
             return null;
         }
         if (sName == null) {
-            sName = generateSystemName();
+            sName = getAutoSystemName();
         } else {
             if (log.isDebugEnabled()) log.debug("createNewPortal called with system name \"{}\"", sName);
         }
-        if (!sName.startsWith("IP")) {
-            sName = "IP" + sName;
+        if (!sName.startsWith(getSystemNamePrefix())) {
+            sName = getSystemNamePrefix() + sName;
         }
-        if (sName.length() < 3) {
+        if (sName.length() < getSystemNamePrefix().length()+1) {
             return null;
         }
         portal = getBySystemName(sName);
@@ -87,16 +85,11 @@ public class PortalManager extends AbstractManager<Portal>
         portal = new Portal(sName, userName);
         // save in the maps
         register(portal);
-        return portal;
-    }
 
-    public String generateSystemName() {
-        String name;
-        do {
-            name = "IP" + Integer.toString(_nextSName++);
-        } while (getBySystemName(name) != null);
-        if (log.isDebugEnabled()) log.debug("generateSystemName \"{}\"", name);
-       return name;
+        // Keep track of the last created auto system name
+        updateAutoNumber(sName);
+
+        return portal;
     }
 
     /**
