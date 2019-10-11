@@ -502,7 +502,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static double lerp(double a, double b, double t) {
-        return ((1.0 - t) * a) + (t * b);
+        return ((1.D - t) * a) + (t * b);
     }
 
     /**
@@ -515,7 +515,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Double lerp(@Nonnull Double a, @Nonnull Double b, @Nonnull Double t) {
-        return ((1.0 - t) * a) + (t * b);
+        return ((1.D - t) * a) + (t * b);
     }
 
     /**
@@ -1240,7 +1240,7 @@ public final class MathUtil {
      * @return the intersection point of the two lines or null if one doesn't exist
      */
     @CheckReturnValue
-    static Point2D intersect(
+    public static Point2D intersect(
             @Nonnull Point2D p1,
             @Nonnull Point2D p2,
             @Nonnull Point2D p3,
