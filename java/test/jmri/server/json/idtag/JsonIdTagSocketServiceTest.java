@@ -19,8 +19,6 @@ import jmri.ReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
-import jmri.server.json.idtag.JsonIdTag;
-import jmri.server.json.idtag.JsonIdTagSocketService;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.util.JUnitUtil;
 import org.junit.After;

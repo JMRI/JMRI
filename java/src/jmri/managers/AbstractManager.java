@@ -1,17 +1,10 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.VetoableChangeSupport;
+import java.beans.*;
+import java.text.DecimalFormat;
 import java.util.*;
-
-import jmri.util.NamedBeanComparator;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -22,7 +15,7 @@ import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
-import jmri.NmraPacket;
+import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +109,12 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private String[] cachedSystemNameArray = null;
     private ArrayList<String> cachedSystemNameList = null;
     private ArrayList<E> cachedNamedBeanList = null;
-    
+
+    // Auto names. The atomic integer is always created even if not used, to
+    // simplify concurrency.
+    AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
     /**
      * Get a NamedBean by its system name.
      *
@@ -687,6 +685,28 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         for (ManagerDataListener<E> m : listeners) {
             m.intervalRemoved(e);
         }
+    }
+
+    public void updateAutoNumber(String systemName) {
+        /* The following keeps track of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them */
+        if (systemName.startsWith(getSystemNamePrefix() + ":AUTO:")) {
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                lastAutoNamedBeanRef.accumulateAndGet(autoNumber, Math::max);
+            } catch (NumberFormatException e) {
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
+            }
+        }
+    }
+
+    public String getAutoSystemName() {
+        int nextAutoBlockRef = lastAutoNamedBeanRef.incrementAndGet();
+        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoBlockRef);
+        b.append(nextNumber);
+        return b.toString();
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractManager.class);
