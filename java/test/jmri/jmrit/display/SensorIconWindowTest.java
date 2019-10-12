@@ -138,7 +138,6 @@ public class SensorIconWindowTest {
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

@@ -144,7 +144,6 @@ public class TurnoutIconWindowTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
     }

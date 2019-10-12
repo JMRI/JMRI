@@ -59,8 +59,9 @@ public class WarrantManager extends AbstractManager<Warrant>
                 return null;
             }
         }
-        if (!systemName.startsWith("IW") || systemName.length() < 3) {
-            log.error("Warrant system name \"{}\" must begin with \"IW\".",systemName);
+        if (!systemName.startsWith(getSystemNamePrefix()) || systemName.length() < getSystemNamePrefix().length()+1) {
+            log.error("Warrant system name \"{}\" must begin with \"{}\".",
+                    systemName, getSystemNamePrefix());
             return null;
         }
         // Warrant does not exist, create a new Warrant

@@ -97,17 +97,10 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         }
         // Block does not exist, create a new Block
         r = new Block(systemName, userName);
-        /*The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IB:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                lastAutoBlockRef.accumulateAndGet(autoNumber, Math::max);
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         // save in the maps
         register(r);
         try {
@@ -128,11 +121,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      */
     @CheckForNull
     public Block createNewBlock(@Nonnull String userName) {
-        int nextAutoBlockRef = lastAutoBlockRef.incrementAndGet();
-        StringBuilder b = new StringBuilder("IB:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoBlockRef);
-        b.append(nextNumber);
-        return createNewBlock(b.toString(), userName);
+        return createNewBlock(getAutoSystemName(), userName);
     }
 
     /**
@@ -154,11 +143,9 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         if (b != null) {
             return b;
         }
-        if (name.startsWith(getSystemPrefix() + typeLetter())) {
-            log.debug("create block for systemname {}",name);
+        if (name.startsWith(getSystemNamePrefix())) {
             b = createNewBlock(name, null);
         } else {
-            log.debug("create autoblock for username {}",name);
             b = createNewBlock(name);
         }
         if (b == null) {
@@ -166,10 +153,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         }
         return b;
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    AtomicInteger lastAutoBlockRef = new AtomicInteger(0);
 
     /**
      * Method to get an existing Block. First looks up assuming that name is a
@@ -340,4 +323,5 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
+
 }
