@@ -37,11 +37,9 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
             }
         }
         List<Element> operationsList = sharedOperations.getChildren("operation");
-        if (log.isDebugEnabled()) {
-            log.debug("Found " + operationsList.size() + " operations");
-        }
-        for (int i = 0; i < operationsList.size(); i++) {
-            TurnoutOperationXml.loadOperation(operationsList.get(i));
+        log.debug("Found {} Operations", operationsList.size());
+        for (Element oper : operationsList) {
+            TurnoutOperationXml.loadOperation(oper);
         }
         return result;
     }
@@ -53,8 +51,7 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
             TurnoutOperationManager manager = (TurnoutOperationManager) o;
             elem.setAttribute("automate", String.valueOf(manager.getDoOperations()));
             TurnoutOperation[] operations = manager.getTurnoutOperations();
-            for (int i = 0; i < operations.length; ++i) {
-                TurnoutOperation op = operations[i];
+            for (TurnoutOperation op : operations) {
                 if (!op.isNonce()) {  // nonces are stored with their respective turnouts
                     TurnoutOperationXml adapter = TurnoutOperationXml.getAdapter(op);
                     if (adapter != null) {
@@ -70,4 +67,5 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class);
+
 }
