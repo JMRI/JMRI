@@ -33,7 +33,6 @@
       <permissive>no</permissive>
     </block>
   </blocks>
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">
     <layoutblock systemName="IB0" occupiedsense="2" trackcolor="#33FF33" occupiedcolor="red" extracolor="orange">
       <systemName>IB0</systemName>
