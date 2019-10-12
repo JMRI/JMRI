@@ -1827,7 +1827,7 @@ public class TrackSegment extends LayoutTrack {
                 setArc(false);  // bezier
                 setCircle(false);
                 if (bezierControlPoints.size() == 0) {
-                    //TODO: use MathUtil.intersect to find intersection of adjacent tracks
+                    //TODO: Use MathUtil.intersect to find intersection of adjacent tracks
                     //TODO: and place the control points halfway between that and the two endpoints
 
                     // set default control point displacements
