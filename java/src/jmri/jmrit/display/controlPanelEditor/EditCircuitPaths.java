@@ -527,7 +527,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                     Portal portal = ((PortalIcon) pos).getPortal();
                     if (!toPortal.equals(portal) && !fromPortal.equals(portal)) {
                         JOptionPane.showMessageDialog(this, Bundle.getMessage("tooManyPortals"),
-                                Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+                               Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
                         return null;
                     }
                 }
@@ -787,6 +787,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                     ((IndicatorTrack)pos).removePath(TEST_PATH);
                 }
             }
+            _pathGroup.clear();
             int oldState = _homeBlock.getState();
             int newState = oldState & ~OBlock.ALLOCATED;
             _homeBlock.pseudoPropertyChange("state", oldState, newState);
