@@ -18,7 +18,7 @@ public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SerialMonFrame(new CMRISystemConnectionMemo());
-	}
+	    }
     }
 
     @After

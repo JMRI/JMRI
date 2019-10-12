@@ -197,7 +197,6 @@ public class CbusConfigurationManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

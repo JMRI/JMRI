@@ -32,7 +32,6 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
         InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
-        JUnitUtil.initShutDownManager();
 
         // prepare the cab signal
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();

@@ -52,6 +52,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     @After
     @Override
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 

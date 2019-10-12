@@ -33,7 +33,6 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         title = Bundle.getMessage("EventTableTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
         memo = new CanSystemConnectionMemo();

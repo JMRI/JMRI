@@ -27,7 +27,6 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         title = Bundle.getMessage("CapConfigTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
         memo = new CanSystemConnectionMemo();

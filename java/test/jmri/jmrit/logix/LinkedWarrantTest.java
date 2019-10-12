@@ -409,7 +409,6 @@ public class LinkedWarrantTest {
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
         JUnitUtil.initWarrantManager();
-        JUnitUtil.initShutDownManager();
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
@@ -423,6 +422,8 @@ public class LinkedWarrantTest {
         _OBlockMgr = null;
         _sensorMgr.dispose();
         _sensorMgr = null;
+        
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

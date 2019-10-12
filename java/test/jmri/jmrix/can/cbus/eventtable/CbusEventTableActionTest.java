@@ -193,7 +193,6 @@ public class CbusEventTableActionTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         
         TrafficControllerScaffold tcis = new TrafficControllerScaffold();

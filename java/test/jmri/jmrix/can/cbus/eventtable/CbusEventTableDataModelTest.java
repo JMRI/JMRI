@@ -416,7 +416,6 @@ public class CbusEventTableDataModelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         memo = new CanSystemConnectionMemo();
     }
 
