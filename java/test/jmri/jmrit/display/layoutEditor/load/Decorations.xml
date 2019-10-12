@@ -39,7 +39,6 @@
       <userName>RM Block</userName>
     </layoutblock>
   </layoutblocks>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
