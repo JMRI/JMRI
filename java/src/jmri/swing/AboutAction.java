@@ -1,8 +1,7 @@
-package apps;
+package jmri.swing;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
-import jmri.swing.AboutDialog;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -10,9 +9,7 @@ import jmri.util.swing.WindowInterface;
 /**
  *
  * @author rhwood
- * @deprecated since 4.17.5 use @link{jmri.swing.AboutAction} instead.
  */
-@Deprecated
 public class AboutAction extends JmriAbstractAction {
 
     public AboutAction(String s, WindowInterface wi) {
