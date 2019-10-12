@@ -21,8 +21,6 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <blocks class="jmri.configurexml.BlockManagerXml">
     <defaultspeed>Normal</defaultspeed>
     <block systemName="IB0">
