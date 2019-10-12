@@ -67,8 +67,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         if (log.isDebugEnabled()) {
             log.debug("N elements: " + contents.size());
         }
-        for (int i = 0; i < contents.size(); i++) {
-            Positionable sub = contents.get(i);
+        for (Positionable sub : contents) {
             if (sub != null && sub.storeItem()) {
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
@@ -91,7 +90,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
 
     /**
      * Create a PanelEditor object, then register and fill it, then pop it in a
-     * JFrame
+     * JFrame.
      *
      * @param shared Top level Element to unpack.
      * @return true if successful
@@ -137,15 +136,14 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
-                String windowFrameRef = name;
 
-                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(name);
                 if (prefsWindowLocation != null) {
                     x = (int) prefsWindowLocation.getX();
                     y = (int) prefsWindowLocation.getY();
                 }
 
-                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(name);
                 if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                     height = (int) prefsWindowSize.getHeight();
                     width = (int) prefsWindowSize.getWidth();
@@ -223,12 +221,11 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.initView();
 
         // load the contents with their individual option settings
-        List<Element> items = shared.getChildren();
-        for (int i = 0; i < items.size(); i++) {
+        List<Element> panelItems = shared.getChildren();
+        for (Element item : panelItems) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via " + adapterName);
+            log.debug("load via {}", adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
@@ -237,8 +234,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                     result = false;
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
-                    | jmri.configurexml.JmriConfigureXmlException
-                    | java.lang.reflect.InvocationTargetException e) {
+                    | jmri.configurexml.JmriConfigureXmlException | java.lang.reflect.InvocationTargetException e) {
                 log.error("Exception while loading {}", item.getName(), e);
                 result = false;
             }

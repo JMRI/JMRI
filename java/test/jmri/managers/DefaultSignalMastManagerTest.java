@@ -4,7 +4,6 @@ import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
 import jmri.implementation.SignalMastRepeater;
-import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 
 import static org.hamcrest.core.StringContains.containsString;
