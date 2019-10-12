@@ -1,4 +1,4 @@
-package jmri.jmrix.swing;
+package jmri.swing;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
