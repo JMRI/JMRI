@@ -384,20 +384,25 @@ public class LogixNGTest {
         StringBuilder expectedResult = new StringBuilder();
         expectedResult
                 .append("LogixNG: A new logix for test").append(newLine)
-                .append("...ConditionalNG").append(newLine)
+                .append("...ConditionalNG: A conditionalNG").append(newLine)
                 .append("......! ").append(newLine)
                 .append(".........Many").append(newLine)
                 .append("............! A1").append(newLine)
                 .append("...............Hold anything").append(newLine)
 //                .append("..................? A1").append(newLine)
-//                .append("..................! A1").append(newLine)
+//                .append(".....................Socket not connected").append(newLine)
                 .append("..................! A1").append(newLine)
+                .append(".....................Socket not connected").append(newLine)
                 .append("............! A2").append(newLine)
                 .append("...............If E then A1 else A2").append(newLine)
                 .append("..................? E").append(newLine)
+                .append(".....................Socket not connected").append(newLine)
                 .append("..................! A1").append(newLine)
+                .append(".....................Socket not connected").append(newLine)
                 .append("..................! A2").append(newLine)
-                .append("............! A3").append(newLine);
+                .append(".....................Socket not connected").append(newLine)
+                .append("............! A3").append(newLine)
+                .append("...............Socket not connected").append(newLine);
         
         StringWriter writer = new StringWriter();
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
@@ -418,8 +423,8 @@ public class LogixNGTest {
         System.err.format("=======================================%n");
         System.err.format("=======================================%n");
         System.err.format("=======================================%n");
-        Assert.assertEquals("Strings matches", expectedResult.toString(), resultStr);
 */        
+        Assert.assertEquals("Strings matches", expectedResult.toString(), resultStr);
     }
     
     @Test

@@ -248,11 +248,15 @@ public abstract class AbstractBaseTestBase {
     @Test
     public void testMaleSocketIsActive() {
         Assert.assertTrue(_baseMaleSocket.isActive());
-        if (_baseMaleSocket instanceof MaleSocket) {
-            ((MaleSocket)_baseMaleSocket).setEnabled(false);
-            Assert.assertFalse(_baseMaleSocket.isActive());
-            ((MaleSocket)_baseMaleSocket).setEnabled(true);
-        } else if (_baseMaleSocket.getParent() instanceof MaleSocket) {
+        _baseMaleSocket.setEnabled(false);
+        Assert.assertFalse(_baseMaleSocket.isActive());
+        _baseMaleSocket.setEnabled(true);
+        
+        Base parent = _baseMaleSocket.getParent();
+        while ((parent != null) && !(parent instanceof MaleSocket)) {
+            parent = parent.getParent();
+        }
+        if (parent != null) {
             ((MaleSocket)_baseMaleSocket.getParent()).setEnabled(false);
             Assert.assertFalse(_baseMaleSocket.isActive());
             ((MaleSocket)_baseMaleSocket.getParent()).setEnabled(true);

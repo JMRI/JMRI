@@ -20,7 +20,6 @@ import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.util.junit.annotations.ToDo;
 import org.netbeans.jemmy.operators.JLabelOperator;
 
 
@@ -30,7 +29,7 @@ import org.netbeans.jemmy.operators.JLabelOperator;
 * @author Dave Sand Copyright (C) 2017 (for the LogixTableActionTest class)
 * @author Daniel Bergqvist Copyright (C) 2019
 */
-public class LogixNGTableActionTest extends AbstractTableActionBase {
+public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
     static final ResourceBundle rbxLogixNGSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
 
