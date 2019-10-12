@@ -1304,26 +1304,26 @@ abstract public class AbstractMRTrafficController {
             mTc = pTc;
         }
 
-        /** @InheritDoc */
+        /** @inheritDoc */
         @Override
         public boolean isShutdownAllowed() {return true;}
 
-        /** @InheritDoc */
+        /** @inheritDoc */
         @Override
         public boolean execute() {
             mTc.terminate();
             return true;
         }
 
-        /** @InheritDoc */
+        /** @inheritDoc */
         @Override
         public String getName() {return "ShutDownTask for "+mTc.getClass().getName();}
 
-        /** @InheritDoc */
+        /** @inheritDoc */
         @Override
         public boolean isParallel() {return false;}
 
-        /** @InheritDoc */
+        /** @inheritDoc */
         @Override
         public boolean isComplete() {return !this.isParallel();}
     }
