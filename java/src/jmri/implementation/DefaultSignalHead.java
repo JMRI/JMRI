@@ -177,7 +177,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }; // Lunar not included
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public int[] getValidStates() {
@@ -185,7 +185,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateKeys() {
@@ -193,7 +193,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateNames() {

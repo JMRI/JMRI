@@ -138,7 +138,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     };
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public int[] getValidStates() {
@@ -146,7 +146,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateKeys() {
@@ -154,7 +154,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateNames() {

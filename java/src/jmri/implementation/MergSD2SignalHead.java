@@ -317,7 +317,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     };
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public int[] getValidStates() {
@@ -339,7 +339,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateKeys() {
@@ -361,7 +361,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateNames() {

@@ -199,7 +199,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     };
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public int[] getValidStates() {
@@ -207,7 +207,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateKeys() {
@@ -215,7 +215,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateNames() {

@@ -164,7 +164,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public int[] getValidStates() {
@@ -195,7 +195,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateKeys() {
@@ -214,7 +214,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public String[] getValidStateNames() {
