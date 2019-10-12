@@ -265,7 +265,7 @@ public class OBlockManagerXml // extends XmlFile
 
     private void loadBlock(Element elem) {
         if (elem.getAttribute("systemName") == null) {
-            log.error("unexpected null for block systemName elem= {}", elem);
+            log.error("unexpected null for block systemName elem= ", elem);
             return;
         }
         String sysName = elem.getAttribute("systemName").getValue();
@@ -429,17 +429,13 @@ public class OBlockManagerXml // extends XmlFile
                     toBlock.addPortal(portal);
 
                     List<Element> ePathsToBlock = eToBlk.getChildren("path");
-                    for (int i = 0; i < ePathsToBlock.size(); i++) {
-                        Element e = ePathsToBlock.get(i);
-                        String pathName = e.getAttribute("pathName").getValue();
-                        String blockName = e.getAttribute("blockName").getValue();
-                        log.debug("Load portal= \"{}\" toBlock= {}, pathName= {}, blockName= {}",
-                                userName, toBlock.getSystemName(), pathName, blockName);
-                        /*if (toBlock.getSystemName().equals(blockName))*/ {
-                            // path is in the toBlock
-                            OPath path = getPath(toBlock, pathName);
-                            portal.addPath(path);
-                        }
+                    for (Element ePath : ePathsToBlock) {
+                        String pathName = ePath.getAttribute("pathName").getValue();
+                        String blockName = ePath.getAttribute("blockName").getValue();
+                        log.debug("Load portal= \"{}\" toBlock= {}, pathName= {}, blockName= {}", userName, toBlock.getSystemName(), pathName, blockName);
+                        // path is in the toBlock
+                        OPath path = getPath(toBlock, pathName);
+                        portal.addPath(path);
                     }
                 }
             }
