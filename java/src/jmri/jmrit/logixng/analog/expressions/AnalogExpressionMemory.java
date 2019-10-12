@@ -78,7 +78,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         return true;
     }
     
-    /** {@inheritDoc} */
     public void setMemory(String memoryName) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
@@ -97,7 +96,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         }
     }
     
-    /** {@inheritDoc} */
     public void setMemory(NamedBeanHandle<Memory> handle) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
@@ -107,7 +105,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         _memoryHandle = handle;
     }
     
-    /** {@inheritDoc} */
     public void setMemory(@CheckForNull Memory memory) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
@@ -122,7 +119,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
         }
     }
     
-    /** {@inheritDoc} */
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
