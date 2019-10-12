@@ -10,6 +10,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -182,6 +183,12 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     @Test
     public void testPullResistanceConfigurable(){
        Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
+    }
+
+    @Ignore("Sensor managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     /**
