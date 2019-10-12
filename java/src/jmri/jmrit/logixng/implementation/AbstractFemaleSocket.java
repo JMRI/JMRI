@@ -11,8 +11,8 @@ import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Abstract female socket.
@@ -303,6 +303,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractFemaleSocket.class);
+//    private final static Logger log = LoggerFactory.getLogger(AbstractFemaleSocket.class);
     
 }
