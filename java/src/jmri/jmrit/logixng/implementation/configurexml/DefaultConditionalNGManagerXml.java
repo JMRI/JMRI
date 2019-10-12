@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.util.List;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
@@ -34,9 +33,6 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
      */
     @Override
     public Element store(Object o) {
-//        log.error("ConditionalNG manager: {}", o);
-//        if (1==1) return null;
-//        if (1==1) throw new RuntimeException("AAA");
         Element conditionalNGs = new Element("logixngConditionalNGs");
         setStoreElementClass(conditionalNGs);
         ConditionalNG_Manager tm = (ConditionalNG_Manager) o;
@@ -63,13 +59,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                     e2.addContent(new Element("systemName").addContent(socketSystemName));
                 }
                 elem.addContent(e2);
-/*
-                // add conditionalNG elements
-                DefaultConditionalNGXml defaultConditionalNGXml = new DefaultConditionalNGXml();
-                for (int i=0; i < conditionalNG.getNumConditionalNGs(); i++) {
-                    elem.addContent(defaultConditionalNGXml.store(conditionalNG.getConditionalNG(i)));
-                }
-*/
+                
                 if (enabled) {
                     elem.setAttribute("enabled", "yes");  // NOI18N
                 } else {
@@ -170,23 +160,6 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                         conditionalNG.setEnabled(false);
                     }
                 }
-/*                
-                // load conditionals, if there are any
-                List<Element> conditionalNGConditionalList = conditionalNG_Element.getChildren("conditionalng");  // NOI18N
-                if (conditionalNGConditionalList.size() > 0) {
-                    
-                    // add conditionalNGs
-                    DefaultConditionalNGXml defaultConditionalNGXml = new DefaultConditionalNGXml();
-                    
-                    for (int n = 0; n < conditionalNGConditionalList.size(); n++) {
-                        try {
-                            conditionalNG.addConditionalNG(defaultConditionalNGXml.loadConditionalNG(conditionalNG, conditionalNGConditionalList.get(n)));
-                        } catch (JmriException e) {
-                            log.error("exception thrown", e);
-                        }
-                    }
-                }
-*/                
             }
         }
     }
