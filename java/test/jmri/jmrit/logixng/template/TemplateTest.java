@@ -98,7 +98,7 @@ public class TemplateTest {
     public void testTemplateInstanceManager() {
         TemplateInstanceManager tim = new TemplateInstanceManager();
         Audio a = tim.provide(AudioManager.class, NullAudio.class, "IA1");
-        IdTag i = tim.provide(IdTagManager.class, NullIdTag.class, "ID1");
+//        IdTag i = tim.provide(IdTagManager.class, NullIdTag.class, "ID1");
         Light l = tim.provide(LightManager.class, NullLight.class, "IL1");
         Logix x = tim.provide(LogixManager.class, NullLogix.class, "IX1");
         Memory m = tim.provide(MemoryManager.class, NullMemory.class, "IM1");
@@ -110,7 +110,7 @@ public class TemplateTest {
 //        SignalMast sm = tim.provide(SignalMastManager.class, NullSignalMast.class, "IF1");
         Turnout t = tim.provide(TurnoutManager.class, NullTurnout.class, "IT1");
         Assert.assertNotNull("Not null", a);
-        Assert.assertNotNull("Not null", i);
+//        Assert.assertNotNull("Not null", i);
         Assert.assertNotNull("Not null", l);
         Assert.assertNotNull("Not null", x);
         Assert.assertNotNull("Not null", m);
@@ -121,7 +121,7 @@ public class TemplateTest {
         Assert.assertNotNull("Not null", sm);
         Assert.assertNotNull("Not null", t);
         Assert.assertTrue("Objects are the same", a.equals(tim.get(AudioManager.class, NullAudio.class, "IA1")));
-        Assert.assertTrue("Objects are the same", i.equals(tim.get(IdTagManager.class, NullIdTag.class, "ID1")));
+//        Assert.assertTrue("Objects are the same", i.equals(tim.get(IdTagManager.class, NullIdTag.class, "ID1")));
         Assert.assertTrue("Objects are the same", l.equals(tim.get(LightManager.class, NullLight.class, "IL1")));
         Assert.assertTrue("Objects are the same", x.equals(tim.get(LogixManager.class, NullLogix.class, "IX1")));
         Assert.assertTrue("Objects are the same", m.equals(tim.get(MemoryManager.class, NullMemory.class, "IM1")));
