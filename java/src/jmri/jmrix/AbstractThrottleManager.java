@@ -966,14 +966,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         } else {
             return null;
         }
-        if (item.equals("IsForward")) {
+        if (item.equals(Throttle.ISFORWARD)) {
             return t.getIsForward();
         } else if (item.startsWith("Speed")) {
-            if (item.equals("SpeedSetting")) {
+            if (item.equals(Throttle.SPEEDSETTING)) {
                 return t.getSpeedSetting();
-            } else if (item.equals("SpeedIncrement")) {
+            } else if (item.equals(Throttle.SPEEDINCREMENT)) {
                 return t.getSpeedIncrement();
-            } else if (item.equals("SpeedStepMode")) {
+            } else if (item.equals(Throttle.SPEEDSTEPMODE)) {
                 return t.getSpeedStepMode();
             }
         } else if (item.equals(Throttle.F0)) {

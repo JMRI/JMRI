@@ -101,7 +101,6 @@ log4j.category.org.jdom2.transform=SEVERE
 # log4j.category.jmri.jmrit.beantable.LogixTableAction=DEBUG
 # log4j.category.jmri.jmrit.display=DEBUG
 # log4j.category.jmri.jmrit.display.IndicatorTrackPaths=DEBUG
-# log4j.category.jmri.jmrit.logix=DEBUG
 # log4j.category.jmri.jmrit.progsupport=TRACE
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG

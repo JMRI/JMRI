@@ -247,7 +247,7 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -269,7 +269,7 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

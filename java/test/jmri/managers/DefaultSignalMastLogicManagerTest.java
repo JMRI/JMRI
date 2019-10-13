@@ -22,6 +22,12 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
     public void testMakeSystemName() {
     }
 
+    @Ignore("This managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

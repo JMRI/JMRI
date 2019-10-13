@@ -16,9 +16,6 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemoManager;
-import jmri.managers.ProxyReporterManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
@@ -308,18 +305,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             ActionListener createListener = this::createPressed;
             ActionListener cancelListener = this::cancelPressed;
             ActionListener rangeListener = this::canAddRange;
-            if (reporterManager instanceof ProxyReporterManager) {
-                ProxyReporterManager proxy = (ProxyReporterManager) reporterManager;
-                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
-                if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                    SystemConnectionMemo memo = InstanceManager
-                            .getDefault(SystemConnectionMemoManager.class)
-                            .getSystemConnectionMemoForUserName(pref.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(ReporterManager.class));
-                }
-            } else {
-                prefixBox.setManagers(reporterManager);
-            }
+            configureManagerComboBox(prefixBox, reporterManager, ReporterManager.class);
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));

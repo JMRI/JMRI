@@ -367,7 +367,7 @@ public class Section extends AbstractNamedBean {
         if (s == null) {
             return null;
         }
-        if (!tempSensorName.equals(s.getUserName())) {
+        if (!tempSensorName.equals(s.getUserName()) && s.getUserName() != null) {
             tempSensorName = s.getUserName();
         }
         return s;
@@ -753,7 +753,7 @@ public class Section extends AbstractNamedBean {
         }
         String s = mFirstBlock.getSystemName();
         String uName = mFirstBlock.getUserName();
-        if ((uName != null) && (!uName.equals(""))) {
+        if ((uName != null) && !uName.isEmpty()) {
             return (s + "( " + uName + " )");
         }
         return s;

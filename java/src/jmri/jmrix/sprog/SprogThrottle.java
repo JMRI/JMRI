@@ -157,7 +157,7 @@ public class SprogThrottle extends AbstractThrottle {
         m = new SprogMessage("M h" + Integer.toHexString(mode));
         ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
         if ((speedStepMode != Mode) && (Mode != SpeedStepMode.NMRA_DCC_27)) {
-            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
+            notifyPropertyChangeListener(SPEEDSTEPS, this.speedStepMode,
                     this.speedStepMode = Mode);
         }
     }
@@ -207,7 +207,7 @@ public class SprogThrottle extends AbstractThrottle {
 
             ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
             }
         } else {
             // 128 step mode speed commands are
@@ -240,7 +240,7 @@ public class SprogThrottle extends AbstractThrottle {
 
             ((SprogSystemConnectionMemo)adapterMemo).getSprogTrafficController().sendSprogMessage(m, null);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
             }
         }
         record(speed);
@@ -252,7 +252,7 @@ public class SprogThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

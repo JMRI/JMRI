@@ -110,14 +110,34 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             log.debug("skipping set of non-integer value \"{}\"", value);
         }
     }
-    
+
     /**
-     * Get the value as a single number.
-     *
+     * Get the value as a single integer.
+     * <p>
      * In some cases, e.g. speed tables, this will result in complex behavior,
      * where setIntValue(getIntValue()) results in something unexpected.
+     *
+     * @return the value as an integer
      */
-    abstract public int getIntValue();
+    public abstract int getIntValue();
+
+    /**
+     * Get the value as an Unsigned Long.
+     * <p>
+     * Some subclasses (e.g. {@link SplitVariableValue}) store the value as a
+     * {@code long} rather than an {@code integer}. This method should be used
+     * in cases where such a class may be queried (e.g. by
+     * {@link ArithmeticQualifier}).
+     * <p>
+     * If not overriden by a subclass, it will return an
+     * {@link Integer#toUnsignedLong UnsignedLong} conversion of the value
+     * returned by {@link #getIntValue getIntValue()}.
+     *
+     * @return the value as a long
+     */
+    public long getLongValue() {
+        return Integer.toUnsignedLong(getIntValue());
+    }
 
     void updatedTextField() {
         log.error("unexpected use of updatedTextField()", new Exception("traceback"));
@@ -475,6 +495,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             return (Cv/radix) % (maxVal+1);
         }
     }
+
     /**
      * Set a value into a CV, using the mask as needed.
      *

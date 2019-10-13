@@ -5,6 +5,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -146,6 +147,12 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         l.setOutputInterval(50);
         Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // interval stored in AbstractTurnoutManager
         Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
+    }
+
+    @Ignore("Turnout managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     /**

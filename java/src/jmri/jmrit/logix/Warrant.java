@@ -15,8 +15,6 @@ import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An Warrant contains the operating permissions and directives needed for a
@@ -714,7 +712,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         InstanceManager.getDefault(TrackerTableAction.class).markNewTracker(getCurrentBlockOrder().getBlock(),
-                _trainName);
+                _trainName, null);
     }
 
     synchronized public void stopWarrant(boolean abort) {
@@ -934,7 +932,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (tm != null) {
                 tm.releaseThrottle(throttle, this);
             } else {
-                log.error(Bundle.getMessage("noThrottle", throttle.getLocoAddress()));
+                log.error("{} on thread {}",Bundle.getMessage("noThrottle", throttle.getLocoAddress()),
+                        Thread.currentThread().getName());
             }
         }
     }
@@ -1418,13 +1417,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             msg = "BlockDark";
         } else if ((state & OBlock.OCCUPIED) == 0) {
             msg = "warnStart";
-        } else {
-            // check if tracker is on this train
-            InstanceManager.getDefault(TrackerTableAction.class).stopTrackerIn(block);
         }
         return msg;
     }
 
+    protected String checkforTrackers() {
+        BlockOrder bo = _orders.get(0);
+        OBlock block = bo.getBlock();
+        Tracker t = InstanceManager.getDefault(TrackerTableAction.class).findTrackerIn(block);
+        if (t != null) {
+            return Bundle.getMessage("blockInUse", t.getTrainName(), block.getDisplayName());
+        }
+        return null;
+    }
+    
     /**
      * Report any occupied blocks in the route
      *
@@ -1642,7 +1648,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         javax.swing.SwingUtilities.invokeAndWait(allocateBlocks);
                     }
                     catch (Exception e) {
-                        e.printStackTrace();
+                        log.error("Exception in allocateBlocks", e);
                     }
                 }
             };
@@ -2748,7 +2754,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         if (log.isDebugEnabled()) {
             log.debug(" waitTime= {}, availDist= {} waitSpeed= {}, rampLen= {}, ramp start speed= {}",
-                    waitTime, availDist, waitSpeed, rampLen);
+                    waitTime, availDist, waitSpeed, rampLen,speedSetting);
         }
         rampSpeedDelay(waitTime, speedType, endBlockIdx);
         return true;
@@ -2818,5 +2824,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return (getSystemName().concat(_speedUtil.getDccAddress().toString())).hashCode();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Warrant.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Warrant.class);
 }

@@ -28,7 +28,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class LightTableActionTest extends AbstractTableActionBase {
+public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
     @Test
     public void testCTor() {
