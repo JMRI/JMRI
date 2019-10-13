@@ -65,17 +65,17 @@ public class FrmCO extends javax.swing.JFrame {
         super();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmCO", true);  // NOI18N
-        _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),          // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCORightTraffic") }));     // NOI18N
-        _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCODark"),                 // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCORed"),                  // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOYellow"),               // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOGreen"),                // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingRed"),          // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingYellow"),       // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingGreen"),        // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOLunar"),                // NOI18N
-                                                                                                Bundle.getMessage("InfoDlgCOFlashingLunar") }));    // NOI18N
+        _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),
+                                                                                                Bundle.getMessage("InfoDlgCORightTraffic") }));
+        _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("SignalHeadStateDark"),
+                                                                                                Bundle.getMessage("SignalHeadStateRed"),
+                                                                                                Bundle.getMessage("SignalHeadStateYellow"),
+                                                                                                Bundle.getMessage("SignalHeadStateGreen"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingRed"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingYellow"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingGreen"),
+                                                                                                Bundle.getMessage("SignalHeadStateLunar"),
+                                                                                                Bundle.getMessage("SignalHeadStateFlashingLunar") }));
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
