@@ -9,7 +9,7 @@ import org.junit.rules.ExpectedException;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Tests for the CtcEditorAction Class
+ * Tests for the CtcEditorAction Class.
  *
  * @author Dave Sand Copyright (C) 2019
  */
