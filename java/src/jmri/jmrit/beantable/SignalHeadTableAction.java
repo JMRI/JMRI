@@ -2850,7 +2850,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             SpinnerNumberModel DccSpinnerModel = new SpinnerNumberModel(1, 0, 31, 1);
             JSpinner tmp = new JSpinner(DccSpinnerModel);
             //tmp.setFocusable(false);
-            tmp.setValue(DccSignalHead.getDefaultNumberForApperance(DccSignalHead.getDefaultValidStates()[i]));
+            tmp.setValue(DccSignalHead.getDefaultNumberForAppearance(DccSignalHead.getDefaultValidStates()[i]));
             dccAspect[i] = tmp; // store the whole JSpinner
             dccSignalPanel.add(tmp); // and display that copy on the JPanel
             tmp.setToolTipText(Bundle.getMessage("DccAccessoryAspect", i));
