@@ -1861,10 +1861,11 @@
    <p>Some of the text messages allow substitutions using the format "{number}". The program
     provides a tool tip when hovering over the text box which shows the available substitutions for
     that particular message.</p>
-
-   <p>You can also modify the color of the text by adding the color control text &lt;FONT color="red"&gt; at the
+    
+    <p>You can also modify the color of the text by adding the color control text &lt;FONT color="red"&gt; at the
     start of the line, where "red" is the color text you want. Complete the color change by placing &lt;/FONT&gt; at the
     end of the line.</p>
+
 
    <a name="BuildReportDetails" id="BuildReportDetails"></a>
    <h3>Build Report Options</h3>
