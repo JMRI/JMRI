@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import org.junit.*;
 
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;

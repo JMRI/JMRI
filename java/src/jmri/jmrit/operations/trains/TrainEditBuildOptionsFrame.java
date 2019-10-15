@@ -196,6 +196,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         addItemLeft(pOption, buildConsistCheckBox, 1, 3);
         pOption.setMaximumSize(new Dimension(2000, 250));
 
+
         buildNormalCheckBox.setEnabled(Setup.isBuildAggressive());
         returnStagingCheckBox.setEnabled(false); // only enable if train departs and returns to same staging loc
 
