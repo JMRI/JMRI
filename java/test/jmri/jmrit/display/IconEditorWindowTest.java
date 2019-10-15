@@ -389,7 +389,6 @@ public class IconEditorWindowTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initShutDownManager();
 
         if (!GraphicsEnvironment.isHeadless()) {
             _editor = new PanelEditor("IconEditorTestPanel");

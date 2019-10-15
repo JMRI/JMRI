@@ -58,19 +58,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
         r = new DefaultRoute(systemName, userName);
         // save in the maps
         register(r);
-        /* The following keeps track of the last created auto system name.
-         Currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them. */
-        if (systemName.startsWith("IR:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoRouteRef) {
-                    lastAutoRouteRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return r;
     }
 
@@ -82,16 +73,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Override
     public Route newRoute(String userName) {
-        int nextAutoRouteRef = lastAutoRouteRef + 1;
-        StringBuilder b = new StringBuilder("IR:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoRouteRef);
-        b.append(nextNumber);
-        return provideRoute(b.toString(), userName);
+        return provideRoute(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoRouteRef = 0;
 
     /**
      * Remove an existing route. Route must have been deactivated before

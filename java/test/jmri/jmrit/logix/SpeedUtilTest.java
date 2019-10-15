@@ -20,6 +20,16 @@ public class SpeedUtilTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testMakeRamp() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SpeedUtil su = new SpeedUtil(null);
+        Assert.assertNotNull("exists", su);
+        RampData ramp = su.getRampForSpeedChange(.1f, .8f);
+        Assert.assertNotNull("exists",ramp);
+        Assert.assertTrue("upRamp",ramp.isUpRamp());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

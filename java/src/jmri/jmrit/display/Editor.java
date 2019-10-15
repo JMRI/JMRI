@@ -691,11 +691,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     g2d.setStroke(new BasicStroke(2.0f));
                 }
                 for (Positionable p : _selectionGroup) {
-                    if (!(p instanceof PositionableShape)) {
-                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
-                    } else {
-                        PositionableShape s = (PositionableShape) p;
-                        s.drawHandles();
+                    if (p != null) {
+                        if (!(p instanceof PositionableShape)) {
+                            g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
+                        } else {
+                            PositionableShape s = (PositionableShape) p;
+                            s.drawHandles();
+                        }
                     }
                 }
             }

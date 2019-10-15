@@ -40,7 +40,6 @@ public class LayoutEditorWindowTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After
