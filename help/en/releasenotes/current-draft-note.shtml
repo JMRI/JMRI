@@ -395,6 +395,10 @@
         <ul>
             <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
               Jython/Python scripts.</li>
+            <li>Jython has been upgraded to version 2.7.1.</li>
+            <li>JMRI's scripting support now defaults to the UTF-8 character encoding for all
+              script files on all platforms. This may require that some scripts be re-saved
+              using UTF-8.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -485,6 +489,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li><strong>Windows Only</strong> The JMRI installer removes the existing
+                <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
+                existing lib folder contents are retained in the backup folder.
+                <strong>This means that any files you have added to the <em>lib</em>
+                    folder will be removed.</strong></li>
             <li>Added basic support for developer architecture checks via
                 <a href="https://www.archunit.org">ArchUnit</a>,
                 see the 
