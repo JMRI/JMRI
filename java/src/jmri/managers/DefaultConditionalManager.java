@@ -323,7 +323,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Create a named bean set for conditionals.  This requires special logic since conditional
      * beans are not registered.
      * @since 4.17.5
-     * @returns a sorted named bean set of conditionals.
+     * @return a sorted named bean set of conditionals.
      */
     @Override
     @Nonnull
