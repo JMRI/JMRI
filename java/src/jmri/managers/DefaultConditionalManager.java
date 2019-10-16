@@ -102,7 +102,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         } else {
             c = new DefaultConditional(systemName, userName);
         }
-        // save conditional in the maps 
+        // save conditional in the maps
         register(c);
 
         boolean addCompleted = lgx.addConditional(systemName, c);
