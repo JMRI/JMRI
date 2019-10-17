@@ -456,10 +456,13 @@ public class VSDConfigDialog extends JDialog {
         log.debug("Roster entry: profile: {}, path: {}", vsd_profile, vsd_path);
 
         // If the roster entry has VSD info stored, load it.
-        if ((vsd_path != null) && (vsd_profile != null)) {
+        if (vsd_path == null || vsd_path.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "No VSD info found in Roster Media - couldn't load VSD File. Use the \"Save to Roster\" button to add the VSD info.");
+        } else {
             // Load the indicated VSDecoder Profile and update the Profile combo box
             // This will trigger a PROFILE_LIST_CHANGE event from the VSDecoderManager.
-            VSDecoderManager.instance().loadProfiles(vsd_path);
+            LoadVSDFileAction.loadVSDFile(vsd_path);
         }
 
         // Set the Address box from the Roster entry

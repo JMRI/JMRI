@@ -3,41 +3,24 @@ package jmri.jmrit.beantable.oblock;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.Iterator;
-import javax.annotation.Nonnull;
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.TransferHandler;
+import java.util.List;
+import java.util.SortedSet;
+import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.TableRowSorter;
-import jmri.InstanceManager;
-import jmri.Path;
+
+import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.SystemType;
 import jmri.util.com.sun.TransferActionListener;
@@ -67,31 +50,33 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     private static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
+    private static String oblockPrefix;
+    private final static String portalPrefix = "IP";
 
-    JTable _oBlockTable;
-    OBlockTableModel _oBlockModel;
-    JTable _portalTable;
-    PortalTableModel _portalModel;
-    JTable _blockPortalTable;
-    BlockPortalTableModel _blockPortalXRefModel;
-    JTable _signalTable;
-    SignalTableModel _signalModel;
+    private JTable _oBlockTable;
+    private OBlockTableModel _oBlockModel;
+    private JTable _portalTable;
+    private PortalTableModel _portalModel;
+    private JTable _blockPortalTable;
+    private BlockPortalTableModel _blockPortalXRefModel;
+    private JTable _signalTable;
+    private SignalTableModel _signalModel;
 
-    JScrollPane _blockTablePane;
-    JScrollPane _portalTablePane;
-    JScrollPane _signalTablePane;
+    private JScrollPane _blockTablePane;
+    private JScrollPane _portalTablePane;
+    private JScrollPane _signalTablePane;
 
-    JDesktopPane _desktop;
-    JInternalFrame _blockTableFrame;
-    JInternalFrame _portalTableFrame;
-    JInternalFrame _blockPortalXRefFrame;
-    JInternalFrame _signalTableFrame;
+    private JDesktopPane _desktop;
+    private JInternalFrame _blockTableFrame;
+    private JInternalFrame _portalTableFrame;
+    private JInternalFrame _blockPortalXRefFrame;
+    private JInternalFrame _signalTableFrame;
 
-    boolean _showWarnings = true;
-    JMenuItem _showWarnItem;
-    JMenu _openMenu;
-    HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
-    HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
+    private boolean _showWarnings = true;
+    private JMenuItem _showWarnItem;
+    private JMenu _openMenu;
+    private HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
+    private HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
 
     public TableFrames() {
         this("OBlock Table");
@@ -176,10 +161,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
@@ -189,10 +174,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
@@ -202,10 +187,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_P);
         editMenu.add(menuItem);
@@ -222,6 +207,21 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         });
         optionMenu.add(_showWarnItem);
         setShowWarnings("ShowWarning");
+
+        JMenuItem importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlocksMenu"));
+        importBlocksItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                importBlocks();
+            }
+        });
+        optionMenu.add(importBlocksItem);
+        // disable ourself if there is no primary Block manager available
+        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) // || Block list is empty
+        {
+            importBlocksItem.setEnabled(false);
+        }
+
         menuBar.add(optionMenu);
 
         _openMenu = new JMenu(Bundle.getMessage("OpenMenu"));
@@ -257,6 +257,170 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         errorCheck();
     }
 
+    private String oblockPrefix() {
+        if (oblockPrefix == null) {
+            oblockPrefix = InstanceManager.getDefault(OBlockManager.class).getSystemNamePrefix();
+        }
+        return oblockPrefix;
+    }
+
+    /**
+     * Convert a copy of JMRI Blocks to OBlocks and connect them with Portals and Paths.
+     *
+     * @author EBR 2019
+     */
+    protected void importBlocks() throws IllegalArgumentException {
+        Manager<Block> bm = InstanceManager.getDefault(jmri.BlockManager.class);
+        OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+        PortalManager pom = InstanceManager.getDefault(PortalManager.class);
+        SortedSet<Block> blkList = bm.getNamedBeanSet();
+        // don't return an element if there are no Blocks to include
+        if (blkList.isEmpty()) {
+            log.warn("no Blocks to convert"); // NOI18N
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportNoBlocks"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            if (_showWarnings) {
+                int reply = JOptionPane.showOptionDialog(null,
+                        Bundle.getMessage("ImportBlockConfirm", oblockPrefix(), blkList.size()),
+                        Bundle.getMessage("QuestionTitle"),
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        new Object[]{Bundle.getMessage("ButtonYes"),
+                                Bundle.getMessage("ButtonCancel")},
+                        Bundle.getMessage("ButtonYes")); // standard JOptionPane can't be found in Jemmy log4J
+                if (reply > 0) {
+                    return;
+                }
+            }
+        }
+        for (Block b : blkList) {
+            try {
+                // read Block properties
+                String sName = b.getSystemName();
+                String uName = b.getUserName();
+                String blockNumber = sName.substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
+                String oBlockName = oblockPrefix() + blockNumber;
+                String sensor = "";
+                Sensor s = b.getSensor();
+                if (s != null) {
+                    sensor = s.getDisplayName();
+                }
+                float length = b.getLengthMm(); // length is stored in Mm in OBlock.setLength(float)
+                int curve = b.getCurvature();
+                List<Path> blockPaths = b.getPaths();
+                String toBlockName;
+                Portal port = null;
+                int n = 0;
+                Portal prevPortal = null;
+
+                log.debug("start creating OBlock {} from Block {}", oBlockName, sName);
+                if ((uName != null) && (obm.getOBlock(uName) != null)) {
+                    log.warn("an OBlock with this user name already exists, replacing {}", uName);
+                }
+                // create the OBlock by systemName
+                OBlock oBlock = obm.provideOBlock(oBlockName);
+                oBlock.setUserName(uName);
+                if (!sensor.isEmpty()) {
+                    oBlock.setSensor(sensor);
+                }
+                oBlock.setMetricUnits(true); // length always stored in Mm in Block, so copy that for OBlock
+                oBlock.setLength(length);
+                oBlock.setCurvature(curve);
+
+                for (Path pa : blockPaths) {
+                    log.debug("Start loop: path {} on block {}", n, oBlockName);
+                    String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
+                    toBlockName = oblockPrefix() + toBlockNumber;
+                    boolean duplicate = false;
+                    SortedSet<Portal> poList = pom.getNamedBeanSet();
+                    String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
+                    for (Portal p : poList) {
+                        log.debug("Checking existing portal {} for match", p.getName());
+                        // check for portal as opposite pair; we need only one Portal/OBlock pair per OBlock connection
+                        if (p.getName().equals(portalName)) {
+                            duplicate = true;
+                            log.debug("DUPLICATE = {}", p.getName());
+                            port = p;
+                            break;
+                        }
+                    }
+                    if (!duplicate) {
+                        portalName = portalPrefix + blockNumber + "-" + toBlockNumber; // normal name for new Portal
+                        log.debug("new Portal {} on block {}, path #{}", portalName, toBlockName, n);
+                        port = pom.providePortal(portalName); // normally, will create a new Portal
+                        port.setFromBlock(oBlock, false);
+                        port.setToBlock(obm.provideOBlock(toBlockName), false); // create one if required
+                    } else {
+                        log.debug("duplicate Portal {} on block {}, path #{}", portalName, toBlockName, n);
+                        // Portal port already set
+                    }
+                    oBlock.addPortal(port);
+
+                    // create OPath from this Path
+                    OPath opa = new OPath(oBlock, "IP" + n++); // only needs to be unique within oBlock
+                    opa.setLength(oBlock.getLengthMm()); // simple assumption, works for default OBlock/OPath
+                    log.debug("new OPath #{} - {} on OBlock {}", n, opa.getName(), opa.getBlock().getDisplayName());
+                    oBlock.addPath(opa); // checks for duplicates, will add OPath to any Portals on oBlock as well
+                    log.debug("number of paths: {}", oBlock.getPaths().size());
+
+                    // set _fromPortal and _toPortal for each OPath in OBlock
+                    if (opa.getFromPortal() == null) {
+                        opa.setFromPortal(port);
+                    }
+                    if ((opa.getToPortal() == null) && (prevPortal != null)) {
+                        opa.setToPortal(prevPortal);
+                        // leaves ToPortal in previously (first) created OPath n-1 empty
+                    }
+                    prevPortal = port; // remember the new portal for use as ToPortal in opposing OPath
+                    // user must remove nonsense manually unless...
+                }
+                // we use the last FromPortal as ToPortal in OPath P0
+                OPath p0 = oBlock.getPathByName("IP0");
+                if ((p0 != null) && (n > 1) && (p0.getToPortal() == null)) {
+                    p0.setToPortal(port);
+                }
+            } catch (IllegalArgumentException iae) {
+                log.error(iae.toString());
+            }
+            // finished setting up 1 OBlock
+        }
+        // add recursive Path elements to FromBlock/ToBlock
+        SortedSet<OBlock> oblkList = obm.getNamedBeanSet();
+        for (OBlock oblk : oblkList) {
+            for (Portal po : oblk.getPortals()) {
+                obm.getByUserName(po.getFromBlockName()).addPortal(po);
+                obm.getByUserName(po.getToBlockName()).addPortal(po);
+                }
+            }
+        // storing and reloading will add in these items
+        errorCheck();
+//        JFrame readyFrame = new JFrame(Bundle.getMessage("MessageTitle"));
+//        JTextField readyMsg = new JTextField(Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()));
+//        readyFrame.add(readyMsg);
+//        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+//        ok.addActionListener(event -> {
+//            readyFrame.setVisible(false);
+//            readyFrame.dispose();
+//        });
+//        readyFrame.add(ok);
+//        readyFrame.setVisible(true);
+//        readyFrame.getRootPane().setDefaultButton(ok);
+//        readyFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+//            @Override
+//            public void windowClosing(java.awt.event.WindowEvent evt) {
+//                readyFrame.dispose();
+//            }
+//        });
+//        readyFrame.pack();
+        if (_showWarnings) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ImportBlockComplete", blkList.size(), oblkList.size()),
+                    Bundle.getMessage("MessageTitle"),
+                    JOptionPane.INFORMATION_MESSAGE); // standard JOptionPane can't be found in Jemmy log4J
+        }
+    }
+
     protected final JScrollPane getBlockTablePane() {
         return _blockTablePane;
     }
@@ -285,7 +449,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return _blockPortalXRefModel;
     }
 
-    private void setShowWarnings(String cmd) {
+    protected void setShowWarnings(String cmd) {
         if (cmd.equals("ShowWarning")) {
             _showWarnings = true;
             _showWarnItem.setActionCommand("SuppressWarning");
@@ -295,23 +459,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _showWarnItem.setActionCommand("ShowWarning");
             _showWarnItem.setText(Bundle.getMessage("ShowWarning"));
         }
-        if (log.isDebugEnabled()) {
-            log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
-        }
+        log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
     }
 
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         errorCheck();
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        if (log.isDebugEnabled()) {
-            log.debug("windowClosing: {}", toString());
-        }
+        log.debug("windowClosing: {}", toString());
     }
 
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         for (OBlock oblock : manager.getNamedBeanSet()) {
             WarrantTableAction.checkPathPortals(oblock);
         }
@@ -387,7 +547,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 openBlockPathFrame(sysName);
             }
         };
-        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         for (OBlock block : manager.getNamedBeanSet()) {
             JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
             mi.setActionCommand(block.getSystemName());
@@ -503,7 +663,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
-    void showPopup(MouseEvent me) {
+    private void showPopup(MouseEvent me) {
         Point p = me.getPoint();
         int col = _oBlockTable.columnAtPoint(p);
         if (!me.isPopupTrigger() && !me.isMetaDown() && !me.isAltDown() && col == OBlockTableModel.STATECOL) {
@@ -745,7 +905,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     protected void openBlockPathFrame(String sysName) {
         JInternalFrame frame = _blockPathMap.get(sysName);
         if (frame == null) {
-            OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
             if (block == null) {
                 return;
             }
@@ -776,7 +936,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             int index = pathTurnoutName.indexOf('&');
             String pathName = pathTurnoutName.substring(1, index);
             String sysName = pathTurnoutName.substring(index + 1);
-            OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
             if (block == null) {
                 return;
             }
@@ -881,7 +1041,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     frame.getTitle(), name,
                     frame.getSize().getWidth(), frame.getSize().getHeight());
         }
-        if (name != null && name.startsWith("OB")) {
+        if (name != null && name.startsWith(oblockPrefix())) {
             WarrantTableAction.initPathPortalCheck();
             if (frame instanceof BlockPathFrame) {
                 WarrantTableAction.checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());

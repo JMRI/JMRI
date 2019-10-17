@@ -91,14 +91,12 @@ public class BlockValueFile extends XmlFile {
                         passes.add(0, "check");
                     }
                     for (String pass : passes) {
-                        for (int i = 0; i < blockList.size(); i++) {
-                            if ((blockList.get(i)).getAttribute("systemname") == null) {
-                                log.warn("unexpected null in systemName "
-                                        + blockList.get(i) + " "
-                                        + blockList.get(i).getAttributes());
+                        for (Element bl : blockList) {
+                            if (bl.getAttribute("systemname") == null) {
+                                log.warn("unexpected null in systemName {} {}", bl, bl.getAttributes());
                                 break;
                             }
-                            String sysName = blockList.get(i).getAttribute("systemname").getValue();
+                            String sysName = bl.getAttribute("systemname").getValue();
                             // get Block - ignore entry if block not found
                             Block b = blockManager.getBySystemName(sysName);
                             if (b != null) {
@@ -106,13 +104,14 @@ public class BlockValueFile extends XmlFile {
                                 if (pass.equals("check") && b.getState() != Block.OCCUPIED) {
                                     // we have a recorded value for an empty block, the blockvalues file
                                     // must be out of date, bail out before we set any values
-                                    log.error("block {} is not occupied but has a saved value, not setting saved block values", b.getDisplayName());
+                                    log.error("block {} is not occupied but has a saved value, not setting saved block values",
+                                            b.getDisplayName());
                                     return;
                                 }
                                 if (pass.equals("set")) {
-                                    Object v = blockList.get(i).getAttribute("value").getValue();
-                                    if (blockList.get(i).getAttribute("valueClass") != null) {
-                                        if (blockList.get(i).getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")) {
+                                    Object v = bl.getAttribute("value").getValue();
+                                    if (bl.getAttribute("valueClass") != null) {
+                                        if (bl.getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")) {
                                             RosterEntry re = Roster.getDefault().getEntryForId(((String) v));
                                             if (re != null) {
                                                 v = re;
@@ -124,7 +123,7 @@ public class BlockValueFile extends XmlFile {
                                 if (pass.equals("set")) {
                                     // set direction if there is one
                                     int dd = Path.NONE;
-                                    Attribute a = blockList.get(i).getAttribute("dir");
+                                    Attribute a = bl.getAttribute("dir");
                                     if (a != null) {
                                         try {
                                             dd = a.getIntValue();
