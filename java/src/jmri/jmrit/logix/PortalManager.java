@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Basic Implementation of a PortalManager.
+ * Basic implementation of a PortalManager.
  * <p>
  * Note that this does not enforce any particular system naming convention.
  * <p>
