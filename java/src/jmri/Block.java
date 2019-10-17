@@ -228,7 +228,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             _reporter.addPropertyChangeListener(_reporterListener = (PropertyChangeEvent e) -> {
                 handleReporterChange(e);
             });
-
         }
     }
 
@@ -300,7 +299,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Get a copy of the list of Paths
+     * Get a copy of the list of Paths.
      *
      * @return the paths or an empty list
      */
@@ -562,12 +561,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return false;
         } else {
             Block b = (Block) obj;
-
-            if (!b.getSystemName().equals(this.getSystemName())) {
-                return false;
-            }
+            return b.getSystemName().equals(this.getSystemName());
         }
-        return true;
     }
 
     @Override
@@ -590,7 +585,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private PropertyChangeListener _reporterListener = null;
     private boolean _reportingCurrent = false;
 
-    private Path pListOfPossibleEntrancePaths[] = null;
+    private Path[] pListOfPossibleEntrancePaths = null;
     private int cntOfPossibleEntrancePaths = 0;
 
     void resetCandidateEntrancePaths() {
@@ -667,9 +662,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     public void goingInactive() {
         log.debug("Block {} goes UNOCCUPIED", getDisplayName());
-        int currPathCnt = paths.size();
-        for (int i = 0; i < currPathCnt; i++) {
-            Block b = paths.get(i).getBlock();
+        for (Path path : paths) {
+            Block b = path.getBlock();
             if (b != null) {
                 b.setAsEntryBlockIfPossible(this);
             }
@@ -698,11 +692,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Path next = null;
         // get statuses of everything once
         int currPathCnt = paths.size();
-        Path pList[] = new Path[currPathCnt];
-        boolean isSet[] = new boolean[currPathCnt];
-        boolean isActive[] = new boolean[currPathCnt];
-        int pDir[] = new int[currPathCnt];
-        int pFromDir[] = new int[currPathCnt];
+        Path[] pList = new Path[currPathCnt];
+        boolean[] isSet = new boolean[currPathCnt];
+        boolean[] isActive = new boolean[currPathCnt];
+        int[] pDir = new int[currPathCnt];
+        int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();
@@ -766,7 +760,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             Path.decodeDirection(getDirection()));
                 } else if (next == null) {
                     log.error("unexpected next==null processing block {}", getDisplayName());
-                } else if (next.getBlock() == null) {
+                } else {
                     log.error("unexpected next.getBlock()=null processing block {}", getDisplayName());
                 }
                 break;
@@ -834,11 +828,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Path next = null;
         // get statuses of everything once
         int currPathCnt = paths.size();
-        Path pList[] = new Path[currPathCnt];
-        boolean isSet[] = new boolean[currPathCnt];
-        boolean isActive[] = new boolean[currPathCnt];
-        int pDir[] = new int[currPathCnt];
-        int pFromDir[] = new int[currPathCnt];
+        Path[] pList = new Path[currPathCnt];
+        boolean[] isSet = new boolean[currPathCnt];
+        boolean[] isActive = new boolean[currPathCnt];
+        int[] pDir = new int[currPathCnt];
+        int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();
