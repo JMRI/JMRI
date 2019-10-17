@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import javax.swing.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
@@ -16,8 +18,11 @@ public class HelpUtilTest {
     @Test
     public void testCTor() {
         JMenuBar menuBar = new JMenuBar();
+        int initialMenuCount = menuBar.getMenuCount();
         HelpUtil.helpMenu(menuBar,"test",true);
-        Assert.assertNotNull("help menu created",menuBar.getHelpMenu());
+        menuBar.getMenu(0);
+        assertThat(menuBar.getMenuCount()).withFailMessage("Help Menu not created")
+                .isGreaterThan(initialMenuCount);
     }
 
     // The minimal setup for log4J
