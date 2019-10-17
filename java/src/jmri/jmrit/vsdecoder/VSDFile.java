@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
 public class VSDFile extends ZipFile {
 
     private static final String VSDXmlFileName = "config.xml"; // NOI18N
-    private String missedFileName;
 
     // Dummy class just used to instantiate
     private static class VSDXmlFile extends XmlFile {
@@ -46,6 +45,8 @@ public class VSDFile extends ZipFile {
     protected Element root;
     protected boolean initialized = false;
     private String _statusMsg = Bundle.getMessage("ButtonOK"); // File Status = OK
+    private String missedFileName;
+    private int num_cylinders;
 
     ZipInputStream zis;
 
@@ -94,20 +95,18 @@ public class VSDFile extends ZipFile {
             root = xmlfile.rootFromFile(f2);
             ValidateStatus rv = this.validate(root);
             if (!rv.getValid()) {
-                // Need to make this one fancier right here
                 _statusMsg = rv.getMessage();
-                log.error("VALIDATE FAILED: File {}", VSDXmlFileName);
             }
             initialized = rv.getValid();
             return initialized;
 
         } catch (java.io.IOException ioe) {
             _statusMsg = "IO Error auto-loading VSD File: " + VSDXmlFileName + " " + ioe.toString();
-            log.warn(_statusMsg);
+            log.error(_statusMsg);
             return false;
         } catch (NullPointerException npe) {
             _statusMsg = "NP Error auto-loading VSD File: path = " + VSDXmlFileName + " " + npe.toString();
-            log.warn(_statusMsg);
+            log.error(_statusMsg);
             return false;
         } catch (org.jdom2.JDOMException ex) {
             _statusMsg = "JDOM Exception loading VSDecoder from path " + VSDXmlFileName + " " + ex.toString();
@@ -169,10 +168,10 @@ public class VSDFile extends ZipFile {
             return t.getPath();
 
         } catch (NullPointerException e) {
-            log.warn("Null pointer exception", e);
+            log.error("Null pointer exception", e);
             return null;
         } catch (IOException e) {
-            log.warn("IO exception", e);
+            log.error("IO exception", e);
             return null;
         }
     }
@@ -228,7 +227,7 @@ public class VSDFile extends ZipFile {
         Iterator<Element> i = xmlroot.getChildren("profile").iterator();
         // If no Profiles, file is invalid
         if (!i.hasNext()) {
-            log.warn("No Profile(s)");
+            log.error("No Profile(s)");
             return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoProfiles"));
         }
 
@@ -236,12 +235,17 @@ public class VSDFile extends ZipFile {
         while (i.hasNext()) {
             e = i.next(); // e points to a profile
             log.debug("Validate: Profile {}", e.getAttributeValue("name"));
+            if (e.getAttributeValue("name") == null || e.getAttributeValue("name").isEmpty()) {
+                log.error("Missing Profile name");
+                return new ValidateStatus(false, "Missing Profile name");
+            }
+
             // Get the "Sound" children ... these are the ones that should have files
             // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
             // returned from an Element is going to be a list of Elements
             Iterator<Element> i2 = (e.getChildren("sound")).iterator();
             if (!i2.hasNext()) {
-                log.warn("Profile {} has no Sounds", e.getAttributeValue("name"));
+                log.error("Profile {} has no Sounds", e.getAttributeValue("name"));
                 return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusNoSounds") + ": " + e.getAttributeValue("name"));
             }
 
@@ -250,7 +254,7 @@ public class VSDFile extends ZipFile {
                 el = i2.next();
                 log.debug("Element: {}", el);
                 if (el.getAttribute("name") == null) {
-                    log.warn("Sound element without a name in profile {}", e.getAttributeValue("name"));
+                    log.error("Sound element without a name in profile {}", e.getAttributeValue("name"));
                     return new ValidateStatus(false, "Sound-Element without a name"); //Bundle.getMessage("VSDFileStatusNoName")
                 }
                 String type = el.getAttributeValue("type");
@@ -262,43 +266,43 @@ public class VSDFile extends ZipFile {
                     // that's OK.  But if there is an element, and the FILE is missing,
                     // that's bad
                     if (!validateOptionalFile(el, "start-file")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <start-file>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <start-file>: " + missedFileName);
                     }
                     if (!validateOptionalFile(el, "mid-file")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <mid-file>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <mid-file>: " + missedFileName);
                     }
                     if (!validateOptionalFile(el, "end-file")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <end-file>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <end-file>: " + missedFileName);
                     }
                     if (!validateOptionalFile(el, "short-file")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <short-file>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <short-file>: " + missedFileName);
                     }
                 } else if (type.equals("diesel")) {
                     // Validate a diesel sound
                     String[] file_elements = {"file"};
                     if (!validateOptionalFile(el, "start-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <start-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <start-file>: " + missedFileName);
                     }
                     if (!validateOptionalFile(el, "shutdown-file")) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <shutdown-file>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <shutdown-file>: " + missedFileName);
                     }
                     if (!validateFiles(el, "notch-sound", file_elements)) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-sound>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <notch-sound>: " + missedFileName);
                     }
                     if (!validateFiles(el, "notch-transition", file_elements, false)) {
-                        return (new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-transition>"));
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <notch-transition>: " + missedFileName);
                     }
                 } else if (type.equals("diesel3")) {
                     // Validate a diesel3 sound
                     String[] file_elements = {"file", "accel-file", "decel-file"};
                     if (!validateOptionalFile(el, "start-file")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <start-file>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <start-file>: " + missedFileName);
                     }
                     if (!validateOptionalFile(el, "shutdown-file")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <shutdown-file>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <shutdown-file>: " + missedFileName);
                     }
                     if (!validateFiles(el, "notch-sound", file_elements)) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-sound>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <notch-sound>: " + missedFileName);
                     }
                 } else if (type.equals("steam")) {
                     // Validate a steam sound
@@ -311,16 +315,17 @@ public class VSDFile extends ZipFile {
                     }
                     if (!validateRequiredElement(el, "cylinders")) {
                         return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <cylinders>");
-                    }
-                    if (!validateRequiredElement(el, "rpm-steps")) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <rpm-steps>");
+                    } else {
+                        // Found element <cylinders> - is number valid?
+                        if (!validateRequiredElementRange(el, "cylinders", 1, 4)) {
+                            return new ValidateStatus(false, "Number of cylinders must be 1, 2, 3 or 4");
+                        }
                     }
                     if (!validateFiles(el, "rpm-step", file_elements)) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": <notch-sound>");
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <rpm-step>: " + missedFileName);
                     }
                 } else if (type.equals("steam1")) {
                     // Validate a steam1 sound
-                    String[] file_elements = {"notch-file", "notchfiller-file", "coast-file", "coastfiller-file"};
                     if (!validateRequiredElement(el, "top-speed")) {
                         return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <top-speed>");
                     }
@@ -329,6 +334,16 @@ public class VSDFile extends ZipFile {
                     }
                     if (!validateRequiredElement(el, "cylinders")) {
                         return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <cylinders>");
+                    } else {
+                        // Found element <cylinders> - is number valid?
+                        if (!validateRequiredElementRange(el, "cylinders", 1, 4)) {
+                            return new ValidateStatus(false, "Number of cylinders must be 1, 2, 3 or 4");
+                        }
+                        // Found element <cylinders> - #cylinders * 2 must correspond to #files
+                        String[] file_elements = {"notch-file", "coast-file"};
+                        if (!validateFilesNumbers(el, "s1notch-sound", file_elements, true)) {
+                            return new ValidateStatus(false, getStatusMessage());
+                        }
                     }
                     if (!validateRequiredElement(el, "s1notch-sound")) {
                         return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingElement") + ": <s1notch-sound>");
@@ -339,11 +354,12 @@ public class VSDFile extends ZipFile {
                     if (!validateRequiredNotchElement(el, "s1notch-sound", "max-rpm")) {
                         return new ValidateStatus(false, "Element max-rpm for Element s1notch-sound missing");
                     }
+                    String[] file_elements = {"notch-file", "notchfiller-file", "coast-file", "coastfiller-file"};
                     if (!validateFiles(el, "s1notch-sound", file_elements)) {
-                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + ": " + missedFileName);
+                        return new ValidateStatus(false, Bundle.getMessage("VSDFileStatusMissingSoundFile") + " <s1notch-sound>: " + missedFileName);
                     }
                 } else {
-                    return new ValidateStatus(false, Bundle.getMessage("VSDFileError") + " - Unsupported sound type: " + type);
+                    return new ValidateStatus(false, "Unsupported sound type: " + type);
                 }
             }
         }
@@ -352,11 +368,25 @@ public class VSDFile extends ZipFile {
     }
 
     protected boolean validateRequiredElement(Element el, String name) {
-        if (el.getChild(name) == null) {
-            log.warn("Element {} for Element {} missing", name, el.getAttributeValue("name"));
+        if (el.getChild(name) == null || el.getChildText(name).isEmpty()) {
+            log.error("Element {} for Element {} missing", name, el.getAttributeValue("name"));
             return false;
         }
         return true;
+    }
+
+    protected boolean validateRequiredElementRange(Element el, String name, int val_from, int val_to) {
+        int val = Integer.parseInt(el.getChildText(name));
+        log.debug(" <{}> found: {} ({} to {})", name, val, val_from, val_to);
+        if (val >= val_from && val <= val_to) {
+            if (name.equals("cylinders")) {
+                num_cylinders = val; // save #cylinder for the #files check
+            }
+            return true;
+        } else {
+            log.error("Value of {} is invalid", name);
+            return false;
+        }
     }
 
     protected boolean validateRequiredNotchElement(Element el, String name1, String name2) {
@@ -365,8 +395,8 @@ public class VSDFile extends ZipFile {
         Iterator<Element> ns_i = elist.iterator();
         while (ns_i.hasNext()) {
             Element ns_e = ns_i.next();
-            if (ns_e.getChild(name2) == null) {
-                log.warn("Element {} for Element {} missing", name2, name1);
+            if (ns_e.getChild(name2) == null || ns_e.getChildText(name2).isEmpty()) {
+                log.error("Element {} for Element {} missing", name2, name1);
                 return false;
             }
         }
@@ -380,7 +410,8 @@ public class VSDFile extends ZipFile {
     protected boolean validateOptionalFile(Element el, String name, Boolean required) {
         String s = el.getChildText(name);
         if ((s != null) && (getFile(s) == null)) {
-            log.warn("File {} for Element {} not found", s, name, el.getAttributeValue("name"));
+            missedFileName = s;
+            log.error("File {} for Element {} not found", s, name, el.getAttributeValue("name"));
             return false;
         }
         return true;
@@ -395,9 +426,9 @@ public class VSDFile extends ZipFile {
         String s;
 
         // First, check to see if any elements of this <name> exist
-        if ((elist.size() == 0) && required) {
+        if (elist.isEmpty() && required) {
             // Only fail if this type of element is required
-            log.warn("No elements of name {}", name);
+            log.error("No elements of name {}", name);
             return false;
         }
 
@@ -410,19 +441,67 @@ public class VSDFile extends ZipFile {
             Element ns_e = ns_i.next();
             for (String fn : fnames) {
                 List<Element> elistf = ns_e.getChildren(fn); // Handle more than one child
-                log.debug(" {}(s):", fn);
+                log.debug(" {}(s): {}", fn, elistf.size());
                 Iterator<Element> ns_if = elistf.iterator();
                 while (ns_if.hasNext()) {
                     Element ns_ef = ns_if.next();
                     s = ns_ef.getText();
                     log.debug("  {}", s);
                     if ((s == null) || (getFile(s) == null)) {
-                        log.warn("File {} for Element {} in Element {} not found", s, fn, name);
+                        log.error("File {} for Element {} in Element {} not found", s, fn, name);
                         missedFileName = s; // Pass missing file name to global variable
                         return false;
                     }
                 }
             }
+        }
+        // Made it this far, all is well
+        return true;
+    }
+
+    protected boolean validateFilesNumbers(Element el, String name, String[] fnames, Boolean required) {
+        List<Element> elist = el.getChildren(name);
+
+        // First, check to see if any elements of this <name> exist
+        if (elist.isEmpty() && required) {
+            // Only fail if this type of element is required
+            log.error("No elements of name {}", name);
+            return false;
+        }
+
+        // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
+        // returned from an Element is going to be a list of Elements
+        log.debug("{}(s): {}", name, elist.size());
+        int nn = 1; // notch number
+        Iterator<Element> ns_i = elist.iterator();
+        while (ns_i.hasNext()) {
+            Element ns_e = ns_i.next();
+            log.debug(" nse: {}", ns_e);
+            for (String fn : fnames) {
+                List<Element> elistf = ns_e.getChildren(fn); // get all files of type <fn>
+                // #notch-files must be equal num_cylinders * 2
+                if (fn.equals("notch-file") && (elistf.size() != num_cylinders * 2)) {
+                    _statusMsg = "Invalid number of notch files: " + elistf.size() + ", but should be "
+                            + (num_cylinders * 2) + " (for " + num_cylinders + " cylinders) in notch " + nn;
+                    log.error(_statusMsg);
+                    return false;
+                }
+                // #coast files are allowed on notch1 only, but are optional. If exist, must be equal num_cylinders * 2
+                if (fn.equals("coast-file") && nn == 1 && !((elistf.size() == num_cylinders * 2) || elistf.size() == 0)) {
+                    _statusMsg = "Invalid number of coast files: " + elistf.size() + ", but should be "
+                            + (num_cylinders * 2) + " (for " + num_cylinders  + " cylinders) in notch 1";
+                    log.error(_statusMsg);
+                    return false;
+                }
+                // Coast files are not allowed on notches > 1
+                if (fn.equals("coast-file") && nn > 1 && (elistf.size() != 0)) {
+                    _statusMsg = "Invalid number of coast files: " + elistf.size() + ", but should be 0 in notch " + nn;
+                    log.error(_statusMsg);
+                    return false;
+                }
+                // Note: no check for a notchfiller-file or a coastfiller-file
+            }
+            nn++;
         }
         // Made it this far, all is well
         return true;

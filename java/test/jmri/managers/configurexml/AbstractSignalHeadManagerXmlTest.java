@@ -15,7 +15,7 @@ public class AbstractSignalHeadManagerXmlTest {
     @Test
     public void testCTor() {
         AbstractSignalHeadManagerXml t = new AbstractSignalHeadManagerXml();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     // The minimal setup for log4J

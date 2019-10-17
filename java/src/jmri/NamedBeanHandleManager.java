@@ -208,8 +208,9 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
+    @Nonnull
     @CheckReturnValue
-    public String makeSystemName(String s) {
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -244,7 +245,7 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
-    public void register(NamedBean n) {
+    public void register(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -260,10 +261,12 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
+    @Nonnull
     @CheckReturnValue
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
+
 }
