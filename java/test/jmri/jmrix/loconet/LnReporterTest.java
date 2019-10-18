@@ -413,8 +413,9 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     @After
     @Override
     public void tearDown() {
-	r = null;
-	tc = null;
+	    r = null;
+	    tc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

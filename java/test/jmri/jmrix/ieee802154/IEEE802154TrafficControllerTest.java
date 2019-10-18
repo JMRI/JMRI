@@ -191,7 +191,9 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

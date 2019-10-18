@@ -51,7 +51,9 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     public void tearDown() {
         t.dispose();
         t = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

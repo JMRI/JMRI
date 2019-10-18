@@ -189,25 +189,30 @@ public class VSDecoderManager implements PropertyChangeListener {
                         if (entry_counter < max_decoder) {
                             VSDConfig config = new VSDConfig();
                             config.setLocoAddress(entry.getDccLocoAddress());
-                            log.debug("Roster entry VSD address: {}", config.getLocoAddress());
-                            boolean is_loaded = LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"));
-                            if (!is_loaded) {
-                                log.error("loading VSD file {}: {}", entry.getAttribute("VSDecoder_Path"), is_loaded);
+                            log.info("Loading Roster \"{}\", VSDecoder {} ...", entry.getId(), config.getLocoAddress());
+                            if (entry.getAttribute("VSDecoder_Path") != null && entry.getAttribute("VSDecoder_Profile") != null) {
+                                if (LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"))) {
+                                    // config.xml OK
+                                    log.info(" VSD path: {}", entry.getAttribute("VSDecoder_Path"));
+                                    config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
+                                    log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
+                                    VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+                                    if (newDecoder != null) {
+                                        log.info("VSD {}, profile \"{}\" ready.", config.getLocoAddress(), config.getProfileName());
+                                        entry_counter++;
+                                    } else {
+                                        log.warn("VSD {} failed", config.getProfileName());
+                                    }
+                                }
+                            } else {
+                                log.error("Cannot load VSD File - path or profile missing - check your Roster Media");
                             }
-                            log.debug(" entry full VSD path: {}", entry.getAttribute("VSDecoder_Path"));
-                            config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
-                            log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
-                            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
-                            if (newDecoder != null) {
-                                log.info("VSD profile {} loaded", config.getProfileName());
-                            }
-                            entry_counter++;
                         } else {
                             log.warn("Only {} roster entries allowed. Disgarded {}", max_decoder, rosterList.size() - max_decoder);
                         }
                     }
                     if (entry_counter == 0) {
-                        log.info("No Roster entry found in Roster Group {}", vsdRosterGroup);
+                        log.warn("No Roster entry found in Roster Group {}", vsdRosterGroup);
                     }
                 } else {
                     log.warn("Roster group \"{}\" not found", vsdRosterGroup);
@@ -301,7 +306,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             //debugPrintDecoderList();
             if (geofile_ok) {
                 if (vsd.topspeed == 0) {
-                    log.warn("Top-speed not defined. No advanced location following possible.");
+                    log.info("Top-speed not defined. No advanced location following possible.");
                 } else {
                     initSoundPositionTimer(vsd);
                 }
@@ -500,25 +505,6 @@ public class VSDecoderManager implements PropertyChangeListener {
      */
     public String getProfilePath(String profile) {
         return profiletable.get(profile);
-    }
-
-    /**
-     * Load Profiles from a VSD file Not deprecated anymore. used by the new
-     * ConfigDialog.
-     */
-    public void loadProfiles(String path) {
-        try {
-            VSDFile vsdfile = new VSDFile(path);
-            if (vsdfile.isInitialized()) {
-                this.loadProfiles(vsdfile);
-            }
-        } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from {}", path);
-            // would be nice to pop up a dialog here...
-        } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from {}", path);
-            // would be nice to pop up a dialog here...
-        }
     }
 
     protected void registerReporterListener(String sysName) {
@@ -946,10 +932,13 @@ public class VSDecoderManager implements PropertyChangeListener {
         java.util.Iterator<Element> i = root.getChildren("profile").iterator(); // NOI18N
         while (i.hasNext()) {
             Element e = i.next();
-            log.debug(e.toString());
-            if ((pname = e.getAttributeValue("name")) != null) { // NOI18N
+            pname = e.getAttributeValue("name");
+            log.debug("Profile name: {}", pname);
+            if ((pname != null) && !(pname.isEmpty())) { // NOI18N
                 profiletable.put(pname, vf.getName());
                 new_entries.add(pname);
+            } else {
+                log.error("Profile name is not valid");
             }
         }
 

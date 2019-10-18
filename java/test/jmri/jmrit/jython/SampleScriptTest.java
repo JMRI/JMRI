@@ -58,7 +58,7 @@ public class SampleScriptTest {
     @BeforeClass
     static public void startTests() {
         // this is to System.out because that's where the test output goes
-        System.out.println("jmri.jmrit.jython.SampleScriptTest starts, following output is from script tests");
+        System.out.println("\njmri.jmrit.jython.SampleScriptTest starts, following output is from script tests");
     }
     
     @Before

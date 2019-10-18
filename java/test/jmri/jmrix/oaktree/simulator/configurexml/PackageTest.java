@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
    ConnectionConfigXmlTest.class
 })
 /**
- * Tests for the jmri.jmrix.secsi.simulator.configurexml package.
+ * Tests for the jmri.jmrix.secsi.oaktree.configurexml package.
  *
  * @author Paul Bender Copyright (C) 2016
  */
