@@ -20,7 +20,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
     static final HashMap<String, String> _nameMap = new HashMap<String, String>();
 
     public TurnoutIconXml() {
-        // map previous store names to actual localized names
+        // map previous store names to property key names
         _nameMap.put("closed", "TurnoutStateClosed");
         _nameMap.put("thrown", "TurnoutStateThrown");
         _nameMap.put("unknown", "BeanStateUnknown");
