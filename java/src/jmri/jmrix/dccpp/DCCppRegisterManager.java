@@ -23,36 +23,47 @@ package jmri.jmrix.dccpp;
 
 public class DCCppRegisterManager {
 
-    final protected DCCppRegister registers[] = new DCCppRegister[DCCppConstants.MAX_MAIN_REGISTERS];
+    protected int maxMainRegisters = 0;
+    protected DCCppRegister registers[];
 
-    public DCCppRegisterManager() { 
-	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
+    // Constuctors
+    public DCCppRegisterManager(int maxMainRegisters) { 
+	this.maxMainRegisters = maxMainRegisters;
+	registers = new DCCppRegister[maxMainRegisters];
+	for (int i = 0; i < maxMainRegisters; i++) {
 	    registers[i] = new DCCppRegister();
 	}
     }
+    public DCCppRegisterManager() { 
+	this(DCCppConstants.MAX_MAIN_REGISTERS);
+    }
     
+    // Member functions
     public int requestRegister(int addr) {
-	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
+	int free = DCCppConstants.NO_REGISTER_FREE;
+
+	for (int i = 0; i < maxMainRegisters; i++) {
 	    if (registers[i].getAddress() == addr) {
 		registers[i].allocate();
 		return(i);
 	    }
-	}
- // If we've made it here, there isn't a register that already matches.
- // Loop back through and find a free slot.
-	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
-	    if (registers[i].isFree()) {
-		registers[i].allocate();
-		registers[i].setAddress(addr);
-		return(i);
+	    // This might be a free spot
+	    if (free == DCCppConstants.NO_REGISTER_FREE && registers[i].isFree()) {
+		free = i;
 	    }
 	}
- // If we've made it here, there is no available slot.  Bummer.
-	return(DCCppConstants.NO_REGISTER_FREE);
+	// If we've made it here, there isn't a register that already matches.
+	// Look if we found a free one on the way through the list above
+	// if not, there is no available slot.  Bummer.
+	if (free != DCCppConstants.NO_REGISTER_FREE) {
+	    registers[free].allocate();
+	    registers[free].setAddress(addr);
+	}
+	return(free);
     }
 
     public void releaseRegister(int addr) {
-	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
+	for (int i = 0; i < maxMainRegisters; i++) {
 	    if (registers[i].getAddress() == addr) {
 		registers[i].release();
 	    }
@@ -61,7 +72,7 @@ public class DCCppRegisterManager {
 
     // NOTE: queryRegisterNum does not increment the use count.
     public int getRegisterNum(int addr) {
-	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
+	for (int i = 0; i < maxMainRegisters; i++) {
 	    if (registers[i].getAddress() == addr) {
 		return(i+1);
 	    }
