@@ -18,12 +18,13 @@ public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SerialMonFrame(new CMRISystemConnectionMemo());
-	}
+	    }
     }
 
     @After
     @Override
     public void tearDown() {
-    	    super.tearDown();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    	super.tearDown();
     }
 }

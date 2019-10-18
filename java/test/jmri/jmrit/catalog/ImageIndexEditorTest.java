@@ -42,7 +42,7 @@ public class ImageIndexEditorTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.initShutDownManager();
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

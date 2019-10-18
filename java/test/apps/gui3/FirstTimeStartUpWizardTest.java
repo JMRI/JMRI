@@ -49,7 +49,7 @@ public class FirstTimeStartUpWizardTest {
 
             @Override
             protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
+                // done automatically now as part of InstanceManager default handling
             }
 
             @Override

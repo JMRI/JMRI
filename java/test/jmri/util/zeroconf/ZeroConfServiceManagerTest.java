@@ -46,6 +46,7 @@ public class ZeroConfServiceManagerTest {
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
         manager = null;
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

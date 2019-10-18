@@ -1,19 +1,19 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.*;
+
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -46,6 +46,9 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         TrainEditFrame trainEditFrame = new TrainEditFrame(t);
         trainEditFrame.setLocation(0, 0); // entire panel must be visible for tests to work properly
         trainEditFrame.setTitle("Test Build Options Train Frame");
+        
+        // Normal build option is only enabled when building aggressive
+        Setup.setBuildAggressive(true);
 
         TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly

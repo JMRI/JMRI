@@ -62,6 +62,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 
