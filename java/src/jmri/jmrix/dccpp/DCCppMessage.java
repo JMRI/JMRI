@@ -1924,6 +1924,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
+     * Get number of supported slots for this DCC++ Base Station Status
+     *
+     * Format: {@code <N>}
+     *
+     *    returns number of slots
+     *    NOTE: this is not implemented in older versions which then do not return anything at all
+     *
+     *    returns: status message with to get number of slots
+     */
+    public static DCCppMessage makeCSMaxNumSlotsMsg() {
+        return(new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
+    }
+
+    /**
      * Generate an emergency stop for the specified address
      * @param address is the locomotive address
      *

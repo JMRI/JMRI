@@ -25,6 +25,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private String baseStationType;
     private String codeBuildDate;
     private DCCppRegisterManager rmgr = null;
+    private int maxNumSlots = 0;
 
     public DCCppCommandStation() {
         super();
@@ -72,6 +73,10 @@ public class DCCppCommandStation implements jmri.CommandStation {
         
         baseStationType = l.getStatusVersionString();
         codeBuildDate = l.getStatusBuildDateString();
+    }
+
+    protected void setCommandStationMaxNumSlots(DCCppReply l) {
+        maxNumSlots = l.getValueInt(1);
     }
 
     /**

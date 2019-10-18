@@ -48,17 +48,20 @@ public abstract class AbstractDCCppInitializationManager {
         
         public DCCppInitializer(Object Parent) {
             
+	    DCCppMessage msg;
             parent = Parent;
-            
-            initTimer = setupInitTimer();
+	    initTimer = setupInitTimer();
             
             // Register as an DCCppListener Listener
             systemMemo.getDCCppTrafficController().addDCCppListener(DCCppInterface.CS_INFO, this);
             
             //Send Information request to the Base Station
-            //First, we need to send a request for the Command Station
-            // hardware and software version 
-            DCCppMessage msg = DCCppMessage.makeCSStatusMsg();
+            //Request number of available slots
+            msg = DCCppMessage.makeCSMaxNumSlotsMsg();
+            //Then Send the version request to the controller
+            systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
+            //Request hardware and software version 
+            msg = DCCppMessage.makeCSStatusMsg();
             //Then Send the version request to the controller
             systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
         }
@@ -105,6 +108,14 @@ public abstract class AbstractDCCppInitializationManager {
         // listen for the responses from the Base Station
         @Override
         public void message(DCCppReply l) {
+            // Check to see if this is a response with the number of slots
+            if (l.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
+                log.debug("MaxNumSlots Info Received: {}", l);
+                systemMemo.getDCCppTrafficController()
+                    .getCommandStation()
+                    .setCommandStationMaxNumSlots(l);
+                finish();
+            }
             // Check to see if this is a response with the Command Station 
             // Version Info
             if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {

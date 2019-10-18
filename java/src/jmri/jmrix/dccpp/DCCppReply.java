@@ -306,6 +306,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_NAMED_REGEX;
                 }
                 return(r);
+            case DCCppConstants.MAXNUMSLOTS_REPLY:
+                if (s.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.MAXNUMSLOTS_REPLY_REGEX;
+                }
+                return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
                 if (s.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.WRITE_EEPROM_REPLY_REGEX;
