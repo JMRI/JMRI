@@ -52,11 +52,10 @@
                 <tr><td align="right">10:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2010.0.1' title="JRE 10"></a></td></tr>
                 <tr><td align="right">9:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%209.0.4' title="JRE 9"></a></td></tr>
                 <tr><td align="right">8u181:</td><td><a href='http://builds.jmri.org/jenkins/job/Development/VersionChecks/JRE%208u181'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%208u181' title="JRE 8u181"></a></td></tr>
-            </td>
-            </tr></table>
+            </table>
             </td>
             </table></td>
-		</td></tr><tr><td align="right">
+		</tr><tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/WebSite/">Web Site</a>:</td><td>
 		<a href='http://builds.jmri.org/jenkins/job/WebSite/job/generate-website/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/generate-website' title="generate website"></a>
 		<a href='http://builds.jmri.org/jenkins/job/WebSite/job/JMRI_repository/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=WebSite/JMRI_repository' title="JMRI repository"></a>
