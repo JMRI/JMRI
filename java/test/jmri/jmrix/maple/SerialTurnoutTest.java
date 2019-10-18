@@ -69,7 +69,9 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         n = null;
         t = null;
         // Some clean up is done through the AbstractTurnoutTestBase
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

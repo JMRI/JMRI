@@ -58,6 +58,7 @@ public class UserInterfaceTest {
                 // NPE here is ok.
             }
         }
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

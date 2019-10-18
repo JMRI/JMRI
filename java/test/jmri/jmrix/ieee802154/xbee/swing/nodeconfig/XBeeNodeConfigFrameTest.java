@@ -44,6 +44,7 @@ public class XBeeNodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {        
         tc = null;
         m = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 }

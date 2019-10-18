@@ -43,6 +43,8 @@ public class StreamConfigPaneTest {
     public void tearDown() {
         node = null;
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 }

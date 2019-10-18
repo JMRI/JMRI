@@ -1378,7 +1378,7 @@
 
             <classpath refid="test.class.path"/>
 
-            <jvmarg value="-Xmx512m"/><!-- checking that memory doesnt run away -->
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg line="${jvm.args}"/>
             
             <arg value="${antargline}"/>

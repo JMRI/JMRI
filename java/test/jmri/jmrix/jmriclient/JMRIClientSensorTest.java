@@ -46,7 +46,8 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
     @After
     @Override
     public void tearDown() {
-	t.dispose();
+	    t.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

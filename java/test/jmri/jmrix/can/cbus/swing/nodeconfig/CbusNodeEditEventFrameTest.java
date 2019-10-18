@@ -112,8 +112,8 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         
         memo = null;
         tcis = null;
-        super.tearDown();
-       
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();    
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);
