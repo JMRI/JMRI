@@ -154,8 +154,8 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public String toString() {
         return "TrackSegment " + getName()
-                + " c1:{" + getConnect1Name() + " (" + type1 + "},"
-                + " c2:{" + getConnect2Name() + " (" + type2 + "}";
+                + " c1:{" + getConnect1Name() + " (" + type1 + ")},"
+                + " c2:{" + getConnect2Name() + " (" + type2 + ")}";
 
     }
 
@@ -230,13 +230,12 @@ public class TrackSegment extends LayoutTrack {
                     connect2 = null;
                     type2 = NONE;
                 } else {
-                    result = false; // didn't find old connection
+                    log.error("Attempt to remove invalid track connection");
+                    result = false;
                 }
             } else {
-                result = false; // can't replace null with null
-            }
-            if (!result) {
-                log.error("Attempt to remove non-existant track connection");
+                log.error("Can't replace null track connection with null");
+                result = false;
             }
         } else // already connected to newTrack?
         if ((connect1 != newTrack) && (connect2 != newTrack)) {
@@ -249,7 +248,7 @@ public class TrackSegment extends LayoutTrack {
                 connect2 = newTrack;
                 type2 = newType;
             } else {
-                log.error("Attempt to replace invalid connection");
+                log.error("Attempt to replace invalid track connection");
                 result = false;
             }
         }
@@ -437,7 +436,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         // nothing to see here, move along
-        return null;
+        throw new jmri.JmriException("Use getConnect1() or getConnect2() instead.");
     }
 
     /**
@@ -450,6 +449,7 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, @CheckForNull LayoutTrack o, int type) throws jmri.JmriException {
         // nothing to see here, move along
+        throw new jmri.JmriException("Use setConnect1() or setConnect2() instead.");
     }
 
     public int getNumberOfBezierControlPoints() {
@@ -1695,6 +1695,7 @@ public class TrackSegment extends LayoutTrack {
         newTrackSegment.setCircle(this.isCircle());
         //newTrackSegment.setBezier(this.isBezier());
         newTrackSegment.setFlip(this.isFlip());
+        newTrackSegment.setDecorations(this.getDecorations());
 
         // link my connect2 to the new track segment
         if (connect2 instanceof PositionablePoint) {

@@ -1,7 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
+
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,27 +26,196 @@ public class TrackSegmentTest {
     static private LayoutEditor layoutEditor = null;
     static private TrackSegment trackSegment = null;
 
+    static final double tolerance = 0.000001;
+
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if (layoutEditor != null) {
-            Assert.assertNotNull("exists", trackSegment);
+            Assert.assertNotNull("trackSegment exists", trackSegment);
+
+            // Invalid parameters in TrackSegment constructor call
+            TrackSegment ts = new TrackSegment("TS01", null, NONE, null, NONE, false, false, layoutEditor);
+            Assert.assertNotNull("TrackSegment TS01 not null", ts);
+            jmri.util.JUnitAppender.assertErrorMessage("Invalid object in TrackSegment constructor call - TS01");
+            jmri.util.JUnitAppender.assertErrorMessage("Invalid connect type 1 ('0') in TrackSegment constructor - TS01");
+            jmri.util.JUnitAppender.assertErrorMessage("Invalid connect type 2 ('0') in TrackSegment constructor - TS01");
         }
+    }
+
+    @Test
+    public void testReplaceTrackConnection() {
+        Assert.assertNotNull("trackSegment exists", trackSegment);
+
+        Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, NONE));
+        jmri.util.JUnitAppender.assertErrorMessage("Can't replace null track connection with null");
+
+        LayoutTrack c1 = trackSegment.getConnect1();
+        int t1 = trackSegment.getType1();
+        Assert.assertTrue("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.replaceTrackConnection(c1, null, NONE));
+        Assert.assertNull("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.getConnect1());
+
+        Assert.assertTrue("trackSegment.replaceTrackConnection(null, c1, t1) fail", trackSegment.replaceTrackConnection(null, c1, t1));
+        Assert.assertEquals("trackSegment.replaceTrackConnection(null, c1, t1) fail", c1, trackSegment.getConnect1());
+
+        PositionablePoint a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), layoutEditor);
+        Assert.assertTrue("trackSegment.replaceTrackConnection(c1, a3, POS_POINT) fail", trackSegment.replaceTrackConnection(c1, a3, POS_POINT));
+
+    }
+
+    @Test
+    public void testToString() {
+        Assert.assertEquals("trackSegment.toString()", "TrackSegment test c1:{A1 (1)}, c2:{A2 (1)}", trackSegment.toString());
+    }
+
+    @Test
+    public void testSetNewConnect() {
+        trackSegment.setNewConnect1(null, NONE);
+        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect1());
+        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType1());
+
+        trackSegment.setNewConnect2(null, NONE);
+        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect2());
+        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType2());
+    }
+
+    @Test
+    public void test_getDirectionRAD() {
+        Assert.assertEquals("trackSegment.getDirectionRAD()", 4.056693354143153, trackSegment.getDirectionRAD(), tolerance);
+        Assert.assertEquals("trackSegment.getDirectionDEG()", 232.4314079711725, trackSegment.getDirectionDEG(), tolerance);
+    }
+
+    @Test
+    public void test_getConnection() {
+        boolean fail = true;   // assume failure (pessimist!)
+        try {
+            Assert.assertNull("trackSegment.getConnection()", trackSegment.getConnection(NONE));
+        } catch (JmriException e) {
+            fail = false;
+        }
+        Assert.assertFalse("trackSegment.getConnection(NONE) threw JmriException", fail);
+    }
+
+    @Test
+    public void test_getSetBezierControlPoints() {
+        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 0", 0, trackSegment.getNumberOfBezierControlPoints());
+
+        Point2D p0 = new Point2D.Double(11.1, 22.2);
+        trackSegment.setBezierControlPoint(p0, 0);
+        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 1", 1, trackSegment.getNumberOfBezierControlPoints());
+        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, trackSegment.getBezierControlPoint(0));
+
+        Point2D p1 = new Point2D.Double(22.2, 33.3);
+        trackSegment.setBezierControlPoint(p1, 1);
+        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
+        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, trackSegment.getBezierControlPoint(0));
+        Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, trackSegment.getBezierControlPoint(1));
+
+        Point2D p0P = new Point2D.Double(33.3, 44.4);
+        trackSegment.setBezierControlPoint(p0P, 0);
+        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
+        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, trackSegment.getBezierControlPoint(0));
+        Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, trackSegment.getBezierControlPoint(1));
+
+        Point2D p1P = new Point2D.Double(44.4, 55.5);
+        trackSegment.setBezierControlPoint(p1P, -1);
+        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
+        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, trackSegment.getBezierControlPoint(0));
+        Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1P, trackSegment.getBezierControlPoint(1));
+
+        Assert.assertEquals("trackSegment.getBezierControlPoint(-1)", p1P, trackSegment.getBezierControlPoint(-1));
+        Assert.assertEquals("trackSegment.getBezierControlPoint(-2)", p0P, trackSegment.getBezierControlPoint(-2));
+    }
+
+    @Test
+    public void test_getSetLayoutBlock() {
+        Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+        trackSegment.setLayoutBlock(null);
+        Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+
+        LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
+        trackSegment.setLayoutBlock(layoutBlock);
+        Assert.assertEquals("trackSegment.getLayoutBlock()", layoutBlock, trackSegment.getLayoutBlock());
+
+        trackSegment.setLayoutBlock(null);
+        Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+    }
+
+    @Test
+    public void test_setLayoutBlockByName() {
+        Assert.assertNull("trackSegment.getLayoutBlock() == null (default)", trackSegment.getLayoutBlock());
+        trackSegment.setLayoutBlockByName(null);
+        Assert.assertNull("trackSegment.getLayoutBlock(null) == null", trackSegment.getLayoutBlock());
+        trackSegment.setLayoutBlockByName("");
+        Assert.assertNull("trackSegment.getLayoutBlock('') == null", trackSegment.getLayoutBlock());
+
+        try {
+            trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
+            Assert.fail("trackSegment.setLayoutBlockByName(\"invalid name\"); NullPointerException not thrown");
+        } catch (NullPointerException e) {
+        }
+        Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
+
+//
+//        LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
+//        trackSegment.setLayoutBlockByName("ILB999");
+//        Assert.assertEquals("trackSegment.getLayoutBlock() == layoutBlock", layoutBlock, trackSegment.getLayoutBlock());
+//
+//        trackSegment.setLayoutBlock(null);
+//        Assert.assertNull("trackSegment.setLayoutBlock(null) == null", trackSegment.getLayoutBlock());
+    }
+
+    @Test
+    public void test_translateAndScaleCoords() {
+        Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), trackSegment.getCentreSeg());
+        trackSegment.translateCoords((float) 111.1, (float) 222.2);
+        Assert.assertEquals("trackSegment.translateCoords()", new Point2D.Double(126.0999984741211, 248.6999969482422), trackSegment.getCoordsCenter());
+        trackSegment.scaleCoords((float) 2.2, (float) 3.3);
+        Assert.assertEquals("trackSegment.scaleCoords()", new Point2D.Double(277.4200026559829, 820.7099780702592), trackSegment.getCoordsCenter());
+    }
+
+    @Test
+    public void test_setCoordsCenter() {
+        Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), trackSegment.getCentreSeg());
+        Point2D newC = new Point2D.Double(111.1, 222.2);
+        trackSegment.setCoordsCenter(newC);
+        Assert.assertEquals("trackSegment.setCoordsCenter(p)", newC, trackSegment.getCoordsCenter());
+    }
+
+    @Test
+    public void test_findHitPointType() {
+        Point2D ccc = trackSegment.getCentreSeg();
+        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, false, false));
+        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, false, true));
+        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, true, false));
+        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, true, true));
+
+        Point2D ep1 = trackSegment.getConnect1().getCoordsForConnectionType(trackSegment.getType1());
+        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, false, false));
+        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, false, true));
+        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, true, false));
+        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, true, true));
+
+        Point2D ep2 = trackSegment.getConnect2().getCoordsForConnectionType(trackSegment.getType2());
+        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, false, false));
+        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, false, true));
+        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, true, false));
+        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, true, true));
     }
 
     /*
         Arrow Decorations
-    */
-
+     */
     @Test
     public void testDefaultGetSetArrowStyle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getArrowStyle() == 0 (default).", 0, trackSegment.getArrowStyle());
+            Assert.assertEquals("trackSegment.getArrowStyle() == 0 (default).", 0, trackSegment.getArrowStyle());
             trackSegment.setArrowStyle(-1);
-            Assert.assertNotEquals("TrackSegment.setArrowStyle(-1) not allowed.", -1, trackSegment.getArrowStyle());
+            Assert.assertNotEquals("trackSegment.setArrowStyle(-1) not allowed.", -1, trackSegment.getArrowStyle());
             trackSegment.setArrowStyle(5);
-            Assert.assertEquals("TrackSegment.getArrowStyle() == 5 (after set).", 5, trackSegment.getArrowStyle());
+            Assert.assertEquals("trackSegment.getArrowStyle() == 5 (after set).", 5, trackSegment.getArrowStyle());
         }
     }
 
@@ -49,9 +223,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetArrowEndStart() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isArrowEndStart() == false (after set).", trackSegment.isArrowEndStart());
+            Assert.assertFalse("trackSegment.isArrowEndStart() == false (after set).", trackSegment.isArrowEndStart());
             trackSegment.setArrowEndStart(true);
-            Assert.assertTrue("TrackSegment.isArrowEndStart() == true (default).", trackSegment.isArrowEndStart());
+            Assert.assertTrue("trackSegment.isArrowEndStart() == true (default).", trackSegment.isArrowEndStart());
         }
     }
 
@@ -59,9 +233,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetArrowEndStop() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isArrowEndStop() == false (after set).", trackSegment.isArrowEndStop());
+            Assert.assertFalse("trackSegment.isArrowEndStop() == false (after set).", trackSegment.isArrowEndStop());
             trackSegment.setArrowEndStop(true);
-            Assert.assertTrue("TrackSegment.isArrowEndStop() == true (default).", trackSegment.isArrowEndStop());
+            Assert.assertTrue("trackSegment.isArrowEndStop() == true (default).", trackSegment.isArrowEndStop());
         }
     }
 
@@ -69,9 +243,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetArrowDirIn() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isArrowDirIn() == false (after set).", trackSegment.isArrowDirIn());
+            Assert.assertFalse("trackSegment.isArrowDirIn() == false (after set).", trackSegment.isArrowDirIn());
             trackSegment.setArrowDirIn(true);
-            Assert.assertTrue("TrackSegment.isArrowDirIn() == true (default).", trackSegment.isArrowDirIn());
+            Assert.assertTrue("trackSegment.isArrowDirIn() == true (default).", trackSegment.isArrowDirIn());
         }
     }
 
@@ -79,9 +253,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetArrowDirOut() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isArrowDirOut() == true (default).", trackSegment.isArrowDirOut());
+            Assert.assertFalse("trackSegment.isArrowDirOut() == true (default).", trackSegment.isArrowDirOut());
             trackSegment.setArrowDirOut(true);
-            Assert.assertTrue("TrackSegment.isArrowDirOut() == false (after set).", trackSegment.isArrowDirOut());
+            Assert.assertTrue("trackSegment.isArrowDirOut() == false (after set).", trackSegment.isArrowDirOut());
         }
     }
 
@@ -89,11 +263,11 @@ public class TrackSegmentTest {
     public void testDefaultGetSetArrowLineWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getArrowLineWidth() == 4 (default).", 4, trackSegment.getArrowLineWidth());
+            Assert.assertEquals("trackSegment.getArrowLineWidth() == 4 (default).", 4, trackSegment.getArrowLineWidth());
             trackSegment.setArrowLineWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setArrowLineWidth(-1) not allowed.", -1, trackSegment.getArrowLineWidth());
+            Assert.assertNotEquals("trackSegment.setArrowLineWidth(-1) not allowed.", -1, trackSegment.getArrowLineWidth());
             trackSegment.setArrowLineWidth(5);
-            Assert.assertEquals("TrackSegment.getArrowLineWidth() == 5 (after set).", 5, trackSegment.getArrowLineWidth());
+            Assert.assertEquals("trackSegment.getArrowLineWidth() == 5 (after set).", 5, trackSegment.getArrowLineWidth());
         }
     }
 
@@ -101,25 +275,24 @@ public class TrackSegmentTest {
     public void testDefaultGetSetArrowLength() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getArrowLength() == 4 (default).", 4, trackSegment.getArrowLength());
+            Assert.assertEquals("trackSegment.getArrowLength() == 4 (default).", 4, trackSegment.getArrowLength());
             trackSegment.setArrowLength(-1);
-            Assert.assertNotEquals("TrackSegment.setArrowLength(-1) not allowed.", -1, trackSegment.getArrowLength());
+            Assert.assertNotEquals("trackSegment.setArrowLength(-1) not allowed.", -1, trackSegment.getArrowLength());
             trackSegment.setArrowLength(5);
-            Assert.assertEquals("TrackSegment.getArrowLength() == 5 (after set).", 5, trackSegment.getArrowLength());
+            Assert.assertEquals("trackSegment.getArrowLength() == 5 (after set).", 5, trackSegment.getArrowLength());
         }
     }
 
     /*
         Bridge Decorations
-    */
-
+     */
     @Test
     public void testDefaultIsSetBridgeSideRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBridgeSideRight() == true (default).", trackSegment.isBridgeSideRight());
+            Assert.assertFalse("trackSegment.isBridgeSideRight() == true (default).", trackSegment.isBridgeSideRight());
             trackSegment.setBridgeSideRight(true);
-            Assert.assertTrue("TrackSegment.isBridgeSideRight() == false (after set).", trackSegment.isBridgeSideRight());
+            Assert.assertTrue("trackSegment.isBridgeSideRight() == false (after set).", trackSegment.isBridgeSideRight());
         }
     }
 
@@ -127,9 +300,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetBridgeSideLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBridgeSideLeft() == true (default).", trackSegment.isBridgeSideLeft());
+            Assert.assertFalse("trackSegment.isBridgeSideLeft() == true (default).", trackSegment.isBridgeSideLeft());
             trackSegment.setBridgeSideLeft(true);
-            Assert.assertTrue("TrackSegment.isBridgeSideLeft() == false (after set).", trackSegment.isBridgeSideLeft());
+            Assert.assertTrue("trackSegment.isBridgeSideLeft() == false (after set).", trackSegment.isBridgeSideLeft());
         }
     }
 
@@ -137,9 +310,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetBridgeHasEntry() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBridgeHasEntry() == true (default).", trackSegment.isBridgeHasEntry());
+            Assert.assertFalse("trackSegment.isBridgeHasEntry() == true (default).", trackSegment.isBridgeHasEntry());
             trackSegment.setBridgeHasEntry(true);
-            Assert.assertTrue("TrackSegment.isBridgeHasEntry() == false (after set).", trackSegment.isBridgeHasEntry());
+            Assert.assertTrue("trackSegment.isBridgeHasEntry() == false (after set).", trackSegment.isBridgeHasEntry());
         }
     }
 
@@ -147,9 +320,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetBridgeHasExit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBridgeHasExit() == true (default).", trackSegment.isBridgeHasExit());
+            Assert.assertFalse("trackSegment.isBridgeHasExit() == true (default).", trackSegment.isBridgeHasExit());
             trackSegment.setBridgeHasExit(true);
-            Assert.assertTrue("TrackSegment.isBridgeHasExit() == false (after set).", trackSegment.isBridgeHasExit());
+            Assert.assertTrue("trackSegment.isBridgeHasExit() == false (after set).", trackSegment.isBridgeHasExit());
         }
     }
 
@@ -157,12 +330,12 @@ public class TrackSegmentTest {
     public void testDefaultGetSetBridgeDeckWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getBridgeDeckWidth() == 10 (default).", 10, trackSegment.getBridgeDeckWidth());
+            Assert.assertEquals("trackSegment.getBridgeDeckWidth() == 10 (default).", 10, trackSegment.getBridgeDeckWidth());
             trackSegment.setBridgeDeckWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setBridgeDeckWidth(-1) not allowed.", -1, trackSegment.getBridgeDeckWidth());
-            Assert.assertEquals("TrackSegment.getBridgeDeckWidth() == 6 (after set).", 6, trackSegment.getBridgeDeckWidth());
+            Assert.assertNotEquals("trackSegment.setBridgeDeckWidth(-1) not allowed.", -1, trackSegment.getBridgeDeckWidth());
+            Assert.assertEquals("trackSegment.getBridgeDeckWidth() == 6 (after set).", 6, trackSegment.getBridgeDeckWidth());
             trackSegment.setBridgeDeckWidth(15);
-            Assert.assertEquals("TrackSegment.getBridgeDeckWidth() == 15 (after set).", 15, trackSegment.getBridgeDeckWidth());
+            Assert.assertEquals("trackSegment.getBridgeDeckWidth() == 15 (after set).", 15, trackSegment.getBridgeDeckWidth());
         }
     }
 
@@ -170,11 +343,11 @@ public class TrackSegmentTest {
     public void testDefaultGetSetBridgeLineWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getBridgeLineWidth() == 1 (default).", 1, trackSegment.getBridgeLineWidth());
+            Assert.assertEquals("trackSegment.getBridgeLineWidth() == 1 (default).", 1, trackSegment.getBridgeLineWidth());
             trackSegment.setBridgeLineWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setBridgeLineWidth(-1) not allowed.", -1, trackSegment.getBridgeLineWidth());
+            Assert.assertNotEquals("trackSegment.setBridgeLineWidth(-1) not allowed.", -1, trackSegment.getBridgeLineWidth());
             trackSegment.setBridgeLineWidth(3);
-            Assert.assertEquals("TrackSegment.getBridgeLineWidth() == 3 (after set).", 3, trackSegment.getBridgeLineWidth());
+            Assert.assertEquals("trackSegment.getBridgeLineWidth() == 3 (after set).", 3, trackSegment.getBridgeLineWidth());
         }
     }
 
@@ -182,26 +355,25 @@ public class TrackSegmentTest {
     public void testDefaultGetSetBridgeApproachWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getBridgeApproachWidth() == 4 (default).", 4, trackSegment.getBridgeApproachWidth());
+            Assert.assertEquals("trackSegment.getBridgeApproachWidth() == 4 (default).", 4, trackSegment.getBridgeApproachWidth());
             trackSegment.setBridgeApproachWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setBridgeApproachWidth(-1) not allowed.", -1, trackSegment.getBridgeApproachWidth());
-            Assert.assertEquals("TrackSegment.getBridgeApproachWidth() == 8 (after set).", 8, trackSegment.getBridgeApproachWidth());
+            Assert.assertNotEquals("trackSegment.setBridgeApproachWidth(-1) not allowed.", -1, trackSegment.getBridgeApproachWidth());
+            Assert.assertEquals("trackSegment.getBridgeApproachWidth() == 8 (after set).", 8, trackSegment.getBridgeApproachWidth());
             trackSegment.setBridgeApproachWidth(16);
-            Assert.assertEquals("TrackSegment.getBridgeApproachWidth() ==16 (after set).", 16, trackSegment.getBridgeApproachWidth());
+            Assert.assertEquals("trackSegment.getBridgeApproachWidth() ==16 (after set).", 16, trackSegment.getBridgeApproachWidth());
         }
     }
 
     /*
         Bumper Decorations
-    */
-
+     */
     @Test
     public void testDefaultIsSetBumperEndStart() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBumperEndStart() == true (default).", trackSegment.isBumperEndStart());
+            Assert.assertFalse("trackSegment.isBumperEndStart() == true (default).", trackSegment.isBumperEndStart());
             trackSegment.setBumperEndStart(true);
-            Assert.assertTrue("TrackSegment.isBumperEndStart() == false (after set).", trackSegment.isBumperEndStart());
+            Assert.assertTrue("trackSegment.isBumperEndStart() == false (after set).", trackSegment.isBumperEndStart());
         }
     }
 
@@ -209,33 +381,33 @@ public class TrackSegmentTest {
     public void testDefaultIsSetBumperEndStop() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBumperEndStop() == true (default).", trackSegment.isBumperEndStop());
+            Assert.assertFalse("trackSegment.isBumperEndStop() == true (default).", trackSegment.isBumperEndStop());
             trackSegment.setBumperEndStop(true);
-            Assert.assertTrue("TrackSegment.isBumperEndStop() == false (after set).", trackSegment.isBumperEndStop());
+            Assert.assertTrue("trackSegment.isBumperEndStop() == false (after set).", trackSegment.isBumperEndStop());
         }
     }
-    
+
     @Test
     public void testDefaultGetSetBumperLineWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getBumperLineWidth() == 1 (default).", 1, trackSegment.getBumperLineWidth());
+            Assert.assertEquals("trackSegment.getBumperLineWidth() == 1 (default).", 1, trackSegment.getBumperLineWidth());
             trackSegment.setBumperLineWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setBumperLineWidth(-1) not allowed.", -1, trackSegment.getBumperLineWidth());
+            Assert.assertNotEquals("trackSegment.setBumperLineWidth(-1) not allowed.", -1, trackSegment.getBumperLineWidth());
             trackSegment.setBumperLineWidth(5);
-            Assert.assertEquals("TrackSegment.getBumperLineWidth() == 5 (after set).", 5, trackSegment.getBumperLineWidth());
+            Assert.assertEquals("trackSegment.getBumperLineWidth() == 5 (after set).", 5, trackSegment.getBumperLineWidth());
         }
     }
-   
+
     @Test
     public void testDefaultGetSetBumperLength() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getBumperLength() == 10 (default).", 10, trackSegment.getBumperLength());
+            Assert.assertEquals("trackSegment.getBumperLength() == 10 (default).", 10, trackSegment.getBumperLength());
             trackSegment.setBumperLength(-1);
-            Assert.assertNotEquals("TrackSegment.setBumperLength(-1) not allowed.", -1, trackSegment.getBumperLength());
+            Assert.assertNotEquals("trackSegment.setBumperLength(-1) not allowed.", -1, trackSegment.getBumperLength());
             trackSegment.setBumperLength(8);
-            Assert.assertEquals("TrackSegment.getBumperLength() == 8 (after set).", 8, trackSegment.getBumperLength());
+            Assert.assertEquals("trackSegment.getBumperLength() == 8 (after set).", 8, trackSegment.getBumperLength());
         }
     }
 
@@ -243,23 +415,22 @@ public class TrackSegmentTest {
     public void testDefaultIsSetBumperFlipped() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isBumperFlipped() == true (default).", trackSegment.isBumperFlipped());
+            Assert.assertFalse("trackSegment.isBumperFlipped() == true (default).", trackSegment.isBumperFlipped());
             trackSegment.setBumperFlipped(true);
-            Assert.assertTrue("TrackSegment.isBumperFlipped() == false (after set).", trackSegment.isBumperFlipped());
+            Assert.assertTrue("trackSegment.isBumperFlipped() == false (after set).", trackSegment.isBumperFlipped());
         }
     }
 
     /*
         Tunnel Decorations
-    */
-
+     */
     @Test
     public void testDefaultIsSetTunnelSideRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isTunnelSideRight() == true (default).", trackSegment.isTunnelSideRight());
+            Assert.assertFalse("trackSegment.isTunnelSideRight() == true (default).", trackSegment.isTunnelSideRight());
             trackSegment.setTunnelSideRight(true);
-            Assert.assertTrue("TrackSegment.isTunnelSideRight() == false (after set).", trackSegment.isTunnelSideRight());
+            Assert.assertTrue("trackSegment.isTunnelSideRight() == false (after set).", trackSegment.isTunnelSideRight());
         }
     }
 
@@ -267,9 +438,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetTunnelSideLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isTunnelSideLeft() == true (default).", trackSegment.isTunnelSideLeft());
+            Assert.assertFalse("trackSegment.isTunnelSideLeft() == true (default).", trackSegment.isTunnelSideLeft());
             trackSegment.setTunnelSideLeft(true);
-            Assert.assertTrue("TrackSegment.isTunnelSideLeft() == false (after set).", trackSegment.isTunnelSideLeft());
+            Assert.assertTrue("trackSegment.isTunnelSideLeft() == false (after set).", trackSegment.isTunnelSideLeft());
         }
     }
 
@@ -277,9 +448,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetTunnelHasEntry() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isTunnelHasEntry() == true (default).", trackSegment.isTunnelHasEntry());
+            Assert.assertFalse("trackSegment.isTunnelHasEntry() == true (default).", trackSegment.isTunnelHasEntry());
             trackSegment.setTunnelHasEntry(true);
-            Assert.assertTrue("TrackSegment.isTunnelHasEntry() == false (after set).", trackSegment.isTunnelHasEntry());
+            Assert.assertTrue("trackSegment.isTunnelHasEntry() == false (after set).", trackSegment.isTunnelHasEntry());
         }
     }
 
@@ -287,9 +458,9 @@ public class TrackSegmentTest {
     public void testDefaultIsSetTunnelHasExit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertFalse("TrackSegment.isTunnelHasExit() == true (default).", trackSegment.isTunnelHasExit());
+            Assert.assertFalse("trackSegment.isTunnelHasExit() == true (default).", trackSegment.isTunnelHasExit());
             trackSegment.setTunnelHasExit(true);
-            Assert.assertTrue("TrackSegment.isTunnelHasExit() == false (after set).", trackSegment.isTunnelHasExit());
+            Assert.assertTrue("trackSegment.isTunnelHasExit() == false (after set).", trackSegment.isTunnelHasExit());
         }
     }
 
@@ -297,11 +468,11 @@ public class TrackSegmentTest {
     public void testDefaultGetSetTunnelFloorWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getTunnelFloorWidth() == 10 (default).", 10, trackSegment.getTunnelFloorWidth());
+            Assert.assertEquals("trackSegment.getTunnelFloorWidth() == 10 (default).", 10, trackSegment.getTunnelFloorWidth());
             trackSegment.setTunnelFloorWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setTunnelFloorWidth(-1) not allowed.", -1, trackSegment.getTunnelFloorWidth());
+            Assert.assertNotEquals("trackSegment.setTunnelFloorWidth(-1) not allowed.", -1, trackSegment.getTunnelFloorWidth());
             trackSegment.setTunnelFloorWidth(5);
-            Assert.assertEquals("TrackSegment.getTunnelFloorWidth() == 5 (after set).", 5, trackSegment.getTunnelFloorWidth());
+            Assert.assertEquals("trackSegment.getTunnelFloorWidth() == 5 (after set).", 5, trackSegment.getTunnelFloorWidth());
         }
     }
 
@@ -309,11 +480,11 @@ public class TrackSegmentTest {
     public void testDefaultGetSetTunnelLineWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getTunnelLineWidth() == 1 (default).", 1, trackSegment.getTunnelLineWidth());
+            Assert.assertEquals("trackSegment.getTunnelLineWidth() == 1 (default).", 1, trackSegment.getTunnelLineWidth());
             trackSegment.setTunnelLineWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setTunnelLineWidth(-1) not allowed.", -1, trackSegment.getTunnelLineWidth());
+            Assert.assertNotEquals("trackSegment.setTunnelLineWidth(-1) not allowed.", -1, trackSegment.getTunnelLineWidth());
             trackSegment.setTunnelLineWidth(5);
-            Assert.assertEquals("TrackSegment.getTunnelLineWidth() == 5 (after set).", 5, trackSegment.getTunnelLineWidth());
+            Assert.assertEquals("trackSegment.getTunnelLineWidth() == 5 (after set).", 5, trackSegment.getTunnelLineWidth());
         }
     }
 
@@ -321,11 +492,11 @@ public class TrackSegmentTest {
     public void testDefaultGetSetTunnelEntranceWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("TrackSegment.getTunnelEntranceWidth() == 16 (default).", 16, trackSegment.getTunnelEntranceWidth());
+            Assert.assertEquals("trackSegment.getTunnelEntranceWidth() == 16 (default).", 16, trackSegment.getTunnelEntranceWidth());
             trackSegment.setTunnelEntranceWidth(-1);
-            Assert.assertNotEquals("TrackSegment.setTunnelEntranceWidth(-1) not allowed.", -1, trackSegment.getTunnelEntranceWidth());
+            Assert.assertNotEquals("trackSegment.setTunnelEntranceWidth(-1) not allowed.", -1, trackSegment.getTunnelEntranceWidth());
             trackSegment.setTunnelEntranceWidth(5);
-            Assert.assertEquals("TrackSegment.getTunnelEntranceWidth() == 5 (after set).", 5, trackSegment.getTunnelEntranceWidth());
+            Assert.assertEquals("trackSegment.getTunnelEntranceWidth() == 5 (after set).", 5, trackSegment.getTunnelEntranceWidth());
         }
     }
 
@@ -374,8 +545,8 @@ public class TrackSegmentTest {
         //jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
-                PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), layoutEditor);
-                PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), layoutEditor);
+                PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
+                PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
                 trackSegment = new TrackSegment("test", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, layoutEditor);
             }
         }

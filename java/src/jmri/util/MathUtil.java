@@ -487,7 +487,6 @@ public final class MathUtil {
      * @param t the fraction (between 0 and 1)
      * @return the linear interpolation between a and b for t
      */
-    @CheckReturnValue
     public static int lerp(int a, int b, double t) {
         return (int) lerp((double) a, (double) b, t);
     }
@@ -640,7 +639,6 @@ public final class MathUtil {
      *         THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN AND
      *         MAX (And yes, this works correctly with negative numbers)
      */
-    @CheckReturnValue
     public static int wrap(int inValue, int inMin, int inMax) {
         int valueRange = inMax - inMin;
         return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
@@ -763,7 +761,6 @@ public final class MathUtil {
      * @param inMax   the max
      * @return the value pinned between the min and max values
      */
-    @CheckReturnValue
     public static int pin(int inValue, int inMin, int inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
     }
