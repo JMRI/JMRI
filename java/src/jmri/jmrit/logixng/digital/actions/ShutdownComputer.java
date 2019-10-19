@@ -63,26 +63,28 @@ public class ShutdownComputer extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        String time = (_seconds == 0) ? "now" : Integer.toString(_seconds);
         try {
+            String shutdownCommand;
             if (SystemType.isLinux() || SystemType.isUnix() || SystemType.isMacOSX()) {
-                Runtime runtime = Runtime.getRuntime();
-                runtime.exec("shutdown -h " + time);
-//                Process proc = runtime.exec("shutdown -s -t " + time);
+                String time = (_seconds == 0) ? "now" : Integer.toString(_seconds);
+                shutdownCommand = "shutdown -h " + time;
             } else if (SystemType.isWindows()) {
-                Runtime runtime = Runtime.getRuntime();
-                runtime.exec("shutdown.exe -s -t " + time);
-//                Process proc = runtime.exec("shutdown -s -t " + time);
-                InstanceManager.getDefault(ShutDownManager.class).shutdown();
+                shutdownCommand = "shutdown.exe -s -t " + Integer.toString(_seconds);
             } else {
                 throw new UnsupportedOperationException("Unknown OS: "+SystemType.getOSName());
             }
+            
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec(shutdownCommand);
+//            Process proc = runtime.exec("shutdown -s -t " + time);
+            InstanceManager.getDefault(ShutDownManager.class).shutdown();
+            
+            // If we are here, shutdown has failed
+            log.error("Shutdown failed");  // NOI18N
+            
         } catch (SecurityException | IOException e) {
             log.error("Shutdown failed", e);  // NOI18N
         }
-        
-        // Quit program
-        AppsBase.handleQuit();
     }
 
     @Override
