@@ -140,9 +140,9 @@
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.9.8.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.9.8.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.9.8.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/jetty-server-9.4.7.v20170914.jar"/>
