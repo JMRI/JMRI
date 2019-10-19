@@ -4,8 +4,6 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Locale;
-
 /**
  * Tests for the Bundle class
  *
