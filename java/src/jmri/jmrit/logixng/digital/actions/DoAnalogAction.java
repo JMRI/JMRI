@@ -40,7 +40,7 @@ public class DoAnalogAction
     }
     
     private DoAnalogAction(DoAnalogAction template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
                 .createFemaleSocket(this, this, _template._analogExpressionSocket.getName());

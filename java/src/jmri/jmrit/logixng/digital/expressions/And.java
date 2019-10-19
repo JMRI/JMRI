@@ -41,7 +41,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     }
 
     private And(And template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }

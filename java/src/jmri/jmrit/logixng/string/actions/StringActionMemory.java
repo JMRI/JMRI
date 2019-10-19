@@ -33,7 +33,7 @@ public class StringActionMemory extends AbstractStringAction
     }
     
     private StringActionMemory(StringActionMemory template) {
-        super(InstanceManager.getDefault(StringActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(StringActionManager.class).getAutoSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }

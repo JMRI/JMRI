@@ -54,7 +54,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     }
     
     private TriggerOnce(TriggerOnce template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._childExpression.getName());

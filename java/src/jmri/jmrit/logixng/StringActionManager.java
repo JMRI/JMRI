@@ -27,7 +27,7 @@ public interface StringActionManager extends Manager<MaleStringActionSocket> {
      * Create a new system name for an StringActionBean.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     public FemaleStringActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
@@ -60,6 +60,17 @@ public interface StringActionManager extends Manager<MaleStringActionSocket> {
 //    public Action getByUserName(String s);
 
 //    public Action getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the StringActionManager is
+     * {@link #getSystemNamePrefix() } and "SA";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "SA";
+    }
 
     /*.*
      * Delete Action by removing it from the manager. The Action must first be

@@ -123,7 +123,7 @@ public class DefaultFemaleGenericExpressionSocket
     public Base getNewObjectBasedOnTemplate() {
         // Female sockets have special handling
         throw new UnsupportedOperationException(
-                InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+                InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
     }
     
     /** {@inheritDoc} */
@@ -324,7 +324,7 @@ public class DefaultFemaleGenericExpressionSocket
     @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalExpressionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
 
     private void addClassesToMap(

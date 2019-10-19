@@ -88,6 +88,20 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
+     * Get the sub system prefix of this manager.
+     * The sub system prefix is the prefix and type for the system name and
+     * possibly some extra characters of the NamedBeans handled by this manager.
+     * <P>
+     * For most managers, this is the same as {@link #getSystemNamePrefix() },
+     * but for some like the managers in LogixNG, it differs.
+     *
+     * @return the sub system prefix
+     */
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix();
+    }
+
+    /**
      * Create a SystemName by prepending the system name prefix to the name if
      * not already present.
      * <p>
@@ -637,11 +651,11 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public static final int LOGIXNG_CONDITIONALNGS = LOGIXNGS + 10;             // LogixNG ConditionalNG
     public static final int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_CONDITIONALNGS + 10;  // LogixNG Expression
     public static final int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
-    public static final int LOGIXNG_ANALOG_EXPRESSIONS = LOGIXNG_DIGITAL_ACTIONS + 10;  // LogixNG AnalogExpression
+    public static final int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action
+    public static final int LOGIXNG_ANALOG_EXPRESSIONS = LOGIXNG_DIGITAL_BOOLEAN_ACTIONS + 10;  // LogixNG AnalogExpression
     public static final int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
     public static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
     public static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
-    public static final int LOGIXNG_DIGITAL_ACTIONS_WITH_CHANGE = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG LogixEmulationAction
 
     /**
      * Determine the order that types should be written when storing panel

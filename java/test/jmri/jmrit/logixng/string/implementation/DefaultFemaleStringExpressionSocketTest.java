@@ -69,7 +69,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     @Test
     public void testSystemName() {
         Assert.assertEquals("String matches", "IQSE10", femaleSocket.getExampleSystemName());
-        Assert.assertEquals("String matches", "IQSE:0001", femaleSocket.getNewSystemName());
+        Assert.assertEquals("String matches", "IQSE:AUTO:0001", femaleSocket.getNewSystemName());
     }
     
     @Test

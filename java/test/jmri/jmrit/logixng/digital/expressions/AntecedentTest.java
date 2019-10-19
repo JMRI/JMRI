@@ -117,7 +117,7 @@ public class AntecedentTest implements FemaleSocketListener {
         DigitalExpressionBean trueExpression =
                 InstanceManager.getDefault(
                         DigitalExpressionManager.class).registerExpression(
-                                new True(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null));
+                                new True(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null));
 //        DigitalExpressionBean falseExpression = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(new False(conditionalNG));
         
         DigitalExpressionBean[] conditionalVariables_True
@@ -175,11 +175,11 @@ public class AntecedentTest implements FemaleSocketListener {
         DigitalExpressionBean trueExpression =
                 InstanceManager.getDefault(
                         DigitalExpressionManager.class).registerExpression(
-                                new True(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null));
+                                new True(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null));
         DigitalExpressionBean falseExpression =
                 InstanceManager.getDefault(
                         DigitalExpressionManager.class).registerExpression(
-                                new False(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null));
+                                new False(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null));
         
         DigitalExpressionBean[] conditionalVariables_True
                 = { trueExpression };

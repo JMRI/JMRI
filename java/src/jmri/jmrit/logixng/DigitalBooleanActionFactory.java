@@ -8,7 +8,7 @@ import java.util.Set;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface DigitalActionWithChangeFactory {
+public interface DigitalBooleanActionFactory {
 
     /**
      * Get a set of classes that implements the DigitalActionWithChange interface.

@@ -125,7 +125,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
         // register new one for configuration
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS_WITH_CHANGE);
+            cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
         
         Assert.assertTrue("manager is a MyManager",
@@ -162,7 +162,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
         // register new one for configuration
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
-            cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS_WITH_CHANGE);
+            cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
         
         Assert.assertTrue("manager is a MyManager",

@@ -227,7 +227,7 @@ public class LogixNGTest {
         ConditionalNG conditionalNG_2 =
                 new DefaultConditionalNG(conditionalNG_1.getSystemName(), null);
         Assert.assertFalse("conditionalNG not added", logixNG.addConditionalNG(conditionalNG_2));
-        JUnitAppender.assertWarnMessage("ConditionalNG 'IQC:0001' has already been added to LogixNG 'IQ:0001'");
+        JUnitAppender.assertWarnMessage("ConditionalNG 'IQC:AUTO:0001' has already been added to LogixNG 'IQ:AUTO:0001'");
         ConditionalNG conditionalNG_3 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(null);
         Assert.assertTrue("conditionalNG added", logixNG.addConditionalNG(conditionalNG_3));
     }
@@ -287,7 +287,7 @@ public class LogixNGTest {
         Assert.assertTrue("ConditionalNG is correct", conditionalNG_6 == logixNG.getConditionalNG(4));
         
         logixNG.deleteConditionalNG(conditionalNG_1);
-        JUnitAppender.assertErrorMessage("attempt to delete ConditionalNG not in LogixNG: IQC:0001");
+        JUnitAppender.assertErrorMessage("attempt to delete ConditionalNG not in LogixNG: IQC:AUTO:0001");
         
         logixNG.deleteConditionalNG(conditionalNG_6);
         Assert.assertTrue("ConditionalNG is correct", conditionalNG_2 == logixNG.getConditionalNG(0));
@@ -311,7 +311,7 @@ public class LogixNGTest {
         Assert.assertTrue("LogixNG has no more conditionalNGs", 0 == logixNG.getNumConditionalNGs());
         
         logixNG.deleteConditionalNG(conditionalNG_5);
-        JUnitAppender.assertErrorMessage("attempt to delete ConditionalNG not in LogixNG: IQC:0005");
+        JUnitAppender.assertErrorMessage("attempt to delete ConditionalNG not in LogixNG: IQC:AUTO:0005");
     }
     
     @Test
@@ -463,12 +463,12 @@ public class LogixNGTest {
         MaleSocket ifThen = many.getChild(1).getConnectedSocket();
 //        System.err.format("aa: %s%n", ifThen.getLongDescription());
         Assert.assertTrue("description is correct", "If E then A1 else A2".equals(ifThen.getLongDescription()));
-        systemName = InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName();
+        systemName = InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName();
         DigitalExpressionBean expression = new ExpressionTurnout(systemName, "An expression for test");  // NOI18N
         MaleSocket digitalExpressionBean = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
         ifThen.getChild(0).connect(digitalExpressionBean);
 //        InstanceManager.getDefault(jmri.DigitalExpressionManager.class).addExpression(new ExpressionTurnout(systemName, "LogixNG 102, DigitalExpressionBean 26"));  // NOI18N
-        systemName = InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName();
+        systemName = InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName();
         DigitalActionBean action = new ActionTurnout(systemName, "An action for test");  // NOI18N
         MaleSocket digitalActionBean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         ifThen.getChild(1).connect(digitalActionBean);
@@ -498,7 +498,7 @@ public class LogixNGTest {
         logixNG.setConditionalNG_SystemName(0, conditionalNG.getSystemName());
 //        logixNG.addConditionalNG(conditionalNG);
         
-        String systemName = InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName();
+        String systemName = InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName();
         DigitalActionBean action = new ActionTurnout(systemName, "An action for test");  // NOI18N
         MaleSocket digitalActionBean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         

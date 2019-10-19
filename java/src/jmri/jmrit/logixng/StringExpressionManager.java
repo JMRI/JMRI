@@ -27,7 +27,7 @@ public interface StringExpressionManager extends Manager<MaleStringExpressionSoc
      * Create a new system name for an Expression.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     /**
      * Create a female socket for analog expressions
@@ -67,6 +67,17 @@ public interface StringExpressionManager extends Manager<MaleStringExpressionSoc
 //    public Expression getByUserName(String s);
 
 //    public Expression getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the StringExpressionManager is
+     * {@link #getSystemNamePrefix() } and "SE";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "SE";
+    }
 
     /**
      * Delete Expression by removing it from the manager. The Expression must

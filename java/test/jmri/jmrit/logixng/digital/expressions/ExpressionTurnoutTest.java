@@ -70,7 +70,7 @@ public class ExpressionTurnoutTest {
         IfThenElse actionIfThen =
                 new IfThenElse(
                         InstanceManager.getDefault(
-                                DigitalActionManager.class).getNewSystemName(), null,
+                                DigitalActionManager.class).getAutoSystemName(), null,
                                 IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
         conditionalNG.getChild(0).connect(socketIfThen);
@@ -78,7 +78,7 @@ public class ExpressionTurnoutTest {
         ExpressionTurnout expressionTurnout =
                 new ExpressionTurnout(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getNewSystemName(), null);
+                                .getAutoSystemName(), null);
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
@@ -116,7 +116,7 @@ public class ExpressionTurnoutTest {
         ExpressionTurnout expression =
                 new ExpressionTurnout(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getNewSystemName(), null);
+                                .getAutoSystemName(), null);
         expression.setTurnout(turnout);
         
         Assert.assertNotNull("Turnout is not null", expression.getTurnout());
@@ -157,7 +157,7 @@ public class ExpressionTurnoutTest {
         ExpressionTurnout expression =
                 new ExpressionTurnout(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getNewSystemName(), null);
+                                .getAutoSystemName(), null);
         expression.setTurnout(turnout);
         
         // Get some other turnout for later use

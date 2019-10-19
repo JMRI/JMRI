@@ -76,7 +76,7 @@ public class DefaultFemaleAnalogExpressionSocket extends AbstractFemaleSocket
     @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(AnalogExpressionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
 
     /** {@inheritDoc} */

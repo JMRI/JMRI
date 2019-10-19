@@ -7,6 +7,6 @@ import jmri.NamedBean;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface DigitalBooleanActionBean extends NamedBean, DigitalActionWithChange {
+public interface DigitalBooleanActionBean extends NamedBean, DigitalBooleanAction {
 
 }

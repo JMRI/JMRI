@@ -27,7 +27,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     @Override
     protected String getNewSystemName() {
         return InstanceManager.getDefault(DigitalActionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
     
     @Test

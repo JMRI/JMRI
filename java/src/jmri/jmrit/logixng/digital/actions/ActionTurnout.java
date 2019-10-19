@@ -32,7 +32,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     }
     
     private ActionTurnout(ActionTurnout template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 //        _template = template;
     }
     

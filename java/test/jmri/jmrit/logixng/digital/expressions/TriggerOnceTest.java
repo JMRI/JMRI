@@ -24,7 +24,7 @@ public class TriggerOnceTest {
             throws NamedBean.BadUserNameException,
                     NamedBean.BadSystemNameException,
                     SocketAlreadyConnectedException {
-        ExpressionTurnout expression = new ExpressionTurnout("IQDE:321", null);
+        ExpressionTurnout expression = new ExpressionTurnout("IQDE:AUTO:321", null);
         MaleDigitalExpressionSocket expressionSocket =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
         DigitalExpressionBean t = new TriggerOnce("IQDE321", null, expressionSocket);
@@ -36,7 +36,7 @@ public class TriggerOnceTest {
             throws NamedBean.BadUserNameException,
                     NamedBean.BadSystemNameException,
                     SocketAlreadyConnectedException {
-        ExpressionTurnout expression = new ExpressionTurnout("IQDE:321", null);
+        ExpressionTurnout expression = new ExpressionTurnout("IQDE:AUTO:321", null);
         MaleDigitalExpressionSocket expressionSocket =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
         DigitalExpressionBean e1 = new TriggerOnce("IQDE321", null, expressionSocket);

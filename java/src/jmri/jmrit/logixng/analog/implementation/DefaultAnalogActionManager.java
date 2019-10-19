@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.analog.implementation;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +32,6 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
         implements AnalogActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
-    private int lastAutoActionRef = 0;
-    
-    // This is for testing only!!!
-    // This number needs to be saved and restored.
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     
     public DefaultAnalogActionManager(InternalSystemConnectionMemo memo) {
@@ -88,6 +82,9 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
             throw new IllegalArgumentException("System name is invalid");
         }
         
+        // Keep track of the last created auto system name
+        updateAutoNumber(action.getSystemName());
+        
         MaleAnalogActionSocket maleSocket = createMaleActionSocket(action);
         register(maleSocket);
         return maleSocket;
@@ -95,7 +92,7 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
     
     @Override
     public int getXMLOrder() {
-        return LOGIXNGS;
+        return LOGIXNG_ANALOG_ACTIONS;
     }
 
     @Override
@@ -116,21 +113,11 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSystemNamePrefix()+"AA:?\\d+")) {
+        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
         }
-    }
-
-    @Override
-    public String getNewSystemName() {
-        int nextAutoLogixNGRef = ++lastAutoActionRef;
-        StringBuilder b = new StringBuilder(getSystemNamePrefix());
-        b.append("AA:");
-        String nextNumber = paddedNumber.format(nextAutoLogixNGRef);
-        b.append(nextNumber);
-        return b.toString();
     }
 
     @Override

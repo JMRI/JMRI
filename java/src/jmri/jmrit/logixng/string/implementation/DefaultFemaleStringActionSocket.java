@@ -63,7 +63,7 @@ public final class DefaultFemaleStringActionSocket
     /** {@inheritDoc} */
     @Override
     public String getNewSystemName() {
-        return InstanceManager.getDefault(StringActionManager.class).getNewSystemName();
+        return InstanceManager.getDefault(StringActionManager.class).getAutoSystemName();
     }
 
     @Override

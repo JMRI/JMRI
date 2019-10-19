@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.implementation;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import jmri.jmrit.logixng.DigitalActionFactory;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleDigitalActionSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -36,9 +34,6 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
         implements DigitalActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
-    private int lastAutoActionRef = 0;
-    
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     
     public DefaultDigitalActionManager(InternalSystemConnectionMemo memo) {
@@ -92,13 +87,8 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
             throw new IllegalArgumentException(String.format("System name is invalid: %s", action.getSystemName()));
         }
         
-        // Remove the letters in the beginning to get only the number of the
-        // system name.
-        String actionNumberStr = action.getSystemName().replaceAll(getSystemNamePrefix()+"DA:?", "");
-        int actionNumber = Integer.parseInt(actionNumberStr);
-        if (lastAutoActionRef < actionNumber) {
-            lastAutoActionRef = actionNumber;
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(action.getSystemName());
         
         // save in the maps
         MaleDigitalActionSocket maleSocket = createMaleActionSocket(action);
@@ -108,7 +98,7 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
     
     @Override
     public int getXMLOrder() {
-        return LOGIXNGS;
+        return LOGIXNG_DIGITAL_ACTIONS;
     }
 
     @Override
@@ -129,21 +119,11 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSystemNamePrefix()+"DA:?\\d+")) {
+        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
         }
-    }
-
-    @Override
-    public String getNewSystemName() {
-        int nextAutoLogixNGRef = ++lastAutoActionRef;
-        StringBuilder b = new StringBuilder(getSystemNamePrefix());
-        b.append("DA:");
-        String nextNumber = paddedNumber.format(nextAutoLogixNGRef);
-        b.append(nextNumber);
-        return b.toString();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.implementation;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +19,11 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.LogixNGPluginFactory;
 import jmri.managers.AbstractManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.jmrit.logixng.DigitalActionWithChangeFactory;
 import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
+import jmri.jmrit.logixng.DigitalBooleanActionFactory;
 
 /**
  * Class providing the basic logic of the DigitalBooleanActionManager interface.
@@ -35,9 +34,6 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         implements DigitalBooleanActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
-    private int lastAutoActionRef = 0;
-    
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     
     public DefaultDigitalBooleanActionManager(InternalSystemConnectionMemo memo) {
@@ -50,7 +46,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
             actionClassList.put(category, new ArrayList<>());
         }
         
-        for (DigitalActionWithChangeFactory actionFactory : ServiceLoader.load(DigitalActionWithChangeFactory.class)) {
+        for (DigitalBooleanActionFactory actionFactory : ServiceLoader.load(DigitalBooleanActionFactory.class)) {
             actionFactory.getClasses().forEach((entry) -> {
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
@@ -91,13 +87,8 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
             throw new IllegalArgumentException(String.format("System name is invalid: %s", action.getSystemName()));
         }
         
-        // Remove the letters in the beginning to get only the number of the
-        // system name.
-        String actionNumberStr = action.getSystemName().replaceAll(getSystemNamePrefix()+"DB:?", "");
-        int actionNumber = Integer.parseInt(actionNumberStr);
-        if (lastAutoActionRef < actionNumber) {
-            lastAutoActionRef = actionNumber;
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(action.getSystemName());
         
         // save in the maps
         MaleDigitalActionWithChangeSocket maleSocket = createMaleActionSocket(action);
@@ -107,7 +98,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     
     @Override
     public int getXMLOrder() {
-        return LOGIXNGS;
+        return LOGIXNG_DIGITAL_BOOLEAN_ACTIONS;
     }
 
     @Override
@@ -128,21 +119,11 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSystemNamePrefix()+"DB:?\\d+")) {
+        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
         }
-    }
-
-    @Override
-    public String getNewSystemName() {
-        int nextAutoLogixNGRef = ++lastAutoActionRef;
-        StringBuilder b = new StringBuilder(getSystemNamePrefix());
-        b.append("DB:");
-        String nextNumber = paddedNumber.format(nextAutoLogixNGRef);
-        b.append(nextNumber);
-        return b.toString();
     }
 
     @Override

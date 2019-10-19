@@ -37,7 +37,7 @@ public class ActionTimer extends AbstractDigitalAction
     }
     
     private ActionTimer(ActionTimer template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, _template._actionSocket.getName());

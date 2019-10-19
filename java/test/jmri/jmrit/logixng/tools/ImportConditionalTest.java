@@ -34,7 +34,7 @@ public class ImportConditionalTest {
         
         ImportConditional t =
                 new ImportConditional(logix, conditional, logixNG,
-                        InstanceManager.getDefault(ConditionalNG_Manager.class).getNewSystemName());
+                        InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
         Assert.assertNotNull("exists",t);
         
         // Remove this when the import tool is completed.

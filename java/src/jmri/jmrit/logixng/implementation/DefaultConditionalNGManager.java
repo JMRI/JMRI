@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.InstanceManager;
@@ -31,9 +30,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         implements ConditionalNG_Manager {
 
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoConditionalNGRef = 0;
     List<FemaleSocketFactory> _femaleSocketFactories = new ArrayList<>();
     
     
@@ -68,7 +64,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSystemNamePrefix()+"C:?\\d+")) {
+        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
@@ -108,20 +104,9 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         x = new DefaultConditionalNG(systemName, userName);
         // save in the maps
         register(x);
-
-        /* The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them */
-        if (systemName.startsWith(getSystemNamePrefix()+"C:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(5));
-                if (autoNumber > lastAutoConditionalNGRef) {
-                    lastAutoConditionalNGRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+        
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
         
 //        if (setupTree) {
             // Setup initial tree for the ConditionalNG
@@ -134,7 +119,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
 
     @Override
     public ConditionalNG createConditionalNG(String userName) throws IllegalArgumentException {
-        return createConditionalNG(getNewSystemName(), userName);
+        return createConditionalNG(getAutoSystemName(), userName);
     }
 
     @Override
@@ -146,21 +131,21 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
             FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
             MaleDigitalActionSocket actionManySocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new Many(digitalActionManager.getNewSystemName(), null));
+                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionManySocket);
             femaleSocket.setLock(Base.Lock.HARD_LOCK);
 
             femaleSocket = actionManySocket.getChild(0);
             MaleDigitalActionSocket actionHoldAnythingSocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new HoldAnything(digitalActionManager.getNewSystemName(), null));
+                            .registerAction(new HoldAnything(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionHoldAnythingSocket);
             femaleSocket.setLock(Base.Lock.HARD_LOCK);
 
             femaleSocket = actionManySocket.getChild(1);
             MaleDigitalActionSocket actionIfThenSocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new IfThenElse(digitalActionManager.getNewSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
             femaleSocket.connect(actionIfThenSocket);
             
             /* FOR TESTING ONLY */
@@ -208,15 +193,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     @Override
     public ConditionalNG getBySystemName(String name) {
         return _tsys.get(name);
-    }
-
-    @Override
-    public String getNewSystemName() {
-        int nextAutoConditionalNGRef = lastAutoConditionalNGRef + 1;
-        StringBuilder b = new StringBuilder(getSystemNamePrefix()+"C:");
-        String nextNumber = paddedNumber.format(nextAutoConditionalNGRef);
-        b.append(nextNumber);
-        return b.toString();
     }
 
     /** {@inheritDoc} */

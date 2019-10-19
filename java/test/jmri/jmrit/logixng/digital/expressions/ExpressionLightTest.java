@@ -70,7 +70,7 @@ public class ExpressionLightTest {
         
         IfThenElse actionIfThen =
                 new IfThenElse(InstanceManager.getDefault(
-                        DigitalActionManager.class).getNewSystemName(), null,
+                        DigitalActionManager.class).getAutoSystemName(), null,
                         IfThenElse.Type.TRIGGER_ACTION);
         
         MaleSocket socketIfThen =
@@ -81,7 +81,7 @@ public class ExpressionLightTest {
         
         ExpressionLight expressionLight =
                 new ExpressionLight(InstanceManager.getDefault(
-                        DigitalExpressionManager.class).getNewSystemName(), null);
+                        DigitalExpressionManager.class).getAutoSystemName(), null);
         
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
@@ -120,7 +120,7 @@ public class ExpressionLightTest {
         ExpressionLight expression =
                 new ExpressionLight(
                         InstanceManager.getDefault(
-                                DigitalExpressionManager.class).getNewSystemName(), null);
+                                DigitalExpressionManager.class).getAutoSystemName(), null);
         expression.setLight(turnout);
         
         Assert.assertNotNull("Light is not null", expression.getLight());
@@ -161,7 +161,7 @@ public class ExpressionLightTest {
         ExpressionLight expression =
                 new ExpressionLight(
                         InstanceManager.getDefault(
-                                DigitalExpressionManager.class).getNewSystemName(), null);
+                                DigitalExpressionManager.class).getAutoSystemName(), null);
         expression.setLight(light);
         
         // Get some other light for later use

@@ -70,7 +70,7 @@ public class ExpressionSensorTest {
         IfThenElse actionIfThen =
                 new IfThenElse(
                         InstanceManager.getDefault(
-                                DigitalActionManager.class).getNewSystemName(), null,
+                                DigitalActionManager.class).getAutoSystemName(), null,
                                 IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket socketIfThen =
                 InstanceManager.getDefault(DigitalActionManager.class)
@@ -80,7 +80,7 @@ public class ExpressionSensorTest {
         ExpressionSensor expressionSensor =
                 new ExpressionSensor(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getNewSystemName(), null);
+                                .getAutoSystemName(), null);
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
@@ -122,7 +122,7 @@ public class ExpressionSensorTest {
         ExpressionSensor expression =
                 new ExpressionSensor(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getNewSystemName(), null);
+                                .getAutoSystemName(), null);
         expression.setSensor(turnout);
         
         Assert.assertNotNull("Sensor is not null", expression.getSensor());
@@ -163,7 +163,7 @@ public class ExpressionSensorTest {
         ExpressionSensor expression =
                 new ExpressionSensor(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getNewSystemName(), null);
+                                .getAutoSystemName(), null);
         expression.setSensor(sensor);
         
         // Get some other sensor for later use

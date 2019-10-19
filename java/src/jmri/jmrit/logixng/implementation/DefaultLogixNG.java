@@ -55,7 +55,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     }
     
     private DefaultLogixNG(DefaultLogixNG template) {
-        super(InstanceManager.getDefault(LogixNG_Manager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(LogixNG_Manager.class).getAutoSystemName(), null);
 //        _template = template;
     }
     

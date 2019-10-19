@@ -59,7 +59,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * Create a new system name for a LogixNG.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
     
     /**
      * Resolve all the LogixNG trees.

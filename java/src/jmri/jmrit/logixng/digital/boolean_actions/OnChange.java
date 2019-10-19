@@ -46,7 +46,7 @@ public class OnChange extends AbstractDigitalBooleanAction
     }
     
     private OnChange(OnChange template) {
-        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null);
         _template = template;
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, _template._actionSocket.getName());

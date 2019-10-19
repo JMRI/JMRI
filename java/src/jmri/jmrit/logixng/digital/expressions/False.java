@@ -28,7 +28,7 @@ public class False extends AbstractDigitalExpression {
     }
 
     private False(False template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }

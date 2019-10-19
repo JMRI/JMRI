@@ -119,7 +119,7 @@ public class ConditionalNGTest {
 
         MaleDigitalActionSocket actionManySocket =
                 InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(new Many(digitalActionManager.getNewSystemName(), null));
+                        .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
         
         
         Assert.assertEquals("socket name is correct", null, conditionalNG.getSocketSystemName());
@@ -317,7 +317,7 @@ public class ConditionalNGTest {
                         .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         
-        String systemName = InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName();
+        String systemName = InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName();
         DigitalActionBean action = new ActionTurnout(systemName, "An action for test");  // NOI18N
         MaleSocket digitalActionBean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         

@@ -44,7 +44,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     }
     
     private Hold(Hold template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._holdExpressionSocket.getName());

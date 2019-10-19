@@ -56,10 +56,21 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
     public ConditionalNG getBySystemName(String name);
     
     /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the ConditionalNG_Manager is
+     * {@link #getSystemNamePrefix() } and "C";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "C";
+    }
+    
+    /**
      * Create a new system name for a ConditionalNG.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
     
     /**
      * Resolve all the ConditionalNG trees.

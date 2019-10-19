@@ -27,7 +27,7 @@ public interface DigitalExpressionManager extends Manager<MaleDigitalExpressionS
      * Create a new system name for an DigitalExpressionBean.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     public FemaleDigitalExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
@@ -66,6 +66,17 @@ public interface DigitalExpressionManager extends Manager<MaleDigitalExpressionS
 //    public DigitalExpressionBean getByUserName(String s);
 
 //    public DigitalExpressionBean getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the DigitalExpressionManager is
+     * {@link #getSystemNamePrefix() } and "DE";
+     */
+    @Override
+    default public String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "DE";
+    }
 
     /**
      * Delete Expression by removing it from the manager. The Expression must

@@ -26,7 +26,7 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
     }
     
     private DigitalActionPluginSocket(@Nonnull DigitalActionPluginSocket template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         Objects.requireNonNull(template, "parameter template must not be null");
         _actionPlugin = null;
         _template = template;

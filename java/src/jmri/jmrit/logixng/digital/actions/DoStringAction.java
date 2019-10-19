@@ -40,7 +40,7 @@ public class DoStringAction
     }
     
     private DoStringAction(DoStringAction template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
                 .createFemaleSocket(this, this, _template._stringExpressionSocket.getName());

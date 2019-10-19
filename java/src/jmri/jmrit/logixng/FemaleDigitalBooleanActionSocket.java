@@ -4,6 +4,6 @@ package jmri.jmrit.logixng;
  *
  */
 public interface FemaleDigitalBooleanActionSocket
-        extends FemaleSocket, DigitalActionWithChange {
+        extends FemaleSocket, DigitalBooleanAction {
 
 }

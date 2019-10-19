@@ -27,7 +27,7 @@ public interface AnalogExpressionManager extends Manager<MaleAnalogExpressionSoc
      * Create a new system name for an Expression.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     /**
      * Create a female socket for analog expressions
@@ -67,6 +67,17 @@ public interface AnalogExpressionManager extends Manager<MaleAnalogExpressionSoc
 //    public Expression getByUserName(String s);
 
 //    public Expression getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the AnalogExpressionManager is
+     * {@link #getSystemNamePrefix() } and "AE";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "AE";
+    }
 
     /**
      * Delete Expression by removing it from the manager. The Expression must

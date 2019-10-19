@@ -37,18 +37,6 @@ public final class DefaultFemaleDigitalBooleanActionSocket
         return socket instanceof MaleDigitalActionWithChangeSocket;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean supportsEnableExecution() {
-        
-        if (isConnected()) {
-            return ((MaleDigitalActionWithChangeSocket)getConnectedSocket())
-                    .supportsEnableExecution();
-        } else {
-            throw new UnsupportedOperationException("Socket is not connected");
-        }
-    }
-    
     @Override
     public void execute(boolean hasChangedToTrue) {
         if (isConnected()) {
@@ -77,7 +65,7 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
 
     @Override

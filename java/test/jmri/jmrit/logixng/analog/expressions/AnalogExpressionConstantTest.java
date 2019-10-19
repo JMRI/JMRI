@@ -234,7 +234,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         logixNG.activateLogixNG();
         
         DigitalActionBean actionDoAnalog =
-                new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+                new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         MaleSocket socketDoAnalog =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
         conditionalNG.getChild(0).connect(socketDoAnalog);

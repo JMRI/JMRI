@@ -32,7 +32,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     }
     
     private ActionLight(ActionLight template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 //        _template = template;
     }
     

@@ -208,7 +208,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         // Get the action and set the turnout
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
-        ActionTurnout action = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        ActionTurnout action = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         action.setTurnout(turnout);
         
         // Get some other turnout for later use
@@ -295,7 +295,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setRunOnGUIDelayed(false);
         conditionalNG.setEnabled(true);
-        actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionTurnout.setTurnout(turnout);
         actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);

@@ -27,7 +27,7 @@ public interface DigitalBooleanActionManager extends Manager<MaleDigitalActionWi
      * Create a new system name for an DigitalBooleanActionBean.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     public FemaleDigitalBooleanActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
@@ -60,6 +60,17 @@ public interface DigitalBooleanActionManager extends Manager<MaleDigitalActionWi
 //    public DigitalBooleanActionBean getByUserName(String s);
 
 //    public DigitalBooleanActionBean getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the DigitalActionManager is
+     * {@link #getSystemNamePrefix() } and "DA";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "DB";
+    }
 
     /*.*
      * Delete DigitalBooleanActionBean by removing it from the manager. The DigitalBooleanActionBean must first be

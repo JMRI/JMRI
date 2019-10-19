@@ -71,7 +71,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     @Test
     public void testSystemName() {
         Assert.assertEquals("String matches", "IQDA10", femaleSocket.getExampleSystemName());
-        Assert.assertEquals("String matches", "IQDA:0001", femaleSocket.getNewSystemName());
+        Assert.assertEquals("String matches", "IQDA:AUTO:0001", femaleSocket.getNewSystemName());
     }
     
     @Test

@@ -37,7 +37,7 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     }
 
     private AnalogExpressionMemory(AnalogExpressionMemory template) {
-        super(InstanceManager.getDefault(AnalogExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(AnalogExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }

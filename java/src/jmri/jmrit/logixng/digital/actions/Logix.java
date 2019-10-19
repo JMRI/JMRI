@@ -41,7 +41,7 @@ public class Logix extends AbstractDigitalAction
     }
     
     private Logix(Logix template) {
-        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null);
         _template = template;
         _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._expressionSocket.getName());

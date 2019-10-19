@@ -29,7 +29,7 @@ public class ShutdownComputer extends AbstractDigitalAction {
     }
     
     private ShutdownComputer(ShutdownComputer template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }

@@ -74,10 +74,10 @@ public class ImportConditional {
         DigitalExpressionBean expression;
         switch (ao) {
             case ALL_AND:
-                expression = new And(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+                expression = new And(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
                 break;
             case ALL_OR:
-                expression = new Or(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+                expression = new Or(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
                 break;
             case MIXED:
                 // This will fail, but fix it later.
@@ -88,7 +88,7 @@ public class ImportConditional {
         }
         buildExpression(expression, conditionalVariables);
         
-        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         buildAction(action, conditionalActions);
         
         MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);

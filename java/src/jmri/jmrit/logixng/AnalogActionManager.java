@@ -27,7 +27,7 @@ public interface AnalogActionManager extends Manager<MaleAnalogActionSocket> {
      * Create a new system name for an AnalogActionBean.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     public FemaleAnalogActionSocket createFemaleAnalogActionSocket(
             Base parent, FemaleSocketListener listener, String socketName);
@@ -60,6 +60,17 @@ public interface AnalogActionManager extends Manager<MaleAnalogActionSocket> {
 //    public Action getByUserName(String s);
 
 //    public Action getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the AnalogActionManager is
+     * {@link #getSystemNamePrefix() } and "AA";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "AA";
+    }
 
     /*.*
      * Delete Action by removing it from the manager. The Action must first be

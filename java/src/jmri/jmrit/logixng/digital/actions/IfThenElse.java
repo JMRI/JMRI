@@ -75,7 +75,7 @@ public class IfThenElse extends AbstractDigitalAction
     }
     
     private IfThenElse(IfThenElse template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._ifExpressionSocket.getName());

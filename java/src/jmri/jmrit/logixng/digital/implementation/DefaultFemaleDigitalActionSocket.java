@@ -76,7 +76,7 @@ public final class DefaultFemaleDigitalActionSocket
     @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalActionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
 
     @Override

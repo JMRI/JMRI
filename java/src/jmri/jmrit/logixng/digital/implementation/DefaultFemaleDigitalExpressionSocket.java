@@ -77,7 +77,7 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
     @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalExpressionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
 
     @Override

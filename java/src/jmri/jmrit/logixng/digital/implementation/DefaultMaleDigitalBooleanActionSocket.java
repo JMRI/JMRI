@@ -95,12 +95,6 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
     
     /** {@inheritDoc} */
     @Override
-    public boolean supportsEnableExecution() {
-        return _action.supportsEnableExecution();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute(boolean hasChangedToTrue) {
         if (! _enabled) {
             return;

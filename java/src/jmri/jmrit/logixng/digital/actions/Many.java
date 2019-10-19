@@ -44,7 +44,7 @@ public class Many extends AbstractDigitalAction
     }
     
     private Many(Many template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }

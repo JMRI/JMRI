@@ -26,7 +26,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     @Override
     protected String getNewSystemName() {
         return InstanceManager.getDefault(AnalogActionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
     
     @Test

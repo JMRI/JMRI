@@ -26,7 +26,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     @Override
     protected String getNewSystemName() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
     
     @Test

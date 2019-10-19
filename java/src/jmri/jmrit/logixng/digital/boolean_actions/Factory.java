@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Set;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionWithChangeFactory;
 import org.openide.util.lookup.ServiceProvider;
+import jmri.jmrit.logixng.DigitalBooleanActionFactory;
 
 /**
  * The factory for DigitalAction classes.
  */
-@ServiceProvider(service = DigitalActionWithChangeFactory.class)
-public class Factory implements DigitalActionWithChangeFactory {
+@ServiceProvider(service = DigitalBooleanActionFactory.class)
+public class Factory implements DigitalBooleanActionFactory {
 
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {

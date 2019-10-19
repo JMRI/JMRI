@@ -27,7 +27,7 @@ public interface DigitalActionManager extends Manager<MaleDigitalActionSocket> {
      * Create a new system name for an DigitalActionBean.
      * @return a new system name
      */
-    public String getNewSystemName();
+    public String getAutoSystemName();
 
     public FemaleDigitalActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
@@ -60,6 +60,17 @@ public interface DigitalActionManager extends Manager<MaleDigitalActionSocket> {
 //    public DigitalActionBean getByUserName(String s);
 
 //    public DigitalActionBean getBySystemName(String s);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the DigitalActionManager is
+     * {@link #getSystemNamePrefix() } and "DA";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "DA";
+    }
 
     /*.*
      * Delete DigitalActionBean by removing it from the manager. The DigitalActionBean must first be

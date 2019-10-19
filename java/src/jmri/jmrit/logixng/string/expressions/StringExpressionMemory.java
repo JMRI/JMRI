@@ -37,7 +37,7 @@ public class StringExpressionMemory extends AbstractStringExpression
     }
 
     private StringExpressionMemory(StringExpressionMemory template) {
-        super(InstanceManager.getDefault(StringExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(StringExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }

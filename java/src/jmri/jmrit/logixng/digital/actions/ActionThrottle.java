@@ -65,7 +65,7 @@ public class ActionThrottle extends AbstractDigitalAction
     }
     
     private ActionThrottle(ActionThrottle template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
                 .createFemaleSocket(this, this, _template._locoAddressSocket.getName());

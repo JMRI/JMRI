@@ -45,7 +45,7 @@ public class DefaultConditionalNG extends AbstractBase
     }
     
     public DefaultConditionalNG(DefaultConditionalNG template) {
-        super(InstanceManager.getDefault(ConditionalNG_Manager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName(), null);
         _template = template;
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, _template._femaleActionSocket.getName());
     }

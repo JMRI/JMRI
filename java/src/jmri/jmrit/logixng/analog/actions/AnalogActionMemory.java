@@ -33,7 +33,7 @@ public class AnalogActionMemory extends AbstractAnalogAction
     }
     
     private AnalogActionMemory(AnalogActionMemory template) {
-        super(InstanceManager.getDefault(AnalogActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(AnalogActionManager.class).getAutoSystemName(), null);
         _template = template;
         _memoryHandle = _template._memoryHandle;
     }

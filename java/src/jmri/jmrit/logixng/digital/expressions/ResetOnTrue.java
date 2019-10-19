@@ -68,7 +68,7 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     }
     
     private ResetOnTrue(ResetOnTrue template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, _template._primaryExpressionSocket.getName());

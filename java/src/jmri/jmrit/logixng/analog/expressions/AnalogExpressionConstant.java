@@ -29,7 +29,7 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
     }
 
     private AnalogExpressionConstant(AnalogExpressionConstant template) {
-        super(InstanceManager.getDefault(AnalogExpressionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(AnalogExpressionManager.class).getAutoSystemName(), null);
         _template = template;
         _value = _template._value;
     }

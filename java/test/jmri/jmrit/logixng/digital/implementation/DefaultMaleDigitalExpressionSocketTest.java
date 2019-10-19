@@ -27,7 +27,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     @Override
     protected String getNewSystemName() {
         return InstanceManager.getDefault(DigitalExpressionManager.class)
-                .getNewSystemName();
+                .getAutoSystemName();
     }
     
     @Test

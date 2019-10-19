@@ -716,7 +716,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     public String getAutoSystemName() {
         int nextAutoBlockRef = lastAutoNamedBeanRef.incrementAndGet();
-        StringBuilder b = new StringBuilder(getSystemNamePrefix() + ":AUTO:");
+        StringBuilder b = new StringBuilder(getSubSystemNamePrefix() + ":AUTO:");
         String nextNumber = paddedNumber.format(nextAutoBlockRef);
         b.append(nextNumber);
         return b.toString();

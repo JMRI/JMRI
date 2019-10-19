@@ -32,7 +32,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     }
     
     private ActionSensor(ActionSensor template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getNewSystemName(), null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 //        _template = template;
     }
     

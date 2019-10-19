@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.analog.implementation;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +36,6 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
         implements AnalogExpressionManager, InstanceManagerAutoDefault {
 
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
-    int lastAutoExpressionRef = 0;
-    
-    // This is for testing only!!!
-    // This number needs to be saved and restored.
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     
     public DefaultAnalogExpressionManager(InternalSystemConnectionMemo memo) {
@@ -95,6 +89,9 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
             throw new IllegalArgumentException("System name is invalid");
         }
         
+        // Keep track of the last created auto system name
+        updateAutoNumber(expression.getSystemName());
+        
         // save in the maps
         MaleAnalogExpressionSocket maleSocket = createMaleAnalogExpressionSocket(expression);
         register(maleSocket);
@@ -103,7 +100,7 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
     
     @Override
     public int getXMLOrder() {
-        return LOGIXNGS;
+        return LOGIXNG_ANALOG_EXPRESSIONS;
     }
 
     @Override
@@ -124,21 +121,11 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSystemNamePrefix()+"AE:?\\d+")) {
+        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
         }
-    }
-
-    @Override
-    public String getNewSystemName() {
-        int nextAutoLogixNGRef = lastAutoExpressionRef + 1;
-        StringBuilder b = new StringBuilder(getSystemNamePrefix());
-        b.append("AE:");
-        String nextNumber = paddedNumber.format(nextAutoLogixNGRef);
-        b.append(nextNumber);
-        return b.toString();
     }
 
     @Override
