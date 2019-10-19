@@ -26,7 +26,7 @@ public class TrackSegmentTest {
     static private LayoutEditor layoutEditor = null;
     static private TrackSegment trackSegment = null;
 
-    static final double tolerance = 0.000001;
+    static final double tolerance = 0.000001;   //amount of error allowed for float comparisons
 
     @Test
     public void testCtor() {
