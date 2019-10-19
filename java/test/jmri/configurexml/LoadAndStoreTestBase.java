@@ -58,10 +58,22 @@ public class LoadAndStoreTestBase {
     private SaveType saveType = SaveType.Config;
     private boolean guiOnly = false;
 
-    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUIOnly) {
+    /**
+     * Get all XML files in a directory and validate the ability to load and
+     * store them.
+     *
+     * @param file      the file to be tested
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @param saveType  the type (i.e. level) of ConfigureXml information being saved
+     * @param isGUI     true for files containing GUI elements, i.e. panels.  These
+     *                  can only be loaded once (others can be loaded twice, and that's
+     *                  tested when this is false), and can't be loaded when running headless.
+     */
+    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUI) {
         this.file = file;
         this.saveType = saveType;
-        this.guiOnly = isGUIOnly;
+        this.guiOnly = isGUI;
     }
 
     /**
