@@ -31,9 +31,7 @@ public class TrackSegmentTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        if (layoutEditor != null) {
-            Assert.assertNotNull("trackSegment exists", trackSegment);
-
+        if ((layoutEditor != null) && (trackSegment != null)) {
             // Invalid parameters in TrackSegment constructor call
             TrackSegment ts = new TrackSegment("TS01", null, NONE, null, NONE, false, false, layoutEditor);
             Assert.assertNotNull("TrackSegment TS01 not null", ts);
@@ -45,163 +43,192 @@ public class TrackSegmentTest {
 
     @Test
     public void testReplaceTrackConnection() {
-        Assert.assertNotNull("trackSegment exists", trackSegment);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, NONE));
+            jmri.util.JUnitAppender.assertErrorMessage("Can't replace null track connection with null");
 
-        Assert.assertFalse("trackSegment.replaceTrackConnection(null, null, NONE) fail", trackSegment.replaceTrackConnection(null, null, NONE));
-        jmri.util.JUnitAppender.assertErrorMessage("Can't replace null track connection with null");
+            LayoutTrack c1 = trackSegment.getConnect1();
+            int t1 = trackSegment.getType1();
+            Assert.assertTrue("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.replaceTrackConnection(c1, null, NONE));
+            Assert.assertNull("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.getConnect1());
 
-        LayoutTrack c1 = trackSegment.getConnect1();
-        int t1 = trackSegment.getType1();
-        Assert.assertTrue("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.replaceTrackConnection(c1, null, NONE));
-        Assert.assertNull("trackSegment.replaceTrackConnection(c1, null, NONE) fail", trackSegment.getConnect1());
+            Assert.assertTrue("trackSegment.replaceTrackConnection(null, c1, t1) fail", trackSegment.replaceTrackConnection(null, c1, t1));
+            Assert.assertEquals("trackSegment.replaceTrackConnection(null, c1, t1) fail", c1, trackSegment.getConnect1());
 
-        Assert.assertTrue("trackSegment.replaceTrackConnection(null, c1, t1) fail", trackSegment.replaceTrackConnection(null, c1, t1));
-        Assert.assertEquals("trackSegment.replaceTrackConnection(null, c1, t1) fail", c1, trackSegment.getConnect1());
-
-        PositionablePoint a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), layoutEditor);
-        Assert.assertTrue("trackSegment.replaceTrackConnection(c1, a3, POS_POINT) fail", trackSegment.replaceTrackConnection(c1, a3, POS_POINT));
-
+            PositionablePoint a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 10.0), layoutEditor);
+            Assert.assertTrue("trackSegment.replaceTrackConnection(c1, a3, POS_POINT) fail", trackSegment.replaceTrackConnection(c1, a3, POS_POINT));
+        }
     }
 
     @Test
     public void testToString() {
-        Assert.assertEquals("trackSegment.toString()", "TrackSegment test c1:{A1 (1)}, c2:{A2 (1)}", trackSegment.toString());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertEquals("trackSegment.toString()", "TrackSegment TS1 c1:{A1 (1)}, c2:{A2 (1)}", trackSegment.toString());
+        }
     }
 
     @Test
     public void testSetNewConnect() {
-        trackSegment.setNewConnect1(null, NONE);
-        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect1());
-        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType1());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setNewConnect1(null, NONE);
+            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect1());
+            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType1());
 
-        trackSegment.setNewConnect2(null, NONE);
-        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect2());
-        Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType2());
+            trackSegment.setNewConnect2(null, NONE);
+            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", null, trackSegment.getConnect2());
+            Assert.assertEquals("trackSegment.setNewConnect1(null, NONE)", NONE, trackSegment.getType2());
+        }
     }
 
     @Test
     public void test_getDirectionRAD() {
-        Assert.assertEquals("trackSegment.getDirectionRAD()", 4.056693354143153, trackSegment.getDirectionRAD(), tolerance);
-        Assert.assertEquals("trackSegment.getDirectionDEG()", 232.4314079711725, trackSegment.getDirectionDEG(), tolerance);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertEquals("trackSegment.getDirectionRAD()", 4.056693354143153, trackSegment.getDirectionRAD(), tolerance);
+            Assert.assertEquals("trackSegment.getDirectionDEG()", 232.4314079711725, trackSegment.getDirectionDEG(), tolerance);
+        }
     }
 
     @Test
     public void test_getConnection() {
-        boolean fail = true;   // assume failure (pessimist!)
-        try {
-            Assert.assertNull("trackSegment.getConnection()", trackSegment.getConnection(NONE));
-        } catch (JmriException e) {
-            fail = false;
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            boolean fail = true;   // assume failure (pessimist!)
+            try {
+                Assert.assertNull("trackSegment.getConnection()", trackSegment.getConnection(NONE));
+            } catch (JmriException e) {
+                fail = false;
+            }
+            Assert.assertFalse("trackSegment.getConnection(NONE) threw JmriException", fail);
         }
-        Assert.assertFalse("trackSegment.getConnection(NONE) threw JmriException", fail);
     }
 
     @Test
     public void test_getSetBezierControlPoints() {
-        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 0", 0, trackSegment.getNumberOfBezierControlPoints());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 0", 0, trackSegment.getNumberOfBezierControlPoints());
 
-        Point2D p0 = new Point2D.Double(11.1, 22.2);
-        trackSegment.setBezierControlPoint(p0, 0);
-        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 1", 1, trackSegment.getNumberOfBezierControlPoints());
-        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, trackSegment.getBezierControlPoint(0));
+            Point2D p0 = new Point2D.Double(11.1, 22.2);
+            trackSegment.setBezierControlPoint(p0, 0);
+            Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 1", 1, trackSegment.getNumberOfBezierControlPoints());
+            Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, trackSegment.getBezierControlPoint(0));
 
-        Point2D p1 = new Point2D.Double(22.2, 33.3);
-        trackSegment.setBezierControlPoint(p1, 1);
-        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
-        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, trackSegment.getBezierControlPoint(0));
-        Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, trackSegment.getBezierControlPoint(1));
+            Point2D p1 = new Point2D.Double(22.2, 33.3);
+            trackSegment.setBezierControlPoint(p1, 1);
+            Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
+            Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, trackSegment.getBezierControlPoint(0));
+            Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, trackSegment.getBezierControlPoint(1));
 
-        Point2D p0P = new Point2D.Double(33.3, 44.4);
-        trackSegment.setBezierControlPoint(p0P, 0);
-        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
-        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, trackSegment.getBezierControlPoint(0));
-        Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, trackSegment.getBezierControlPoint(1));
+            Point2D p0P = new Point2D.Double(33.3, 44.4);
+            trackSegment.setBezierControlPoint(p0P, 0);
+            Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
+            Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, trackSegment.getBezierControlPoint(0));
+            Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, trackSegment.getBezierControlPoint(1));
 
-        Point2D p1P = new Point2D.Double(44.4, 55.5);
-        trackSegment.setBezierControlPoint(p1P, -1);
-        Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
-        Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, trackSegment.getBezierControlPoint(0));
-        Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1P, trackSegment.getBezierControlPoint(1));
+            Point2D p1P = new Point2D.Double(44.4, 55.5);
+            trackSegment.setBezierControlPoint(p1P, -1);
+            Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, trackSegment.getNumberOfBezierControlPoints());
+            Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, trackSegment.getBezierControlPoint(0));
+            Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1P, trackSegment.getBezierControlPoint(1));
 
-        Assert.assertEquals("trackSegment.getBezierControlPoint(-1)", p1P, trackSegment.getBezierControlPoint(-1));
-        Assert.assertEquals("trackSegment.getBezierControlPoint(-2)", p0P, trackSegment.getBezierControlPoint(-2));
+            Assert.assertEquals("trackSegment.getBezierControlPoint(-1)", p1P, trackSegment.getBezierControlPoint(-1));
+            Assert.assertEquals("trackSegment.getBezierControlPoint(-2)", p0P, trackSegment.getBezierControlPoint(-2));
+        }
     }
 
     @Test
     public void test_getSetLayoutBlock() {
-        Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
-        trackSegment.setLayoutBlock(null);
-        Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+            trackSegment.setLayoutBlock(null);
+            Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
 
-        LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
-        trackSegment.setLayoutBlock(layoutBlock);
-        Assert.assertEquals("trackSegment.getLayoutBlock()", layoutBlock, trackSegment.getLayoutBlock());
+            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
+            trackSegment.setLayoutBlock(layoutBlock);
+            Assert.assertEquals("trackSegment.getLayoutBlock()", layoutBlock, trackSegment.getLayoutBlock());
 
-        trackSegment.setLayoutBlock(null);
-        Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+            trackSegment.setLayoutBlock(null);
+            Assert.assertNull("trackSegment.getLayoutBlock()", trackSegment.getLayoutBlock());
+        }
     }
 
     @Test
     public void test_setLayoutBlockByName() {
-        Assert.assertNull("trackSegment.getLayoutBlock() == null (default)", trackSegment.getLayoutBlock());
-        trackSegment.setLayoutBlockByName(null);
-        Assert.assertNull("trackSegment.getLayoutBlock(null) == null", trackSegment.getLayoutBlock());
-        trackSegment.setLayoutBlockByName("");
-        Assert.assertNull("trackSegment.getLayoutBlock('') == null", trackSegment.getLayoutBlock());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertNull("trackSegment.getLayoutBlock() == null (default)", trackSegment.getLayoutBlock());
+            trackSegment.setLayoutBlockByName(null);
+            Assert.assertNull("trackSegment.getLayoutBlock(null) == null", trackSegment.getLayoutBlock());
+            trackSegment.setLayoutBlockByName("");
+            Assert.assertNull("trackSegment.getLayoutBlock('') == null", trackSegment.getLayoutBlock());
 
-        try {
-            trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
-            Assert.fail("trackSegment.setLayoutBlockByName(\"invalid name\"); NullPointerException not thrown");
-        } catch (NullPointerException e) {
+            try {
+                trackSegment.setLayoutBlockByName("invalid name");    //note: invalid name
+                Assert.fail("trackSegment.setLayoutBlockByName(\"invalid name\"); NullPointerException not thrown");
+            } catch (NullPointerException e) {
+            }
+            Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
+            jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
+
+//            LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
+//            trackSegment.setLayoutBlockByName("ILB999");
+//            Assert.assertEquals("trackSegment.getLayoutBlock() == layoutBlock", layoutBlock, trackSegment.getLayoutBlock());
+//
+//            trackSegment.setLayoutBlock(null);
+//            Assert.assertNull("trackSegment.setLayoutBlock(null) == null", trackSegment.getLayoutBlock());
         }
-        Assert.assertNull("trackSegment.getLayoutBlock() == null", trackSegment.getLayoutBlock());
-        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: The block name does not return a block.");
-
-//
-//        LayoutBlock layoutBlock = new LayoutBlock("ILB999", "Test Block");
-//        trackSegment.setLayoutBlockByName("ILB999");
-//        Assert.assertEquals("trackSegment.getLayoutBlock() == layoutBlock", layoutBlock, trackSegment.getLayoutBlock());
-//
-//        trackSegment.setLayoutBlock(null);
-//        Assert.assertNull("trackSegment.setLayoutBlock(null) == null", trackSegment.getLayoutBlock());
     }
 
     @Test
     public void test_translateAndScaleCoords() {
-        Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), trackSegment.getCentreSeg());
-        trackSegment.translateCoords((float) 111.1, (float) 222.2);
-        Assert.assertEquals("trackSegment.translateCoords()", new Point2D.Double(126.0999984741211, 248.6999969482422), trackSegment.getCoordsCenter());
-        trackSegment.scaleCoords((float) 2.2, (float) 3.3);
-        Assert.assertEquals("trackSegment.scaleCoords()", new Point2D.Double(277.4200026559829, 820.7099780702592), trackSegment.getCoordsCenter());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), trackSegment.getCentreSeg());
+            trackSegment.translateCoords((float) 111.1, (float) 222.2);
+            Assert.assertEquals("trackSegment.translateCoords()", new Point2D.Double(126.0999984741211, 248.6999969482422), trackSegment.getCoordsCenter());
+            trackSegment.scaleCoords((float) 2.2, (float) 3.3);
+            Assert.assertEquals("trackSegment.scaleCoords()", new Point2D.Double(277.4200026559829, 820.7099780702592), trackSegment.getCoordsCenter());
+        }
     }
 
     @Test
     public void test_setCoordsCenter() {
-        Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), trackSegment.getCentreSeg());
-        Point2D newC = new Point2D.Double(111.1, 222.2);
-        trackSegment.setCoordsCenter(newC);
-        Assert.assertEquals("trackSegment.setCoordsCenter(p)", newC, trackSegment.getCoordsCenter());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), trackSegment.getCentreSeg());
+            Point2D newC = new Point2D.Double(111.1, 222.2);
+            trackSegment.setCoordsCenter(newC);
+            Assert.assertEquals("trackSegment.setCoordsCenter(p)", newC, trackSegment.getCoordsCenter());
+        }
     }
 
     @Test
     public void test_findHitPointType() {
-        Point2D ccc = trackSegment.getCentreSeg();
-        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, false, false));
-        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, false, true));
-        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, true, false));
-        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, true, true));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            Point2D ccc = trackSegment.getCentreSeg();
+            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ccc, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ccc, true, true));
 
-        Point2D ep1 = trackSegment.getConnect1().getCoordsForConnectionType(trackSegment.getType1());
-        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, false, false));
-        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, false, true));
-        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, true, false));
-        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, true, true));
+            Point2D ep1 = trackSegment.getConnect1().getCoordsForConnectionType(trackSegment.getType1());
+            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep1, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep1, true, true));
 
-        Point2D ep2 = trackSegment.getConnect2().getCoordsForConnectionType(trackSegment.getType2());
-        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, false, false));
-        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, false, true));
-        Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, true, false));
-        Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, true, true));
+            Point2D ep2 = trackSegment.getConnect2().getCoordsForConnectionType(trackSegment.getType2());
+            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, false, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, false, true));
+            Assert.assertEquals("trackSegment.findHitPointType()", TRACK, trackSegment.findHitPointType(ep2, true, false));
+            Assert.assertEquals("trackSegment.findHitPointType()", NONE, trackSegment.findHitPointType(ep2, true, true));
+        }
     }
 
     /*
@@ -547,7 +574,7 @@ public class TrackSegmentTest {
             if (layoutEditor != null) {
                 PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
                 PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
-                trackSegment = new TrackSegment("test", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, layoutEditor);
+                trackSegment = new TrackSegment("TS1", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, true, layoutEditor);
             }
         }
     }
