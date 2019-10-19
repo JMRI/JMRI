@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.actions;
 
-import apps.AppsBase;
 import java.io.IOException;
 import java.util.Locale;
 import jmri.InstanceManager;

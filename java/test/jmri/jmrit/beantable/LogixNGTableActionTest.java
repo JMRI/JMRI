@@ -203,7 +203,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertNotNull("Verify 'LogixNG 999' Added", chk999);  // NOI18N
 
         // Add creates an edit frame; find and dispose
-        JFrame editFrame = JFrameOperator.waitJFrame(jmri.Bundle.formatMessage(rbxLogixNGSwing.getString("TitleEditLogixNG2"), "IQ:0001", "LogixNG 999"), true, true);  // NOI18N
+        JFrame editFrame = JFrameOperator.waitJFrame(jmri.Bundle.formatMessage(rbxLogixNGSwing.getString("TitleEditLogixNG2"), "IQ:AUTO:0001", "LogixNG 999"), true, true);  // NOI18N
         JUnitUtil.dispose(editFrame);
 
         JUnitUtil.dispose(logixNGFrame);
