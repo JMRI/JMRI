@@ -213,7 +213,6 @@ public class DefaultCabSignalTest {
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
         InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
-        JUnitUtil.initShutDownManager();
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 

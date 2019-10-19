@@ -37,7 +37,7 @@ public class CbusCabSignalManager extends AbstractCabSignalManager {
     }
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     protected CabSignal createCabSignal(LocoAddress address){

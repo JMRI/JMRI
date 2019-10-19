@@ -1,7 +1,6 @@
 package jmri.jmrix.pricom.downloader;
 
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * JUnit tests for the LoaderPane class.
@@ -68,4 +67,13 @@ public class LoaderPaneTest {
         Assert.assertEquals("length", 128, p.getDataSize(bytes));
     }
 
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }

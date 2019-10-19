@@ -27,7 +27,6 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         title = Bundle.getMessage("CapConfigTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
         memo = new CanSystemConnectionMemo();
@@ -40,6 +39,8 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
         Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
         tcis = null;

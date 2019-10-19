@@ -48,6 +48,7 @@ public class Z21ReporterTest extends jmri.implementation.AbstractRailComReporter
         tc.terminateThreads();
         memo = null;
         tc = null;
+        JUnitUtil.clearShutDownManager(); // clears "Writing IdTags" from DefaultIdTagManager
         JUnitUtil.tearDown();
    }
 

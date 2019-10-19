@@ -27,7 +27,9 @@ public class Z21XNetThrottleManagerTest extends XNetThrottleManagerTest {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

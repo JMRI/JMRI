@@ -499,9 +499,10 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
-       if(memo!=null) {
-          memo.dispose();
-       }
+        if(memo!=null) {
+            memo.dispose();
+        }
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     }
 
     @AfterClass

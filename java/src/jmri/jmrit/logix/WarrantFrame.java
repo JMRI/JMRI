@@ -920,6 +920,9 @@ public class WarrantFrame extends WarrantRoute {
         }
 
         msg = _warrant.checkRoute();
+        if (msg == null) {
+            msg = _warrant.checkforTrackers();
+        }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("LearnError", msg),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -1023,13 +1026,17 @@ public class WarrantFrame extends WarrantRoute {
         
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
                 _throttleCommands, _runETOnlyBox.isSelected());
+        if (msg == null) {
+            msg = _warrant.checkforTrackers();
+        }
         if (msg != null) {
             clearWarrant();
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             setStatusText(msg, Color.red);
             return;
-        }
+        } else
+        
         msg = _warrant.checkStartBlock();
         if (msg != null) {
             if (msg.equals("warnStart")) {
@@ -1285,7 +1292,11 @@ public class WarrantFrame extends WarrantRoute {
         long endTime = System.currentTimeMillis();
         long time = endTime - _startTime;
         _startTime = endTime;
-        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName, _speed));
+        ThrottleSetting ts = new ThrottleSetting(time, cmd, value, bName, _speed);
+        if (log.isDebugEnabled()) {
+            log.debug("setThrottleCommand= {}", ts.toString());
+        }
+        _throttleCommands.add(ts);
         _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());

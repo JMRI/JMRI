@@ -526,7 +526,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             operationsMenu(menuBar, wi);
         }
         systemsMenu(menuBar, wi);
-        scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi);
         menuBar.add(new WindowMenu(wi));
         helpMenu(menuBar, wi);
@@ -677,13 +676,20 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
+    /**
+     * Add a script menu to a window menu bar.
+     * 
+     * @param menuBar the menu bar to add the script menu to
+     * @param wi the window interface containing menuBar
+     * @deprecated since 4.17.5 without direct replacement; appears
+     * to have been empty method since 1.2.3
+     */
+    @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
         // temporarily remove Scripts menu; note that "Run Script"
         // has been added to the Panels menu
         // JMenu menu = new JMenu("Scripts");
         // menuBar.add(menu);
-        // menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
-        // menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
     protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {

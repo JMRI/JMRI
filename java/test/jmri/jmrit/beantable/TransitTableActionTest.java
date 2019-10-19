@@ -18,7 +18,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TransitTableActionTest extends AbstractTableActionBase {
+public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
 
     @Test
     public void testCTor() {

@@ -105,6 +105,7 @@ public class JsonOperationsSocketServiceTest {
         service = null;
         connection = null;
         mapper = null;
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

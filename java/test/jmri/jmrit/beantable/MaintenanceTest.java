@@ -10,6 +10,7 @@ import org.junit.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -98,10 +99,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Cross Reference Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("DeviceReportParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
+            Maintenance.deviceReportPressed("IS1",parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
     @Test
@@ -114,10 +117,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Find Orphan Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindOrphansParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
+            Maintenance.findOrphansPressed(parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
     //@Test
@@ -130,10 +135,12 @@ public class MaintenanceTest {
 	    });
         t.setName("Find Empty Dialog Close Thread");
         t.start();
+        JmriJFrame parent = new jmri.util.JmriJFrame("FindEmptyParent");
         ThreadingUtil.runOnGUI(() -> {
-            Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+            Maintenance.findEmptyPressed(parent);
         });
         t.join(); // only proceed when all done
+        JUnitUtil.dispose(parent);
     }
 
 
@@ -149,6 +156,7 @@ public class MaintenanceTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

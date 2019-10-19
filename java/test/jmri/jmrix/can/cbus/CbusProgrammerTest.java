@@ -92,8 +92,9 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void tearDown() {
         programmer = p = null;
         tc = null;
-	testListener = null;
-	JUnitUtil.tearDown();
+	    testListener = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    	JUnitUtil.tearDown();
     }
 
 }

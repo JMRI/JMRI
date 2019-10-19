@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.SignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
@@ -17,7 +18,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
  */
-public class SignalHeadTableActionTest extends AbstractTableActionBase {
+public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHead> {
 
     @Test
     public void testCreate() {

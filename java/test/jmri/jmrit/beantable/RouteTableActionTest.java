@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  *
  * @author	Bob Jacobsen Copyright 2004, 2007
  */
-public class RouteTableActionTest extends AbstractTableActionBase {
+public class RouteTableActionTest extends AbstractTableActionBase<Route> {
 
     @Test
     public void testCreate() {

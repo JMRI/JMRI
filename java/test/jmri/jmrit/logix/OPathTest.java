@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the OPath class
+ * Tests for the OPath class.
  *
  * @author	Bob Jacobsen Copyright 2010
  */

@@ -74,12 +74,35 @@ public class NBHSignalHead extends NBHAbstractSignalCommon {
         _mNamedBeanHandleSignalHead.getBean().setHeld(newHeld);
     }
 
+    /**
+     * Get an array of appearance indexes valid for the mast type.
+     *
+     * @return array of appearance state values available on this mast type
+     */
     @Override
     public int[] getValidStates() {
         if (_mNamedBeanHandleSignalHead == null) return new int[0];
         return _mNamedBeanHandleSignalHead.getBean().getValidStates();
     }
 
+    /**
+     * Get an array of non-localized appearance keys valid for the mast type.
+     * For GUI application consider using (capitalized) {@link #getValidStateNames()}
+     *
+     * @return array of translated appearance names available on this mast type
+     */
+    @Override
+    public String[] getValidStateKeys() {
+        if (_mNamedBeanHandleSignalHead == null) return new String[0];
+        return _mNamedBeanHandleSignalHead.getBean().getValidStateKeys();
+    }
+
+    /**
+     * Get an array of localized appearance descriptions valid for the mast type.
+     * For persistance and comparison consider using {@link #getValidStateKeys()}
+     *
+     * @return array of translated appearance names
+     */
     @Override
     public String[] getValidStateNames() {
         if (_mNamedBeanHandleSignalHead == null) return new String[0];

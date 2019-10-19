@@ -132,7 +132,9 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @After
     public void tearDown() {
         tc.terminate();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
     /**

@@ -107,13 +107,14 @@ public class CallOn {
                                                                             callOnEntry._mSwitchIndicator6);
                     if (_mSignalHeadSelected) {
 //  Technically, I'd have liked to call this only once, but in reality, each signalhead could have a different value list:
-                        String[] validStateNames = signal.getValidStateNames();
+                        String[] validStateNames = signal.getValidStateNames(); // TODO consider using getValidStateKeys() to skip localisation issue
                         int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
+                        // TODO use non-localized validStateNKeys instead of localized validStateNames
                         if (validStateNamesIndex == -1) { // Not found:
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnNotValidAspect"));   // NOI18N
                         }
                         NBHSensor calledOnExternalSensor = new NBHSensor("CallOn", userIdentifier, "groupingString", callOnEntry._mCalledOnExternalSensor, false);
-                        int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a coorelated 1 for 1 with "getValidStateNames", via tests it seems to be.
+                        int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a correlated 1 for 1 with "getValidStateNames", via tests it seems to be.
                         _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, correspondingValidStates[validStateNamesIndex], calledOnExternalSensor, null, route));
                     } else {
                         String externalBlockName = callOnEntry._mExternalBlock;
@@ -219,8 +220,9 @@ NOTE:
     }
 
 //  When we went to foreign language support, I had to convert to English here, so that these lines worked above:
-//  String[] validStateNames = signal.getValidStateNames();
+//  String[] validStateNames = signal.getValidStateNames(); // use getValidStateKeys instead?
 //  int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
+//
 //  I SUSPECT (not verified) that "signal.getValidStateNames()" ALWAYS returns English no matter what language is selected.
 //  If I AM WRONG, then this routine can be removed, and the call to it removed:
     private String convertFromForeignLanguageColor(String foreignLanguageColor) {

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
+import jmri.Section;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
@@ -13,7 +14,7 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SectionTableActionTest extends AbstractTableActionBase {
+public class SectionTableActionTest extends AbstractTableActionBase<Section> {
 
     @Test
     public void testCTor() {

@@ -13,6 +13,8 @@ import jmri.implementation.QuietShutDownTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement SensorManager for Dcc4Pc systems. The Manager handles all the state
  * changes.
@@ -49,7 +51,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     Dcc4PcTrafficController tc;
 
     @Override
-    public Dcc4PcSensor getSensor(String name) {
+    public Dcc4PcSensor getSensor(@Nonnull String name) {
         return (Dcc4PcSensor) super.getSensor(name);
 
     }
@@ -58,6 +60,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Dcc4PcSystemConnectionMemo getMemo() {
         return (Dcc4PcSystemConnectionMemo) memo;
     }
@@ -91,13 +94,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     //we want the system name to be in the format of board:input
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(String curAddress, @Nonnull String prefix) throws JmriException {
         String iName;
         if (curAddress.contains(":")) {
             board = 0;

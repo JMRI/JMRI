@@ -37,7 +37,9 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     public void tearDown() {
         tcis = null;
         r = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
     
     @Test
