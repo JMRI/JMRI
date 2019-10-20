@@ -30,13 +30,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     public DCCppCommandStation() {
         super();
-        rmgr = new DCCppRegisterManager();
     }
 
     public DCCppCommandStation(DCCppSystemConnectionMemo memo) {
         super();
         adaptermemo = memo;
-        rmgr = new DCCppRegisterManager();
     }
 
     public void setBaseStationType(String s) {
@@ -203,6 +201,12 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     private DCCppSystemConnectionMemo adaptermemo;
 
+    private void creatermgr() {
+	if (rmgr == null) {
+	    rmgr = new DCCppRegisterManager(maxNumSlots);
+	}
+    }
+
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
@@ -220,21 +224,25 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     public int requestNewRegister(int addr) {
- return(rmgr.requestRegister(addr));
+	creatermgr();
+	return(rmgr.requestRegister(addr));
     }
 
     public void releaseRegister(int addr) {
- rmgr.releaseRegister(addr);
+	creatermgr();
+	rmgr.releaseRegister(addr);
     }
 
     // Return DCCppConstants.NO_REGISTER_FREE if address is not in list
     public int getRegisterNum(int addr) {
- return(rmgr.getRegisterNum(addr));
+	creatermgr();
+	return(rmgr.getRegisterNum(addr));
     }
 
     // Return DCCppConstants.REGISTER_UNALLOCATED if register is unused.
     public int getRegisterAddress(int num) {
- return(rmgr.getRegisterAddress(num));
+	creatermgr();
+	return(rmgr.getRegisterAddress(num));
     }
 
     /*
