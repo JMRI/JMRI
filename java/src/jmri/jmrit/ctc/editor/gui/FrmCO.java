@@ -537,34 +537,38 @@ public class FrmCO extends javax.swing.JFrame {
 
     private void _mGroupingListAddReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGroupingListAddReplaceActionPerformed
         if (ProjectsCommonSubs.isNullOrEmptyString((String) _mExternalSignal.getSelectedItem())) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
             return;
         }
         if (_mSignalHeadSelected) {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mCalledOnExternalSensor.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
             }
         } else {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mExternalBlock.getSelectedItem())) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOBlockInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOBlockInvalid"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
             }
         }
         CallOnEntry callOnEntry = new CallOnEntry(  (String) _mExternalSignal.getSelectedItem(),
-                                                    _mSignalFacingDirection.getSelectedItem().toString(),
-                                                    _mSignalAspectToDisplay.getSelectedItem().toString(),
-                                                    (String) _mCalledOnExternalSensor.getSelectedItem(),
-                                                    (String) _mExternalBlock.getSelectedItem(),
-                                                    (String)_mSwitchIndicator1.getSelectedItem(),
-                                                    (String)_mSwitchIndicator2.getSelectedItem(),
-                                                    (String)_mSwitchIndicator3.getSelectedItem(),
-                                                    (String)_mSwitchIndicator4.getSelectedItem(),
-                                                    (String)_mSwitchIndicator5.getSelectedItem(),
-                                                    (String)_mSwitchIndicator6.getSelectedItem());
+                (_mSignalFacingDirection.getSelectedItem() == null ? null : _mSignalFacingDirection.getSelectedItem().toString()),
+                (_mSignalAspectToDisplay.getSelectedItem() == null ? null : _mSignalAspectToDisplay.getSelectedItem().toString()),
+                (String) _mCalledOnExternalSensor.getSelectedItem(),
+                (String) _mExternalBlock.getSelectedItem(),
+                (String)_mSwitchIndicator1.getSelectedItem(),
+                (String)_mSwitchIndicator2.getSelectedItem(),
+                (String)_mSwitchIndicator3.getSelectedItem(),
+                (String)_mSwitchIndicator4.getSelectedItem(),
+                (String)_mSwitchIndicator5.getSelectedItem(),
+                (String)_mSwitchIndicator6.getSelectedItem());
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(callOnEntry);
         if (verifyClassReturnValue != null) { // Error:
-            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);    // NOI18N
+            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);    // NOI18N
             return;
         }
 
