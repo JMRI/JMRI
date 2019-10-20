@@ -77,7 +77,26 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
+	if (maxNumSlots != 0) {
+	    log.error("Command Station maxNumSlots already initialized");
+	    return;
+	}
         maxNumSlots = l.getValueInt(1);
+        log.debug("maxNumSlots set to {}", maxNumSlots);
+    }
+    protected void setCommandStationMaxNumSlots(int n) {
+	if (maxNumSlots != 0) {
+	    log.error("Command Station maxNumSlots already initialized");
+	    return;
+	}
+        maxNumSlots = n;
+        log.debug("maxNumSlots set to {}", maxNumSlots);
+    }
+    protected int getCommandStationMaxNumSlots() {
+	if (maxNumSlots <= 0) {
+	    log.error("Command Station maxNumSlots not initialized yet");
+	}
+        return maxNumSlots;
     }
 
     /**

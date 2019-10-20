@@ -19,8 +19,10 @@ public abstract class AbstractDCCppInitializationManager {
     protected Thread initThread = null;
 
     protected DCCppSystemConnectionMemo systemMemo = null;
-    protected static int INITIALTIMEOUT = 30000;
 
+    // If there is no answer from an Arduino after 10 sec it's not there
+    // Normal answer time is ~2 sec
+    protected static int INITIALTIMEOUT = 10000;
 
     protected int getInitTimeout() {
         return INITIALTIMEOUT;  // this method is overriden for tests.
@@ -95,10 +97,16 @@ public abstract class AbstractDCCppInitializationManager {
             javax.swing.Timer retVal = 
 		new javax.swing.Timer(INITIALTIMEOUT,
 				      (java.awt.event.ActionEvent e) -> {
+					  DCCppCommandStation cs;
 					  /* If the timer times out, notify any
 					     waiting objects, and dispose of
 					     this thread */
 					  log.debug("Timeout waiting for Command Station Response");
+					  // This means probably that there was no answer on the MaxNumSlots question
+					  cs = systemMemo.getDCCppTrafficController().getCommandStation(); 
+					  if (cs.getCommandStationMaxNumSlots() <= 0) {
+					      cs.setCommandStationMaxNumSlots(DCCppConstants.MAX_MAIN_REGISTERS);
+					  }
 					  finish();
 				      }
 		    );
