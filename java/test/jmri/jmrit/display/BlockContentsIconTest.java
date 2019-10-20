@@ -86,7 +86,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Override
     @ToDo("The test in the parent class fails if there is no icon set")
     public void testGetAndSetScale(){
-	// the test in the parent clase fails if there is no icon for the
+	// the test in the parent class fails if there is no icon for the
 	// blockcontents.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13

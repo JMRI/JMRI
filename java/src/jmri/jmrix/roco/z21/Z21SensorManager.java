@@ -90,7 +90,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg) {
@@ -127,7 +127,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message l) {

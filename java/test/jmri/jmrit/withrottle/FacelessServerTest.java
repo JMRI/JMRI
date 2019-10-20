@@ -44,6 +44,7 @@ public class FacelessServerTest {
           // not all tests fully configure the server, so an
           // NPE here is ok.
         }
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

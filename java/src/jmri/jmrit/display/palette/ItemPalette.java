@@ -147,9 +147,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     protected static JTabbedPane _tabPane;
     private static HashMap<String, ItemPanel> _tabIndex;
 
-    static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
+    private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
-    static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    private static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     private ItemPanel _currentItemPanel;
 
     /**
@@ -169,53 +169,37 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         tree = manager.newCatalogTree("NXPI", "Item Palette");
         CatalogTreeNode root = tree.getRoot();
 
-        Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
+        for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : _iconMaps.entrySet()) {
             root.add(store3levelMap(entry.getKey(), entry.getValue()));
             if (log.isDebugEnabled()) {
                 log.debug("Add type node " + entry.getKey());
             }
         }
 
-        Iterator<Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>> its = _indicatorTOMaps.entrySet().iterator();
-        while (its.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry = its.next();
+        for (Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry : _indicatorTOMaps.entrySet()) {
             CatalogTreeNode typeNode = new CatalogTreeNode(entry.getKey());
-            Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent = iter.next();
+            for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent : entry.getValue().entrySet()) {
                 typeNode.add(store3levelMap(ent.getKey(), ent.getValue()));
-                if (log.isDebugEnabled()) {
-                    log.debug("Add IndicatorTO node " + ent.getKey());
-                }
+                log.debug("Add IndicatorTO node {}", ent.getKey());
             }
             root.add(typeNode);
-            if (log.isDebugEnabled()) {
-                log.debug("Add IndicatorTO node " + entry.getKey());
-            }
+            log.debug("Add IndicatorTO node {}", entry.getKey());
         }
     }
 
     static CatalogTreeNode store3levelMap(String type, HashMap<String, HashMap<String, NamedIcon>> familyMap) {
         CatalogTreeNode typeNode = new CatalogTreeNode(type);
-        Iterator<Entry<String, HashMap<String, NamedIcon>>> iter = familyMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, HashMap<String, NamedIcon>> ent = iter.next();
-            String family = ent.getKey();
+        for (Entry<String, HashMap<String, NamedIcon>> mapEntry : familyMap.entrySet()) {
+            String family = mapEntry.getKey();
             CatalogTreeNode familyNode = new CatalogTreeNode(family);
-            HashMap<String, NamedIcon> iconMap = ent.getValue();
-            Iterator<Entry<String, NamedIcon>> iterat = iconMap.entrySet().iterator();
-            while (iterat.hasNext()) {
-                Entry<String, NamedIcon> e = iterat.next();
-                String state = e.getKey();
-                String path = e.getValue().getURL();
+            HashMap<String, NamedIcon> iconMap = mapEntry.getValue();
+            for (Entry<String, NamedIcon> iconEntry : iconMap.entrySet()) {
+                String state = iconEntry.getKey();
+                String path = iconEntry.getValue().getURL();
                 familyNode.addLeaf(state, path);
             }
             typeNode.add(familyNode);
-            if (log.isDebugEnabled()) {
-                log.debug("Add familyNode " + familyNode);
-            }
+            log.debug("Add familyNode {}", familyNode);
         }
         return typeNode;
     }
@@ -247,10 +231,8 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 if (typeName.equals("IndicatorTO")) {
                     HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
                             = loadIndicatorFamilyMap(node, ed);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Add {} indicatorTO families to item type {} for _indicatorTOMaps.",
-                                familyTOMap.size(), typeName );
-                    }
+                    log.debug("Add {} indicatorTO families to item type {} for _indicatorTOMaps.",
+                            familyTOMap.size(), typeName );
                     _indicatorTOMaps.put(typeName, familyTOMap);
                 } else {
                     HashMap<String, HashMap<String, NamedIcon>> familyMap
@@ -259,9 +241,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                     log.debug("Add item type {} to _iconMaps.", typeName);
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("Icon Map has {} members", _iconMaps.size());
-            }
+            log.debug("Icon Map has {} members", _iconMaps.size());
             return true;
         }
         return false;
@@ -281,8 +261,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<>();
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
         Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
@@ -304,9 +283,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 }
                 if (icon != null) {
                     iconMap.put(iconName, icon);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Add {} icon to family \"{}\"", iconName, familyName);
-                    }
+                    log.debug("Add {} icon to family \"{}\"", iconName, familyName);
                 }
             }
             familyMap.put(familyName, iconMap);
@@ -329,15 +306,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static void loadDefaultIcons(Editor ed) {
         try {
             List<Element> typeList = getDefaultIconItemTypes();
-            for (int i = 0; i < typeList.size(); i++) {
-                String typeName = typeList.get(i).getName();
-                List<Element> families = typeList.get(i).getChildren();
+            for (Element type : typeList) {
+                String typeName = type.getName();
+                List<Element> families = type.getChildren();
                 loadFamilies(typeName, families, ed);
             }
-        } catch (org.jdom2.JDOMException e) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
-        } catch (java.io.IOException ioe) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + ioe);
+        } catch (org.jdom2.JDOMException | java.io.IOException e) {
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: ", e);
         }
     }
 
@@ -348,29 +323,25 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
                     = loadDefaultIndicatorTOMap(families, ed);
             _indicatorTOMaps.put(typeName, familyTOMap);
-            if (log.isDebugEnabled()) {
-                log.debug("Add {} indicatorTO families to item type {} to _indicatorTOMaps.",
-                        familyTOMap.size(), typeName);
-            }
+            log.debug("Add {} indicatorTO families to item type {} to _indicatorTOMaps.",
+                    familyTOMap.size(), typeName);
         } else {
             HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, ed);
             _iconMaps.put(typeName, familyMap);
-            if (log.isDebugEnabled()) {
-                log.debug("Add {} families to item type \"{}\" to _iconMaps.",
-                        familyMap.size(), typeName);
-            }
+            log.debug("Add {} families to item type \"{}\" to _iconMaps.",
+                    familyMap.size(), typeName);
         }
     }
 
     static void loadMissingItemType(String itemType, Editor ed) {
         try {
             List<Element> typeList = getDefaultIconItemTypes();
-            for (int i = 0; i < typeList.size(); i++) {
-                String typeName = typeList.get(i).getName();
+            for (Element type : typeList) {
+                String typeName = type.getName();
                 if (!typeName.equals(itemType)) {
                     continue;
                 }
-                List<Element> families = typeList.get(i).getChildren();
+                List<Element> families = type.getChildren();
                 loadFamilies(itemType, families, ed);
                 InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             }
@@ -380,19 +351,19 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<>();
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
         for (int k = 0; k < families.size(); k++) {
             String familyName = families.get(k).getName();
-            HashMap<String, NamedIcon> iconMap
-                    = new HashMap<>();     // Map of all icons of in family, familyName
+            HashMap<String, NamedIcon> iconMap = new HashMap<>();
+            // Map of all icons of in family, familyName
             List<Element> iconfiles = families.get(k).getChildren();
             for (int j = 0; j < iconfiles.size(); j++) {
                 String iconName = iconfiles.get(j).getName();
                 String fileName = iconfiles.get(j).getText().trim();
                 if (fileName.length() == 0) {
                     fileName = "resources/icons/misc/X-red.gif";
-                    log.warn("loadDefaultFamilyMap: iconName = {} in family {} has no image file.", iconName, familyName);
+                    log.warn("loadDefaultFamilyMap: iconName = {} in family {} has no image file.",
+                            iconName, familyName);
                 }
                 NamedIcon icon = NamedIcon.getIconByName(fileName);
                 if (icon == null) {
@@ -415,8 +386,8 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed) {
-        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                = new HashMap<>(); // Map of all families of type, typeName
+        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap = new HashMap<>();
+        // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
             List<Element> types = typeList.get(k).getChildren();

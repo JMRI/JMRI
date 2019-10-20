@@ -217,7 +217,7 @@ public abstract class JsonHttpService {
             }
         } catch (
                 IOException |
-                NullPointerException ex) {
+                IllegalArgumentException ex) {
             throw new JsonException(500, ex, id);
         }
         return this.doSchema(type, server, schema, id);

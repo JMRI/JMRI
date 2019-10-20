@@ -122,6 +122,7 @@ public class DefaultRailComTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // would be better to check and clean up specifics in tests
         JUnitUtil.tearDown();
     }
 
