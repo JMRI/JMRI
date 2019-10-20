@@ -79,6 +79,8 @@
 
         <li><a href="#start">Getting Started</a></li>
 
+        <li><a href="#enable">Enabled and Execution enabled</a></li>
+
         <li><a href="#notes">Additional Notes</a></li>
 
         <li><a href="#actions_expressions">List of actions and expressions</a></li>
@@ -269,12 +271,12 @@
           The second section lets you select a user name selection
           method.  See the 
           <a href="../../package/jmri/jmrit/beantable/LogixNGTable.shtml#logixOptions">
-          LogixNG Options</a> menu for details.<span class="since">since 4.7.3</span>
+          LogixNG Options</a> menu for details.
           </li>
           <li>
           The third section lets you select a ConditionalNG Editor.  See the 
           <a href="../../package/jmri/jmrit/beantable/LogixNGTable.shtml#logixOptions">
-          LogixNG Options</a> menu for details.<span class="since">since 4.9.2</span>
+          LogixNG Options</a> menu for details.
           </li>
         </ul></li>
 
@@ -284,7 +286,7 @@
             <li>Find orphaned items</li>
             <li>Find empty ConditionalNGs</li>
             <li>Find Cross References</li>
-            <li>ConditionalNG Variable References<span class="since">since 4.7.4</span><br>
+            <li>ConditionalNG Variable References<br>
             <a href="../../package/jmri/jmrit/beantable/images/VariableReferences.png">
             <img src="../../package/jmri/jmrit/beantable/images/VariableReferences.png"
             alt="Variable Reference Window" height="320" width="339">
@@ -391,7 +393,7 @@
       menu on the LogixNG Table will open a window with a list showing
       the details for each conditionalNG. It is an effective way to
       review the entire contents of a LogixNG. Click on the close button
-      to close the window.<span class="since">since 4.7.3</span>
+      to close the window.
 
       <div style="margin-left: 2em">
       <a href="../../package/jmri/jmrit/beantable/images/ConditionalNGBrowser.png">
@@ -698,8 +700,11 @@
       been entered. The other button, <strong>Delete ConditionalNG</strong>,
       provides an easy way to delete an unneeded ConditionalNG. Click
       <strong>Delete ConditionalNG</strong> to delete the ConditionalNG being
-      edited and return to the Edit LogixNG window.</p><a name=
-      "start" id="start"></a>
+      edited and return to the Edit LogixNG window.</p>
+	  
+	  
+
+	  <a name="start" id="start"></a>
 
       <h2>Getting Started</h2>
 
@@ -794,6 +799,40 @@
         tables from the Tools menu), or select <b>Store Panel...</b>
         in the <b>Panel</b> menu. Note that the enabled/disabled
         state of each LogixNG is saved in the configuration file.</p>
+	  
+	  
+
+	  <a name="enable" id="enable"></a>
+
+      <h2>Enabled and Execution enabled</h2>
+
+      <p>The intention with LogixNG is to be similar to Logix, in
+	  order to make it easier for users of Logix to understand how
+	  LogixNG works.</p>
+
+	  <p>This has resulted in a big challenge when it comes to
+	  <strong>Enabled</strong>, since in Logix, a Conditional that
+	  is not <strong>Enabled</strong> will still calculate its
+	  variables but not execute its actions.</p>
+
+	  <p>In LogixNG, there is a need to be able to completely disable
+	  the calculation too, and not only the execution of actions.
+	  Therefore, in LogixNG, if a LogixNG or a ConditionalNG is not
+	  <strong>enabled</strong>, it's not evaluated at all.</p>
+
+	  <p>But LogixNG also needed to be somewhat compatible with Logix,
+	  for example to be able to import Logixs to LogixNG. In order to
+	  solve that, LogixNG has <strong>execution enabled</strong>. If
+	  a LogixNG or a ConditionalNG doesn't have <strong>execution
+	  enabled</strong>, it's only evaluated but not executed.</p>
+
+	  <p>There is however a problem with <strong>execution enabled
+	  </strong>. Not all of the actions supports this. Only the actions
+	  <a href="#aaa">IfThenElse</a> and <a href="#bbb">Logix</a> supports
+	  <strong>execution enabled</strong>.</p>
+
+
+
 
       <a name="notes" id="notes"></a>
       <h2>Additional Notes</h2>

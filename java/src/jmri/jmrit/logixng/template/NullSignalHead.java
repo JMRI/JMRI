@@ -37,92 +37,110 @@ public class NullSignalHead extends AbstractNullNamedBean implements SignalHead 
         return false;
     }
     
+    /** {@inheritDoc} */
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
+    /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index)
             throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getChildCount() {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
         return getShortDescription(locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getAppearance() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setAppearance(int newAppearance) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getAppearanceName() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getAppearanceName(int appearance) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean getLit() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setLit(boolean newLit) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean getHeld() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setHeld(boolean newHeld) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public int[] getValidStates() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getValidStateNames() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isCleared() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isShowingRestricting() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isAtStop() {
         throw new UnsupportedOperationException("Not supported.");
@@ -174,8 +192,27 @@ public class NullSignalHead extends AbstractNullNamedBean implements SignalHead 
     public void disposeMe() {
     }
 
+    /** {@inheritDoc} */
     @Override
     public Base getNewObjectBasedOnTemplate() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getAppearanceKey() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getAppearanceKey(int appearance) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String[] getValidStateKeys() {
         throw new UnsupportedOperationException("Not supported.");
     }
     
