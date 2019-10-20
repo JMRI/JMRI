@@ -179,6 +179,10 @@
 	  its own type letter, the letters in the alphabet would run out. Therefore
 	  LogixNG has sub type letters, except for LogixNG itself.</p>
 
+	  <p>There is usually no need to work directly with system names and it's
+	  recommended to let JMRI to auto generate them. But they can be created
+	  manually if desired.</p>
+
       <p>LogixNG types and example system names</p>
 	  <table border="1" cellspacing="0">
 	    <tr><th>LogixNG type</th><th>System name</th><th>Auto system name</th></tr>
