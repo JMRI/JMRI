@@ -586,7 +586,8 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(trafficLockingEntry);
         if (verifyClassReturnValue != null) { // Error:
-            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);  // NOI18N
+            JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
 
