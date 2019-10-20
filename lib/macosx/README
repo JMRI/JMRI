@@ -1,3 +1,9 @@
 Mac OS X has fat (multi-architecture) binaries, and single
 architecture binaries.  Fat ones can go here, single architecture
 ones should go into the correct subdir.
+
+For Catalina, these were signed via e.g.
+codesign -v -s "Developer ID Application: firstname lastname" lib/macosx/libgluegen-rt.jnilib 
+
+The signature can be checked with e.g.
+codesign -dv --verbose=4 lib/macosx/libgluegen-rt.jnilib 
