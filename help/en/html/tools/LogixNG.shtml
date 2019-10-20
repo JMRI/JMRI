@@ -45,6 +45,8 @@
       <p>LogixNG is similar to Logix&trade;, but is a new design
 	  to make the code easier to manage and extend.</p>
 	  
+
+
 	  <a name="contents" id="contents"></a>
       <h2>Contents</h2>
 
@@ -58,14 +60,14 @@
 
       <ul>
         <li><a href="#intro">Introduction to LogixNG</a></li>
-        <li><a href="#intro">Introduction to LogixNG and
-        ConditionalNGs</a></li>
 
-        <li><a href="#logix">What are LogixNG</a></li>
+        <li><a href="#system_names">LogixNG system names</a></li>
 
-        <li><a href="#conditional">ConditionalNGs</a></li>
+        <li><a href="#logixng">What are LogixNG</a></li>
 
-        <li><a href="#editconditional">The Edit ConditionalNG
+        <li><a href="#conditionalng">ConditionalNGs</a></li>
+
+        <li><a href="#editconditionalng">The Edit ConditionalNG
         Window</a></li>
 
         <li><a href="#logicalexpression">The Logical
@@ -80,7 +82,7 @@
         <li><a href="#notes">Additional Notes</a></li>
 
         <li><a href="#actions_expressions">List of actions and expressions</a></li>
-      </ul><a name="intro" id="intro"></a>
+      </ul>
 
       <p>Detail <strong>State Variable</strong> and <strong>Action</strong> Lists:</p>
       <ul>
@@ -93,6 +95,10 @@
         <li><a href="../../package/jmri/jmrit/conditional/ConditionalNGListEditor.shtml">ConditionalNG List Editor</a> </li>
         <li><a href="../../package/jmri/jmrit/conditional/ConditionalNGTreeEditor.shtml">ConditionalNG Tree Editor</a></li>
       </ul>
+
+
+
+	  <a name="intro" id="intro"></a>
 
       <h2>Introduction to LogixNG</h2>
 
@@ -127,14 +133,9 @@
 	  Expressions of LogixNG follows the same idea as in Logix, but
 	  are implemented in a true tree structure.</p>
 
-
-
-
-
-
       <p>A LogixNG is a small group of ConditionalNGs focused on a
       single task on the layout. Each <a href=
-      "#conditional">ConditionalNG</a> may be viewed as a statement
+      "#conditionalng">ConditionalNG</a> may be viewed as a statement
       of the form:</p>
 
       <div style="margin-left: 2em;"><p><code>if (logical expression) then (action)</code></p></div>
@@ -164,7 +165,43 @@
       all the logic addressing the task, and grouping all the logic
       for the task in one place, makes it much easier to see how
       related logical expressions might work together and how they
-      might affect each other.</p><a name="logix" id="logix"></a>
+      might affect each other.</p>
+
+
+
+	  <a name="system_names" id="system_names"></a>
+
+      <h2>LogixNG system names</h2>
+
+      <p>System names in JMRI consists of a system prefix and a type letter.
+	  For LogixNG, the system prefix is usually 'I' and the type letter is 'Q'.
+	  But LogixNG consists of several sub types and if all of them would have
+	  its own type letter, the letters in the alphabet would run out. Therefore
+	  LogixNG has sub type letters, except for LogixNG itself.</p>
+
+      <p>LogixNG types and example system names</p>
+	  <table border="1" cellspacing="0">
+	    <tr><th>LogixNG type</th><th>System name</th><th>Auto system name</th></tr>
+		<tr><td>LogixNG</td><td>IQ0001</td><td>IQ:AUTO:0001</td></tr>
+		<tr><td><strong>C</strong>onditionalNG</td><td>IQC0001</td><td>IQC:AUTO:0001</td></tr>
+		<tr><td><strong>D</strong>igital <strong>A</strong>ction</td><td>IQDA0001</td><td>IQDA:AUTO:0001</td></tr>
+		<tr><td><strong>D</strong>igital <strong>B</strong>oolean action</td><td>IQDB0001</td><td>IQDB:AUTO:0001</td></tr>
+		<tr><td><strong>D</strong>igital <strong>E</strong>xpression</td><td>IQDE0001</td><td>IQDE:AUTO:0001</td></tr>
+		<tr><td><strong>A</strong>nalog <strong>A</strong>ction</td><td>IQAA0001</td><td>IQAA:AUTO:0001</td></tr>
+		<tr><td><strong>A</strong>nalog <strong>E</strong>xpression</td><td>IQAE0001</td><td>IQAE:AUTO:0001</td></tr>
+		<tr><td><strong>S</strong>tring <strong>A</strong>ction</td><td>IQSA0001</td><td>IQSA:AUTO:0001</td></tr>
+		<tr><td><strong>S</strong>tring <strong>E</strong>xpression</td><td>IQSE0001</td><td>IQSE:AUTO:0001</td></tr>
+	  </table>
+
+	  <p>"Auto system name" refers to system names that are generated automaticly.</p>
+
+	  <p>All system names consists of the system prefix, the type letter, possible a
+	  sub type, possible :AUTO: and a number. The number may begin with zeros and the
+	  system name IQ1 is different from the system name IQ0001.</p>
+	  
+	  
+	  
+	  <a name="logixng" id="logixng"></a>
 
       <h2>What are LogixNG?</h2>
 
@@ -323,7 +360,7 @@
       when the LogixNG is being enabled. ConditionalNGs are evaluated
       when one of their expressions changes its state. If an
       entity is used as a expression in more than one
-      conditional, it is indeterminate which conditional is
+      conditionalNG, it is indeterminate which conditionalNG is
       evaluated first.</p>
 
       <p>When <strong>Done</strong> is clicked at the bottom of the Edit
@@ -348,7 +385,7 @@
 
       <p>Selecting the <strong>Browse</strong> item from the drop down
       menu on the LogixNG Table will open a window with a list showing
-      the details for each conditional. It is an effective way to
+      the details for each conditionalNG. It is an effective way to
       review the entire contents of a LogixNG. Click on the close button
       to close the window.<span class="since">since 4.7.3</span>
 
@@ -363,7 +400,7 @@
       <strong>select</strong> menu on the LogixNG Table will show a series of
       dialog windows that provide a way to copy the LogixNG and any
       or all of its ConditionalNG to a new or existing
-      LogixNG.</p><a name="conditional" id="conditional"></a>
+      LogixNG.</p><a name="conditionalng" id="conditionalng"></a>
 
       <h2>ConditionalNGs</h2>
 
@@ -444,7 +481,7 @@
       action has a user selectable option of being performed if: 1)
       the logical expression changes to true, 2) the logical
       expression changes to false, or 3) the logical expression
-      changes. This means a conditional may actually be three
+      changes. This means a conditionalNG may actually be three
       statements.</p>
 
       <ul><li>if (antecedent is true) then (do "on change to true"
@@ -457,7 +494,7 @@
       actions)</li>
       </ul>
 
-      <a name="editconditional" id="editconditional"></a>
+      <a name="editconditionalng" id="editconditionalng"></a>
       <h3>The Edit ConditionalNG Window</h3>
 
       <p>The Edit ConditionalNG window is where logical expressions
@@ -509,7 +546,7 @@
       variable changes. Note that the current states of all the
       variables are <strong>always</strong> used in the calculation of the
       ConditionalNG's state. The "Trigger" setting allows a state
-      variable to be "passive" and not cause the conditional to
+      variable to be "passive" and not cause the conditionalNG to
       evaluate its state. That is, such a variable state is a
       necessary condition, but not a sufficient one to cause any
       actions to take place.</p>
@@ -560,13 +597,13 @@
       <h3>Triggering the Actions</h3>
 
       <p>There are two policies that can be taken after a
-      conditional's state is evaluated:</p>
+      conditionalNG's state is evaluated:</p>
 
       <ul>
-        <li>Execute the conditional actions only if the state of
-        the conditional has changed</li>
+        <li>Execute the conditionalNG actions only if the state of
+        the conditionalNG has changed</li>
 
-        <li>Execute the conditional actions regardless whether the
+        <li>Execute the conditionalNG actions regardless whether the
         state has changed</li>
       </ul>
 
@@ -577,13 +614,13 @@
       "on false" actions are executed. That is, if successive
       triggers cause the logical expression to be evaluated to the
       same state, only the first trigger will execute the actions.
-      Normally, it is best for a conditional to execute its actions
-      only when the state of the conditional changes. However, if
+      Normally, it is best for a conditionalNG to execute its actions
+      only when the state of the conditionalNG changes. However, if
       it is important to maintain the actions associated with a
       particular state of the ConditionalNG the <strong>Execute actions
       whenever triggered</strong> button should be used. If external
-      events undo some of the actions of the conditional but do not
-      change the state of the conditional, then this policy will
+      events undo some of the actions of the conditionalNG but do not
+      change the state of the conditionalNG, then this policy will
       execute the action on any trigger.</p><a name="theactions"
       id="theactions"></a>
 
@@ -623,7 +660,7 @@
       action entirely.</p>
 
       <p>To change the order order of the ConditionalNGs in a LogixNG,
-      or the order of the actions in a conditional click the
+      or the order of the actions in a conditionalNG click the
       "Reorder" button. The right-most buttons in the table will
       then let you select the first one, next one, etc. Note
       however, this is merely the order in which the commands are
@@ -632,8 +669,8 @@
       take place in a specified order, use separate ConditionalNGs
       for each action and chain the ConditionalNGs such that a
       preceding action's completed state is the expression for
-      the succeeding action.</p><a name="updateconditional" id=
-      "updateconditional"></a>
+      the succeeding action.</p><a name="updateconditionalng" id=
+      "updateconditionalng"></a>
 
       <h3>Activating the ConditionalNG</h3>
 
