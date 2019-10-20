@@ -394,21 +394,21 @@
         </p>
         <p>
         <strong>Reapplying patterns to existing information:</strong><br>
-      Once you've changed this screen, you may want the new pattern to be selectively applied.  There are two choices:
-      <ol>
-      <li>Reapply pattern to selected item (a single O.S. Section) or</li>
-      <li>Reapply pattern to selected item (a single O.S. Section) specific sub-system.</li>
-      </ol>
-To do 1, get to the main screen, and select a single O.S. Section.  The "Reapply patterns to selected item"
-button will be enabled.  When you press this button, a confirmation dialog will appear.  Pressing "Yes" will
-then take the new pattern specified and completely apply it to all of the O.S. Sections sub-systems.
-To do 2, get to the main screen, and select a single O.S. Section.  Then at the bottom of the screen, press
-the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems are not affected by this,
-so what follows may not appear.  You will then see a button at the bottom of the sub-system selected with
-"Reapply patterns - this form ONLY!".  Pressing that will immediately show you the results of the new
-pattern in the edit boxes of that screen.
+        Once you've changed this screen, you may want the new pattern to be selectively applied.
+        There are two choices:</p>
+        <ol>
+        <li>Reapply pattern to selected item (a single O.S. Section) or</li>
+        <li>Reapply pattern to selected item (a single O.S. Section) specific sub-system.</li>
+        </ol>
+        <p>To do 1, get to the main screen, and select a single O.S. Section.  The "Reapply patterns to selected item"
+        button will be enabled.  When you press this button, a confirmation dialog will appear.  Pressing "Yes" will
+        then take the new pattern specified and completely apply it to all of the O.S. Sections sub-systems.
+        To do 2, get to the main screen, and select a single O.S. Section.  Then at the bottom of the screen, press
+        the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems are not affected by this,
+        so what follows may not appear.  You will then see a button at the bottom of the sub-system selected, called
+        "Reapply patterns - this form ONLY!". Pressing it will immediately show you the results of the new
+        pattern in the edit boxes of that screen.
         </p>
-
 
         <a name="menuCfgGui" id="menuCfgGui"></a>
         <h5>GUI Design</h5>
