@@ -20,7 +20,7 @@
         <jetty.version>9.4.7.v20170914</jetty.version>
         <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
@@ -684,12 +684,6 @@
                     <!-- Include an issue in GitHub for each ignored package -->
                     <!-- documenting why the vulnerability is ignored. -->
                     <excludeCoordinates>
-                        <exclude>
-                            <!-- jython 2.7.0: https://github.com/JMRI/JMRI/issues/3712 -->
-                            <groupId>org.python</groupId>
-                            <artifactId>jython-standalone</artifactId>
-                            <version>2.7.0</version>
-                        </exclude>
                     </excludeCoordinates>
                 </configuration>
             </plugin>
@@ -1022,11 +1016,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <!-- when updating, remove from net.ossindex list of ignored -->
-            <!-- vulnerabilities elsewhere in this file -->
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.0</version><!-- versions < 2.7.1 have CVE against them -->
+            <version>2.7.1</version>
         </dependency>
         <!--
         <dependency>

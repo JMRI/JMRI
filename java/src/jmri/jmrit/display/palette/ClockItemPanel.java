@@ -52,15 +52,12 @@ public class ClockItemPanel extends IconItemPanel {
             _iconPanel.removeAll();
         }
 
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
+        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
             NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             JPanel panel = new JPanel();
             panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
-            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                    borderName));
+            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
             try {
                 JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
                 if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
@@ -72,7 +69,7 @@ public class ClockItemPanel extends IconItemPanel {
                 label.setIcon(icon);
                 label.setName(borderName);
                 panel.add(label);
-            } catch (java.lang.ClassNotFoundException cnfe) {
+            } catch (ClassNotFoundException cnfe) {
                 log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
             _iconPanel.add(panel);

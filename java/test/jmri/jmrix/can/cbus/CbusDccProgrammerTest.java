@@ -83,7 +83,9 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @After
     public void tearDown() {
         programmer = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerTest.class);

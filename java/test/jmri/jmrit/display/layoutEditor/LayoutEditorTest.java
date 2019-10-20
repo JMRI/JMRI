@@ -13,7 +13,7 @@ import org.junit.rules.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
- * Test simple functioning of LayoutEditor
+ * Test simple functioning of LayoutEditor.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -836,7 +836,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    public void testToolBarPostionOptions() {
+    public void testToolBarPositionOptions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
@@ -900,4 +900,5 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+
 }

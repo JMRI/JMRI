@@ -433,12 +433,12 @@ public class NXFrameTest {
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
         JUnitUtil.initWarrantManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After
     public void tearDown() throws Exception {
         InstanceManager.getDefault(WarrantManager.class).dispose();
+        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

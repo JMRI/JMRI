@@ -28,7 +28,9 @@ public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
     @Override
     public void tearDown() {
         tm = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }
