@@ -78,7 +78,6 @@ public class ConvertDialogTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initOBlockManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

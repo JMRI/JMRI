@@ -36,7 +36,9 @@ public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     @After
     public void tearDown() {
 	    programmer = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

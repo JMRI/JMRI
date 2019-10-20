@@ -51,7 +51,7 @@ public class DecoderPro3Test {
 
             @Override
             protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
+                // done automatically now as part of InstanceManager default handling
             }
         };
         Assert.assertNotNull(a);

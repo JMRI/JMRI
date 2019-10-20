@@ -31,7 +31,8 @@ public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-	_memo = null;
+	    _memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     	super.tearDown();    
     }
 }

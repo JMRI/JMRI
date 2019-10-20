@@ -92,6 +92,7 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
         tc.terminateThreads();
         memo = null;
         tc = null;
+        JUnitUtil.clearShutDownManager(); // clears "Writing IdTags" from DefaultIdTagManager
         JUnitUtil.tearDown();
    }
 

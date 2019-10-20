@@ -82,8 +82,7 @@ public class DefaultShutDownManagerTest {
 
     @Test
     public void testInstanceManagerCreates() {
-        JUnitUtil.initShutDownManager();
-        jmri.ShutDownManager sdm = jmri.InstanceManager.getDefault(jmri.ShutDownManager.class);
+        jmri.ShutDownManager sdm = jmri.InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         Assert.assertNotNull(sdm);
     }
     

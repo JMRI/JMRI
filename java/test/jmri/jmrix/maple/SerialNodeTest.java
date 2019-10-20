@@ -59,7 +59,9 @@ public class SerialNodeTest {
     @After
     public void tearDown() {
         b = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

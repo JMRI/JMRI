@@ -96,7 +96,9 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void tearDown() {
 	t.dispose();
         tc.terminate();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

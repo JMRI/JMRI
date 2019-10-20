@@ -66,7 +66,9 @@ public class OlcbClockControlTest {
     @After
     public void tearDown() throws Exception {
         if (iface != null) iface.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private void initializeWithClockMaster() {
