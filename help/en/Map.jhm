@@ -2382,6 +2382,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.AudioTable" url="package/jmri/jmrit/beantable/AudioTable.shtml"/>
 
+<mapID target="package.jmri.jmrit.logix.Tracker" url="package/jmri/jmrit/logix/Tracker.shtml"/>
+
 <mapID target="html.hardware.XPressNet.index_tools" url="html/hardware/XPressNet/index.shtml#tools"/>
 
 <mapID target="html.web.XMLIO" url="html/web/XMLIO.shtml"/>

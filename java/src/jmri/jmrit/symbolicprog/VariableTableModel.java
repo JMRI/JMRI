@@ -633,17 +633,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int maxVal = 255;
         String highCV = null;
 
-        if ((a = child.getAttribute("min")) != null) {
-            minVal = Integer.parseInt(a.getValue());
-        }
-        if ((a = child.getAttribute("max")) != null) {
-            maxVal = Integer.parseInt(a.getValue());
-        }
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
         }
-
         int factor = 1;
         if ((a = child.getAttribute("factor")) != null) {
             factor = Integer.parseInt(a.getValue());
@@ -656,7 +649,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("upperMask")) != null) {
             uppermask = a.getValue();
         }
-        v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, null, null);
+        String extra3 = "0";
+        if ((a = child.getAttribute("min")) != null) {
+            extra3 = a.getValue();
+        }
+        String extra4 = Long.toUnsignedString(~0);
+        if ((a = child.getAttribute("max")) != null) {
+            extra4 = a.getValue();
+        }
+        v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, extra3, extra4);
         return v;
     }
 
@@ -667,12 +668,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int maxVal = 255;
         String highCV = null;
 
-        if ((a = child.getAttribute("min")) != null) {
-            minVal = Integer.parseInt(a.getValue());
-        }
-        if ((a = child.getAttribute("max")) != null) {
-            maxVal = Integer.parseInt(a.getValue());
-        }
         if ((a = child.getAttribute("highCV")) != null) {
             highCV = a.getValue();
             _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
@@ -693,7 +688,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("case")) != null) {
             extra1 = a.getValue();
         }
-        v = new SplitHexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, extra1, null, null, null);
+        String extra3 = "0";
+        if ((a = child.getAttribute("min")) != null) {
+            extra3 = a.getValue();
+        }
+        String extra4 = Long.toUnsignedString(~0,16);
+        if ((a = child.getAttribute("max")) != null) {
+            extra4 = a.getValue();
+        }
+        v = new SplitHexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, extra1, null, extra3, extra4);
         return v;
     }
 

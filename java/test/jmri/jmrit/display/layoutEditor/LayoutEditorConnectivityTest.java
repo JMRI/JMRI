@@ -301,7 +301,6 @@ public class LayoutEditorConnectivityTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

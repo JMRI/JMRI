@@ -99,7 +99,9 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     // The minimal setup for log4J
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);

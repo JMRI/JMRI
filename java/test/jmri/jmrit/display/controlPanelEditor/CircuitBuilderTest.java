@@ -186,7 +186,6 @@ public class CircuitBuilderTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
-        JUnitUtil.initShutDownManager();
     }
 
     @After

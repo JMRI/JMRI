@@ -217,7 +217,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
-        menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")) {
             @Override
@@ -444,6 +443,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         if (msg == null) {
             msg = _model.checkAddressInUse(w);
+        }
+        if (msg == null) {
+            msg = w.checkforTrackers();
         }
 
         if (msg == null) {

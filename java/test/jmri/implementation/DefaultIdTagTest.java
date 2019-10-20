@@ -111,6 +111,7 @@ public class DefaultIdTagTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

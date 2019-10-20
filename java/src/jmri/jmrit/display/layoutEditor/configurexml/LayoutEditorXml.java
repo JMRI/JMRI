@@ -41,7 +41,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of a LayoutEditor
+     * Default implementation for storing the contents of a LayoutEditor.
      *
      * @param o Object to store, of type LayoutEditor
      * @return Element containing the complete info

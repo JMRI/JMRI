@@ -117,6 +117,7 @@
     <path id="runtime.class.path">
         <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
+        <pathelement location="${libdir}/xml-apis-1.4.01.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/javacsv.jar"/>
         <pathelement location="${libdir}/jdom-2.0.5.jar"/>
@@ -127,7 +128,7 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jython-standalone-2.7.0.jar"/>
+        <pathelement location="${libdir}/jython-standalone-2.7.1.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
@@ -139,9 +140,9 @@
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.9.8.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.9.8.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.9.8.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.7.v20170914.jar"/>
         <pathelement location="${libdir}/jetty-server-9.4.7.v20170914.jar"/>
@@ -1378,7 +1379,7 @@
 
             <classpath refid="test.class.path"/>
 
-            <jvmarg value="-Xmx512m"/><!-- checking that memory doesnt run away -->
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg line="${jvm.args}"/>
             
             <arg value="${antargline}"/>
@@ -1843,12 +1844,13 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linkined -->
+            <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
         </javadoc>
     </target>
 
@@ -1915,12 +1917,13 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
+            <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linkined -->
+            <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
         </javadoc>
     </target>
 
@@ -1999,13 +2002,14 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0"/>
             <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
             <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0" packagelistLoc="lib/jinputvalidator-0.8.0-package-list" />
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
-        </javadoc>
+            <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linkined -->
+            <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
+   </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
             <arg value="-o"/>

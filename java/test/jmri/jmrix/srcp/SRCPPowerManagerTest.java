@@ -97,6 +97,7 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

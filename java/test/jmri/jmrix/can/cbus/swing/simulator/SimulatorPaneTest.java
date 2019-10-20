@@ -30,7 +30,6 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initShutDownManager();
         title = Bundle.getMessage("MenuItemNetworkSim");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
         memo = new CanSystemConnectionMemo();
@@ -46,6 +45,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
         tcis = null;
         memo = null;
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
     

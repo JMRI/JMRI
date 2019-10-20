@@ -1,6 +1,7 @@
 package jmri.jmrit.lcdclock;
 
 import java.awt.GraphicsEnvironment;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -17,8 +18,26 @@ public class LcdClockFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if(!GraphicsEnvironment.isHeadless()){
-           frame = new LcdClockFrame();
+            // force time, not running
+            Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
+            clock.setRun(false);
+            clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+                       
+            LcdClockFrame face;
+            frame = face = new LcdClockFrame();
+            
+            // change, but don't check consequences of, run state
+                        
+            clock.setRun(true);
+
+            clock.setRun(false);
+            
+            // pretend run/stop button clicked
+            face.b.doClick();
+            
         }
+        
+        
     }
 
     @After

@@ -58,10 +58,22 @@ public class LoadAndStoreTestBase {
     private SaveType saveType = SaveType.Config;
     private boolean guiOnly = false;
 
-    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUIOnly) {
+    /**
+     * Get all XML files in a directory and validate the ability to load and
+     * store them.
+     *
+     * @param file      the file to be tested
+     * @param pass      if true, successful validation will pass; if false,
+     *                  successful validation will fail
+     * @param saveType  the type (i.e. level) of ConfigureXml information being saved
+     * @param isGUI     true for files containing GUI elements, i.e. panels.  These
+     *                  can only be loaded once (others can be loaded twice, and that's
+     *                  tested when this is false), and can't be loaded when running headless.
+     */
+    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUI) {
         this.file = file;
         this.saveType = saveType;
-        this.guiOnly = isGUIOnly;
+        this.guiOnly = isGUI;
     }
 
     /**
@@ -180,7 +192,7 @@ public class LoadAndStoreTestBase {
             }
 
             if (!match) {
-                // if ether line contains a fontname attribute
+                // if either line contains a fontname attribute
                 String fontname_regexe = "( fontname=\"[^\"]*\")";
                 String[] splits1 = line1.split(fontname_regexe);
                 if (splits1.length == 2) {  // (yes) remove it
@@ -260,7 +272,7 @@ public class LoadAndStoreTestBase {
             Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         }
 
-        log.debug("Start check file " + this.file.getCanonicalPath());
+        log.debug("Start check file {}", this.file.getCanonicalPath());
 
         loadFile(this.file);
         // Panel sub-classes (with GUI) will fail if you try to load them twice.
@@ -275,7 +287,7 @@ public class LoadAndStoreTestBase {
         if (!compFile.exists()) {
             compFile = this.file;
         }
-        log.debug("   Chose comparison file " + compFile.getCanonicalPath());
+        log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
         File outFile = storeFile(this.file, this.saveType);
         checkFile(compFile, outFile);

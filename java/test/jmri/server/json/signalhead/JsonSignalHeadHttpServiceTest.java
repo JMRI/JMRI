@@ -14,8 +14,6 @@ import jmri.SignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
-import jmri.server.json.signalhead.JsonSignalHead;
-import jmri.server.json.signalhead.JsonSignalHeadHttpService;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
