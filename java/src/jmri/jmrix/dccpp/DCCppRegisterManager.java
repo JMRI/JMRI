@@ -9,7 +9,8 @@ package jmri.jmrix.dccpp;
  * Defines and Manages the Registers (~ slots) for DCC++ Base Station
  *
  * @author Mark Underwood Copyright (C) 2015
-  *
+ * @author Harald Barth Copyright (C) 2019
+ *
  */
 
 /* A few notes on implementation

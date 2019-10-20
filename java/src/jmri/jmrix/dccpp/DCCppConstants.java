@@ -7,6 +7,7 @@ package jmri.jmrix.dccpp;
  *
  * @author Paul Bender Copyright (C) 2003-2009
  * @author Mark Underwood Copyright (C) 2015
+ * @author Harald Barth Copyright (C) 2019
  *
  * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
  * broadcast messages CS_ is for command station messages PROG_ is for
