@@ -26,7 +26,7 @@ public class TrackSegmentTest {
     static private LayoutEditor layoutEditor = null;
     static private TrackSegment trackSegment = null;
 
-    //the amount of variation allowed floating point values in order to be considered equal
+    // the amount of variation allowed floating point values in order to be considered equal
     static final double tolerance = 0.000001;
 
     @Test
