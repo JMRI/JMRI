@@ -9,7 +9,7 @@ import org.junit.rules.ExpectedException;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Tests for the CtcEditorAction Class
+ * Tests for the CtcEditorAction Class.
  *
  * @author Dave Sand Copyright (C) 2019
  */
@@ -160,7 +160,7 @@ public class CtcEditorActionTest {
         if (DELAY > 0) {
             new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
         }
-        JFrameOperator frmChange = new JFrameOperator("Modify switch and signal etc. #'s");  // NOI18N
+        JFrameOperator frmChange = new JFrameOperator("Modify Switch and Signal etc. #'s");  // NOI18N
         Assert.assertNotNull(frmChange);
         new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -174,7 +174,7 @@ public class CtcEditorActionTest {
 
         // ButtonReapplyItem -- Not a frame, use dialog mode
         jlo.clickOnItem(0, 1);
-        Thread btnApply = createModalDialogOperatorThread("Warning", Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
+        Thread btnApply = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
         JButtonOperator jbApply = new JButtonOperator(_jfo, Bundle.getMessage("ButtonReapplyItem"));
         jbApply.doClick();
         JUnitUtil.waitFor(() -> {
@@ -344,4 +344,5 @@ public class CtcEditorActionTest {
     }
 
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
+
 }

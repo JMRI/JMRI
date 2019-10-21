@@ -399,12 +399,21 @@
             <li>JMRI's scripting support now defaults to the UTF-8 character encoding for all
               script files on all platforms. This may require that some scripts be re-saved
               using UTF-8.</li>
+            <li>The jython/SetSignalFlashRate.py sample script shows how to 
+                change the flashing on/off time for your signals.  Just invoke
+                it before defining the signals, i.e. before loading your
+                configuration and panel files.
+            </li>
         </ul>
 
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
-            <li></li>
+            <li>The jython/SetSignalFlashRate.py sample script shows how to 
+                change the flashing on/off time for your signals.  Just invoke
+                it before defining the signals, i.e. before loading your
+                configuration and panel files.
+            </li>
         </ul>
         <h4>Signal Systems</h4>
             <ul>

@@ -39,10 +39,12 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
         if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
+
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     @Override

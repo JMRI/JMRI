@@ -23,9 +23,7 @@ import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
 /**
- * MemoryIconTest.java
- *
- * Description:
+ * Test simple functioning of MemoryIcon.
  *
  * @author	Bob Jacobsen Copyright 2007, 2015
  */
@@ -72,7 +70,7 @@ public class MemoryIconTest extends PositionableTestBase {
     @Test
     public void testShowBlank() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        log.debug("testShowBlank");
+        //log.debug("testShowBlank");
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect blank");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -96,7 +94,6 @@ public class MemoryIconTest extends PositionableTestBase {
             jf.setVisible(false);
             JUnitUtil.dispose(jf);
         }
-
     }
 
     @Test
@@ -125,7 +122,6 @@ public class MemoryIconTest extends PositionableTestBase {
             jf.setVisible(false);
             JUnitUtil.dispose(jf);
         }
-
     }
 
     @Test
@@ -205,7 +201,6 @@ public class MemoryIconTest extends PositionableTestBase {
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
-
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
@@ -238,7 +233,6 @@ public class MemoryIconTest extends PositionableTestBase {
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),rpt.toReportString()));
-
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -300,7 +294,7 @@ public class MemoryIconTest extends PositionableTestBase {
                }
         });
 
-        // find a point in mid-center of memory icon - location choosen by
+        // find a point in mid-center of memory icon - location chosen by
         // looking at v4.0.1 on Mac
         Point p = SwingUtilities.convertPoint(jl,x, y, frame);
 
@@ -321,7 +315,7 @@ public class MemoryIconTest extends PositionableTestBase {
         return colors;
     }
 
-    // The minimal setup for log4J
+    // Setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -329,8 +323,9 @@ public class MemoryIconTest extends PositionableTestBase {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
-            p = to = new MemoryIcon("MemoryTest1", editor );
+            to = new MemoryIcon("MemoryTest1", editor );
             to.setMemory("IM1");
+            p = to;
         }
     }
 
@@ -341,5 +336,6 @@ public class MemoryIconTest extends PositionableTestBase {
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
+    //private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
+
 }

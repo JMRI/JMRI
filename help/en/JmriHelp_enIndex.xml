@@ -290,6 +290,8 @@
 
  <indexitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
 
+ <indexitem text="Jython (in Scripting) " target="html.tools.scripting.Python"/>
+
  <indexitem text="Layout Editor (Panels) " target="package.jmri.jmrit.display.LayoutEditor"/>
 
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
@@ -500,6 +502,8 @@
 
  <indexitem text="Properties Files (Developers, I18N) " target="html.doc.Technical.Properties"/>
 
+ <indexitem text="Python (in Scripting) " target="html.tools.scripting.Python"/>
+
  <indexitem text="QSI - Hardware, Connection, Tools " target="html.hardware.qsi.index"/>
 
  <indexitem text="RailDriver Throttle " target="html.hardware.raildriver.index"/>
@@ -548,6 +552,18 @@
  </indexitem>
  <indexitem text="SC (Signal Controlled) Warrant " target="package.jmri.jmrit.logix.SCWarrant"/>
 
+ <indexitem text="Scripting " target="html.tools.scripting.index">
+  <indexitem text="Getting Started " target="html.tools.scripting.Start"/>
+
+  <indexitem text="Example: Setting Turnouts " target="html.tools.scripting.ex_set_turnouts"/>
+
+  <indexitem text="Examples (Links) " target="html.tools.scripting.Examples"/>
+
+  <indexitem text="Scripting How To... " target="html.tools.scripting.HowTo"/>
+
+  <indexitem text="Scripting What...Where " target="html.tools.scripting.WhatWhere"/>
+
+ </indexitem>
  <indexitem text="SECSI (TrakTronix) " target="html.hardware.secsi.index"/>
 
  <indexitem text="Section " target="package.jmri.jmrit.beantable.SectionTable">

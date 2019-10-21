@@ -6,7 +6,7 @@ import jmri.util.JmriJFrame;
 import org.junit.*;
 
 /**
- * Test simple functioning of IconAdder
+ * Test simple functioning of IconAdder.
  *
  * @author	Paul Bender Copyright (C) 2016
  */
@@ -91,6 +91,5 @@ public class IconAdderTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

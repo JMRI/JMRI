@@ -717,7 +717,6 @@ public class LayoutTurnout extends LayoutTrack {
             }
             if (nb.equals(getSignalDMast())) {
                 setSignalDMast(null);
-                return;
             }
         } else if (nb instanceof Sensor) {
             if (nb.equals(getSensorA())) {
@@ -734,7 +733,6 @@ public class LayoutTurnout extends LayoutTrack {
             }
             if (nb.equals(getSensorB())) {
                 setSensorD(null);
-                return;
             }
         } else if (nb instanceof SignalHead) {
             if (nb.equals(getSignalHead(POINTA))) {
@@ -2025,7 +2023,7 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+    protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
         int result = NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
@@ -2104,8 +2102,9 @@ public class LayoutTurnout extends LayoutTrack {
     /*
      * Modify coordinates methods
      */
+
     /**
-     * set center coordinates
+     * Set center coordinates
      *
      * @param p the coordinates to set
      */
@@ -4730,22 +4729,22 @@ public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> checkForFreeConnections() {
+    public @Nonnull List<Integer> checkForFreeConnections() {
         List<Integer> result = new ArrayList<>();
 
         //check the A connection point
         if (getConnectA() == null) {
-            result.add(Integer.valueOf(TURNOUT_A));
+            result.add(TURNOUT_A);
         }
 
         //check the B connection point
         if (getConnectB() == null) {
-            result.add(Integer.valueOf(TURNOUT_B));
+            result.add(TURNOUT_B);
         }
 
         //check the C connection point
         if (getConnectC() == null) {
-            result.add(Integer.valueOf(TURNOUT_C));
+            result.add(TURNOUT_C);
         }
 
         //check the D connection point
@@ -4753,7 +4752,7 @@ public class LayoutTurnout extends LayoutTrack {
                 || (getTurnoutType() == LH_XOVER)
                 || (getTurnoutType() == RH_XOVER)) {
             if (getConnectD() == null) {
-                result.add(Integer.valueOf(TURNOUT_D));
+                result.add(TURNOUT_D);
             }
         }
         return result;
@@ -4899,7 +4898,6 @@ public class LayoutTurnout extends LayoutTrack {
             setLayoutBlockB(layoutBlock);
             setLayoutBlockC(layoutBlock);
             setLayoutBlockD(layoutBlock);
-
         }
     }
 
