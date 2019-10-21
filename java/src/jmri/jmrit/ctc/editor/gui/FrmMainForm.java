@@ -888,7 +888,8 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event__mEdit_ILActionPerformed
 
     private void reapplyPatternsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reapplyPatternsButtonActionPerformed
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormConfirm"), Bundle.getMessage("Warning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {  // NOI18N
+        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormConfirm"),
+                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {  // NOI18N
             int index = _mColumns.getEntrySelectedIndex();
             CodeButtonHandlerData codeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerData(index);
             codeButtonHandlerData = CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
@@ -1107,7 +1108,8 @@ public class FrmMainForm extends JFrame {
 
     private void _mQuitWithoutSavingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mQuitWithoutSavingActionPerformed
         if (_mOriginalCopy.changed(_mCTCSerialData)) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormFileModWarn1"), Bundle.getMessage("Warning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { // NOI18N
+            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormFileModWarn1"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { // NOI18N
                 shutdown();
             }
         } else {    // No changes, just close.

@@ -52,8 +52,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected JTable nodeTable = null;
 
     // button pane items
-    JButton addButton = new JButton(Bundle.getMessage("AddButtonText"));
-    JButton doneButton = new JButton(Bundle.getMessage("DoneButtonText"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
     JButton printButton = new JButton(Bundle.getMessage("PrintButtonText"));
 
     NodeConfigManagerFrame curFrame;
