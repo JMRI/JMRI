@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Swing tests for the LayoutEditor
+ * Swing tests for the LayoutEditor.
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
  */
@@ -33,7 +33,7 @@ public class LayoutEditorWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
+    // Setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -46,4 +46,5 @@ public class LayoutEditorWindowTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
+
 }

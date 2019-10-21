@@ -331,8 +331,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _leftButtonBar.add(_labelPanel);
 
         // ------------ Add Button ------------
-        JButton addButton = new JButton(Bundle.getMessage("AddButtonText"));    // NOI18N
-        addButton.setToolTipText(Bundle.getMessage("HintAddButton"));       // NOI18N
+        JButton addButton = new JButton(Bundle.getMessage("ButtonAddText")); // NOI18N
+        addButton.setToolTipText(Bundle.getMessage("HintAddButton"));        // NOI18N
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2790,7 +2790,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     /**
-     * Fetch valid appearances for a given Signal Head.
+     * Fetch valid localized appearances for a given Signal Head.
      * <p>
      * Warn if head is not found.
      *

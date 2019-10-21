@@ -35,7 +35,7 @@ public class LnCabSignalManager extends AbstractCabSignalManager {
     }
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     protected CabSignal createCabSignal(LocoAddress address){

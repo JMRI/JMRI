@@ -315,12 +315,16 @@
       
       <p>
       It's possible that, as an intermediate step,
-      JMRI development will move to a later Java version
-      without requiring that JMRI users move to a later version.  
-      For example, it's remotely possible that JMRI will require Java 11
+      JMRI development will move to a later Java SDK version
+      without requiring that JMRI users move to a later Java JRE version.  
+      For example, it's remotely possible that JMRI will require a Java 11 SDK
       to compile and build distributions, which would still be able to
       work on Java 8.  We prefer to do that to keep older hardware working,
-      but it's not always possible.
+      but it's not always possible. 
+      (Note:  Here, we're talking about using the Java 11 SDK, not about
+      using Java 11 language features. Java 9 through 11 SDKs 
+      require setting their source version and runtime version to the same
+      value;  you can't compile i.e. Java 11 source code for a Java 8 runtime)
 
       <p>
       There are also smaller migration issues. These don't directly
