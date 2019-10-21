@@ -9,4 +9,11 @@
         existing lib folder contents are retained in the backup folder.
         <strong>This means that any files you have added to the <em>lib</em>
             folder will be removed.</strong></li>
+    <li><strong>macOS Only</strong> This version includes changes to how
+        macOS-specific libraries are provided.  This was done to increase
+        compatibility with macOS 10.15 Catalina.
+        For more information on 
+        <a href="https://jmri.org/install/MacOSX.shtml#catalina">Catalina compatibility</a>,
+        see the 
+        <a href="https://jmri.org/install/MacOSX.shtml#catalina">JMRI web site</a>.
     <li></li>
