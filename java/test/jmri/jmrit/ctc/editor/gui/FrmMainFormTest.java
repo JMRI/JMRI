@@ -5,7 +5,8 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /*
-* Tests for the FrmMainForm Class
+* Tests for the FrmMainForm Class.
+*
 * @author  Dave Sand   Copyright (C) 2019
 */
 public class FrmMainFormTest {

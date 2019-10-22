@@ -248,7 +248,6 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initRosterConfigManager();
 
         // setup the warrant preliminaries.
@@ -338,6 +337,8 @@ public class WarrantTest {
         sNorth = null;
         sSouth = null;
         warrant = null;
+
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

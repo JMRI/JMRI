@@ -396,10 +396,11 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     @After
     public void tearDown() {
-	t = null;
-	l = null;
-	p = null;
-	JUnitUtil.tearDown();
+    	t = null;
+    	l = null;
+    	p = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    	JUnitUtil.tearDown();
     }
 
 }

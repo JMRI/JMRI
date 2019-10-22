@@ -32,6 +32,7 @@ public class HtmlManifestTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

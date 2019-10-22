@@ -203,7 +203,6 @@ public class LoadAtStartUpTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initDebugThrottleManager();
     }
 

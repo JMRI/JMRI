@@ -31,7 +31,9 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
    public void tearDown(){
         tc = null;
 	m = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
    }
 
 }

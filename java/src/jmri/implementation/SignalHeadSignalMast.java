@@ -162,7 +162,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         return heads;
     }
 
-    //taken out of the defaultsignalappearancemap
+    // taken out of the defaultsignalappearancemap
     public void setAppearances(String aspect) {
         if (map == null) {
             log.error("No appearance map defined, unable to set appearance {}", getDisplayName());
@@ -220,7 +220,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             }
         }
         if (delay != 0) {
-            //If a delay is required we will fire this off into a seperate thread and let it get on with it.
+            // If a delay is required we will fire this off into a seperate thread and let it get on with it.
             final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
             final int thrDelay = delay;
             Runnable r = new Runnable() {
