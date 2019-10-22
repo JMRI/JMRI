@@ -1,20 +1,17 @@
 # Test the SetSignalFlashRate.py script
 import jmri
 
-if ( jmri.implementation.DefaultSignalHead.masterDelay == 1000) :
-    raise AssertionError("We cannot test and verify the change if the original value is the same as in the script")
-
-execfile("jython/SetSignalFlashRate.py")
 
 initial = jmri.implementation.DefaultSignalHead.masterDelay
 
-jmri.implementation.DefaultSignalHead.masterDelay = 2*initial+1
+# protect the test case
+if ( initial == 1000) : jmri.implementation.DefaultSignalHead.masterDelay = 750
 
-if ( jmri.implementation.DefaultSignalHead.masterDelay != 2*initial+1) :
+execfile("jython/SetSignalFlashRate.py")  # should set to 1000
+
+if ( jmri.implementation.DefaultSignalHead.masterDelay != 1000) :
     raise AssertionError("Time not changed")
     
 jmri.implementation.DefaultSignalHead.masterDelay = initial
 
-if ( jmri.implementation.DefaultSignalHead.masterDelay != initial) :
-    raise AssertionError("Time not reset")
 
