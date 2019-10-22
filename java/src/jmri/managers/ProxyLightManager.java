@@ -164,7 +164,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * its determination of support for variable lights.
      */
     @Override
-    public boolean supportsVariableLights(String systemName) {
+    public boolean supportsVariableLights(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).supportsVariableLights(systemName);
@@ -178,7 +178,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * range box in the add Light window.
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).allowMultipleAdditions(systemName);
@@ -195,6 +195,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
     }

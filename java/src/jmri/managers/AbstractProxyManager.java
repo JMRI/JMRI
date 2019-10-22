@@ -1,6 +1,7 @@
 package jmri.managers;
 
-import jmri.ProxyManager;
+import jmri.*;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
@@ -9,12 +10,7 @@ import java.util.*;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import jmri.InstanceManager;
 
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanPropertyDescriptor;
-import jmri.ProvidingManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
@@ -146,10 +142,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
         m.addDataListener(this);
         recomputeNamedBeanSet();
-
-        if (log.isDebugEnabled()) {
-            log.debug("added manager " + m.getClass());
-        }
+        log.debug("added manager {}", m.getClass());
     }
 
     private Manager<E> initInternal() {
@@ -176,7 +169,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
-    public E getNamedBean(String name) {
+    public E getNamedBean(@Nonnull String name) {
         E t = getBeanByUserName(name);
         if (t != null) {
             return t;
@@ -224,7 +217,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(String systemName) {
+    public E getBeanBySystemName(@Nonnull String systemName) {
         // System names can be matched to managers by system and type at front of name
         int index = matchTentative(systemName);
         if (index >= 0) {
@@ -237,7 +230,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(String userName) {
+    public E getBeanByUserName(@Nonnull String userName) {
         for (Manager<E> m : this.mgrs) {
             E b = m.getBeanByUserName(userName);
             if (b != null) {
@@ -255,7 +248,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * Manager attempts to validate the system name.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         int i = matchTentative(systemName);
         Manager manager = getDefaultManager();
         if (i >= 0) {
@@ -272,7 +266,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      *         system name format. Return INVALID if no manager exists.
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return getMgr(i).validSystemNameFormat(systemName);
@@ -338,11 +332,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     }
 
     /**
-     * Find the index of a matching manager. Returns -1 if there is no match,
-     * which is not considered an error
+     * Find the index of a matching manager.
      *
      * @param systemname the system name
-     * @return the index of the matching manager
+     * @return the index of the matching manager, -1 if there is no match,
+     *         which is not considered an error
      */
     protected int matchTentative(String systemname) {
         for (Manager<E> m : mgrs) {
@@ -371,9 +365,35 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         return index;
     }
 
+    /**
+     * Shared method to create a systemName based on the prefix and manager class.
+     *
+     * @param curAddress base address to use
+     * @param prefix system prefix to use
+     * @param managerType BeanType manager (method is used for Turnout and Sensor Managers)
+     * @return a valid system name for this connection
+     * @throws JmriException if systemName cannot be created
+     */
+    String createSystemName(String curAddress, String prefix, Class managerType) throws JmriException {
+        for (Manager<E> m : mgrs) {
+            if (prefix.equals(m.getSystemPrefix()) &&  managerType.equals(m.getClass())) {
+                try {
+                    if (managerType == TurnoutManager.class) {
+                        return ((TurnoutManager) m).createSystemName(curAddress, prefix);
+                    } else if (managerType == SensorManager.class) {
+                        return ((SensorManager) m).createSystemName(curAddress, prefix);
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
+    }
+
     /** {@inheritDoc} */
     @Override
-    public void deleteBean(E s, String property) throws PropertyVetoException {
+    public void deleteBean(E s, @Nonnull String property) throws PropertyVetoException {
         String systemName = s.getSystemName();
         try {
             getMgr(match(systemName)).deleteBean(s, property);
@@ -385,7 +405,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /**
      * {@inheritDoc}
      * <p>
-     * Forwards the register request to the matching system
+     * Forwards the register request to the matching system.
      */
     @Override
     public void register(E s) {
@@ -396,7 +416,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /**
      * {@inheritDoc}
      * <p>
-     * Forwards the deregister request to the matching system
+     * Forwards the deregister request to the matching system.
      *
      * @param s the name
      */
@@ -467,6 +487,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @OverridingMethodsMustInvokeSuper
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         if (!namedPropertyListenerMap.containsKey(propertyName)) {
@@ -574,6 +595,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      *         memo if there is no default manager
      */
     @Override
+    @Nonnull
     public SystemConnectionMemo getMemo() {
         try {
             return getDefaultManager().getMemo();
@@ -586,6 +608,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * @return The system-specific prefix letter for the primary implementation
      */
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         try {
             return getDefaultManager().getSystemPrefix();
@@ -607,6 +630,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      *         primary system.
      */
     @Override
+    @Nonnull
     public String makeSystemName(String s) {
         return getDefaultManager().makeSystemName(s);
     }
@@ -626,7 +650,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
-        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
+        log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
         
         List<E> list = getNamedBeanList();
         String[] retval = new String[list.size()];
@@ -773,4 +797,5 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class);
+
 }
