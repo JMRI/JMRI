@@ -65,6 +65,7 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
         tc.terminateThreads();
         tc = null;
         scm = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

@@ -64,7 +64,7 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
 
     void startLogging(ActionEvent e) {
 
-        System.out.println("" + e);
+        log.debug("{}", e);
         ((JMenuItem) (e.getSource())).setText("Stop CSV Export Reading...");
 
         // initialize chooser

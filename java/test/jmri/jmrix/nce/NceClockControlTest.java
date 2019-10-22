@@ -31,6 +31,7 @@ public class NceClockControlTest {
     @After
     public void tearDown() {
         tcis = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

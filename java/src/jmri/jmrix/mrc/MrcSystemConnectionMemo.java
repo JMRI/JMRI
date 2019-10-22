@@ -35,6 +35,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * @return current traffic controller for this connection
      */
     public MrcTrafficController getMrcTrafficController() {
+        if (mrcTrafficController == null) log.error("found tc null in request", new Exception("traceback"));
         return mrcTrafficController;
     }
     private MrcTrafficController mrcTrafficController;
@@ -54,7 +55,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         }
         if (programmerManager == null) {
-            programmerManager = new MrcProgrammerManager(new MrcProgrammer(getMrcTrafficController()), this);
+            programmerManager = new MrcProgrammerManager(new MrcProgrammer(this), this);
         }
         return programmerManager;
     }
@@ -208,5 +209,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MrcSystemConnectionMemo.class.getName());
 
 }

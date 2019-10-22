@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
+import jmri.Throttle;
 import jmri.ThrottleManager;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
@@ -77,7 +78,7 @@ public class LoadAtStartUpTest {
                 smm.getSignalMast("South To East").getAspect().equals("Approach"));
         Assert.assertTrue("1 East End Throat Signal Green",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
-        float speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        float speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
@@ -91,7 +92,7 @@ public class LoadAtStartUpTest {
                 smm.getSignalMast("South To East").getAspect().equals("Approach"));
         Assert.assertTrue("2 East End Throat Signal Green",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ West Block").setState(Sensor.ACTIVE);
@@ -105,7 +106,7 @@ public class LoadAtStartUpTest {
                 smm.getSignalMast("South To East").getAspect().equals("Clear"));
         Assert.assertTrue("3 East End Throat Signal Approach",
                 smm.getSignalMast("East End Throat").getAspect().equals("Approach"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ South Block").setState(Sensor.ACTIVE);
@@ -118,7 +119,7 @@ public class LoadAtStartUpTest {
                 smm.getSignalMast("South To East").getAspect().equals("Clear"));
         Assert.assertTrue("4 East End Throat Signal Green",
                 smm.getSignalMast("East End Throat").getAspect().equals("Approach"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.60, speed, 0.01);
 
         sm.getSensor("Occ West Block").setState(Sensor.INACTIVE);
@@ -132,7 +133,7 @@ public class LoadAtStartUpTest {
         Assert.assertTrue("5 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
         Assert.assertTrue("5 East End Throat Signal yellow",
                 smm.getSignalMast("East End Throat").getAspect().equals("Approach"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ South Block").setState(Sensor.INACTIVE);
@@ -145,7 +146,7 @@ public class LoadAtStartUpTest {
         Assert.assertTrue("6 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
         Assert.assertTrue("6 East End Throat Signal Red",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
@@ -155,7 +156,7 @@ public class LoadAtStartUpTest {
         Assert.assertTrue("7 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
         Assert.assertTrue("7 East End Throat Signal Red",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ South Platform").setState(Sensor.ACTIVE);
@@ -165,7 +166,7 @@ public class LoadAtStartUpTest {
         Assert.assertTrue("8 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
         Assert.assertTrue("8 East End Throat Signal Red",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
-        speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
+        speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
         Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ East Block").setState(Sensor.INACTIVE);
@@ -179,7 +180,7 @@ public class LoadAtStartUpTest {
 
         // train slows to stop
         JUnitUtil.waitFor(() -> {
-            return (float) m.getThrottleInfo(addr, "SpeedSetting") == 0.0;
+            return (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING) == 0.0;
         }, "Signal Just passed east end throat now stop");
 
         // cancel (terminate) the train.
@@ -198,7 +199,6 @@ public class LoadAtStartUpTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initDebugThrottleManager();
     }
 

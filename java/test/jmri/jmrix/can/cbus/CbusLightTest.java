@@ -548,7 +548,9 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     public void tearDown() {
         t.dispose();
         tcis=null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
         
     }
 

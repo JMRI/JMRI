@@ -7,12 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
@@ -28,30 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.gui.GuiLafPreferencesManager;
-import jmri.AddressedProgrammerManager;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.LightManager;
-import jmri.LogixManager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.PowerManagerScaffold;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.SensorManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.ThrottleManager;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
-import jmri.UserPreferencesManager;
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorFrameOperator;
@@ -65,15 +37,7 @@ import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.internal.InternalReporterManager;
 import jmri.jmrix.internal.InternalSensorManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.managers.AbstractSignalHeadManager;
-import jmri.managers.DefaultConditionalManager;
-import jmri.managers.DefaultIdTagManager;
-import jmri.managers.DefaultLogixManager;
-import jmri.managers.DefaultMemoryManager;
-import jmri.managers.DefaultRailComManager;
-import jmri.managers.DefaultSignalMastLogicManager;
-import jmri.managers.DefaultSignalMastManager;
-import jmri.managers.TestUserPreferencesManager;
+import jmri.managers.*;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -296,6 +260,9 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // check for hanging shutdown tasks
+        checkShutDownManager();
+        
         // checking time?
         if (checkTestDuration) {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
@@ -917,15 +884,49 @@ public class JUnitUtil {
     
     /**
      * Leaves ShutDownManager, if any, in place,
-     * but removes its contents.
+     * but removes its contents.  Instead of using this,
+     * it's better to have your test code remove _and_ _check_
+     * for specific items; this just suppresses output from the 
+     * {@link #checkShutDownManager()} check down as part of the 
+     * default end-of-test code.
+     *
+     * @see #checkShutDownManager()
      * @see #initShutDownManager()
+     * @deprecated 4.17.4 because tests should directly test and remove queued items;
+     *             we do not intend to remove this method soon but you should not use
+     *             it in new code.
      */
+    @Deprecated // 4.17.4 because tests should directly test and remove queued items;
+                // we do not intend to remove this method soon but you should not use
+                // it in new code.
     public static void clearShutDownManager() {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         if (sm == null) return;
         List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            sm.deregister(list.get(0));
+        while (list != null && list.size() > 0) {
+            ShutDownTask task = list.get(0);
+            sm.deregister(task);
+            list = sm.tasks();  // avoid ConcurrentModificationException
+        }
+    }
+
+    /**
+     * Warns if the {@link jmri.ShutDownManager} was not left empty. Normally
+     * run as part of the 
+     * default end-of-test code.
+     *
+     * @see #clearShutDownManager()
+     * @see #initShutDownManager()
+     */
+    static void checkShutDownManager() {
+        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
+        if (sm == null) return;
+        List<ShutDownTask> list = sm.tasks();
+        while (list != null && !list.isEmpty()) {
+            ShutDownTask task = list.get(0);
+            log.warn("Test {} left ShutDownTask registered: {}}", getTestClassName(), task.getName(), 
+                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+            sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
 
@@ -942,10 +943,15 @@ public class JUnitUtil {
     }
 
     /**
-     * Creates, if needed, a new ShutDownManager, clearing any existing
-     * ShutDownManager, and ensuring the ShutDownManager is not in the state of
-     * ShuttingDown if the ShutDownManager is a MockShutDownManager.
+     * Creates a new ShutDownManager.
+     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
+     * Normally, this is not needed for tests, as 
+     * a {@link MockShutDownManager} is created and provided when a {@link ShutDownManager}
+     * is requested from the {@link InstanceManager} via a {@link InstanceManager#getDefault()} call.
+     * @see #clearShutDownManager()
+     * @deprecated 4.17.5 should not be needed in new test code
      */
+    @Deprecated // 4.17.5 should not be needed in new test code
     public static void initShutDownManager() {
         ShutDownManager manager = InstanceManager.getDefault(ShutDownManager.class);
         List<ShutDownTask> tasks = manager.tasks();
@@ -1222,7 +1228,7 @@ public class JUnitUtil {
             window.dispose();
         });
     }
-    
+        
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
             if (t.getName().equals(threadName)) return t;

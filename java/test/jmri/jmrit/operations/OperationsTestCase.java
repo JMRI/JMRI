@@ -39,7 +39,6 @@ public class OperationsTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
-        JUnitUtil.initShutDownManager();
     }
 
     private final boolean waitOnEventQueueNotEmpty = false;
@@ -80,6 +79,8 @@ public class OperationsTestCase {
                 // ignore.
             }
         }
+        
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

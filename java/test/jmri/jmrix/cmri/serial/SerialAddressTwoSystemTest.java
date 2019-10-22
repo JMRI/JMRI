@@ -85,13 +85,15 @@ public class SerialAddressTwoSystemTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
         if (stcs1 != null) stcs1.terminateThreads();
         stcs1 = null;
         memo1 = null;
         if (stcs2 != null) stcs2.terminateThreads();
         stcs2 = null;
         memo2 = null;
+
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     @Test

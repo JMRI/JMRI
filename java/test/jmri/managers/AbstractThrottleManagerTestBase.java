@@ -162,12 +162,12 @@ public abstract class AbstractThrottleManagerTestBase {
 		Assert.assertNull("NULL",tm.getThrottleInfo(addr,Throttle.F28));
         ThrottleListener throtListen = new ThrottleListen();
         tm.requestThrottle(addr,throtListen, true);
-        JUnitUtil.waitFor(()->{ return(tm.getThrottleInfo(addr,"IsForward")!=null); }, "reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(tm.getThrottleInfo(addr,Throttle.ISFORWARD)!=null); }, "reply didn't arrive");
         
-        Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,"IsForward"));
-        Assert.assertNotNull("speed setting",tm.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertNotNull("speed increment",tm.getThrottleInfo(addr,"SpeedIncrement"));
-        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,"SpeedStepMode"));
+        Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,Throttle.ISFORWARD));
+        Assert.assertNotNull("speed setting",tm.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertNotNull("speed increment",tm.getThrottleInfo(addr,Throttle.SPEEDINCREMENT));
+        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,Throttle.SPEEDSTEPMODE));
         Assert.assertNotNull("F0",tm.getThrottleInfo(addr,Throttle.F0));
         Assert.assertNotNull("F1",tm.getThrottleInfo(addr,Throttle.F1));
         Assert.assertNotNull("F2",tm.getThrottleInfo(addr,Throttle.F2));

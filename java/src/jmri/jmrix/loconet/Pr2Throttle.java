@@ -216,7 +216,7 @@ public class Pr2Throttle extends AbstractThrottle {
 
         writeData();
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); // NOI18N
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting); // NOI18N
         }
         record(speed);
     }
@@ -231,7 +231,7 @@ public class Pr2Throttle extends AbstractThrottle {
         isForward = forward;
         sendFunctionGroup1();
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward); // NOI18N
+            notifyPropertyChangeListener(ISFORWARD, old, isForward); // NOI18N
         }
     }
 

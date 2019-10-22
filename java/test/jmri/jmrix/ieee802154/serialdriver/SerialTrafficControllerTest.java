@@ -161,7 +161,9 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

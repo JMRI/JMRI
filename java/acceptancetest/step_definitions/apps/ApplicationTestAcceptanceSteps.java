@@ -94,15 +94,16 @@ public class ApplicationTestAcceptanceSteps implements En {
             JUnitUtil.clearShutDownManager();
             JUnitUtil.resetAppsBase();
             JUnitUtil.resetFileUtilSupport();
+            JUnitUtil.resetWindows(false,false);
             JUnitUtil.tearDown();
         });
 
     }
 
     private void dismissClosingDialogs() {
-        // the Unsaved Changes dialog doesn't appear every time we close, 
-        // so put pressing No button in that dialog into a thread by itself.  
-        // If the dialog appears, the button will be clicked, but it's not 
+        // the Unsaved Changes dialog doesn't appear every time we close,
+        // so put pressing No button in that dialog into a thread by itself.
+        // If the dialog appears, the button will be clicked, but it's not
         // an error if the dialog doesn't appear.
         Thread t = new Thread(() -> {
             try {

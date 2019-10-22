@@ -22,7 +22,7 @@ public final class DCCppConstants {
 
     private DCCppConstants() {
         // final class of static values, no values to construct.
-    };
+    }
 
     public static final int MAX_MESSAGE_SIZE = 30;
     public static final int MAX_REPLY_SIZE = 256;

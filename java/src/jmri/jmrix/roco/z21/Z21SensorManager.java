@@ -8,6 +8,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the Z21Specific Sensor implementation.
  * <p>
@@ -43,6 +45,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Z21SystemConnectionMemo getMemo() {
         return (Z21SystemConnectionMemo) memo;
     }
@@ -87,7 +90,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg) {
@@ -124,7 +127,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message l) {
@@ -135,7 +138,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         name = validateSystemNamePrefix(name, locale);
         if (name.substring(getSystemNamePrefix().length()).contains(":")) {
             return Z21CanBusAddress.validateSystemNameFormat(name, this, locale);
@@ -155,12 +159,13 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public synchronized String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public synchronized String createSystemName(String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
@@ -200,7 +205,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    public synchronized String getNextValidAddress(String curAddress, String prefix) {
+    public synchronized String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 
@@ -234,7 +239,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
-    public Sensor getBySystemName(String sName){
+    public Sensor getBySystemName(@Nonnull String sName){
         Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
         return getBySystemName(sName,comparator);
     }

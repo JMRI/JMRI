@@ -1,0 +1,46 @@
+# This suppresses known issues (that should still be resolved\)
+# from the ArchUnit tests run via jmri.ArchitectureCheck
+
+# Be sure to regex escape all . () [ $ characters, accept differing lines for lambdas, and end with .*
+
+# For checkStandardStreams
+Method <jmri\.jmrit\.XmlFile\.lambda\$dumpElement\$.*\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.jmrit\.XmlFile\.lambda\$0\(org\.jdom2\.Element\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.jmrit\.XmlFileValidateAction\$2\.showFailResults\(java\.awt\.Component, java\.lang\.String\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.jmrit\.automat\.JythonAutomaton\.handle\(\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.jmrit\.automat\.JythonSiglet\.defineIO\(\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.managers\.DefaultShutDownManager\.runShutDownTasks\(boolean\)> gets field <java\.lang\.System\.err>.*
+Method <jmri\.util\.FileUtilSupport\.getPreferencesPath\(\)> gets field <java\.lang\.System\.err>.*
+Method <jmri\.util\.com\.dictiography\.collections\.IndexedTreeMap\.dbg\(\)> gets field <java\.lang\.System\.out>.*
+Method <jmri\.util\.com\.rbnb\.UDPOutputStream\.write\(\[B, int, int\)> gets field <java\.lang\.System\.err>.*
+
+# For checkBundleNamesOnlyOnBundleClass
+Class <jmri\.jmrit\.symbolicprog\.SymbolicProgBundle> is not assignable to jmri\.Bundle.*
+
+# For checkBundleNames
+Class <apps\.ConfigBundle> does not have simple name \'Bundle\'.*
+
+# For checkJmriPackageAwt
+Method <jmri\.ConditionalAction\.getListener\(\)> has return type <java\.awt\.event\.ActionListener>.*
+Method <jmri\.ConditionalAction\.setListener\(java\.awt\.event\.ActionListener\)> has parameter of type <java\.awt\.event\.ActionListener>.*
+Method <jmri\.Path\.computeDirection\(java\.awt\.geom\.Point2D, java\.awt\.geom\.Point2D\)> has parameter of type <java\.awt\.geom\.Point2D>.*
+Method <jmri\.UserPreferencesManager\.getScreen\(\)> has return type <java\.awt\.Dimension>.*
+Method <jmri\.UserPreferencesManager\.getWindowLocation\(java\.lang\.String\)> has return type <java\.awt\.Point>.*
+Method <jmri\.UserPreferencesManager\.getWindowSize\(java\.lang\.String\)> has return type <java\.awt\.Dimension>.*
+Method <jmri\.UserPreferencesManager\.setWindowLocation\(java\.lang\.String, java\.awt\.Point\)> has parameter of type <java\.awt\.Point>.*
+Method <jmri\.UserPreferencesManager\.setWindowSize\(java\.lang\.String, java\.awt\.Dimension\)> has parameter of type <java\.awt\.Dimension>.*
+
+# For checkJmriPackageJmrix
+Method <jmri\.Manager\.getMemo\(\)> has return type <jmri\.jmrix\.SystemConnectionMemo>.*
+
+# For checkJmriPackageSwing
+Interface <jmri\.CatalogTree> extends interface <javax\.swing\.tree\.TreeModel>.*
+Method <jmri\.ConditionalAction\.getTimer\(\)> has return type <javax\.swing\.Timer>.*
+Method <jmri\.ConditionalAction\.setTimer\(javax\.swing\.Timer\)> has parameter of type <javax\.swing\.Timer>.*
+Method <jmri\.JmriPlugin\.start\(javax\.swing\.JFrame, javax\.swing\.JMenuBar\)> has parameter of type <javax\.swing\.JFrame>.*
+Method <jmri\.JmriPlugin\.start\(javax\.swing\.JFrame, javax\.swing\.JMenuBar\)> has parameter of type <javax\.swing\.JMenuBar>.*
+
+# For checkJmriPackageJdom
+Method <jmri\.BasicRosterEntry\.store\(\)> has return type <org\.jdom2\.Element>.*
+Method <jmri\.IdTag\.load\(org\.jdom2\.Element\)> has parameter of type <org\.jdom2\.Element>.*
+Method <jmri\.IdTag\.store\(boolean\)> has return type <org\.jdom2\.Element>.*

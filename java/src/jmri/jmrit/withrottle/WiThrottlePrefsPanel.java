@@ -278,8 +278,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        // TODO: migrate to local resource bundle
-        return ResourceBundle.getBundle("apps.AppsConfigBundle").getString("MenuWiThrottle"); // NOI18N
+        return Bundle.getMessage("MenuMenu"); // NOI18N
     }
 
     @Override
