@@ -351,22 +351,22 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * Find the index of a matching manager. Throws IllegalArgumentException if
      * there is no match, here considered to be an error that must be reported.
      *
-     * @param systemname the system name
+     * @param systemName the system name
      * @return the index of the matching manager
      */
-    protected int match(String systemname) {
+    protected int match(String systemName) {
         // make sure internal present
         initInternal();
 
-        int index = matchTentative(systemname);
+        int index = matchTentative(systemName);
         if (index < 0) {
-            throw new IllegalArgumentException("System name " + systemname + " failed to match"); // NOI18N
+            throw new IllegalArgumentException("System name " + systemName + " failed to match"); // NOI18N
         }
         return index;
     }
 
     /**
-     * Shared method to create a systemName based on the prefix and manager class.
+     * Shared method to create a systemName based on the address base, the prefix and manager class.
      *
      * @param curAddress base address to use
      * @param prefix system prefix to use
@@ -376,12 +376,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     String createSystemName(String curAddress, String prefix, Class managerType) throws JmriException {
         for (Manager<E> m : mgrs) {
-            if (prefix.equals(m.getSystemPrefix()) &&  managerType.equals(m.getClass())) {
+            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
                 try {
                     if (managerType == TurnoutManager.class) {
                         return ((TurnoutManager) m).createSystemName(curAddress, prefix);
                     } else if (managerType == SensorManager.class) {
                         return ((SensorManager) m).createSystemName(curAddress, prefix);
+                    } else {
+                        log.warn("createSystemName requested for incompatible Manager");
                     }
                 } catch (jmri.JmriException ex) {
                     throw ex;
