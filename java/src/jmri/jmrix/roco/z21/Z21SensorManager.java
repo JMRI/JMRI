@@ -165,7 +165,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
 
     @Override
     @Nonnull
-    public synchronized String createSystemName(String curAddress, @Nonnull String prefix) throws JmriException {
+    public synchronized String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 

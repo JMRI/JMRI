@@ -56,8 +56,9 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     @Nonnull public
     Reporter provideReporter(@Nonnull String name);
 
-    @Override
     /** {@inheritDoc} */
+    @Override
+    @Nonnull
     default public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
@@ -129,8 +130,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      *                                  an illegal name or name that can't
      *                                  be parsed.
      */
-    @Nonnull public
-    Reporter newReporter(@Nonnull String systemName, String userName);
+    @Nonnull
+    public Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
      * Determine if it is possible to add a range of reporters in numerical
@@ -149,8 +150,11 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * @param prefix     system prefix used to make up the systemName
      * @param curAddress hardware address of the turnout to check
      * @return the next available address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
      */
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     /**
      * {@inheritDoc}

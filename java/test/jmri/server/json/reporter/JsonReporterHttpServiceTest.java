@@ -30,6 +30,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author Paul Bender
@@ -129,8 +131,9 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         // create a default reporter manager that overrides provide() to require valid system name
         // this allows testing that invalid names are reported to clients correctly
         InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+            @Nonnull
             @Override
-            public Reporter provide(String name) {
+            public Reporter provide(@Nonnull String name) {
                 return this.newReporter(name, null);
             }
         });

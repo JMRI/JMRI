@@ -5,6 +5,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the Acela-specific Sensor implementation.
  * <p>
@@ -240,7 +242,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

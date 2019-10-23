@@ -6,6 +6,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the RPS-specific Sensor implementation.
  * <p>
@@ -51,8 +53,9 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!prefix.equals(getSystemPrefix())) {
             log.warn("prefix does not match memo.prefix");
             return null;

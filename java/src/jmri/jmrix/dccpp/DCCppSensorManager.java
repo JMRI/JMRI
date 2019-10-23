@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_SENSOR_ID;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -130,12 +131,13 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
+    @Nonnull
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
+    synchronized public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
@@ -176,7 +178,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      * @return the next valid address after the current address
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName;
 

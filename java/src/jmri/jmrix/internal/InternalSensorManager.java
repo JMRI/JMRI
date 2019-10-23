@@ -5,6 +5,8 @@ import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implementation of the InternalSensorManager interface.
  *
@@ -18,7 +20,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
     
     /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -65,7 +67,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Sensor s = getBySystemName(prefix + typeLetter() + curAddress);

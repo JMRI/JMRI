@@ -1,6 +1,7 @@
 package jmri.jmrix.tams;
 
 import java.util.Hashtable;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -106,8 +107,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return s;
     }
 
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
             log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
@@ -152,7 +154,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     int port = 0;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName;
 
@@ -212,7 +214,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
      * @return true
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

@@ -393,6 +393,25 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
     }
 
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, Class managerType) throws jmri.JmriException {
+        for (Manager<E> m : mgrs) {
+            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
+                try {
+                    if (managerType == TurnoutManager.class) {
+                        return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
+                    } else if (managerType == SensorManager.class) {
+                        return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
+                    } else if (managerType == ReporterManager.class) {
+                        return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        return null;
+    }
+
     /** {@inheritDoc} */
     @Override
     public void deleteBean(E s, @Nonnull String property) throws PropertyVetoException {

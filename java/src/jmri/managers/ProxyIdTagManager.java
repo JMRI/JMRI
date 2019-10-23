@@ -139,7 +139,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return requested IdTag object (never null)
      */
     @Override
-    public IdTag newIdTag(String systemName, String userName) {
+    public IdTag newIdTag(@Nonnull String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 

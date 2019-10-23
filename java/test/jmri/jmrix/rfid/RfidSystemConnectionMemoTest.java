@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+
 /**
  * RfidSystemConnectionMemoTest.java
  *
@@ -53,7 +55,7 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         };
         RfidReporterManager r = new RfidReporterManager(memo){
             @Override
-            protected jmri.Reporter createNewReporter(String systemName, String userName){
+            protected jmri.Reporter createNewReporter(@Nonnull String systemName, String userName){
                return null;
             }
             @Override

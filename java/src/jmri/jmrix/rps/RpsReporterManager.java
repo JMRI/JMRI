@@ -6,6 +6,8 @@ import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * RPS implementation of a ReporterManager.
  *
@@ -31,7 +33,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
      * System name is normalized to ensure uniqueness.
      */
     @Override
-    protected Reporter createNewReporter(String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
         log.debug(userName);
         RpsReporter r = new RpsReporter(systemName, userName, getSystemPrefix());
         Distributor.instance().addMeasurementListener(r);

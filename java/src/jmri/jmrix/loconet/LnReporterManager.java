@@ -5,6 +5,8 @@ import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the LocoNet-specific Reporter implementation.
  * <p>
@@ -51,7 +53,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         Reporter t;
         int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         t = new LnReporter(addr, tc, getSystemPrefix());

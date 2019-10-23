@@ -2,6 +2,8 @@ package jmri.jmrix.jmriclient;
 
 import jmri.Sensor;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement sensor manager for JMRIClient systems.
  * <p>
@@ -37,8 +39,9 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
      * JMRIClient Sensors can take arbitrary names to match the names used
      * on the server.
      */
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
 

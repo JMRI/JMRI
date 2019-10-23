@@ -103,8 +103,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         String tmpSName = prefix + "S" + curAddress;
         // first, check validity
         try {

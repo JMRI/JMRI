@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a SensorManager that can serves as a proxy for multiple
+ * Implementation of a SensorManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
@@ -131,17 +131,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        for (int i = 0; i < nMgrs(); i++) {
-            if (prefix.equals(
-                    ((SensorManager) getMgr(i)).getSystemPrefix())) {
-                try {
-                    return ((SensorManager) getMgr(i)).getNextValidAddress(curAddress, prefix);
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
-            }
-        }
-        return null;
+        return getNextValidAddress(curAddress, prefix, SensorManager.class);
     }
 
     /**

@@ -6,6 +6,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the specific Sensor implementation.
  * <p>
@@ -156,12 +158,13 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             //Address format passed is in the form of sysNode:address or T:turnout address
             int seperator = curAddress.indexOf(":");
@@ -190,7 +193,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     int iName = 0;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 

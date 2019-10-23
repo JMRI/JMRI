@@ -7,6 +7,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the XpressNet specific Sensor implementation.
  * <p>
@@ -174,12 +176,13 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
+    @Nonnull
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
+    synchronized public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
@@ -212,7 +215,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 

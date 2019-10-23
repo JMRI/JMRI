@@ -15,6 +15,8 @@ import org.openlcb.OlcbInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the OpenLCB-specific Sensor implementation.
  *
@@ -135,12 +137,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
             validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
@@ -151,7 +154,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         // always return this (the current) name without change
         return curAddress;
     }

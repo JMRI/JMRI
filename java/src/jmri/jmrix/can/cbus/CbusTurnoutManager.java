@@ -75,7 +75,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc} 
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -83,7 +83,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc} 
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // first, check validity
         try {
             validateAddressFormat(curAddress);
@@ -99,7 +99,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc} 
      */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String testAddr = curAddress;
         // make sure starting name is valid
         try {

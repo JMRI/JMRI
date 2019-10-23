@@ -5,6 +5,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
@@ -86,12 +88,12 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     abstract public void reply(SerialReply r);
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.

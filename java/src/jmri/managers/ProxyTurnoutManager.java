@@ -235,16 +235,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        for (int i = 0; i < nMgrs(); i++) {
-            if (prefix.equals((getMgr(i)).getSystemPrefix())) {
-                try {
-                    return ((TurnoutManager) getMgr(i)).getNextValidAddress(curAddress, prefix);
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
-            }
-        }
-        return null;
+        return getNextValidAddress(curAddress, prefix, TurnoutManager.class);
     }
 
     @Override

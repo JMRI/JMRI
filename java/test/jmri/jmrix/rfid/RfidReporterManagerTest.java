@@ -5,6 +5,8 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
 
+import javax.annotation.Nonnull;
+
 /**
  * RfidReporterManagerTest.java
  *
@@ -94,7 +96,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         };
         l = new RfidReporterManager(new RfidSystemConnectionMemo()){
             @Override
-            protected Reporter createNewReporter(String systemName, String userName){
+            protected Reporter createNewReporter(@Nonnull String systemName, String userName){
                return null;
             }
             @Override

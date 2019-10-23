@@ -15,6 +15,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the XBee specific Sensor implementation.
  *
@@ -183,12 +185,13 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // for now, set this to false. multiple additions currently works
     // partially, but not for all possible cases.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
+    @Nonnull
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String encoderAddress = addressFromSystemName(prefix + typeLetter() + curAddress);
         int input = pinFromSystemName(prefix + typeLetter() + curAddress);
 

@@ -2,6 +2,8 @@ package jmri.jmrix.dcc4pc;
 
 import jmri.Reporter;
 
+import javax.annotation.Nonnull;
+
 /**
  * Dcc4PcReporterManager implements the ReporterManage for dcc4pc
  *
@@ -28,7 +30,7 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         Reporter r = new Dcc4PcReporter(systemName, userName);
         register(r);
         return r;

@@ -6,6 +6,7 @@ import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 
 /**
@@ -61,7 +62,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         if (!systemName.matches(getSystemPrefix() + typeLetter() + "[" + 1 + "]")) {
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {
@@ -154,7 +155,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      * {@inheritDoc}
      */
     @Override
-    public Reporter getBySystemName(String sName){
+    public Reporter getBySystemName(@Nonnull String sName){
         Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
         return getBySystemName(sName,comparator);
     }
