@@ -504,7 +504,11 @@
                 <strong>This means that any files you have added to the <em>lib</em>
                     folder will be removed.</strong></li>
             <li><strong>macOS Only</strong> This version includes changes to how
-                macOS-specific libraries are provided.  This was done to increase
+                the distributed files are signed.  This includes signing individual
+                libraries, signing libraries inside jar files, signing the three
+                app bundles, and signing the .dmg file itself, followed by 
+                notarizing the .dmg file.
+                This was done to increase
                 compatibility with macOS 10.15 Catalina.
             <li>Added basic support for developer architecture checks via
                 <a href="https://www.archunit.org">ArchUnit</a>,
