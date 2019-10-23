@@ -23,9 +23,9 @@ public class PortalTest {
 
     @Test
     public void testCtor() {
-        Portal p = _portalMgr.createNewPortal("IP1", null);
+        Portal p = _portalMgr.createNewPortal(null);
         Assert.assertNull("No User Name", p);       // Portals must have a user name
-        p = _portalMgr.createNewPortal(null, "portal_1");
+        p = _portalMgr.createNewPortal("portal_1");
         Assert.assertNotNull("Has User Name", p);
     }
     

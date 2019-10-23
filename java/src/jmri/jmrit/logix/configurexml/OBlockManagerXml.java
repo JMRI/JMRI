@@ -109,7 +109,6 @@ public class OBlockManagerXml // extends XmlFile
 
     static private Element storePortal(Portal portal) {
         Element elem = new Element("portal");
-        elem.setAttribute("systemName", portal.getSystemName());
         elem.setAttribute("portalName", portal.getName());
         OBlock block = portal.getFromBlock();
         if (block != null) {
@@ -222,7 +221,7 @@ public class OBlockManagerXml // extends XmlFile
     private Portal getPortal(String name) {
         Portal portal = _portalMgr.providePortal(name);
         if (portal == null) {
-            portal = _portalMgr.createNewPortal(null, name);
+            portal = _portalMgr.createNewPortal(name);
             log.debug("create Portal: ({}, {})", portal.getSystemName(), name);
         }
         return portal;

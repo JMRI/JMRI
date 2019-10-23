@@ -193,7 +193,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                     msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                 }
                 if (msg==null) {
-                    Portal portal = _manager.createNewPortal(null, tempRow[NAME_COLUMN]);
+                    Portal portal = _manager.createNewPortal(tempRow[NAME_COLUMN]);
                     if (portal != null) {
                         portal.setToBlock(toBlock, false);
                         portal.setFromBlock(fromBlock, false);

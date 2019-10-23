@@ -55,7 +55,12 @@ public class PortalManager extends AbstractManager<Portal>
      * Generate a systemName if called with sName == null and 
      * non null userName.
      */
+    @Deprecated
     public Portal createNewPortal(String sName, String userName) {
+        return createNewPortal(userName);
+    }
+    
+    public Portal createNewPortal(String userName) {
         // Check that Portal does not already exist
         Portal portal;
         if (userName != null && userName.trim().length() > 0) {
@@ -66,22 +71,7 @@ public class PortalManager extends AbstractManager<Portal>
         } else {  // must have a user name for backward compatibility
             return null;
         }
-        if (sName == null) {
-            sName = getAutoSystemName();
-        } else {
-            if (log.isDebugEnabled()) log.debug("createNewPortal called with system name \"{}\"", sName);
-        }
-        if (!sName.startsWith(getSystemNamePrefix())) {
-            sName = getSystemNamePrefix() + sName;
-        }
-        if (sName.length() < getSystemNamePrefix().length()+1) {
-            return null;
-        }
-        portal = getBySystemName(sName);
-        if (portal != null) {
-            return null;
-        }
-        // Portal does not exist, create a new Portal
+        String sName = getAutoSystemName();
         portal = new Portal(sName, userName);
         // save in the maps
         register(portal);
@@ -138,7 +128,7 @@ public class PortalManager extends AbstractManager<Portal>
         }
         Portal portal = getPortal(name);
         if (portal == null) {
-            portal = createNewPortal(null, name);
+            portal = createNewPortal(name);
         }
         return portal;
     }

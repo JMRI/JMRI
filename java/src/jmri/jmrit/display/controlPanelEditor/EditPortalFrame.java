@@ -525,7 +525,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             Portal portal = _homeBlock.getPortalByName(name);
             if (portal == null) {
                 PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
-                portal = portalMgr.createNewPortal(null, name);
+                portal = portalMgr.createNewPortal(name);
                 portal.setFromBlock(_homeBlock, false);
                 _portalList.dataChange();
             }
