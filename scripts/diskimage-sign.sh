@@ -35,6 +35,14 @@ KEYCHAIN_FILE=$7
 KEYCHAIN_PWD=$8
 
 # -----------------------------------------
+function trapExitHandler {
+    trap - 1 2 3 15
+    umount "$tmpimage2" && echo "Unmounted tmpimage2"
+    umount "$tmpindir" && echo "Unmounted tempindir"
+    umount "$INPUTIMAGEFILE" && echo "Unmounted input image"
+    rm -rf "$tmpimage1" "$tmpimage2" "$tmpoutdir" "$tmpindir" >/dev/null 2>&1
+}
+# -----------------------------------------
 # Retry a command up to a specific number of times until it exits successfully.
 # Waits 1 minute between retries
 #
@@ -80,7 +88,7 @@ function signJarMember {
 #  
 function signFile {
   local file=$1
-  codesign -v -s "$CERTIFICATE" --deep $file
+  codesign -v -s "$CERTIFICATE" --force --deep $file
   return 0
 }
 # -----------------------------------------
@@ -122,8 +130,9 @@ then
   exit 1
 fi
 
-
-trap 'rm -rf "$tmpimage1" "$tmpimage2" "$tmpoutdir" "$tmpindir" >/dev/null 2>&1'  0
+# handle cleanup on exit
+trap trapExitHandler  0
+# handle error signals by aborting
 trap 'exit 2' 1 2 3 15
 
 # shouldn't be anything left over, but if so, clean up
@@ -132,7 +141,6 @@ rm -f "$tmpimage1" "$tmpimage2"
 
 # mount input image (needs Linux varient)
 hdiutil attach "$INPUTIMAGEFILE" -mountpoint "$tmpindir" -nobrowse
-trap '[ "$EJECTED" = 0 ] && hdiutil eject "$INPUTIMAGEFILE  "' 0
 
 # create disk image and mount
 jmrisize=`du -ms "$tmpindir" | awk '{print $1}'`
@@ -142,12 +150,10 @@ if [ "$SYSTEM" = "MACOSX" ]
 then 
     hdiutil create -size ${imagesize}MB -fs HFS+ -layout SPUD -volname "JMRI ${REL_VER}" "$tmpimage2"
     hdiutil attach ${tmpimage2}.dmg -mountpoint "$tmpoutdir" -nobrowse
-    trap '[ "$EJECTED" = 0 ] && hdiutil eject "$tmpimage2"' 0
 else
     dd if=/dev/zero of="$tmpimage2" bs=1M count=${imagesize}
     mkfs.hfsplus -v "JMRI ${REL_VER}" "${tmpimage2}"
     sudo mount -t hfsplus -o loop,rw,uid=$UID "$tmpimage2" $tmpoutdir
-    trap '[ "$EJECTED" = 0 ] && sudo umount "$tmpoutdir"' 0
 fi
 
 # wait for the mountpoint to settle down...
