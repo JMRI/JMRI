@@ -12,6 +12,8 @@
 #    ID of signing certificate, i.e. "Developer ID Application: My Name"
 #    Apple ID for notarization
 #    Application-specific password on that Apple ID (see appleid.apple.com)
+#    Location of keychain file containing that certificate
+#    Password to unlock that keychain file
 #
 # Although it might be consuming additional space on the final disk image,
 # we do the signing and jar-updating there to ensure this doesn't
@@ -29,7 +31,8 @@ INPUTIMAGEFILE=$3
 CERTIFICATE=$4
 AC_USER=$5
 AC_PASSWORD=$6
-
+KEYCHAIN_FILE=$7
+KEYCHAIN_PWD=$8
 
 # -----------------------------------------
 # Retry a command up to a specific number of times until it exits successfully.
@@ -129,6 +132,7 @@ rm -f "$tmpimage1" "$tmpimage2"
 
 # mount input image (needs Linux varient)
 hdiutil attach "$INPUTIMAGEFILE" -mountpoint "$tmpindir" -nobrowse
+trap '[ "$EJECTED" = 0 ] && hdiutil eject "$INPUTIMAGEFILE  "' 0
 
 # create disk image and mount
 jmrisize=`du -ms "$tmpindir" | awk '{print $1}'`
@@ -159,6 +163,9 @@ fi
 
 # copy contents of the Mac OS X distribution to the newly mounted filesysten
 tar -C "$tmpindir" -cf - JMRI | $SUDO tar -C "$tmpoutdir" -xf -
+
+# unlock the keychain containing the certification
+security unlock-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN_FILE"
 
 # sign the app files in output
 signFile $tmpoutdir/JMRI/PanelPro.app
