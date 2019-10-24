@@ -24,7 +24,7 @@ public class TrainByCarTypeAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // create frame
-        TrainByCarTypeFrame f = new TrainByCarTypeFrame(_train);
+        new TrainByCarTypeFrame(_train);
     }
 }
 

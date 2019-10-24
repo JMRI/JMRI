@@ -428,7 +428,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         } else if (attribute.equals(Setup.PICKUP_COMMENT.toLowerCase())) { // NOI18N
             return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
         } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
+            return this.getFormattedAttribute(JSON.REMOVE_COMMENT, rollingStock.path(JSON.REMOVE_COMMENT).textValue());
         } else if (attribute.equals(Setup.RWE.toLowerCase())) {
             return this.getFormattedAttribute(JSON.RETURN_WHEN_EMPTY, this.getFormattedLocation(rollingStock
                     .path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE")); // NOI18N
