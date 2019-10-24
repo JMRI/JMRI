@@ -1,14 +1,19 @@
 package jmri.web.servlet.operations;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.Xml;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -18,9 +23,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -446,12 +448,16 @@ public class HtmlManifest extends HtmlTrainCommon {
         // TODO handle tracks without names
         switch (show) {
             case location:
-                return String.format(locale, strings.getProperty(prefix + "Location"), location.path(JSON.USERNAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "Location"),
+                        splitString(location.path(JSON.USERNAME).asText()));
             case track:
-                return String.format(locale, strings.getProperty(prefix + "Track"), location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "Track"),
+                        splitString(location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText()));
             case both:
             default: // default here ensures the method always returns
-                return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"), location.path(JSON.USERNAME).asText(), location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText());
+                return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"),
+                        splitString(location.path(JSON.USERNAME).asText()),
+                        splitString(location.path(JsonOperations.TRACK).path(JSON.USERNAME).asText()));
         }
     }
 
