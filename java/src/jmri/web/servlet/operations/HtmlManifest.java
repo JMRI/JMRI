@@ -308,7 +308,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                                             ShowLocation.location))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.DESTINATION_TRACK)) {
                     builder.append(
-                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.LOCATION),
+                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.DESTINATION),
                                             ShowLocation.both))).append(" "); // NOI18N
                 } else if (attribute.equals(Xml.TYPE)) {
                     builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
@@ -341,6 +341,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
                                             ShowLocation.location))).append(" "); // NOI18N
+                } else if (attribute.equals(Xml.TYPE)) {
+                    builder.append(this.getTextAttribute(JsonOperations.CAR_TYPE, car)).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
                 }
@@ -426,7 +428,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         } else if (attribute.equals(Setup.PICKUP_COMMENT.toLowerCase())) { // NOI18N
             return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
         } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JSON.ADD_COMMENT, rollingStock.path(JSON.ADD_COMMENT).textValue());
+            return this.getFormattedAttribute(JSON.REMOVE_COMMENT, rollingStock.path(JSON.REMOVE_COMMENT).textValue());
         } else if (attribute.equals(Setup.RWE.toLowerCase())) {
             return this.getFormattedAttribute(JSON.RETURN_WHEN_EMPTY, this.getFormattedLocation(rollingStock
                     .path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE")); // NOI18N
