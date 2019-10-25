@@ -16,38 +16,38 @@ package jmri.jmrix.can;
 public interface CanMutableFrame extends CanFrame {
 
     /**
-     * Set the CAN Frame header
+     * Set the CAN Frame header.
      * @param h new header value
      */
     public void setHeader(int h);
 
     /**
-     * Set if the CAN Frame header is extended
+     * Set if the CAN Frame header is extended.
      * @param b true if extended, else false
      */
     public void setExtended(boolean b);
 
     /**
-     * Set if the CAN Frame is an RTR Frame
+     * Set if the CAN Frame is an RTR Frame.
      * @param b true if RTR, else false
      */
     public void setRtr(boolean b);
 
     /**
-     * Set the number of data elements in the main CAN Frame body
+     * Set the number of data elements in the main CAN Frame body.
      * @param n true number of data bytes, 0-8
      */
     public void setNumDataElements(int n);
 
     /**
-     * Get a single data byte in the frame
+     * Get a single data byte in the frame.
      * @param n the index, 0-7
      * @param v the new value, 0-255
      */
     public void setElement(int n, int v);
     
     /**
-     * Set the CAN Frame data elements by int array
+     * Set the CAN Frame data elements by int array.
      *
      * @param d array of CAN Frame data bytes, max 8
      */
@@ -59,7 +59,7 @@ public interface CanMutableFrame extends CanFrame {
     }
     
     /**
-     * Set the CAN Frame data elements by byte array
+     * Set the CAN Frame data elements by byte array.
      *
      * @param d array of CAN Frame data bytes, max 8
      */

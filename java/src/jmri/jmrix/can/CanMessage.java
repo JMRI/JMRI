@@ -1,9 +1,7 @@
 package jmri.jmrix.can;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRMessage;
-import jmri.util.StringUtil;
 
 /**
  * Base class for messages in a CANbus based message/reply protocol.
@@ -38,7 +36,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;
-        setBinary(true);
+        super.setBinary(true);
         _dataChars = new int[8];
     }
     
@@ -82,8 +80,8 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         this(m.getHeader());
         _isExtended = m.isExtended();
         _isRtr = m.isRtr();
-        setBinary(true);
-        setData(m.getData());
+        super.setBinary(true);
+        setData(java.util.Arrays.copyOf(m.getData(),m.getNumDataElements()));
         setNumDataElements(m.getNumDataElements());
     }
 
@@ -95,7 +93,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         this(m.getHeader());
         _isExtended = m.isExtended();
         _isRtr = m.isRtr();
-        setBinary(true);
+        super.setBinary(true);
         setData(m.getData());
         setNumDataElements(m.getNumDataElements());
     }
@@ -126,17 +124,19 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
 
     /**
-     * Note that a CanMessage and a CanReply can be tested for equality
+     * Note that a CanMessage and a CanReply can be tested for equality.
      * @param a CanMessage or CanReply to test against
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EQ_UNUSUAL",
+        justification = "Equality test done in CanFrame")
     public boolean equals(Object a) {
         return isEqual(this,a);
     }
 
     /**
      * {@inheritDoc}
-     * This format matches @CanReply
+     * This format matches {@link CanReply}
      */
     @Override
     public String toString() {
@@ -154,7 +154,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
 
     /**
      * {@inheritDoc}
-     * Always False
+     * @return always false
      */
     @Override
     public boolean replyExpected() {
@@ -173,7 +173,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
      * {@inheritDoc}
      */
     @Override
-    public void setNumDataElements(int n) {
+    public final void setNumDataElements(int n) {
         _nDataChars = n;
     }
 
@@ -194,9 +194,9 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
 
     /**
-     * Get the data bytes in array form
+     * Get the data bytes in array form.
+     * @return the actual int array
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
     public int[] getData() {
         return _dataChars;
     }

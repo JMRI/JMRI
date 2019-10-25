@@ -29,7 +29,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;
-        setBinary(true);
+        super.setBinary(true);
         _dataChars = new int[8];
     }
 
@@ -73,7 +73,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         _header = m.getHeader();
         _isExtended = m.isExtended();
         _isRtr = m.isRtr();
-        setBinary(true);
+        super.setBinary(true);
         setData(m.getData());
         setNumDataElements(m.getNumDataElements());
     }
@@ -87,8 +87,8 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         _header = m.getHeader();
         _isExtended = m.isExtended();
         _isRtr = m.isRtr();
-        setBinary(true);
-        setData(m.getData());
+        super.setBinary(true);
+        setData(java.util.Arrays.copyOf(m.getData(),m.getNumDataElements()));
         setNumDataElements(m.getNumDataElements());
     }
 
@@ -104,6 +104,8 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
      * Note that a CanMessage and a CanReply can be tested for equality
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EQ_UNUSUAL",
+        justification = "Equality test done in CanFrame")
     public boolean equals(Object a) {
         return isEqual(a,this);
     }
@@ -128,7 +130,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
      * {@inheritDoc}
      */
     @Override
-    public void setNumDataElements(int n) {
+    public final void setNumDataElements(int n) {
         _nDataChars = (n <= 8) ? n : 8;
     }
 
@@ -149,10 +151,9 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     }
 
     /**
-     * Get the data byte array
-     * @return the byte array
+     * Get the data byte array.
+     * @return the actual byte array, not a Copy Of
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
     public int[] getData() {
         return _dataChars;
     }
@@ -169,7 +170,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
      * {@inheritDoc}
      */
     @Override
-    public void setHeader(int h) {
+    public final void setHeader(int h) {
         _header = h;
     }
 
