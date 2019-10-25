@@ -97,16 +97,12 @@ public abstract class AbstractDCCppInitializationManager {
             javax.swing.Timer retVal = 
 		new javax.swing.Timer(INITIALTIMEOUT,
 				      (java.awt.event.ActionEvent e) -> {
-					  DCCppCommandStation cs;
 					  /* If the timer times out, notify any
 					     waiting objects, and dispose of
 					     this thread */
 					  log.debug("Timeout waiting for Command Station Response");
-					  // This means probably that there was no answer on the MaxNumSlots question
-					  cs = systemMemo.getDCCppTrafficController().getCommandStation(); 
-					  if (cs.getCommandStationMaxNumSlots() <= 0) {
-					      cs.setCommandStationMaxNumSlots(DCCppConstants.MAX_MAIN_REGISTERS);
-					  }
+					  // This means that there was no answer on the MaxNumSlots question
+					  systemMemo.getDCCppTrafficController().getCommandStation().setCommandStationMaxNumSlots(DCCppConstants.MAX_MAIN_REGISTERS);
 					  finish();
 				      }
 		    );
