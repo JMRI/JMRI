@@ -1,4 +1,4 @@
-package jmri.jmrix.jmriclient.swing.mon;
+    package jmri.jmrix.jmriclient.swing.mon;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
@@ -34,7 +34,8 @@ public class JMRIClientMonActionTest {
 
     @After
     public void tearDown() {
-	memo = null;
+	    memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     	JUnitUtil.tearDown();
     }
 }

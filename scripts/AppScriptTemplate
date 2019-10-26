@@ -129,7 +129,7 @@ function parse_args() {
 function heap_size() {
     # get Java heap size
     heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
-    heap=$( expr ${heap} / 1048576 ) # bytes to MB
+    [ ! -z "$heap" ] && heap=$( expr ${heap} / 1048576 ) || heap=0 # bytes to MB
     # Java heap defaults to 1/4 total memory size
     # if <= 768MB (1/4 of 3GB), set it ourselves
     if [ ${heap} -le 768 ] ; then

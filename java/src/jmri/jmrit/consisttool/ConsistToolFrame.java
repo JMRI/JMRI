@@ -199,7 +199,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         locoDirectionNormal.setVisible(true);
         locoDirectionNormal.setEnabled(false);
 
-        addLocoButton.setText(Bundle.getMessage("AddButtonText"));
+        addLocoButton.setText(Bundle.getMessage("ButtonAddText"));
         addLocoButton.setVisible(true);
         addLocoButton.setToolTipText(Bundle.getMessage("AddButtonToolTip"));
         addLocoButton.addActionListener((ActionEvent e) -> {

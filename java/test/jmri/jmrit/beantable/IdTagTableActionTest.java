@@ -81,7 +81,6 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initIdTagManager(); 
         helpTarget = "package.jmri.jmrit.beantable.IdTagTable"; 
         a = new IdTagTableAction();
@@ -90,6 +89,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
     @After
     @Override
     public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
         a = null;
     }

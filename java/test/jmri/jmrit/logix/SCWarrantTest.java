@@ -121,7 +121,6 @@ public class SCWarrantTest extends WarrantTest {
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initRosterConfigManager();
 
         // setup the sc warrant preliminaries.

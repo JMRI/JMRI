@@ -6,7 +6,8 @@ import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 /**
- * Tests for the CtcRunStartup Class
+ * Tests for the CtcRunStartup Class.
+ *
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunStartupTest {

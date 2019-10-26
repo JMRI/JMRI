@@ -42,7 +42,9 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         mm = null;
         tcis=null;
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
         
     }
     

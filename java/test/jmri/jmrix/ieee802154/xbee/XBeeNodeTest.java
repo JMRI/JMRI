@@ -173,7 +173,9 @@ public class XBeeNodeTest{
     public void tearDown() {
         ((XBeeInterfaceScaffold)tc).dispose();
         tc = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

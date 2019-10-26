@@ -92,6 +92,7 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
     @Override
     public void tearDown() {
         jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
         a = null;
     }

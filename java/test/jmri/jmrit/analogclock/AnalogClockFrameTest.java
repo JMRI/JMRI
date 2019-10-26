@@ -1,6 +1,7 @@
 package jmri.jmrit.analogclock;
 
 import java.awt.GraphicsEnvironment;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -17,7 +18,23 @@ public class AnalogClockFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if(!GraphicsEnvironment.isHeadless()){
-          frame = new AnalogClockFrame();
+            // force time, not running
+            Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
+            clock.setRun(false);
+            clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+
+            AnalogClockFrame face;
+            frame = face = new AnalogClockFrame();
+
+            // change, but don't check consequences of, run state
+                        
+            clock.setRun(true);
+
+            clock.setRun(false);
+            
+            // pretend run/stop button clicked
+            face.b.doClick();
+
         }
     }
 

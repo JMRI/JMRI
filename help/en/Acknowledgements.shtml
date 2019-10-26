@@ -80,7 +80,9 @@
 
         <li>Cees Baarda, who expanded the DigiRails DR4018/DR4024 decoder definitions</li>
         
-        <li>Harald Barth, who improved the SRCP implementation</li>
+        <li>Harald Barth, <!-- habazut -->
+        who improved the SRCP implementation
+        and the DCC++ implementation.</li>
 
         <li>Michal Basta, who contributed the Czech
         internationalization</li>
