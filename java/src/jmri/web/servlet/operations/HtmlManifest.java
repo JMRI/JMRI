@@ -430,14 +430,11 @@ public class HtmlManifest extends HtmlTrainCommon {
         } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
             return this.getFormattedAttribute(JSON.REMOVE_COMMENT, rollingStock.path(JSON.REMOVE_COMMENT).textValue());
         } else if (attribute.equals(Setup.RWE.toLowerCase())) {
-            return this.getFormattedLocation(rollingStock
-                    .path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST.toLowerCase())) {
-            return this.getFormattedLocation(rollingStock
-                    .path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK.toLowerCase())) {
-            return this.getFormattedLocation(rollingStock
-                    .path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination"); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination"); // NOI18N
         }
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
