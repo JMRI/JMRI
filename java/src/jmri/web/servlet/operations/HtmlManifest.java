@@ -447,6 +447,10 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected String getFormattedLocation(JsonNode location, ShowLocation show, String prefix) {
+        if (location.isNull() || location.isEmpty()) {
+            // return an empty string if location is an empty or null
+            return "";
+        }
         // TODO handle tracks without names
         switch (show) {
             case location:
