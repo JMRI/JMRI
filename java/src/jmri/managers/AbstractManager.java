@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -113,8 +114,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     // Auto names. The atomic integer is always created even if not used, to
     // simplify concurrency.
-    AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
+    private AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
+    private DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     /**
      * Get a NamedBean by its system name.
@@ -152,15 +153,15 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Protected method used by subclasses to over-ride the default behavior of
-     * getBeanBySystemName when a simple string lookup is not sufficient
+     * getBeanBySystemName when a simple string lookup is not sufficient.
      *
-     * @param systemName the system name to check.
-     * @param comparator a Comparator encapsulating the system specific comparison behavior.
-     * @return A named bean of the appropriate type, or null if not found.
+     * @param systemName the system name to check
+     * @param comparator a Comparator encapsulating the system specific comparison behavior
+     * @return a named bean of the appropriate type, or null if not found
      */
-    protected E getBySystemName(String systemName,Comparator<String> comparator){
-        for(Map.Entry<String,E> e:_tsys.entrySet()){
-            if(0==comparator.compare(e.getKey(),systemName)){
+    protected E getBySystemName(String systemName, Comparator<String> comparator){
+        for (Map.Entry<String,E> e : _tsys.entrySet()) {
+            if (0 == comparator.compare(e.getKey(), systemName)) {
                 return e.getValue();
             }
         }
@@ -307,7 +308,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void deregister(E s) {
+    public void deregister(@Nonnull E s) {
         int position = getPosition(s);
 
         // clear caches
@@ -370,7 +371,6 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
                         // If so, clear. Note that this is not a "move" operation
                         _tuser.get(now).setUserName(null);
                     }
-
                     _tuser.put(now, t); // put new name for this bean
                 }
             } catch (ClassCastException ex) {
@@ -543,7 +543,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
-     * Method to inform all registered listeners of a vetoable change. If the
+     * Inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a

@@ -41,6 +41,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public XBeeConnectionMemo getMemo() {
         return (XBeeConnectionMemo) memo;
@@ -86,8 +87,9 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         super.validateSystemNameFormat(name, locale);
         int pin = pinFromSystemName(name);
         if (pin < 0 || pin > 7) {
@@ -102,7 +104,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -246,7 +248,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public void deregister(jmri.Sensor s) {
+    public void deregister(@Nonnull jmri.Sensor s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();

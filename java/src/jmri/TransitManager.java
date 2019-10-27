@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implementation of a Transit Manager
  * <p>
@@ -178,6 +180,7 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         return list;
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");

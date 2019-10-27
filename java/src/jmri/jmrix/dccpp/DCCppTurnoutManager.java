@@ -7,6 +7,8 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement TurnoutManager for DCC++ systems.
  * <p>
@@ -35,6 +37,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
@@ -157,15 +160,16 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != -1) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 0, MAX_TURNOUT_ADDRESS, locale);
     }
 

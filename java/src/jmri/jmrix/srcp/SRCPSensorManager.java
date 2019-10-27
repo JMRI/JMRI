@@ -2,6 +2,8 @@ package jmri.jmrix.srcp;
 
 import jmri.Sensor;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement Sensor manager for SRCP systems.
  * <p>
@@ -22,6 +24,7 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;

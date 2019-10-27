@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -56,6 +57,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;
@@ -81,11 +83,13 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
      * @param s the input to make a system name
      * @return the resultant system name
      */
+    @Nonnull
     @Override
-    public String makeSystemName(String s) {
+    public String makeSystemName(@Nonnull String s) {
         return s;
     }
 
+    @Nonnull
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
@@ -93,6 +97,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         return new String[0];
     }
 
+    @Nonnull
     @Override
     @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
@@ -894,6 +899,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         //monitorLocos(monitorState);
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage("EcosLocoAddresses");

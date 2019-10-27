@@ -5,6 +5,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the system-specific SECSI Sensor implementation.
  * <p>
@@ -38,6 +40,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public SecsiSystemConnectionMemo getMemo() {
         return (SecsiSystemConnectionMemo) memo;
@@ -103,8 +106,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
     }
 
@@ -112,7 +116,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 

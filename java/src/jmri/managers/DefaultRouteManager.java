@@ -10,6 +10,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Basic Implementation of a RouteManager.
  * <p>
@@ -119,6 +121,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return InstanceManager.getDefault(DefaultRouteManager.class);
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");

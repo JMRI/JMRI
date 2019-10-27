@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 
 import jmri.Reporter;
 import jmri.ReporterManager;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Implementation of a ReporterManager that can serve as a proxy for multiple

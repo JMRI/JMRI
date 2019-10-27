@@ -51,6 +51,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public TamsSystemConnectionMemo getMemo() {
         return (TamsSystemConnectionMemo) memo;

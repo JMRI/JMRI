@@ -19,6 +19,7 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public Dcc4PcSystemConnectionMemo getMemo() {
         return (Dcc4PcSystemConnectionMemo) memo;

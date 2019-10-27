@@ -24,6 +24,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public RpsSystemConnectionMemo getMemo() {
         return (RpsSystemConnectionMemo) memo;
@@ -73,8 +74,9 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
@@ -82,7 +84,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

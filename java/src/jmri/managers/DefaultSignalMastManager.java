@@ -119,6 +119,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return _tuser.get(key);
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");

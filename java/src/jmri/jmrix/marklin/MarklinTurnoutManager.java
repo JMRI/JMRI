@@ -4,6 +4,8 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for Marklin systems.
  * <p>
@@ -23,6 +25,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public MarklinSystemConnectionMemo getMemo() {
         return (MarklinSystemConnectionMemo) memo;

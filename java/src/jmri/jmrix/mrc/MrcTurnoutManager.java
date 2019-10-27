@@ -2,6 +2,8 @@ package jmri.jmrix.mrc;
 
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * New MRC TurnoutManager
  * <p>
@@ -20,6 +22,7 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     MrcTrafficController tc = null;
 
+    @Nonnull
     @Override
     public MrcSystemConnectionMemo getMemo() {
         return (MrcSystemConnectionMemo) memo;

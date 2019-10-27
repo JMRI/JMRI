@@ -33,6 +33,7 @@ public class CbusLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
@@ -87,8 +88,9 @@ public class CbusLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
         validateAddressFormat(name.substring(getSystemNamePrefix().length()));
         return name;
@@ -98,7 +100,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         String addr;
         try {
             addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part

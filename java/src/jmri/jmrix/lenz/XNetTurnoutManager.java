@@ -5,6 +5,8 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for Lenz (XpresssNet) connections.
  * <p>
@@ -29,6 +31,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public XNetSystemConnectionMemo getMemo() {
         return (XNetSystemConnectionMemo) memo;
@@ -147,8 +150,9 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(name,
                 XNetAddress.MINSENSORADDRESS,
                 XNetAddress.MAXSENSORADDRESS,
@@ -159,7 +163,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 

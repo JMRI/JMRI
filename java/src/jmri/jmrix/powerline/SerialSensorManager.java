@@ -31,6 +31,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
@@ -136,8 +137,9 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -145,7 +147,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 

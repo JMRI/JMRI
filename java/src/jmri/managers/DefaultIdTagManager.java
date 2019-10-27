@@ -335,6 +335,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         super.dispose();
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");

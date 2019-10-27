@@ -3,6 +3,8 @@ package jmri.jmrix.internal;
 import jmri.Light;
 import jmri.implementation.AbstractVariableLight;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement a LightManager for "Internal" (virtual) lights.
  *
@@ -40,6 +42,7 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;

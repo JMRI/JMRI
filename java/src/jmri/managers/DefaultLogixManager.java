@@ -11,6 +11,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Basic Implementation of a LogixManager.
  * <p>
@@ -180,6 +182,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return InstanceManager.getDefault(DefaultLogixManager.class);
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");

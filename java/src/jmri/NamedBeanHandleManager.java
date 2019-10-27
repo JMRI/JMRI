@@ -214,12 +214,14 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Nonnull
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Nonnull
     @Override
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -250,7 +252,7 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -67,6 +67,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return null;
     }
 
+    @Nonnull
     @Override
     public java.util.SortedSet<Turnout> getNamedBeanSet() {
         return null;
@@ -102,6 +103,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return -1;
     }
 
+    @Nonnull
     @Override
     public String getSystemPrefix() {
         return " ";
@@ -112,6 +114,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return ' ';
     }
 
+    @Nonnull
     @Override
     public String makeSystemName(String s) {
         return null;
@@ -122,7 +125,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public void deleteBean(Turnout bean, String s) {
+    public void deleteBean(@Nonnull Turnout bean, @Nonnull String s) {
     }
 
     @Override
@@ -178,15 +181,15 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public void register(Turnout n) {
+    public void register(@Nonnull Turnout n) {
     }
 
     @Override
-    public void deregister(Turnout n) {
+    public void deregister(@Nonnull Turnout n) {
     }
 
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return NameValidity.VALID;
     }
 
@@ -234,17 +237,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public Turnout getBeanBySystemName(String systemName) {
+    public Turnout getBeanBySystemName(@Nonnull String systemName) {
         return null;
     }
 
     @Override
-    public Turnout getBeanByUserName(String userName) {
+    public Turnout getBeanByUserName(@Nonnull String userName) {
         return null;
     }
 
     @Override
-    public Turnout getNamedBean(String name) {
+    public Turnout getNamedBean(@Nonnull String name) {
         return null;
     }
 
@@ -253,6 +256,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return " ";
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return plural ? "Turnouts" : "Turnout";

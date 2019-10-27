@@ -11,6 +11,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
 import org.openlcb.OlcbInterface;
 
+import javax.annotation.Nonnull;
+
 /**
  * OpenLCB implementation of a TurnoutManager.
  * <p>
@@ -33,11 +35,13 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();

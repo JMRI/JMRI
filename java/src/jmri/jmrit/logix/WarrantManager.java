@@ -9,6 +9,8 @@ import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Basic Implementation of a WarrantManager.
  * <p>
@@ -124,6 +126,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         });
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");

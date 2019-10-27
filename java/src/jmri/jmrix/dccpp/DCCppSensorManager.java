@@ -41,6 +41,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
@@ -210,15 +211,16 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, MAX_SENSOR_ID, locale);
     }
 

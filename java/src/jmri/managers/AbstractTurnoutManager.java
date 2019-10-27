@@ -151,6 +151,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");

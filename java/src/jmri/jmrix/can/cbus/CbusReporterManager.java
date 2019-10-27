@@ -28,6 +28,7 @@ public class CbusReporterManager extends AbstractReporterManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
@@ -51,7 +52,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * Checks for reporter number between 0 and 65535
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
         log.debug("Checking system name: {}", systemName);
         if ( systemName == null ) {

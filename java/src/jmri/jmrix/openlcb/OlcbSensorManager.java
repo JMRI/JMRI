@@ -35,11 +35,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();

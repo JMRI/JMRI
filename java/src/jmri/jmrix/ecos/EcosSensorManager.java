@@ -5,6 +5,8 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement sensor manager for ECoS systems. The Manager handles all the state
  * changes.
@@ -41,6 +43,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;

@@ -15,6 +15,8 @@ import jmri.managers.AbstractLightManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import org.openlcb.OlcbInterface;
 
+import javax.annotation.Nonnull;
+
 /**
  *
  * @author jcollell
@@ -33,11 +35,13 @@ public class OlcbLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
     
+    @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();

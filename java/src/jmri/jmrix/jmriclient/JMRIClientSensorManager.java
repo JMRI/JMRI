@@ -21,6 +21,7 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public JMRIClientSystemConnectionMemo getMemo() {
         return (JMRIClientSystemConnectionMemo) memo;

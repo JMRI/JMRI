@@ -4,6 +4,8 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for Tams systems. Reworked to support binary
  * commands and polling of command station.
@@ -25,6 +27,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public TamsSystemConnectionMemo getMemo() {
         return (TamsSystemConnectionMemo) memo;

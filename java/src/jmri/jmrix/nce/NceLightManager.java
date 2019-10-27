@@ -7,6 +7,8 @@ import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement LightManager for NCE systems
  * <p>
@@ -26,6 +28,7 @@ public class NceLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
@@ -97,8 +100,9 @@ public class NceLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return super.validateNmraAccessorySystemNameFormat(name, locale);
     }
 
@@ -106,7 +110,7 @@ public class NceLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 

@@ -186,6 +186,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      *
      * @return a string for the type of object handled by this manager
      */
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");

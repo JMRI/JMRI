@@ -152,7 +152,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID
                 ? NameValidity.VALID
                 : Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix());

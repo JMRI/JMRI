@@ -4,6 +4,8 @@ import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement LightManager for XpressNet systems.
  * <p>
@@ -27,6 +29,7 @@ public class XNetLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public XNetSystemConnectionMemo getMemo() {
         return (XNetSystemConnectionMemo) memo;
@@ -69,8 +72,9 @@ public class XNetLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(name,
                 XNetAddress.MINSENSORADDRESS,
                 XNetAddress.MAXSENSORADDRESS,
@@ -80,7 +84,7 @@ public class XNetLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 

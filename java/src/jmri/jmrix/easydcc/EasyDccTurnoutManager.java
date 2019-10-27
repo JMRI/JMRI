@@ -5,6 +5,8 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for EasyDcc systems.
  * <p>
@@ -35,6 +37,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public EasyDccSystemConnectionMemo getMemo() {
         return (EasyDccSystemConnectionMemo) memo;
@@ -69,15 +72,16 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_ADDRESS, locale);
     }
 

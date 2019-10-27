@@ -56,6 +56,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public Z21SystemConnectionMemo getMemo() {
         return (Z21SystemConnectionMemo) memo;

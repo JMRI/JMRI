@@ -8,6 +8,8 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
+import javax.annotation.Nonnull;
+
 /**
  * Test NamedBeanComparator
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -69,6 +71,7 @@ public class AbstractManagerTest {
             throw new UnsupportedOperationException("Not supported.");
         }
 
+        @Nonnull
         @Override
         public String getBeanTypeHandled(boolean plural) {
             throw new UnsupportedOperationException("Not supported.");

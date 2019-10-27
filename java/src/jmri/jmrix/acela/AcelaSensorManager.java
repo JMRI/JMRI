@@ -34,6 +34,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
@@ -103,8 +104,9 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@value AcelaAddress#MINSENSORADDRESS} to
      * {@value AcelaAddress#MAXSENSORADDRESS}.
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINSENSORADDRESS,
                 AcelaAddress.MAXSENSORADDRESS,
@@ -115,7 +117,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 

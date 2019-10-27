@@ -7,6 +7,8 @@ import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement LightManager for XBee connections.
  * <p>
@@ -25,6 +27,7 @@ public class XBeeLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public XBeeConnectionMemo getMemo() {
         return (XBeeConnectionMemo) memo;
@@ -68,8 +71,9 @@ public class XBeeLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         super.validateSystemNameFormat(name, locale);
         int pin = pinFromSystemName(name);
         if (pin < 0 || pin > 7) {
@@ -84,7 +88,7 @@ public class XBeeLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -163,7 +167,7 @@ public class XBeeLightManager extends AbstractLightManager {
     }
 
     @Override
-    public void deregister(jmri.Light s) {
+    public void deregister(@Nonnull jmri.Light s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();

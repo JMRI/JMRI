@@ -105,6 +105,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;

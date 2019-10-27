@@ -2,6 +2,8 @@ package jmri.jmrix.pi;
 
 import jmri.Sensor;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the RaspberryPi specific Sensor implementation.
  *
@@ -20,6 +22,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public RaspberryPiSystemConnectionMemo getMemo() {
         return (RaspberryPiSystemConnectionMemo) memo;

@@ -2,6 +2,8 @@ package jmri.jmrix.srcp;
 
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for SRCP systems.
  * <p>
@@ -22,6 +24,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;

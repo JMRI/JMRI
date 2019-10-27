@@ -6,6 +6,8 @@ import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement LightManager for Acela systems.
  * <p>
@@ -24,6 +26,7 @@ public class AcelaLightManager extends AbstractLightManager {
         super(memo);
     }
 
+    @Nonnull
     @Override
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
@@ -71,8 +74,9 @@ public class AcelaLightManager extends AbstractLightManager {
      * {@value AcelaAddress#MINOUTPUTADDRESS} to
      * {@value AcelaAddress#MAXOUTPUTADDRESS}.
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINOUTPUTADDRESS,
                 AcelaAddress.MAXOUTPUTADDRESS,
@@ -83,7 +87,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 

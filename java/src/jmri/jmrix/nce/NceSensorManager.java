@@ -49,6 +49,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
@@ -433,8 +434,9 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         String parts[];
         int num;
         if (name.contains(":")) {
@@ -489,7 +491,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         if (super.validSystemNameFormat(systemName) == NameValidity.VALID) {
             try {
                 validateSystemNameFormat(systemName);

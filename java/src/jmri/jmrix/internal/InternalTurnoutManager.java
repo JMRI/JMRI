@@ -4,6 +4,8 @@ import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.implementation.AbstractTurnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
@@ -18,6 +20,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;

@@ -2,6 +2,8 @@ package jmri.jmrix.zimo;
 
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for Mx1 Turnouts.
  * <p>
@@ -19,6 +21,7 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public Mx1SystemConnectionMemo getMemo() {
         return (Mx1SystemConnectionMemo) memo;

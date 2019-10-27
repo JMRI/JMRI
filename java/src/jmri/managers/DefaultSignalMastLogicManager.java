@@ -29,6 +29,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Default implementation of a SignalMastLogicManager.
  * @see jmri.SignalMastLogicManager
@@ -445,6 +447,7 @@ public class DefaultSignalMastLogicManager
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalMastLogics" : "BeanNameSignalMastLogic");

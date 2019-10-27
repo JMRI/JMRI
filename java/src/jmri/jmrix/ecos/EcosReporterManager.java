@@ -19,6 +19,7 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;

@@ -414,7 +414,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
-    public void deleteBean(E s, @Nonnull String property) throws PropertyVetoException {
+    public void deleteBean(@Nonnull E s, @Nonnull String property) throws PropertyVetoException {
         String systemName = s.getSystemName();
         try {
             getMgr(match(systemName)).deleteBean(s, property);
@@ -429,7 +429,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * Forwards the register request to the matching system.
      */
     @Override
-    public void register(E s) {
+    public void register(@Nonnull E s) {
         String systemName = s.getSystemName();
         getMgr(match(systemName)).register(s);
     }
@@ -442,7 +442,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * @param s the name
      */
     @Override
-    public void deregister(E s) {
+    public void deregister(@Nonnull E s) {
         String systemName = s.getSystemName();
         getMgr(match(systemName)).deregister(s);
     }
@@ -652,7 +652,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     @Nonnull
-    public String makeSystemName(String s) {
+    public String makeSystemName(@Nonnull String s) {
         return getDefaultManager().makeSystemName(s);
     }
 

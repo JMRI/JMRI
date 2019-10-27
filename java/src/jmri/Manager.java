@@ -61,7 +61,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public SystemConnectionMemo getMemo();
 
     /**
-     * Provides access to the system prefix string. This was previously called
+     * Provide access to the system prefix string. This was previously called
      * the "System letter"
      *
      * @return the system prefix
@@ -412,7 +412,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public int getObjectCount();
 
     /**
-     * This provides an array of system names.
+     * Provide an array of system names.
      * <p>
      * Note: this is ordered by the underlying NamedBeans, not on the Strings
      * themselves.
@@ -428,7 +428,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public String[] getSystemNameArray();
 
     /**
-     * This provides an
+     * Provide an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * system names.
      * <p>
@@ -448,7 +448,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public List<String> getSystemNameList();
 
     /**
-     * This provides an
+     * Provide an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * NamedBeans in system-name order.
      * <p>
@@ -465,7 +465,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public List<E> getNamedBeanList();
 
     /**
-     * This provides an
+     *  an
      * {@linkplain java.util.Collections#unmodifiableSet unmodifiable} SortedSet
      * of NamedBeans in system-name order.
      * <p>
@@ -481,8 +481,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public SortedSet<E> getNamedBeanSet();
 
     /**
-     * Locate an existing instance based on a system name. Returns null if no
-     * instance already exists.
+     * Locate an existing instance based on a system name.
      *
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
@@ -493,8 +492,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public E getBeanBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an existing instance based on a user name. Returns null if no
-     * instance already exists.
+     * Locate an existing instance based on a user name.
      *
      * @param userName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
@@ -504,8 +502,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public E getBeanByUserName(@Nonnull String userName);
 
     /**
-     * Locate an existing instance based on a name. Returns null if no instance
-     * already exists.
+     * Locate an existing instance based on a name.
      *
      * @param name User Name or System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
@@ -518,7 +515,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Return the descriptors for the system-specific properties of the
      * NamedBeans that are kept in this manager.
      *
-     * @return list of known properties, or empty list if there are none.
+     * @return list of known properties, or empty list if there are none
      */
     @Nonnull
     default public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
@@ -574,10 +571,10 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param n        The NamedBean to be deleted
      * @param property The programmatic name of the request. "CanDelete" will
      *                 enquire with all listeners if the item can be deleted.
-     *                 "DoDelete" tells the listener to delete the item.
+     *                 "DoDelete" tells the listener to delete the item
      * @throws java.beans.PropertyVetoException - If the recipients wishes the
      *                                          delete to be aborted (see
-     *                                          above).
+     *                                          above)
      */
     public void deleteBean(@Nonnull E n, @Nonnull String property) throws java.beans.PropertyVetoException;
 
@@ -643,7 +640,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public int getXMLOrder();
 
     /**
-     * Returns the user-readable name of the type of NamedBean handled by this
+     * Get the user-readable name of the type of NamedBean handled by this
      * manager.
      * <p>
      * For instance, in the code where we are dealing with just a bean and a
@@ -659,7 +656,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
-     * Returns the user-readable name of the type of NamedBean handled by this
+     * Get the user-readable name of the type of NamedBean handled by this
      * manager.
      * <p>
      * For instance, in the code where we are dealing with just a bean and a
@@ -676,7 +673,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public String getBeanTypeHandled(boolean plural);
 
     /**
-     * Provides length of the system prefix of the given system name.
+     * Provide length of the system prefix of the given system name.
      * <p>
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
@@ -906,7 +903,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     }
 
     /**
-     * Defines an event that encapsulates changes to a list.
+     * Define an event that encapsulates changes to a list.
      * <p>
      * Intended to be equivalent to {@link javax.swing.event.ListDataEvent}
      * without introducing a Swing dependency into core JMRI.
@@ -937,7 +934,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         final private Manager<E> source;
 
         /**
-         * Creates a <code>ListDataEvent</code> object.
+         * Create a <code>ListDataEvent</code> object.
          *
          * @param source      the source of the event (<code>null</code> not
          *                    permitted).
@@ -962,7 +959,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
 
         /**
-         * Returns the source of the event in a type-safe manner.
+         * Get the source of the event in a type-safe manner.
          *
          * @return the event source
          */
@@ -972,29 +969,27 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
 
         /**
-         * Returns the index of the first item in the range of modified list
+         * Get the index of the first item in the range of modified list
          * items.
          *
-         * @return The index of the first item in the range of modified list
-         *         items.
+         * @return index of the first item in the range of modified list items
          */
         public int getIndex0() {
             return index0;
         }
 
         /**
-         * Returns the index of the last item in the range of modified list
+         * Get the index of the last item in the range of modified list
          * items.
          *
-         * @return The index of the last item in the range of modified list
-         *         items.
+         * @return index of the last item in the range of modified list items
          */
         public int getIndex1() {
             return index1;
         }
 
         /**
-         * Returns the changed bean or null
+         * Get the changed bean or null.
          *
          * @return null if more than one bean was changed
          */
@@ -1003,24 +998,24 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
 
         /**
-         * Returns a code representing the type of this event, which is usually
+         * Get a code representing the type of this event, which is usually
          * one of {@link #CONTENTS_CHANGED}, {@link #INTERVAL_ADDED} or
          * {@link #INTERVAL_REMOVED}.
          *
-         * @return The event type.
+         * @return the event type
          */
         public int getType() {
             return type;
         }
 
         /**
-         * Returns a string representing the state of this event.
+         * Get a string representing the state of this event.
          *
-         * @return A string.
+         * @return event state as a string
          */
         @Override
         public String toString() {
-            return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
+            return getClass().getName() + "[type=" + type + ", index0=" + index0 + ", index1=" + index1 + "]";
         }
     }
 

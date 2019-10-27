@@ -32,6 +32,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public XNetSystemConnectionMemo getMemo() {
         return (XNetSystemConnectionMemo) memo;
@@ -124,8 +125,9 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         if (name.contains(":")) {
             validateSystemNamePrefix(name, locale);
             String[] parts = name.substring(getSystemNamePrefix().length()).split(":");
@@ -171,7 +173,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 

@@ -2,6 +2,8 @@ package jmri.jmrix.jmriclient;
 
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for JMRIClient systems
  * <p>
@@ -19,6 +21,7 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public JMRIClientSystemConnectionMemo getMemo() {
         return (JMRIClientSystemConnectionMemo) memo;

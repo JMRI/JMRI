@@ -3,6 +3,8 @@ package jmri.jmrix.sprog;
 import java.util.Locale;
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for Sprog systems.
  * <p>
@@ -20,6 +22,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public SprogSystemConnectionMemo getMemo() {
         return (SprogSystemConnectionMemo) memo;
@@ -44,15 +47,16 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, SprogConstants.MAX_ACC_DECODER_JMRI_ADDR, locale);
     }
 

@@ -3,6 +3,8 @@ package jmri.jmrix.rfid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the Rfid-specific Sensor implementation.
  * <p>
@@ -21,6 +23,7 @@ abstract public class RfidSensorManager extends jmri.managers.AbstractSensorMana
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public RfidSystemConnectionMemo getMemo() {
         return (RfidSystemConnectionMemo) memo;

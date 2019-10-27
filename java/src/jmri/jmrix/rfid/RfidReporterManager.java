@@ -4,6 +4,8 @@ import jmri.managers.AbstractReporterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Rfid implementation of a ReporterManager.
  * <p>
@@ -22,6 +24,7 @@ abstract public class RfidReporterManager extends AbstractReporterManager implem
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public RfidSystemConnectionMemo getMemo() {
         return (RfidSystemConnectionMemo) memo;

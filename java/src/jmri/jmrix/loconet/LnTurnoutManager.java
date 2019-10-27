@@ -14,6 +14,8 @@ import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the LocoNet-specific Turnout implementation.
  * System names are "LTnnn", where L is the user configurable system prefix,
@@ -69,6 +71,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
@@ -207,15 +210,16 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -247,6 +251,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();

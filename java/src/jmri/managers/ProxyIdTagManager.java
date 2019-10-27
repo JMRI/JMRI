@@ -156,6 +156,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");

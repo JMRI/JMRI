@@ -14,6 +14,8 @@ import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Provide the concrete implementation for the Internal CatalogTree Manager.
  * <p>
@@ -178,6 +180,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return null;
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");

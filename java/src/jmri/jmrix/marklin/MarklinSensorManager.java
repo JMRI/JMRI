@@ -35,6 +35,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public MarklinSystemConnectionMemo getMemo() {
         return (MarklinSystemConnectionMemo) memo;

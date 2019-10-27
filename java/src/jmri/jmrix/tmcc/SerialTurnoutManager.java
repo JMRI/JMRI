@@ -7,6 +7,8 @@ import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement turnout manager for TMCC serial systems.
  * <p>
@@ -26,6 +28,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
     public TmccSystemConnectionMemo getMemo() {
         return (TmccSystemConnectionMemo) memo;
@@ -82,8 +85,9 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(name, 1, 99, locale);
     }
 
@@ -91,7 +95,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         NameValidity validity = super.validSystemNameFormat(systemName);
         if (validity == NameValidity.VALID) {
             int num;

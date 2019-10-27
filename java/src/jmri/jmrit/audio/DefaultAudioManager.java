@@ -14,6 +14,8 @@ import jmri.managers.AbstractAudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Provide the concrete implementation for the Internal Audio Manager.
  *
@@ -180,7 +182,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")
-    public synchronized void deregister(Audio s) {
+    public synchronized void deregister(@Nonnull Audio s) {
         super.deregister(s);
         // Decrement the relevant Audio object counter
         switch (s.getSubType()) {

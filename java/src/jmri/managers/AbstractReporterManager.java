@@ -117,12 +117,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         }
 
         // return existing if there is one
-        Reporter r;
-        if ((userName != null) && ((r = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != r) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, r.getSystemName());
-            }
+        Reporter r = (Reporter) getByUserOrSystemName(systemName, userName);
+        if (r != null) {
             return r;
         }
         if ((r = getBySystemName(systemName)) != null) {

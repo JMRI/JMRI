@@ -6,6 +6,8 @@ import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Basic implementation of a PortalManager.
  * <p>
@@ -148,6 +150,7 @@ public class PortalManager extends AbstractManager<Portal>
         // Override, don't register, OBlockManager does store and load of Portals
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNamePortals" : "BeanNamePortal");
