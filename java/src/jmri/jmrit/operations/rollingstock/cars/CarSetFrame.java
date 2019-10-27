@@ -261,6 +261,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         return false;
     }
 
+    TrainByCarTypeFrame tctf = null;
     protected boolean askKernelChange = true;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
@@ -412,7 +413,10 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                         new Object[]{car.toString(), train.getName()}), Bundle.getMessage("rsNotMove"),
                         JOptionPane.ERROR_MESSAGE);
                 // show the train's route and car location
-                new TrainByCarTypeFrame(car);
+                if (tctf != null) {
+                    tctf.dispose();
+                }
+                tctf = new TrainByCarTypeFrame(car);
                 // prevent rs from being picked up and delivered
                 setRouteLocationAndDestination(car, train, null, null);
                 return false;
