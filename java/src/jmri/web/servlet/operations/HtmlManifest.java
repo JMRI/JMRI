@@ -430,14 +430,11 @@ public class HtmlManifest extends HtmlTrainCommon {
         } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
             return this.getFormattedAttribute(JSON.REMOVE_COMMENT, rollingStock.path(JSON.REMOVE_COMMENT).textValue());
         } else if (attribute.equals(Setup.RWE.toLowerCase())) {
-            return this.getFormattedAttribute(JSON.RETURN_WHEN_EMPTY, this.getFormattedLocation(rollingStock
-                    .path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE")); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST.toLowerCase())) {
-            return this.getFormattedAttribute(JSON.FINAL_DESTINATION, this.getFormattedLocation(rollingStock
-                    .path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination")); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK.toLowerCase())) {
-            return this.getFormattedAttribute(JSON.FINAL_DESTINATION, this.getFormattedLocation(rollingStock
-                    .path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination")); // NOI18N
+            return this.getFormattedLocation(rollingStock.path(JSON.FINAL_DESTINATION), ShowLocation.track, "FinalDestination"); // NOI18N
         }
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
@@ -447,6 +444,10 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected String getFormattedLocation(JsonNode location, ShowLocation show, String prefix) {
+        if (location.isNull() || location.isEmpty()) {
+            // return an empty string if location is an empty or null
+            return "";
+        }
         // TODO handle tracks without names
         switch (show) {
             case location:
