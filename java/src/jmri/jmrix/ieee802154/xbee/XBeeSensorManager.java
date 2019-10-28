@@ -58,8 +58,9 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // XBee specific methods
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {

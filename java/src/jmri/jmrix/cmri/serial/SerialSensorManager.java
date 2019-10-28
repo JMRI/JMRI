@@ -56,8 +56,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = getMemo().normalizeSystemName(systemName);

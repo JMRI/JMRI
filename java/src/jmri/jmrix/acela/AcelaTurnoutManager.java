@@ -42,7 +42,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout trn = null;
         // check if the output bit is available
         int nAddress = -1;
@@ -113,7 +113,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

@@ -105,8 +105,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     public Reporter newReporter(@NonNull String systemName, String userName) {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
                 + ((userName == null) ? "null" : userName));  // NOI18N
-
-        log.debug("new Reporter: {} {}", systemName, userName);
+        log.debug("new Reporter: {} {}", systemName, (userName == null ? "null" : userName));
 
        // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
@@ -117,25 +116,15 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         }
 
         // return existing if there is one
-        Reporter r = (Reporter) getByUserOrSystemName(systemName, userName);
+        Reporter r = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, ((userName == null) ? null : getByUserName(userName)));
         if (r != null) {
             return r;
         }
-        if ((r = getBySystemName(systemName)) != null) {
-            if ((r.getUserName() == null) && (userName != null)) {
-                r.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found reporter via system name ({}) with non-null user name ({})", systemName, userName);
-            }
-            return r;
-        }
-
         // doesn't exist, make a new one
         r = createNewReporter(systemName, userName);
 
-        // Some implementations of createNewReporter() registers the bean, some
-        // don't. Check if the bean is registered and register it if it isn't
-        // registered.
+        // Some implementations of createNewReporter() registers the bean, some don't.
+        // Check if the bean is registered and register it if it isn't registered.
         if (getBeanBySystemName(systemName) == null) {
             // save in the maps
             register(r);

@@ -1,7 +1,9 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 
@@ -54,8 +56,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a system name.
      *
      * @return requested Turnout object or null if none exists
      */
@@ -65,14 +66,22 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a user name.
      *
      * @return requested Turnout object or null if none exists
      */
     @Override
     public Sensor getByUserName(@Nonnull String userName) {
         return super.getBeanByUserName(userName);
+    }
+
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public Sensor getByUserThenSystemName(@Nonnull String systemName, Sensor sysNameResult,
+                                             String userName, Sensor uNameResult) {
+        return super.getByUserThenSystemName(systemName, sysNameResult,
+                userName, uNameResult);
     }
 
     /**
@@ -131,7 +140,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, SensorManager.class);
+        return getNextValidAddress(curAddress, prefix, typeLetter());
     }
 
     /**

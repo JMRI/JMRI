@@ -40,8 +40,9 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * Create a new sensor if all checks are passed.
      * System name is normalized to ensure uniqueness.
      */
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         try {
            RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);

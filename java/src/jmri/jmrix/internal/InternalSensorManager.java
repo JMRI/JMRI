@@ -29,8 +29,9 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
      *
      * @return new null
      */
+    @Nonnull
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor sen = new AbstractSensor(systemName, userName) {
             @Override
             public void requestUpdateFromLayout() {

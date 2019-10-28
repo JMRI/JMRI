@@ -7,6 +7,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -240,6 +241,31 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         return null;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public E getByUserThenSystemName(@Nonnull String systemName,
+                                             E sysNameResult,
+                                             String userName,
+                                             E uNameResult){
+        E b;
+        if ((userName != null) && ((b = uNameResult) != null)) {
+            if (sysNameResult != b) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, b.getSystemName());
+            }
+            return b;
+        }
+        if ((b = sysNameResult) != null) {
+            if ((b.getUserName() == null) && (userName != null)) {
+                b.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found bean by system name ({}) with non-null user name ({})", systemName, userName);
+            }
+        }
+        return b;
+    }
+
     /**
      * {@inheritDoc}
      * <p>
@@ -334,13 +360,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /**
      * Find the index of a matching manager.
      *
-     * @param systemname the system name
+     * @param systemName the system name
      * @return the index of the matching manager, -1 if there is no match,
      *         which is not considered an error
      */
-    protected int matchTentative(String systemname) {
+    protected int matchTentative(String systemName) {
         for (Manager<E> m : mgrs) {
-            if (systemname.startsWith(m.getSystemPrefix() + m.typeLetter())) {
+            if (systemName.startsWith(m.getSystemPrefix() + m.typeLetter())) {
                 return mgrs.entryIndex(m);
             }
         }
@@ -393,16 +419,20 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
     }
 
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, Class managerType) throws jmri.JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
         for (Manager<E> m : mgrs) {
-            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
+            log.debug("NextValidAddress requested for {}", curAddress);
+            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
                 try {
-                    if (managerType == TurnoutManager.class) {
-                        return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
-                    } else if (managerType == SensorManager.class) {
-                        return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
-                    } else if (managerType == ReporterManager.class) {
-                        return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                    switch (typeLetter) {
+                        case 'T':
+                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
+                        case 'S':
+                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
+                        case 'R':
+                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                        default:
+                            return null;
                     }
                 } catch (jmri.JmriException ex) {
                     throw ex;

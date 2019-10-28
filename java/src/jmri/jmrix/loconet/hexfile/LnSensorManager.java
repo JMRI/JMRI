@@ -8,6 +8,8 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 /**
  * Manage the LocoNet-specific Sensor implementation via a LocoNet
@@ -25,8 +27,9 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
     }
 
     // LocoNet-specific methods
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s = new LnSensor(systemName, userName, tc, getSystemPrefix());
         if (defaultSensorState != Sensor.UNKNOWN) {
             try {

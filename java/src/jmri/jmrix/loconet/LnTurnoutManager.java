@@ -98,7 +98,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
      * {@inheritDoc}
      */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String prefix = getSystemPrefix();
         int addr;
         try {
@@ -202,7 +202,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

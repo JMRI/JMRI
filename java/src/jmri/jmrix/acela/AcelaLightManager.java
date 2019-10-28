@@ -41,7 +41,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;

@@ -47,7 +47,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
@@ -119,6 +119,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * Allows text other than "CLOSED" to be use with certain hardware system to
      * represent the Turnout.CLOSED state.
      */
+    @Nonnull
     @Override
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
@@ -129,6 +130,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
      */
+    @Nonnull
     @Override
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
@@ -168,7 +170,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

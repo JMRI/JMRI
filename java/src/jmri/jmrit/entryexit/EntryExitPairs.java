@@ -11,6 +11,7 @@ import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.*;
 import java.util.Map.Entry;
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JDialog;
@@ -247,6 +248,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             return b;
         }
         return getBeanBySystemName(name);
+    }
+
+    @CheckForNull
+    @Override
+    public DestinationPoints getByUserThenSystemName(@Nonnull String systemName, DestinationPoints sysNameResult,
+                                                     String userName, DestinationPoints uNameResult) {
+        return null;
     }
 
     /** {@inheritDoc} */
@@ -1455,4 +1463,5 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
+
 }

@@ -90,38 +90,20 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("newLight: {};{}",
-                ((systemName == null) ? "null" : systemName),
-                ((userName == null) ? "null" : userName));
+        log.debug("newLight: {};{}", systemName, (userName == null ? "null" : userName));
         systemName = validateSystemNameFormat(systemName);
 
         // return existing if there is one
-        Light s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
-                        userName, systemName, s.getSystemName());
-            }
+        Light s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        if (s != null) {
             return s;
         }
-        if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found light via system name '{}' with non-null user name '{}'",
-                        systemName, userName);
-            }
-            return s;
-        }
-
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
-
         // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
-
         // save in the maps
         register(s);
 
@@ -139,7 +121,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @CheckForNull
     abstract protected Light createNewLight(
             @Nonnull String systemName,
-            @Nonnull String userName);
+            String userName);
 
     /**
      * {@inheritDoc}

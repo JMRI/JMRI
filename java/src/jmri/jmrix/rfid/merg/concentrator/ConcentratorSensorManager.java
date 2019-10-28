@@ -13,6 +13,8 @@ import jmri.jmrix.rfid.TimeoutRfidSensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Manage the Rfid-specific Sensor implementation.
  * <p>
@@ -36,8 +38,9 @@ public class ConcentratorSensorManager extends RfidSensorManager {
         tc.addRfidListener(this);
     }
 
+    @Nonnull
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         log.debug("Create new Sensor");
         TimeoutRfidSensor s;
         s = new TimeoutRfidSensor(systemName, userName);

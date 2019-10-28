@@ -50,6 +50,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public Turnout getByUserThenSystemName(@Nonnull String systemName,
+                                           Turnout sysNameResult,
+                                           String userName,
+                                           Turnout uNameResult) {
+        return null;
+    }
+
+    @Override
     public Turnout newTurnout(String systemName, String userName) {
         return null;
     }
@@ -57,11 +65,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Override
     public int getObjectCount() { return -1;}    
 
+    @Nonnull
     @Override
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
+    @Nonnull
     @Override
     public java.util.List<Turnout> getNamedBeanList() {
         return null;
@@ -73,6 +83,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return null;
     }
 
+    @Nonnull
     @Override
     public String[] getSystemNameArray() {
         return null;
@@ -116,7 +127,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Nonnull
     @Override
-    public String makeSystemName(String s) {
+    public String makeSystemName(@Nonnull String s) {
         return null;
     }
 

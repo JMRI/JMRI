@@ -1,14 +1,13 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.IdTag;
-import jmri.IdTagManager;
-import jmri.Manager;
-import jmri.Reporter;
+import jmri.*;
+
 import java.util.List;
 import java.util.ArrayList;
-import jmri.InstanceManager;
+
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
@@ -58,7 +57,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return Null if nothing by that name exists
      */
     @Override
-    public IdTag getIdTag(String name) {
+    public IdTag getIdTag(@Nonnull String name) {
         return super.getNamedBean(name);
     }
 
@@ -67,10 +66,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         return ((IdTagManager) getMgr(i)).newIdTag(systemName, userName);
     }
 
-    @Override
     /**
      * {@inheritDoc}
      */
+    @Override
+    @Nonnull
     public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
         return provideIdTag(name);
     }
@@ -84,34 +84,41 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return Never null under normal circumstances
      */
     @Override
-    public IdTag provideIdTag(String name) throws IllegalArgumentException {
+    @Nonnull
+    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
         return super.provideNamedBean(name);
     }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a system name.
      *
      * @return requested IdTag object or null if none exists
      */
     @Override
-    public IdTag getBySystemName(String systemName) {
+    public IdTag getBySystemName(@Nonnull String systemName) {
         return super.getBeanBySystemName(systemName);
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a user name.
      *
      * @return requested Turnout object or null if none exists
      */
     @Override
-    public IdTag getByUserName(String userName) {
+    public IdTag getByUserName(@Nonnull String userName) {
         return super.getBeanByUserName(userName);
     }
 
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public IdTag getByUserThenSystemName(@Nonnull String systemName, IdTag sysNameResult, String userName, IdTag uNameResult) {
+        return super.getByUserThenSystemName(systemName, sysNameResult,
+                userName, uNameResult);
+    }
+
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one IdTag object representing a given physical light and therefore
      * only one with a specific system or user name.
@@ -139,12 +146,13 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return requested IdTag object (never null)
      */
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 
     @Override
-    public IdTag getByTagID(String tagID) {
+    public IdTag getByTagID(@Nonnull String tagID) {
         return getBySystemName(makeSystemName(tagID));
     }
 
@@ -207,7 +215,8 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
+    @Nonnull
+    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold) {
         List<IdTag> out = new ArrayList<>();
         return out;
     }

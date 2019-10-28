@@ -185,23 +185,12 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (!initialised && !loading) {
             init();
         }
-        log.debug("new IdTag:{};{}", systemName, (userName == null) ? "null" : userName); // NOI18N
+        log.debug("new IdTag:{};{}", systemName, (userName == null ? "null" : userName)); // NOI18N
         Objects.requireNonNull(systemName, "SystemName cannot be null.");
 
         // return existing if there is one
-        IdTag s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
-            }
-            return s;
-        }
-        if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found IdTag via system name ({}) with non-null user name ({})", systemName, userName); // NOI18N
-            }
+        IdTag s = (IdTag) getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        if (s != null) {
             return s;
         }
 

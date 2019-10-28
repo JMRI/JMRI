@@ -41,8 +41,9 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         return (MarklinSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
             int board = 0;

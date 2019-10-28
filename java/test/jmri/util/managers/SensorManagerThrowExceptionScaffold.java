@@ -21,8 +21,9 @@ public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
     }
     
     /** {@inheritDoc} */
+    @Nonnull
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

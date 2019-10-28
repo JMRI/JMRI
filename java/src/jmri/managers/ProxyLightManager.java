@@ -1,9 +1,11 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
@@ -35,7 +37,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * @return Null if nothing by that name exists
      */
     @Override
-    public Light getLight(String name) {
+    public Light getLight(@Nonnull String name) {
         return super.getNamedBean(name);
     }
 
@@ -44,8 +46,9 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
+    @Nonnull
     public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /**
@@ -57,30 +60,37 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * @return Never null under normal circumstances
      */
     @Override
-    public Light provideLight(String name) throws IllegalArgumentException {
+    @Nonnull
+    public Light provideLight(@Nonnull String name) throws IllegalArgumentException {
         return super.provideNamedBean(name);
     }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a system name.
      *
      * @return requested Light object or null if none exists
      */
     @Override
-    public Light getBySystemName(String systemName) {
+    public Light getBySystemName(@Nonnull String systemName) {
         return super.getBeanBySystemName(systemName);
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a user name.
      *
-     * @return requested Turnout object or null if none exists
+     * @return requested Light object or null if none exists
      */
     @Override
-    public Light getByUserName(String userName) {
+    public Light getByUserName(@Nonnull String userName) {
         return super.getBeanByUserName(userName);
+    }
+
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public Light getByUserThenSystemName(@Nonnull String systemName, Light sysNameResult, String userName, Light uNameResult) {
+        return super.getByUserThenSystemName(systemName, sysNameResult,
+                userName, uNameResult);
     }
 
     /**
@@ -112,7 +122,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * @return requested Light object (never null)
      */
     @Override
-    public Light newLight(String systemName, String userName) {
+    @Nonnull
+    public Light newLight(@Nonnull String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 
@@ -125,7 +136,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * Return false if no manager exists.
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).validSystemNameConfig(systemName);
@@ -139,7 +150,8 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * a manager is found, return its determination of an alternate system name
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).convertSystemNameToAlternate(systemName);

@@ -372,7 +372,16 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         String errorMessage = null;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
-            curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            try {
+                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            } catch (jmri.JmriException ex) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
+                return;
+            }
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));

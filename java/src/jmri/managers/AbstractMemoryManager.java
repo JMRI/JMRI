@@ -79,39 +79,19 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
+    @Nonnull
+    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
+        log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
         Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
 
         // return existing if there is one
-        Memory s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName()); // NOI18N
-            }
-            return s;
-        }
-        if ((s = getBySystemName(systemName)) != null) {
-            // handle user name from request
-            if (userName != null) {
-                // check if already on set in Object, might be inconsistent
-                if (!userName.equals(s.getUserName())) {
-                    // this is a problem
-                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, s.getUserName());
-                } else {
-                    s.setUserName(userName);
-                }
-            }
+        Memory s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, ((userName == null) ? null : getByUserName(userName)));
+        if (s != null) {
             return s;
         }
 
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
 
         // save in the maps
         register(s);

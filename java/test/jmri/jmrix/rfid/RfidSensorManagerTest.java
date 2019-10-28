@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+
 /**
  * RfidSensorManagerTest.java
  *
@@ -22,7 +24,7 @@ public class RfidSensorManagerTest {
     public void testCtor() {
         RfidSensorManager c = new RfidSensorManager(new RfidSystemConnectionMemo()){
             @Override
-            protected Sensor createNewSensor(String systemName, String userName){
+            protected Sensor createNewSensor(@Nonnull String systemName, String userName){
                return null;
             }
             @Override

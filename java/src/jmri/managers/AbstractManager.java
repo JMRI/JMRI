@@ -190,6 +190,31 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
+    public E getByUserThenSystemName(@Nonnull String systemName,
+                                           E sysNameResult,
+                                           String userName,
+                                           E uNameResult){
+        E b;
+        if ((userName != null) && ((b = uNameResult) != null)) {
+            if (sysNameResult != b) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, b.getSystemName());
+            }
+            return b;
+        }
+        if ((b = sysNameResult) != null) {
+            if ((b.getUserName() == null) && (userName != null)) {
+                b.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found bean by system name ({}) with non-null user name ({})", systemName, userName);
+            }
+        }
+        return b;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     @OverridingMethodsMustInvokeSuper
     public void deleteBean(@Nonnull E bean, @Nonnull String property) throws PropertyVetoException {
         try {

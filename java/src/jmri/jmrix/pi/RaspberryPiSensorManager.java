@@ -34,8 +34,9 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
         super.dispose();
     }
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         return new RaspberryPiSensor(systemName, userName);
     }
 

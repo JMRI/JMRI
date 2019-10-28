@@ -29,7 +29,7 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }

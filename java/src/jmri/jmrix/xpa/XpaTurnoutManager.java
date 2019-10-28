@@ -30,7 +30,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     // Xpa-specific methods
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new XpaTurnout(addr, getMemo());
         t.setUserName(userName);
@@ -38,7 +38,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

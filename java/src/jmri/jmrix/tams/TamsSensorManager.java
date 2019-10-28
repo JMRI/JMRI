@@ -57,8 +57,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return (TamsSystemConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         TamsTrafficController tc = getMemo().getTrafficController();
         TamsSensor s = new TamsSensor(systemName, userName);
         log.debug("Creating new TamsSensor: {}", systemName);

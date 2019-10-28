@@ -88,10 +88,11 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + (userName == null ? "null" : userName));  // NOI18N
 
-        log.debug("new Audio: {}; {}", systemName, userName); // NOI18N
+        log.debug("new Audio: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
  
         // is system name in correct format?
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
@@ -108,22 +109,8 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         }
 
         // return existing if there is one
-        Audio s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
-            }
-            log.debug("Found existing Audio ({}). Returning existing (1).", s.getSystemName());  // NOI18N
-            return s;
-        }
-        if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found audio via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")"); // NOI18N
-            }
-            log.debug("Found existing Audio ({}). Returning existing (2).", s.getSystemName());
+        Audio s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        if (s != null) {
             return s;
         }
 

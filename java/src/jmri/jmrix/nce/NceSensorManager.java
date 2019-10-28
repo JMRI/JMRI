@@ -72,8 +72,9 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         int number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
 
         Sensor s = new NceSensor(systemName);

@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -83,6 +84,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     public Turnout getByUserName(@Nonnull String userName) {
         return super.getBeanByUserName(userName);
+    }
+
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public Turnout getByUserThenSystemName(@Nonnull String systemName, Turnout sysNameResult, String userName, Turnout uNameResult) {
+        return super.getByUserThenSystemName(systemName, sysNameResult,
+                userName, uNameResult);
     }
 
     /**
@@ -230,12 +239,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return createSystemName(curAddress, prefix, jmri.TurnoutManager.class);
+        return createSystemName(curAddress, prefix, TurnoutManager.class);
     }
 
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, TurnoutManager.class);
+        return getNextValidAddress(curAddress, prefix, typeLetter());
     }
 
     @Override

@@ -35,7 +35,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // validate the system name
         String sName = validateSystemNameFormat(systemName);
         // does this turnout already exist?
@@ -69,12 +69,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
 
     // Turnout address format is more than a simple number.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
             return makeSystemName(curAddress);
         } catch (IllegalArgumentException ex) {

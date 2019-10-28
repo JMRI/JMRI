@@ -31,7 +31,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     // Sprog-specific methods
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
         Turnout t;
         if (getMemo().getSprogMode() == SprogConstants.SprogMode.OPS ) {
@@ -75,7 +75,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

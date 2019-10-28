@@ -1,7 +1,9 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -54,8 +56,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a system name.
      *
      * @return requested Reporter object or null if none exists
      */
@@ -65,8 +66,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a user name.
      *
      * @return requested Reporter object or null if none exists
      */
@@ -85,6 +85,14 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
         }
         // If it's not in the system list, go ahead and return null
         return (retv);
+    }
+
+    /** {@inheritDoc} */
+    @CheckForNull
+    @Override
+    public Reporter getByUserThenSystemName(@Nonnull String systemName, Reporter sysNameResult, String userName, Reporter uNameResult) {
+        return super.getByUserThenSystemName(systemName, sysNameResult,
+                userName, uNameResult);
     }
 
     /**
@@ -132,7 +140,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
 
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, ReporterManager.class);
+        return getNextValidAddress(curAddress, prefix, typeLetter());
     }
 
     /**

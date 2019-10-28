@@ -91,37 +91,20 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Sensor newSensor(@Nonnull String sysName, String userName) throws IllegalArgumentException {
-        log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
+    public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        log.debug(" newSensor(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
 
-        java.util.Objects.requireNonNull(sysName, "Generated systemName may not be null, started with "+sysName);
+        java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with " + systemName);
 
-        sysName = validateSystemNameFormat(sysName);
+        systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
-        Sensor s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(sysName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, sysName, s.getSystemName());
-            }
-            return s;
-        }
-        if ((s = getBySystemName(sysName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found sensor via system name ({}) with non-null user name ({}). Sensor \"{}({})\" cannot be used.",
-                        sysName, s.getUserName(), sysName, userName);
-            }
+        Sensor s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        if (s != null) {
             return s;
         }
 
         // doesn't exist, make a new one
-        s = createNewSensor(sysName, userName);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
+        s = createNewSensor(systemName, userName);
 
         // save in the maps
         register(s);
@@ -144,7 +127,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      * @param userName   the user name to use for the new Sensor
      * @return a new Sensor
      */
-    abstract protected Sensor createNewSensor(String systemName, String userName);
+    @Nonnull
+    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName);
 
     /**
      * {@inheritDoc}

@@ -41,51 +41,26 @@ public class DefaultRailComManager extends DefaultIdTagManager
 
     @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
     private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-        }
+        log.error("SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));
+        throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));
     }
     
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new IdTag:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+        log.debug("new IdTag: {};{}", systemName, (userName == null ? "null" : userName));
         checkSystemName(systemName, userName);
-        
         // return existing if there is one
-        RailCom s;
-        if ((userName != null) && ((s = (RailCom)getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
-            }
+        RailCom s = (RailCom) getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        if (s != null) {
             return s;
         }
-        if ((s = (RailCom) getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found IdTag via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
-            }
-            return s;
-        }
-
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
-
         // save in the maps
         register(s);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
 
         return s;
     }

@@ -30,8 +30,9 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         return (SRCPBusConnectionMemo) memo;
     }
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new SRCPSensor(addr, getMemo());

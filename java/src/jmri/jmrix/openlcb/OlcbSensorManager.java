@@ -85,8 +85,9 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         memo.getTrafficController().addCanListener(this);
     }
 
+    @Nonnull
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {

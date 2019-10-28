@@ -81,7 +81,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getTurnout(@Nonnull String name);
 
     /**
-     * Get the Turnout with the given system name or return null if no instance
+     * Get the Turnout with the given system name or null if no instance
      * already exists.
      *
      * @param systemName the system name
@@ -91,7 +91,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getBySystemName(@Nonnull String systemName);
 
     /**
-     * Get the Turnout with the given user name or return null if no instance
+     * Get the Turnout with the given user name or null if no instance
      * already exists.
      *
      * @param userName the user name

@@ -22,11 +22,12 @@ public class TurnoutManagerThrowExceptionScaffold extends InternalTurnoutManager
     
     /** {@inheritDoc} */
     @Override
-    protected Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public Turnout provideTurnout(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
@@ -46,11 +47,12 @@ public class TurnoutManagerThrowExceptionScaffold extends InternalTurnoutManager
     
     /** {@inheritDoc} */
     @Override
-    public Turnout getByUserName(String key) {
+    public Turnout getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
