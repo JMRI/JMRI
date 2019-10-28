@@ -140,9 +140,6 @@ function heap_size() {
                 mem=$( cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]: )
                 mem=$( expr $mem / 1024 )
                 ;;
-            SunOS*)
-                mem=$( /usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]' )
-                ;;
             Darwin*)
                 mem=$( /usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].: )
                 mem=$( expr $mem / 1048576 )
