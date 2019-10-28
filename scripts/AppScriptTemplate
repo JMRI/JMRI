@@ -122,10 +122,12 @@ function parse_args() {
 
 # Get the default heap size for JMRI in MB.
 # Based on total memory size, this is:
-# - 1/4 total memory size on systems with more than 4GB RAM
-# - 1/2 total memory size on systems with 1-4GB RAM
 # - 3/4 total memory size on systems with less than 1GB RAM
+# - 1/2 total memory size on systems with 1-4GB RAM with minimum of 768MB
+# - 1/4 total memory size on systems with more than 4GB RAM with minimum of 2GB
 # - with an absolute minimum of 192MB
+# - note that minimums are maximum allocation for immediately smaller RAM
+#   (i.e. since 2GB is 1/2 4GB, do not configure 6GB system to use 1.5 GB)
 function heap_size() {
     # get Java heap size
     heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | grep -v SoftMaxHeapSize | awk '{print $4}' )
@@ -152,9 +154,13 @@ function heap_size() {
             mem=640
         fi
         if [ $mem -le 1024 ] ; then
-          heap=$( expr $mem \* 3 / 4 )
+            heap=$( expr $mem \* 3 / 4 )
+        elif [ $mem -le 4096 ] ; then
+            heap=$( expr $mem \* 1 / 2 )
+            [ $heap -le 768 ] && heap=768 # 3/4 of 1024
         else
-          heap=$( expr $mem \* 1 / 2 )
+            heap=$( expr $mem \* 1 / 4 )
+            [ $heap -le 2048 ] && heap=2048 # 1/2 of 4096
         fi
         if [ $heap -lt 192 ] ; then
             heap=192 # 3/4 of 256MB
