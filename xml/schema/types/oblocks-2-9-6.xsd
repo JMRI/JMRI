@@ -87,7 +87,6 @@
                             </xs:complexType>
                         </xs:element >
                     </xs:sequence>
-                  <xs:attribute name="systemName" type="xs:string" />
                   <xs:attribute name="portalName" type="xs:string" />
                   <xs:attribute name="pathName" type="xs:string" />
                   <xs:attribute name="fromDirection" type="xs:string" />
