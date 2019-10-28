@@ -106,35 +106,36 @@ public class LightControl {
         }
         LightControl that = (LightControl) o;
         if (that._controlType != this._controlType) return false;
+        boolean _shouldReturn = true;
         switch(_controlType) {
             case Light.NO_CONTROL : 
                 break;
             case Light.SENSOR_CONTROL : 
                 if ((! that._controlSensorName.equals(this._controlSensorName)) ||
-                    ( that._controlSensorSense != this._controlSensorSense)) return false;
+                    ( that._controlSensorSense != this._controlSensorSense)) _shouldReturn = false;
                 break;
             case Light.FAST_CLOCK_CONTROL : 
                 if ((that.getFastClockOffCombined() != this.getFastClockOffCombined()) ||
-                    (that.getFastClockOnCombined() != this.getFastClockOnCombined())) return false;
+                    (that.getFastClockOnCombined() != this.getFastClockOnCombined())) _shouldReturn = false;
                 break;
             case Light.TURNOUT_STATUS_CONTROL : 
                 if ((! that._controlTurnoutName.equals(this._controlTurnoutName)) ||
-                    (that._turnoutState != this._turnoutState)) return false;
+                    (that._turnoutState != this._turnoutState)) _shouldReturn = false;
                 break;
             case Light.TIMED_ON_CONTROL : 
                 if ((! that._timedSensorName.equals(this._timedSensorName)) ||
-                    (that._timeOnDuration != this._timeOnDuration)) return false;
+                    (that._timeOnDuration != this._timeOnDuration)) _shouldReturn = false;
                 break;
             case Light.TWO_SENSOR_CONTROL : 
                 if ((! that._controlSensorName.equals(this._controlSensorName)) ||
                     (that._controlSensorSense != this._controlSensorSense) ||
-                    (! that._controlSensor2Name.equals(this._controlSensor2Name))) return false;
+                    (! that._controlSensor2Name.equals(this._controlSensor2Name))) _shouldReturn = false;
                 break;
             default:
                 // unexpected _controlType value
                 jmri.util.Log4JUtil.warnOnce(log, "Unexpected _controlType = {}", _controlType);
         }
-        return true;
+        return _shouldReturn;
     }
     
     @Override
@@ -560,18 +561,8 @@ public class LightControl {
                     // if sensor state is currently known, set light accordingly
                     twoSensorChanged();
                     // listen for change in sensor states
-                    _namedControlSensor.getBean().addPropertyChangeListener(
-                        _sensorListener = (PropertyChangeEvent e) -> {
-                            if (e.getPropertyName().equals("KnownState")) {
-                                twoSensorChanged();
-                            }
-                    }, _controlSensorName, getDescriptionText(_parentLight.getDisplayName()));
-                    _namedControlSensor2.getBean().addPropertyChangeListener(
-                        _sensor2Listener = (PropertyChangeEvent e) -> {
-                            if (e.getPropertyName().equals("KnownState")) {
-                                twoSensorChanged();
-                            }
-                    }, _controlSensor2Name, getDescriptionText(_parentLight.getDisplayName()));
+                    _sensorListener = addTwoSensorListener(_namedControlSensor.getBean());
+                    _sensor2Listener = addTwoSensorListener(_namedControlSensor2.getBean());
                     _active = true;
                 } else {
                     // at least one control sensor does not exist
@@ -583,6 +574,20 @@ public class LightControl {
                 log.error("Unexpected control type when activating Light: {}", _parentLight);
         }
         
+    }
+    
+    /**
+     * Property Change Listener for Two Sensor.
+     */
+    private PropertyChangeListener addTwoSensorListener(Sensor sensor) {
+        PropertyChangeListener pcl;
+        sensor.addPropertyChangeListener(
+            pcl = (PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    twoSensorChanged();
+                }
+            }, sensor.getDisplayName(), getDescriptionText(_parentLight.getDisplayName()));
+        return pcl;
     }
     
     /**
