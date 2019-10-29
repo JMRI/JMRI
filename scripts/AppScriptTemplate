@@ -122,9 +122,9 @@ function parse_args() {
 
 # Get the default heap size for JMRI in MB.
 # Based on total memory size, this is:
-# - 3/4 total memory size on systems with less than 1GB RAM
-# - 1/2 total memory size on systems with 1-4GB RAM with minimum of 768MB
 # - 1/4 total memory size on systems with more than 4GB RAM with minimum of 2GB
+# - 1/2 total memory size on systems with 1-4GB RAM with minimum of 768MB
+# - 3/4 total memory size on systems with less than 1GB RAM
 # - with an absolute minimum of 192MB
 # - note that minimums are maximum allocation for immediately smaller RAM
 #   (i.e. since 2GB is 1/2 4GB, do not configure 6GB system to use 1.5 GB)
