@@ -4,14 +4,11 @@
   <jmriversion>
     <major>4</major>
     <minor>17</minor>
-    <test>4</test>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
-    <sensor inverted="false">
-      <systemName>ISCLOCKRUNNING</systemName>
-    </sensor>
     <sensor inverted="false">
       <systemName>IS0</systemName>
       <userName>init</userName>
@@ -19,6 +16,85 @@
     <sensor inverted="false">
       <systemName>IS1</systemName>
       <userName>block1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>block2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>block3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>block4</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS11</systemName>
+      <userName>err1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS12</systemName>
+      <userName>err2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS13</systemName>
+      <userName>err3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS14</systemName>
+      <userName>err4</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS20</systemName>
+      <userName>Infinity&amp;Beyond</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS21</systemName>
+      <userName>FarWest</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS22</systemName>
+      <userName>FarEast</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS23</systemName>
+      <userName>EastYard</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS24</systemName>
+      <userName>sMiddle</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS30</systemName>
+      <userName>sFarAway</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS34</systemName>
+      <userName>sFarMiddle</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS35</systemName>
+      <userName>sReallyFar</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS40</systemName>
+      <userName>ClearBlocks</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS41</systemName>
+      <userName>ClearSignals</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS50</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS51</systemName>
+      <userName>StopTrain</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS52</systemName>
+      <userName>StartTrain</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS100</systemName>
@@ -49,30 +125,6 @@
       <userName>Set Error</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS11</systemName>
-      <userName>err1</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS12</systemName>
-      <userName>err2</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS13</systemName>
-      <userName>err3</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS14</systemName>
-      <userName>err4</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS2</systemName>
-      <userName>block2</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS20</systemName>
-      <userName>Infinity&amp;Beyond</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS201</systemName>
       <userName>Warrant1</userName>
     </sensor>
@@ -93,67 +145,15 @@
       <userName>Warrant5</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS21</systemName>
-      <userName>FarWest</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS22</systemName>
-      <userName>FarEast</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS23</systemName>
-      <userName>EastYard</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS24</systemName>
-      <userName>sMiddle</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS3</systemName>
-      <userName>block3</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS30</systemName>
-      <userName>sFarAway</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS301</systemName>
       <userName>TrainId</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS34</systemName>
-      <userName>sFarMiddle</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS35</systemName>
-      <userName>sReallyFar</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS4</systemName>
-      <userName>block4</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS40</systemName>
-      <userName>ClearBlocks</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS401</systemName>
       <userName>TrainName</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS41</systemName>
-      <userName>ClearSignals</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS50</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS51</systemName>
-      <userName>StopTrain</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS52</systemName>
-      <userName>StartTrain</userName>
+      <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -167,6 +167,46 @@
     <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT1</systemName>
       <userName>toEast2Siding</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+      <userName>toWest2Siding</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT3</systemName>
+      <userName>TOYard</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT4</systemName>
+      <userName>TOSouth</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT5</systemName>
+      <userName>toEast2Yard</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT6</systemName>
+      <userName>TOFarWest</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT7</systemName>
+      <userName>crossover</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT8</systemName>
+      <userName>farAwayTO</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT9</systemName>
+      <userName>toCrossover2</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT50</systemName>
+      <comment>SignalHead:IH3:Green</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT51</systemName>
+      <comment>SignalHead:IH3:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT100</systemName>
@@ -209,57 +249,11 @@
       <userName>signal:9</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT2</systemName>
-      <userName>toWest2Siding</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT3</systemName>
-      <userName>TOYard</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT4</systemName>
-      <userName>TOSouth</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT5</systemName>
-      <userName>toEast2Yard</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT50</systemName>
-      <comment>SignalHead:IH3:Green</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT51</systemName>
-      <comment>SignalHead:IH3:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT6</systemName>
-      <userName>TOFarWest</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT7</systemName>
-      <userName>crossover</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT8</systemName>
-      <userName>farAwayTO</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT9</systemName>
-      <userName>toCrossover2</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>ITYARD1</systemName>
       <userName>YardSpurs</userName>
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="4:50 PM">
-      <systemName>IMCURRENTTIME</systemName>
-    </memory>
-    <memory value="1.0">
-      <systemName>IMRATEFACTOR</systemName>
-    </memory>
     <memory value="WestToEastOnSiding">
       <systemName>IM1</systemName>
       <userName>Warrant</userName>
@@ -271,6 +265,12 @@
     <memory value="PDQX">
       <systemName>IM4</systemName>
       <userName>TrainName</userName>
+    </memory>
+    <memory value="10:56 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
@@ -327,7 +327,6 @@
       <unlit allowed="no" />
     </virtualsignalmast>
   </signalmasts>
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
     <oblock systemName="OB1" userName="West" length="1000.0" units="true" curve="0" permissive="false" speedNotch="">
       <userName>West</userName>
@@ -1750,216 +1749,8 @@
       <logixConditional systemName="SYS_SGC_WARRANTS" order="0" />
     </logix>
   </logixs>
-  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
-    <conditional systemName="IX:AUTO:0002C1" userName="Allocate Siding Manual Route" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0002C1</systemName>
-      <userName>Allocate Siding Manual Route</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Set Error" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="43" systemName="OB1" data="-1" delay="0" string="" />
-      <conditionalAction option="1" type="43" systemName="OB4" data="-1" delay="0" string="siding" />
-      <conditionalAction option="1" type="43" systemName="OB3" data="-1" delay="0" string="eastSiding" />
-      <conditionalAction option="2" type="44" systemName="OB1" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="44" systemName="OB4" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="44" systemName="OB3" data="-1" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0002C2" userName="Set Not In Service" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IX:AUTO:0002C2</systemName>
-      <userName>Set Not In Service</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Set NotInService" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="46" systemName="Siding" data="-1" delay="0" string="" />
-      <conditionalAction option="1" type="46" systemName="SidingYard" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="47" systemName="Siding" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="47" systemName="SidingYard" data="-1" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0002C3" userName="Set Deallocate" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IX:AUTO:0002C3</systemName>
-      <userName>Set Deallocate</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Set Manual Deallocate" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="45" systemName="West" data="-1" delay="0" string="" />
-      <conditionalAction option="1" type="45" systemName="Siding" data="-1" delay="0" string="" />
-      <conditionalAction option="1" type="45" systemName="East" data="-1" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C1" userName="Allocate Warrant" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0003C1</systemName>
-      <userName>Allocate Warrant</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Allocate AutoRun" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="36" systemName="@Warrant" data="-1" delay="0" string="@TrainId" />
-      <conditionalAction option="1" type="49" systemName="@Warrant" data="-1" delay="0" string="@TrainName" />
-      <conditionalAction option="1" type="31" systemName="@Warrant" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="32" systemName="@Warrant" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="9" systemName="SetPath AutoRun" data="4" delay="0" string="" />
-      <conditionalAction option="2" type="9" systemName="Run AutoRun" data="4" delay="0" string="" />
-      <conditionalAction option="2" type="9" systemName="Set Manual Deallocate" data="4" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C10" userName="LoopWestToEast" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IX:AUTO:0003C10</systemName>
-      <userName>LoopWestToEast</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Warrant5" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="12" systemName="IM1" data="-1" delay="0" string="LoopWestToEast" />
-      <conditionalAction option="1" type="12" systemName="TrainName" data="-1" delay="0" string="EZX" />
-      <conditionalAction option="1" type="12" systemName="TrainId" data="-1" delay="0" string="SantaFe" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C2" userName="AutoRun Warrant" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IX:AUTO:0003C2</systemName>
-      <userName>AutoRun Warrant</userName>
-      <conditionalStateVariable operator="1" negated="no" type="1" systemName="Run AutoRun" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="36" systemName="@IM1" data="-1" delay="0" string="@IM3" />
-      <conditionalAction option="1" type="49" systemName="@IM1" data="-1" delay="0" string="@IM4" />
-      <conditionalAction option="1" type="34" systemName="@Warrant" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="35" systemName="@Warrant" data="3" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C4" userName="ManualRun Warrant" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IX:AUTO:0003C4</systemName>
-      <userName>ManualRun Warrant</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="Run Manually" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="48" systemName="@Warrant" data="-1" delay="0" string="" />
-      <conditionalAction option="1" type="36" systemName="@Warrant" data="-1" delay="0" string="@TrainId" />
-      <conditionalAction option="1" type="49" systemName="@Warrant" data="-1" delay="0" string="@TrainName" />
-      <conditionalAction option="2" type="35" systemName="@Warrant" data="3" delay="0" string="" />
-      <conditionalAction option="2" type="32" systemName="@Warrant" data="-1" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C5" userName="SetPath Warrant" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0003C5</systemName>
-      <userName>SetPath Warrant</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="SetPath AutoRun" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="36" systemName="@Warrant" data="-1" delay="0" string="@TrainId" />
-      <conditionalAction option="1" type="49" systemName="@Warrant" data="-1" delay="0" string="@TrainName" />
-      <conditionalAction option="1" type="33" systemName="@Warrant" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="32" systemName="@Warrant" data="-1" delay="0" string="" />
-      <conditionalAction option="2" type="9" systemName="Allocate AutoRun" data="4" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C6" userName="Set WestToEastOnMain" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0003C6</systemName>
-      <userName>Set WestToEastOnMain</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="EastBoundLocal" />
-      <conditionalAction option="1" type="12" systemName="TrainName" data="-1" delay="0" string="PDQX" />
-      <conditionalAction option="1" type="12" systemName="TrainId" data="-1" delay="0" string="Hudson" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C7" userName="Set WestToEastOnSiding" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0003C7</systemName>
-      <userName>Set WestToEastOnSiding</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestToEastOnSiding" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C8" userName="EastYardToWestYard" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0003C8</systemName>
-      <userName>EastYardToWestYard</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS203" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="EastYardToWestYard" />
-    </conditional>
-    <conditional systemName="IX:AUTO:0003C9" userName="WayFarToWest" antecedent="R1" logicType="1" triggerOnChange="no">
-      <systemName>IX:AUTO:0003C9</systemName>
-      <userName>WayFarToWest</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS204" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WayFarToWest" />
-    </conditional>
-    <conditional systemName="IXOCCUPYC1" userName="ClearBlocks" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IXOCCUPYC1</systemName>
-      <userName>ClearBlocks</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ClearBlocks" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS2" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS20" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS21" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS22" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS23" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS24" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS30" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS34" data="4" delay="0" string="" />
-    </conditional>
-    <conditional systemName="IXOCCUPYC2" userName="ClearSignals" antecedent="R1" logicType="1" triggerOnChange="yes">
-      <systemName>IXOCCUPYC2</systemName>
-      <userName>ClearSignals</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS41" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain1" data="16" delay="0" string="Green" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain2" data="16" delay="0" string="Green" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain3" data="16" delay="0" string="Green" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain4" data="16" delay="0" string="Green" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain5" data="16" delay="0" string="Green" />
-      <conditionalAction option="1" type="37" systemName="Triple Head Approach" data="-1" delay="0" string="Clear" />
-      <conditionalAction option="1" type="37" systemName="Triple Head Color" data="-1" delay="0" string="Clear" />
-    </conditional>
-    <conditional systemName="MAST INITC1" userName="Signal Mast Init" antecedent="R1 and R2" logicType="2" triggerOnChange="yes">
-      <systemName>MAST INITC1</systemName>
-      <userName>Signal Mast Init</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="init" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="2" systemName="init" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="37" systemName="Triple Head Color" data="-1" delay="0" string="Clear" />
-      <conditionalAction option="1" type="37" systemName="Triple Head Approach" data="-1" delay="0" string="Approach Medium" />
-    </conditional>
-    <conditional systemName="RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
-      <systemName>RTXINITIALIZER1T</systemName>
-      <userName>Route 1C Initialize</userName>
-      <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain2" data="8" delay="0" string="" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain3" data="16" delay="0" string="" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain4" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="3" systemName="SigEBMain5" data="1" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="init" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="block1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="block2" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="block3" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="block4" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="err1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="err2" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="err3" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="err4" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Infinity&amp;Beyond" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="FarWest" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="FarEast" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="EastYard" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="sMiddle" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="sFarAway" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="sFarMiddle" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="sReallyFar" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ClearBlocks" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ClearSignals" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="StopTrain" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="StartTrain" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Run Manually" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Run AutoRun" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Allocate AutoRun" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Set NotInService" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Set Manual Deallocate" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="SetPath AutoRun" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Warrant1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Warrant2" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Warrant3" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Warrant4" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="Warrant5" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="TrainName" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="YardSpurs" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="toEast2Siding" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="toWest2Siding" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="TOYard" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="TOSouth" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="toEast2Yard" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="TOFarWest" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="crossover" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="farAwayTO" data="2" delay="0" string="" />
-      <conditionalAction option="1" type="2" systemName="toCrossover2" data="2" delay="0" string="" />
-    </conditional>
-    <conditional systemName="SYS_SGC_WARRANTS" userName="Sensor Group warrants" antecedent="" logicType="2" triggerOnChange="yes">
-      <systemName>SYS_SGC_WARRANTS</systemName>
-      <userName>Sensor Group warrants</userName>
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS203" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS204" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS205" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="9" systemName="IS201" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS202" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS203" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS204" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS205" data="4" delay="0" string="" />
-    </conditional>
-  </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Dec 28 12:04:15 PST 2010" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Indicator Demo 0" x="1992" y="29" height="444" width="1249" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="horizontal" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Indicator Demo 0" x="644" y="541" height="444" width="1249" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="horizontal" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
     <icons>
       <visible>
         <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
@@ -5432,37 +5223,54 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Aug 27 16:47:58 PDT 2019</date>
+      <date>Tue Oct 15 10:54:16 PDT 2019</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Aug 27 16:48:09 PDT 2019</date>
-      <filename>/C:/jmriPanels/IndicatorDemo.xml</filename>
+      <date>Tue Oct 15 10:55:33 PDT 2019</date>
+      <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Mon Aug 19 14:56:08 PDT 2019</date>
+          <date>Tue Aug 27 16:47:58 PDT 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Mon Aug 19 15:00:12 PDT 2019</date>
+          <date>Tue Aug 27 16:48:09 PDT 2019</date>
           <filename>/C:/jmriPanels/IndicatorDemo.xml</filename>
-          <filehistory />
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Mon Aug 19 14:56:08 PDT 2019</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Mon Aug 19 15:00:12 PDT 2019</date>
+              <filename>/C:/jmriPanels/IndicatorDemo.xml</filename>
+              <filehistory />
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Mon Aug 19 15:09:07 PDT 2019</date>
+              <filename />
+            </operation>
+          </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Mon Aug 19 15:09:07 PDT 2019</date>
+          <date>Tue Aug 27 16:50:02 PDT 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Aug 27 16:50:02 PDT 2019</date>
+      <date>Tue Oct 15 10:56:31 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+pete_+2019-08-27T23:47:52Z+Rd1e2b80ecc on Tue Aug 27 16:50:02 PDT 2019-->
+  <!--Written by JMRI version 4.17.5ish+pete_+2019-10-15T17:54:08Z+Rd1fa1538ac4 on Tue Oct 15 10:56:31 PDT 2019-->
 </layout-config>

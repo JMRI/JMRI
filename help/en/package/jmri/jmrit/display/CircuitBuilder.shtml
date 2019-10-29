@@ -29,7 +29,7 @@
     panel. It is an alternative to using the
     <a href="../logix/OBlockTable.shtml">Occupancy Block Tables</a> to create 
     <b>OBlocks, Portals and OPaths</b>.
-    Circuit Builder is a graphical way to create and configure these objects
+    Circuit Builder is a graphical tool to create and configure these objects
     by "point and click" mouse operations. Here "track circuit" is just another name
     for "OBlock". The
     prototype name for track having a device that can detect occupancy is
@@ -54,12 +54,17 @@
     </p>
     
     <h3>Getting Started</h3>
+    The Circuit Builder tool can be opened from either the <b>Circuit Builder</b>
+    menu item under the <b>Add Items</b> menu or by the <b>Open Circuit Builder</b>
+    menu item under the <b>Warrant</b> menu.
+    <p>
 	Make a track diagram of your layout using track icons - of any kind, but
 	eventually they will need to be some kind of Indicator Track. The 
-	<b>Item Palette</b> can help you select the kind you want. Then open
-	CircuitBuilder from the <b>Warrant</b> menu. The CircuitBuilder menu
-	will appear. Now use
-	CircuitBuilder menu to make two track circuits (OBlocks).<br>
+	<b>Item Palette</b> menu item under the <b>Add Items</b> menu
+	can help you select the kind you want. Then open
+	CircuitBuilder as suggested above. The CircuitBuilder menu
+	will appear. Now use either the Circuit Builder window or the
+	Circuit Builder menu to make two track circuits (OBlocks).<br>
 	<a href="#OBlocks">Add/Edit OBlocks</a><br>
 	After making two OBlocks you can make and configure the following items:<br>
 	<a href="#Portals">Add/Edit Portals</a><br>
@@ -68,6 +73,7 @@
 	<a href="#Signals">Add/Edit Signals</a><br>
 	When you are done editing, select the items under the <a href="#Errors">Error Checks</a> 
 	submenu for errors and omissions.<br>
+	</p>
 	    
     <h2>Basic Operational Model of Circuit Builder</h2>
     Circuit Builder works by using icons on a block by block basis. 
@@ -91,10 +97,12 @@
     Indicator Track icons.  See <a href="ItemPalette.shtml">The Item Palette</a>
     for more information about Indicator track icons.
     </p><p>
-    CircuitBuilder is aware of all the objects defined in the Occupancy Block tables. If your layout track
-    diagram is split up among several panels, CircuitBuilder will edit with the icons on
-    each panel separately. It may post messages about missing icons but if the objects
-    are not meant to be represented on that panel, ignore them.
+    CircuitBuilder is aware of all the objects defined in the Occupancy Block tables. 
+    When your layout track diagram is split up among several panels, each panel has a 
+    its own CircuitBuilder to edit its icons. It may post messages about missing icons but if the objects
+    are not meant to be represented on that panel, ignore them. This "discrepancy" is due
+    to the fact that OBlocks, Portals and Paths are global for all panels of your JMRI
+    session, but each Circuit Builder is concerned only by the icons on its panel.
     </p>
 
     <h3>Mouse Operations When Using CircuitBuilder</h3>
