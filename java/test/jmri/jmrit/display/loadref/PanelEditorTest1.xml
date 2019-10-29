@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>17</minor>
-    <test>4</test>
+    <test>5</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -23,23 +23,20 @@
       <systemName>IT1</systemName>
     </turnout>
   </turnouts>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed Oct 23 12:33:08 PDT 2019</date>
+      <date>Mon Oct 28 22:04:35 PDT 2019</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/load/PanelEditorTest1.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Oct 23 12:33:08 PDT 2019</date>
+      <date>Mon Oct 28 22:04:35 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.4ish+jake+20191023T1932Z+Ra44ed5fdc2 on Wed Oct 23 12:33:08 PDT 2019-->
+  <!--Written by JMRI version 4.17.5ish+jake+20191029T0350Z+R0e009a02d2 on Mon Oct 28 22:04:35 PDT 2019-->
 </layout-config>

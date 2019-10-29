@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>3</minor>
-    <test>1</test>
-    <modifier>.1</modifier>
+    <minor>17</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>inactive</defaultInitialState>
@@ -41,7 +41,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="5:04 PM">
+    <memory value="10:04 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -105,12 +105,11 @@
       <unlit allowed="no" />
     </virtualsignalmast>
   </signalmasts>
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
     <oblock systemName="OB101" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS101" />
       <path pathName="4P2" blockName="OB101" fromPortal="4-1" toPortal="1-2" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="1-2">
+      <portal portalName="1-2">
         <fromBlock blockName="OB101">
           <path pathName="4P2" blockName="OB101" />
         </fromBlock>
@@ -120,7 +119,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP2" portalName="4-1">
+      <portal portalName="4-1">
         <fromBlock blockName="OB104">
           <path pathName="3P1" blockName="OB104" />
         </fromBlock>
@@ -134,7 +133,7 @@
     <oblock systemName="OB102" length="3000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS102" />
       <path pathName="1P3" blockName="OB102" fromPortal="1-2" toPortal="2-3" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="1-2">
+      <portal portalName="1-2">
         <fromBlock blockName="OB101">
           <path pathName="4P2" blockName="OB101" />
         </fromBlock>
@@ -144,7 +143,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP3" portalName="2-3">
+      <portal portalName="2-3">
         <fromBlock blockName="OB102">
           <path pathName="1P3" blockName="OB102" />
         </fromBlock>
@@ -158,7 +157,7 @@
     <oblock systemName="OB103" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS103" />
       <path pathName="2P4" blockName="OB103" fromPortal="2-3" toPortal="3-4" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP3" portalName="2-3">
+      <portal portalName="2-3">
         <fromBlock blockName="OB102">
           <path pathName="1P3" blockName="OB102" />
         </fromBlock>
@@ -168,7 +167,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0009)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP4" portalName="3-4">
+      <portal portalName="3-4">
         <fromBlock blockName="OB103">
           <path pathName="2P4" blockName="OB103" />
         </fromBlock>
@@ -188,7 +187,7 @@
       <path pathName="3P5" blockName="OB104" fromPortal="3-4" toPortal="4-5" fromDirection="0" toDirection="0" length="1000.0">
         <setting turnout="IT201" set="4" />
       </path>
-      <portal systemName="IP2" portalName="4-1">
+      <portal portalName="4-1">
         <fromBlock blockName="OB104">
           <path pathName="3P1" blockName="OB104" />
         </fromBlock>
@@ -198,7 +197,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0007)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP4" portalName="3-4">
+      <portal portalName="3-4">
         <fromBlock blockName="OB103">
           <path pathName="2P4" blockName="OB103" />
         </fromBlock>
@@ -209,7 +208,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0008)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP5" portalName="4-5">
+      <portal portalName="4-5">
         <fromBlock blockName="OB104">
           <path pathName="3P5" blockName="OB104" />
         </fromBlock>
@@ -223,7 +222,7 @@
     <oblock systemName="OB105" length="1000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS105" />
       <path pathName="4P" blockName="OB105" fromPortal="4-5" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP5" portalName="4-5">
+      <portal portalName="4-5">
         <fromBlock blockName="OB104">
           <path pathName="3P5" blockName="OB104" />
         </fromBlock>
@@ -235,7 +234,6 @@
       </portal>
     </oblock>
   </oblocks>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
     <signalmastlogic source="1-2">
@@ -469,21 +467,30 @@
       </destinationMast>
     </signalmastlogic>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jan 04 16:22:19 GMT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jan 04 08:22:19 PST 2016" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Thu Feb 11 17:00:00 GMT 2016</date>
-      <filename>JMRI program</filename>
+      <type>Load OK</type>
+      <date>Mon Oct 28 22:04:36 PDT 2019</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/load/PortalCheck.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Thu Feb 11 17:00:00 GMT 2016</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Feb 11 17:04:28 GMT 2016</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Feb 11 17:04:28 GMT 2016</date>
+      <date>Mon Oct 28 22:04:36 PDT 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.3.1-R2b72e88 on Thu Feb 11 17:04:28 GMT 2016 $Id$-->
+  <!--Written by JMRI version 4.17.5ish+jake+20191029T0350Z+R0e009a02d2 on Mon Oct 28 22:04:36 PDT 2019-->
 </layout-config>
-
-<!-- neodl5.grp.bf1.yahoo.com Thu Feb 11 21:46:44 PST 2016 -->
