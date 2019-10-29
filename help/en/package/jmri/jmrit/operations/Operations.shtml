@@ -3123,7 +3123,7 @@
    <a name="Cars" id="Cars"></a>
    <h2>Cars</h2>
    The cars window allows you to edit your car roster. You can enter a car's road (reporting mark),
-   number, type, and length. The program will automatically calculate the car's weight based on
+   number, type, and length. The program will automatically calculate the car's maximum weight based on
    length and the scale your modeling. You can optionally add the car's color, built date, load and
    owner. If you want a group of cars to be switched as a unit, you can create a "kernel". You can
    assign any number of cars to a kernel but the type of the first car assigned will be used by the
@@ -3260,7 +3260,7 @@
    <h4>Type, Length, Weight</h4>
    Select the car's type and length from the menu boxes. Use the "Edit" button to the right of the
    menu boxes to add or delete car types, or lengths that you want to add or remove. The car's
-   weight is automatically calculated, but you can enter a different weight if necessary. When
+   maximum weight is automatically calculated, but you can enter a different weight if necessary. When
    entering the length of a car, enter the length of the body and not the total length. For example,
    a forty foot boxcar has a length of 40 feet. The program when calculating lengths will add two
    feet to each end of a car for the couplers. Therefore when you place a forty foot car at a spur,
@@ -3422,9 +3422,9 @@
 
    <a name="LoadType" id="LoadType"></a>
    <h4>Load Type</h4>
-   A load type of "Load" means the program will consider the car as being loaded and the maximum car
+   A load type of "Load" means the program will consider the car as being loaded and the car's maximum
    weight is used when calculating the train's total weight. A load type of "Empty" tells the
-   program that the car is empty as to only use 1/3 of the car's maximum weight when calculating the
+   program that the car is empty and to only use 1/3 of the car's maximum weight when calculating the
    train's total weight. If you use the <a href="#ManifestComments">Loads and Empties</a> option
    when printing your Manifest, you will want to use the correct load type so that the program
    prints out the correct number of loads and empties in the train.
