@@ -67,7 +67,7 @@
       <userName>West</userName>
       <sensor systemName="IS1" />
       <path pathName="MainWest" blockName="OB1" fromPortal="WestToWestApproach" toPortal="WestToLoop" fromDirection="0" toDirection="0" length="100.0" />
-      <portal systemName="IP1" portalName="WestToLoop">
+      <portal portalName="WestToLoop">
         <fromBlock blockName="OB1">
           <path pathName="MainWest" blockName="OB1" />
         </fromBlock>
@@ -75,7 +75,7 @@
           <path pathName="MainLoop" blockName="OB12" />
         </toBlock>
       </portal>
-      <portal systemName="IP2" portalName="WestToWestApproach">
+      <portal portalName="WestToWestApproach">
         <fromBlock blockName="OB3">
           <path pathName="MainWestApproacj" blockName="OB3" />
         </fromBlock>
@@ -88,7 +88,7 @@
       <userName>WestApproach</userName>
       <sensor systemName="IS3" />
       <path pathName="MainWestApproacj" blockName="OB3" fromPortal="WestApproachToMidWest" toPortal="WestToWestApproach" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP2" portalName="WestToWestApproach">
+      <portal portalName="WestToWestApproach">
         <fromBlock blockName="OB3">
           <path pathName="MainWestApproacj" blockName="OB3" />
         </fromBlock>
@@ -96,7 +96,7 @@
           <path pathName="MainWest" blockName="OB1" />
         </toBlock>
       </portal>
-      <portal systemName="IP3" portalName="WestApproachToMidWest">
+      <portal portalName="WestApproachToMidWest">
         <fromBlock blockName="OB3">
           <path pathName="MainWestApproacj" blockName="OB3" />
         </fromBlock>
@@ -109,7 +109,7 @@
       <userName>MidWest</userName>
       <sensor systemName="IS5" />
       <path pathName="MainMidWest" blockName="OB5" fromPortal="WestApproachToMidWest" toPortal="MidWestToMiddle" fromDirection="0" toDirection="0" length="1000.0" />
-      <portal systemName="IP3" portalName="WestApproachToMidWest">
+      <portal portalName="WestApproachToMidWest">
         <fromBlock blockName="OB3">
           <path pathName="MainWestApproacj" blockName="OB3" />
         </fromBlock>
@@ -117,7 +117,7 @@
           <path pathName="MainMidWest" blockName="OB5" />
         </toBlock>
       </portal>
-      <portal systemName="IP4" portalName="MidWestToMiddle">
+      <portal portalName="MidWestToMiddle">
         <fromBlock blockName="OB5">
           <path pathName="MainMidWest" blockName="OB5" />
         </fromBlock>
@@ -130,7 +130,7 @@
       <userName>Middle</userName>
       <sensor systemName="IS6" />
       <path pathName="MainMidShort" blockName="OB6" fromPortal="MidEastToMiddle" toPortal="MidWestToMiddle" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP4" portalName="MidWestToMiddle">
+      <portal portalName="MidWestToMiddle">
         <fromBlock blockName="OB5">
           <path pathName="MainMidWest" blockName="OB5" />
         </fromBlock>
@@ -138,7 +138,7 @@
           <path pathName="MainMidShort" blockName="OB6" />
         </toBlock>
       </portal>
-      <portal systemName="IP5" portalName="MidEastToMiddle">
+      <portal portalName="MidEastToMiddle">
         <fromBlock blockName="OB6">
           <path pathName="MainMidShort" blockName="OB6" />
         </fromBlock>
@@ -151,7 +151,7 @@
       <userName>MidEast</userName>
       <sensor systemName="IS7" />
       <path pathName="MainMidEast" blockName="OB7" fromPortal="MidEastToEastApproach" toPortal="MidEastToMiddle" fromDirection="0" toDirection="0" length="1000.0" />
-      <portal systemName="IP5" portalName="MidEastToMiddle">
+      <portal portalName="MidEastToMiddle">
         <fromBlock blockName="OB6">
           <path pathName="MainMidShort" blockName="OB6" />
         </fromBlock>
@@ -159,7 +159,7 @@
           <path pathName="MainMidEast" blockName="OB7" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="MidEastToEastApproach">
+      <portal portalName="MidEastToEastApproach">
         <fromBlock blockName="OB7">
           <path pathName="MainMidEast" blockName="OB7" />
         </fromBlock>
@@ -172,7 +172,7 @@
       <userName>EastApproach</userName>
       <sensor systemName="IS9" />
       <path pathName="MainEastApproach" blockName="OB9" fromPortal="EastToEastApproch" toPortal="MidEastToEastApproach" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP6" portalName="MidEastToEastApproach">
+      <portal portalName="MidEastToEastApproach">
         <fromBlock blockName="OB7">
           <path pathName="MainMidEast" blockName="OB7" />
         </fromBlock>
@@ -180,7 +180,7 @@
           <path pathName="MainEastApproach" blockName="OB9" />
         </toBlock>
       </portal>
-      <portal systemName="IP7" portalName="EastToEastApproch">
+      <portal portalName="EastToEastApproch">
         <fromBlock blockName="OB11">
           <path pathName="MainEast" blockName="OB11" />
         </fromBlock>
@@ -193,7 +193,7 @@
       <userName>East</userName>
       <sensor systemName="IS11" />
       <path pathName="MainEast" blockName="OB11" fromPortal="EastToEastApproch" toPortal="EastToLoop" fromDirection="0" toDirection="0" length="100.0" />
-      <portal systemName="IP7" portalName="EastToEastApproch">
+      <portal portalName="EastToEastApproch">
         <fromBlock blockName="OB11">
           <path pathName="MainEast" blockName="OB11" />
         </fromBlock>
@@ -201,7 +201,7 @@
           <path pathName="MainEastApproach" blockName="OB9" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="EastToLoop">
+      <portal portalName="EastToLoop">
         <fromBlock blockName="OB11">
           <path pathName="MainEast" blockName="OB11" />
         </fromBlock>
@@ -214,7 +214,7 @@
       <userName>LoopConnector</userName>
       <sensor systemName="IS12" />
       <path pathName="MainLoop" blockName="OB12" fromPortal="WestToLoop" toPortal="EastToLoop" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="WestToLoop">
+      <portal portalName="WestToLoop">
         <fromBlock blockName="OB1">
           <path pathName="MainWest" blockName="OB1" />
         </fromBlock>
@@ -222,7 +222,7 @@
           <path pathName="MainLoop" blockName="OB12" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="EastToLoop">
+      <portal portalName="EastToLoop">
         <fromBlock blockName="OB11">
           <path pathName="MainEast" blockName="OB11" />
         </fromBlock>
