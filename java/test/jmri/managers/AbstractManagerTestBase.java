@@ -81,7 +81,6 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
     }
 
-
     @Test
     public final void testVetoableChangeListenerAddAndRemove() {
 

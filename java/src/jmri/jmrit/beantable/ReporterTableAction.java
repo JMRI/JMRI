@@ -375,8 +375,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             try {
                 curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
             } catch (jmri.JmriException ex) {
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
+                displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);

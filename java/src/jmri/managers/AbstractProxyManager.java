@@ -102,6 +102,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Manager<E> getDefaultManager() {
         return defaultManager != null ? defaultManager : getInternalManager();
     }
@@ -248,22 +249,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
                                              E sysNameResult,
                                              String userName,
                                              E uNameResult){
-        E b;
-        if ((userName != null) && ((b = uNameResult) != null)) {
-            if (sysNameResult != b) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, b.getSystemName());
-            }
-            return b;
-        }
-        if ((b = sysNameResult) != null) {
-            if ((b.getUserName() == null) && (userName != null)) {
-                b.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found bean by system name ({}) with non-null user name ({})", systemName, userName);
-            }
-        }
-        return b;
+        return getDefaultManager().getByUserThenSystemName(systemName, sysNameResult, userName, uNameResult);
     }
 
     /**

@@ -96,7 +96,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Reporter object representing a given physical Reporter and
      * therefore only one with a specific system or user name.

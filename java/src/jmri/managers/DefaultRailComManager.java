@@ -39,19 +39,10 @@ public class DefaultRailComManager extends DefaultIdTagManager
         return new DefaultRailCom(systemName, userName);
     }
 
-    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
-    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
-        log.error("SystemName cannot be null. UserName was "
-                + ((userName == null) ? "null" : userName));
-        throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                + ((userName == null) ? "null" : userName));
-    }
-    
     @Override
     @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("new IdTag: {};{}", systemName, (userName == null ? "null" : userName));
-        checkSystemName(systemName, userName);
         // return existing if there is one
         RailCom s = (RailCom) getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
         if (s != null) {

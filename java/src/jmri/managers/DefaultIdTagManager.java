@@ -189,7 +189,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         Objects.requireNonNull(systemName, "SystemName cannot be null.");
 
         // return existing if there is one
-        IdTag s = (IdTag) getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        IdTag s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
         if (s != null) {
             return s;
         }
