@@ -82,20 +82,17 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     @Nonnull
     public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
-        Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
-
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
         Memory s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, ((userName == null) ? null : getByUserName(userName)));
         if (s != null) {
             return s;
         }
-
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
-
         // save in the maps
         register(s);
-
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
 

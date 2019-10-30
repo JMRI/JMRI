@@ -1,6 +1,8 @@
 package jmri.managers;
 
 import java.util.Enumeration;
+import java.util.Objects;
+
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
@@ -93,19 +95,16 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         log.debug(" newSensor(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
-
-        java.util.Objects.requireNonNull(systemName, "Generated systemName may not be null, started with " + systemName);
-
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + (userName == null ? "null" : userName));  // NOI18N
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Sensor s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
         if (s != null) {
             return s;
         }
-
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
-
         // save in the maps
         register(s);
 

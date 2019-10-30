@@ -9,6 +9,8 @@ import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+
 /**
  * Abstract partial implementation of a LightManager.
  * <p>
@@ -91,8 +93,9 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("newLight: {};{}", systemName, (userName == null ? "null" : userName));
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));  // NOI18N
         systemName = validateSystemNameFormat(systemName);
-
         // return existing if there is one
         Light s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
         if (s != null) {

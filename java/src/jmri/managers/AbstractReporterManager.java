@@ -103,10 +103,9 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @Override
     @NonNull
     public Reporter newReporter(@NonNull String systemName, String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + ((userName == null) ? "null" : userName));  // NOI18N
         log.debug("new Reporter: {} {}", systemName, (userName == null ? "null" : userName));
-
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + (userName == null ? "null" : userName));  // NOI18N
        // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {

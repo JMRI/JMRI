@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog;
 
+import java.util.Objects;
 import java.util.Set;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
@@ -19,7 +20,7 @@ import javax.annotation.Nonnull;
 /**
  * Provide the concrete implementation for the Internal CatalogTree Manager.
  * <p>
- * Control of the systemName is internal so the more casual approach of
+ * Control of the systemName is internal so the more casual approach like that of
  * SignalHeadManager is used rather than the ProxyManager style.
  *
  * @author Pete Cressman Copyright (C) 2009
@@ -61,7 +62,6 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 
@@ -84,38 +84,20 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public CatalogTree newCatalogTree(String sysName, String userName) {
-        log.debug("new CatalogTree: systemName= {}, userName= {}", sysName, userName);
-        if (sysName == null) {
-            log.error("SystemName cannot be null. UserName= {}", userName);
-            return null;
-        }
-
+    public CatalogTree newCatalogTree(@Nonnull String systemName, @Nonnull String userName) {
+        log.debug(" newCatalogTree(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + (userName == null ? "null" : userName));  // NOI18N
         // return existing if there is one
-        CatalogTree s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(sysName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, sysName, s.getSystemName());
-            }
-            return s;
+        CatalogTree t = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        if (t != null) {
+            return t;
         }
-        if ((s = getBySystemName(sysName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
-            } else if (userName != null) {
-                log.warn("Found memory via system name ({}) with non-null userName ({})",
-                        sysName, userName);
-            }
-            return s;
-        }
-
         // doesn't exist, make a new one
-        s = createNewCatalogTree(sysName, userName);
-
+        t = createNewCatalogTree(systemName, userName);
         // save in the maps
-        register(s);
-        return s;
+        register(t);
+        return t;
     }
 
     /**
@@ -133,11 +115,11 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      *   NX... - index for files stored in XML config file
      * </pre>
      *
-     * @param systemName system name for catalog tree
-     * @param userName   user name for catalog tree
+     * @param systemName system name for catalog tree, never null/empty
+     * @param userName   user name for catalog tree, never null/empty
      * @return the new catalog tree or null if unable to create
      */
-    protected CatalogTree createNewCatalogTree(String systemName, String userName) {
+    protected CatalogTree createNewCatalogTree(@Nonnull String systemName, @Nonnull String userName) {
         if (systemName == null || systemName.length() == 0) {
             log.error("Null systemName!");
             return null;
@@ -226,11 +208,9 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
                 };
                 sdm.register(_shutDownTask);
             }
-        } else {
-            if (_shutDownTask != null) {
-                sdm.deregister(_shutDownTask);
-                _shutDownTask = null;
-            }
+        } else if (_shutDownTask != null) {
+            sdm.deregister(_shutDownTask);
+            _shutDownTask = null;
         }
     }
 
@@ -240,6 +220,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(CatalogTreeManager.class)) {
                 return new DefaultCatalogTreeManager();
@@ -248,6 +229,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(CatalogTreeManager.class);

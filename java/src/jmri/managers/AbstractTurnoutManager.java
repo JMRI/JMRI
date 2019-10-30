@@ -91,11 +91,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     @Nonnull
     public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + (userName == null ? "null" : userName));  // NOI18N
-
-        // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}", systemName, (userName == null ? "null" : userName));
-
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + (userName == null ? "null" : userName));  // NOI18N
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
