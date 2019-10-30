@@ -57,7 +57,6 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return (TamsSystemConnectionMemo) memo;
     }
 
-    @Nonnull
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         TamsTrafficController tc = getMemo().getTrafficController();
@@ -67,7 +66,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             int board;
             int channel;
 
-            String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
+            String curAddress = systemName.substring(getSystemPrefix().length() + 1);
             int seperator = curAddress.indexOf(':');
             try {
                 board = Integer.parseInt(curAddress.substring(0, seperator));

@@ -52,7 +52,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *
      * @return null if sensor already exists by that name or an alternate
      */
-    @Nonnull
     @Override
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         String prefix = getSystemPrefix();

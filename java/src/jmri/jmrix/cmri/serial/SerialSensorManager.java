@@ -56,7 +56,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;

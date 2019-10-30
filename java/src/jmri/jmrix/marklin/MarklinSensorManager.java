@@ -41,7 +41,9 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         return (MarklinSystemConnectionMemo) memo;
     }
 
-    @Nonnull
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         MarklinSensor s = new MarklinSensor(systemName, userName);
@@ -59,7 +61,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     tc.sendMarklinMessage(m, this);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
             Hashtable<Integer, MarklinSensor> sensorList = _tmarklin.get(board);
@@ -69,11 +71,10 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
+                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
                 return null;
             }
         }
-
         return s;
     }
 

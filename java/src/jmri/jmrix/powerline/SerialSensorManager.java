@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
-    SerialTrafficController tc = null;
+    private SerialTrafficController tc = null;
 
     public SerialSensorManager(SerialTrafficController tc) {
         super(tc.getAdapterMemo());
@@ -44,10 +44,9 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
+     * Create a new sensor if all checks are passed. System name is normalized to
      * ensure uniqueness.
      */
-    @Nonnull
     @Override
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
@@ -70,7 +69,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         } else {
             s = new SerialSensor(sName, tc, userName);
         }
-
         return s;
     }
 

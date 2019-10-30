@@ -54,7 +54,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      *
      * @return null if the system name is not in a valid format
      */
-    @Nonnull
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         // check if the output bit is available

@@ -58,7 +58,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // XBee specific methods
 
-    @Nonnull
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         XBeeNode curNode = null;
@@ -76,11 +75,11 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         }
         int pin = pinFromSystemName(systemName);
         if (curNode != null && !curNode.getPinAssigned(pin)) {
-            log.debug("Adding sensor to pin " + pin);
+            log.debug("Adding sensor to pin {}", pin);
             curNode.setPinBean(pin, new XBeeSensor(systemName, userName, tc));
             return (XBeeSensor) curNode.getPinBean(pin);
         } else {
-            log.debug("Failed to create sensor " + systemName);
+            log.debug("Failed to create sensor {}", systemName);
             return null;
         }
     }

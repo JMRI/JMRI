@@ -50,10 +50,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
+     * Create a new sensor if all checks are passed. System name is normalized to
      * ensure uniqueness.
      */
-    @Nonnull
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
