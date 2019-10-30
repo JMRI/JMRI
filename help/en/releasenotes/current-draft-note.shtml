@@ -399,12 +399,21 @@
             <li>JMRI's scripting support now defaults to the UTF-8 character encoding for all
               script files on all platforms. This may require that some scripts be re-saved
               using UTF-8.</li>
+            <li>The jython/SetSignalFlashRate.py sample script shows how to 
+                change the flashing on/off time for your signals.  Just invoke
+                it before defining the signals, i.e. before loading your
+                configuration and panel files.
+            </li>
         </ul>
 
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
-            <li></li>
+            <li>The jython/SetSignalFlashRate.py sample script shows how to 
+                change the flashing on/off time for your signals.  Just invoke
+                it before defining the signals, i.e. before loading your
+                configuration and panel files.
+            </li>
         </ul>
         <h4>Signal Systems</h4>
             <ul>
@@ -496,6 +505,13 @@
                 existing lib folder contents are retained in the backup folder.
                 <strong>This means that any files you have added to the <em>lib</em>
                     folder will be removed.</strong></li>
+            <li><strong>macOS Only</strong> This version includes changes to how
+                the distributed files are signed.  This includes signing individual
+                libraries, signing libraries inside jar files, signing the three
+                app bundles, and signing the .dmg file itself, followed by 
+                notarizing the .dmg file.
+                This was done to increase
+                compatibility with macOS 10.15 Catalina.
             <li>Added basic support for developer architecture checks via
                 <a href="https://www.archunit.org">ArchUnit</a>,
                 see the 

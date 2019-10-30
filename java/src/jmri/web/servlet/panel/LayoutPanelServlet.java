@@ -1,5 +1,6 @@
 package jmri.web.servlet.panel;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.awt.Color;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +16,6 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.util.ColorUtil;
-
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -24,8 +24,6 @@ import org.jdom2.output.XMLOutputter;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
@@ -175,7 +173,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      * @param e        element to be updated
      * @param beanType bean type to use for userName lookup
      * @param attrName attribute name to replace
-     * 
+     *
      */
     private void replaceUserNameAttribute(@NonNull Element e, @NonNull String beanType, @NonNull String attrName) {
 
@@ -188,18 +186,18 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             case "turnout" :
                 Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(un);
                 if (t == null) return;
-                sn = t.getSystemName(); 
+                sn = t.getSystemName();
                 break;
             case "layoutBlock" :
                 LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(un);
                 if (lb == null) return;
-                sn = lb.getSystemName(); 
+                sn = lb.getSystemName();
                 break;
             default:
-                return; 
+                return;
         }
         if (!un.equals(sn)) {
-            a.setValue(sn);            
+            a.setValue(sn);
             log.debug("systemName '{}' replaced userName '{}' for {}", sn, un, attrName);
         }
     }
@@ -210,7 +208,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      * @param e        element to be updated
      * @param beanType bean type to use for userName lookup
      * @param childName child element name whose text will be replaced
-     * 
+     *
      */
     private void replaceUserNameChild(@NonNull Element e, @NonNull String beanType, @NonNull String childName) {
 
@@ -229,12 +227,12 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 return;
         }
         if (!un.equals(sn)) {
-            c.setText(sn);            
+            c.setText(sn);
             log.debug("systemName '{}' replaced userName '{}' for {}", sn, un, childName);
         }
     }
 
-    
+
     /**
      * update the element replacing username with systemname for known attributes and children
      *
@@ -243,10 +241,17 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     private void replaceUserNames(Element e) {
         replaceUserNameAttribute(e, "turnout", "turnoutname");
         replaceUserNameAttribute(e, "turnout", "secondturnoutname");
+
+        // block names for turnouts
         replaceUserNameAttribute(e, "layoutBlock", "blockname");
         replaceUserNameAttribute(e, "layoutBlock", "blockbname");
         replaceUserNameAttribute(e, "layoutBlock", "blockcname");
         replaceUserNameAttribute(e, "layoutBlock", "blockdname");
+
+        // block names for level crossings
+        replaceUserNameAttribute(e, "layoutBlock", "blocknameac");
+        replaceUserNameAttribute(e, "layoutBlock", "blocknamebd");
+
         replaceUserNameChild(e, "turnout", "turnout");
         replaceUserNameChild(e, "turnout", "turnoutB");
     }

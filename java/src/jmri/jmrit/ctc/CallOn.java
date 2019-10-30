@@ -227,16 +227,17 @@ NOTE:
 //  I SUSPECT (not verified) that "signal.getValidStateNames()" ALWAYS returns English no matter what language is selected.
 //  If I AM WRONG, then this routine can be removed, and the call to it removed:
     private String convertFromForeignLanguageColor(String foreignLanguageColor) {
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCODark"))) return "Dark"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCORed"))) return "Red";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOYellow"))) return "Yellow"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOGreen"))) return "Green";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingRed"))) return "Flashing Red";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingYellow"))) return "Flashing Yellow"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingGreen"))) return "Flashing Green";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOLunar"))) return "Lunar";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingLunar"))) return "Flashing Lunar";   // NOI18N
-        return "Red";   // NOI18N    Should NEVER happen, but if programmers screw up, default to some "sane" value.
+        String color = "Red"; // should NEVER be used directly, but if programmers screw up, default to some "sane" value.
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateDark"))) color = "Dark";     // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateRed"))) color = "Red";       // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateYellow"))) color = "Yellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateGreen"))) color = "Green";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingRed"))) color = "Flashing Red";       // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingYellow"))) color = "Flashing Yellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingGreen"))) color = "Flashing Green";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateLunar"))) color = "Lunar";                    // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("SignalHeadStateFlashingLunar"))) color = "Flashing Lunar";   // NOI18N
+        return color;
     }
 
 }

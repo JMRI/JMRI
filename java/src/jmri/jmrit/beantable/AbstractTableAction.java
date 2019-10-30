@@ -66,7 +66,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         f = new BeanTableFrame<E>(m, helpTarget(), dataTable) {
 
             /**
-             * Include an "add" button
+             * Include an "Add..." button
              */
             @Override
             void extras() {

@@ -11,7 +11,7 @@ public class BundleTest {
 
     @Test
     public void testGoodKeyMessage() {
-        Assert.assertEquals("Open CTC Editor", Bundle.getMessage("CtcEditorAction"));  // NOI18N
+        Assert.assertEquals("CTC Editor", Bundle.getMessage("CtcEditorAction"));  // NOI18N
     }
 
     @Test(expected = java.util.MissingResourceException.class)
@@ -21,7 +21,7 @@ public class BundleTest {
 
     @Test
     public void testGoodKeyMessageArg() {
-        Assert.assertEquals("Open CTC Editor", Bundle.getMessage("CtcEditorAction", new Object[]{}));  // NOI18N
+        Assert.assertEquals("CTC Editor", Bundle.getMessage("CtcEditorAction", new Object[]{}));  // NOI18N
     }
 
     @Test(expected = java.util.MissingResourceException.class)
