@@ -81,7 +81,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         if (systemName.contains(":")) {
             int indexOfSplit = systemName.indexOf(":");
             systemName = systemName.substring(0, indexOfSplit);
-            indexOfSplit = getSystemPrefix().length() + 1; //+1 includes the typeletter which is a char
+            indexOfSplit = getSystemPrefix().length() + 1; // +1 includes the typeletter which is a char
             systemName = systemName.substring(indexOfSplit);
             int boardNo;
             try {
@@ -99,7 +99,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return true;
     }
 
-    //we want the system name to be in the format of board:input
+    // we want the system name to be in the format of board:input
     @Override
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {

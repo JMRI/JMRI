@@ -43,7 +43,7 @@ public class SerialLightManager extends AbstractLightManager {
      * system name does not correspond to a configured OakTree digital output bit
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    public Light createNewLight(@Nonnull String systemName, String userName) {
         Light lgt = null;
         // Validate the systemName
         if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {

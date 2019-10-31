@@ -201,7 +201,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Turnout has been invoked.
      *
      * @return never null
      */

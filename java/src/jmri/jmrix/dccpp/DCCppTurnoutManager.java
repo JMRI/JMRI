@@ -45,7 +45,9 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
 
     // DCCpp-specific methods
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t = null;
@@ -60,9 +62,10 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return t;
     }
 
-    /** {@inheritDoc}
-    * Listen for turnouts, creating them as needed.
-    */
+    /**
+     * {@inheritDoc}
+     * Listen for turnouts, creating them as needed.
+     */
     @Override
     public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {

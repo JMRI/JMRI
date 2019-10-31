@@ -115,16 +115,14 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Light has been invoked.
      *
      * @param systemName the system name to use for this light
      * @param userName   the user name to use for this light
-     * @return the new light
+     * @return the new light or null if unsuccessful
      */
     @CheckForNull
-    abstract protected Light createNewLight(
-            @Nonnull String systemName,
-            String userName);
+    abstract protected Light createNewLight(@Nonnull String systemName, String userName);
 
     /**
      * {@inheritDoc}

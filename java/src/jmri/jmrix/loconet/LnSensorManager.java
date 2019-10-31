@@ -64,6 +64,10 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     // LocoNet-specific methods
+
+    /**
+     * {@inheritDoc}
+     */
     @Nonnull
     @Override
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
