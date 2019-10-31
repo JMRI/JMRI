@@ -5,10 +5,15 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
+
+import org.openlcb.EventID;
+import org.openlcb.EventMessage;
 import org.openlcb.Message;
+import org.openlcb.OlcbInterface;
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
+import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +31,10 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     CanSystemConnectionMemo memo;
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
+    OlcbInterface olcbInterface;
+    boolean printNodeName = true;
+    boolean printEventFirst = true;
+    boolean printEventAll = true;
 
     @Override
     public void initContext(Object context) {
@@ -42,6 +51,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
         messageBuilder = new MessageBuilder(aliasMap);
+        olcbInterface = memo.get(OlcbInterface.class);
 
         setFixedWidthFont();
     }
@@ -125,7 +135,27 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     formatted = prefix + ": Unknown message " + raw;
                 }
             } else {
+                Message msg = list.get(0);
                 formatted = prefix + ": " + list.get(0).toString();
+                if (printNodeName && olcbInterface != null) {
+                    String name = olcbInterface.getNodeStore().findNode(list.get(0).getSourceNodeID()).getSimpleNodeIdent().getUserName();
+                    if (name != null && !name.equals("")) {
+                        formatted = formatted + "\n  Src: " + name;
+                    }
+                }
+                if (printEventFirst && olcbInterface != null && msg instanceof EventMessage) {
+                    EventID ev = ((EventMessage) msg).getEventID();
+                    EventTable.EventTableEntry[] descr =
+                            olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
+                    if (descr.length > 0) {
+                        formatted = formatted + "\n  Event: " + descr[0].getDescription();
+                    }
+                    if (printEventAll) {
+                        for (int i = 1; i < descr.length; i++) {
+                            formatted = formatted + "\n  Event: " + descr[i].getDescription();
+                        }
+                    }
+                }
             }
         } else {
             // control type
