@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
-public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Portal> {
+public class PortalTableModel extends jmri.jmrit.beantable.AbstractPortalTableDataModel<Portal> {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -58,14 +58,14 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
     }
 
     @Override
-    public Manager<Portal> getManager() {
+    public PortalManager getManager() {
         _manager = InstanceManager.getDefault(PortalManager.class);
         return _manager;
     }
 
     @Override
     public Portal getBySystemName(String name) {
-        return _manager.getBySystemName(name);
+        return _manager.getByUserName(name);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
         Portal portal = null;
         if (row < sysNameList.size()) {
             String name = sysNameList.get(row);
-            portal = _manager.getBySystemName(name);
+            portal = _manager.getByUserName(name);
         }
         if (portal == null) {
             if (col == DELETE_COL) {
@@ -193,7 +193,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                     msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                 }
                 if (msg==null) {
-                    Portal portal = _manager.createNewPortal(null, tempRow[NAME_COLUMN]);
+                    Portal portal = _manager.createNewPortal(tempRow[NAME_COLUMN]);
                     if (portal != null) {
                         portal.setToBlock(toBlock, false);
                         portal.setFromBlock(fromBlock, false);
@@ -212,7 +212,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
         }
 
         String name = sysNameList.get(row);
-        Portal portal = _manager.getBySystemName(name);
+        Portal portal = _manager.getByUserName(name);
         if (portal == null) {
             log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
                     + "portalListSize= " + _manager.getObjectCount());

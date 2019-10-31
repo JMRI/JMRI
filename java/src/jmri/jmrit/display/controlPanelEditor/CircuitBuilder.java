@@ -438,7 +438,7 @@ public class CircuitBuilder {
             for (int i = 0; i < _noPortalIcon.size(); i++) {
                 Portal portal = _noPortalIcon.get(i);
                 JMenuItem mi = new JMenuItem(portal.toString());
-                mi.setActionCommand(portal.getSystemName());
+                mi.setActionCommand(portal.getUserName());
                 mi.addActionListener(editPortalAction);
                 blockNeeds.add(mi);
             }

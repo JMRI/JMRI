@@ -221,8 +221,8 @@ public class OBlockManagerXml // extends XmlFile
     private Portal getPortal(String name) {
         Portal portal = _portalMgr.providePortal(name);
         if (portal == null) {
-            portal = _portalMgr.createNewPortal(null, name);
-            log.debug("create Portal: ({}, {})", portal.getSystemName(), name);
+            portal = _portalMgr.createNewPortal(name);
+            log.debug("create Portal: ({})", name);
         }
         return portal;
     }

@@ -1,6 +1,9 @@
 package jmri.jmrit.logix;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import jmri.Block;
 import jmri.InstanceManager;
@@ -10,6 +13,9 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.beans.Beans;
+import jmri.beans.PropertyChangeProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +34,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author  Pete Cressman Copyright (C) 2009
  */
-public class Portal extends jmri.implementation.AbstractNamedBean {
+public class Portal implements PropertyChangeProvider {
 
+    public static final int UNKNOWN = NamedBean.UNKNOWN;
+
+    private String userName;
+    private String comment;
     private final ArrayList<OPath> _fromPaths = new ArrayList<>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
@@ -43,8 +53,16 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     public static final int ENTER_TO_BLOCK = 0x02;
     public static final int ENTER_FROM_BLOCK = 0x04;
 
+    public Portal(String uName) {
+        this.userName = uName;
+    }
+
+    /**
+     * @deprecated since 4.17.5.
+     */
+    @Deprecated // 4.17.5
     public Portal(String sName, String uName) {
-        super(sName, uName);
+        this.userName = uName;
     }
 
     /**
@@ -116,6 +134,61 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             _fromPaths.remove(path);
         } else if (_toBlock != null && _toBlock.equals(block)) {
             _toPaths.remove(path);
+        }
+    }
+
+    /**
+     * @deprecated since 4.17.5.
+     */
+    @Deprecated // 4.17.5
+    public String getSystemName() {
+        throw new UnsupportedOperationException("Portal does not have a system name");
+    }
+
+    /**
+     * @deprecated since 4.17.5.
+     */
+    @Deprecated // 4.17.5
+    public void setSystemName(String uName) {
+        throw new UnsupportedOperationException("Portal does not have a system name");
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String uName) {
+        this.userName = uName;
+    }
+
+    public String getDisplayName() {
+        return userName;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String c) {
+        this.comment = c;
+    }
+
+    public String getDisplayName(NamedBean.DisplayOptions displayOption) {
+        switch (displayOption) {
+            case USERNAME:
+            case DISPLAYNAME:
+                return userName;
+                
+            case QUOTED_USERNAME:
+            case QUOTED_DISPLAYNAME:
+                return String.format("\"%s\"", userName);
+                
+            case SYSTEMNAME:
+            case QUOTED_SYSTEMNAME:
+            case USERNAME_SYSTEMNAME:
+            case QUOTED_USERNAME_SYSTEMNAME:
+            default:
+                throw new UnsupportedOperationException("DisplayOption "+displayOption.name()+" is not supported");
         }
     }
 
@@ -437,14 +510,12 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @Override
     public void setState(int s) throws JmriException {
         int old = _state;
         _state = s;
         firePropertyChange("Direction", old, _state);
     }
 
-    @Override
     public int getState() {
         return _state;
     }
@@ -458,7 +529,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @return permissible speed, null if no signal
      * @deprecated since 4.17.5 use getPermissibleSpeed(OBlock, boolean)
      */
-    @Deprecated
+    @Deprecated // 4.17.5
     public String getPermissibleEntranceSpeed(@Nonnull OBlock block) {
         return getPermissibleSpeed(block, true);
     }
@@ -511,7 +582,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @return permissible speed, null if no signal
      * @deprecated since 4.17.5 use getPermissibleSpeed(OBlock, boolean)
      */
-    @Deprecated
+    @Deprecated // 4.17.5
     public String getPermissibleExitSpeed(@Nonnull OBlock block) {
         return getPermissibleSpeed(block, false);
     }
@@ -656,8 +727,20 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return (!_toBlock.equals(_fromBlock));
     }
 
-    @Override
+    @OverridingMethodsMustInvokeSuper
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
+    }
+
+    @OverridingMethodsMustInvokeSuper
     public void dispose() {
+        PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
+        for (PropertyChangeListener l : listeners) {
+            pcs.removePropertyChangeListener(l);
+            register.remove(l);
+            listenerRefs.remove(l);
+        }
+        
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
         }
@@ -665,7 +748,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             _toBlock.removePortal(this);
         }
         jmri.InstanceManager.getDefault(PortalManager.class).deregister(this);
-        super.dispose();
     }
 
     public String getDescription() {
@@ -673,7 +755,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 getUserName(), getFromBlockName(), getToBlockName());
     }
 
-    @Override
     @Nonnull
     // note that this doesn't properly implement the 
     // contract in {@link NamedBean.toString()}, 
@@ -690,10 +771,137 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return sb.toString();
     }
 
-    @Override
     @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNamePortal");
+    }
+
+    // implementing classes will typically have a function/listener to get
+    // updates from the layout, which will then call
+    //  public void firePropertyChange(String propertyName,
+    //             Object oldValue,
+    //      Object newValue)
+    // _once_ if anything has changed state
+    // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
+    // reflect to it
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    protected final HashMap<PropertyChangeListener, String> register = new HashMap<>();
+    protected final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
+/*
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(@Nonnull PropertyChangeListener l,
+                                                       String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(l);
+        if (beanRef != null) {
+            register.put(l, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(l, listenerRef);
+        }
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(@Nonnull String propertyName,
+                                                       @Nonnull PropertyChangeListener l, String beanRef, String listenerRef) {
+        pcs.addPropertyChangeListener(propertyName, l);
+        if (beanRef != null) {
+            register.put(l, beanRef);
+        }
+        if (listenerRef != null) {
+            listenerRefs.put(l, listenerRef);
+        }
+    }
+*/
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
+        }
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
+        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+            register.remove(listener);
+            listenerRefs.remove(listener);
+        }
+    }
+/*
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name) {
+        ArrayList<PropertyChangeListener> list = new ArrayList<>();
+        register.entrySet().forEach((entry) -> {
+            PropertyChangeListener l = entry.getKey();
+            if (entry.getValue().equals(name)) {
+                list.add(l);
+            }
+        });
+        return list.toArray(new PropertyChangeListener[list.size()]);
+    }
+
+    /**
+     * Get a meaningful list of places where the bean is in use.
+     *
+     * @return ArrayList of the listeners
+     */
+    public synchronized ArrayList<String> getListenerRefs() {
+        return new ArrayList<>(listenerRefs.values());
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
+        if (listenerRefs.containsKey(l)) {
+            listenerRefs.put(l, newName);
+        }
+    }
+
+    public synchronized String getListenerRef(PropertyChangeListener l) {
+        return listenerRefs.get(l);
+    }
+
+    /**
+     * Get the number of current listeners.
+     *
+     * @return -1 if the information is not available for some reason.
+     *./
+    @Override
+    public synchronized int getNumPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners().length;
+    }
+*/
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    @Nonnull
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Portal.class);

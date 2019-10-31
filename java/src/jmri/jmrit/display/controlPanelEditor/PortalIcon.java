@@ -37,7 +37,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     public static final String TO_ARROW = "toArrow";
     public static final String FROM_ARROW = "fromArrow";
 
-    private NamedBeanHandle<Portal> _portalHdl;
+    private Portal _portal;
     private String _status;
     private boolean _regular = true; // true when TO_ARROW shows entry into ToBlock
     private boolean _hide = false; // true when arrow should NOT show entry into ToBlock
@@ -115,10 +115,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     public Portal getPortal() {
-        if (_portalHdl == null) {
-            return null;
-        }
-        return _portalHdl.getBean();
+        return _portal;
     }
 
     @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="Portals always have userNames")
@@ -126,7 +123,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         if (portal == null) {
             return;
         }
-        if (_portalHdl != null) {
+        if (_portal != null) {
             Portal port = getPortal();
             if (port.equals(portal)) {
                 return;
@@ -135,8 +132,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
             }
         }
         // Portals always have userNames
-        _portalHdl = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(portal.getUserName(), portal);
+        _portal = portal;
         portal.addPropertyChangeListener(this);
         setName(portal.getName());
         setToolTip(new ToolTip(portal.getDescription(), 0, 0));
@@ -162,7 +158,9 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     @Override
     public NamedBean getNamedBean() {
-        return getPortal();
+        // This needs to be fixed.
+        throw new UnsupportedOperationException("this operation is currently not supported");
+//        return getPortal();
     }
 
     @Override
