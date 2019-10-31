@@ -1,0 +1,27 @@
+@startuml
+
+class OPath
+note left: An OPath is a route that traverses a Block\nfrom one boundary to another.
+
+class Portal
+note left: A Portal is a boundary between two Blocks
+
+class OBlock
+note left: OBlock extends jmri.Block to be used in \nLogix Conditionals and Warrants. It is the smallest \n piece of track that can have occupancy detection. \nA better name would be Detection Circuit. \nHowever, an OBlock can be defined without an occupancy sensor \nand used to calculate routes.
+
+class Warrant
+
+class WarrantRoute
+
+Block <|-- OBlock  : is
+OBlock "1" *-- "many" Portal : references
+
+Portal "1" *-- "many" OPath : references
+
+Path <|-- OPath : is
+
+
+
+@enduml
+
+
