@@ -177,11 +177,15 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                 }
             } else {
                 Message msg = list.get(0);
-                formatted = prefix + ": " + list.get(0).toString();
+                StringBuilder sb = new StringBuilder();
+                sb.append(prefix);
+                sb.append(": ");
+                sb.append(list.get(0).toString());
                 if (nodeNameCheckBox.isSelected() && olcbInterface != null) {
                     String name = olcbInterface.getNodeStore().findNode(list.get(0).getSourceNodeID()).getSimpleNodeIdent().getUserName();
                     if (name != null && !name.equals("")) {
-                        formatted = formatted + "\n  Src: " + name;
+                        sb.append("\n  Src: ");
+                        sb.append(name);
                     }
                 }
                 if ((eventCheckBox.isSelected() || eventAllCheckBox.isSelected()) && olcbInterface != null && msg instanceof EventMessage) {
@@ -189,14 +193,17 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     EventTable.EventTableEntry[] descr =
                             olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
                     if (descr.length > 0) {
-                        formatted = formatted + "\n  Event: " + descr[0].getDescription();
+                        sb.append("\n  Event: ");
+                        sb.append(descr[0].getDescription());
                     }
                     if (eventAllCheckBox.isSelected()) {
                         for (int i = 1; i < descr.length; i++) {
-                            formatted = formatted + "\n  Event: " + descr[i].getDescription();
+                            sb.append("\n  Event: ");
+                            sb.append(descr[i].getDescription());
                         }
                     }
                 }
+                formatted = sb.toString();
             }
         } else {
             // control type
