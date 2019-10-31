@@ -77,6 +77,12 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
+
+        UserPreferencesManager pm = InstanceManager.getDefault(UserPreferencesManager.class);
+        pm.setSimplePreferenceState(nodeNameCheck, nodeNameCheckBox.isSelected());
+        pm.setSimplePreferenceState(eventCheck, eventCheckBox.isSelected());
+        pm.setSimplePreferenceState(eventAllCheck, eventAllCheckBox.isSelected());
+
         super.dispose();
     }
 
