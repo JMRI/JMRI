@@ -3,6 +3,8 @@ package jmri.jmrix.grapevine;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -47,12 +49,14 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Create a new sensor if all checks are passed.
+     * {@inheritDoc}
+     * <p>
      * System name is normalized to ensure uniqueness.
      *
      * @return null if sensor already exists by that name or an alternate
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         String prefix = getSystemPrefix();
         log.debug("createNewSensor {} {}", systemName, userName);

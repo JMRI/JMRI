@@ -85,11 +85,10 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
 
     @Override
     public CatalogTree newCatalogTree(@Nonnull String systemName, @Nonnull String userName) {
-        log.debug(" newCatalogTree(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + (userName == null ? "null" : userName));  // NOI18N
+        log.debug(" newCatalogTree(\"{}\", \"{}\")", systemName, userName);
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + userName); // NOI18N
         // return existing if there is one
-        CatalogTree t = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
+        CatalogTree t = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, getByUserName(userName));
         if (t != null) {
             return t;
         }

@@ -1,6 +1,8 @@
 package jmri.jmrix.powerline;
 
 import java.util.Locale;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,8 @@ import javax.annotation.Nonnull;
  * the unit number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
- * multiple connection
+ * @author Ken Cameron, (C) 2009, sensors from poll replies. Converted to
+ * multiple connection support
  * @author kcameron Copyright (C) 2011
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
@@ -31,8 +33,8 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
+    @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
     }
@@ -44,10 +46,14 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     }
 
     /**
-     * Create a new sensor if all checks are passed. System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it

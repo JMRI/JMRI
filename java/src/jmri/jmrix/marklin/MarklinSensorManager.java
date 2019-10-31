@@ -3,6 +3,8 @@ package jmri.jmrix.marklin;
 import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -43,8 +45,11 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * {@inheritDoc}
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {

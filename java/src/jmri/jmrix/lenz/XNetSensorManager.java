@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz;
 
 import java.util.Locale;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -48,13 +50,15 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     // XpressNet specific methods
 
     /**
-     * Create a new Sensor based on the system name.
+     * {@inheritDoc}
+     * <p>
      * Assumes calling method has checked that a Sensor with this
      * system name does not already exist.
      *
      * @return null if the system name is not in a valid format
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());

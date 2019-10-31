@@ -3,6 +3,8 @@ package jmri.jmrix.tams;
 import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -57,7 +59,15 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return (TamsSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         TamsTrafficController tc = getMemo().getTrafficController();
         TamsSensor s = new TamsSensor(systemName, userName);

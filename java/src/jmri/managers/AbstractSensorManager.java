@@ -132,7 +132,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /**
      * {@inheritDoc}
      * Note that this null implementation only needs be implemented in
-     * system-specific Sensor Managers where readout of sensor status from the
+     * system-specific SensorManagers where readout of sensor status from the
      * layout is possible.
      */
     @Override

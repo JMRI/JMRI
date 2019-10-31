@@ -9,6 +9,8 @@ import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import java.util.Locale;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -58,7 +60,13 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // XBee specific methods
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);

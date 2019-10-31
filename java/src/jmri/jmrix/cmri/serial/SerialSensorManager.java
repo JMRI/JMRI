@@ -1,6 +1,8 @@
 package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
@@ -55,8 +57,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * {@inheritDoc}
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it

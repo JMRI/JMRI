@@ -1,6 +1,8 @@
 package jmri.jmrix.acela;
 
 import java.util.Locale;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,17 +36,21 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
+    @Nonnull
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
-     * Create a new sensor if all checks are passed. System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // TODO: validate the system name
