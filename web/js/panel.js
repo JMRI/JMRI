@@ -2469,12 +2469,12 @@ function $drawSlip($widget) {
 
 function $drawLayoutShape($widget) {
 
-    $logProperties($widget, true);   //TODO: remove or disable for production
+    //$logProperties($widget, true);   //TODO: remove or disable for production
 
     var $pts = $widget.points;   // get the points
     var len = $pts.length;
     if (len > 0) {
-        jmri.log("Got " + len + " LayoutShape points!");   //TODO: remove or disable for production
+        //jmri.log("Got " + len + " LayoutShape points!");   //TODO: remove or disable for production
 
         $gCtx.save();   // save current line width and color
 
@@ -2491,14 +2491,14 @@ function $drawLayoutShape($widget) {
         $gCtx.beginPath();
 
         var shapeType = $widget.type;
-        jmri.log("shapeType: " + shapeType);   //TODO: remove or disable for production
+        //jmri.log("shapeType: " + shapeType);   //TODO: remove or disable for production
 
         var cnt = $pts.length;
         $pts.each(function(idx, $lsp) {  //loop thru points
             // this point
             var p = $getLayoutShapePoint($lsp);
 
-            $logProperties($lsp, true);   //TODO: remove or disable for production
+            //$logProperties($lsp, true);   //TODO: remove or disable for production
 
             // left point
             var idxL = $wrapValue(idx - 1, 0, cnt);
@@ -2513,7 +2513,7 @@ function $drawLayoutShape($widget) {
             var midR = $point_midpoint(p, pR);
 
             var lspt = $lsp.attributes.type.value;  // Straight or Curve
-            jmri.log("lspt: " + lspt);   //TODO: remove or disable for production
+            //jmri.log("lspt: " + lspt);   //TODO: remove or disable for production
 
             // if this is an open shape...
             if (shapeType == "eOpen") {
