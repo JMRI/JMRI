@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.4ish+jake+20190909T0548Z+R3eac499165 on Sun Sep 08 22:49:13 PDT 2019-->
-  <decoderIndex version="974">
+  <!--Written by JMRI version 4.17.5ish+jake+20191101T0325Z+Rf2913b7cd4 on Thu Oct 31 20:26:31 PDT 2019-->
+  <decoderIndex version="976">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -16299,6 +16299,7 @@
         <model model="ECO-RTR SD40" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="862" comment="Model E0102.001" />
         <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="975" comment="Model E0102.011" />
         <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E0102.005" />
+        <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="801" comment="Model E0102.???B" />
         <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B" />
         <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???" />
         <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="781" comment="Model E0103.001B" />
@@ -33488,6 +33489,15 @@
           <output name="Shunting" label="mode" />
           <output name="Start/brake" label="inertia" />
           <size length="9.5" width="7.8" height="2.4" units="mm" />
+        </model>
+        <model model="74120" numOuts="4" numFns="12" maxMotorCurrent="1.2A" formFactor="HO" connector="NEM652" productID="74120" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="solder" maxcurrent="400 mA" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="20" width="11" height="3.8" units="mm" />
         </model>
         <model model="PIKO41RH2400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Diesel Loco Rh2400 Next18 plug and RailCom(R) (Plus)">
           <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
