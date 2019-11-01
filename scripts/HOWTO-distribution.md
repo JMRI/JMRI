@@ -83,7 +83,9 @@ then manually update the end of that line above in this document to be this vers
 ================================================================================
 ## Update Content
 
-- Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
+- Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date. 
+
+ - Make sure `git status` shows "up to date", not "ahead".
 
 - If it's a new year, update copyright dates (done for 2018):
     JMRI:
@@ -156,7 +158,7 @@ We roll some general code maintenance items into the release process.
 - Check for Nullable annotations, which should be @CheckForNull instead (OK to have two in FindBugsCheck, others should be removed)
 ```
         grep -r javax.annotation.Nullable java/src java/test
-        grep -r javax.@Nullable java/src java/test
+        grep -r @Nullable java/src java/test
 ```
 
 - Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires code has been built; should only mention jmri/util/TimerUtil.class):
@@ -198,6 +200,7 @@ git push github
 
 ```    
         cd (local web copy)/releasenotes
+        git checkout master
         git pull 
         cp jmri4.17.5.shtml jmri4.17.6.shtml
         (edit the new release note accordingly)
@@ -207,7 +210,7 @@ git push github
         git add jmri4.17.6.shtml
         git commit -m"start new 4.17.6 release note" jmri4.17.6.shtml
         git push github
-        cd (local JMRI copy)
+        cd ../../(local JMRI copy)
 ```
 
 - Check if any section headings were added to the release-note fragment
@@ -222,7 +225,12 @@ git push github
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
      bbedit help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.17.5.shtml
      
+ - add any new warnings to the old warnings section of the next (4.17.6) release note:
+    bbedit ../website/releasenotes/jmri4.17.5.shtml ../website/releasenotes/jmri4.17.6.shtml
+       
 - Clean out the unneeded sections from the release note
+
+
 
 - Create the new draft note section
 
