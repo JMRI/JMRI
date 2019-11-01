@@ -73,6 +73,13 @@
         and can be set as Slave, merely following the other Mast,
         or as a two way coupling so clicking he Repeater on your
         Panel also sets the Master.</p>
+        
+        <p>Signal mast repeaters can provide an easy way to overcome a
+            limitation of JMRI Signal Masts when using JMRI's automatic discovery 
+            for Signal Mast Logic in those cases where there are multiple physical
+            routes between a signal mast and its "destination" signal mast.  See 
+            <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
+            Signal Mast Repeater</a> documentation for more details.
 
         <h2>Saving and Reloading Configuration</h2>
 

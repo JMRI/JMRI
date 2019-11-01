@@ -36,6 +36,18 @@
       the updates will take place, either Master to Slave, Slave To
       Master or Bothway. You can also disable/enable the Repeater
       along with deleting it from this screen.</p>
+
+      <h2>Using Signal Mast Repeaters for signaling where routes exist</h2>
+      <p>In those cases where there are multiple different routes between a "source" 
+      signal mast and a "destination" signal mast, with no intervening 
+      signal masts, the regular JMRI Signal Mast Logic "discovery" project 
+      will only identify _one_ of the valid routes.  JMRI's Signal Mast Logic
+      ignores any other routes.  This can be seen in the JMRI Layout Editor 
+      panel example below.</p>
+      
+      <img src="" alt="an example showing two different routes from one signal mast to its destination signal mast">
+      
+    
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
