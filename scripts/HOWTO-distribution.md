@@ -69,21 +69,23 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.17.4 4.17.5 4.17.5
+  ./scripts/update-HOWTO.sh 4.17.5 4.17.6 4.17.6
 ```
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after__ you edit it here are *.4 *.5 *.6
 
-- To check the script ran OK, the following should be the release you're doing now: 4.17.4
+- To check the script ran OK, the following should be the release you're doing now: 4.17.5
 
 ================================================================================
 ## Notification
 
-- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-4.17.4". (This might already exist, if it was properly created at the end of the last build cycle)
+- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-4.17.5". (This might already exist, if it was properly created at the end of the last build cycle)
 
 ================================================================================
 ## Update Content
 
-- Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
+- Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date. 
+
+ - Make sure `git status` shows "up to date", not "ahead".
 
 - If it's a new year, update copyright dates (done for 2018):
     JMRI:
@@ -156,7 +158,7 @@ We roll some general code maintenance items into the release process.
 - Check for Nullable annotations, which should be @CheckForNull instead (OK to have two in FindBugsCheck, others should be removed)
 ```
         grep -r javax.annotation.Nullable java/src java/test
-        grep -r javax.@Nullable java/src java/test
+        grep -r @Nullable java/src java/test
 ```
 
 - Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires code has been built; should only mention jmri/util/TimerUtil.class):
@@ -182,7 +184,7 @@ We roll some general code maintenance items into the release process.
 - Commit the current copy of these notes, the push directly back to master on GitHub.
 
 ```
-git commit -m"for 4.17.4" scripts/HOWTO-distribution.md
+git commit -m"for 4.17.5" scripts/HOWTO-distribution.md
 git push github
 ```
 
@@ -198,16 +200,17 @@ git push github
 
 ```    
         cd (local web copy)/releasenotes
+        git checkout master
         git pull 
-        cp jmri4.17.4.shtml jmri4.17.5.shtml
+        cp jmri4.17.5.shtml jmri4.17.6.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old
             remove old-version change notes
-        git add jmri4.17.5.shtml
-        git commit -m"start new 4.17.5 release note" jmri4.17.5.shtml
+        git add jmri4.17.6.shtml
+        git commit -m"start new 4.17.6 release note" jmri4.17.6.shtml
         git push github
-        cd (local JMRI copy)
+        cd ../../(local JMRI copy)
 ```
 
 - Check if any section headings were added to the release-note fragment
@@ -217,23 +220,28 @@ git push github
     If there were, update the master
 
 - Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.17.4.shtml
+     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.17.5.shtml
      
 - Merge the new warnings (if any) from help/en/releasenotes/current-warnings.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     bbedit help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.17.4.shtml
+     bbedit help/en/releasenotes/current-draft-warnings.shtml ../website/releasenotes/jmri4.17.5.shtml
      
+ - add any new warnings to the old warnings section of the next (4.17.6) release note:
+    bbedit ../website/releasenotes/jmri4.17.5.shtml ../website/releasenotes/jmri4.17.6.shtml
+       
 - Clean out the unneeded sections from the release note
+
+
 
 - Create the new draft note section
 
     cp help/en/releasenotes/jmri4.17-master.shtml help/en/releasenotes/current-draft-note.shtml
     cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-    git commit -m"start for 4.17.5 release note" help/en/releasenotes/current-draft-*.shtml
+    git commit -m"start for 4.17.6 release note" help/en/releasenotes/current-draft-*.shtml
 
 - Commit release note, push and pull back
 
     cd ../website/releasenotes
-    git commit -m"updated 4.17.5 release note" jmri4.17.4.shtml jmri4.17.5.shtml
+    git commit -m"updated 4.17.6 release note" jmri4.17.5.shtml jmri4.17.6.shtml
     git push github
     git pull
     cd ../../JMRI
@@ -266,11 +274,11 @@ where the date at the end should be the date (and optionally time) of the last r
 
 - (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the next release:
 ```
-    <version>4.17.5-SNAPSHOT</version>
+    <version>4.17.6-SNAPSHOT</version>
 ```
 Commit, and push back directly to master (this should be the only change, and has to be before the next step)
 ```
-git commit -m"for next release 4.17.5" pom.xml
+git commit -m"for next release 4.17.6" pom.xml
 git push github
 ```
 
@@ -278,23 +286,23 @@ git push github
 - Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
 ```
-The release-4.17.4 branch has been created. 
+The release-4.17.5 branch has been created. 
 
-Maintainers, please set the 4.17.5 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.17.6 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.4/)
+Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.5/)
 ```
 
 FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
 
 ```
-The release-4.17.4 branch has been created. 
+The release-4.17.5 branch has been created. 
 
-Maintainers, please set the 4.17.5 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the 4.17.6 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
-Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.5/)
+Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.6/)
 
-If you're developing any additional (post-4.17.5) changes that you want in the JMRI 4.16 production release, please start from this branch, i.e. do `git checkout -b release-4.17.4` to start your work.
+If you're developing any additional (post-4.17.6) changes that you want in the JMRI 4.16 production release, please start from this branch, i.e. do `git checkout -b release-4.17.5` to start your work.
 ```
 
 - Pull back to make sure your repository is fully up to date
@@ -315,7 +323,7 @@ If you're developing any additional (post-4.17.5) changes that you want in the J
         Project Name
         Description
         Source Code Management:
-           Branch Specified:  4.17.4
+           Branch Specified:  4.17.5
     
 - Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
 
@@ -328,7 +336,7 @@ If you're developing any additional (post-4.17.5) changes that you want in the J
     unsetenv JMRI_OPTIONS
     ant alltest
     
-and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.17.4" Github issue so that historical resource usage info is available.
+and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.17.5" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
@@ -338,11 +346,11 @@ and attach jvisualvm to the AllTest class when it appears. When that's done, put
 - Announce the file set via email to jmri@jmri-developers.groups.io with a subject line 
 
 ```
-"First 4.17.4 files available":
+"First 4.17.5 files available":
 
-First JMRI 4.17.4 files are available in the usual way at:
+First JMRI 4.17.5 files are available in the usual way at:
 
-http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.4
+http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.5
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 ```
@@ -354,7 +362,7 @@ Feedback appreciated. I would like to release this later today or tomorrow morni
 
 If anybody wants to add a change from here on in, they should
 
-- Ideally, start the work on either the release-4.17.4 branch (if working after that was started) or on a branch-from-master that's _before_ the release-4.17.4 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
+- Ideally, start the work on either the release-4.17.5 branch (if working after that was started) or on a branch-from-master that's _before_ the release-4.17.5 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
 
 - Commit their changes to that branch, and push as needed to get it to their GitHub fork.
 
@@ -362,7 +370,7 @@ If anybody wants to add a change from here on in, they should
 
    - One to master, as usual
    
-   - One to the release branch e.g. "release-4.17.4".  The comment on this PR should explain why this should be included instead of waiting for the next release.
+   - One to the release branch e.g. "release-4.17.5".  The comment on this PR should explain why this should be included instead of waiting for the next release.
    
    Merging the PR to the master makes those changes available on further developments forever; the one on the release, if accepted, includes the change and kicks off new runs of the various CI and build jobs.
 
@@ -370,7 +378,7 @@ If anybody wants to add a change from here on in, they should
 
 If somebody has merged their change into master (or it's branched from master later than the release tag), you have two choices:
 
-- Merge master into the release-4.17.4 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
+- Merge master into the release-4.17.5 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
 
 - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
@@ -380,19 +388,19 @@ If somebody has merged their change into master (or it's branched from master la
 The following will take several minutes, so be patient:
 
 ```
-git checkout release-4.17.4
+git checkout release-4.17.5
 ant clean compile
 cd target
-rm -f properties.4.17.4.zip
+rm -f properties.4.17.5.zip
 
 foreach x ( `find classes -name \*.properties` )
-printf '%s\n' 0a '# from tag v4.17.4' . x | ex $x
+printf '%s\n' 0a '# from tag v4.17.5' . x | ex $x
 end
 
-find classes -name \*.properties | zip -@ properties.4.17.4.zip
+find classes -name \*.properties | zip -@ properties.4.17.5.zip
 cd ..
 mkdir release
-mv target/properties.4.17.4.zip release/
+mv target/properties.4.17.5.zip release/
 ls -lt release/
 git checkout master
 
@@ -403,7 +411,7 @@ git checkout master
 
 Run a script to download the created files, create checksums and create text for release notes, etc
 ```
-./scripts/releasesummary 4.17.4
+./scripts/releasesummary 4.17.5
 ```
 
 This will print a bunch of text in several sections. Save that for later and edit it into the website/releaselist, release note files and GitHub info below.
@@ -424,22 +432,22 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 - Fill out form:
 
-   - "tag version field" gets v4.17.4 (e.g. leading lower-case "v")
-   - @ branch: select the release-4.17.4 release branch
-   - "Release title" field gets "Prod/Test Release 4.17.4"
+   - "tag version field" gets v4.17.5 (e.g. leading lower-case "v")
+   - @ branch: select the release-4.17.5 release branch
+   - "Release title" field gets "Prod/Test Release 4.17.5"
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
 
-[Release notes](http://jmri.org/releasenotes/jmri4.17.4.shtml)
+[Release notes](http://jmri.org/releasenotes/jmri4.17.5.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.4+Rbf0d1af.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+Rbf0d1af.dmg) | 39ed7fa9e2b4753c415f5e1399c750eb048fc7bc52284f054d9f7bdeaf41c924
-[JMRI.4.17.4+Rbf0d1af.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+Rbf0d1af.exe) | b053fcd1b8019afc122b47d39031ce38c3a6805b54c16cbb43df9a2cf1e2e04a
-[JMRI.4.17.4+Rbf0d1af.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.4/JMRI.4.17.4+Rbf0d1af.tgz) | c4a7f34191987f0c5ad8294b3c0b0cc0f407fd40960366af5b3fd9d6faf2810f
+[JMRI.4.17.5+Rbf0d1af.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rbf0d1af.dmg) | 39ed7fa9e2b4753c415f5e1399c750eb048fc7bc52284f054d9f7bdeaf41c924
+[JMRI.4.17.5+Rbf0d1af.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rbf0d1af.exe) | b053fcd1b8019afc122b47d39031ce38c3a6805b54c16cbb43df9a2cf1e2e04a
+[JMRI.4.17.5+Rbf0d1af.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rbf0d1af.tgz) | c4a7f34191987f0c5ad8294b3c0b0cc0f407fd40960366af5b3fd9d6faf2810f
 
 
 ```
@@ -466,7 +474,7 @@ git fetch
 git checkout master
 git pull
 git checkout -b temp-master
-git merge origin/release-4.17.4
+git merge origin/release-4.17.5
 ```
 
 Note that you're testing the merge of the release branch back onto master.  This should report "Already up-to-date.", i.e. no changes, with the possible exception of some auto-generated files:
@@ -488,12 +496,12 @@ If there are any changes in other files, do both of:
 ====================================================================================
 ## Update GitHub Status items
 
-- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.17.5". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.17.6". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
 This is the next release in the 4.17 cycle. It's intended to be created around (July 12) from the `HEAD` of the `master` branch.
 ```
 
-- Confirm that the tag for the current release (v4.17.4 for release 4.17.4) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.17.4) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
+- Confirm that the tag for the current release (v4.17.5 for release 4.17.5) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.17.5) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from pending items
 
@@ -527,7 +535,7 @@ git push github
 
 - Commit site, push to github
 ```
-    git commit -m"4.17.4 web site" .
+    git commit -m"4.17.5 web site" .
     git push github
     git pull
 ```
@@ -541,11 +549,11 @@ git push github
 
 - Mail announcement to jmriusers@groups.io
 
-    Subject is "Test version 4.17.4 of JMRI/DecoderPro is available for download" or "JMRI 4.16 is available for download"
+    Subject is "Test version 4.17.5 of JMRI/DecoderPro is available for download" or "JMRI 4.16 is available for download"
 
     Content:
     
-Test version 4.17.4 of JMRI/DecoderPro is available for download.
+Test version 4.17.5 of JMRI/DecoderPro is available for download.
 
 This is the next in a series of test releases that will culminate in a production release, hopefully in early December 2019.
 
@@ -557,18 +565,18 @@ If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you
 
 If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <http://jmri.org/releasenotes/jmri4.12.shtml#migration>
 
-For more information on the issues, new features and bug fixes in 4.17.4 please see the release note:   
-<http://jmri.org/releasenotes/jmri4.17.4.shtml>
+For more information on the issues, new features and bug fixes in 4.17.5 please see the release note:   
+<http://jmri.org/releasenotes/jmri4.17.5.shtml>
 
 Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
 <http://jmri.org/Copyright.html>
 
 The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
-<http://jmri.org/releasenotes/jmri4.17.4.shtml>
+<http://jmri.org/releasenotes/jmri4.17.5.shtml>
 
-- Close the [4.17.4 release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
+- Close the [4.17.5 release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
 ```
-JMRI 4.17.4 has been released. Files are available in the GitHub release section.
+JMRI 4.17.5 has been released. Files are available in the GitHub release section.
 
 ```
 
@@ -626,7 +634,7 @@ If you're building locally:
 - Get the release in your local work directory
 
 ```
-    git checkout release-4.17.4
+    git checkout release-4.17.5
 ```
 
 - edit release.properties to say release.official=true (last line)
@@ -661,7 +669,7 @@ Ant will do the various builds, construct the distribution directories, and fina
 To do a direct download:
 
 ```
-curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.4/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.5/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
 ```
 and expansion; 
 
@@ -753,9 +761,9 @@ Possibilities for automating GitHub release creation:
 Alternatively, if you have shell access to the Jenkins server, you perhaps can upload directly from there, once the initial draft release has been created (this hasn't been tested):
 
 ```
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.17.4 -n "JMRI.4.17.5+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.17.5/workspace/dist/release/JMRI.4.17.4+Rd144052.dmg 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.17.4 -n "JMRI.4.17.4+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.17.4/workspace/dist/release/JMRI.4.17.4+Rd144052.exe 
-github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.17.4 -n "JMRI.4.17.4+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.17.5/workspace/dist/release/JMRI.4.17.4+Rd144052.tgz 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.17.5 -n "JMRI.4.17.6+Rd144052.dmg" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.17.6/workspace/dist/release/JMRI.4.17.5+Rd144052.dmg 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.17.5 -n "JMRI.4.17.5+Rd144052.exe" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.17.5/workspace/dist/release/JMRI.4.17.5+Rd144052.exe 
+github-release upload -s {github_secret} -u JMRI -r JMRI -t v4.17.5 -n "JMRI.4.17.5+Rd144052.tgz" -f /var/lib/jenkins/jobs/TestReleases/jobs/4.17.6/workspace/dist/release/JMRI.4.17.5+Rd144052.tgz 
 ```
 
 (It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )

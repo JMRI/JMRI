@@ -1,20 +1,4 @@
 
     <!-- contains new warnings for the release under development -->
 
-    <li>JMRI's scripting support now defaults to the UTF-8 character encoding for all
-        script files on all platforms. This may require that some scripts be re-saved
-        using UTF-8.</li>
-    <li><strong>Windows Only</strong> The JMRI installer removes the existing
-        <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
-        existing lib folder contents are retained in the backup folder.
-        <strong>This means that any files you have added to the <em>lib</em>
-            folder will be removed.</strong></li>
-    <li><strong>macOS Only</strong> This version includes changes to how
-        the final .dmg file is built, signed and notarized.  This was done to increase
-        compatibility with macOS 10.15 Catalina.
-        Please drag the JMRI icon to the Applications folder to install this release.
-        For more information on 
-        <a href="https://jmri.org/install/MacOSX.shtml#catalina">Catalina compatibility</a>,
-        see the 
-        <a href="https://jmri.org/install/MacOSX.shtml#catalina">JMRI web site</a>.
-    <li></li>
+    <li>None yet</li>
