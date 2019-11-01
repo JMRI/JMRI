@@ -14,6 +14,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutShape;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
@@ -157,6 +158,20 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         }
         log.debug("Number of LayoutTrack elements: {}", layoutTracks.size());
 
+        // include LayoutShapes
+        List<LayoutShape> layoutShapes = editor.getLayoutShapes();
+        for (Object sub : layoutShapes) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                if (e != null) {
+                    panel.addContent(e);
+                }
+            } catch (Exception e) {
+                log.error("Error storing panel LayoutShape element: " + e);
+            }
+        }
+        log.debug("Number of LayoutShape elements: {}", layoutShapes.size());
+
         //write out formatted document
         Document doc = new Document(panel);
         XMLOutputter fmt = new XMLOutputter();
@@ -179,18 +194,24 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
         String sn = "";
         Attribute a = e.getAttribute(attrName);
-        if (a == null) return;
+        if (a == null) {
+            return;
+        }
         String un = a.getValue();
 
-        switch(beanType) {
-            case "turnout" :
+        switch (beanType) {
+            case "turnout":
                 Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(un);
-                if (t == null) return;
+                if (t == null) {
+                    return;
+                }
                 sn = t.getSystemName();
                 break;
-            case "layoutBlock" :
+            case "layoutBlock":
                 LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(un);
-                if (lb == null) return;
+                if (lb == null) {
+                    return;
+                }
                 sn = lb.getSystemName();
                 break;
             default:
@@ -205,8 +226,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     /**
      * replace child element value of attrName with systemName for type attrType
      *
-     * @param e        element to be updated
-     * @param beanType bean type to use for userName lookup
+     * @param e         element to be updated
+     * @param beanType  bean type to use for userName lookup
      * @param childName child element name whose text will be replaced
      *
      */
@@ -214,13 +235,17 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
         String sn = "";
         Element c = e.getChild(childName);
-        if (c == null) return;
+        if (c == null) {
+            return;
+        }
         String un = c.getText();
 
-        switch(beanType) {
-            case "turnout" :
+        switch (beanType) {
+            case "turnout":
                 Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(un);
-                if (t == null) return;
+                if (t == null) {
+                    return;
+                }
                 sn = t.getSystemName();
                 break;
             default:
@@ -232,9 +257,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         }
     }
 
-
     /**
-     * update the element replacing username with systemname for known attributes and children
+     * update the element replacing username with systemname for known
+     * attributes and children
      *
      * @param e element to be updated
      */
