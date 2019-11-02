@@ -1673,7 +1673,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
                                 break;
                             case "layoutShape" :
-                                jmri.log("#### Layout Shape ####");
+                                //jmri.log("#### Layout Shape ####");
                                 //store this widget in persistent array, with ident as key
                                 $widget['id'] = $widget.ident;
                                 $gWidgets[$widget.id] = $widget;
