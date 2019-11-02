@@ -3564,7 +3564,7 @@ function updateOccupancySub(occupancyName, state) {
 }
 
 function setBlockColor(blockName, newColor) {
-    //jmri.log("setting color for block " + blockName + " to " + newColor);
+    //jmri.log("setBlockColor(" + blockName + ", " + newColor + ");");
     var $blk = $gBlks[blockName];
     if (typeof $blk != "undefined") {
         $gBlks[blockName].blockcolor = newColor;
@@ -3668,7 +3668,7 @@ $(document).ready(function() {
                 updateWidgets(name, value, data);
             },
             layoutBlock: function(name, value, data) {
-                setBlockColor(data.userName, data.blockColor);
+                setBlockColor(name, data.blockColor);
             },
             memory: function(name, value, data) {
                 updateWidgets(name, value, data);
