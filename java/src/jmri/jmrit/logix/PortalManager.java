@@ -3,6 +3,17 @@ package jmri.jmrit.logix;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Map;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,105 +42,82 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2014
  */
-public class PortalManager extends AbstractManager<Portal>
-        implements jmri.InstanceManagerAutoDefault {
+public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyChangeListener {
+    
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private Hashtable<Integer, Portal> _tsys = new Hashtable<>();   // stores Portal in loaded order
+    private Hashtable<String, Portal> _tuser = new Hashtable<>();   // stores portal by current name
+    private Integer _nextIndex = new Integer(1);
 
     public PortalManager() {
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @Override
-    public int getXMLOrder() {
-        return jmri.Manager.OBLOCKS;
+    public int getPortalCount() {
+        return _tsys.size();
     }
 
-    @Override
-    public char typeLetter() {
-        return 'P';
+    public Portal getPortal(int idx) {
+        return _tsys.get(new Integer(idx));
     }
 
-    /*
-     * Method to create a new Portal. Returns null if a
-     * Portal with the same systemName or userName already exists. 
-     *
-     * Generate a systemName if called with sName == null and 
-     * non null userName.
-     */
-    public Portal createNewPortal(String sName, String userName) {
+    public Portal getPortal(String name) {
+        return _tuser.get(name);
+    }
+
+    public Collection<Portal> getPortalSet() {
+        return Collections.unmodifiableCollection(_tsys.values());
+    }
+
+    public Portal createNewPortal(String userName) {
         // Check that Portal does not already exist
         Portal portal;
         if (userName != null && userName.trim().length() > 0) {
-            portal = getByUserName(userName);
+            portal = _tuser.get(userName);
             if (portal != null) {
                 return null;
             }
         } else {  // must have a user name for backward compatibility
             return null;
         }
-        if (sName == null) {
-            sName = getAutoSystemName();
-        } else {
-            if (log.isDebugEnabled()) log.debug("createNewPortal called with system name \"{}\"", sName);
-        }
-        if (!sName.startsWith(getSystemNamePrefix())) {
-            sName = getSystemNamePrefix() + sName;
-        }
-        if (sName.length() < getSystemNamePrefix().length()+1) {
-            return null;
-        }
-        portal = getBySystemName(sName);
-        if (portal != null) {
-            return null;
-        }
         // Portal does not exist, create a new Portal
-        portal = new Portal(sName, userName);
+        portal = new Portal(userName);
         // save in the maps
-        register(portal);
-
-        // Keep track of the last created auto system name
-        updateAutoNumber(sName);
-
+        _tsys.put(_nextIndex, portal);
+        _tuser.put(userName, portal);
+        _nextIndex = Integer.valueOf(_nextIndex.intValue()+1);
+        pcs.firePropertyChange("length", null, _tsys.size());
+        // listen for name and state changes to forward
+        portal.addPropertyChangeListener(this);
         return portal;
     }
 
-    /**
-     * Method to get an existing Portal. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
-     * both fail, returns null.
-     * @param name  either System name or user name
-     * @return Portal, if found
-     */
-    public Portal getPortal(String name) {
-        if (name == null) {
-            return null;
+    private synchronized boolean changeName(String oldName, String newName) {
+        Portal portal = _tuser.get(oldName);
+        if (portal == null) {
+            return false;
         }
-        Portal portal = getByUserName(name);
-        if (portal != null) {
-            if (log.isDebugEnabled()) log.debug("getPortal with User Name \"{}\"", name);
-            return portal;
+        _tuser.remove(oldName);
+        _tuser.put(newName, portal);
+        return true;
+    }
+
+    private synchronized void deletePortal(Portal portal) {
+        if (portal == null) {
+            return;
         }
-        if (name.length() > 2 && name.startsWith("IP")) {
-            portal = getBySystemName(name);
-            if (portal != null) {
-                if (log.isDebugEnabled()) log.debug("getPortal with System Name \"{}\"", name);
-                return portal;
+        Integer idx = null;
+        String name = null;
+        for (Map.Entry<Integer, Portal> entry : _tsys.entrySet()) {
+            Portal p = entry.getValue();
+            if (portal.equals(p)) {
+                idx = entry.getKey();
+                name = p.getName();
+                break;
             }
         }
-        return null;
-    }
-
-    public Portal getBySystemName(String name) {
-        if (name == null || name.trim().length() == 0) {
-            return null;
-        }
-        return _tsys.get(name);
-    }
-
-    public Portal getByUserName(String key) {
-        if (key == null || key.trim().length() == 0) {
-            return null;
-        }
-        return _tuser.get(key);
+        _tsys.remove(idx);
+        _tuser.remove(name);
+        pcs.firePropertyChange("length", null, _tsys.size());
     }
 
     public Portal providePortal(String name) {
@@ -138,19 +126,32 @@ public class PortalManager extends AbstractManager<Portal>
         }
         Portal portal = getPortal(name);
         if (portal == null) {
-            portal = createNewPortal(null, name);
+            portal = createNewPortal(name);
         }
         return portal;
     }
 
-    @Override
-    protected void registerSelf() {
-        // Override, don't register, OBlockManager does store and load of Portals
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
     }
 
-    @Override
-    public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNamePortals" : "BeanNamePortal");
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
+    public void propertyChange(PropertyChangeEvent e) {
+        if (!(e.getSource() instanceof Portal)) {
+            return;
+        }
+        Portal portal = (Portal)e.getSource();
+        String propertyName = e.getPropertyName();
+        if (propertyName.equals("Delete")) {
+            deletePortal(portal);
+        } else if (propertyName.equals("NameChange")) {
+            changeName((String)e.getOldValue(), (String)e.getNewValue());
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class);

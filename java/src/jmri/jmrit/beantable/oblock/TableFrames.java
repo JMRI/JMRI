@@ -332,10 +332,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     log.debug("Start loop: path {} on block {}", n, oBlockName);
                     String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
                     toBlockName = oblockPrefix() + toBlockNumber;
-                    boolean duplicate = false;
-                    SortedSet<Portal> poList = pom.getNamedBeanSet();
+//                    boolean duplicate = false;
+//                    SortedSet<Portal> poList = pom.getNamedBeanSet();
                     String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
-                    for (Portal p : poList) {
+                    port =pom.getPortal(portalName);
+/*                    for (Portal p : poList) {
                         log.debug("Checking existing portal {} for match", p.getName());
                         // check for portal as opposite pair; we need only one Portal/OBlock pair per OBlock connection
                         if (p.getName().equals(portalName)) {
@@ -344,8 +345,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                             port = p;
                             break;
                         }
-                    }
-                    if (!duplicate) {
+                    }*/
+//                    if (!duplicate) {
+                    if (port == null) {
                         portalName = portalPrefix + blockNumber + "-" + toBlockNumber; // normal name for new Portal
                         log.debug("new Portal {} on block {}, path #{}", portalName, toBlockName, n);
                         port = pom.providePortal(portalName); // normally, will create a new Portal

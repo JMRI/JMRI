@@ -132,8 +132,7 @@ public class SignalTableModel extends AbstractTableModel {
 
     private void makeList() {
         ArrayList<SignalRow> tempList = new ArrayList<SignalRow>();
-        // collect signals entered into Portals
-        SortedSet<Portal> portals = _portalMgr.getNamedBeanSet();
+        Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
             NamedBean signal = portal.getFromSignal();
             SignalRow sr = null;
@@ -177,7 +176,7 @@ public class SignalTableModel extends AbstractTableModel {
         OBlock toBlock = sr.getToBlock();
         String msg = null;
         if (portal != null) {
-            if (toBlock == null && sr.getFromBlock() == null) {
+            if (toBlock == null && fromBlock == null) {
                 msg = Bundle.getMessage("SignalDirection",
                         portal.getName(),
                         portal.getFromBlock().getDisplayName(),
@@ -189,16 +188,16 @@ public class SignalTableModel extends AbstractTableModel {
             if (pToBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pFromBlk);
-                    /*       } else if (!fromBlock.equals(pFromBlk)) {
+                } else if (!fromBlock.equals(pFromBlk)) {
                      msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
-                     fromBlock.getDisplayName());    */
+                     fromBlock.getDisplayName());
                 }
             } else if (pFromBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pToBlk);
-                    /*       } else if (!toBlock.equals(pToBlk)) {
+                } else if (!toBlock.equals(pToBlk)) {
                      msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
-                     toBlock.getDisplayName()); */
+                     toBlock.getDisplayName());
                 }
             } else if (pToBlk.equals(fromBlock)) {
                 if (toBlock == null) {
@@ -227,7 +226,7 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     private Portal getPortalwithBlocks(OBlock fromBlock, OBlock toBlock) {
-        SortedSet<Portal> portals = _portalMgr.getNamedBeanSet();
+        Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
             OBlock fromBlk = portal.getFromBlock();
             OBlock toBlk = portal.getToBlock();

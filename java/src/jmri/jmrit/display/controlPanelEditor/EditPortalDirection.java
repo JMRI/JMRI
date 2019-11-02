@@ -143,7 +143,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         if (portal != null) {
             List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
             if (piArray.isEmpty()) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getDisplayName()),
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getName()),
                         Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
                 clearListSelection();
             } else {

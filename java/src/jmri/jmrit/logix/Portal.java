@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Block;
@@ -8,8 +10,11 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.beans.Beans;
 import jmri.implementation.SignalSpeedMap;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author  Pete Cressman Copyright (C) 2009
  */
-public class Portal extends jmri.implementation.AbstractNamedBean {
+public class Portal {
 
     private final ArrayList<OPath> _fromPaths = new ArrayList<>();
     private OBlock _fromBlock;
@@ -38,13 +43,16 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     private OBlock _toBlock;
     private NamedBean _toSignal;            // may be either SignalHead or SignalMast
     private float _toSignalOffset;          // adjustment distance for speed change
+    private String _name;
     private int _state = UNKNOWN;
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    public static final int UNKNOWN = 0x01;
     public static final int ENTER_TO_BLOCK = 0x02;
     public static final int ENTER_FROM_BLOCK = 0x04;
 
-    public Portal(String sName, String uName) {
-        super(sName, uName);
+    public Portal(String uName) {
+        _name = uName;
     }
 
     /**
@@ -83,11 +91,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 if (pName.equals(p.getName())) {
                     return true;    // OK, everything equal
                 } else {
-                    log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.", path.getName(), p.getName(), getUserName(), path.getBlock().getDisplayName());
+                    log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.", path.getName(), p.getName(), _name, path.getBlock().getDisplayName());
                     return false;
                 }
             } else if (pName.equals(p.getName())) {
-                log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.", path.getName(), getUserName(), path.getBlock().getDisplayName());
+                log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.", path.getName(), _name, path.getBlock().getDisplayName());
                 return false;
             }
         }
@@ -129,46 +137,22 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (newName == null || newName.length() == 0) {
             return null;
         }
-        String oldName = getUserName();
+        String oldName = _name;
         if (newName.equals(oldName)) {
             return null;
         }
-
-        String msg = checkName(newName, _fromBlock);
-        if (msg == null) {
-            msg = checkName(newName, _toBlock);
+        Portal p = jmri.InstanceManager.getDefault(PortalManager.class).getPortal(newName);
+        if (p != null) {
+            return Bundle.getMessage("DuplicatePortalName", oldName, p.getDescription());
         }
-        if (msg == null) {
-            setUserName(newName);
-            WarrantTableAction.portalNameChange(oldName, newName);
-        } else {
-            msg = Bundle.getMessage("DuplicatePortalName", msg, newName);
-        }
-        return msg;
-    }
-
-    /**
-     * Check for duplicate name in either block.
-     *
-     * @param name suggested Portal user name
-     * @param block the OBlock for which the Portal name should be checked
-     * @return null if successful, name of existing Portal if name is already in use on a Portal
-     */
-    static private String checkName(String name, OBlock block) {
-        if (block == null) {
-            return null;
-        }
-        List<Portal> list = block.getPortals();
-        for (Portal portal : list) {
-            if (name.equals(portal.getName())) {
-                return portal.getName();
-            }
-        }
+        _name = newName;
+        pcs.firePropertyChange("NameChange", oldName, newName);
+        WarrantTableAction.portalNameChange(oldName, newName);
         return null;
     }
 
     public String getName() {
-        return getUserName();
+        return _name;
     }
 
     /**
@@ -424,29 +408,33 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      * @param block OBlock
      */
     protected void setEntryState(OBlock block) {
-        try {
-            if (block == null) {
-                _state = UNKNOWN;
-            } else if (block.equals(_fromBlock)) {
-                setState(ENTER_FROM_BLOCK);
-            } else if (block.equals(_toBlock)) {
-                setState(ENTER_TO_BLOCK);
-            }
-        } catch (jmri.JmriException ex) {
-            log.error("setEntryState failed");
+        if (block == null) {
+            _state = UNKNOWN;
+        } else if (block.equals(_fromBlock)) {
+            setState(ENTER_FROM_BLOCK);
+        } else if (block.equals(_toBlock)) {
+            setState(ENTER_TO_BLOCK);
         }
     }
 
-    @Override
-    public void setState(int s) throws JmriException {
+    public void setState(int s) {
         int old = _state;
         _state = s;
-        firePropertyChange("Direction", old, _state);
+        pcs.firePropertyChange("Direction", old, _state);
     }
 
-    @Override
     public int getState() {
         return _state;
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    @OverridingMethodsMustInvokeSuper
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
     /**
@@ -545,11 +533,11 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 }
             }
         } else {
-            log.error("Block \"{}\" is not in Portal \"{}\".", blockName, getUserName());
+            log.error("Block \"{}\" is not in Portal \"{}\".", blockName, _name);
         }
         if (speed != null) {
             log.debug("Portal \"{}\" has {}} speed= {} into \"{}\" from signal.",
-                    getUserName(), (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
+                    _name, (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
         }
         // no signals, proceed at recorded speed
         return speed;
@@ -656,7 +644,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return (!_toBlock.equals(_fromBlock));
     }
 
-    @Override
+    @OverridingMethodsMustInvokeSuper
     public void dispose() {
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
@@ -664,36 +652,29 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (_toBlock != null) {
             _toBlock.removePortal(this);
         }
-        jmri.InstanceManager.getDefault(PortalManager.class).deregister(this);
-        super.dispose();
+        pcs.firePropertyChange("Deleted", true, false);
+        PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
+        for (PropertyChangeListener l : listeners) {
+            pcs.removePropertyChangeListener(l);
+        }
     }
 
     public String getDescription() {
         return Bundle.getMessage("PortalDescription",
-                getUserName(), getFromBlockName(), getToBlockName());
+                _name, getFromBlockName(), getToBlockName());
     }
 
     @Override
     @Nonnull
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
     public String toString() {
         StringBuilder sb = new StringBuilder("Portal \"");
-        sb.append(getUserName());
+        sb.append(_name);
         sb.append("\" from block \"");
         sb.append(getFromBlockName());
         sb.append("\" to block \"");
         sb.append(getToBlockName());
         sb.append("\"");
         return sb.toString();
-    }
-
-    @Override
-    @Nonnull
-    public String getBeanType() {
-        return Bundle.getMessage("BeanNamePortal");
     }
 
     private final static Logger log = LoggerFactory.getLogger(Portal.class);

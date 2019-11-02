@@ -239,7 +239,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         Portal portal = _portalList.getSelectedValue();
         if (portal == null) {
             PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
-            portal = portalMgr.getByUserName(name);
+            portal = portalMgr.getPortal(name);
         }
         if (portal != null) {
             int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("confirmPortalDelete", portal.getName()),
@@ -251,9 +251,8 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                 _portalName.setText(null);
                 ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIconMap(portal));
                 for (PortalIcon icon : removeList) {
-//                    deletePortalIcon(icon);
                     _parent.getCircuitIcons(oppBlock).remove(icon);
-                    icon.remove();  // will call deletePortalIcon()
+                    icon.remove();  // will call _parent.deletePortalIcon(icon)
                 }
             }
         }
@@ -282,7 +281,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             log.error("Removed PortalIcon without Portal");
             return null;
         }
-        String name = portal.getDisplayName();
+        String name = portal.getName();
         String msg = null;
         OBlock fromBlock = portal.getFromBlock();
         OBlock toBlock = portal.getToBlock();
@@ -461,7 +460,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             super(flavor);
         }
 
-        /** {@inheritDoc} */
         @Override
         protected boolean okToDrag() {
             String name = _portalName.getText();
@@ -471,7 +469,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                 return false;
             }
             PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
-            Portal portal = portalMgr.getByUserName(name);
+            Portal portal = portalMgr.getPortal(name);
             if (portal == null) {
                 return true;
             }
@@ -525,7 +523,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             Portal portal = _homeBlock.getPortalByName(name);
             if (portal == null) {
                 PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
-                portal = portalMgr.createNewPortal(null, name);
+                portal = portalMgr.createNewPortal(name);
                 portal.setFromBlock(_homeBlock, false);
                 _portalList.dataChange();
             }

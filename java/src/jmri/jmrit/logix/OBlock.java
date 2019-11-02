@@ -584,15 +584,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
                 path.setTurnouts(0, false, lockState, false);
                 Portal portal = path.getFromPortal();
-                try {
-                    if (portal != null) {
-                        portal.setState(Portal.UNKNOWN);
-                    }
-                    portal = path.getToPortal();
-                    if (portal != null) {
-                        portal.setState(Portal.UNKNOWN);
-                    }
-                } catch (jmri.JmriException ex) {
+                if (portal != null) {
+                    portal.setState(Portal.UNKNOWN);
+                }
+                portal = path.getToPortal();
+                if (portal != null) {
+                    portal.setState(Portal.UNKNOWN);
                 }
             }
         }

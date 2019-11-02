@@ -1,8 +1,11 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -28,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
-public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Portal> {
+public class PortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -44,6 +47,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
     public PortalTableModel(TableFrames parent) {
         super();
         _parent = parent;
+        _manager = InstanceManager.getDefault(PortalManager.class);
     }
 
     public void init() {
@@ -58,48 +62,13 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
     }
 
     @Override
-    public Manager<Portal> getManager() {
-        _manager = InstanceManager.getDefault(PortalManager.class);
-        return _manager;
-    }
-
-    @Override
-    public Portal getBySystemName(String name) {
-        return _manager.getBySystemName(name);
-    }
-
-    @Override
-    public Portal getByUserName(String name) {
-        return _manager.getByUserName(name);
-    }
-
-    @Override
-    protected String getBeanType() {
-        return "Portal";
-    }
-
-    @Override
-    public String getValue(String name) {
-        return name;
-    }
-
-    @Override
-    public void clickOn(Portal t) {
-    }
-
-    @Override
-    protected String getMasterClassName() {
-        return PortalTableModel.class.getName();
-    }
-
-    @Override
     public int getColumnCount() {
         return NUMCOLS;
     }
 
     @Override
     public int getRowCount() {
-        return super.getRowCount() + 1;
+        return _manager.getPortalCount();
     }
 
     @Override
@@ -120,16 +89,13 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
 
     @Override
     public Object getValueAt(int row, int col) {
-        if (getRowCount() == row) {
+        int size = getRowCount();
+        if (row == size +1) {
             return tempRow[col];
         }
-        if (row > sysNameList.size()) {
-            return "";
-        }
         Portal portal = null;
-        if (row < sysNameList.size()) {
-            String name = sysNameList.get(row);
-            portal = _manager.getBySystemName(name);
+        if (row <= size) {
+            portal = _manager.getPortal(row);
         }
         if (portal == null) {
             if (col == DELETE_COL) {
@@ -157,7 +123,8 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
     @Override
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
-        if (super.getRowCount() == row) {
+        int size = getRowCount();
+        if (row == size +1) {
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -193,7 +160,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                     msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                 }
                 if (msg==null) {
-                    Portal portal = _manager.createNewPortal(null, tempRow[NAME_COLUMN]);
+                    Portal portal = _manager.createNewPortal(tempRow[NAME_COLUMN]);
                     if (portal != null) {
                         portal.setToBlock(toBlock, false);
                         portal.setFromBlock(fromBlock, false);
@@ -211,11 +178,13 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
             return;
         }
 
-        String name = sysNameList.get(row);
-        Portal portal = _manager.getBySystemName(name);
+        Portal portal = null;
+        if (row <= size) {
+            portal = _manager.getPortal(row);
+        }
         if (portal == null) {
             log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
-                    + "portalListSize= " + _manager.getObjectCount());
+                    + "portalListSize= " + _manager.getPortalCount());
             return;
         }
 
@@ -244,14 +213,8 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                 fireTableRowsUpdated(row, row);
                 break;
             case NAME_COLUMN:
-                if (_manager.getPortal((String) value) != null) {
-                    msg = Bundle.getMessage("DuplPortalName", (String) value);
-                    break;
-                }
-                if (_manager.getPortal((String) value) != null) {
-                    msg = Bundle.getMessage("PortalNameConflict", (String) value);
-                } else {
-                    portal.setName((String) value);
+                msg = portal.setName((String)value);
+                if (msg == null ) {
                     fireTableRowsUpdated(row, row);
                 }
                 break;
@@ -324,7 +287,6 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
                                 justification="better to keep cases in column order rather than to combine")
-    @Override
     public int getPreferredWidth(int col) {
         switch (col) {
             case FROM_BLOCK_COLUMN:
@@ -339,6 +301,12 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                 break;
         }
         return 5;
+    }
+
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("length")) {
+            fireTableDataChanged();
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);
