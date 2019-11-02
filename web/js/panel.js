@@ -1672,6 +1672,17 @@ function processPanelXML($returnedData, $success, $xhr) {
                             case "backgroundColor" :  //set background color of the panel itself
                                 $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
                                 break;
+                            case "layoutShape" :
+                                jmri.log("#### Layout Shape ####");
+                                //store this widget in persistent array, with ident as key
+                                $widget['id'] = $widget.ident;
+                                $gWidgets[$widget.id] = $widget;
+
+                                $widget['points'] = $(this).find('point');
+
+                                //draw the LayoutShape
+                                $drawLayoutShape($widget);
+                                break;
                             default:
                                 jmri.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
                                 break;
@@ -2455,6 +2466,99 @@ function $drawSlip($widget) {
         $drawCircle(rccx, rccy, $cr, $gPanel.turnoutcirclecolor, 1);
     }
 }   // function $drawSlip($widget)
+
+function $drawLayoutShape($widget) {
+    var $pts = $widget.points;   // get the points
+    var len = $pts.length;
+    if (len > 0) {
+        $gCtx.save();   // save current line width and color
+
+        if (typeof $widget.lineColor != "undefined") {
+            $gCtx.strokeStyle = $widget.lineColor;
+        }
+        if (typeof $widget.fillColor != "undefined") {
+            $gCtx.fillStyle = $widget.fillColor;
+        }
+        if (typeof $widget.linewidth != "undefined") {
+            $gCtx.lineWidth = $widget.linewidth;
+        }
+
+        $gCtx.beginPath();
+
+        var shapeType = $widget.type;
+
+        var cnt = $pts.length;
+        $pts.each(function(idx, $lsp) {  //loop thru points
+            // this point
+            var p = $getLayoutShapePoint($lsp);
+
+            // left point
+            var idxL = $wrapValue(idx - 1, 0, cnt);
+            var $lspL = $pts[idxL];
+            var pL = $getLayoutShapePoint($lspL);
+            var midL = $point_midpoint(pL, p);
+
+            // right point
+            var idxR = $wrapValue(idx + 1, 0, cnt);
+            var $lspR = $pts[idxR];
+            var pR = $getLayoutShapePoint($lspR);
+            var midR = $point_midpoint(p, pR);
+
+            var lspt = $lsp.attributes.type.value;  // Straight or Curve
+
+            // if this is an open shape...
+            if (shapeType == "eOpen") {
+                // and this is first or last point...
+                if ((idx == 0) || (idxR == 0)) {
+                    // then force straight shape point type
+                    lspt = "Straight";
+                }
+            }
+            if (lspt == "Straight") {
+                if (idx == 0) { // if this is the first point...
+                    // ...and our shape is open...
+                    if (shapeType == "Open") {
+                        $gCtx.moveTo(p[0], p[1]);    // then start here
+                    } else {    // otherwise
+                        $gCtx.moveTo(midL[0], midL[1]);  //start here
+                        $gCtx.lineTo(p[0], p[1]);        //draw to here
+                    }
+                } else {
+                    $gCtx.lineTo(midL[0], midL[1]);  //start here
+                    $gCtx.lineTo(p[0], p[1]);        //draw to here
+                }
+                // if this is not the last point...
+                // ...or our shape isn't open
+                if ((idxR != 0) || (shapeType == "Open")) {
+                    $gCtx.lineTo(midR[0], midR[1]);      // draw to here
+                }
+            } else if (lspt == "Curve") {
+                if (idx == 0) { // if this is the first point
+                    $gCtx.moveTo(midL[0], midL[1]);  // then start here
+                }
+                $gCtx.quadraticCurveTo(p[0], p[1], midR[0], midR[1]);
+            } else {
+                jmri.log("ERROR: unexpected LayoutShape point type '" + lspt + "' for " + $widget.ide);
+            }
+        });   // $pts.each(function(idx, $lsp)
+
+        if (shapeType == "Filled") {
+            $gCtx.fill();
+        }
+        $gCtx.stroke();
+
+        $gCtx.restore();        // restore color and width back to default
+    }   // if (len > 0)
+}
+
+function $getLayoutShapePoint($lsp) {
+    return [Number($lsp.attributes.x.value), Number($lsp.attributes.y.value)];
+}
+// wrap inValue around between minVal and maxVal
+function $wrapValue(inValue, minVal, maxVal) {
+    var range = maxVal - minVal;
+    return ((inValue % range) + range) % range;
+}
 
 function $lerp(value1, value2, amount) {
     return ((1 - amount) * value1) + (amount * value2);
@@ -3340,6 +3444,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "layoutblock" :
         case "levelxing" :
         case "layoutturntable" :
+        case "layoutShape" :
             return "drawn";
             break;
     }

@@ -2500,14 +2500,15 @@ public class TrackSegment extends LayoutTrack {
                 vector = MathUtil.orthogonal(vector);
 
                 if (bridgeSideRight) {
-                    Point2D ep1L = MathUtil.add(ep1, vector);
-                    Point2D ep2L = MathUtil.add(ep2, vector);
-                    g2.draw(new Line2D.Double(ep1L, ep2L));
-                }
-                if (bridgeSideLeft) {
-                    Point2D ep1R = MathUtil.subtract(ep1, vector);
-                    Point2D ep2R = MathUtil.subtract(ep2, vector);
+                    Point2D ep1R = MathUtil.add(ep1, vector);
+                    Point2D ep2R = MathUtil.add(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
+                }
+
+                if (bridgeSideLeft) {
+                    Point2D ep1L = MathUtil.subtract(ep1, vector);
+                    Point2D ep2L = MathUtil.subtract(ep2, vector);
+                    g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
             }   // if isArc() {} else if isBezier() {} else...
 
@@ -2663,6 +2664,32 @@ public class TrackSegment extends LayoutTrack {
             }
 
             if (tunnelHasEntry) {
+                if (tunnelSideRight) {
+                    p1 = new Point2D.Double(0.0, 0.0);
+                    p2 = new Point2D.Double(0.0, +halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, +halfEntranceWidth);
+                    p4 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth);
+                    p5 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p6 = new Point2D.Double(-halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p7 = new Point2D.Double(-halfDiffWidth, 0.0);
+
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
+                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, startAngleRAD), ep1);
+                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, startAngleRAD), ep1);
+                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, startAngleRAD), ep1);
+                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, startAngleRAD), ep1);
+
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1P.getX(), p1P.getY());
+                    path.lineTo(p2P.getX(), p2P.getY());
+                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
+                    path.lineTo(p5P.getX(), p5P.getY());
+                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
+                    path.closePath();
+                    g2.draw(path);
+                }
                 if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, -halfFloorWidth);
@@ -2689,44 +2716,15 @@ public class TrackSegment extends LayoutTrack {
                     path.closePath();
                     g2.draw(path);
                 }
+            }
+            if (tunnelHasExit) {
                 if (tunnelSideRight) {
-//                    if (getName().equals("T5")) {
-//                        log.debug("STOP");
-//                    }
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, +halfFloorWidth);
                     p3 = new Point2D.Double(0.0, +halfEntranceWidth);
-                    p4 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth);
-                    p5 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
-                    p6 = new Point2D.Double(-halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
-                    p7 = new Point2D.Double(-halfDiffWidth, 0.0);
-
-                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
-                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
-                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
-                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, startAngleRAD), ep1);
-                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, startAngleRAD), ep1);
-                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, startAngleRAD), ep1);
-                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, startAngleRAD), ep1);
-
-                    GeneralPath path = new GeneralPath();
-                    path.moveTo(p1P.getX(), p1P.getY());
-                    path.lineTo(p2P.getX(), p2P.getY());
-                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
-                    path.lineTo(p5P.getX(), p5P.getY());
-                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
-                    path.closePath();
-                    g2.draw(path);
-                }
-            }
-            if (tunnelHasExit) {
-                if (tunnelSideLeft) {
-                    p1 = new Point2D.Double(0.0, 0.0);
-                    p2 = new Point2D.Double(0.0, -halfFloorWidth);
-                    p3 = new Point2D.Double(0.0, -halfEntranceWidth);
-                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth);
-                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
-                    p6 = new Point2D.Double(halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth);
+                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p6 = new Point2D.Double(halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
                     p7 = new Point2D.Double(halfDiffWidth, 0.0);
 
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
@@ -2746,13 +2744,13 @@ public class TrackSegment extends LayoutTrack {
                     path.closePath();
                     g2.draw(path);
                 }
-                if (tunnelSideRight) {
+                if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
-                    p2 = new Point2D.Double(0.0, +halfFloorWidth);
-                    p3 = new Point2D.Double(0.0, +halfEntranceWidth);
-                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth);
-                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
-                    p6 = new Point2D.Double(halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p2 = new Point2D.Double(0.0, -halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, -halfEntranceWidth);
+                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth);
+                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p6 = new Point2D.Double(halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
                     p7 = new Point2D.Double(halfDiffWidth, 0.0);
 
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
