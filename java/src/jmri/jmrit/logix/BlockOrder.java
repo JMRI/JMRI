@@ -190,11 +190,6 @@ public class BlockOrder {
         return null;
     }
     
-/* Why is this here?
-    protected String hash() {
-        return _block.getDisplayName() + _pathName + _entryName + _exitName;
-    } */
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("BlockOrder: Block \"");

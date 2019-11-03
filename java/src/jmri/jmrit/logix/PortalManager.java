@@ -1,9 +1,5 @@
 package jmri.jmrit.logix;
 
-import jmri.InstanceManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.managers.AbstractManager;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

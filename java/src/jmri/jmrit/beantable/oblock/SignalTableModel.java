@@ -188,16 +188,10 @@ public class SignalTableModel extends AbstractTableModel {
             if (pToBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pFromBlk);
-                } else if (!fromBlock.equals(pFromBlk)) {
-                     msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
-                     fromBlock.getDisplayName());
                 }
             } else if (pFromBlk.equals(toBlock)) {
                 if (fromBlock == null) {
                     sr.setFromBlock(pToBlk);
-                } else if (!toBlock.equals(pToBlk)) {
-                     msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
-                     toBlock.getDisplayName());
                 }
             } else if (pToBlk.equals(fromBlock)) {
                 if (toBlock == null) {
