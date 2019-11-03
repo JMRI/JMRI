@@ -81,6 +81,6 @@ layout.
 </div> <!-- End of block of text on left side of page -->
 
 <!-- Sidebar-Tail -->
-    <script type="text/javascript" src="/webjs/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="/web/js/here.js"></script>
 <!-- /Sidebar-Tail -->
