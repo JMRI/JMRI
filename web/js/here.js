@@ -1,19 +1,14 @@
 /*
-Hilights the current page (hyperlink) in the left sidebar
-Egbert Broerse 2019
+Highlight the li element with href link to the current page in the left sidebar
+Since 11 2019
 */
 
 document.documentElement.className="hasJS";
 
 $(function(){
-    var $page = jQuery.url.attr("file");
-    $('ul.side li a').each(function(){
-        var $href = $(this).attr('href');
-        if ( ($href == $page) || ($href == '') ) {
-            $(this).addClass('here');
-        } else {
-            $(this).removeClass('here');
-        }
-    });
-});
-
+  $('a').each(function() {
+    if ($(this).prop('href') == window.location.href) {
+      $(this.parentNode).addClass('here');
+    }
+  });
+})
