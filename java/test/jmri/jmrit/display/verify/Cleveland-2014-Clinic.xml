@@ -734,7 +734,7 @@
     <oblock systemName="OBBU-M1" userName="Butler Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Butler Main 1" />
       <path pathName="BU M1" blockName="OBBU-M1" toPortal="Butler 1" fromDirection="0" toDirection="0" />
-      <portal systemName="IP1" portalName="Butler 1">
+      <portal portalName="Butler 1">
         <fromBlock blockName="OBWH-W1">
           <path pathName="BU-WH M1" blockName="OBWH-W1" />
         </fromBlock>
@@ -747,7 +747,7 @@
     <oblock systemName="OBBU-M2" userName="Butler Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Butler Main 2" />
       <path pathName="BU M2" blockName="OBBU-M2" toPortal="Butler 2" fromDirection="0" toDirection="0" />
-      <portal systemName="IP2" portalName="Butler 2">
+      <portal portalName="Butler 2">
         <fromBlock blockName="OBWH-W2">
           <path pathName="BU-WH M2" blockName="OBWH-W2" />
         </fromBlock>
@@ -760,7 +760,7 @@
     <oblock systemName="OBMA-E1" userName="Manion East Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Manion East Main 1" />
       <path pathName="MA-SQ M1" blockName="OBMA-E1" fromPortal="Manion E1" toPortal="Squires 1" fromDirection="0" toDirection="0" />
-      <portal systemName="IP3" portalName="Manion E1">
+      <portal portalName="Manion E1">
         <fromBlock blockName="OBMA-E1">
           <path pathName="MA-SQ M1" blockName="OBMA-E1" />
         </fromBlock>
@@ -769,7 +769,7 @@
           <path pathName="MA M1" blockName="OBMA-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP4" portalName="Squires 1">
+      <portal portalName="Squires 1">
         <fromBlock blockName="OBMA-E1">
           <path pathName="MA-SQ M1" blockName="OBMA-E1" />
         </fromBlock>
@@ -782,7 +782,7 @@
     <oblock systemName="OBMA-E2" userName="Manion East Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Manion East Main 2" />
       <path pathName="MA-SQ M2" blockName="OBMA-E2" fromPortal="Squires 2" toPortal="Manion E2" fromDirection="0" toDirection="0" />
-      <portal systemName="IP5" portalName="Manion E2">
+      <portal portalName="Manion E2">
         <fromBlock blockName="OBMA-E2">
           <path pathName="MA-SQ M2" blockName="OBMA-E2" />
         </fromBlock>
@@ -792,7 +792,7 @@
           <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="Squires 2">
+      <portal portalName="Squires 2">
         <fromBlock blockName="OBMA-E2">
           <path pathName="MA-SQ M2" blockName="OBMA-E2" />
         </fromBlock>
@@ -810,7 +810,7 @@
       <path pathName="MA M1-M2" blockName="OBMA-OS-M1" fromPortal="Manion Crossover" toPortal="Manion W1" fromDirection="0" toDirection="0">
         <setting turnout="LT201" set="4" />
       </path>
-      <portal systemName="IP3" portalName="Manion E1">
+      <portal portalName="Manion E1">
         <fromBlock blockName="OBMA-E1">
           <path pathName="MA-SQ M1" blockName="OBMA-E1" />
         </fromBlock>
@@ -819,7 +819,7 @@
           <path pathName="MA M1" blockName="OBMA-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP7" portalName="Manion Crossover">
+      <portal portalName="Manion Crossover">
         <fromBlock blockName="OBMA-OS-M2">
           <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
         </fromBlock>
@@ -827,7 +827,7 @@
           <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="Manion W1">
+      <portal portalName="Manion W1">
         <fromBlock blockName="OBMA-W1">
           <path pathName="CR-MA M1" blockName="OBMA-W1" />
         </fromBlock>
@@ -846,7 +846,7 @@
       <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" fromPortal="Manion Crossover" toPortal="Manion E2" fromDirection="0" toDirection="0">
         <setting turnout="LT202" set="4" />
       </path>
-      <portal systemName="IP5" portalName="Manion E2">
+      <portal portalName="Manion E2">
         <fromBlock blockName="OBMA-E2">
           <path pathName="MA-SQ M2" blockName="OBMA-E2" />
         </fromBlock>
@@ -856,7 +856,7 @@
           <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
         </toBlock>
       </portal>
-      <portal systemName="IP7" portalName="Manion Crossover">
+      <portal portalName="Manion Crossover">
         <fromBlock blockName="OBMA-OS-M2">
           <path pathName="MA M2-M1 C" blockName="OBMA-OS-M2" />
         </fromBlock>
@@ -864,7 +864,7 @@
           <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP9" portalName="Manion W2">
+      <portal portalName="Manion W2">
         <fromBlock blockName="OBMA-W2">
           <path pathName="CR-MA M2" blockName="OBMA-W2" />
         </fromBlock>
@@ -877,7 +877,7 @@
     <oblock systemName="OBMA-W1" userName="Manion West Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Manion West Main 1" />
       <path pathName="CR-MA M1" blockName="OBMA-W1" fromPortal="Manion W1" toPortal="Cressman M1" fromDirection="0" toDirection="0" />
-      <portal systemName="IP8" portalName="Manion W1">
+      <portal portalName="Manion W1">
         <fromBlock blockName="OBMA-W1">
           <path pathName="CR-MA M1" blockName="OBMA-W1" />
         </fromBlock>
@@ -887,7 +887,7 @@
           <path pathName="MA M1-M2" blockName="OBMA-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="Cressman M1">
+      <portal portalName="Cressman M1">
         <fromBlock blockName="OBWH-E1">
           <path pathName="WH-CR M1" blockName="OBWH-E1" />
         </fromBlock>
@@ -899,7 +899,7 @@
     <oblock systemName="OBMA-W2" userName="Manion West Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Manion West Main 2" />
       <path pathName="CR-MA M2" blockName="OBMA-W2" fromPortal="Manion W2" toPortal="Cressman M2" fromDirection="0" toDirection="0" />
-      <portal systemName="IP9" portalName="Manion W2">
+      <portal portalName="Manion W2">
         <fromBlock blockName="OBMA-W2">
           <path pathName="CR-MA M2" blockName="OBMA-W2" />
         </fromBlock>
@@ -908,7 +908,7 @@
           <path pathName="MA M2" blockName="OBMA-OS-M2" />
         </toBlock>
       </portal>
-      <portal systemName="IP11" portalName="Cressman M2">
+      <portal portalName="Cressman M2">
         <fromBlock blockName="OBWH-E2">
           <path pathName="WH-CR M2" blockName="OBWH-E2" />
         </fromBlock>
@@ -920,7 +920,7 @@
     <oblock systemName="OBSQ-M1" userName="Squires Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Squires Main 1" />
       <path pathName="SQ M1" blockName="OBSQ-M1" toPortal="Squires 1" fromDirection="0" toDirection="0" />
-      <portal systemName="IP4" portalName="Squires 1">
+      <portal portalName="Squires 1">
         <fromBlock blockName="OBMA-E1">
           <path pathName="MA-SQ M1" blockName="OBMA-E1" />
         </fromBlock>
@@ -933,7 +933,7 @@
     <oblock systemName="OBSQ-M2" userName="Squires Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Squires Main 2" />
       <path pathName="SQ M2" blockName="OBSQ-M2" toPortal="Squires 2" fromDirection="0" toDirection="0" />
-      <portal systemName="IP6" portalName="Squires 2">
+      <portal portalName="Squires 2">
         <fromBlock blockName="OBMA-E2">
           <path pathName="MA-SQ M2" blockName="OBMA-E2" />
         </fromBlock>
@@ -946,7 +946,7 @@
     <oblock systemName="OBWH-E1" userName="Whithead East Main 1" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="LS118" />
       <path pathName="WH-CR M1" blockName="OBWH-E1" fromPortal="Cressman M1" toPortal="Whithead E1" fromDirection="0" toDirection="0" />
-      <portal systemName="IP10" portalName="Cressman M1">
+      <portal portalName="Cressman M1">
         <fromBlock blockName="OBWH-E1">
           <path pathName="WH-CR M1" blockName="OBWH-E1" />
         </fromBlock>
@@ -954,7 +954,7 @@
           <path pathName="CR-MA M1" blockName="OBMA-W1" />
         </toBlock>
       </portal>
-      <portal systemName="IP12" portalName="Whithead E1">
+      <portal portalName="Whithead E1">
         <fromBlock blockName="OBWH-E1">
           <path pathName="WH-CR M1" blockName="OBWH-E1" />
         </fromBlock>
@@ -968,7 +968,7 @@
     <oblock systemName="OBWH-E2" userName="Whithead East Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Normal">
       <sensor systemName="Whithead East Main 2" />
       <path pathName="WH-CR M2" blockName="OBWH-E2" fromPortal="Cressman M2" toPortal="Whithead E2" fromDirection="0" toDirection="0" />
-      <portal systemName="IP11" portalName="Cressman M2">
+      <portal portalName="Cressman M2">
         <fromBlock blockName="OBWH-E2">
           <path pathName="WH-CR M2" blockName="OBWH-E2" />
         </fromBlock>
@@ -976,7 +976,7 @@
           <path pathName="CR-MA M2" blockName="OBMA-W2" />
         </toBlock>
       </portal>
-      <portal systemName="IP13" portalName="Whithead E2">
+      <portal portalName="Whithead E2">
         <fromBlock blockName="OBWH-E2">
           <path pathName="WH-CR M2" blockName="OBWH-E2" />
         </fromBlock>
@@ -994,7 +994,7 @@
       <path pathName="WH M2-M1" blockName="OBWH-OS-M1" fromPortal="Whithead Crossover" toPortal="Whithead E1" fromDirection="0" toDirection="0">
         <setting turnout="LT101" set="4" />
       </path>
-      <portal systemName="IP12" portalName="Whithead E1">
+      <portal portalName="Whithead E1">
         <fromBlock blockName="OBWH-E1">
           <path pathName="WH-CR M1" blockName="OBWH-E1" />
         </fromBlock>
@@ -1004,7 +1004,7 @@
           <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP14" portalName="Whithead Crossover">
+      <portal portalName="Whithead Crossover">
         <fromBlock blockName="OBWH-OS-M2">
           <path pathName="WH M2-M1" blockName="OBWH-OS-M2" />
         </fromBlock>
@@ -1012,7 +1012,7 @@
           <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP15" portalName="Whithead W1">
+      <portal portalName="Whithead W1">
         <fromBlock blockName="OBWH-W1">
           <path pathName="BU-WH M1" blockName="OBWH-W1" />
         </fromBlock>
@@ -1029,7 +1029,7 @@
       <path pathName="WH M2-M1" blockName="OBWH-OS-M2" fromPortal="Whithead W2" toPortal="Whithead Crossover" fromDirection="0" toDirection="0">
         <setting turnout="LT102" set="4" />
       </path>
-      <portal systemName="IP13" portalName="Whithead E2">
+      <portal portalName="Whithead E2">
         <fromBlock blockName="OBWH-E2">
           <path pathName="WH-CR M2" blockName="OBWH-E2" />
         </fromBlock>
@@ -1038,7 +1038,7 @@
           <path pathName="WH M2" blockName="OBWH-OS-M2" />
         </toBlock>
       </portal>
-      <portal systemName="IP14" portalName="Whithead Crossover">
+      <portal portalName="Whithead Crossover">
         <fromBlock blockName="OBWH-OS-M2">
           <path pathName="WH M2-M1" blockName="OBWH-OS-M2" />
         </fromBlock>
@@ -1046,7 +1046,7 @@
           <path pathName="WH M2-M1" blockName="OBWH-OS-M1" />
         </toBlock>
       </portal>
-      <portal systemName="IP16" portalName="Whithead W2">
+      <portal portalName="Whithead W2">
         <fromBlock blockName="OBWH-W2">
           <path pathName="BU-WH M2" blockName="OBWH-W2" />
         </fromBlock>
@@ -1060,7 +1060,7 @@
     <oblock systemName="OBWH-W1" userName="Whithead West Main 1" length="355.6" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="Whithead West Main 1" />
       <path pathName="BU-WH M1" blockName="OBWH-W1" fromPortal="Whithead W1" toPortal="Butler 1" fromDirection="0" toDirection="0" />
-      <portal systemName="IP1" portalName="Butler 1">
+      <portal portalName="Butler 1">
         <fromBlock blockName="OBWH-W1">
           <path pathName="BU-WH M1" blockName="OBWH-W1" />
         </fromBlock>
@@ -1069,7 +1069,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0013)" signalDelay="0" />
       </portal>
-      <portal systemName="IP15" portalName="Whithead W1">
+      <portal portalName="Whithead W1">
         <fromBlock blockName="OBWH-W1">
           <path pathName="BU-WH M1" blockName="OBWH-W1" />
         </fromBlock>
@@ -1081,7 +1081,7 @@
     <oblock systemName="OBWH-W2" userName="Whithead West Main 2" length="355.6" units="false" curve="0" permissive="true" speedNotch="Maximum">
       <sensor systemName="Whithead West Main 2" />
       <path pathName="BU-WH M2" blockName="OBWH-W2" fromPortal="Butler 2" toPortal="Whithead W2" fromDirection="0" toDirection="0" />
-      <portal systemName="IP2" portalName="Butler 2">
+      <portal portalName="Butler 2">
         <fromBlock blockName="OBWH-W2">
           <path pathName="BU-WH M2" blockName="OBWH-W2" />
         </fromBlock>
@@ -1090,7 +1090,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:NS-2008:CLS-3-lo($0014)" signalDelay="0" />
       </portal>
-      <portal systemName="IP16" portalName="Whithead W2">
+      <portal portalName="Whithead W2">
         <fromBlock blockName="OBWH-W2">
           <path pathName="BU-WH M2" blockName="OBWH-W2" />
         </fromBlock>

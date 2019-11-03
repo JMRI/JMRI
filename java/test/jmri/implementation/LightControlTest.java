@@ -660,10 +660,9 @@ public class LightControlTest {
 
         l.activateLight();
         Assert.assertEquals("Light enabled", Light.OFF, l.getState());
-
-        lc.setControlType(999);
-        l.deactivateLight();
-        JUnitAppender.assertWarnMessage("Unexpected control type when deactivating Light: ILL1");
+        
+        lc.activateLightControl();
+        Assert.assertEquals("Light still off", Light.OFF, l.getState());
 
         l.dispose();
 

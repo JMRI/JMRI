@@ -25,6 +25,8 @@
 set -e   # bail on errors
 set -x   # show our work
 
+whoami
+
 REL_VER=$1
 OUTPUT=$2
 INPUTIMAGEFILE=$3
@@ -32,7 +34,6 @@ CERTIFICATE=$4
 AC_USER=$5
 AC_PASSWORD=$6
 KEYCHAIN_FILE=$7
-KEYCHAIN_PWD=$8
 
 # -----------------------------------------
 function trapExitHandler {
@@ -88,7 +89,10 @@ function signJarMember {
 #  
 function signFile {
   local file=$1
-  codesign -v -s "$CERTIFICATE" --force --deep $file
+  echo sign $file
+  xattr -lr $file
+  xattr -cr $file
+  codesign -v -s "$CERTIFICATE" --force --keychain "$KEYCHAIN_FILE" --deep $file
   return 0
 }
 # -----------------------------------------
@@ -139,7 +143,8 @@ trap 'exit 2' 1 2 3 15
 
 rm -f "$tmpimage1" "$tmpimage2"
 
-# mount input image (needs Linux varient)
+# mount input image
+sync
 hdiutil attach "$INPUTIMAGEFILE" -mountpoint "$tmpindir" -nobrowse
 
 # create disk image and mount
@@ -170,8 +175,12 @@ fi
 # copy contents of the Mac OS X distribution to the newly mounted filesysten
 tar -C "$tmpindir" -cf - JMRI | $SUDO tar -C "$tmpoutdir" -xf -
 
-# unlock the keychain containing the certification
-security unlock-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN_FILE"
+# display debug info for the keychain containing the certification
+security list-keychains
+security -v default-keychain
+security -v login-keychain
+security -v show-keychain-info "$KEYCHAIN_FILE"
+security -v find-certificate -c "$CERTIFICATE"  "$KEYCHAIN_FILE"
 
 # sign the app files in output
 signFile $tmpoutdir/JMRI/PanelPro.app
@@ -191,7 +200,6 @@ signJarMember $tmpoutdir/JMRI/lib/libusb4java-1.2.0-osx-x86_64.jar org/usb4java/
 signJarMember $tmpoutdir/JMRI/lib/bluecove-2.1.1-SNAPSHOT.jar libbluecove.jnilib
 signJarMember $tmpoutdir/JMRI/lib/jna-4.4.0.jar com/sun/jna/darwin/libjnidispatch.jnilib
 signJarMember $tmpoutdir/JMRI/lib/hid4java-0.5.0.jar darwin/libhidapi.dylib
-signJarMember $tmpoutdir/JMRI/lib/libusb4java-1.2.0-osx-x86.jar org/usb4java/osx-x86/libusb4java.dylib
 # signJarMember $tmpoutdir/JMRI/lib/selenium-server-standalone-3.6.0.jar com/sun/jna/darwin/libjnidispatch.jnilib # OMITTED DUE TO TOC ISSUE
 signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.1.jar META-INF/native/osx/libjansi.jnilib
 signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.1.jar jni/Darwin/libjffi-1.2.jnilib
