@@ -2353,7 +2353,10 @@
         <exec executable="wget"
               osFamily="unix"
               failonerror="true">
-            <arg value="-t 1200"/>
+            <arg value="--tries=1"/> <!-- don't retry, just fail, because you're firing off a process -->
+            <arg value="--dns-timeout=10"/>     <!-- default is wait forever -->
+            <arg value="--connect-timeout=10"/> <!-- default is wait forever -->
+            <arg value="--read-timeout=3600"/>  <!-- wait a long time for the process to run and data return -->
             <arg value="-O signing-wget.log"/>
             <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>

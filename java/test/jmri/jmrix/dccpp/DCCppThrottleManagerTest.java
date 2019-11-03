@@ -19,7 +19,9 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+	DCCppCommandStation cs = new DCCppCommandStation();
+	cs.setCommandStationMaxNumSlots(12); // the "traditional" value for DCC++
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(cs);
         tm = new DCCppThrottleManager(new DCCppSystemConnectionMemo(tc));
     }
 
