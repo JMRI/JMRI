@@ -77,4 +77,9 @@
 
 	</div> <!-- closes #side -->
 
+    <!-- Sidebar-Tail -->
+        <script type="text/javascript" src="/web/js/here.js">
+        </script>
+    <!-- /Sidebar-Tail -->
+
 <!-- /Sidebar -->
