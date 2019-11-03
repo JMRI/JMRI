@@ -163,20 +163,7 @@ public class DefaultShutDownManager implements ShutDownManager {
                 return false;
             }
             log.debug("sequential tasks completed executing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
-            // close any open windows by triggering a closing event
-            // this gives open windows a final chance to perform any cleanup
-            if (!GraphicsEnvironment.isHeadless()) {
-                Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
-                    // do not run on thread, or in parallel, as System.exit()
-                    // will get called before windows can close
-                    if (frame.isDisplayable()) { // dispose() has not been called
-                        log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
-                        Date timer = new Date();
-                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                        log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - timer.getTime());
-                    }
-                });
-            }
+            shutdownGUI();
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // wait for parallel tasks to complete
             synchronized (start) {
@@ -206,6 +193,24 @@ public class DefaultShutDownManager implements ShutDownManager {
             }
         }
         return false;
+    }
+    
+    protected void shutdownGUI() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        // close any open windows by triggering a closing event
+        // this gives open windows a final chance to perform any cleanup
+        Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
+            // do not run on thread, or in parallel, as System.exit()
+            // will get called before windows can close
+            if (frame.isDisplayable()) { // dispose() has not been called
+                log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
+                Date timer = new Date();
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - timer.getTime());
+            }
+        });
     }
 
     /**
