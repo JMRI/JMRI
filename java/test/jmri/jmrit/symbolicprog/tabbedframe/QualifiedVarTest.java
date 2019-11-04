@@ -1,6 +1,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -60,8 +61,8 @@ public class QualifiedVarTest {
                 p.setVisible(true);
 
                 // close the window for cleanliness
-                JUnitUtil.dispose(p);
-            }
+                p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
+        }
         });
     }
 

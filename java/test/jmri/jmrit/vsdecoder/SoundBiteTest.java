@@ -22,7 +22,6 @@ public class SoundBiteTest {
 
     private ShutDownTask damsdt;
 
-
     @Test
     public void testStateConstants() {
         // Maybe check the enums here?
