@@ -104,6 +104,31 @@
 
       <h2>Introduction to LogixNG</h2>
 
+      <p>For those who are used with Logix, it's important to note that
+	  LogixNG is similar, but different.</p>
+
+	  <p>The main building blocks in LogixNG are actions and expressions.
+	  An action do something, for example throwing a turnout, set a signal
+	  or run a script. An expression asks a question, for example if
+	  turnout LT2 is closed, or if sensor IS255 is active.</p>
+
+	  <p>The actions and expressions are organized in trees, there each
+	  tree is a ConditionalNG. The ConditionalNGs are organized in LogixNGs.</p>
+
+	  <p>An action or expression may have other actions and/or expressions
+	  as children, which allows the user to build a complex structure
+	  with simple building blocks.</p>
+
+	  <p>Example:<br />
+	  One common root of the tree is the IfThenElse action. It has one
+	  child expression and one or two child actions. It evaluates the
+	  expression and if the expression answers <strong>true</strong>, the
+	  "then" child action is executed. But if the expression answers
+	  <strong>false</strong>, the "else" child action is executed instead.
+
+
+<!--
+      ********************REMOVED CONTENT*****************************
       <p>LogixNG is built of four building blocks:</p>
 	  <ul>
         <li>LogixNG - a container of one or several ConditionalNGs</li>
@@ -168,6 +193,9 @@
       for the task in one place, makes it much easier to see how
       related logical expressions might work together and how they
       might affect each other.</p>
+
+      ********************REMOVED CONTENT*****************************
+-->
 
 
 
