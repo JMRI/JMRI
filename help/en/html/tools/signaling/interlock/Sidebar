@@ -14,7 +14,7 @@
 		    <li><dfn><a href="../SignalMasts.shtml">Signal Masts</a></dfn>
 		    <li><dfn><a href="../SignalGroups.shtml">Signal Groups</a></dfn>
 		    <li><dfn><a href="../SignalMastLogic.shtml">Signal Mast Logic</a></dfn>
-		    <li><dfn><strong>Entry Exit &amp; Interlocking</strong></dfn> <!-- you're here now -->
+		    <li class="here"><dfn>Entry Exit &amp; Interlocking</dfn> <!-- you're here now -->
 		    </ul>
 		</dd>
 
