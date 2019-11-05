@@ -27,7 +27,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -65,7 +64,6 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.NamedBean.DisplayOptions;
 import jmri.Reporter;
-import jmri.ReporterManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHead;
@@ -2425,7 +2423,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (selectionActive) {
                 pt = MathUtil.midPoint(getSelectionRect());
             }
-            enterReporter((int) pt.getX(), (int) pt.getY());
+            getLEDialogs().enterReporter((int) pt.getX(), (int) pt.getY());
             //note: panel resized in enterReporter
             setDirty();
             redrawPanel();
@@ -2476,7 +2474,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem gridSizeItem = new JMenuItem(Bundle.getMessage("SetGridSizes") + "...");
         gridMenu.add(gridSizeItem);
         gridSizeItem.addActionListener((ActionEvent event) -> {
-            enterGridSizes();
+            getLEDialogs().enterGridSizes();
         });
 
         //
@@ -2732,7 +2730,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
             //bring up scale track diagram dialog
-            scaleTrackDiagram();
+            getLEDialogs().scaleTrackDiagram();
         });
 
         //translate selection
@@ -2741,7 +2739,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
             //bring up translate selection dialog
-            moveSelection();
+            if (!selectionActive || (selectionWidth == 0.0) || (selectionHeight == 0.0)) {
+                //no selection has been made - nothing to move
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("Error12"),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            } else {
+                getLEDialogs().moveSelection();
+            }
         });
 
         //undo translate selection
@@ -3509,545 +3513,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }
 
-    /*====================================*\
-    |* Dialog box to enter new grid sizes *|
-    \*====================================*/
-    //operational variables for enter grid sizes pane
-    private transient JmriJFrame enterGridSizesFrame = null;
-    private boolean enterGridSizesOpen = false;
-    private boolean gridSizesChange = false;
-    private transient JTextField primaryGridSizeField = new JTextField(6);
-    private transient JTextField secondaryGridSizeField = new JTextField(6);
-    private transient JButton gridSizesDone;
-    private transient JButton gridSizesCancel;
-
-    //display dialog for entering grid sizes
-    protected void enterGridSizes() {
-        if (enterGridSizesOpen) {
-            enterGridSizesFrame.setVisible(true);
-            return;
-        }
-
-        //Initialize if needed
-        if (enterGridSizesFrame == null) {
-            enterGridSizesFrame = new JmriJFrame(Bundle.getMessage("SetGridSizes"));
-            enterGridSizesFrame.addHelpMenu("package.jmri.jmrit.display.EnterGridSizes", true);
-            enterGridSizesFrame.setLocation(70, 30);
-            Container theContentPane = enterGridSizesFrame.getContentPane();
-            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
-
-            //setup primary grid sizes
-            JPanel panel3 = new JPanel();
-            panel3.setLayout(new FlowLayout());
-            JLabel primaryGridSIzeLabel = new JLabel(Bundle.getMessage("PrimaryGridSize"));
-            panel3.add(primaryGridSIzeLabel);
-            panel3.add(primaryGridSizeField);
-            primaryGridSizeField.setToolTipText(Bundle.getMessage("PrimaryGridSizeHint"));
-            theContentPane.add(panel3);
-
-            //setup side track width
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel secondaryGridSizeLabel = new JLabel(Bundle.getMessage("SecondaryGridSize"));
-            panel2.add(secondaryGridSizeLabel);
-            panel2.add(secondaryGridSizeField);
-            secondaryGridSizeField.setToolTipText(Bundle.getMessage("SecondaryGridSizeHint"));
-            theContentPane.add(panel2);
-
-            //set up Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            panel5.add(gridSizesDone = new JButton(Bundle.getMessage("ButtonDone")));
-            gridSizesDone.addActionListener((ActionEvent event) -> {
-                gridSizesDonePressed(event);
-            });
-            gridSizesDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
-
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(gridSizesDone);
-                rootPane.setDefaultButton(gridSizesDone);
-            });
-
-            //Cancel
-            panel5.add(gridSizesCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            gridSizesCancel.addActionListener((ActionEvent event) -> {
-                gridSizesCancelPressed(event);
-            });
-            gridSizesCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            theContentPane.add(panel5);
-        }
-
-        //Set up for Entry of Track Widths
-        primaryGridSizeField.setText(Integer.toString(gridSize1st));
-        secondaryGridSizeField.setText(Integer.toString(gridSize2nd));
-        enterGridSizesFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent event) {
-                gridSizesCancelPressed(null);
-            }
-        });
-        enterGridSizesFrame.pack();
-        enterGridSizesFrame.setVisible(true);
-        gridSizesChange = false;
-        enterGridSizesOpen = true;
-    }
-
-    void gridSizesDonePressed(@Nonnull ActionEvent event) {
-        String newGridSize = "";
-        float siz = 0.0F;
-
-        //get secondary grid size
-        newGridSize = secondaryGridSizeField.getText().trim();
-        try {
-            siz = Float.parseFloat(newGridSize);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(enterGridSizesFrame, e);
-            return;
-        }
-
-        if ((siz < 5.0) || (siz > 100.0)) {
-            JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", siz)}),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-
-        if (!MathUtil.equals(gridSize2nd, siz)) {
-            gridSize2nd = (int) siz;
-            gridSizesChange = true;
-        }
-
-        //get mainline track width
-        newGridSize = primaryGridSizeField.getText().trim();
-        try {
-            siz = Float.parseFloat(newGridSize);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(enterGridSizesFrame, e);
-            return;
-        }
-
-        if ((siz < 5) || (siz > 100.0)) {
-            JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", siz)}),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            if (!MathUtil.equals(gridSize1st, siz)) {
-                gridSize1st = (int) siz;
-                gridSizesChange = true;
-            }
-
-            //success - hide dialog and repaint if needed
-            enterGridSizesOpen = false;
-            enterGridSizesFrame.setVisible(false);
-            enterGridSizesFrame.dispose();
-            enterGridSizesFrame = null;
-
-            if (gridSizesChange) {
-                redrawPanel();
-                setDirty();
-            }
-        }
-    }
-
-    void gridSizesCancelPressed(ActionEvent event) {
-        enterGridSizesOpen = false;
-        enterGridSizesFrame.setVisible(false);
-        enterGridSizesFrame.dispose();
-        enterGridSizesFrame = null;
-
-        if (gridSizesChange) {
-            redrawPanel();
-            setDirty();
-        }
-    }
-
-    /*=======================================*\
-    |* Dialog box to enter new reporter info *|
-    \*=======================================*/
-    //operational variables for enter reporter pane
-    private transient JmriJFrame enterReporterFrame = null;
-    private boolean reporterOpen = false;
-    private transient JTextField xPositionField = new JTextField(6);
-    private transient JTextField yPositionField = new JTextField(6);
-    private transient JTextField reporterNameField = new JTextField(6);
-    private transient JButton reporterDone;
-    private transient JButton reporterCancel;
-
-    //display dialog for entering Reporters
-    protected void enterReporter(int defaultX, int defaultY) {
-        if (reporterOpen) {
-            enterReporterFrame.setVisible(true);
-
-            return;
-        }
-
-        //Initialize if needed
-        if (enterReporterFrame == null) {
-            enterReporterFrame = new JmriJFrame(Bundle.getMessage("AddReporter"));
-
-//enterReporterFrame.addHelpMenu("package.jmri.jmrit.display.AddReporterLabel", true);
-            enterReporterFrame.setLocation(70, 30);
-            Container theContentPane = enterReporterFrame.getContentPane();
-            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
-
-            //setup reporter entry
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel reporterLabel = new JLabel(Bundle.getMessage("ReporterName"));
-            panel2.add(reporterLabel);
-            panel2.add(reporterNameField);
-            reporterNameField.setToolTipText(Bundle.getMessage("ReporterNameHint"));
-            theContentPane.add(panel2);
-
-            //setup coordinates entry
-            JPanel panel3 = new JPanel();
-            panel3.setLayout(new FlowLayout());
-            JLabel xCoordLabel = new JLabel(Bundle.getMessage("ReporterLocationX"));
-            panel3.add(xCoordLabel);
-            panel3.add(xPositionField);
-            xPositionField.setToolTipText(Bundle.getMessage("ReporterLocationXHint"));
-            JLabel yCoordLabel = new JLabel(Bundle.getMessage("ReporterLocationY"));
-            panel3.add(yCoordLabel);
-            panel3.add(yPositionField);
-            yPositionField.setToolTipText(Bundle.getMessage("ReporterLocationYHint"));
-            theContentPane.add(panel3);
-
-            //set up Add and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            panel5.add(reporterDone = new JButton(Bundle.getMessage("AddNewLabel")));
-            reporterDone.addActionListener((ActionEvent event) -> {
-                reporterDonePressed(event);
-            });
-            reporterDone.setToolTipText(Bundle.getMessage("ReporterDoneHint"));
-
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(reporterDone);
-                rootPane.setDefaultButton(reporterDone);
-            });
-
-            //Cancel
-            panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            reporterCancel.addActionListener((ActionEvent event) -> {
-                reporterCancelPressed();
-            });
-            reporterCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            theContentPane.add(panel5);
-        }
-
-        //Set up for Entry of Reporter Icon
-        xPositionField.setText(Integer.toString(defaultX));
-        yPositionField.setText(Integer.toString(defaultY));
-        enterReporterFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent event) {
-                reporterCancelPressed();
-            }
-        });
-        enterReporterFrame.pack();
-        enterReporterFrame.setVisible(true);
-        reporterOpen = true;
-    }
-
-    void reporterDonePressed(@Nonnull ActionEvent event) {
-        //get size of current panel
-        Dimension dim = getTargetPanelSize();
-
-        //get x coordinate
-        String newX = "";
-        int xx = 0;
-
-        newX = xPositionField.getText().trim();
-        try {
-            xx = Integer.parseInt(newX);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(enterReporterFrame, e);
-            return;
-        }
-
-        if ((xx <= 0) || (xx > dim.width)) {
-            JOptionPane.showMessageDialog(enterReporterFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", xx)}),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-
-        // get y coordinate
-        String newY = "";
-        int yy = 0;
-        newY = yPositionField.getText().trim();
-        try {
-            yy = Integer.parseInt(newY);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(enterReporterFrame, e);
-            return;
-        }
-
-        if ((yy <= 0) || (yy > dim.height)) {
-            JOptionPane.showMessageDialog(enterReporterFrame,
-                    MessageFormat.format(Bundle.getMessage("Error2a"),
-                            new Object[]{String.format(" %s ", yy)}),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-
-        // get reporter name
-        Reporter reporter = null;
-        String rName = reporterNameField.getText();
-
-        if (InstanceManager.getNullableDefault(ReporterManager.class) != null) {
-            try {
-                reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(rName);
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(enterReporterFrame,
-                        MessageFormat.format(Bundle.getMessage("Error18"),
-                                new Object[]{rName}), Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        } else {
-            JOptionPane.showMessageDialog(enterReporterFrame,
-                    Bundle.getMessage("Error17"), Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-
-        //add the reporter icon
-        addReporter(reporter, xx, yy);
-
-        //success - repaint the panel
-        redrawPanel();
-        enterReporterFrame.setVisible(true);
-    }
-
-    void reporterCancelPressed() {
-        reporterOpen = false;
-        enterReporterFrame.setVisible(false);
-        enterReporterFrame.dispose();
-        enterReporterFrame = null;
-        redrawPanel();
-    }
-
-    /*===============================*\
-    |*  Dialog box to enter scale /  *|
-    |*  translate track diagram info *|
-    \*===============================*/
-    //operational variables for scale/translate track diagram pane
-    private transient JmriJFrame scaleTrackDiagramFrame = null;
-    private boolean scaleTrackDiagramOpen = false;
-    private transient JTextField xFactorField = new JTextField(6);
-    private transient JTextField yFactorField = new JTextField(6);
-    private transient JTextField xTranslateField = new JTextField(6);
-    private transient JTextField yTranslateField = new JTextField(6);
-    private transient JButton scaleTrackDiagramDone;
-    private transient JButton scaleTrackDiagramCancel;
-
-    //display dialog for scaling the track diagram
-    protected void scaleTrackDiagram() {
-        if (scaleTrackDiagramOpen) {
-            scaleTrackDiagramFrame.setVisible(true);
-            return;
-        }
-
-        // Initialize if needed
-        if (scaleTrackDiagramFrame == null) {
-            scaleTrackDiagramFrame = new JmriJFrame(Bundle.getMessage("ScaleTrackDiagram"));
-            scaleTrackDiagramFrame.addHelpMenu("package.jmri.jmrit.display.ScaleTrackDiagram", true);
-            scaleTrackDiagramFrame.setLocation(70, 30);
-            Container theContentPane = scaleTrackDiagramFrame.getContentPane();
-            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
-
-            // setup x translate
-            JPanel panel31 = new JPanel();
-            panel31.setLayout(new FlowLayout());
-            JLabel xTranslateLabel = new JLabel(Bundle.getMessage("XTranslateLabel"));
-            panel31.add(xTranslateLabel);
-            panel31.add(xTranslateField);
-            xTranslateField.setToolTipText(Bundle.getMessage("XTranslateHint"));
-            theContentPane.add(panel31);
-
-            //setup y translate
-            JPanel panel32 = new JPanel();
-            panel32.setLayout(new FlowLayout());
-            JLabel yTranslateLabel = new JLabel(Bundle.getMessage("YTranslateLabel"));
-            panel32.add(yTranslateLabel);
-            panel32.add(yTranslateField);
-            yTranslateField.setToolTipText(Bundle.getMessage("YTranslateHint"));
-            theContentPane.add(panel32);
-
-            //setup information message 1
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            JLabel message1Label = new JLabel(Bundle.getMessage("Message1Label"));
-            panel33.add(message1Label);
-            theContentPane.add(panel33);
-
-            //setup x factor
-            JPanel panel21 = new JPanel();
-            panel21.setLayout(new FlowLayout());
-            JLabel xFactorLabel = new JLabel(Bundle.getMessage("XFactorLabel"));
-            panel21.add(xFactorLabel);
-            panel21.add(xFactorField);
-            xFactorField.setToolTipText(Bundle.getMessage("FactorHint"));
-            theContentPane.add(panel21);
-
-            //setup y factor
-            JPanel panel22 = new JPanel();
-            panel22.setLayout(new FlowLayout());
-            JLabel yFactorLabel = new JLabel(Bundle.getMessage("YFactorLabel"));
-            panel22.add(yFactorLabel);
-            panel22.add(yFactorField);
-            yFactorField.setToolTipText(Bundle.getMessage("FactorHint"));
-            theContentPane.add(panel22);
-
-            //setup information message 2
-            JPanel panel23 = new JPanel();
-            panel23.setLayout(new FlowLayout());
-            JLabel message2Label = new JLabel(Bundle.getMessage("Message2Label"));
-            panel23.add(message2Label);
-            theContentPane.add(panel23);
-
-            //set up Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            panel5.add(scaleTrackDiagramDone = new JButton(Bundle.getMessage("ScaleTranslate")));
-            scaleTrackDiagramDone.addActionListener((ActionEvent event) -> {
-                scaleTrackDiagramDonePressed(event);
-            });
-            scaleTrackDiagramDone.setToolTipText(Bundle.getMessage("ScaleTranslateHint"));
-
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(scaleTrackDiagramDone);
-                rootPane.setDefaultButton(scaleTrackDiagramDone);
-            });
-
-            panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            scaleTrackDiagramCancel.addActionListener((ActionEvent event) -> {
-                scaleTrackDiagramCancelPressed(event);
-            });
-            scaleTrackDiagramCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            theContentPane.add(panel5);
-        }
-
-        // Set up for Entry of Scale and Translation
-        xFactorField.setText("1.0");
-        yFactorField.setText("1.0");
-        xTranslateField.setText("0");
-        yTranslateField.setText("0");
-        scaleTrackDiagramFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent event) {
-                scaleTrackDiagramCancelPressed(null);
-            }
-        });
-        scaleTrackDiagramFrame.pack();
-        scaleTrackDiagramFrame.setVisible(true);
-        scaleTrackDiagramOpen = true;
-    }
-
-    void scaleTrackDiagramDonePressed(@Nonnull ActionEvent event) {
-        String newText = "";
-        boolean changeFlag = false;
-        boolean translateError = false;
-        float xTranslation = 0.0F;
-        float yTranslation = 0.0F;
-        float xFactor = 1.0F;
-        float yFactor = 1.0F;
-
-        // get x translation
-        newText = xTranslateField.getText().trim();
-        try {
-            xTranslation = Float.parseFloat(newText);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(scaleTrackDiagramFrame, e);
-            return;
-        }
-
-        // get y translation
-        newText = yTranslateField.getText().trim();
-        try {
-            yTranslation = Float.parseFloat(newText);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(scaleTrackDiagramFrame, e);
-            return;
-        }
-
-        // get x factor
-        newText = xFactorField.getText().trim();
-        try {
-            xFactor = Float.parseFloat(newText);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(scaleTrackDiagramFrame, e);
-            return;
-        }
-
-        // get y factor
-        newText = yFactorField.getText().trim();
-        try {
-            yFactor = Float.parseFloat(newText);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(scaleTrackDiagramFrame, e);
-            return;
-        }
-
-        // here when all numbers read in successfully - check for translation
-        if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
-            //apply translation
-            if (translateTrack(xTranslation, yTranslation)) {
-                changeFlag = true;
-            } else {
-                log.error("Error translating track diagram");
-                translateError = true;
-            }
-        }
-
-        if (!translateError && ((xFactor != 1.0) || (yFactor != 1.0))) {
-            //apply scale change
-            if (scaleTrack(xFactor, yFactor)) {
-                changeFlag = true;
-            } else {
-                log.error("Error scaling track diagram");
-            }
-        }
-        selectionActive = false;
-        clearSelectionGroups();
-
-        // success - dispose of the dialog and repaint if needed
-        scaleTrackDiagramOpen = false;
-        scaleTrackDiagramFrame.setVisible(false);
-        scaleTrackDiagramFrame.dispose();
-        scaleTrackDiagramFrame = null;
-
-        if (changeFlag) {
-            redrawPanel();
-            setDirty();
-        }
-    }
-
-    void scaleTrackDiagramCancelPressed(ActionEvent event) {
-        scaleTrackDiagramOpen = false;
-        scaleTrackDiagramFrame.setVisible(false);
-        scaleTrackDiagramFrame.dispose();
-        scaleTrackDiagramFrame = null;
-    }
-
     boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
         layoutTrackList.forEach((lt) -> {
@@ -4076,130 +3541,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return true;
     }
 
-    /*=========================================*\
-    |* Dialog box to enter move selection info *|
-    \*=========================================*/
-    //operational variables for move selection pane
-    private transient JmriJFrame moveSelectionFrame = null;
-    private boolean moveSelectionOpen = false;
-    private transient JTextField xMoveField = new JTextField(6);
-    private transient JTextField yMoveField = new JTextField(6);
-    private transient JButton moveSelectionDone;
-    private transient JButton moveSelectionCancel;
+    private transient Rectangle2D undoRect;
     private boolean canUndoMoveSelection = false;
     private double undoDeltaX = 0.0;
     private double undoDeltaY = 0.0;
-    private transient Rectangle2D undoRect;
 
-    //display dialog for translation a selection
-    protected void moveSelection() {
-        if (!selectionActive || (selectionWidth == 0.0) || (selectionHeight == 0.0)) {
-            //no selection has been made - nothing to move
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("Error12"),
-                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-
-        if (moveSelectionOpen) {
-            moveSelectionFrame.setVisible(true);
-            return;
-        }
-
-        //Initialize if needed
-        if (moveSelectionFrame == null) {
-            moveSelectionFrame = new JmriJFrame(Bundle.getMessage("TranslateSelection"));
-            moveSelectionFrame.addHelpMenu("package.jmri.jmrit.display.TranslateSelection", true);
-            moveSelectionFrame.setLocation(70, 30);
-            Container theContentPane = moveSelectionFrame.getContentPane();
-            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.PAGE_AXIS));
-
-            //setup x translate
-            JPanel panel31 = new JPanel();
-            panel31.setLayout(new FlowLayout());
-            JLabel xMoveLabel = new JLabel(Bundle.getMessage("XTranslateLabel"));
-            panel31.add(xMoveLabel);
-            panel31.add(xMoveField);
-            xMoveField.setToolTipText(Bundle.getMessage("XTranslateHint"));
-            theContentPane.add(panel31);
-
-            //setup y translate
-            JPanel panel32 = new JPanel();
-            panel32.setLayout(new FlowLayout());
-            JLabel yMoveLabel = new JLabel(Bundle.getMessage("YTranslateLabel"));
-            panel32.add(yMoveLabel);
-            panel32.add(yMoveField);
-            yMoveField.setToolTipText(Bundle.getMessage("YTranslateHint"));
-            theContentPane.add(panel32);
-
-            //setup information message
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
-            JLabel message1Label = new JLabel(Bundle.getMessage("Message3Label"));
-            panel33.add(message1Label);
-            theContentPane.add(panel33);
-
-            //set up Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            panel5.add(moveSelectionDone = new JButton(Bundle.getMessage("MoveSelection")));
-            moveSelectionDone.addActionListener((ActionEvent event) -> {
-                moveSelectionDonePressed(event);
-            });
-            moveSelectionDone.setToolTipText(Bundle.getMessage("MoveSelectionHint"));
-
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(moveSelectionDone);
-                rootPane.setDefaultButton(moveSelectionDone);
-            });
-
-            panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            moveSelectionCancel.addActionListener((ActionEvent event) -> {
-                moveSelectionCancelPressed();
-            });
-            moveSelectionCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
-            theContentPane.add(panel5);
-        }
-
-        //Set up for Entry of Translation
-        xMoveField.setText("0");
-        yMoveField.setText("0");
-        moveSelectionFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent event) {
-                moveSelectionCancelPressed();
-            }
-        });
-        moveSelectionFrame.pack();
-        moveSelectionFrame.setVisible(true);
-        moveSelectionOpen = true;
-    }
-
-    void moveSelectionDonePressed(@Nonnull ActionEvent event) {
-        String newText = "";
-        float xTranslation = 0.0F;
-        float yTranslation = 0.0F;
-
-        //get x translation
-        newText = xMoveField.getText().trim();
-        try {
-            xTranslation = Float.parseFloat(newText);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(moveSelectionFrame, e);
-            return;
-        }
-
-        //get y translation
-        newText = yMoveField.getText().trim();
-        try {
-            yTranslation = Float.parseFloat(newText);
-        } catch (NumberFormatException e) {
-            showEntryErrorDialog(moveSelectionFrame, e);
-            return;
-        }
-
+    void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             Rectangle2D selectionRect = getSelectionRect();
@@ -4236,19 +3583,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             setDirty();
             redrawPanel();
         }
-
-        //success - hide dialog
-        moveSelectionOpen = false;
-        moveSelectionFrame.setVisible(false);
-        moveSelectionFrame.dispose();
-        moveSelectionFrame = null;
-    }
-
-    void moveSelectionCancelPressed() {
-        moveSelectionOpen = false;
-        moveSelectionFrame.setVisible(false);
-        moveSelectionFrame.dispose();
-        moveSelectionFrame = null;
     }
 
     void undoMoveSelection() {
@@ -4360,27 +3694,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             super.setScroll(state);
         }
-    }
-
-    /**
-     * showEntryErrorDialog(Component parentComponent, NumberFormatException e)
-     *
-     * @param parentComponent determines the <code>Frame</code> in which the
-     *                        dialog is displayed; if <code>null</code>, or if
-     *                        the <code>parentComponent</code> has no
-     *                        <code>Frame</code>, a default <code>Frame</code>
-     *                        is used
-     * @param e               Exception thrown to indicate that the application
-     *                        has attempted to convert a string to one of the
-     *                        numeric types, but that the string does not have
-     *                        the appropriate format.
-     */
-    private void showEntryErrorDialog(Component parentComponent, NumberFormatException e) {
-        JOptionPane.showMessageDialog(parentComponent,
-                String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                        e, Bundle.getMessage("TryAgain")),
-                Bundle.getMessage("ErrorTitle"),
-                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -5834,9 +5147,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     protected void clearSelectionGroups() {
+        selectionActive = false;
         _positionableSelection.clear();
         _layoutTrackSelection.clear();
-        assignBlockToSelectionMenuItem.setEnabled(_layoutTrackSelection.size() > 0);
+        assignBlockToSelectionMenuItem.setEnabled(false);
         _layoutShapeSelection.clear();
     }
 
@@ -8391,6 +7705,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutEditorChecks = new LayoutEditorChecks(this);
         }
         return layoutEditorChecks;
+    }
+
+    private transient LayoutEditorDialogs leDialogs = null;
+
+    public LayoutEditorDialogs getLEDialogs() {
+        if (leDialogs == null) {
+            leDialogs = new LayoutEditorDialogs(this);
+        }
+        return leDialogs;
     }
 
     /**
