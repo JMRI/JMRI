@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import org.eclipse.jetty.websocket.api.Session;
@@ -56,7 +55,7 @@ public class JsonMockConnection extends JsonConnection {
      * {@link #isThrowIOException()} will return false.
      */
     @Override
-    public void sendMessage(@Nullable JsonNode message, int id) throws IOException {
+    public void sendMessage(@CheckForNull JsonNode message, int id) throws IOException {
         if (this.throwIOException) {
             this.throwIOException = false;
             throw new IOException();
