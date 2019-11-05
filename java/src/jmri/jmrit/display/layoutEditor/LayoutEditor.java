@@ -3603,12 +3603,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             siz = Float.parseFloat(newGridSize);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(enterGridSizesFrame, e);
             return;
         }
 
@@ -3632,12 +3627,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             siz = Float.parseFloat(newGridSize);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(enterGridSizesFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(enterGridSizesFrame, e);
             return;
         }
 
@@ -3666,7 +3656,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    void gridSizesCancelPressed(@Nonnull ActionEvent event) {
+    void gridSizesCancelPressed(ActionEvent event) {
         enterGridSizesOpen = false;
         enterGridSizesFrame.setVisible(false);
         enterGridSizesFrame.dispose();
@@ -3780,12 +3770,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             xx = Integer.parseInt(newX);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(enterReporterFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(enterReporterFrame, e);
             return;
         }
 
@@ -3806,12 +3791,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             yy = Integer.parseInt(newY);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(enterReporterFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(enterReporterFrame, e);
             return;
         }
 
@@ -3996,12 +3976,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             xTranslation = Float.parseFloat(newText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(scaleTrackDiagramFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(scaleTrackDiagramFrame, e);
             return;
         }
 
@@ -4010,12 +3985,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             yTranslation = Float.parseFloat(newText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(scaleTrackDiagramFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(scaleTrackDiagramFrame, e);
             return;
         }
 
@@ -4024,12 +3994,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             xFactor = Float.parseFloat(newText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(scaleTrackDiagramFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(scaleTrackDiagramFrame, e);
             return;
         }
 
@@ -4038,12 +4003,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             yFactor = Float.parseFloat(newText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(scaleTrackDiagramFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(scaleTrackDiagramFrame, e);
             return;
         }
 
@@ -4081,7 +4041,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    void scaleTrackDiagramCancelPressed(@Nonnull ActionEvent event) {
+    void scaleTrackDiagramCancelPressed(ActionEvent event) {
         scaleTrackDiagramOpen = false;
         scaleTrackDiagramFrame.setVisible(false);
         scaleTrackDiagramFrame.dispose();
@@ -4227,12 +4187,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             xTranslation = Float.parseFloat(newText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(moveSelectionFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(moveSelectionFrame, e);
             return;
         }
 
@@ -4241,12 +4196,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         try {
             yTranslation = Float.parseFloat(newText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(moveSelectionFrame,
-                    String.format("%s: %s %s", Bundle.getMessage("EntryError"),
-                            e, Bundle.getMessage("TryAgain")),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-
+            showEntryErrorDialog(moveSelectionFrame, e);
             return;
         }
 
@@ -4410,6 +4360,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         } else {
             super.setScroll(state);
         }
+    }
+
+    /**
+     * showEntryErrorDialog(Component parentComponent, NumberFormatException e)
+     *
+     * @param parentComponent determines the <code>Frame</code> in which the
+     *                        dialog is displayed; if <code>null</code>, or if
+     *                        the <code>parentComponent</code> has no
+     *                        <code>Frame</code>, a default <code>Frame</code>
+     *                        is used
+     * @param e               Exception thrown to indicate that the application
+     *                        has attempted to convert a string to one of the
+     *                        numeric types, but that the string does not have
+     *                        the appropriate format.
+     */
+    private void showEntryErrorDialog(Component parentComponent, NumberFormatException e) {
+        JOptionPane.showMessageDialog(parentComponent,
+                String.format("%s: %s %s", Bundle.getMessage("EntryError"),
+                        e, Bundle.getMessage("TryAgain")),
+                Bundle.getMessage("ErrorTitle"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**

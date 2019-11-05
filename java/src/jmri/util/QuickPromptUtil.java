@@ -87,7 +87,7 @@ public class QuickPromptUtil {
         Integer result = oldValue;
         Integer newValue = promptForData(parentComponent, message, title, oldValue, validator, (val) -> {
             try {
-                return new Integer(Integer.parseInt(val));
+                return Integer.valueOf(Integer.parseInt(val));
             } catch (NumberFormatException ex) {
                 // original exception ignored; wrong message.
                 throw new NumberFormatException(Bundle.getMessage("InputDialogNotNumber"));
