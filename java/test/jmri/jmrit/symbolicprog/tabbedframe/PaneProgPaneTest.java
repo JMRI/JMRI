@@ -430,6 +430,7 @@ public class PaneProgPaneTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // testing of PaneProgFrame ShutDown items down in PaneProgFrame tests
         JUnitUtil.tearDown();
     }
 
