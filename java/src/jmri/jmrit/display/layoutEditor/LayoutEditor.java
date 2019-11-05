@@ -1926,12 +1926,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Set up editable JmriBeanComboBoxes
+     * Set up NamedBeanComboBox
      *
-     * @param inComboBox     the editable JmriBeanComboBoxes to set up
+     * @param inComboBox     the NamedBeanComboBox to set up
      * @param inValidateMode true to validate typed inputs; false otherwise
      * @param inEnable       boolean to enable / disable the NamedBeanComboBox
-     * @param inEditable   boolean to enable / disable the combobox
+     * @param inEditable     boolean to make the NamedBeanComboBox editable
      */
     public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
