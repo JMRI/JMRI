@@ -126,7 +126,7 @@ public class LayoutEditorDialogs {
         enterGridSizesOpen = true;
     }
 
-    void gridSizesDonePressed(@Nonnull ActionEvent event) {
+    private void gridSizesDonePressed(@Nonnull ActionEvent event) {
         String newGridSize = "";
         float siz = 0.0F;
 
@@ -178,7 +178,7 @@ public class LayoutEditorDialogs {
         }
     }
 
-    void gridSizesCancelPressed(ActionEvent event) {
+    private void gridSizesCancelPressed(ActionEvent event) {
         enterGridSizesOpen = false;
         enterGridSizesFrame.setVisible(false);
         enterGridSizesFrame.dispose();
@@ -280,7 +280,7 @@ public class LayoutEditorDialogs {
         reporterOpen = true;
     }
 
-    void reporterDonePressed(@Nonnull ActionEvent event) {
+    private void reporterDonePressed(@Nonnull ActionEvent event) {
         //get x coordinate
         String newX = "";
         int xx = 0;
@@ -352,7 +352,7 @@ public class LayoutEditorDialogs {
         reporterCancelPressed();
     }
 
-    void reporterCancelPressed() {
+    private void reporterCancelPressed() {
         reporterOpen = false;
         enterReporterFrame.setVisible(false);
         enterReporterFrame.dispose();
@@ -480,7 +480,7 @@ public class LayoutEditorDialogs {
         scaleTrackDiagramOpen = true;
     }
 
-    void scaleTrackDiagramDonePressed(@Nonnull ActionEvent event) {
+    private void scaleTrackDiagramDonePressed(@Nonnull ActionEvent event) {
         boolean changeFlag = false;
         boolean translateError = false;
         float xTranslation, yTranslation, xFactor, yFactor;
@@ -542,11 +542,7 @@ public class LayoutEditorDialogs {
         }
         layoutEditor.clearSelectionGroups();
 
-        // success - dispose of the dialog and repaint if needed
-        scaleTrackDiagramOpen = false;
-        scaleTrackDiagramFrame.setVisible(false);
-        scaleTrackDiagramFrame.dispose();
-        scaleTrackDiagramFrame = null;
+        scaleTrackDiagramCancelPressed(null);
 
         if (changeFlag) {
             layoutEditor.redrawPanel();
@@ -554,7 +550,7 @@ public class LayoutEditorDialogs {
         }
     }
 
-    void scaleTrackDiagramCancelPressed(ActionEvent event) {
+    private void scaleTrackDiagramCancelPressed(ActionEvent event) {
         scaleTrackDiagramOpen = false;
         scaleTrackDiagramFrame.setVisible(false);
         scaleTrackDiagramFrame.dispose();
@@ -651,7 +647,7 @@ public class LayoutEditorDialogs {
         moveSelectionOpen = true;
     }
 
-    void moveSelectionDonePressed(@Nonnull ActionEvent event) {
+    private void moveSelectionDonePressed(@Nonnull ActionEvent event) {
         String newText = "";
         float xTranslation = 0.0F;
         float yTranslation = 0.0F;
@@ -679,7 +675,7 @@ public class LayoutEditorDialogs {
         moveSelectionCancelPressed();
     }
 
-    void moveSelectionCancelPressed() {
+    private void moveSelectionCancelPressed() {
         moveSelectionOpen = false;
         moveSelectionFrame.setVisible(false);
         moveSelectionFrame.dispose();

@@ -23,6 +23,7 @@ import org.junit.runners.Suite;
         LayoutConnectivityTest.class,
         LayoutEditorActionTest.class,
         LayoutEditorAuxToolsTest.class,
+        LayoutEditorDialogsTest.class,
         LayoutEditorFindItemsTest.class,
         LayoutEditorLoadAndStoreTest.class,
         LayoutEditorTest.class,
