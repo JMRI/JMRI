@@ -17,6 +17,7 @@ import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.util.JmriJFrame;
@@ -52,6 +53,7 @@ public class LayoutEditorDialogs {
     private transient JButton gridSizesCancel;
 
     //display dialog for entering grid sizes
+    @InvokeOnGuiThread
     protected void enterGridSizes() {
         if (enterGridSizesOpen) {
             enterGridSizesFrame.setVisible(true);
@@ -172,17 +174,7 @@ public class LayoutEditorDialogs {
                 layoutEditor.setGridSize((int) siz);
                 gridSizesChange = true;
             }
-
-            //success - hide dialog and repaint if needed
-            enterGridSizesOpen = false;
-            enterGridSizesFrame.setVisible(false);
-            enterGridSizesFrame.dispose();
-            enterGridSizesFrame = null;
-
-            if (gridSizesChange) {
-                layoutEditor.redrawPanel();
-                layoutEditor.setDirty();
-            }
+            gridSizesCancelPressed(null);
         }
     }
 
@@ -211,10 +203,10 @@ public class LayoutEditorDialogs {
     private transient JButton reporterCancel;
 
     //display dialog for entering Reporters
+    @InvokeOnGuiThread
     protected void enterReporter(int defaultX, int defaultY) {
         if (reporterOpen) {
             enterReporterFrame.setVisible(true);
-
             return;
         }
 
@@ -357,15 +349,7 @@ public class LayoutEditorDialogs {
         //add the reporter icon
         layoutEditor.addReporter(reporter, xx, yy);
 
-        // success - dispose of the dialog and repaint if needed
-        reporterOpen = false;
-        enterReporterFrame.setVisible(false);
-        enterReporterFrame.dispose();
-        enterReporterFrame = null;
-
-        //success - repaint the panel
-        layoutEditor.redrawPanel();
-        enterReporterFrame.setVisible(true);
+        reporterCancelPressed();
     }
 
     void reporterCancelPressed() {
@@ -391,6 +375,7 @@ public class LayoutEditorDialogs {
     private transient JButton scaleTrackDiagramCancel;
 
     //display dialog for scaling the track diagram
+    @InvokeOnGuiThread
     protected void scaleTrackDiagram() {
         if (scaleTrackDiagramOpen) {
             scaleTrackDiagramFrame.setVisible(true);
@@ -588,8 +573,8 @@ public class LayoutEditorDialogs {
     private transient JButton moveSelectionCancel;
 
     //display dialog for translation a selection
+    @InvokeOnGuiThread
     protected void moveSelection() {
-
         if (moveSelectionOpen) {
             moveSelectionFrame.setVisible(true);
             return;
@@ -691,11 +676,7 @@ public class LayoutEditorDialogs {
 
         layoutEditor.translate(xTranslation, yTranslation);
 
-        //success - hide dialog
-        moveSelectionOpen = false;
-        moveSelectionFrame.setVisible(false);
-        moveSelectionFrame.dispose();
-        moveSelectionFrame = null;
+        moveSelectionCancelPressed();
     }
 
     void moveSelectionCancelPressed() {

@@ -724,7 +724,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JLabel turnoutNameLabel = new JLabel(turnoutNameString);
         turnoutNamePanel.add(turnoutNameLabel);
 
-        setupComboBox(turnoutNameComboBox, false, true);
+        setupComboBox(turnoutNameComboBox, false, true, false);
         turnoutNameComboBox.setToolTipText(Bundle.getMessage("TurnoutNameToolTip"));
         turnoutNamePanel.add(turnoutNameComboBox);
 
@@ -733,7 +733,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // turnoutNameComboBox.setEnabledColor(Color.green.darker().darker());
         // turnoutNameComboBox.setDisabledColor(Color.red);
 
-        setupComboBox(extraTurnoutNameComboBox, false, true);
+        setupComboBox(extraTurnoutNameComboBox, false, true, false);
         extraTurnoutNameComboBox.setToolTipText(Bundle.getMessage("SecondTurnoutNameToolTip"));
 
         extraTurnoutNameComboBox.addPopupMenuListener(newTurnoutComboBoxPopupMenuListener(extraTurnoutNameComboBox));
@@ -790,7 +790,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         dashedLine.setToolTipText(Bundle.getMessage("DashedCheckBoxTip"));
 
         //the blockPanel is enabled/disabled via selectionListAction above
-        setupComboBox(blockIDComboBox, false, true);
+        setupComboBox(blockIDComboBox, false, true, false);
         blockIDComboBox.setToolTipText(Bundle.getMessage("BlockIDToolTip"));
 
         //change the block name
@@ -817,7 +817,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
-        setupComboBox(blockSensorComboBox, false, true);
+        setupComboBox(blockSensorComboBox, false, true, false);
         blockSensorComboBox.setToolTipText(Bundle.getMessage("OccupancySensorToolTip"));
 
         //third row of edit tool bar items
@@ -831,12 +831,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         memoryButton.setToolTipText(Bundle.getMessage("MemoryButtonToolTip", Bundle.getMessage("Memory")));
 
-        setupComboBox(textMemoryComboBox, true, false);
+        setupComboBox(textMemoryComboBox, true, false, false);
         textMemoryComboBox.setToolTipText(Bundle.getMessage("MemoryToolTip"));
 
         blockContentsButton.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
 
-        setupComboBox(blockContentsComboBox, true, false);
+        setupComboBox(blockContentsComboBox, true, false, false);
         blockContentsComboBox.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
 
         blockContentsComboBox.addActionListener((ActionEvent event) -> {
@@ -852,12 +852,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //Signal Mast & text
         signalMastButton.setToolTipText(Bundle.getMessage("SignalMastButtonToolTip"));
-        setupComboBox(signalMastComboBox, true, false);
+        setupComboBox(signalMastComboBox, true, false, false);
 
         //sensor icon & text
         sensorButton.setToolTipText(Bundle.getMessage("SensorButtonToolTip"));
 
-        setupComboBox(sensorComboBox, true, false);
+        setupComboBox(sensorComboBox, true, false, false);
         sensorComboBox.setToolTipText(Bundle.getMessage("SensorIconToolTip"));
 
         sensorIconEditor = new MultiIconEditor(4);
@@ -874,7 +874,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //Signal icon & text
         signalButton.setToolTipText(Bundle.getMessage("SignalButtonToolTip"));
 
-        setupComboBox(signalHeadComboBox, true, false);
+        setupComboBox(signalHeadComboBox, true, false, false);
         signalHeadComboBox.setToolTipText(Bundle.getMessage("SignalIconToolTip"));
 
         signalIconEditor = new MultiIconEditor(10);
@@ -1931,31 +1931,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inComboBox     the editable JmriBeanComboBoxes to set up
      * @param inValidateMode true to validate typed inputs; false otherwise
      * @param inEnable       boolean to enable / disable the NamedBeanComboBox
-     */
-    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable) {
-        setupComboBox(inComboBox, inValidateMode, inEnable, !inValidateMode);
-    }
-
-    /**
-     * Set up editable JmriBeanComboBoxes
-     *
-     * @param inComboBox     the editable JmriBeanComboBoxes to set up
-     * @param inValidateMode true to validate typed inputs; false otherwise
-     * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      * @param inFirstBlank   boolean to enable / disable the first item being
      *                       blank
      */
-    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inFirstBlank) {
+    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
 
         inComboBox.setEnabled(inEnable);
-        inComboBox.setEditable(false);
+        inComboBox.setEditable(inEditable);
         inComboBox.setValidatingInput(inValidateMode);
         inComboBox.setSelectedIndex(-1);
 
         // This has to be set before calling setupComboBoxMaxRows
         // (otherwise if inFirstBlank then the  number of rows will be wrong)
-        inComboBox.setAllowNull(inFirstBlank);
+        inComboBox.setAllowNull(!inValidateMode);
 
         // set the max number of rows that will fit onscreen
         JComboBoxUtil.setupComboBoxMaxRows(inComboBox);
@@ -3543,30 +3532,26 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient Rectangle2D undoRect;
     private boolean canUndoMoveSelection = false;
-    private double undoDeltaX = 0.0;
-    private double undoDeltaY = 0.0;
+    private Point2D undoDelta = MathUtil.zeroPoint2D;
 
-    void translate(float xTranslation, float yTranslation) {
+    public void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
+            Point2D delta = new Point2D.Double(xTranslation, yTranslation);
             Rectangle2D selectionRect = getSelectionRect();
 
             //set up undo information
-            undoRect = MathUtil.offset(selectionRect, xTranslation, yTranslation);
-            undoDeltaX = -xTranslation;
-            undoDeltaY = -yTranslation;
+            undoRect = MathUtil.offset(selectionRect, delta);
+            undoDelta = MathUtil.subtract(MathUtil.zeroPoint2D, delta);
             canUndoMoveSelection = true;
             undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
 
             //apply translation to icon items within the selection
             for (Positionable c : _positionableSelection) {
-                Point2D upperLeft = c.getLocation();
-                int xNew = (int) (upperLeft.getX() + xTranslation);
-                int yNew = (int) (upperLeft.getY() + yTranslation);
-                c.setLocation(xNew, yNew);
+                Point2D newPoint = MathUtil.add(c.getLocation(), delta);
+                c.setLocation((int) newPoint.getX(), (int) newPoint.getY());
             }
 
-            Point2D delta = new Point2D.Double(xTranslation, yTranslation);
             for (LayoutTrack lt : _layoutTrackSelection) {
                 lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta));
             }
@@ -3588,30 +3573,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     void undoMoveSelection() {
         if (canUndoMoveSelection) {
             _positionableSelection.forEach((c) -> {
-                Point2D upperLeft = c.getLocation();
-                int xNew = (int) (upperLeft.getX() + undoDeltaX);
-                int yNew = (int) (upperLeft.getY() + undoDeltaY);
-                c.setLocation(xNew, yNew);
+                Point2D newPoint = MathUtil.add(c.getLocation(), undoDelta);
+                c.setLocation((int) newPoint.getX(), (int) newPoint.getY());
             });
 
-            Point2D delta = new Point2D.Double(undoDeltaX, undoDeltaY);
             _layoutTrackSelection.forEach((lt) -> {
-                Point2D center = lt.getCoordsCenter();
-                lt.setCoordsCenter(MathUtil.add(center, delta));
+                lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), undoDelta));
             });
 
             _layoutShapeSelection.forEach((ls) -> {
-                Point2D center = ls.getCoordsCenter();
-                ls.setCoordsCenter(MathUtil.add(center, delta));
+                ls.setCoordsCenter(MathUtil.add(ls.getCoordsCenter(), undoDelta));
             });
 
-            undoRect = MathUtil.offset(undoRect, delta);
+            undoRect = MathUtil.offset(undoRect, undoDelta);
             selectionX = undoRect.getX();
             selectionY = undoRect.getY();
             selectionWidth = undoRect.getWidth();
             selectionHeight = undoRect.getHeight();
+
             resizePanelBounds(false);
             redrawPanel();
+
             canUndoMoveSelection = false;
             undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
         }
@@ -5154,7 +5136,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         _layoutShapeSelection.clear();
     }
 
-    boolean noWarnGlobalDelete = false;
+    private boolean noWarnGlobalDelete = false;
 
     private void deleteSelectedItems() {
         if (!noWarnGlobalDelete) {
@@ -6591,7 +6573,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    boolean noWarnPositionablePoint = false;
+    private boolean noWarnPositionablePoint = false;
 
     /**
      * Remove a PositionablePoint -- an Anchor or an End Bumper.
@@ -6604,8 +6586,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if ((o.getConnect1() != null) || (o.getConnect2() != null)) {
             if (!noWarnPositionablePoint) {
                 int selectedValue = JOptionPane.showOptionDialog(this,
-                        Bundle.getMessage("Question2"), Bundle.getMessage(
-                        "WarningTitle"),
+                        Bundle.getMessage("Question2"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"),
                             Bundle.getMessage("ButtonNo"),
@@ -6655,7 +6636,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return false;
     }
 
-    boolean noWarnLayoutTurnout = false;
+    private boolean noWarnLayoutTurnout = false;
 
     /**
      * Remove a LayoutTurnout
@@ -6765,7 +6746,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         p.setTrackConnection(t);
     }
 
-    boolean noWarnLevelXing = false;
+    private boolean noWarnLevelXing = false;
 
     /**
      * Remove a Level Crossing
@@ -6848,7 +6829,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return false;
     }
 
-    boolean noWarnSlip = false;
+    private boolean noWarnSlip = false;
 
     /**
      * Remove a slip
@@ -6930,7 +6911,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return false;
     }
 
-    boolean noWarnTurntable = false;
+    private boolean noWarnTurntable = false;
 
     /**
      * Remove a Layout Turntable

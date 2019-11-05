@@ -38,7 +38,6 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import jmri.*;
@@ -246,9 +245,8 @@ public class LayoutTrackEditors {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
             panel2.add(blockNameLabel);
-            LayoutEditor.setupComboBox(editTrackSegmentBlockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(editTrackSegmentBlockNameComboBox, false, true, true);
             editTrackSegmentBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-            editTrackSegmentBlockNameComboBox.setEditable(true);
 
             panel2.add(editTrackSegmentBlockNameComboBox);
 
@@ -462,7 +460,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout1stTurnoutComboBox = new NamedBeanComboBox<>
                     (InstanceManager.getDefault(TurnoutManager.class));
             editLayoutTurnout1stTurnoutComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, false, true, false);
 
             panel1.add(editLayoutTurnout1stTurnoutComboBox);
             contentPane.add(panel1);
@@ -473,7 +471,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout2ndTurnoutComboBox = new NamedBeanComboBox<>
                     (InstanceManager.getDefault(TurnoutManager.class));
             editLayoutTurnout2ndTurnoutComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, true, false);
 
             editLayoutTurnout2ndTurnoutCheckBox.addActionListener((ActionEvent e) -> {
                 boolean additionalEnabled = editLayoutTurnout2ndTurnoutCheckBox.isSelected();
@@ -526,9 +524,8 @@ public class LayoutTrackEditors {
             panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
             panel2.add(editLayoutTurnoutBlockNameComboBox);
-            LayoutEditor.setupComboBox(editLayoutTurnoutBlockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutTurnoutBlockNameComboBox, false, true, true);
             editLayoutTurnoutBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-            editLayoutTurnoutBlockNameComboBox.setEditable(true);
             panel2.add(editLayoutTurnoutBlockButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
             editLayoutTurnoutBlockButton.addActionListener((ActionEvent e) -> {
                 editLayoutTurnoutEditBlockPressed(e);
@@ -542,9 +539,8 @@ public class LayoutTrackEditors {
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");  // NOI18N
                 panel21.setBorder(borderblk2);
-                LayoutEditor.setupComboBox(editLayoutTurnoutBlockBNameComboBox, false, true);
+                LayoutEditor.setupComboBox(editLayoutTurnoutBlockBNameComboBox, false, true, true);
                 editLayoutTurnoutBlockBNameComboBox.setToolTipText(Bundle.getMessage("EditBlockBNameHint"));  // NOI18N
-                editLayoutTurnoutBlockBNameComboBox.setEditable(true);
                 panel21.add(editLayoutTurnoutBlockBNameComboBox);
 
                 panel21.add(editLayoutTurnoutBlockBButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
@@ -559,9 +555,8 @@ public class LayoutTrackEditors {
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");  // NOI18N
                 panel22.setBorder(borderblk3);
-                LayoutEditor.setupComboBox(editLayoutTurnoutBlockCNameComboBox, false, true);
+                LayoutEditor.setupComboBox(editLayoutTurnoutBlockCNameComboBox, false, true, true);
                 editLayoutTurnoutBlockCNameComboBox.setToolTipText(Bundle.getMessage("EditBlockCNameHint"));  // NOI18N
-                editLayoutTurnoutBlockCNameComboBox.setEditable(true);
                 panel22.add(editLayoutTurnoutBlockCNameComboBox);
                 panel22.add(editLayoutTurnoutBlockCButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
                 editLayoutTurnoutBlockCButton.addActionListener((ActionEvent e) -> {
@@ -575,9 +570,8 @@ public class LayoutTrackEditors {
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");  // NOI18N
                 panel23.setBorder(borderblk4);
-                LayoutEditor.setupComboBox(editLayoutTurnoutBlockDNameComboBox, false, true);
+                LayoutEditor.setupComboBox(editLayoutTurnoutBlockDNameComboBox, false, true, true);
                 editLayoutTurnoutBlockDNameComboBox.setToolTipText(Bundle.getMessage("EditBlockDNameHint"));  // NOI18N
-                editLayoutTurnoutBlockDNameComboBox.setEditable(true);
                 panel23.add(editLayoutTurnoutBlockDNameComboBox);
                 panel23.add(editLayoutTurnoutBlockDButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
                 editLayoutTurnoutBlockDButton.addActionListener((ActionEvent e) -> {
@@ -924,7 +918,7 @@ public class LayoutTrackEditors {
             editLayoutSlipTurnoutAComboBox = new NamedBeanComboBox<>
                     (InstanceManager.getDefault(TurnoutManager.class));
             editLayoutSlipTurnoutAComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, false, true, false);
             panel1.add(editLayoutSlipTurnoutAComboBox);
             contentPane.add(panel1);
 
@@ -936,7 +930,7 @@ public class LayoutTrackEditors {
             editLayoutSlipTurnoutBComboBox = new NamedBeanComboBox<>
                     (InstanceManager.getDefault(TurnoutManager.class));
             editLayoutSlipTurnoutBComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, false, true, false);
             panel1a.add(editLayoutSlipTurnoutBComboBox);
 
             contentPane.add(panel1a);
@@ -980,9 +974,8 @@ public class LayoutTrackEditors {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
             panel3.add(block1NameLabel);
             panel3.add(editLayoutSlipBlockNameComboBox);
-            LayoutEditor.setupComboBox(editLayoutSlipBlockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutSlipBlockNameComboBox, false, true, true);
             editLayoutSlipBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-            editLayoutSlipBlockNameComboBox.setEditable(true);
 
             contentPane.add(panel3);
             // set up Edit Block buttons
@@ -1346,9 +1339,8 @@ public class LayoutTrackEditors {
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));  // NOI18N
             panel1.add(block1NameLabel);
             panel1.add(editLevelXingBlock1NameComboBox);
-            LayoutEditor.setupComboBox(editLevelXingBlock1NameComboBox, false, true);
+            LayoutEditor.setupComboBox(editLevelXingBlock1NameComboBox, false, true, true);
             editLevelXingBlock1NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-            editLevelXingBlock1NameComboBox.setEditable(true);
             contentPane.add(panel1);
 
             // setup block 2 name
@@ -1357,9 +1349,8 @@ public class LayoutTrackEditors {
             JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));  // NOI18N
             panel2.add(block2NameLabel);
             panel2.add(editLevelXingBlock2NameComboBox);
-            LayoutEditor.setupComboBox(editLevelXingBlock2NameComboBox, false, true);
+            LayoutEditor.setupComboBox(editLevelXingBlock2NameComboBox, false, true, true);
             editLevelXingBlock2NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-            editLevelXingBlock2NameComboBox.setEditable(true);
             contentPane.add(panel2);
 
             // set up Edit 1 Block and Edit 2 Block buttons
@@ -1794,7 +1785,7 @@ public class LayoutTrackEditors {
             turnoutNameComboBox = new NamedBeanComboBox<>
                     (InstanceManager.getDefault(TurnoutManager.class));
             turnoutNameComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(turnoutNameComboBox, false, true);
+            LayoutEditor.setupComboBox(turnoutNameComboBox, false, true, false);
             turnoutNameComboBox.setSelectedItem(rayTrack.getTurnout());
             turnoutNameComboBox.addPopupMenuListener(
                     layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox, turntableTurnouts));
