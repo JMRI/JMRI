@@ -117,10 +117,14 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
 
     javax.swing.Timer timer = null;
     /**
-     * On or off time of flashing signal
+     * On or off time of flashing signal.
+     * Public so that it can be overridden by 
+     * scripting (before first use)
      */
-    int delay = 750;
+    public int delay = masterDelay;
 
+    public static int masterDelay = 750;
+    
     /**
      * Start the timer that controls flashing.
      */
