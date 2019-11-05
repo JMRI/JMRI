@@ -6906,7 +6906,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             case LayoutTrack.LEVEL_XING_C:
             case LayoutTrack.LEVEL_XING_D: {
                 try {
-                    ((LayoutTrack) fromObject).setConnection(fromPointType, toObject, toPointType);
+                    fromObject.setConnection(fromPointType, toObject, toPointType);
                 } catch (jmri.JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
@@ -7793,7 +7793,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             case LayoutTrack.LEVEL_XING_C:
             case LayoutTrack.LEVEL_XING_D: {
                 try {
-                    ((LayoutTrack) o).setConnection(type, null, LayoutTrack.NONE);
+                    o.setConnection(type, null, LayoutTrack.NONE);
                 } catch (jmri.JmriException e) {
                     // ignore (log.error in setConnection method)
                 }
@@ -9959,52 +9959,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
+        List theList = null;
+
         if (nb instanceof Sensor) {
-            for (SensorIcon si : sensorList) {
-                if ((si.getNamedBean() == nb) && (si.getPopupUtility() != null)) {
-                    if (menu != Editor.VIEWPOPUPONLY) {
-                        si.getPopupUtility().addEditPopUpMenu(item);
-                    }
-                    if (menu != Editor.EDITPOPUPONLY) {
-                        si.getPopupUtility().addViewPopUpMenu(item);
-                    }
-                }
-            }
+            theList = sensorList;
         } else if (nb instanceof SignalHead) {
-            for (SignalHeadIcon si : signalList) {
-                if ((si.getNamedBean() == nb) && (si.getPopupUtility() != null)) {
-                    if (menu != Editor.VIEWPOPUPONLY) {
-                        si.getPopupUtility().addEditPopUpMenu(item);
-                    }
-                    if (menu != Editor.EDITPOPUPONLY) {
-                        si.getPopupUtility().addViewPopUpMenu(item);
-                    }
-                }
-            }
+            theList = signalList;
         } else if (nb instanceof SignalMast) {
-            for (SignalMastIcon si : signalMastList) {
-                if ((si.getNamedBean() == nb) && (si.getPopupUtility() != null)) {
-                    if (menu != Editor.VIEWPOPUPONLY) {
-                        si.getPopupUtility().addEditPopUpMenu(item);
-                    }
-                    if (menu != Editor.EDITPOPUPONLY) {
-                        si.getPopupUtility().addViewPopUpMenu(item);
-                    }
-                }
-            }
+            theList = signalMastList;
         } else if (nb instanceof Block) {
-            for (BlockContentsIcon si : blockContentsLabelList) {
-                if ((si.getNamedBean() == nb) && (si.getPopupUtility() != null)) {
-                    if (menu != Editor.VIEWPOPUPONLY) {
-                        si.getPopupUtility().addEditPopUpMenu(item);
-                    }
-                    if (menu != Editor.EDITPOPUPONLY) {
-                        si.getPopupUtility().addViewPopUpMenu(item);
-                    }
-                }
-            }
+            theList = blockContentsLabelList;
         } else if (nb instanceof Memory) {
-            for (MemoryIcon si : memoryLabelList) {
+            theList = memoryLabelList;
+        }
+        if (theList != null) {
+            for (Object o : theList) {
+                PositionableLabel si = (PositionableLabel) o;
                 if ((si.getNamedBean() == nb) && (si.getPopupUtility() != null)) {
                     if (menu != Editor.VIEWPOPUPONLY) {
                         si.getPopupUtility().addEditPopUpMenu(item);

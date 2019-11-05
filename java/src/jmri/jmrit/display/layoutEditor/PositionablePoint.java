@@ -1125,7 +1125,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for width
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             connect1.getBumperLineWidth(), new Predicate<Integer>() {
@@ -1146,7 +1146,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for length
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             connect1.getBumperLength(), new Predicate<Integer>() {
