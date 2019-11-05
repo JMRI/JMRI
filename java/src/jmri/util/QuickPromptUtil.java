@@ -86,7 +86,7 @@ public class QuickPromptUtil {
     public static Integer promptForInteger(Component parentComponent, @Nonnull String message, @Nonnull String title, Integer oldValue, @CheckForNull Predicate<Integer> validator) {
         Integer result = oldValue;
         Integer newValue = promptForData(parentComponent, message, title, oldValue, validator, (val) -> {
-           try {
+            try {
                 return new Integer(Integer.parseInt(val));
             } catch (NumberFormatException ex) {
                 // original exception ignored; wrong message.
@@ -198,7 +198,7 @@ public class QuickPromptUtil {
 
     /**
      * Creates a min/max predicate which will check the bounds. Suitable for
-     * {@link #promptForInteger(java.awt.Component, java.lang.String, java.lang.String, int, java.util.function.Predicate)}.
+     * {@link #promptForInteger(java.awt.Component, java.lang.String, java.lang.String, Integer, java.util.function.Predicate)}.
      *
      * @param min        minimum value. Use {@link Integer#MIN_VALUE} to disable
      *                   check.
