@@ -43,6 +43,11 @@ public class QualifiedVarTest {
                     protected JPanel getModePane() {
                         return null;
                     }
+                    // prevent this test from prompting to save file
+                    @Override
+                    protected boolean checkDirtyFile() {
+                        return false;
+                    }
                 };
 
                 // get the sample info
