@@ -3594,7 +3594,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         enterGridSizesOpen = true;
     }
 
-    void gridSizesDonePressed(ActionEvent event) {
+    void gridSizesDonePressed(@Nonnull ActionEvent event) {
         String newGridSize = "";
         float siz = 0.0F;
 
@@ -3666,7 +3666,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    void gridSizesCancelPressed(ActionEvent event) {
+    void gridSizesCancelPressed(@Nonnull ActionEvent event) {
         enterGridSizesOpen = false;
         enterGridSizesFrame.setVisible(false);
         enterGridSizesFrame.dispose();
@@ -3982,7 +3982,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         scaleTrackDiagramOpen = true;
     }
 
-    void scaleTrackDiagramDonePressed(ActionEvent event) {
+    void scaleTrackDiagramDonePressed(@Nonnull ActionEvent event) {
         String newText = "";
         boolean changeFlag = false;
         boolean translateError = false;
@@ -4081,7 +4081,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    void scaleTrackDiagramCancelPressed(ActionEvent event) {
+    void scaleTrackDiagramCancelPressed(@Nonnull ActionEvent event) {
         scaleTrackDiagramOpen = false;
         scaleTrackDiagramFrame.setVisible(false);
         scaleTrackDiagramFrame.dispose();
