@@ -1,6 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.JUnitUtil;
@@ -31,10 +32,9 @@ public class PrintActionTest {
         };
         PrintAction t = new PrintAction("Test Action", pFrame, true);
         Assert.assertNotNull("exists", t);
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

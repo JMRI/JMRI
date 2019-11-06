@@ -1,6 +1,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -49,7 +50,7 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // show me the specially-created frame
@@ -79,7 +80,7 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // static variables for internal classes to report their interpretations
