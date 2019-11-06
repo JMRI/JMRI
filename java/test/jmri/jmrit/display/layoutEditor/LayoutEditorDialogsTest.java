@@ -19,7 +19,9 @@ public class LayoutEditorDialogsTest {
     @Rule    // allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
+    //
     // testing infrastructure
+    //
 //    @BeforeClass
 //    public void setUpClass() {
 //        JUnitUtil.setUp();
