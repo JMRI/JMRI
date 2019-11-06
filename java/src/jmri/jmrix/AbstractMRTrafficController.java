@@ -93,7 +93,7 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 
 abstract public class AbstractMRTrafficController {
 
-    private ShutDownTask shutDownTask = null; // retain for possible removal.
+    protected final ShutDownTask shutDownTask = new CleanupTask(this); // retain for possible removal.
 
     /**
      * Create a new unnamed MRTrafficController.
@@ -111,7 +111,7 @@ abstract public class AbstractMRTrafficController {
         // in an unusable state. Once the shutdown task executes, the connection
         // must be considered permanently closed.
         
-        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask = new CleanupTask(this));
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     private boolean synchronizeRx = true;

@@ -4,6 +4,9 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+
 /**
  * Test scaffold implementation of XNetInterface.
  * <p>
@@ -16,6 +19,8 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     public XNetInterfaceScaffold(LenzCommandStation pCommandStation) {
         super(pCommandStation);
         setSystemConnectionMemo(new XNetSystemConnectionMemo(this));
+        // super class registers a shutdown task that is not needed in tests
+        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
     }
 
     // override some XNetTrafficController methods for test purposes

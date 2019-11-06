@@ -4,11 +4,12 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
+import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 
 /**
  * Test simple functioning of SerialMonFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -19,6 +20,7 @@ public class SerialMonFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SecsiSystemConnectionMemo();
+        memo.setTrafficController(new SerialTrafficControlScaffold(memo));
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SerialMonFrame(memo);
 	    }

@@ -4,6 +4,9 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+
 /**
  * Stands in for the SerialTrafficController class.
  *
@@ -17,6 +20,8 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
             log.debug("setting instance: " + this);
         }
         memo = adaptermemo;
+        // super class registers a shutdown task that is not needed in tests
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
     // override some SerialTrafficController methods for test purposes
