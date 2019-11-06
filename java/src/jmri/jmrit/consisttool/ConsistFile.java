@@ -4,11 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
+
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.LocoAddress;
@@ -263,7 +260,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
      * @param consistList list of consist addresses
      * @throws java.io.IOException if unable to write file
      */
-    public void writeFile(ArrayList<LocoAddress> consistList) throws IOException {
+    public void writeFile(List<LocoAddress> consistList) throws IOException {
         writeFile(consistList, defaultConsistFilename());
     }
 
@@ -274,7 +271,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
      * @param fileName    path to file
      * @throws java.io.IOException if unable to write file
      */
-    public void writeFile(ArrayList<LocoAddress> consistList, String fileName) throws IOException {
+    public void writeFile(List<LocoAddress> consistList, String fileName) throws IOException {
         // create root element
         Element root = new Element("consist-roster-config");
         Document doc = newDocument(root, dtdLocation + "consist-roster-config.dtd");
@@ -306,7 +303,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
             }
             writeXML(findFile(fileName), doc);
         } catch (IOException ioe) {
-            log.error("IO Exception " + ioe);
+            log.error("IO Exception {}",ioe,ioe);
             throw (ioe);
         }
     }
