@@ -1,6 +1,8 @@
 package jmri.jmrit.audio;
 
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -14,6 +16,8 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2017
  */
 public class NullAudioSourceTest {
+
+    private ShutDownTask damsdt;
 
     @Test
     public void testCtor() {
@@ -30,14 +34,15 @@ public class NullAudioSourceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.AudioManager am = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
-        am.init();
+        DefaultAudioManager dam = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        damsdt = dam.audioShutDownTask;
+        InstanceManager.setDefault(jmri.AudioManager.class, dam).init();
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        InstanceManager.getDefault(ShutDownManager.class).deregister(damsdt);
         JUnitUtil.tearDown();
     }
 }
