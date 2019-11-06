@@ -13,7 +13,7 @@
 	<li><a href="./Files.shtml">Configuration Files</a>
 	<li><a href="./Roster.shtml">Working with the Roster</a>
 	<li><a href="./FAQ.shtml">FAQ</a>
-  <li><a href="../../setup/index.shtml">JMRI Setup</a></li>
+    <li><a href="../../setup/index.shtml">JMRI Setup</a></li>
 	</ul>
 
 <dt><h3>Advanced</h3></dt>
@@ -30,14 +30,16 @@
 	</ul>
 </dd>
 
-<dt><h3>Other Apps</h3></dt>
+<dt><h3>The Apps</h3></dt>
 <dd>
 	<ul>
-		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
+		<li class="this"><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
 		<li><a href="../PanelPro/index.shtml">PanelPro&trade;</a></li>
 		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		<li><a href="../ManifestCreator/index.shtml">Manifest Creator</a></li>
+        <li><a href="../TrainCrew/index.shtml">TrainCrew</a></li>
 	</ul>
 </dd>
 
@@ -86,5 +88,11 @@ to running trains in the background.
 		
 </dl>
 </div> <!-- close #side -->
+
+<!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+<!-- /Sidebar-Tail -->
+
 <!-- /Sidebar -->
 

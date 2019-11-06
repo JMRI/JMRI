@@ -91,7 +91,13 @@
 			<li><a href="Poll2007.shtml">Usage Poll, Spring 2007</a>
 			</ul>
 		</dd>
-</dl>
+    </dl>
 	    
-</div> <!-- closes #side -->
+    </div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
+
 <!-- /Sidebar -->

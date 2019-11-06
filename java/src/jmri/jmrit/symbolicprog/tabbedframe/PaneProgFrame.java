@@ -139,11 +139,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
-            decoderDirtyTask
-                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                            Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
-                            (String) null, this
-                    ) {
+            decoderDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                    Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
+                    (String) null, this) {
                 @Override
                 public boolean checkPromptNeeded() {
                     return !checkDirtyDecoder();
@@ -152,11 +150,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
         if (fileDirtyTask == null) {
-            fileDirtyTask
-                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                            Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
-                            Bundle.getMessage("PromptSaveQuit"), this
-                    ) {
+            fileDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                    Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
+                    Bundle.getMessage("PromptSaveQuit"), this) {
                 @Override
                 public boolean checkPromptNeeded() {
                     return !checkDirtyFile();
@@ -164,7 +160,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                 @Override
                 public boolean doPrompt() {
-                    boolean result = storeFile(); // storeFile false if failed, abort shutdown
+                    // storeFile false if failed, abort shutdown
+                    boolean result = storeFile();
                     return result;
                 }
             };
