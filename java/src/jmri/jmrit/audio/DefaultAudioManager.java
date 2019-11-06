@@ -49,7 +49,13 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private static boolean initialised = false;
 
-    ShutDownTask audioShutDownTask;
+    public final ShutDownTask audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
+        @Override
+        public boolean execute() {
+            InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+            return true;
+        }
+    };
 
     @Override
     public int getXMLOrder() {
@@ -158,16 +164,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 log.error("Error creating Default Audio Listener: " + ex);
             }
 
-            // Finally, create and register a shutdown task to ensure clean exit
-            if (audioShutDownTask == null) {
-                audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
-                    @Override
-                    public boolean execute() {
-                        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
-                        return true;
-                    }
-                };
-            }
+            // Register a shutdown task to ensure clean exit
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(audioShutDownTask);
 
             initialised = true;
