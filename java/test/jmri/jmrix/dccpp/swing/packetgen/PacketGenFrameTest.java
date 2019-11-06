@@ -34,8 +34,8 @@ public class PacketGenFrameTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    public void tearDown() {
+    public void tearDown() {        
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
