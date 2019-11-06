@@ -52,6 +52,7 @@
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
 	        <ul>
+	        <li><dfn><a href="../signaling/index.shtml">Signaling</a></dfn>
 			<li><dfn><a href="../EntryExit.shtml">Entry Exit (NX)</a></dfn>
 			<li><dfn><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dfn>
             <li><dfn><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
@@ -65,5 +66,10 @@
 	    </dl>
 
 	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->

@@ -12,8 +12,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -423,7 +421,7 @@ public final class MathUtil {
     public static Point2D normalize(@Nonnull Point2D p) {
         Point2D result = p;
         double length = length(p);
-        if (length >= 0.001) {
+        if (length > 0.0) {
             result = divide(p, length);
         }
         return result;
@@ -454,8 +452,8 @@ public final class MathUtil {
     /**
      * compute the angle (direction in radians) from point 1 to point 2
      * <p>
-     * Note: Goes CCW from south to east to north to west, etc.
-     * For JMRI subtract from PI/2 to get east, south, west, north
+     * Note: Goes CCW from south to east to north to west, etc. For JMRI
+     * subtract from PI/2 to get east, south, west, north
      *
      * @param p1 the first Point2D
      * @param p2 the second Point2D
@@ -469,8 +467,8 @@ public final class MathUtil {
     /**
      * compute the angle (direction in degrees) from point 1 to point 2
      * <p>
-     * Note: Goes CCW from south to east to north to west, etc.
-     * For JMRI subtract from 90.0 to get east, south, west, north
+     * Note: Goes CCW from south to east to north to west, etc. For JMRI
+     * subtract from 90.0 to get east, south, west, north
      *
      * @param p1 the first Point2D
      * @param p2 the second Point2D
@@ -489,7 +487,6 @@ public final class MathUtil {
      * @param t the fraction (between 0 and 1)
      * @return the linear interpolation between a and b for t
      */
-    @CheckReturnValue
     public static int lerp(int a, int b, double t) {
         return (int) lerp((double) a, (double) b, t);
     }
@@ -504,7 +501,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static double lerp(double a, double b, double t) {
-        return ((1.0 - t) * a) + (t * b);
+        return ((1.D - t) * a) + (t * b);
     }
 
     /**
@@ -517,7 +514,7 @@ public final class MathUtil {
      */
     @CheckReturnValue
     public static Double lerp(@Nonnull Double a, @Nonnull Double b, @Nonnull Double t) {
-        return ((1.0 - t) * a) + (t * b);
+        return ((1.D - t) * a) + (t * b);
     }
 
     /**
@@ -642,7 +639,6 @@ public final class MathUtil {
      *         THIS IS NOT A PIN OR TRUNCATE; VALUES WRAP AROUND BETWEEN MIN AND
      *         MAX (And yes, this works correctly with negative numbers)
      */
-    @CheckReturnValue
     public static int wrap(int inValue, int inMin, int inMax) {
         int valueRange = inMax - inMin;
         return inMin + ((((inValue - inMin) % valueRange) + valueRange) % valueRange);
@@ -765,7 +761,6 @@ public final class MathUtil {
      * @param inMax   the max
      * @return the value pinned between the min and max values
      */
-    @CheckReturnValue
     public static int pin(int inValue, int inMin, int inMax) {
         return Math.min(Math.max(inValue, inMin), inMax);
     }
@@ -1033,7 +1028,7 @@ public final class MathUtil {
     /**
      * Draw a cubic Bezier curve
      *
-     * @param g2 the Graphics2D to draw to
+     * @param g2 the Graphics2D context to draw to
      * @param p0 origin control point
      * @param p1 first control point
      * @param p2 second control point
@@ -1125,8 +1120,8 @@ public final class MathUtil {
     /*
      * plot a Bezier curve
      *
-     * @param g2           the Graphics2D to draw to
-     * @param p            control points
+     * @param g2 the Graphics2D context to draw to
+     * @param p  the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @param fillFlag     false to draw / true to fill
      * @return the length of the Bezier curve
@@ -1154,7 +1149,7 @@ public final class MathUtil {
     /**
      * get the path for a Bezier curve
      *
-     * @param p             control points
+     * @param p            control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1173,7 +1168,7 @@ public final class MathUtil {
     /**
      * get the path for a Bezier curve
      *
-     * @param p   control points
+     * @param p control points
      * @return the length of the Bezier curve
      */
     public static GeneralPath getBezierPath(@Nonnull Point2D p[]) {
@@ -1183,8 +1178,8 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2           the Graphics2D to draw to
-     * @param p            control points
+     * @param g2 the Graphics2D context to draw to
+     * @param p  the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1198,8 +1193,8 @@ public final class MathUtil {
     /**
      * Fill a Bezier curve
      *
-     * @param g2           the Graphics2D to draw to
-     * @param p            control points
+     * @param g2 the Graphics2D context to draw to
+     * @param p  the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1213,8 +1208,8 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2  the Graphics2D to draw to
-     * @param p control points
+     * @param g2 the Graphics2D context to draw to
+     * @param p  the control points
      * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, @Nonnull Point2D p[]) {
@@ -1224,12 +1219,48 @@ public final class MathUtil {
     /**
      * Fill a Bezier curve
      *
-     * @param g2  the Graphics2D to draw to
-     * @param p   control points
+     * @param g2 the Graphics2D context to draw to
+     * @param p  the control points
      * @return the length of the Bezier curve
      */
     public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
     }
+
+    /**
+     * Find intersection of two lines
+     *
+     * @param p1 the first point on the first line
+     * @param p2 the second point on the first line
+     * @param p3 the first point on the second line
+     * @param p4 the second point on the second line
+     * @return the intersection point of the two lines or null if one doesn't exist
+     */
+    @CheckReturnValue
+    public static Point2D intersect(
+            @Nonnull Point2D p1,
+            @Nonnull Point2D p2,
+            @Nonnull Point2D p3,
+            @Nonnull Point2D p4) {
+        Point2D result = null;  // assume failure (pessimist!)
+
+        // pull these out for convenience
+        double x1 = p1.getX(), y1 = p1.getY();
+        double x2 = p2.getX(), y2 = p2.getY();
+        double x3 = p3.getX(), y3 = p3.getY();
+        double x4 = p4.getX(), y4 = p4.getY();
+
+        //
+        // equation from <https://en.wikipedia.org/wiki/Line–line_intersection>
+        //
+        double d = ((x1 - x2) * (y3 - y4)) - ((y1 - y2) * (x3 - x4));
+        // if d is zero the lines don't have one intersection point
+        if (d > 0.0) {
+            double t = ((x1 - x3) * (y3 - y4)) - ((y1 - y3) * (x3 - x4)) / d;
+            result = new Point2D.Double(x1 + (t * (x2 - x1)), y1 + (t * (y2 - y1)));
+        }
+        return result;
+    }
+
     // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
 }

@@ -168,7 +168,6 @@
         <pathelement location="${libdir}/libusb4java-1.2.0-linux-arm.jar"/>
         <pathelement location="${libdir}/libusb4java-1.2.0-linux-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.2.0-linux-x86_64.jar"/>
-        <pathelement location="${libdir}/libusb4java-1.2.0-osx-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.2.0-osx-x86_64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.2.0-windows-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.2.0-windows-x86_64.jar"/>

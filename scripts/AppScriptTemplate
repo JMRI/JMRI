@@ -122,10 +122,12 @@ function parse_args() {
 
 # Get the default heap size for JMRI in MB.
 # Based on total memory size, this is:
-# - 1/4 total memory size on systems with more than 4GB RAM
-# - 1/2 total memory size on systems with 1-4GB RAM
+# - 1/4 total memory size on systems with more than 4GB RAM with minimum of 2GB
+# - 1/2 total memory size on systems with 1-4GB RAM with minimum of 768MB
 # - 3/4 total memory size on systems with less than 1GB RAM
 # - with an absolute minimum of 192MB
+# - note that minimums are maximum allocation for immediately smaller RAM size
+#   (i.e. as 2GB = 1/2 4GB, do not use 1.5GB on 6GB system (1.5GB = 1/4 6GB))
 function heap_size() {
     # get Java heap size
     heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | grep -v SoftMaxHeapSize | awk '{print $4}' )
@@ -138,9 +140,6 @@ function heap_size() {
                 mem=$( cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]: )
                 mem=$( expr $mem / 1024 )
                 ;;
-            SunOS*)
-                mem=$( /usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]' )
-                ;;
             Darwin*)
                 mem=$( /usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].: )
                 mem=$( expr $mem / 1048576 )
@@ -152,9 +151,13 @@ function heap_size() {
             mem=640
         fi
         if [ $mem -le 1024 ] ; then
-          heap=$( expr $mem \* 3 / 4 )
+            heap=$( expr $mem \* 3 / 4 )
+        elif [ $mem -le 4096 ] ; then
+            heap=$( expr $mem \* 1 / 2 )
+            [ $heap -le 768 ] && heap=768 # 3/4 of 1024
         else
-          heap=$( expr $mem \* 1 / 2 )
+            heap=$( expr $mem \* 1 / 4 )
+            [ $heap -le 2048 ] && heap=2048 # 1/2 of 4096
         fi
         if [ $heap -lt 192 ] ; then
             heap=192 # 3/4 of 256MB

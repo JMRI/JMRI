@@ -109,7 +109,6 @@ public class OBlockManagerXml // extends XmlFile
 
     static private Element storePortal(Portal portal) {
         Element elem = new Element("portal");
-        elem.setAttribute("systemName", portal.getSystemName());
         elem.setAttribute("portalName", portal.getName());
         OBlock block = portal.getFromBlock();
         if (block != null) {
@@ -360,13 +359,7 @@ public class OBlockManagerXml // extends XmlFile
     }   // loadBlock
 
     private Portal loadPortal(Element elem) {
-        String sysName = null;
         String userName = elem.getAttribute("portalName").getValue();
-        if (elem.getAttribute("systemName") == null) {
-            log.debug("Portal systemName is null");
-        } else {
-            sysName = elem.getAttribute("systemName").getValue();
-        }
         String fromBlockName = null;
         String toBlockName = null;
         // Portals must have user names.
@@ -378,11 +371,11 @@ public class OBlockManagerXml // extends XmlFile
             portal = _portalMgr.providePortal(userName);
         }
         if (portal == null) {
-            log.error("unable to create Portal ({}, {}) elem attrs= {}",
-                    sysName, userName, elem.getAttributes());
+            log.error("unable to create Portal ({}) elem attrs= {}",
+                    userName, elem.getAttributes());
             return null;
         }
-        log.debug("create Portal: ({}, {})", sysName,  userName);
+        log.debug("create Portal: ({})", userName);
 
         OBlock fromBlock = null;
         Element eFromBlk = elem.getChild("fromBlock");
