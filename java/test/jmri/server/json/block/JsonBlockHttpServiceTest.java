@@ -293,6 +293,10 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         validate(block);
         validate(blocks);
         assertEquals("Server schema for block and blocks is the same", block, blocks);
+
+        // Suppress a warning message (see networknt/json-schema-validator#79)
+        JUnitAppender.checkForMessageStartingWith(
+                "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
     }
 
 }
