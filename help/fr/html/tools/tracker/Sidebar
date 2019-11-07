@@ -34,10 +34,10 @@
 		<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des portions de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement &#224; la conduite d'un train en toile de fond.
 		    <ul>
 		    	<li><dfn><a href="../tools/Signalling">Signalisation</a></dfn>
-			<li><dfn><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
+			    <li><dfn><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
 		    	<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
 		    	<li><dfn><a href="../../tools/fastclock">Horloges Acc&#233;l&#233;r&#233;es</a></dfn>
-		   	 <li><dfn><a href="../doc/scripts/index.html">Script</a></dfn>
+		   	    <li><dfn><a href="../doc/scripts/index.html">Script</a></dfn>
 		    </ul>
 		</dd>
 

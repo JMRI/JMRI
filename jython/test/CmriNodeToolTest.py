@@ -11,3 +11,5 @@ if (not java.awt.GraphicsEnvironment.isHeadless()) :
     execfile("jython/CmriNodeTool.py")
     # need to kill the display
     a.scriptFrame.dispose()
+
+jmri.util.JUnitUtil.clearShutDownManager()

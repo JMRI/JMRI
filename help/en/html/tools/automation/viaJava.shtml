@@ -27,13 +27,14 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: Layout Automation in Java</h2>The JMRI library
+      <h2>JMRI: Layout Automation in Java</h2>
+      <p>The JMRI library
       provides a very powerful set of tools for automating your
       layout. If the tools built into <a href=
       "../../apps/PanelPro/index.shtml">PanelPro</a> or the
       <a href="../scripting/index.shtml">scripting capability</a>
       aren't sufficient to do what you want, writing your own
-      control program certainly will be.
+      control program certainly will be.</p>
 
       <p>This page describes the JMRI Java classes that support
       writing "automation" code in Java. That's things like
@@ -182,8 +183,9 @@ MyCode().start()
           <pre style="font-family: monospace;">
 import jmri.jmrit.automat
 jmri.jmrit.automat.SampleAutomaton().start()
-</pre>and hit Execute. The 2nd line creates an instance of your
-class and tells it to start running.
+</pre>
+          and hit Execute. The 2nd line creates an instance of your
+          class and tells it to start running.
 
           <p>Once you've got that working, you can put that in a
           little script file and invoke it at startup, via a Logix,

@@ -3,7 +3,7 @@
 <hr class="hide">
 <div id="side"> <!-- Block of text on left side of page -->
 
-<dl class="toc">
+<dl>
 
 <dt><h3>DecoderPro&reg;</h3></dt>
 <dd>
@@ -33,7 +33,7 @@
 <dt><h3>The Apps</h3></dt>
 <dd>
 	<ul>
-		<li class="this"><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+		<li class="here"><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
 		<li><a href="../PanelPro/index.shtml">PanelPro&trade;</a></li>
 		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>

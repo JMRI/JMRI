@@ -1,29 +1,29 @@
 <!-- Sidebar -->
 <hr class="hide">
 <div id="side"> <!-- Block of text on left side of page -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <!-- Updated  by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
  
-<dl class=toc>
+<dl>
 
 <dt><h3>DispatcherPro&trade;</h3></dt>
 <dd>
    <ul>
-   <li<a HREF="../../tools/Signalling/index.shtml">Signalisation</a>
+   <li<a href="../../tools/Signalling/index.shtml">Signalisation</a>
    <li><a href="../../setup/index.shtml">Configuration de JMRI</a></li>
   </ul>
 </dd>
 
 <dt><h3>Autres Applications</h3></dt>
-<dd>
-			<ul>
-			<li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-			<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
-			<!-- <li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li> -->
-    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
-			<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
-			</ul>
-</dd>
+        <dd>
+            <ul>
+            <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+            <li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+            <li class="here"><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+            <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+            <li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+            </ul>
+        </dd>
 			<dt><h3><a href="../../tools/index.shtml">Outils</a></h3></dt>
 			<dd>JMRI fournit des outils puissant pour travailler avec votre r&#233;seau.
 			<ul>
@@ -54,7 +54,7 @@
 		jusqu'&#224; des trains circulants en to&#238;le de fond.
 		    <ul>
 		    <li><dfn><a href="../../tools/signaling/index.shtml">Signalisation</a></dfn>
-        <li><dfn><a href="../../tools/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
+            <li><dfn><a href="../../tools/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
 		    <li><dfn><a href="../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
 		    <li><dfn><a href="../../tools/fastclock/index.shtml">Horloges Acc&#233;l&#233;r&#233;es</a></dfn>
 		    <li><dfn><a href="../../tools/scripting/index.shtml">Script</a></dfn>
