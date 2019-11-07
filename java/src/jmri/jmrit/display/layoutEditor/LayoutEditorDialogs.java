@@ -95,13 +95,6 @@ public class LayoutEditorDialogs {
             });
             gridSizesDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(gridSizesDone);
-                rootPane.setDefaultButton(gridSizesDone);
-            });
-
             //Cancel
             panel5.add(gridSizesCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             gridSizesCancel.addActionListener((ActionEvent event) -> {
@@ -109,6 +102,10 @@ public class LayoutEditorDialogs {
             });
             gridSizesCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(gridSizesDone);
+            rootPane.setDefaultButton(gridSizesDone);
         }
 
         //Set up for Entry of Track Widths
@@ -231,14 +228,17 @@ public class LayoutEditorDialogs {
             //setup coordinates entry
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
+
             JLabel xCoordLabel = new JLabel(Bundle.getMessage("ReporterLocationX"));
             panel3.add(xCoordLabel);
             panel3.add(xPositionField);
             xPositionField.setToolTipText(Bundle.getMessage("ReporterLocationXHint"));
+
             JLabel yCoordLabel = new JLabel(Bundle.getMessage("ReporterLocationY"));
             panel3.add(yCoordLabel);
             panel3.add(yPositionField);
             yPositionField.setToolTipText(Bundle.getMessage("ReporterLocationYHint"));
+
             theContentPane.add(panel3);
 
             //set up Add and Cancel buttons
@@ -250,13 +250,6 @@ public class LayoutEditorDialogs {
             });
             reporterDone.setToolTipText(Bundle.getMessage("ReporterDoneHint"));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(reporterDone);
-                rootPane.setDefaultButton(reporterDone);
-            });
-
             //Cancel
             panel5.add(reporterCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             reporterCancel.addActionListener((ActionEvent event) -> {
@@ -264,6 +257,10 @@ public class LayoutEditorDialogs {
             });
             reporterCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(reporterDone);
+            rootPane.setDefaultButton(reporterDone);
         }
 
         //Set up for Entry of Reporter Icon
@@ -294,6 +291,7 @@ public class LayoutEditorDialogs {
         }
 
         if ((xx <= 0) || (xx > layoutEditor.getLayoutWidth())) {
+            log.error("invalid x: " + xx + ", LayoutWidth: " + layoutEditor.getLayoutWidth());
             JOptionPane.showMessageDialog(enterReporterFrame,
                     MessageFormat.format(Bundle.getMessage("Error2a"),
                             new Object[]{String.format(" %s ", xx)}),
@@ -315,6 +313,7 @@ public class LayoutEditorDialogs {
         }
 
         if ((yy <= 0) || (yy > layoutEditor.getLayoutHeight())) {
+            log.error("invalid y: " + yy + ", LayoutWidth: " + layoutEditor.getLayoutHeight());
             JOptionPane.showMessageDialog(enterReporterFrame,
                     MessageFormat.format(Bundle.getMessage("Error2a"),
                             new Object[]{String.format(" %s ", yy)}),
@@ -449,19 +448,16 @@ public class LayoutEditorDialogs {
             });
             scaleTrackDiagramDone.setToolTipText(Bundle.getMessage("ScaleTranslateHint"));
 
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(scaleTrackDiagramDone);
-                rootPane.setDefaultButton(scaleTrackDiagramDone);
-            });
-
             panel5.add(scaleTrackDiagramCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             scaleTrackDiagramCancel.addActionListener((ActionEvent event) -> {
                 scaleTrackDiagramCancelPressed(event);
             });
             scaleTrackDiagramCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(scaleTrackDiagramDone);
+            rootPane.setDefaultButton(scaleTrackDiagramDone);
         }
 
         // Set up for Entry of Scale and Translation
@@ -617,20 +613,16 @@ public class LayoutEditorDialogs {
                 moveSelectionDonePressed(event);
             });
             moveSelectionDone.setToolTipText(Bundle.getMessage("MoveSelectionHint"));
-
-            //make this button the default button (return or enter activates)
-            //Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(moveSelectionDone);
-                rootPane.setDefaultButton(moveSelectionDone);
-            });
-
             panel5.add(moveSelectionCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             moveSelectionCancel.addActionListener((ActionEvent event) -> {
                 moveSelectionCancelPressed();
             });
             moveSelectionCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel5);
+
+            //make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(moveSelectionDone);
+            rootPane.setDefaultButton(moveSelectionDone);
         }
 
         //Set up for Entry of Translation

@@ -402,13 +402,6 @@ public class LayoutEditorTools {
             });
             setSignalsDone.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));
 
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
-                rootPane.setDefaultButton(setSignalsDone);
-            });
-
             panel6.add(setSignalsCancel = new JButton(Bundle.getMessage("ButtonCancel")));
             setSignalsCancel.addActionListener((ActionEvent e) -> {
                 setSignalsCancelPressed(e);
@@ -468,7 +461,9 @@ public class LayoutEditorTools {
         }
         // place signals as requested
         String signalHeadName = throatContinuingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setThroatContinuing.isSelected()) {
             if (isHeadOnPanel(throatContinuingHead)
                     && (throatContinuingHead != getHeadFromName(layoutTurnout.getSignalA1Name()))) {
@@ -504,7 +499,9 @@ public class LayoutEditorTools {
             }
         }
         signalHeadName = throatDivergingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((setThroatDiverging.isSelected()) && (throatDivergingHead != null)) {
             if (isHeadOnPanel(throatDivergingHead)
                     && (throatDivergingHead != getHeadFromName(layoutTurnout.getSignalA2Name()))) {
@@ -544,7 +541,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = continuingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setContinuing.isSelected()) {
             if (isHeadOnPanel(continuingHead)
                     && (continuingHead != getHeadFromName(layoutTurnout.getSignalB1Name()))) {
@@ -585,7 +584,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = divergingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setDiverging.isSelected()) {
             if (isHeadOnPanel(divergingHead)
                     && (divergingHead != getHeadFromName(layoutTurnout.getSignalC1Name()))) {
@@ -752,7 +753,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = throatContinuingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnout.getCoordsA();
@@ -768,7 +771,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = throatDivergingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnout.getCoordsA();
@@ -855,7 +860,9 @@ public class LayoutEditorTools {
         }
 
         String signalHeadName = throatContinuingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track,
                 layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -908,7 +915,9 @@ public class LayoutEditorTools {
             return;
         }
         signalHeadName = throatContinuingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead2 = getNextSignalFromObject(track2,
                 layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead2 == null) && (!reachedEndBumper())) {
@@ -970,7 +979,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = throatDivergingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track,
                 layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -1021,7 +1032,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = continuingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track,
                 layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -1068,7 +1081,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = divergingSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track,
                 layoutTurnout, signalHeadName, setSignalsAtTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -1221,16 +1236,16 @@ public class LayoutEditorTools {
     public void setSignalHeadOnPanel(int rotation,
             @Nonnull String signalHeadName,
             int xLoc, int yLoc) {
-        setSignalHeadOnPanel((double)rotation,signalHeadName,xLoc,yLoc);
+        setSignalHeadOnPanel((double) rotation, signalHeadName, xLoc, yLoc);
     }
 
     /**
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
      *
-     * @param directionDEG rotation in degrees.
+     * @param directionDEG   rotation in degrees.
      * @param signalHeadName name of a signal head.
-     * @param where coordinates for placing signal head on panel.
+     * @param where          coordinates for placing signal head on panel.
      */
     public void setSignalHeadOnPanel(double directionDEG,
             @Nonnull String signalHeadName,
@@ -1242,10 +1257,10 @@ public class LayoutEditorTools {
      * Places a signal head icon on the panel after rotation at the designated
      * place, with all icons taken care of.
      *
-     * @param directionDEG rotation in degrees.
+     * @param directionDEG   rotation in degrees.
      * @param signalHeadName name of a signal head.
-     * @param xLoc x coordinate for placing signal head on panel.
-     * @param yLoc y coordinate for placing signal head on panel.
+     * @param xLoc           x coordinate for placing signal head on panel.
+     * @param yLoc           y coordinate for placing signal head on panel.
      */
     public void setSignalHeadOnPanel(double directionDEG, @Nonnull String signalHeadName, int xLoc, int yLoc) {
         SignalHeadIcon l = getSignalHeadIcon(signalHeadName);
@@ -2173,6 +2188,11 @@ public class LayoutEditorTools {
             });
             setSignalsAtBlockBoundaryCancel.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));
             theContentPane.add(panel6);
+
+            // make this button the default button (return or enter activates)
+            JRootPane rootPane = SwingUtilities.getRootPane(setSignalsDone);
+            rootPane.setDefaultButton(setSignalsDone);
+
             setSignalsAtBlockBoundaryFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -2233,7 +2253,9 @@ public class LayoutEditorTools {
         }
         // place or update signals as requested
         String newEastBoundSignalName = eastBoundSignalHeadComboBox.getSelectedItemDisplayName();
-        if (newEastBoundSignalName == null) newEastBoundSignalName = "";
+        if (newEastBoundSignalName == null) {
+            newEastBoundSignalName = "";
+        }
         if ((eastBoundHead != null) && setEastBound.isSelected()) {
             if (isHeadOnPanel(eastBoundHead)
                     && (eastBoundHead != getHeadFromName(boundary.getEastBoundSignal()))) {
@@ -2268,7 +2290,9 @@ public class LayoutEditorTools {
             // need to figure out what to do in this case.
         }
         String newWestBoundSignalName = westBoundSignalHeadComboBox.getSelectedItemDisplayName();
-        if (newWestBoundSignalName == null) newWestBoundSignalName = "";
+        if (newWestBoundSignalName == null) {
+            newWestBoundSignalName = "";
+        }
         if ((westBoundHead != null) && setWestBound.isSelected()) {
             if (isHeadOnPanel(westBoundHead)
                     && (westBoundHead != getHeadFromName(boundary.getWestBoundSignal()))) {
@@ -2454,7 +2478,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = eastBoundSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coords = boundary.getCoordsCenter();
@@ -2470,7 +2496,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = westBoundSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coords = boundary.getCoordsCenter();
@@ -2496,7 +2524,9 @@ public class LayoutEditorTools {
             p = boundary.getLinkedPoint();
         }
         String newEastBoundSignalName = eastBoundSignalHeadComboBox.getSelectedItemDisplayName();
-        if (newEastBoundSignalName == null) newEastBoundSignalName = "";
+        if (newEastBoundSignalName == null) {
+            newEastBoundSignalName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(eastTrack,
                 p, newEastBoundSignalName, setSignalsAtBlockBoundaryFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -2536,7 +2566,9 @@ public class LayoutEditorTools {
             p = boundary.getLinkedPoint();
         }
         String newWestBoundSignalName = westBoundSignalHeadComboBox.getSelectedItemDisplayName();
-        if (newWestBoundSignalName == null) newWestBoundSignalName = "";
+        if (newWestBoundSignalName == null) {
+            newWestBoundSignalName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(westTrack,
                 p, newWestBoundSignalName, setSignalsAtBlockBoundaryFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -2966,7 +2998,9 @@ public class LayoutEditorTools {
         }
         // place signal icons if requested, and assign signal heads to this turnout
         String signalHeadName = a1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setA1Head.isSelected()) {
             if (isHeadOnPanel(a1Head)
                     && (a1Head != getHeadFromName(layoutTurnout.getSignalA1Name()))) {
@@ -3002,7 +3036,9 @@ public class LayoutEditorTools {
             }
         }
         signalHeadName = a2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((a2Head != null) && setA2Head.isSelected()) {
             if (isHeadOnPanel(a2Head)
                     && (a2Head != getHeadFromName(layoutTurnout.getSignalA2Name()))) {
@@ -3041,7 +3077,9 @@ public class LayoutEditorTools {
             layoutTurnout.setSignalA2Name("");
         }
         signalHeadName = b1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setB1Head.isSelected()) {
             if (isHeadOnPanel(b1Head)
                     && (b1Head != getHeadFromName(layoutTurnout.getSignalB1Name()))) {
@@ -3077,7 +3115,9 @@ public class LayoutEditorTools {
             }
         }
         signalHeadName = b2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((b2Head != null) && setB2Head.isSelected()) {
             if (isHeadOnPanel(b2Head)
                     && (b2Head != getHeadFromName(layoutTurnout.getSignalB2Name()))) {
@@ -3116,7 +3156,9 @@ public class LayoutEditorTools {
             layoutTurnout.setSignalB2Name("");
         }
         signalHeadName = c1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setC1Head.isSelected()) {
             if (isHeadOnPanel(c1Head)
                     && (c1Head != getHeadFromName(layoutTurnout.getSignalC1Name()))) {
@@ -3152,7 +3194,9 @@ public class LayoutEditorTools {
             }
         }
         signalHeadName = c2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((c2Head != null) && setC2Head.isSelected()) {
             if (isHeadOnPanel(c2Head)
                     && (c2Head != getHeadFromName(layoutTurnout.getSignalC2Name()))) {
@@ -3191,7 +3235,9 @@ public class LayoutEditorTools {
             layoutTurnout.setSignalC2Name("");
         }
         signalHeadName = d1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setD1Head.isSelected()) {
             if (isHeadOnPanel(d1Head)
                     && (d1Head != getHeadFromName(layoutTurnout.getSignalD1Name()))) {
@@ -3227,7 +3273,9 @@ public class LayoutEditorTools {
             }
         }
         signalHeadName = d2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((d2Head != null) && setD2Head.isSelected()) {
             if (isHeadOnPanel(d2Head)
                     && (d2Head != getHeadFromName(layoutTurnout.getSignalD2Name()))) {
@@ -3360,7 +3408,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = a1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnout.getCoordsA();
@@ -3376,7 +3426,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = a2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnout.getCoordsA();
@@ -3392,7 +3444,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = b1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsB = layoutTurnout.getCoordsB();
@@ -3408,7 +3462,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = b2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsB = layoutTurnout.getCoordsB();
@@ -3424,7 +3480,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = c1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsC = layoutTurnout.getCoordsC();
@@ -3440,7 +3498,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = c2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsC = layoutTurnout.getCoordsC();
@@ -3456,7 +3516,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = d1SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsD = layoutTurnout.getCoordsD();
@@ -3472,7 +3534,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = d2SignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsD = layoutTurnout.getCoordsD();
@@ -3962,7 +4026,9 @@ public class LayoutEditorTools {
 
         // place or update signals as requested
         String signalName = aSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalName == null) signalName = "";
+        if (signalName == null) {
+            signalName = "";
+        }
         if ((aHead != null) && setAHead.isSelected()) {
             if (isHeadOnPanel(aHead)
                     && (aHead != getHeadFromName(levelXing.getSignalAName()))) {
@@ -4005,7 +4071,9 @@ public class LayoutEditorTools {
             levelXing.setSignalAName("");
         }
         signalName = bSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalName == null) signalName = "";
+        if (signalName == null) {
+            signalName = "";
+        }
         if ((bHead != null) && setBHead.isSelected()) {
             if (isHeadOnPanel(bHead)
                     && (bHead != getHeadFromName(levelXing.getSignalBName()))) {
@@ -4048,7 +4116,9 @@ public class LayoutEditorTools {
             levelXing.setSignalBName("");
         }
         signalName = cSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalName == null) signalName = "";
+        if (signalName == null) {
+            signalName = "";
+        }
         if ((cHead != null) && setCHead.isSelected()) {
             if (isHeadOnPanel(cHead)
                     && (cHead != getHeadFromName(levelXing.getSignalCName()))) {
@@ -4091,7 +4161,9 @@ public class LayoutEditorTools {
             levelXing.setSignalCName("");
         }
         signalName = dSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalName == null) signalName = "";
+        if (signalName == null) {
+            signalName = "";
+        }
         if ((dHead != null) && setDHead.isSelected()) {
             if (isHeadOnPanel(dHead)
                     && (dHead != getHeadFromName(levelXing.getSignalDName()))) {
@@ -4279,7 +4351,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = aSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = levelXing.getCoordsA();
@@ -4295,7 +4369,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = bSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsB = levelXing.getCoordsB();
@@ -4314,7 +4390,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = cSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsC = levelXing.getCoordsC();
@@ -4330,7 +4408,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = dSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsB = levelXing.getCoordsB();
@@ -4930,12 +5010,16 @@ public class LayoutEditorTools {
 
         if (!setSignalsAtThroatToThroatTurnoutsFromMenuFlag) {
             ttotTurnoutName1 = turnout1ComboBox.getSelectedItemDisplayName();
-            if (ttotTurnoutName1 == null) ttotTurnoutName1 = "";
+            if (ttotTurnoutName1 == null) {
+                ttotTurnoutName1 = "";
+            }
         }
         if (ttotTurnoutName1.isEmpty()) {
             // turnout 1 not entered, test turnout 2
             ttotTurnoutName2 = turnout2ComboBox.getSelectedItemDisplayName();
-            if (ttotTurnoutName2 == null) ttotTurnoutName2 = "";
+            if (ttotTurnoutName2 == null) {
+                ttotTurnoutName2 = "";
+            }
             if (ttotTurnoutName2.isEmpty()) {
                 // no entries in turnout fields
                 JOptionPane.showMessageDialog(setSignalsAtThroatToThroatTurnoutsFrame, Bundle.getMessage("SignalsError1"),
@@ -5013,7 +5097,9 @@ public class LayoutEditorTools {
             turnout1ComboBox.setSelectedItem(layoutTurnout1.getTurnout());
             // have turnout 1 and layout turnout 1 - was something entered for turnout 2
             ttotTurnoutName2 = turnout2ComboBox.getSelectedItemDisplayName();
-            if (ttotTurnoutName2 == null) ttotTurnoutName2 = "";
+            if (ttotTurnoutName2 == null) {
+                ttotTurnoutName2 = "";
+            }
             if (ttotTurnoutName2.isEmpty()) {
                 // no entry for turnout 2
                 connectorTrack = (TrackSegment) layoutTurnout1.getConnectA();
@@ -5095,7 +5181,9 @@ public class LayoutEditorTools {
 
         // place signal icons if requested, and assign signal heads to this turnout
         String signalHeadName = a1TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setA1TToTHead.isSelected()) {
             if (isHeadOnPanel(a1TToTHead)
                     && (a1TToTHead != getHeadFromName(layoutTurnout1.getSignalB1Name()))) {
@@ -5136,7 +5224,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = a2TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((a2TToTHead != null) && setA2TToTHead.isSelected()) {
             if (isHeadOnPanel(a2TToTHead)
                     && (a2TToTHead != getHeadFromName(layoutTurnout1.getSignalB2Name()))) {
@@ -5180,7 +5270,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = b1TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setB1TToTHead.isSelected()) {
             if (isHeadOnPanel(b1TToTHead)
                     && (b1TToTHead != getHeadFromName(layoutTurnout1.getSignalC1Name()))) {
@@ -5221,7 +5313,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = b2TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((b2TToTHead != null) && setB2TToTHead.isSelected()) {
             if (isHeadOnPanel(b2TToTHead)
                     && (b2TToTHead != getHeadFromName(layoutTurnout1.getSignalC2Name()))) {
@@ -5266,7 +5360,9 @@ public class LayoutEditorTools {
 
         // signal heads on turnout 2
         signalHeadName = c1TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setC1TToTHead.isSelected()) {
             if (isHeadOnPanel(c1TToTHead)
                     && (c1TToTHead != getHeadFromName(layoutTurnout2.getSignalB1Name()))) {
@@ -5307,7 +5403,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = c2TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((c2TToTHead != null) && setC2TToTHead.isSelected()) {
             if (isHeadOnPanel(c2TToTHead)
                     && (c2TToTHead != getHeadFromName(layoutTurnout2.getSignalB2Name()))) {
@@ -5351,7 +5449,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = d1TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setD1TToTHead.isSelected()) {
             if (isHeadOnPanel(d1TToTHead)
                     && (d1TToTHead != getHeadFromName(layoutTurnout2.getSignalC1Name()))) {
@@ -5392,7 +5492,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = d2TToTSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((d2TToTHead != null) && setD2TToTHead.isSelected()) {
             if (isHeadOnPanel(d2TToTHead)
                     && (d2TToTHead != getHeadFromName(layoutTurnout2.getSignalC2Name()))) {
@@ -6475,7 +6577,9 @@ public class LayoutEditorTools {
         }
         // place signals as requested at turnout A
         String signalHeadName = a1_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setA13WayHead.isSelected()) {
             if (isHeadOnPanel(a13WayHead)
                     && (a13WayHead != getHeadFromName(layoutTurnoutA.getSignalA1Name()))) {
@@ -6512,7 +6616,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = a2_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((setA23WayHead.isSelected()) && (a23WayHead != null)) {
             if (isHeadOnPanel(a23WayHead)
                     && (a23WayHead != getHeadFromName(layoutTurnoutA.getSignalA2Name()))) {
@@ -6552,7 +6658,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = a3_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((setA33WayHead.isSelected()) && (a33WayHead != null)) {
             if (isHeadOnPanel(a33WayHead)
                     && (a33WayHead != getHeadFromName(layoutTurnoutA.getSignalA3Name()))) {
@@ -6592,7 +6700,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = b_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setB3WayHead.isSelected()) {
             if (isHeadOnPanel(b3WayHead)
                     && (b3WayHead != getHeadFromName(layoutTurnoutA.getSignalC1Name()))) {
@@ -6630,7 +6740,9 @@ public class LayoutEditorTools {
 
         // place signals as requested at Turnout C
         signalHeadName = c_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setC3WayHead.isSelected()) {
             if (isHeadOnPanel(c3WayHead)
                     && (c3WayHead != getHeadFromName(layoutTurnoutB.getSignalB1Name()))) {
@@ -6667,7 +6779,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = d_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setD3WayHead.isSelected()) {
             if (isHeadOnPanel(d3WayHead)
                     && (d3WayHead != getHeadFromName(layoutTurnoutB.getSignalC1Name()))) {
@@ -6723,11 +6837,15 @@ public class LayoutEditorTools {
         }
         // link the two turnouts
         signalHeadName = turnoutBComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         layoutTurnoutA.setLinkedTurnoutName(signalHeadName);
         layoutTurnoutA.setLinkType(LayoutTurnout.FIRST_3_WAY);
         signalHeadName = turnoutAComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         layoutTurnoutB.setLinkedTurnoutName(signalHeadName);
         layoutTurnoutB.setLinkType(LayoutTurnout.SECOND_3_WAY);
         // finish up
@@ -6771,7 +6889,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = a1_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnoutA.getCoordsA();
@@ -6790,7 +6910,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = a2_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnoutA.getCoordsA();
@@ -6809,7 +6931,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = a3_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsA = layoutTurnoutA.getCoordsA();
@@ -6828,7 +6952,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = b_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsB = layoutTurnoutA.getCoordsB();
@@ -6854,7 +6980,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = c_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsB = layoutTurnoutB.getCoordsB();
@@ -6880,7 +7008,9 @@ public class LayoutEditorTools {
             testIcon = signalIconEditor.getIcon(0);
         }
         String signalHeadName = d_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         Point2D coordsC = layoutTurnoutB.getCoordsC();
@@ -6923,7 +7053,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = a1_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutB,
                 signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -6980,7 +7112,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = a2_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
                 signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -7030,7 +7164,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = a3_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutB,
                 signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -7082,7 +7218,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = b_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
                 signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -7132,7 +7270,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = c_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
                 signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -7184,7 +7324,9 @@ public class LayoutEditorTools {
             return;
         }
         String signalHeadName = d_3WaySignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         SignalHead nextHead = getNextSignalFromObject(track, layoutTurnoutA,
                 signalHeadName, setSignalsAt3WayTurnoutFrame);
         if ((nextHead == null) && (!reachedEndBumper())) {
@@ -7468,7 +7610,9 @@ public class LayoutEditorTools {
     /**
      * Returns true if the specified Sensor is assigned to an object on the
      * panel, regardless of whether an icon is displayed or not. With sensors we
-     * NO LONGER (4.11.2) allow the same sensor to be allocated in both directions.
+     * NO LONGER (4.11.2) allow the same sensor to be allocated in both
+     * directions.
+     *
      * @param sensor The sensor to be checked.
      * @return true if the sensor is currently assigned someplace.
      */
@@ -7529,22 +7673,23 @@ public class LayoutEditorTools {
 
     /**
      * Display an error dialog.
+     *
      * @param sensor The sensor that is already assigned.
      */
     void sensorAssignedElseWhere(@Nonnull Sensor sensor) {
         JOptionPane.showMessageDialog(setSensorsAtBlockBoundaryFrame,
-                Bundle.getMessage("SensorsError6",  // NOI18N
+                Bundle.getMessage("SensorsError6", // NOI18N
                         new Object[]{sensor.getDisplayName()}),
                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
     }
 
     /**
      * Removes the assignment of the specified Sensor to either a turnout, a
-     * positionable point, or a level crossing wherever it is assigned.
-     * Removes any NX Pairs that use the sensor.
+     * positionable point, or a level crossing wherever it is assigned. Removes
+     * any NX Pairs that use the sensor.
      * <p>
      * If the NX deletes fail due to Conditional references or user deny, the
-     * assignment is not deleted.  No additional notification is necessary since
+     * assignment is not deleted. No additional notification is necessary since
      * they have already been notified or made a choice to not continue.
      * <p>
      * @param sensor The sensor to be removed.
@@ -7616,6 +7761,7 @@ public class LayoutEditorTools {
     /**
      * Removes the Sensor icon from the panel and from assignment to any
      * turnout, positionable point, or level crossing.
+     *
      * @param sensor The sensor whose icon and references are to be removed.
      * @return true if the removal was successful.
      */
@@ -7689,11 +7835,11 @@ public class LayoutEditorTools {
         Sensor currWestSensor = InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensorName());
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: east = {}, west = {}",  // NOI18N
-                    (currEastSensor == null) ? "- none- " : currEastSensor.getDisplayName(),  // NOI18N
+            log.trace("current sensors: east = {}, west = {}", // NOI18N
+                    (currEastSensor == null) ? "- none- " : currEastSensor.getDisplayName(), // NOI18N
                     (currWestSensor == null) ? "- none- " : currWestSensor.getDisplayName());  // NOI18N
-            log.trace("new sensors: east = {}, west = {}",  // NOI18N
-                    (eastSensor == null) ? "- none- " : eastSensor.getDisplayName(),  // NOI18N
+            log.trace("new sensors: east = {}, west = {}", // NOI18N
+                    (eastSensor == null) ? "- none- " : eastSensor.getDisplayName(), // NOI18N
                     (westSensor == null) ? "- none- " : westSensor.getDisplayName());  // NOI18N
         }
 
@@ -7724,11 +7870,13 @@ public class LayoutEditorTools {
 
     /**
      * Attached a sensor to the block boundary positional point.
+     *
      * @since 4.11.2
-     * @param newSensor The sensor that is being added.
+     * @param newSensor  The sensor that is being added.
      * @param currSensor The sensor that might already be there, otherwise null.
-     * @param beanDetail The BeanDetails object that contains the supporting data.
-     * @param direction The direction, East or West.
+     * @param beanDetail The BeanDetails object that contains the supporting
+     *                   data.
+     * @param direction  The direction, East or West.
      */
     void setBoundarySensor(Sensor newSensor, Sensor currSensor,
             BeanDetails<Sensor> beanDetail, String direction) {
@@ -7755,7 +7903,7 @@ public class LayoutEditorTools {
                 sensorAssignedElseWhere(newSensor);
             }
         } else if (currSensor == newSensor) {
-             if (beanDetail.addToPanel()) {
+            if (beanDetail.addToPanel()) {
                 if (!isSensorOnPanel(newSensor)) {
                     log.trace("Add icon for existing sensor '{}'", newSensor.getDisplayName());  // NOI18N
                     if (direction.equals("West")) {  // NOI18N
@@ -7771,7 +7919,7 @@ public class LayoutEditorTools {
         } else {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 if (removeSensorFromPanel(currSensor)) {
-                    log.trace("Replace sensor '{}' with sensor '{}'",  // NOI18N
+                    log.trace("Replace sensor '{}' with sensor '{}'", // NOI18N
                             currSensor.getDisplayName(), newSensor.getDisplayName());
                     if (direction.equals("West")) {  // NOI18N
                         boundary.setWestBoundSensor(beanDetail.getText());
@@ -7779,7 +7927,7 @@ public class LayoutEditorTools {
                         boundary.setEastBoundSensor(beanDetail.getText());
                     }
                     if (beanDetail.addToPanel()) {
-                        log.trace("Add icon for replacement sensor '{}'",  // NOI18N
+                        log.trace("Add icon for replacement sensor '{}'", // NOI18N
                                 newSensor.getDisplayName());
                         if (direction.equals("West")) {  // NOI18N
                             placeWestBoundIcon(getSensorIcon(beanDetail.getText()),
@@ -9047,7 +9195,6 @@ public class LayoutEditorTools {
             theContentPane.add(panel6);
         }
 
-
         turnoutSignalMastA.getCombo().setExcludedItems(new HashSet<>());
         turnoutSignalMastB.getCombo().setExcludedItems(new HashSet<>());
         turnoutSignalMastC.getCombo().setExcludedItems(new HashSet<>());
@@ -9250,7 +9397,9 @@ public class LayoutEditorTools {
                 if (isSignalMastOnPanel(turnoutMastD)
                         && (turnoutMastD != layoutTurnout.getSignalDMast())) {
                     String signalHeadName = divergingSignalHeadComboBox.getSelectedItemDisplayName();
-                    if (signalHeadName == null) signalHeadName = "";
+                    if (signalHeadName == null) {
+                        signalHeadName = "";
+                    }
                     JOptionPane.showMessageDialog(setSignalsAtTurnoutFrame,
                             Bundle.getMessage("SignalsError6",
                                     new Object[]{signalHeadName}),
@@ -10821,7 +10970,6 @@ public class LayoutEditorTools {
 //         }
 //         return NONE;
 //     }   // isSensorAssignedHere
-
     SensorIcon turnoutSensorBlockIcon;
 
     private void setSensorsDonePressed(ActionEvent a) {
@@ -10842,15 +10990,15 @@ public class LayoutEditorTools {
         Sensor currSensorD = layoutTurnout.getSensorD();
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
-                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(),  // NOI18N
-                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(),  // NOI18N
-                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(),  // NOI18N
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), // NOI18N
                     (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
-            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
-                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(),  // NOI18N
-                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(),  // NOI18N
-                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(),  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(), // NOI18N
+                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(), // NOI18N
+                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(), // NOI18N
                     (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
@@ -10902,16 +11050,18 @@ public class LayoutEditorTools {
     }   // setSensorsDonePressed
 
     /**
-     * Attached a sensor to a turnout block boundary.
-     * Supports both LayoutTurnout and LayoutSlip classes.
+     * Attached a sensor to a turnout block boundary. Supports both
+     * LayoutTurnout and LayoutSlip classes.
+     *
      * @since 4.11.2
-     * @param trackItem The turnout or slip that is being modified.
-     * @param newSensor The sensor that is being added.
+     * @param trackItem  The turnout or slip that is being modified.
+     * @param newSensor  The sensor that is being added.
      * @param currSensor The sensor that might already be there, otherwise null.
-     * @param beanDetail The BeanDetails object that contains the supporting data.
-     * @param connect The track segment that is attached to this point
-     * @param coords The track componennt coordinates
-     * @param position Which of the four points is being changed
+     * @param beanDetail The BeanDetails object that contains the supporting
+     *                   data.
+     * @param connect    The track segment that is attached to this point
+     * @param coords     The track componennt coordinates
+     * @param position   Which of the four points is being changed
      */
     <T extends LayoutTurnout> void setTurnoutSensor(T trackItem, Sensor newSensor, Sensor currSensor,
             BeanDetails beanDetail, LayoutTrack connect, Point2D coords, String position) {
@@ -10957,7 +11107,7 @@ public class LayoutEditorTools {
         } else {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 if (removeSensorFromPanel(currSensor)) {
-                    log.trace("Replace sensor '{}' with sensor '{}'",  // NOI18N
+                    log.trace("Replace sensor '{}' with sensor '{}'", // NOI18N
                             currSensor.getDisplayName(), newSensor.getDisplayName());
                     switch (position) {
                         case "A":  // NOI18N
@@ -10976,7 +11126,7 @@ public class LayoutEditorTools {
                             break;
                     }
                     if (beanDetail.addToPanel()) {
-                        log.trace("Add icon for replacement sensor '{}'",  // NOI18N
+                        log.trace("Add icon for replacement sensor '{}'", // NOI18N
                                 newSensor.getDisplayName());
                         placingBlock(getSensorIcon(beanDetail.getText()),
                                 beanDetail.isRightSelected(), 0.0,
@@ -11364,18 +11514,17 @@ public class LayoutEditorTools {
         Sensor currSensorD = levelXing.getSensorD();
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
-                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(),  // NOI18N
-                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(),  // NOI18N
-                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(),  // NOI18N
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), // NOI18N
                     (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
-            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
-                    (aSensor == null) ? "- none- " : aSensor.getDisplayName(),  // NOI18N
-                    (bSensor == null) ? "- none- " : bSensor.getDisplayName(),  // NOI18N
-                    (cSensor == null) ? "- none- " : cSensor.getDisplayName(),  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (aSensor == null) ? "- none- " : aSensor.getDisplayName(), // NOI18N
+                    (bSensor == null) ? "- none- " : bSensor.getDisplayName(), // NOI18N
+                    (cSensor == null) ? "- none- " : cSensor.getDisplayName(), // NOI18N
                     (dSensor == null) ? "- none- " : dSensor.getDisplayName());  // NOI18N
         }
-
 
         // place/remove sensors as requested
         if (aSensor == null) {
@@ -11423,13 +11572,15 @@ public class LayoutEditorTools {
 
     /**
      * Attached a sensor to a level crossing block boundary.
+     *
      * @since 4.11.2
-     * @param newSensor The sensor that is being added.
+     * @param newSensor  The sensor that is being added.
      * @param currSensor The sensor that might already be there, otherwise null.
-     * @param beanDetail The BeanDetails object that contains the supporting data.
-     * @param connect The track segment that is attached to this point
-     * @param coords The track componennt coordinates
-     * @param position Which of the four points is being changed
+     * @param beanDetail The BeanDetails object that contains the supporting
+     *                   data.
+     * @param connect    The track segment that is attached to this point
+     * @param coords     The track componennt coordinates
+     * @param position   Which of the four points is being changed
      */
     void setLevelXingSensor(Sensor newSensor, Sensor currSensor, BeanDetails beanDetail,
             LayoutTrack connect, Point2D coords, String position) {
@@ -11473,7 +11624,7 @@ public class LayoutEditorTools {
         } else {
             if (!isSensorAssignedAnywhere(newSensor)) {
                 if (removeSensorFromPanel(currSensor)) {
-                    log.trace("Replace sensor '{}' with sensor '{}'",  // NOI18N
+                    log.trace("Replace sensor '{}' with sensor '{}'", // NOI18N
                             currSensor.getDisplayName(), newSensor.getDisplayName());
                     switch (position) {
                         case "A":  // NOI18N
@@ -11492,7 +11643,7 @@ public class LayoutEditorTools {
                             break;
                     }
                     if (beanDetail.addToPanel()) {
-                        log.trace("Add icon for replacement sensor '{}'",  // NOI18N
+                        log.trace("Add icon for replacement sensor '{}'", // NOI18N
                                 newSensor.getDisplayName());
                         placingBlock(getSensorIcon(beanDetail.getText()),
                                 beanDetail.isRightSelected(), 0.0, connect, coords);
@@ -11912,22 +12063,21 @@ public class LayoutEditorTools {
         Sensor sensorC = getSensorFromEntry(slipSensorC.getText(), false, setSensorsAtSlipFrame);
         Sensor sensorD = getSensorFromEntry(slipSensorD.getText(), false, setSensorsAtSlipFrame);
 
-
         Sensor currSensorA = layoutSlip.getSensorA();
         Sensor currSensorB = layoutSlip.getSensorB();
         Sensor currSensorC = layoutSlip.getSensorC();
         Sensor currSensorD = layoutSlip.getSensorD();
 
         if (log.isTraceEnabled()) {
-            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
-                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(),  // NOI18N
-                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(),  // NOI18N
-                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(),  // NOI18N
+            log.trace("current sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (currSensorA == null) ? "- none- " : currSensorA.getDisplayName(), // NOI18N
+                    (currSensorB == null) ? "- none- " : currSensorB.getDisplayName(), // NOI18N
+                    (currSensorC == null) ? "- none- " : currSensorC.getDisplayName(), // NOI18N
                     (currSensorD == null) ? "- none- " : currSensorD.getDisplayName());  // NOI18N
-            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}",  // NOI18N
-                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(),  // NOI18N
-                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(),  // NOI18N
-                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(),  // NOI18N
+            log.trace("new sensors: A = {}, B = {}, C = {}, D = {}", // NOI18N
+                    (sensorA == null) ? "- none- " : sensorA.getDisplayName(), // NOI18N
+                    (sensorB == null) ? "- none- " : sensorB.getDisplayName(), // NOI18N
+                    (sensorC == null) ? "- none- " : sensorC.getDisplayName(), // NOI18N
                     (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
@@ -12572,7 +12722,9 @@ public class LayoutEditorTools {
 
         // place signal icons if requested, and assign signal heads to this turnout
         String signalHeadName = a1SlipSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setA1SlipHead.isSelected()) {
             if (isHeadOnPanel(a1SlipHead)
                     && (a1SlipHead != getHeadFromName(layoutSlip.getSignalB1Name()))) {
@@ -12613,7 +12765,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = a2SlipSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((a2SlipHead != null) && setA2SlipHead.isSelected()) {
             if (isHeadOnPanel(a2SlipHead)
                     && (a2SlipHead != getHeadFromName(layoutSlip.getSignalB2Name()))) {
@@ -12657,7 +12811,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = b1SlipSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setB1SlipHead.isSelected()) {
             if (isHeadOnPanel(b1SlipHead)
                     && (b1SlipHead != getHeadFromName(layoutSlip.getSignalC1Name()))) {
@@ -12699,7 +12855,9 @@ public class LayoutEditorTools {
 
         if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
             signalHeadName = b2SlipSignalHeadComboBox.getSelectedItemDisplayName();
-            if (signalHeadName == null) signalHeadName = "";
+            if (signalHeadName == null) {
+                signalHeadName = "";
+            }
             if ((b2SlipHead != null) && setB2SlipHead.isSelected()) {
                 if (isHeadOnPanel(b2SlipHead)
                         && (b2SlipHead != getHeadFromName(layoutSlip.getSignalC2Name()))) {
@@ -12752,7 +12910,9 @@ public class LayoutEditorTools {
 
         // signal heads on turnout 2
         signalHeadName = c1SlipSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setC1SlipHead.isSelected()) {
             if (isHeadOnPanel(c1SlipHead)
                     && (c1SlipHead != getHeadFromName(layoutSlip.getSignalB1Name()))) {
@@ -12794,7 +12954,9 @@ public class LayoutEditorTools {
 
         if (layoutSlip.getTurnoutType() == LayoutSlip.DOUBLE_SLIP) {
             signalHeadName = c2SlipSignalHeadComboBox.getSelectedItemDisplayName();
-            if (signalHeadName == null) signalHeadName = "";
+            if (signalHeadName == null) {
+                signalHeadName = "";
+            }
             if ((c2SlipHead != null) && setC2SlipHead.isSelected()) {
                 if (isHeadOnPanel(c2SlipHead)
                         && (c2SlipHead != getHeadFromName(layoutSlip.getSignalB2Name()))) {
@@ -12846,7 +13008,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = d1SlipSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if (setD1SlipHead.isSelected()) {
             if (isHeadOnPanel(d1SlipHead)
                     && (d1SlipHead != getHeadFromName(layoutSlip.getSignalC1Name()))) {
@@ -12887,7 +13051,9 @@ public class LayoutEditorTools {
         }
 
         signalHeadName = d2SlipSignalHeadComboBox.getSelectedItemDisplayName();
-        if (signalHeadName == null) signalHeadName = "";
+        if (signalHeadName == null) {
+            signalHeadName = "";
+        }
         if ((d2SlipHead != null) && setD2SlipHead.isSelected()) {
             if (isHeadOnPanel(d2SlipHead)
                     && (d2SlipHead != getHeadFromName(layoutSlip.getSignalC2Name()))) {
@@ -13457,7 +13623,6 @@ public class LayoutEditorTools {
         }
     }
 
-
     /**
      * get a signal head icon for the given signal head
      *
@@ -13466,8 +13631,8 @@ public class LayoutEditorTools {
      */
     @CheckReturnValue
     public SignalHeadIcon getSignalHeadIcon(@Nonnull String signalName) {
-        if(signalIconEditor == null) {
-           signalIconEditor = layoutEditor.signalIconEditor;
+        if (signalIconEditor == null) {
+            signalIconEditor = layoutEditor.signalIconEditor;
         }
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(signalName);
