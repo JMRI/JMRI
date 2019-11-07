@@ -1,5 +1,4 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id$-->
 <html lang="fr">
 <head>
 <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
@@ -13,7 +12,6 @@
   content="Updated instructions for GitHub instead of single file edit and ZIP">
   <title>How to Update the JMRI Documentation</title>
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
 <h1>Actualisation Manuelle des Documents JMRI</h1>
@@ -91,8 +90,8 @@ pouvez installer <a href="http://www.kde.org/"> KSnapshot </a> ou votre applicat
 
 <h3>Pour Mac OS X</h3>
 
-Apr&#232;s avoir configur&#233; votre photo, maintenez la touche <span
-<style = "font-family: monospace"> &lt;Apple + Maj + 4&gt; </span> . Lorsque vous
+Apr&#232;s avoir configur&#233; votre photo, maintenez la touche
+<span style = "font-family: monospace"> &lt;Apple + Maj + 4&gt; </span> . Lorsque vous
 les lib&#233;rer en m&#234;me temps, le curseur devient un signe plus, et vous pouvez le faire glisser
  autour le zone que vous souhaitez. Quand vous relachez, vous avez un fichier image sur
 votre bureau.
@@ -131,12 +130,13 @@ fichier qui ont &#233;t&#233; modifi&#233;es.
 
 <h3>Pr&#233;parer les Fichiers </h3>
 
-Le type de fichier correct &#224; utiliser pour JMRI a l'extension. shtml. Si vous avez
+<p>Le type de fichier correct &#224; utiliser pour JMRI a l'extension. shtml. Si vous avez
 fait un .html ou .htm, vous pouvez changer l'extension de vous-m&#234;me en .shtml.
 Ne pas utiliser d'espaces ou de majuscules dans vos
 noms de fichiers. Si vous ne changez pas ou n'ajouter pas d'images, il suffit de sauvegarder le fichier avec
-son nom d'origine, exemple: <span style="font-family: monospace">&ldquo;index.shtml&rdquo;</span>,
-dans un emplacement o&#249; vous pouvez le trouver facilement quand vous &#234;tes pr&#234;t &#224; le copier sur GitHub </a> . </p>
+son nom d'origine, exemple: <span style="font-family: monospace">&lt;index.shtml&gt;</span>,
+dans un emplacement o&#249; vous pouvez le trouver facilement quand vous &#234;tes pr&#234;t &#224; le copier sur
+  GitHub </a> .</p>
 
 <h3>Envoyer &#224; GitHub </h3>
 

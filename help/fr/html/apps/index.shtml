@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <title>JMRI: Applications</title>
 
@@ -64,16 +63,17 @@
     </dd>
 
 
-		<dt><h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3></dt>
-		<dd>
-		    Un jeu d'outil pour l'utilisation Audio avec JMRI.<br>
-		    Ouvrez SoundPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI
-		</dd>
+	<dt><h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3></dt>
+	<dd>
+		Un jeu d'outil pour l'utilisation Audio avec JMRI.<br>
+		Ouvrez SoundPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI
+	</dd>
  </dl>		
 		
 <h2>Plus d'Outils</h2>
   <ul>
-  <li<a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre r&#233;seau partag&#233; par la 
+  <li><a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre
+	  r&#233;seau partag&#233; par la
   plupart des applications JMRI.</li>
 			<li><a href="../tools/index.shtml#systemSpecificTools">Des Outils Syst&#232:me-Sp&#233;cifique </a> sont disponibles dans la plupart des 
 			applications JMRI depuis leur propre menu quand vous avez configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
