@@ -24,10 +24,8 @@ public class LayoutEditorDialogsTest {
     @Rule    // allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
-    /**
+    /*
      * This is called once before all tests
-     *
-     * @throws Exception
      */
     @BeforeClass
     public static void setUpClass() {
@@ -39,10 +37,8 @@ public class LayoutEditorDialogsTest {
         }
     }
 
-    /**
+    /*
      * This is called once after all tests
-     *
-     * @throws Exception
      */
     @AfterClass
     public static void tearDownClass() {
@@ -52,29 +48,6 @@ public class LayoutEditorDialogsTest {
             layoutEditorDialogs = null;
         }
         JUnitUtil.tearDown();
-    }
-
-    /**
-     * This is called before each test
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUpEach() throws Exception {
-        //JUnitUtil.setUp();
-        //if (!GraphicsEnvironment.isHeadless()) {
-        //    JUnitUtil.resetProfileManager();
-        //}
-    }
-
-    /**
-     * This is called after each test
-     *
-     * @throws Exception
-     */
-    @After
-    public void tearDownEach() throws Exception {
-        //JUnitUtil.tearDown();
     }
 
     private static LayoutEditor layoutEditor = null;
