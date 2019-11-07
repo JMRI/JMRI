@@ -35,7 +35,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
             -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
-            -Dpython.cachdir=${PYTHON_CACHEDIR}
+            -Dpython.cachedir=${PYTHON_CACHEDIR}
     fi
 else
     # run full GUI test suite and fail on coverage issues
@@ -45,5 +45,5 @@ else
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
         -Djava.awt.headless=${HEADLESS} \
         -Dcucumber.options="--tags 'not @Ignore'" \
-        -Dpython.cachdir=${PYTHON_CACHEDIR}
+        -Dpython.cachedir=${PYTHON_CACHEDIR}
 fi
