@@ -2411,7 +2411,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             if (selectionActive) {
                 pt = MathUtil.midPoint(getSelectionRect());
             }
-            getLEDialogs().enterReporter((int) pt.getX(), (int) pt.getY());
+            EnterReporterDialog d = new EnterReporterDialog(this);
+            d.enterReporter((int) pt.getX(), (int) pt.getY());
             //note: panel resized in enterReporter
             setDirty();
             redrawPanel();
@@ -2462,7 +2463,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem gridSizeItem = new JMenuItem(Bundle.getMessage("SetGridSizes") + "...");
         gridMenu.add(gridSizeItem);
         gridSizeItem.addActionListener((ActionEvent event) -> {
-            getLEDialogs().enterGridSizes();
+            EnterGridSizesDialog d = new EnterGridSizesDialog(this);
+            d.enterGridSizes();
         });
 
         //
@@ -2718,7 +2720,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
             //bring up scale track diagram dialog
-            getLEDialogs().scaleTrackDiagram();
+            ScaleTrackDiagramDialog d = new ScaleTrackDiagramDialog(this);
+            d.scaleTrackDiagram();
         });
 
         //translate selection
@@ -2732,7 +2735,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("Error12"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             } else {
-                getLEDialogs().moveSelection();
+                //bring up move selection dialog
+                MoveSelectionDialog d = new MoveSelectionDialog(this);
+                d.moveSelection();
             }
         });
 
@@ -7685,15 +7690,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             layoutEditorChecks = new LayoutEditorChecks(this);
         }
         return layoutEditorChecks;
-    }
-
-    private transient LayoutEditorDialogs leDialogs = null;
-
-    public LayoutEditorDialogs getLEDialogs() {
-        if (leDialogs == null) {
-            leDialogs = new LayoutEditorDialogs(this);
-        }
-        return leDialogs;
     }
 
     /**
