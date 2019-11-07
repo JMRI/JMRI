@@ -109,7 +109,7 @@
 				<tooltip xml:lang="nl">&lt;html&gt;Schakelt de + +-modus in. speciale bediening van de afstandsbediening:&lt;br&gt; Verhoog, houden of verminder de snelheid.&lt;br&gt;De controle is met snelheids stappen:&lt;br&gt; 0-4 = remmen,&lt;br&gt; 5-9 = houden (inclusief stop),&lt;br&gt; 10-14 = Versnellen.&lt;br&gt; Met de grote toetsen van de Lenz LH100 zeer makkelijk te gebruiken.&lt;br&gt; (Stel de regelaar in op 14 snelheids stappen en de loc CV29-2 op 0)&lt;br&gt;</tooltip>
 			</variable>
 			<variable CV="5" item="ATL-B" mask="XXXXXXVX"> <!-- Shuttle mode -->
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-Offon.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Shuttle Operation</label>
 				<label xml:lang="de">Pendelbetrieb</label>
 				<label xml:lang="nl">Pendeldienst</label>
