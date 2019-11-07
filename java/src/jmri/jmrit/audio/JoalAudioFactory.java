@@ -348,6 +348,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables to record static library status")
     public void cleanup() {
         // Stop the command thread
         super.cleanup();
