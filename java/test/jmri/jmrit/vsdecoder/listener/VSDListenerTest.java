@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.listener;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,9 @@ public class VSDListenerTest {
     public void testCtor() {
         VSDListener s = new VSDListener();
         Assert.assertNotNull("exists", s);
+    
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
     @Before
