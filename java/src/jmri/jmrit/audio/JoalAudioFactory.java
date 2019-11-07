@@ -389,8 +389,9 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
 
         // Finally, shutdown OpenAL and close the output device
-        log.debug("Shutting down OpenAL");
-        ALut.alutExit();
+        log.debug("Shutting down OpenAL, initialised: {}", initialised);
+        if (initialised) ALut.alutExit();
+        initialised = false;
     }
 
     @Override
