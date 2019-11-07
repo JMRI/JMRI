@@ -202,6 +202,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     public void cleanup() {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
+        InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(audioShutDownTask);
         activeAudioFactory.cleanup();
     }
 
