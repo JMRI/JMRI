@@ -24,16 +24,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
-    
-    @BeforeClass
-    static public void setUpClass() {
-          JUnitUtil.setUp();
-    }
-
-    @AfterClass
-    static public void tearDownClass() {
-          JUnitUtil.tearDown();
-    }
 
     @Before
     @Override
