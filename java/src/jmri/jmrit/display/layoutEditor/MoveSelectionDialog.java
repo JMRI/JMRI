@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import jmri.InvokeOnGuiThread;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements the move selection dialog for the Layout Editor
@@ -180,6 +178,6 @@ public class MoveSelectionDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(
-            MoveSelectionDialog.class);
+//    private final static Logger log = LoggerFactory.getLogger(
+//            MoveSelectionDialog.class);
 }

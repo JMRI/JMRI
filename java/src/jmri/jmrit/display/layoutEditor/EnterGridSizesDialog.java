@@ -19,8 +19,6 @@ import javax.swing.SwingUtilities;
 import jmri.InvokeOnGuiThread;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Layout Editor Dialogs implements some dialogs for the Layout Editor
@@ -208,6 +206,6 @@ public class EnterGridSizesDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(
-            EnterGridSizesDialog.class);
+//    private final static Logger log = LoggerFactory.getLogger(
+//            EnterGridSizesDialog.class);
 }
