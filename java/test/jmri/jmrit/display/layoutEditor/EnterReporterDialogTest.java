@@ -70,7 +70,7 @@ public class EnterReporterDialogTest {
 
         // cancel the dialog
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        //TODO: any way to verify that the dialog is closed?
+        Assert.assertTrue("AddReporter Dialog closed.", !jFrameOperator.isActive());
 
         enterReporterDialog.enterReporter(150, 200);
         jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
@@ -145,5 +145,6 @@ public class EnterReporterDialogTest {
 
         // and everything should work!
         addNewLabelButtonOperator.doClick();
+        Assert.assertTrue("AddReporter Dialog closed.", !jFrameOperator.isActive());
     }
 }

@@ -69,7 +69,7 @@ public class MoveSelectionDialogTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        //TODO: any way to verify that the dialog is closed?
+        Assert.assertTrue("TranslateSelection Dialog closed.", !jFrameOperator.isActive());
 
         // reopen scale track diagram
         moveSelectionDialog.moveSelection();
@@ -113,5 +113,6 @@ public class MoveSelectionDialogTest {
 
         // and everything should work!
         moveSelectionButtonOperator.doClick();
+        Assert.assertTrue("TranslateSelection Dialog closed.", !jFrameOperator.isActive());
     }
 }

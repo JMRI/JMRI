@@ -32,7 +32,7 @@ public class ScaleTrackDiagramDialogTest {
      * This is called before each tests
      */
     @Before
-    public static void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
@@ -45,7 +45,7 @@ public class ScaleTrackDiagramDialogTest {
      * This is called after each tests
      */
     @After
-    public static void tearDown() {
+    public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
@@ -69,7 +69,7 @@ public class ScaleTrackDiagramDialogTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("ScaleTrackDiagram"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        //TODO: any way to verify that the dialog is closed?
+        Assert.assertTrue("ScaleTrackDiagram Dialog closed.", !jFrameOperator.isActive());
 
         // reopen scale track diagram
         scaleTrackDiagramDialog.scaleTrackDiagram();
@@ -145,5 +145,6 @@ public class ScaleTrackDiagramDialogTest {
 
         // and everything should work!
         scaleTranslateButtonOperator.doClick();
+        Assert.assertTrue("ScaleTrackDiagram Dialog closed.", !jFrameOperator.isActive());
     }
 }

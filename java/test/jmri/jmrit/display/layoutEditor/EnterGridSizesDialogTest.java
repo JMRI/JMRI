@@ -69,7 +69,8 @@ public class EnterGridSizesDialogTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-
+        Assert.assertTrue("SetGridSizes Dialog closed.", !jFrameOperator.isActive());
+        
         enterGridSizesDialog.enterGridSizes();
         jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
 
@@ -116,6 +117,7 @@ public class EnterGridSizesDialogTest {
         secondaryGridSizeTextFieldOperator.setText(Integer.toString(oldGridSize2nd ^ 1));
 
         doneButtonOperator.doClick();
+        Assert.assertTrue("SetGridSizes Dialog closed.", !jFrameOperator.isActive());
 
         Assert.assertEquals("new grid size 1st", oldGridSize1st ^ 1, layoutEditor.getGridSize());
         Assert.assertEquals("new grid size 2nd", oldGridSize2nd ^ 1, layoutEditor.getGridSize2nd());
