@@ -126,36 +126,76 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Method used to initialise the manager
+     * Attempt to create and initialise an AudioFactory, working
+     * down a preference heirarchy. Result is in activeAudioFactory.
+     * Uses null implementation to always succeed
+     */
+    private void createFactory() {
+        // was a specific implementation requested?
+        // define as jmri.jmrit.audio.NullAudioFactory to get headless CI form in testing
+        String className = System.getProperty("jmri.jmrit.audio.DefaultAudioManager.implementation");
+        // if present, determines the active factory class
+        if (className != null) {
+            log.debug("Try to initialise {} from property", className);
+            try {
+                Class<?> c = Class.forName(className);
+                if (AudioFactory.class.isAssignableFrom(c)) {
+                    activeAudioFactory = (AudioFactory) c.getConstructor().newInstance();
+                    if (activeAudioFactory.init()) {
+                        // all OK
+                        return;
+                    } else {
+                        log.error("Specified jmri.jmrit.audio.DefaultAudioManager.implementation value {} did not initialize, continuing", className);
+                    }
+                } else {
+                    log.error("Specified jmri.jmrit.audio.DefaultAudioManager.implementation value {} is not a jmri.AudioFactory subclass, continuing", className);
+                }
+            } catch (
+                    ClassNotFoundException |
+                    InstantiationException |
+                    IllegalAccessException |
+                    java.lang.reflect.InvocationTargetException |
+                    NoSuchMethodException |
+                    SecurityException e) {
+                log.error("Unable to instantiate AudioFactory class {} with default constructor", className);
+                // and proceed to fallback choices
+            }
+        }
+        
+//      // Try to initialise LWJGL
+//      log.debug("Try to initialise LWJGLAudioFactory");
+//      activeAudioFactory = new LWJGLAudioFactory();
+//      if (activeAudioFactory.init()) return;
+//
+//      // Next try JOAL
+        log.debug("Try to initialise JoalAudioFactory");
+        activeAudioFactory = new JoalAudioFactory();
+        if (activeAudioFactory.init()) return;
+
+        // fall-back to JavaSound
+        log.debug("Try to initialise JavaSoundAudioFactory");
+        activeAudioFactory = new JavaSoundAudioFactory();
+        if (activeAudioFactory.init()) return;
+
+        // Finally, if JavaSound fails, fall-back to a Null sound system
+        log.debug("Try to initialise NullAudioFactory");
+        activeAudioFactory = new NullAudioFactory();
+        activeAudioFactory.init();
+        // assumed to succeed.
+    }
+    
+    /**
+     * Method used to initialise the manager and make connections
      */
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
         if (!initialised) {
-//            // First try to initialise LWJGL
-//            activeAudioFactory = new LWJGLAudioFactory();
-//            log.debug("Try to initialise LWJGLAudioFactory");
-//
-//            // If LWJGL fails, fall-back to JOAL
-//            if (!activeAudioFactory.init()) {
-            activeAudioFactory = new JoalAudioFactory();
-            log.debug("Try to initialise JoalAudioFactory");
-
-            // If JOAL fails, fall-back to JavaSound
-            if (!activeAudioFactory.init()) {
-                activeAudioFactory = new JavaSoundAudioFactory();
-                log.debug("Try to initialise JavaSoundAudioFactory");
-
-                // Finally, if JavaSound fails, fall-back to a Null sound system
-                if (!activeAudioFactory.init()) {
-                    activeAudioFactory = new NullAudioFactory();
-                    log.debug("Try to initialise NullAudioFactory");
-                    activeAudioFactory.init();
-                }
-            }
-//            }
-
+        
+            // create Factory of appropriate type
+            createFactory();
+            
             // Create default Listener and save in map
             try {
                 Audio s = createNewAudio("IAL$", "Default Audio Listener");

@@ -189,6 +189,12 @@
             <dd>When set true, run some extra tests; usually used during code migration,
                 where not everything is right yet but you want to be able to include
                 tests for individual running.  </dd>
+        <dt>jmri.jmrit.audio.DefaultAudioManager.implementation</dt>
+            <dd>When set, use the specified class for the AudioFactory implementation.
+                Setting it to <code>jmri.jmrit.audio.NullAudioFactory</code> will 
+                recreate the audio environment on the CI machines, which have no 
+                audio hardware available.
+            </dd>
         <dt>jmri.shutdownmanager</dt>
             <dd>When set, use the specified class as the default ShutDownManager. The specified class
               must implement the jmri.ShutDownManager interface and have a public default constructor.
