@@ -18,7 +18,8 @@ public class JoalAudioBufferTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeNotNull(JoalAudioFactory.getAL());
+        Assert.assertNotNull(JoalAudioFactory.getAL());   // fatal problem in setup
+        
         JoalAudioBuffer l = new JoalAudioBuffer("test");
         Assert.assertNotNull("exists", l);
         Assert.assertEquals("test", l.getSystemName());
@@ -26,7 +27,8 @@ public class JoalAudioBufferTest {
 
     @Test
     public void testC2Stringtor() {
-        Assume.assumeNotNull(JoalAudioFactory.getAL());
+        Assert.assertNotNull(JoalAudioFactory.getAL());  // fatal problem in setup
+        
         JoalAudioBuffer l = new JoalAudioBuffer("testsysname","testusername");
         Assert.assertNotNull("exists", l);
         Assert.assertEquals("testsysname", l.getSystemName());
@@ -42,6 +44,9 @@ public class JoalAudioBufferTest {
         jmri.AudioManager am = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
         am.init();
+        
+        // If there isn't a JoalAudioFactory at this point, have to create one for testing
+        if (JoalAudioFactory.getAL() == null) new JoalAudioFactory().init();
     }
 
     @After
