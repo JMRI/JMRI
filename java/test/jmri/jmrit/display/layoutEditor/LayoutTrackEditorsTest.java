@@ -25,20 +25,20 @@ public class LayoutTrackEditorsTest {
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(0); // allow 2 retries
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     private LayoutEditor layoutEditor = null;
 
     private Turnout to0 = null;
     private Turnout to1 = null;
 
-    private LayoutTurnout dxo = null;
-    private LayoutTurnout rhto = null;
-    private LayoutSlip slip = null;
-    private LayoutSlip sslip = null;
-    private LevelXing xing = null;
-    private TrackSegment segment = null;
-    private LayoutTurntable turntable = null;
+    private LayoutTurnout doubleXoverLayoutTurnout = null;
+    private LayoutTurnout rightHandLayoutTurnout = null;
+    private LayoutSlip firstLayoutSlip = null;
+    private LayoutSlip secondLayoutSlip = null;
+    private LevelXing levelXing = null;
+    private TrackSegment trackSegment = null;
+    private LayoutTurntable layoutTurntable = null;
 
     @Test
     public void testCTor() {
@@ -74,13 +74,13 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTrackSegmentDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        segment.setArc(true);
-        segment.setCircle(true);
+        trackSegment.setArc(true);
+        trackSegment.setCircle(true);
         createBlocks();
 
-        // Edit the track segment
+        // Edit the track trackSegment
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(segment);
+        trackEditor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Select dashed
@@ -127,33 +127,34 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTrackSegmentCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        segment.setArc(false);
-        segment.setCircle(false);
+        trackSegment.setArc(false);
+        trackSegment.setCircle(false);
 
-        // Edit the track segment
+        // Edit the track trackSegment
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(segment);
+        trackEditor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Create empty block edit dialog
-        Thread segmentBlockError = createModalDialogOperatorThread(
+        Thread segmentBlockError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "segmentBlockError");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
         JUnitUtil.waitFor(() -> {
             return !(segmentBlockError.isAlive());
         }, "segmentBlockError finished");
 
-        new JButtonOperator(jFrameOperator, "Cancel").doClick();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
     public void testEditTrackSegmentClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // Edit the track segment
+        // Edit the track trackSegment
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(segment);
+        trackEditor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         jFrameOperator.close();
@@ -162,12 +163,12 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTrackSegmentError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        segment.setArc(true);
-        segment.setCircle(true);
+        trackSegment.setArc(true);
+        trackSegment.setCircle(true);
 
-        // Edit the track segment
+        // Edit the track trackSegment
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(segment);
+        trackEditor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Set arc angle
@@ -185,7 +186,7 @@ public class LayoutTrackEditorsTest {
 
         // Edit the double crossover
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(dxo);
+        trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Select main turnout
@@ -267,7 +268,7 @@ public class LayoutTrackEditorsTest {
 
         // Edit the rh turnout
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(rhto);
+        trackEditor.editLayoutTrack(rightHandLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurnout"));
 
         // Select main turnout
@@ -304,43 +305,44 @@ public class LayoutTrackEditorsTest {
 
         // Edit the double crossover
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(dxo);
+        trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Invoke layout block editor with no block assigned
-        Thread turnoutBlockAError = createModalDialogOperatorThread(
+        Thread turnoutBlockAError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "turnoutBlockAError");  // NOI18N
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit", "0")).doClick();
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 0).doClick();
         JUnitUtil.waitFor(() -> {
             return !(turnoutBlockAError.isAlive());
         }, "turnoutBlockAError finished");
 
-        Thread turnoutBlockBError = createModalDialogOperatorThread(
+        Thread turnoutBlockBError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "turnoutBlockBError");  // NOI18N
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit", "1")).doClick();
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 1).doClick();
         JUnitUtil.waitFor(() -> {
             return !(turnoutBlockBError.isAlive());
         }, "turnoutBlockBError finished");
 
-        Thread turnoutBlockCError = createModalDialogOperatorThread(
+        Thread turnoutBlockCError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "turnoutBlockCError");  // NOI18N
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit", "2")).doClick();
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 2).doClick();
         JUnitUtil.waitFor(() -> {
             return !(turnoutBlockCError.isAlive());
         }, "turnoutBlockCError finished");
 
-        Thread turnoutBlockDError = createModalDialogOperatorThread(
+        Thread turnoutBlockDError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "turnoutBlockDError");  // NOI18N
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit", "3")).doClick();
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 3).doClick();
         JUnitUtil.waitFor(() -> {
             return !(turnoutBlockDError.isAlive());
         }, "turnoutBlockDError finished");
 
-        new JButtonOperator(jFrameOperator, "Cancel").doClick();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -349,7 +351,7 @@ public class LayoutTrackEditorsTest {
 
         // Edit the double crossover
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(dxo);
+        trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         jFrameOperator.close();
@@ -361,9 +363,9 @@ public class LayoutTrackEditorsTest {
         createTurnouts();
         createBlocks();
 
-        // Edit the double slip
+        // Edit the double firstLayoutSlip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(slip);
+        trackEditor.editLayoutTrack(firstLayoutSlip);
 
         // Select turnout A
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
@@ -418,9 +420,9 @@ public class LayoutTrackEditorsTest {
         createTurnouts();
         createBlocks();
 
-        // Edit the single slip
+        // Edit the single firstLayoutSlip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(sslip);
+        trackEditor.editLayoutTrack(secondLayoutSlip);
 
         // Select turnout A
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
@@ -463,30 +465,31 @@ public class LayoutTrackEditorsTest {
     public void testEditSlipCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // Edit the double slip
+        // Edit the double firstLayoutSlip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(slip);
+        trackEditor.editLayoutTrack(firstLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Invoke layout block editor with no block assigned
-        Thread slipBlockError = createModalDialogOperatorThread(
+        Thread slipBlockError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "slipBlockError");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
         JUnitUtil.waitFor(() -> {
             return !(slipBlockError.isAlive());
         }, "slipBlockError finished");
 
-        new JButtonOperator(jFrameOperator, "Cancel").doClick();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
     public void testEditSlipClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // Edit the double slip
+        // Edit the double firstLayoutSlip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(slip);
+        trackEditor.editLayoutTrack(firstLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         jFrameOperator.close();
@@ -499,7 +502,7 @@ public class LayoutTrackEditorsTest {
 
         // Edit the level crossing
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(xing);
+        trackEditor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Select AC block
@@ -556,27 +559,28 @@ public class LayoutTrackEditorsTest {
 
         // Edit the level crossing
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(xing);
+        trackEditor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Invoke layout block editor with no block assigned
-        Thread xingBlock1Error = createModalDialogOperatorThread(
+        Thread xingBlock1Error = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "xingBlock1Error");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "AC")).doClick();
         JUnitUtil.waitFor(() -> {
             return !(xingBlock1Error.isAlive());
         }, "xingBlock1Error finished");
 
-        Thread xingBlock2Error = createModalDialogOperatorThread(
+        Thread xingBlock2Error = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "xingBlock2Error");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "BD")).doClick();
         JUnitUtil.waitFor(() -> {
             return !(xingBlock2Error.isAlive());
         }, "xingBlock2Error finished");
 
-        new JButtonOperator(jFrameOperator, "Cancel").doClick();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -585,7 +589,7 @@ public class LayoutTrackEditorsTest {
 
         // Edit the level crossing
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(xing);
+        trackEditor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         jFrameOperator.close();
@@ -596,9 +600,9 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         createTurnouts();
 
-        // Edit the turntable
+        // Edit the layoutTurntable
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(turntable);
+        trackEditor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Set good radius
@@ -619,7 +623,8 @@ public class LayoutTrackEditorsTest {
         new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
 
         // Delete the 5th ray
-        Thread deleteRay = createModalDialogOperatorThread("Warning", "Yes", "deleteRay");  // NOI18N
+        Thread deleteRay = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                "Warning", "Yes");  // NOI18N
         new JButtonOperator(jFrameOperator, "Delete", 4).doClick();
         JUnitUtil.waitFor(() -> {
             return !(deleteRay.isAlive());
@@ -662,9 +667,9 @@ public class LayoutTrackEditorsTest {
         jtxt.setText("qqq");
 
         // Move focus
-        Thread badRayAngleModalDialogOperatorThread = createModalDialogOperatorThread(
+        Thread badRayAngleModalDialogOperatorThread = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "badRayAngle");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         jtxt = new JTextFieldOperator(jFrameOperator, 3);
         jtxt.clickMouse();
         JUnitUtil.waitFor(() -> {
@@ -685,10 +690,11 @@ public class LayoutTrackEditorsTest {
 
         // Edit the Turntable
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(turntable);
+        trackEditor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
-        new JButtonOperator(jFrameOperator, "Cancel").doClick();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -697,7 +703,7 @@ public class LayoutTrackEditorsTest {
 
         // Edit the Turntable
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(turntable);
+        trackEditor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         jFrameOperator.close();
@@ -707,17 +713,17 @@ public class LayoutTrackEditorsTest {
     public void testEditTurntableErrors() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // Edit the turntable
+        // Edit the layoutTurntable
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(turntable);
+        trackEditor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Ray angle
         JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 1);
         jtxt.setText("xyz");
-        Thread badAngle = createModalDialogOperatorThread(
+        Thread badAngle = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "badAngle");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
         JUnitUtil.waitFor(() -> {
             return !(badAngle.isAlive());
@@ -728,17 +734,15 @@ public class LayoutTrackEditorsTest {
         jtxt = new JTextFieldOperator(jFrameOperator, 0);
         jtxt.setText("abc");
 
-        Thread badRadius = createModalDialogOperatorThread(
+        Thread badRadius = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"), "badRadius");  // NOI18N
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         JUnitUtil.waitFor(() -> {
             return !(badRadius.isAlive());
         }, "badRadius finished");
     }
 
-// new EventTool().waitNoEvent(10000);
-    // from here down is testing infrastructure
     public void createTurnouts() {
         Turnout turnout1 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT101");
         turnout1.setUserName("Turnout 101");
@@ -754,18 +758,6 @@ public class LayoutTrackEditorsTest {
         block1.setUserName("Blk 1");
         Block block2 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB2");
         block2.setUserName("Blk 2");
-    }
-
-    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(dialogTitle);
-            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
-        });
-        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);
-        t.start();
-        return t;
     }
 
     @Before
@@ -785,38 +777,38 @@ public class LayoutTrackEditorsTest {
             Point2D delta = new Point2D.Double(50.0, 75.0);
 
             // Double crossover
-            dxo = new LayoutTurnout("Double Xover",
+            doubleXoverLayoutTurnout = new LayoutTurnout("Double Xover",
                     LayoutTurnout.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
 
             // RH Turnout
             point = MathUtil.add(point, delta);
-            rhto = new LayoutTurnout("RH Turnout",
+            rightHandLayoutTurnout = new LayoutTurnout("RH Turnout",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
 
-            // Double slip
+            // Double firstLayoutSlip
             point = MathUtil.add(point, delta);
-            slip = new LayoutSlip("Double Slip",
+            firstLayoutSlip = new LayoutSlip("Double Slip",
                     point, 0.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
 
-            // Single slip
+            // Single firstLayoutSlip
             point = MathUtil.add(point, delta);
-            sslip = new LayoutSlip("Single Slip",
+            secondLayoutSlip = new LayoutSlip("Single Slip",
                     point, 0.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
 
             // Level crossing
             point = MathUtil.add(point, delta);
-            xing = new LevelXing("Level Xing",
+            levelXing = new LevelXing("Level Xing",
                     point, layoutEditor);
 
             // Turntable
             point = MathUtil.add(point, delta);
-            turntable = new LayoutTurntable("Turntable",
+            layoutTurntable = new LayoutTurntable("Turntable",
                     point, layoutEditor);
 
             // Track Segment
             PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), layoutEditor);
             PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), layoutEditor);
-            segment = new TrackSegment("Segment", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, false, layoutEditor);
+            trackSegment = new TrackSegment("Segment", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, false, layoutEditor);
         }
     }
 
@@ -825,46 +817,46 @@ public class LayoutTrackEditorsTest {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
-        if (dxo != null) {
-            dxo.remove();
-            dxo.dispose();
-            dxo = null;
+        if (doubleXoverLayoutTurnout != null) {
+            doubleXoverLayoutTurnout.remove();
+            doubleXoverLayoutTurnout.dispose();
+            doubleXoverLayoutTurnout = null;
         }
 
-        if (rhto != null) {
-            rhto.remove();
-            rhto.dispose();
-            rhto = null;
+        if (rightHandLayoutTurnout != null) {
+            rightHandLayoutTurnout.remove();
+            rightHandLayoutTurnout.dispose();
+            rightHandLayoutTurnout = null;
         }
 
-        if (slip != null) {
-            slip.remove();
-            slip.dispose();
-            slip = null;
+        if (firstLayoutSlip != null) {
+            firstLayoutSlip.remove();
+            firstLayoutSlip.dispose();
+            firstLayoutSlip = null;
         }
 
-        if (sslip != null) {
-            sslip.remove();
-            sslip.dispose();
-            sslip = null;
+        if (secondLayoutSlip != null) {
+            secondLayoutSlip.remove();
+            secondLayoutSlip.dispose();
+            secondLayoutSlip = null;
         }
 
-        if (xing != null) {
-            xing.remove();
-            xing.dispose();
-            xing = null;
+        if (levelXing != null) {
+            levelXing.remove();
+            levelXing.dispose();
+            levelXing = null;
         }
 
-        if (segment != null) {
-            segment.remove();
-            segment.dispose();
-            segment = null;
+        if (trackSegment != null) {
+            trackSegment.remove();
+            trackSegment.dispose();
+            trackSegment = null;
         }
 
-        if (turntable != null) {
-            turntable.remove();
-            turntable.dispose();
-            turntable = null;
+        if (layoutTurntable != null) {
+            layoutTurntable.remove();
+            layoutTurntable.dispose();
+            layoutTurntable = null;
         }
 
         layoutEditor = null;

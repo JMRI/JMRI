@@ -452,11 +452,7 @@ public class LayoutTrackEditors {
         if (editLayoutTurnoutOpen) {
             editLayoutTurnoutFrame.setVisible(true);
         } else if (editLayoutTurnoutFrame == null) { // Initialize if needed
-            if (layoutTurnout.isTurnoutTypeXover()) {
-                editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditXover"), false, true);  // NOI18N
-            } else {
-                editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditTurnout"), false, true);  // NOI18N
-            }
+            editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditTurnout"), false, true);  // NOI18N
 
             editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutTurnout", true);  // NOI18N
             editLayoutTurnoutFrame.setLocation(50, 30);
@@ -510,9 +506,7 @@ public class LayoutTrackEditors {
             contentPane.add(panel1b);
 
             // add continuing state choice, if not crossover
-            if ((layoutTurnout.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)
-                    && (layoutTurnout.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                    && (layoutTurnout.getTurnoutType() != LayoutTurnout.LH_XOVER)) {
+            if (!layoutTurnout.isTurnoutTypeXover()) {
                 JPanel panel3 = new JPanel();
                 panel3.setLayout(new FlowLayout());
                 editLayoutTurnoutStateComboBox.removeAllItems();
@@ -530,11 +524,8 @@ public class LayoutTrackEditors {
 
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
-            if (layoutTurnout.isTurnoutTypeXover()) {
-                editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideXover"));  // NOI18N
-            } else {
-                editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTurnout"));  // NOI18N
-            }
+            editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTurnout"));  // NOI18N
+
             editLayoutTurnoutHiddenCheckBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));  // NOI18N
             panel33.add(editLayoutTurnoutHiddenCheckBox);
             contentPane.add(panel33);
@@ -553,9 +544,8 @@ public class LayoutTrackEditors {
                 editLayoutTurnoutEditBlockPressed(e);
             });
             contentPane.add(panel2);
-            if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                    || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+
+            if (layoutTurnout.isTurnoutTypeXover()) {
                 JPanel panel21 = new JPanel();
                 panel21.setLayout(new FlowLayout());
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -615,6 +605,13 @@ public class LayoutTrackEditors {
         }
 
         // Set up for Edit
+        if (layoutTurnout.isTurnoutTypeXover()) {
+            editLayoutTurnoutFrame.setTitle(Bundle.getMessage("EditXover"));
+            editLayoutTurnoutHiddenCheckBox.setText(Bundle.getMessage("HideXover"));
+        } else {
+            editLayoutTurnoutFrame.setTitle(Bundle.getMessage("EditTurnout"));
+            editLayoutTurnoutHiddenCheckBox.setText(Bundle.getMessage("HideTurnout"));
+        }
         editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
 
         List<Turnout> currentTurnouts = new ArrayList<>();
@@ -628,20 +625,14 @@ public class LayoutTrackEditors {
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         editLayoutTurnoutBlockNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockName()));
         editLayoutTurnoutBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlock()));
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+        if (layoutTurnout.isTurnoutTypeXover()) {
             editLayoutTurnoutBlockBNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockBName()));
             editLayoutTurnoutBlockCNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockCName()));
             editLayoutTurnoutBlockDNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockDName()));
             editLayoutTurnoutBlockBNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockB()));
             editLayoutTurnoutBlockCNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockC()));
             editLayoutTurnoutBlockDNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockD()));
-        }
-
-        if ((layoutTurnout.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.LH_XOVER)) {
+        } else {
             editLayoutTurnout2ndTurnoutCheckBox.setText(Bundle.getMessage("ThrowTwoTurnouts"));  // NOI18N
         }
 
@@ -658,9 +649,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(null);
         }
 
-        if ((layoutTurnout.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.LH_XOVER)) {
+        if (!layoutTurnout.isTurnoutTypeXover()) {
             if (layoutTurnout.getContinuingSense() == Turnout.CLOSED) {
                 editLayoutTurnoutStateComboBox.setSelectedIndex(editLayoutTurnoutClosedIndex);
             } else {
@@ -802,9 +791,7 @@ public class LayoutTrackEditors {
                 newName = "";
             }
             if (!layoutTurnout.getSecondTurnoutName().equals(newName)) {
-                if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                        || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+                if (layoutTurnout.isTurnoutTypeXover()) {
                     // turnout has changed
                     if (layoutEditor.validatePhysicalTurnout(
                             newName, editLayoutTurnoutFrame)) {
@@ -844,9 +831,7 @@ public class LayoutTrackEditors {
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+        if (layoutTurnout.isTurnoutTypeXover()) {
             // check if Block 2 changed
             newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemDisplayName();
             if (newName == null) {
