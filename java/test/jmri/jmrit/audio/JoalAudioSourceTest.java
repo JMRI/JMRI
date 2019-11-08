@@ -21,6 +21,11 @@ public class JoalAudioSourceTest {
         Assume.assumeNotNull(JoalAudioFactory.getAL());
         JoalAudioSource l = new JoalAudioSource("test");
         Assert.assertNotNull("exists", l);
+        Assert.assertEquals("test", l.getSystemName());
+        
+        Assert.assertEquals(jmri.Audio.STATE_STOPPED, l.getState());
+        Assert.assertEquals(0, l.numProcessedBuffers());
+        Assert.assertEquals(0, l.numQueuedBuffers());
     }
 
     @Test
@@ -28,6 +33,8 @@ public class JoalAudioSourceTest {
         Assume.assumeNotNull(JoalAudioFactory.getAL());
         JoalAudioSource l = new JoalAudioSource("testsysname","testusername");
         Assert.assertNotNull("exists", l);
+        Assert.assertEquals("testsysname", l.getSystemName());
+        Assert.assertEquals("testusername", l.getUserName());
     }
 
     @Before

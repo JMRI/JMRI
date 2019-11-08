@@ -21,6 +21,7 @@ public class JoalAudioBufferTest {
         Assume.assumeNotNull(JoalAudioFactory.getAL());
         JoalAudioBuffer l = new JoalAudioBuffer("test");
         Assert.assertNotNull("exists", l);
+        Assert.assertEquals("test", l.getSystemName());
     }
 
     @Test
@@ -28,6 +29,11 @@ public class JoalAudioBufferTest {
         Assume.assumeNotNull(JoalAudioFactory.getAL());
         JoalAudioBuffer l = new JoalAudioBuffer("testsysname","testusername");
         Assert.assertNotNull("exists", l);
+        Assert.assertEquals("testsysname", l.getSystemName());
+        Assert.assertEquals("testusername", l.getUserName());
+        
+        Assert.assertEquals("Empty buffer", l.toString());
+        Assert.assertEquals(0, l.getLength());
     }
 
     @Before
