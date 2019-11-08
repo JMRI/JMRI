@@ -800,6 +800,13 @@ public class JUnitUtil {
         InstanceManager.setDefault(IdTagManager.class,
                 new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
                     @Override
+                    public void init() {
+                        super.init();
+                        // IdTagManager shutDownTask is not needed in tests, so unregister it
+                        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
+                    }
+
+                    @Override
                     public void writeIdTagDetails() {
                         // do not actually write tags
                         this.dirty = false;
@@ -924,7 +931,7 @@ public class JUnitUtil {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         if (sm == null) return;
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && list.size() > 0) {
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException

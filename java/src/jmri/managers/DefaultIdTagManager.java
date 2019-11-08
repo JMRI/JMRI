@@ -38,7 +38,21 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean loading = false;
     private boolean storeState = false;
     private boolean useFastClock = false;
-    private ShutDownTask shutDownTask = null;
+    protected final ShutDownTask shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
+        @Override
+        public boolean execute() {
+            // Save IdTag details prior to exit, if necessary
+            log.debug("Start writing IdTag details...");
+            try {
+                writeIdTagDetails();
+            } catch (java.io.IOException ioe) {
+                log.error("Exception writing IdTags: {}", (Object) ioe);
+            }
+
+            // continue shutdown
+            return true;
+        }
+    };
 
     public DefaultIdTagManager(SystemConnectionMemo memo) {
         super(memo);
@@ -67,24 +81,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
             // Create shutdown task to save
             log.debug("Register ShutDown task");
-            if (this.shutDownTask == null) {
-                this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                    @Override
-                    public boolean execute() {
-                        // Save IdTag details prior to exit, if necessary
-                        log.debug("Start writing IdTag details...");
-                        try {
-                            writeIdTagDetails();
-                        } catch (java.io.IOException ioe) {
-                            log.error("Exception writing IdTags: {}", (Object) ioe);
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                };
-                InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
-            }
+            InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
             initialised = true;
         }
     }
