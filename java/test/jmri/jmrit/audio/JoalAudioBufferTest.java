@@ -42,7 +42,6 @@ public class JoalAudioBufferTest {
         jmri.AudioManager am = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
         am.init();
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
     }
 
     @After
@@ -51,7 +50,6 @@ public class JoalAudioBufferTest {
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
 
         jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 }
