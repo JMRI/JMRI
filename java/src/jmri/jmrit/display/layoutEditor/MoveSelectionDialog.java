@@ -178,6 +178,6 @@ public class MoveSelectionDialog {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(
-//            MoveSelectionDialog.class);
+    //private final static Logger log = LoggerFactory.getLogger(
+    //        MoveSelectionDialog.class);
 }
