@@ -28,10 +28,10 @@ public class MoveSelectionDialogTest {
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     /*
-     * This is called once before all tests
+     * This is called before each test
      */
-    @BeforeClass
-    public static void setUpClass() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
@@ -41,31 +41,15 @@ public class MoveSelectionDialogTest {
     }
 
     /*
-     * This is called once after all tests
+     * This is called after each test
      */
-    @AfterClass
-    public static void tearDownClass() {
+    @After
+    public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
             moveSelectionDialog = null;
         }
-        JUnitUtil.tearDown();
-    }
-
-    /*
-     * This is called before each test
-     */
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    /*
-     * This is called after each test
-     */
-    @After
-    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
