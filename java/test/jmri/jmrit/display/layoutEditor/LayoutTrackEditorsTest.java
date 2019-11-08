@@ -29,8 +29,8 @@ public class LayoutTrackEditorsTest {
 
     private LayoutEditor layoutEditor = null;
 
-    private Turnout to0 = null;
-    private Turnout to1 = null;
+    private Turnout turnout0 = null;
+    private Turnout turnout1 = null;
 
     private LayoutTurnout doubleXoverLayoutTurnout = null;
     private LayoutTurnout rightHandLayoutTurnout = null;
@@ -744,13 +744,13 @@ public class LayoutTrackEditorsTest {
     }
 
     public void createTurnouts() {
-        Turnout turnout1 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT101");
-        turnout1.setUserName("Turnout 101");
-        turnout1.setCommandedState(Turnout.CLOSED);
+        turnout0 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT101");
+        turnout0.setUserName("Turnout 101");
+        turnout0.setCommandedState(Turnout.CLOSED);
 
-        Turnout turnout2 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT102");
-        turnout2.setUserName("Turnout 102");
-        turnout2.setCommandedState(Turnout.CLOSED);
+        turnout1 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT102");
+        turnout1.setUserName("Turnout 102");
+        turnout1.setCommandedState(Turnout.CLOSED);
     }
 
     public void createBlocks() {
