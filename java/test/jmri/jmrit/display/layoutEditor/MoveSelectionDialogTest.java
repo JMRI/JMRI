@@ -11,6 +11,7 @@ import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
+
 /**
  * Test simple functioning of moveSelectionDialog
  *
@@ -61,19 +62,22 @@ public class MoveSelectionDialogTest {
     }
 
     @Test
-    public void testMoveSelection() {
-
+    public void testMoveSelectionCanceled() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         moveSelectionDialog.moveSelection();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        Assert.assertTrue("TranslateSelection Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
+    }
 
-        // reopen scale track diagram
+    @Test
+    public void testMoveSelection() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         moveSelectionDialog.moveSelection();
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
 
         // get MoveSelection button
         JButtonOperator moveSelectionButtonOperator = new JButtonOperator(jFrameOperator,
@@ -113,6 +117,6 @@ public class MoveSelectionDialogTest {
 
         // and everything should work!
         moveSelectionButtonOperator.doClick();
-        Assert.assertTrue("TranslateSelection Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 }

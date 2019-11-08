@@ -62,18 +62,22 @@ public class ScaleTrackDiagramDialogTest {
     }
 
     @Test
-    public void testScaleTrackDiagram() {
+    public void testScaleTrackDiagramCanceled() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         scaleTrackDiagramDialog.scaleTrackDiagram();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("ScaleTrackDiagram"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        Assert.assertTrue("ScaleTrackDiagram Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
+    }
 
-        // reopen scale track diagram
+    @Test
+    public void testScaleTrackDiagram() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         scaleTrackDiagramDialog.scaleTrackDiagram();
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("ScaleTrackDiagram"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("ScaleTrackDiagram"));
 
         // get ScaleTranslate button
         JButtonOperator scaleTranslateButtonOperator = new JButtonOperator(jFrameOperator,
@@ -145,6 +149,6 @@ public class ScaleTrackDiagramDialogTest {
 
         // and everything should work!
         scaleTranslateButtonOperator.doClick();
-        Assert.assertTrue("ScaleTrackDiagram Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 }

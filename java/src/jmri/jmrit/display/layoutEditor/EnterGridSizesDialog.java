@@ -66,9 +66,9 @@ public class EnterGridSizesDialog {
             //setup primary grid sizes
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
-            JLabel primaryGridSIzeLabel = new JLabel(Bundle.getMessage("PrimaryGridSize"));
-            panel3.add(primaryGridSIzeLabel);
-            primaryGridSIzeLabel.setLabelFor(primaryGridSizeField);
+            JLabel primaryGridSizeLabel = new JLabel(Bundle.getMessage("PrimaryGridSize"));
+            panel3.add(primaryGridSizeLabel);
+            primaryGridSizeLabel.setLabelFor(primaryGridSizeField);
             panel3.add(primaryGridSizeField);
             primaryGridSizeField.setToolTipText(Bundle.getMessage("PrimaryGridSizeHint"));
             theContentPane.add(panel3);

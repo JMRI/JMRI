@@ -62,7 +62,7 @@ public class EnterReporterDialogTest {
     }
 
     @Test
-    public void testEnterReporter() {
+    public void testEnterReporterCanceled() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterReporterDialog.enterReporter(150, 200);
@@ -70,10 +70,15 @@ public class EnterReporterDialogTest {
 
         // cancel the dialog
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        Assert.assertTrue("AddReporter Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
+    }
+
+    @Test
+    public void testEnterReporter() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterReporterDialog.enterReporter(150, 200);
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
 
         // Try to press Add New Label button with reporter name blank... should get an error dialog
         JLabelOperator reporterNameLabelOperator = new JLabelOperator(
@@ -113,7 +118,7 @@ public class EnterReporterDialogTest {
         JLabelOperator reporterLocationX = new JLabelOperator(
                 jFrameOperator, Bundle.getMessage("ReporterLocationX"));
         JTextFieldOperator xLocationTextFieldOperator = new JTextFieldOperator(
-                                (JTextField) reporterLocationX.getLabelFor());
+                (JTextField) reporterLocationX.getLabelFor());
         xLocationTextFieldOperator.setText("NumberFormatException string");
 
         Thread misc2 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
@@ -130,7 +135,7 @@ public class EnterReporterDialogTest {
         JLabelOperator reporterLocationY = new JLabelOperator(
                 jFrameOperator, Bundle.getMessage("ReporterLocationY"));
         JTextFieldOperator yLocationTextFieldOperator = new JTextFieldOperator(
-                                                (JTextField) reporterLocationY.getLabelFor());
+                (JTextField) reporterLocationY.getLabelFor());
         yLocationTextFieldOperator.setText("NumberFormatException string");
 
         Thread misc3 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
@@ -145,6 +150,6 @@ public class EnterReporterDialogTest {
 
         // and everything should work!
         addNewLabelButtonOperator.doClick();
-        Assert.assertTrue("AddReporter Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 }

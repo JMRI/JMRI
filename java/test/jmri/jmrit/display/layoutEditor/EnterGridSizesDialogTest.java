@@ -62,17 +62,22 @@ public class EnterGridSizesDialogTest {
     }
 
     @Test
-    public void testEnterGridSizes() {
+    public void testEnterGridSizesCanceled() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterGridSizesDialog.enterGridSizes();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
-        Assert.assertTrue("SetGridSizes Dialog closed.", !jFrameOperator.isActive());
-        
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
+    }
+
+    @Test
+    public void testEnterGridSizes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         enterGridSizesDialog.enterGridSizes();
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
 
         JLabelOperator primaryGridSizeLabelOperator = new JLabelOperator(
                 jFrameOperator, Bundle.getMessage("PrimaryGridSize"));
@@ -117,7 +122,7 @@ public class EnterGridSizesDialogTest {
         secondaryGridSizeTextFieldOperator.setText(Integer.toString(oldGridSize2nd ^ 1));
 
         doneButtonOperator.doClick();
-        Assert.assertTrue("SetGridSizes Dialog closed.", !jFrameOperator.isActive());
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
 
         Assert.assertEquals("new grid size 1st", oldGridSize1st ^ 1, layoutEditor.getGridSize());
         Assert.assertEquals("new grid size 2nd", oldGridSize2nd ^ 1, layoutEditor.getGridSize2nd());
