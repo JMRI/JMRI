@@ -642,14 +642,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         firePropertyChange("portalCount", oldSize, _portals.size());
     }
 
-    /**
+    /*
      * Remove portal from block and stub all paths using this portal to be dead
      * end spurs.
      *
      * @param portal the Portal to remove
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
-    public void removePortal(Portal portal) {
+    protected boolean removePortal(Portal portal) {
         int oldSize = _portals.size();
         int oldPathSize = getPaths().size();
         if (portal != null) {
@@ -672,7 +672,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             while (iter.hasNext()) {
                 OPath path = (OPath) iter.next();
                 if (path.getFromPortal() == null && path.getToPortal() == null) {
-                    removePath(path);
+                    removeOPath(path);
                     log.debug("removed Path \"{}\" from block {}", path.getName(), getDisplayName());
                 }
             }
@@ -688,6 +688,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         log.debug("removePortal: block {} portals decreased from {} to {}. Paths decreased from {} to {}",
                 getDisplayName(), oldSize, _portals.size(), oldPathSize, getPaths().size());
         firePropertyChange("portalCount", oldSize, _portals.size());
+        return true;
     }
 
     public Portal getPortalByName(String name) {
@@ -736,6 +737,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @param path the OPath to add
      * @return true if path was added to OBlock
      */
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     public boolean addPath(OPath path) {
         String pName = path.getName();
         log.debug("addPath \"{}\" to OBlock {}", pName, getSystemName());
@@ -777,20 +779,20 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return true;
     }
 
-    @Override
-    public void removePath(Path path) {
+    public boolean removeOPath(OPath path) {
         jmri.Block block = path.getBlock();
         if (block != null && !getSystemName().equals(block.getSystemName())) {
-            return;
+            return false;
         }
-        // log.debug("Path "+((OPath)path).getName()+" removed from "+getSystemName());
+        if (!InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).okToRemoveBlockPath(this, path)) {
+            return false;
+        }
         path.clearSettings();
         int oldSize = getPaths().size();
         super.removePath(path);
-        if (path instanceof OPath) {
-            ((OPath) path).dispose();
-        }
+        path.dispose();
         firePropertyChange("pathCount", oldSize, getPaths().size());
+        return true;
     }
 
     /**
@@ -898,18 +900,29 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     public void dispose() {
+        if (!InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).okToRemoveBlock(this)) {
+            return;
+        }
         for (Portal portal : getPortals()) {
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
             if (opBlock != null) {
-                opBlock.removePortal(portal);
+                if (!opBlock.removePortal(portal)) {
+                    return;
+                }
             }
-            portal.dispose();
+            if (this.equals(portal.getToBlock())) {
+                portal.setToBlock(null, false);
+            }
+            if (this.equals(portal.getFromBlock())) {
+                portal.setFromBlock(null, false);
+            }
         }
         _portals.clear();
         for (Path pa : getPaths()) {
-            removePath(pa);
+            removeOPath((OPath)pa);
         }
         jmri.InstanceManager.getDefault(OBlockManager.class).deregister(this);
         super.dispose();

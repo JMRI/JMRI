@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable.oblock;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.*;
@@ -16,6 +17,7 @@ import javax.swing.table.TableRowSorter;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.beantable.oblock.Bundle;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
@@ -233,7 +235,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         _desktop = new JDesktopPane();
         _desktop.putClientProperty("JDesktopPane.dragMode", "outline");
-        _desktop.setPreferredSize(new Dimension(1100, 550));
+        _desktop.setPreferredSize(new Dimension(1100, 600));
+        _desktop.setBackground(new Color(180,180,180));
         setContentPane(_desktop);
         _blockTableFrame = makeBlockFrame();
         _blockTableFrame.setVisible(true);
@@ -278,7 +281,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (blkList.isEmpty()) {
             log.warn("no Blocks to convert"); // NOI18N
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportNoBlocks"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
             return;
         } else {
             if (_showWarnings) {
@@ -644,7 +647,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         setRowHeight(_oBlockTable.getRowHeight());
         int tableWidth = _desktop.getPreferredSize().width;
-        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
+        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 16));
         _blockTablePane = new JScrollPane(_oBlockTable);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
@@ -699,7 +702,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _portalTable.sizeColumnsToFit(-1);
         int tableWidth = _portalTable.getPreferredSize().width;
-        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
+        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 16));
         _portalTablePane = new JScrollPane(_portalTable);
 
         JPanel contentPane = new JPanel();
@@ -709,7 +712,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         contentPane.add(_portalTablePane, BorderLayout.CENTER);
 
         frame.setContentPane(contentPane);
-        frame.setLocation(0, 200);
+        frame.setLocation(0, 320);
         frame.pack();
         return frame;
     }
@@ -741,7 +744,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         frame.addInternalFrameListener(this);
         frame.setContentPane(contentPane);
-        frame.setLocation(700, 30);
+        frame.setLocation(700, 20);
         frame.pack();
         return frame;
     }
@@ -780,7 +783,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         contentPane.add(_signalTablePane, BorderLayout.CENTER);
 
         frame.setContentPane(contentPane);
-        frame.setLocation(200, 350);
+        frame.setLocation(350, 400);
         frame.pack();
         return frame;
     }
@@ -856,12 +859,36 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return frame;
     }
 
+    /**
+     * ********************* BlockPathFrame *****************************
+     */
+    protected static class PathTurnoutFrame extends JInternalFrame {
+
+        /**
+         *
+         */
+        PathTurnoutTableModel PathTurnoutModel;
+
+        public PathTurnoutFrame(String title, boolean resizable, boolean closable,
+                boolean maximizable, boolean iconifiable) {
+            super(title, resizable, closable, maximizable, iconifiable);
+        }
+
+        public void init(OBlock block, TableFrames parent) {
+            PathTurnoutModel = new PathTurnoutTableModel();
+        }
+
+        public PathTurnoutTableModel getModel() {
+            return PathTurnoutModel;
+        }
+    }
+
     /*
      * ********************* PathTurnoutFrame *****************************
      */
     protected JInternalFrame makePathTurnoutFrame(OBlock block, String pathName) {
         String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
-        JInternalFrame frame = new JInternalFrame(title, true, true, false, true);
+        PathTurnoutFrame frame = new PathTurnoutFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) {
             log.debug("makePathTurnoutFrame for Block {} and Path {}", block.getDisplayName(), pathName);
         }
@@ -991,6 +1018,24 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
+    protected int verifyWarning(String message) {
+        int val = 0;
+        if (_showWarnings) {
+            // verify deletion
+            val = JOptionPane.showOptionDialog(null,
+                    message, Bundle.getMessage("WarningTitle"),
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                        Bundle.getMessage("ButtonYesPlus"),
+                        Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo")); // default choice = No
+            if (val == 1) { // suppress future warnings
+                _showWarnings = false;
+            }
+        }
+        return val;
+    }
+
     /*
      * ********************* InternalFrameListener implementation *****************
      */
@@ -1020,6 +1065,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 WarrantTableAction.showPathPortalErrors();
             }
         } else {
+            if (frame instanceof PathTurnoutFrame) {
+                ((PathTurnoutFrame) frame).getModel().removeListener();
+            }
             _PathTurnoutMap.remove(name);
         }
     }

@@ -46,6 +46,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         super();
         _parent = parent;
         _manager = InstanceManager.getDefault(PortalManager.class);
+        _manager.addPropertyChangeListener(this);
     }
 
     public void init() {
@@ -66,7 +67,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public int getRowCount() {
-        return _manager.getPortalCount();
+        return _manager.getPortalCount() + 1;
     }
 
     @Override
@@ -87,14 +88,10 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public Object getValueAt(int row, int col) {
-        int size = getRowCount();
-        if (row == size +1) {
+        if (row == _manager.getPortalCount()) {
             return tempRow[col];
         }
-        Portal portal = null;
-        if (row <= size) {
-            portal = _manager.getPortal(row);
-        }
+        Portal portal = _manager.getPortal(row);
         if (portal == null) {
             if (col == DELETE_COL) {
                 return Bundle.getMessage("ButtonClear");
@@ -121,8 +118,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     @Override
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
-        int size = getRowCount();
-        if (row == size +1) {
+        if (row == _manager.getPortalCount()) {
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -152,21 +148,22 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 }
             }
             if (msg==null && tempRow[NAME_COLUMN] != null) {
-                if (fromBlock == null || toBlock==null ) {
-                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
-                } else if (fromBlock.equals(toBlock)){
-                    msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
-                }
-                if (msg==null) {
-                    Portal portal = _manager.createNewPortal(tempRow[NAME_COLUMN]);
-                    if (portal != null) {
-                        portal.setToBlock(toBlock, false);
-                        portal.setFromBlock(fromBlock, false);
-                        initTempRow();
-                        fireTableDataChanged();
+                if (fromBlock != null && toBlock!=null ) {
+                    if (fromBlock.equals(toBlock)) { 
+                        msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                     } else {
-                        msg = Bundle.getMessage("DuplPortalName", (String) value);
+                        Portal portal = _manager.createNewPortal(tempRow[NAME_COLUMN]);
+                        if (portal != null) {
+                            portal.setToBlock(toBlock, false);
+                            portal.setFromBlock(fromBlock, false);
+                            initTempRow();
+                            fireTableDataChanged();
+                        } else {
+                            msg = Bundle.getMessage("DuplPortalName", (String) value);
+                        }
                     }
+                } else if (fromBlock == null ^ toBlock==null ) {
+                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
                 }
             }
             if (msg != null) {
@@ -176,10 +173,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             return;
         }
 
-        Portal portal = null;
-        if (row <= size) {
-            portal = _manager.getPortal(row);
-        }
+        Portal portal = _manager.getPortal(row);
         if (portal == null) {
             log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
                     + "portalListSize= " + _manager.getPortalCount());
@@ -198,14 +192,10 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     break;
                 }
                 if (!portal.setFromBlock(block, false)) {
-                    int response = JOptionPane.showConfirmDialog(null,
-                            Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.NO_OPTION) {
+                    int val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()));
+                    if (val == 2) {
                         break;
                     }
-
                 }
                 portal.setFromBlock(block, true);
                 fireTableRowsUpdated(row, row);
@@ -227,14 +217,10 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     break;
                 }
                 if (!portal.setToBlock(block, false)) {
-                    int response = JOptionPane.showConfirmDialog(null,
-                            Bundle.getMessage("BlockPathsConflict", value, portal.getToBlockName()),
-                            Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE);
-                    if (response == JOptionPane.NO_OPTION) {
+                    int val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getToBlockName()));
+                    if (val == 2) {
                         break;
                     }
-
                 }
                 portal.setToBlock(block, true);
                 fireTableRowsUpdated(row, row);
@@ -254,18 +240,10 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         }
     }
 
-    private static boolean deletePortal(Portal portal) {
-        if (JOptionPane.showConfirmDialog(null,
-                Bundle.getMessage("DeletePortalConfirm",
-                        portal.getName()), Bundle.getMessage("WarningTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            OBlockManager oBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            for (OBlock oblock : oBlockMgr.getNamedBeanSet()) {
-                oblock.removePortal(portal);
-            }
-            portal.dispose();
-            return true;
+    private boolean deletePortal(Portal portal) {
+        int val = _parent.verifyWarning(Bundle.getMessage("DeletePortalConfirm", portal.getName()));
+        if (val != 2) {
+            return portal.dispose();
         }
         return false;
     }
@@ -302,8 +280,19 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("length")) {
+        if (!(e.getSource() instanceof PortalManager)) {
+            return;
+        }
+        String property = e.getPropertyName();
+        if (property.equals("length")) {
+            int oldCount = getRowCount();
+            initTempRow();
             fireTableDataChanged();
+            log.debug("propertyChange \"{}\" caught. oldCount= {}, newCount= {}", property, oldCount, getRowCount());
+        } else if (property.equals("NameChange")) {
+            int row = ((Integer)e.getNewValue()).intValue();
+            log.debug("propertyChange \"{}\" caught. row= {}", property, row);
+            fireTableRowsUpdated(row, row);            
         }
     }
 

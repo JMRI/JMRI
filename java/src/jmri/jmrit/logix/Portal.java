@@ -10,8 +10,11 @@ import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
+import jmri.util.ThreadingUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,6 +126,7 @@ public class Portal {
         } else if (_toBlock != null && _toBlock.equals(block)) {
             _toPaths.remove(path);
         }
+        pcs.firePropertyChange("RemovePath", block, path);
     }
 
     /**
@@ -145,7 +149,6 @@ public class Portal {
         }
         _name = newName;
         pcs.firePropertyChange("NameChange", oldName, newName);
-        WarrantTableAction.portalNameChange(oldName, newName);
         return null;
     }
 
@@ -176,13 +179,15 @@ public class Portal {
         }
         // log.debug("setToBlock: oldBlock= \"{}\" newBlock \"{}\".", getToBlockName(),
         //      (block != null ? block.getDisplayName() : null));
+        OBlock oldBlock = _toBlock;
         if (_toBlock != null) {
-            _toBlock.removePortal(this);
+            _toBlock.removePortal(this);    // may should not
         }
         _toBlock = block;
         if (_toBlock != null) {
             _toBlock.addPortal(this);
         }
+        pcs.firePropertyChange("BlockChanged", oldBlock, _toBlock);
         return true;
     }
 
@@ -221,6 +226,7 @@ public class Portal {
         }
         // log.debug("setFromBlock: oldBlock= \"{}\" newBlock \"{}\".", getFromBlockName(),
         //     (block!=null ? block.getDisplayName() : null));
+        OBlock oldBlock = _fromBlock;
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
         }
@@ -228,6 +234,7 @@ public class Portal {
         if (_fromBlock != null) {
             _fromBlock.addPortal(this);
         }
+        pcs.firePropertyChange("BlockChanged", oldBlock, _fromBlock);
         return true;
     }
 
@@ -643,18 +650,22 @@ public class Portal {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public void dispose() {
-        if (_fromBlock != null) {
-            _fromBlock.removePortal(this);
+    public boolean dispose() {
+        if (!InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).okToRemovePortal(this)) {
+            return false;
         }
-        if (_toBlock != null) {
-            _toBlock.removePortal(this);
+        if (_fromBlock != null && !_fromBlock.removePortal(this)) {
+            return false;
         }
-        pcs.firePropertyChange("Deleted", true, false);
+        if (_toBlock != null && !_toBlock.removePortal(this)) {
+            return false;
+        }
+        pcs.firePropertyChange("portalDelete", true, false);
         PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
         for (PropertyChangeListener l : listeners) {
             pcs.removePropertyChangeListener(l);
         }
+        return true;
     }
 
     public String getDescription() {

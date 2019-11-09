@@ -3,15 +3,17 @@ package jmri.jmrit.logix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
-import java.util.Map;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
 
 /**
  * Basic implementation of a PortalManager.
@@ -41,34 +43,34 @@ import org.slf4j.LoggerFactory;
 public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyChangeListener {
     
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private Hashtable<Integer, Portal> _tsys = new Hashtable<>();   // stores Portal in loaded order
-    private Hashtable<String, Portal> _tuser = new Hashtable<>();   // stores portal by current name
+    private ArrayList<Portal> _nameList = new ArrayList<>();   // stores Portal in loaded order
+    private Hashtable<String, Portal> _portalMap = new Hashtable<>();   // stores portal by current name
     private Integer _nextIndex = new Integer(1);
 
     public PortalManager() {
     }
 
     public int getPortalCount() {
-        return _tsys.size();
+        return _nameList.size();
     }
 
     public Portal getPortal(int idx) {
-        return _tsys.get(new Integer(idx));
+        return _nameList.get(idx);
     }
 
     public Portal getPortal(String name) {
-        return _tuser.get(name);
+        return _portalMap.get(name);
     }
 
     public Collection<Portal> getPortalSet() {
-        return Collections.unmodifiableCollection(_tsys.values());
+        return Collections.unmodifiableCollection(_nameList);
     }
 
     public Portal createNewPortal(String userName) {
         // Check that Portal does not already exist
         Portal portal;
         if (userName != null && userName.trim().length() > 0) {
-            portal = _tuser.get(userName);
+            portal = _portalMap.get(userName);
             if (portal != null) {
                 return null;
             }
@@ -78,42 +80,20 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         // Portal does not exist, create a new Portal
         portal = new Portal(userName);
         // save in the maps
-        _tsys.put(_nextIndex, portal);
-        _tuser.put(userName, portal);
+        _nameList.add(portal);
+        _portalMap.put(userName, portal);
         _nextIndex = Integer.valueOf(_nextIndex.intValue()+1);
-        pcs.firePropertyChange("length", null, _tsys.size());
+        pcs.firePropertyChange("length", null, _nameList.size());
         // listen for name and state changes to forward
         portal.addPropertyChangeListener(this);
         return portal;
     }
 
-    private synchronized boolean changeName(String oldName, String newName) {
-        Portal portal = _tuser.get(oldName);
-        if (portal == null) {
-            return false;
-        }
-        _tuser.remove(oldName);
-        _tuser.put(newName, portal);
-        return true;
-    }
-
     private synchronized void deletePortal(Portal portal) {
-        if (portal == null) {
-            return;
-        }
-        Integer idx = null;
-        String name = null;
-        for (Map.Entry<Integer, Portal> entry : _tsys.entrySet()) {
-            Portal p = entry.getValue();
-            if (portal.equals(p)) {
-                idx = entry.getKey();
-                name = p.getName();
-                break;
-            }
-        }
-        _tsys.remove(idx);
-        _tuser.remove(name);
-        pcs.firePropertyChange("length", null, _tsys.size());
+        String name = portal.getName();
+        _nameList.remove(portal);
+        _portalMap.remove(name);
+        pcs.firePropertyChange("length", null, _nameList.size());
     }
 
     public Portal providePortal(String name) {
@@ -123,6 +103,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         Portal portal = getPortal(name);
         if (portal == null) {
             portal = createNewPortal(name);
+            pcs.firePropertyChange("length", null, _nameList.size());
         }
         return portal;
     }
@@ -142,15 +123,24 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
             return;
         }
         Portal portal = (Portal)e.getSource();
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String propertyName = e.getPropertyName();
-        if (propertyName.equals("Delete")) {
+        if (propertyName.equals("portalDelete")) {
             deletePortal(portal);
-        } else if (propertyName.equals("NameChange")) {
-            changeName((String)e.getOldValue(), (String)e.getNewValue());
+        } else if (propertyName.equals("NameChange")) { // note, source is Portal
+            // Name has been changed already by Portal
+            String newName = (String)e.getNewValue();
+            String oldName = (String)e.getOldValue();
+            manager.portalNameChange(oldName, newName);
+            Integer idx = _nameList.indexOf(_portalMap.get(newName));
+            pcs.firePropertyChange("NameChange", idx, idx);   // note, source will be PortalManager
+        } else if (propertyName.equals("BlockChanged") || propertyName.equals("RemovePath")) {
+            int idx = _nameList.indexOf(portal);
+            pcs.firePropertyChange("NameChange", idx, idx);   // note, source will be PortalManager
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
+//    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
 }
 
 

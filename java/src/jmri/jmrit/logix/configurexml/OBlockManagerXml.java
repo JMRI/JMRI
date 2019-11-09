@@ -356,8 +356,14 @@ public class OBlockManagerXml // extends XmlFile
         // Portals must have user names.
         Portal portal = _portalMgr.getPortal(userName);
         if (portal != null) {
-            fromBlockName = portal.getFromBlock().getSystemName();
-            toBlockName = portal.getToBlock().getSystemName();
+            OBlock block = portal.getFromBlock();
+            if (block != null) {
+                fromBlockName = block.getSystemName();
+            }
+            block = portal.getToBlock();
+            if (block != null) {
+                toBlockName = block.getSystemName();
+            }
         } else {
             portal = _portalMgr.providePortal(userName);
         }

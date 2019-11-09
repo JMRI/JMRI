@@ -241,19 +241,32 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
             PortalManager portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
             portal = portalMgr.getPortal(name);
         }
-        if (portal != null) {
-            int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("confirmPortalDelete", portal.getName()),
-                    Bundle.getMessage("makePortal"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.YES_OPTION) {
-                OBlock oppBlock = portal.getOpposingBlock(_homeBlock);
-                portal.dispose();
-                _portalList.dataChange();
-                _portalName.setText(null);
-                ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIconMap(portal));
-                for (PortalIcon icon : removeList) {
-                    _parent.getCircuitIcons(oppBlock).remove(icon);
-                    icon.remove();  // will call _parent.deletePortalIcon(icon)
-                }
+        if (portal == null) {
+            return;
+        }        
+        if (!_suppressWarnings) {
+            int val = JOptionPane.showOptionDialog(this, Bundle.getMessage("confirmPortalDelete", portal.getName()),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                            Bundle.getMessage("ButtonYesPlus"),
+                            Bundle.getMessage("ButtonNo"),},
+                    Bundle.getMessage("ButtonNo")); // default NO
+            if (val == 2) {
+                return;
+            }
+            if (val == 1) { // suppress future warnings
+                _suppressWarnings = true;
+            }
+        }
+        if (portal.dispose()) {
+            _portalList.dataChange();
+            _portalName.setText(null);
+            OBlock oppBlock = portal.getOpposingBlock(_homeBlock);
+            ArrayList<PortalIcon> removeList = new ArrayList<>(_parent.getPortalIconMap(portal));
+            for (PortalIcon icon : removeList) {
+                _parent.getCircuitIcons(oppBlock).remove(icon);
+                icon.remove();  // will call _parent.deletePortalIcon(icon)
             }
         }
     }

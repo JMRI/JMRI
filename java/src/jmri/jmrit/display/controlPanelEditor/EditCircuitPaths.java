@@ -722,11 +722,11 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             } else {
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack) pos).removePath(name);
-                } else {
+/*                } else {
                     PortalIcon pi = (PortalIcon) pos;
                     //                   pi.setStatus(PortalIcon.VISIBLE);
                     Portal p = pi.getPortal();
-                    p.removePath(path);
+                    p.removePath(path);*/
                 }
             }
         }
@@ -741,9 +741,10 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (path == null) {
             return;
         }
-        _homeBlock.removePath(path);
-        clearListSelection();
-        _pathListModel.dataChange();
+        if (_homeBlock.removeOPath(path)) {
+            clearListSelection();
+            _pathListModel.dataChange();
+        }
     }
 
     @Override

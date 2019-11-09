@@ -1176,8 +1176,8 @@ public class CircuitBuilder {
         for (Positionable pos : list) {
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack) pos).setOccBlockHandle(null);
-            } else if (pos instanceof PortalIcon) {
-                pos.remove();
+/*            } else if (pos instanceof PortalIcon) {
+                pos.remove();*/
             }
             _darkTrack.add(pos);
         }

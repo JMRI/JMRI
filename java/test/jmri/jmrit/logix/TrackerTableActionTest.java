@@ -177,11 +177,14 @@ public class TrackerTableActionTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initDebugThrottleManager();
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
     }
 
     @After
     public void tearDown() {
+        _OBlockMgr.dispose();
+        _OBlockMgr = null;
         JUnitUtil.tearDown();
     }
 

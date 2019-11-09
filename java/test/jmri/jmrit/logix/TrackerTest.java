@@ -98,6 +98,7 @@ public class TrackerTest {
 
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
+        _OBlockMgr.dispose();
     }        
 
     // The minimal setup for log4J
@@ -107,6 +108,7 @@ public class TrackerTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
