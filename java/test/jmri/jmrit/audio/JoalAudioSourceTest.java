@@ -18,41 +18,24 @@ public class JoalAudioSourceTest {
 
     @Test
     public void testCtor() {
-        JoalAudioSource l;
-        // This structure is because Jacoco insists on us running some JoalAudioSource
-        // code even if there's no valid JOAL implementation present.
-        try {
-            l = new JoalAudioSource("test");
-            Assert.assertNotNull("exists", l);
-            Assert.assertEquals("test", l.getSystemName());
+        JoalAudioSource l = new JoalAudioSource("test");
         
-            Assert.assertEquals(jmri.Audio.STATE_STOPPED, l.getState());
-            Assert.assertEquals(0, l.numProcessedBuffers());
-            Assert.assertEquals(0, l.numQueuedBuffers());
-        } catch (NullPointerException e) {
-            if (JoalAudioFactory.getAL() == null) {
-                // this is expected - no JOAL to check
-                return;
-            } else Assert.fail("AL OK, but NPE in test");
-        }
+        Assert.assertNotNull("exists", l);
+        Assert.assertEquals("test", l.getSystemName());
+        Assert.assertEquals(jmri.Audio.STATE_STOPPED, l.getState());
+        Assert.assertEquals(0, l.numProcessedBuffers());
+        Assert.assertEquals(0, l.numQueuedBuffers());
     }
 
     @Test
     public void testC2Stringtor() {
-        JoalAudioSource l;
-        // This structure is because Jacoco insists on us running some JoalAudioSource
-        // code even if there's no valid JOAL implementation present.
-        try {
-            l = new JoalAudioSource("testsysname","testusername");
-            Assert.assertNotNull("exists", l);
-            Assert.assertEquals("testsysname", l.getSystemName());
-            Assert.assertEquals("testusername", l.getUserName());
-        } catch (NullPointerException e) {
-            if (JoalAudioFactory.getAL() == null) {
-                // this is expected - no JOAL to check
-                return;
-            } else Assert.fail("AL OK, but NPE in test");
-        }
+        Assume.assumeNotNull(JoalAudioFactory.getAL()); // Run test method only when JOAL is present.
+
+        JoalAudioSource l = new JoalAudioSource("testsysname","testusername");
+        
+        Assert.assertNotNull("exists", l);
+        Assert.assertEquals("testsysname", l.getSystemName());
+        Assert.assertEquals("testusername", l.getUserName());
     }
 
     @Before
