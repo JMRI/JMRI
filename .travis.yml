@@ -65,7 +65,7 @@ env:
   - RUN_ORDER=filesystem
   - CC_TEST_REPORTER_ID=1d1326c4dfaeede878b46588cda440432d1dd6ec605d2c99af7b240ac7db0477
   matrix:
-  - HEADLESS=false STATIC=false
+  - HEADLESS=false STATIC=false PRINT_SUMMARY=true
   - HEADLESS=true STATIC=false
   - HEADLESS=true STATIC=true
 
