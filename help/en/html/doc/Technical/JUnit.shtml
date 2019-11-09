@@ -192,6 +192,8 @@
         <dt>jmri.shutdownmanager</dt>
             <dd>When set, use the specified class as the default ShutDownManager. The specified class
               must implement the jmri.ShutDownManager interface and have a public default constructor.
+              This is used in our standard testing infrastructure(s) to ensure that a mocked
+              test-compatible ShutDownManager is available.
             </dd>
         <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
             <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
@@ -627,7 +629,7 @@
     JUnitUtil.tearDown();
 </pre>
 
-      <h4>Some special cases</h4>
+      <h4>Working with a Timebase</h4>
       
       During testing, your code might need a ShutDownManager.  There
       are several points to consider:
@@ -652,6 +654,27 @@
             to create the mock manager before the getNullableDefault(..) request.
       </ul>
       
+        <h4>Working with a Timebase</h4>
+        
+        A simple, internal Timebase is provided by default 
+        when one is requested from the InstanceManager.
+        You don't have to prepare one in advance.
+        But please note that simple Timebase is initialized to
+        Right Now, and starts in a running state.  To get consistent
+        results from your tests, you should instead set it to 
+        a consistent time (so e.g. AM/PM branches always go the same way)
+        and to not be running (so that results don't vary with run time).
+        To do that:
+
+<pre style="font-family: monospace;">
+    Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
+    clock.setRun(false);
+    clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+</pre>
+
+        After this, when you code picks up a Timebase instance,
+        it'll get this properly prepared one.
+    
       <h3><a name="RunningListeners" id="RunningListeners">Working
       with Listeners</a></h3>
       JMRI is a multi-threaded application.
