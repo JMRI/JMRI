@@ -484,29 +484,29 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
         <u>user</u> wants to merge <u>3</u> commits into JMRI:master from <u>user</u>:<u>branch</u>
         </blockquote>
         <a href="images/GitHubPRbranchInfo.png"><img src="images/GitHubPRbranchInfo.png" width="446" height="114" alt="GitHub Web branch screen"></a>
-
+			</li>
 	 <li>Ensuite, pousser cette branche sur votre propre machine avec la commande:
 	 <pre><code>
         git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
         </code></pre>
 	o&#249; vous avez remplacer chaque valeur soulign&#233;e:
 	<ul>
-		<li> Changez "user" par le nom utilisateur GitHub correcte
-		<li>Changez "branch" par le nom de branche dans le pull request ( c'est OK si c'est par ex: master )
+		<li> Changez "user" par le nom utilisateur GitHub correcte</li>
+		<li>Changez "branch" par le nom de branche dans le pull request ( c'est OK si c'est par ex: master )</li>
 		<li>changez "local-branch" par ce que vous voulez appeler la branche sur votre propre machine.
 		<em>Celle-ci ne doit pas d&#233;j&#225; exist&#233;</em>.Quelque chose comme "ma-branche-utilisateur" Vous rappellera 
 		de qui est le d&#233;p&#244;t dont vous l'avez tir&#233;, tout en marquant les changements ult&#233;rieurs comme les v&#244;tres 
 		si vous les partagez plus tard avec quelqu'un d'autre.
 		( Il est recommand&#233; que vous d&#233;marriez vos noms de branches avec
-		votre propre nom, cela simplifie tout sorte s d'op&#233;rations )
-        </ul>
-        <li>>La branche existe manitenant dans votre machine, Et vous pouvez juste vous d&#233;placer vers elle:	
+		votre propre nom, cela simplifie tout sorte s d'op&#233;rations )</li>
+        </ul></li>
+        <li>La branche existe manitenant dans votre machine, Et vous pouvez juste vous d&#233;placer vers elle:
         <pre><code>
         git checkout <u>local-branch</u>
         </code></pre>	  
 	  puis compler, tester, etc, comme vous le voulez. Vous pouvez m&#234;me soumettre et partager les changements
 	  si vous le d&#233;sirez, parce que c'est maintenant votre propre branche de d&#233;veloppement: Elle a commenc&#233; &#225; 
-	  une autre personne, mais c'est maintenant la votre.
+	  une autre personne, mais c'est maintenant la votre.</li>
 	</ul>
 	</dd>
 

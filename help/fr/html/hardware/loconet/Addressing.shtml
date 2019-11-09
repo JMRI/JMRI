@@ -52,10 +52,10 @@
 <h1>Support: Adressage LocoNet&reg;</h1>
 
 <ul class="snav"><!-- h2 TOC -->
-<li><a href="#turnouts">Aiguillages</a>
-<li><a href="#sensor">Capteurs</a>
-<li><a href="#transponding">Retransmission</a>
-<li><a href="#SVs">SVs</a>
+    <li><a href="#turnouts">Aiguillages</a></li>
+    <li><a href="#sensor">Capteurs</a></li>
+    <li><a href="#transponding">Retransmission</a></li>
+    <li><a href="#SVs">SVs</a></li>
 </ul>
 
 Le Syst&#232;mes LocoNet&reg; adresse des Capteurs en entr&#233;e et des Aiguillages en  sortie en utilisant des num&#233;ros.

@@ -50,21 +50,22 @@
 	Conditions</a>, puis cliquez sur <a href="#start"> Mise en route</a> et suivez ces instructions. Revenez 
 	ici pour lire ce que vous avez fait.
 	<ul>
-	<li><a href="#intro"> Introduction &#224; Logix et Conditions</a>
-	<li><a href="#logix"> Qu'est ce que Logix</a>
-	<li><a href="#conditional"> Conditions</a>
-	<li><a href="#editconditional"> La fen&#234;tre Modifier Condition</a>
-	<li><a href="#logicalexpression"> L'Expression Logique</a>
-	<li><a href="#thepolicy">D&#233;clenchemet des Actions</a>
-	<li><a href="#theactions"> Les Actions</a>
-	<li><a href="#start"> Mise en route</a>
-	<li><a href="#variable"> Etat des variables Disponibles</a>
-	<li><a href="#action"> Actions Disponibles</a>
-	<li><a href="#notes"> Notes Suppl&#233;mentaires</a>
+		<li><a href="#intro"> Introduction &#224; Logix et Conditions</a></li>
+		<li><a href="#logix"> Qu'est ce que Logix</a></li>
+		<li><a href="#conditional"> Conditions</a></li>
+		<li><a href="#editconditional"> La fen&#234;tre Modifier Condition</a></li>
+		<li><a href="#logicalexpression"> L'Expression Logique</a></li>
+		<li><a href="#thepolicy">D&#233;clenchemet des Actions</a></li>
+		<li><a href="#theactions"> Les Actions</a></li>
+		<li><a href="#start"> Mise en route</a></li>
+		<li><a href="#variable"> Etat des variables Disponibles</a></li>
+		<li><a href="#action"> Actions Disponibles</a></li>
+		<li><a href="#notes"> Notes Suppl&#233;mentaires</a></li>
 	</ul>
 	</dd>
 
-	<dt class = left><a  name=intro>  <H3>Introduction aux  Logix et Conditions</H3></a></dt>
+	<dt class = left><a  name=intro>
+	<h3>Introduction aux  Logix et Conditions</h3></a></dt>
 	<dd class=top>
 	<p> Un Logix est un petit groupe de Conditions concentr&#233;s sur une t&#226;che unique sur le 
 	r&#233;seau. Chaque Condition peut &#234;tre consid&#233;r&#233; comme une d&#233;claration de la 

@@ -108,7 +108,7 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configurer No&#339;uds</a><br>
 	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
 	    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
-	    width="128" height="149" alt="Configuration Tool pane"></a>
+	    width="128" height="149" alt="Configuration Tool pane"></a>multiple connexions
 	<li>D&#233;marrer le Concentrateur<br>
 	<a href="images/OpenLCBHubControl.png">
 	<img src="images/OpenLCBHubControl.png" alt="Hub Control Pane" width="114" height="28"></a></li>

@@ -5,7 +5,7 @@
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
 <!-- Translated by Blorec Herv&#233; le 2016-09-19-->
-title>JMRI: Signaling introduction</title>
+<title>JMRI: Signaling introduction</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
 <meta name="Date.Modified" content="20151214"/>
@@ -39,7 +39,7 @@ allant du simple "feu rouge" pour terminer par l'&#233;mulation d'un prototype p
 		<li><a href="#signaling">Signalisation R&#233;aliste de Chemin de Fer</a></li>
 	<li><a href="#tools">Outils de Signalisation JMRI</a></li>
 <li><a href="#advanced">Signalisation Avanc&#233;e</a></li>
-</ul
+</ul>
 
 <a name="terms"><h2>Vocabulaire de Signalisation</h2></a></dt>
 
@@ -76,7 +76,7 @@ direction et l'itin&#233;raire du voyage. La "protection" est pour pr&#233;venir
 <li><b>Nom Syst&#232;me</b> Le nom des objets JMRI identifiant soit des pi&#232;ces virtuelles ( internes ) ou physiques de mat&#233;riel utilis&#233;, exemple: une une sortie sur un d&#233;codeur pour commander un signal. Le Nom Syst&#232;me doit suivre certaines <a href="../../doc/Technical/Names.shtml">R&#233;gles de D&#233;nomination</a> pour &#234;tre correctement interpr&#233;t&#233; par JMRI, et le nom varie suivant votre mat&#233;riel car il doit correspondre &#224; votre syst&#232;me DCC.</li>
 </ul>
 
-<h2><a name="signaling">Signalisation R&#233;aliste Ferroviaire</a></h2
+<h2><a name="signaling">Signalisation R&#233;aliste Ferroviaire</a></h2>
 <p>
 &#192; travers le monde, les chemins de fer ont d&#233;velopp&#233; une large gamme de mat"riel de signalisation tels que Drapeaux ( non support&#233;s dans JMRI, S&#233;maphores, Signaux &#224; position de lumi&#232;re, Signaux Lampes de Couleur. Diff&#233;rents signaux physiques peuvent montrer la m&#234;me "Indication" en utilisant diff&#233;rentes combinaisons de lumi&#232;res, de positions de s&#233;maphore, et/ou de Panneaux; ces mod&#232;les de lumi&#232;res sont appel&#233;s "Aspects". Par exemple l'Aspect "Arr&#234;t" peut &#234;tre une simple lampe rouge sur un m&#226;t de Signalisation avec seulement une lampe, rouge au-dessus de rouge sur un m&#226;t de signalisation avec deux lampes, etc. Pour apprendre les r&#232;gles du chemin de fer, votre mod&#232;le fait partie du jeu mais JMRI vous aide en fournissant plus de 20 syst&#232;mes de signalisation r&#233;aliste de diff&#233;rents pays. Pourtant, c'est au conducteur d'interpr&#233;ter les Aspects des Signaux affich&#233;s et ajuster le r&#233;gulateur...
 
@@ -162,11 +162,11 @@ sur vos panneaux, voir la
 <a name="advanced"><h2>La Signalisation Avanc&#233;e</h2></a>
 	
 <ul>
-	<li><a href="interlock/index.shtml">Verrouillage Entr&#233;e/Sortie</a>
-	<li><a href="#logix">Logix</a>: Logique basiqe pour commander des parties du r&#233;seau
-	</li><li><a href="#scripting">Script</a>: personnalisation JMRI incluant les interactions utilisateur
-	</li><li><a href="#automat">Classes Automatisation</a>
-	<li><a href="#widgets">Boite &#224; Outils</a> pour les utilisateurs exp&#233;riment&#233;s pour faire toutes sortes d'automatisme sur le r&#233;seau en &#233;crivant un nouveau programme
+	<li><a href="interlock/index.shtml">Verrouillage Entr&#233;e/Sortie</a></li>
+	<li><a href="#logix">Logix</a>: Logique basiqe pour commander des parties du r&#233;seau</li>
+	<li><a href="#scripting">Script</a>: personnalisation JMRI incluant les interactions utilisateur</li>
+	<li><a href="#automat">Classes Automatisation</a></li>
+	<li><a href="#widgets">Boite &#224; Outils</a> pour les utilisateurs exp&#233;riment&#233;s pour faire toutes sortes d'automatisme sur le r&#233;seau en &#233;crivant un nouveau programme</li>
 </ul>
 
 <a name="logix"><h3>Signalisation avec Logix</h3></a>

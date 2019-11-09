@@ -377,17 +377,17 @@
 		<li><a href="#hardware">Mat&#233;riel</a></li>
 		<li><a href="#limitations">Limitations</a></li>
 		<li><a href="#connecting">Connexion avec:</a>
-				<ul>
-				<li><a href="#connectLi100">LI100, LI100, LI101 or LI101F</a>
-				<li><a href="#connectLiusb">LIUSB</a>
-				<li><a href="#connectLiusbServer">Serveur LIUSB</a>
-				<li><a href="#connectLiusbEthernet">LIUSB Ethernet</a>
-				<li><a href="#connectSim">Simulateur XPressNet</a>
-				<li><a href="#connectZtc">ZTC 640</a>
-				<li><a href="#connectElite">Hornby Elite USB</a>
-				<li><a href="#connectXtncp">Adaptateur XnTcp</a>
-				<li><a href="#connectXpa">Modem et XPA </a>
-				</ul>
+        <ul>
+            <li><a href="#connectLi100">LI100, LI100, LI101 or LI101F</a></li>
+            <li><a href="#connectLiusb">LIUSB</a></li>
+            <li><a href="#connectLiusbServer">Serveur LIUSB</a></li>
+            <li><a href="#connectLiusbEthernet">LIUSB Ethernet</a></li>
+            <li><a href="#connectSim">Simulateur XPressNet</a></li>
+            <li><a href="#connectZtc">ZTC 640</a></li>
+            <li><a href="#connectElite">Hornby Elite USB</a></li>
+            <li><a href="#connectXtncp">Adaptateur XnTcp</a></li>
+            <li><a href="#connectXpa">Modem et XPA </a></li>
+        </ul></li>
 		<li><a href="#tools">Outils JMRI XPressNet</a></li>
 		<li><a href="#documentation">Documentation</a></li>
 </ul>
