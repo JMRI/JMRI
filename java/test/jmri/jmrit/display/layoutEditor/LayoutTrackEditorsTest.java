@@ -1,8 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -12,7 +15,9 @@ import jmri.util.MathUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 import org.junit.rules.Timeout;
+import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.operators.Operator.StringComparator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
@@ -34,8 +39,8 @@ public class LayoutTrackEditorsTest {
 
     private LayoutTurnout doubleXoverLayoutTurnout = null;
     private LayoutTurnout rightHandLayoutTurnout = null;
-    private LayoutSlip firstLayoutSlip = null;
-    private LayoutSlip secondLayoutSlip = null;
+    private LayoutSlip singleLayoutSlip = null;
+    private LayoutSlip doubleLayoutSlip = null;
     private LevelXing levelXing = null;
     private TrackSegment trackSegment = null;
     private LayoutTurntable layoutTurntable = null;
@@ -103,17 +108,18 @@ public class LayoutTrackEditorsTest {
                 Bundle.getMessage("BlockID"));
         JComboBoxOperator blockComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) blockNameLabelOperator.getLabelFor());
-        blockComboBoxOperator.selectItem(2); //TODO: fix hardcoded index
-        // Use editable combo instead of select
-        JTextFieldOperator jblktxt = blockComboBoxOperator.getTextField();
-        jblktxt.setText("XYZ Block");
+        blockComboBoxOperator.getTextField().setText("Blk 2");
 
         // Set arc angle
-        JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 1);
+        JLabelOperator setArcAngleLabelOperator = new JLabelOperator(
+                jFrameOperator, Bundle.getMessage("SetArcAngle"));
+        JTextFieldOperator jtxt = new JTextFieldOperator(
+                (JTextField) setArcAngleLabelOperator.getLabelFor());
         jtxt.setText("35");
 
         // Invoke layout block editor
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
+
         //TODO: frame (dialog) titles hard coded here...
         // it should be based on Bundle.getMessage("EditBean", "Block", "DX Blk A"));
         // but that isn't working...
@@ -157,7 +163,8 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
-        jFrameOperator.close();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -206,55 +213,66 @@ public class LayoutTrackEditorsTest {
         supportingTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         // Enable Invert and Hide
-        new JCheckBoxOperator(jFrameOperator, 1).doClick();
-        new JCheckBoxOperator(jFrameOperator, 2).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SecondTurnoutInvert")).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("HideXover")).doClick();
 
         // Ener new names for each block position
-        //TODO: fix hardcoded index
-        JTextFieldOperator jblktxt = new JTextFieldOperator(jFrameOperator, 0);
-        jblktxt.setText("DX Blk A");
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 0).doClick();
+        JTextFieldOperator blockATextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockNameHint")));
+        blockATextFieldOperator.setText("DX Blk A");
+        JButtonOperator editBlockButtonOperator = new JButtonOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockHint", "")));
+        editBlockButtonOperator.doClick();
+
         //TODO: frame (dialog) titles hard coded here...
-        // it should be based on Bundle.getMessage("EditBean", "Block", "DX Blk A"));
-        // but that isn't working...
-        //JFrameOperator blkFOa = new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk A"));
+        // should be: new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk A"));
+        // but that's not working...
         JFrameOperator blkFOa = new JFrameOperator("Edit Block DX Blk A");
         new JButtonOperator(blkFOa, Bundle.getMessage("ButtonOK")).doClick();
 
-        jblktxt = new JTextFieldOperator(jFrameOperator, 1);
-        jblktxt.setText("DX Blk B");
-        //JFrameOperator blkFOa = new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk B"));
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 1).doClick();
+        JTextFieldOperator blockBTextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockBNameHint")));
+        blockBTextFieldOperator.setText("DX Blk B");
+
+        editBlockButtonOperator = new JButtonOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockHint", "2")));
+        editBlockButtonOperator.doClick();
+
         //TODO: frame (dialog) titles hard coded here...
+        //should be: new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk B"));
         JFrameOperator blkFOb = new JFrameOperator("Edit Block DX Blk B");
         new JButtonOperator(blkFOb, Bundle.getMessage("ButtonOK")).doClick();
 
-        jblktxt = new JTextFieldOperator(jFrameOperator, 2);
-        jblktxt.setText("DX Blk C");
-        //JFrameOperator blkFOa = new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk C"));
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 2).doClick();
+        JTextFieldOperator blockCTextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockCNameHint")));
+        blockCTextFieldOperator.setText("DX Blk C");
+        editBlockButtonOperator = new JButtonOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockHint", "3")));
+        editBlockButtonOperator.doClick();
+
         //TODO: frame (dialog) titles hard coded here...
+        //should be: new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk C"));
         JFrameOperator blkFOc = new JFrameOperator("Edit Block DX Blk C");
         new JButtonOperator(blkFOc, Bundle.getMessage("ButtonOK")).doClick();
 
-        jblktxt = new JTextFieldOperator(jFrameOperator, 3);
-        jblktxt.setText("DX Blk D");
-        //JFrameOperator blkFOa = new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk D"));
-        new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 3).doClick();
+        JTextFieldOperator blockDTextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockDNameHint")));
+        blockDTextFieldOperator.setText("DX Blk D");
+        editBlockButtonOperator = new JButtonOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockHint", "4")));
+        editBlockButtonOperator.doClick();
+
         //TODO: frame (dialog) titles hard coded here...
+        //should be: new JFrameOperator(Bundle.getMessage("EditBean", "Block", "DX Blk D"));
         JFrameOperator blkFOd = new JFrameOperator("Edit Block DX Blk D");
         new JButtonOperator(blkFOd, Bundle.getMessage("ButtonOK")).doClick();
 
         /* The previous block editor sections create new layout blocks so
            the following force tests of the normal create process handled by done. */
-        jblktxt = new JTextFieldOperator(jFrameOperator, 1);
-        jblktxt.setText("DX New B");
-
-        jblktxt = new JTextFieldOperator(jFrameOperator, 2);
-        jblktxt.setText("DX New C");
-
-        jblktxt = new JTextFieldOperator(jFrameOperator, 3);
-        jblktxt.setText("DX New D");
+        blockATextFieldOperator.setText("DX New A");
+        blockBTextFieldOperator.setText("DX New B");
+        blockCTextFieldOperator.setText("DX New C");
+        blockDTextFieldOperator.setText("DX New D");
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
@@ -272,28 +290,36 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurnout"));
 
         // Select main turnout
-        //TODO: fix hardcoded index
-        JComboBoxOperator tcbo = new JComboBoxOperator(jFrameOperator, 0);
-        tcbo.selectItem(1); //TODO: fix hardcoded index
+        JLabelOperator mainTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
+        JComboBoxOperator mainTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) mainTurnoutLabelOperator.getLabelFor());
+        mainTurnoutComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
         // Enable second turnout and select it
-        //TODO: fix hardcoded index
-        new JCheckBoxOperator(jFrameOperator, 0).doClick();
-        JComboBoxOperator tcbo2 = new JComboBoxOperator(jFrameOperator, 1);
-        tcbo2.selectItem(2); //TODO: fix hardcoded index
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("ThrowTwoTurnouts")).doClick();
+
+        JLabelOperator supportingTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("Supporting", Bundle.getMessage("BeanNameTurnout")));
+        JComboBoxOperator supportingTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) supportingTurnoutLabelOperator.getLabelFor());
+        supportingTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         // Enable Invert and Hide
-        new JCheckBoxOperator(jFrameOperator, 1).doClick();
-        new JCheckBoxOperator(jFrameOperator, 2).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SecondTurnoutInvert")).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("HideTurnout")).doClick();
 
         // Continuing route option
-        JComboBoxOperator contOption = new JComboBoxOperator(jFrameOperator, 2);
-        contOption.selectItem(1); //TODO: fix hardcoded index
+        JLabelOperator continuingTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("ContinuingState"));
+        JComboBoxOperator continuingTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) continuingTurnoutLabelOperator.getLabelFor());
+        continuingTurnoutComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
-        // Use editable combo instead of select
-        //TODO: fix hardcoded index
-        JTextFieldOperator jblktxt = new JTextFieldOperator(jFrameOperator, 0);
-        jblktxt.setText("QRS Block");
+        // put a new block name in the block combobox's textfield
+        JTextFieldOperator blockTextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockNameHint")));
+        blockTextFieldOperator.setText("QRS Block");
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
@@ -354,45 +380,49 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
-        jFrameOperator.close();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
-    public void testEditSlipDone() {
+    public void testEditDoubleSlipDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         createTurnouts();
         createBlocks();
 
-        // Edit the double firstLayoutSlip
+        // Edit the double Slip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(firstLayoutSlip);
-
-        // Select turnout A
+        trackEditor.editLayoutTrack(doubleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
-        //TODO: fix hardcoded index
-        JComboBoxOperator tcbA = new JComboBoxOperator(jFrameOperator, 0);
-        tcbA.selectItem(1); //TODO: fix hardcoded index
+        // Select turnout A
+        JLabelOperator firstTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("BeanNameTurnout") + " A");
+        JComboBoxOperator firstTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) firstTurnoutLabelOperator.getLabelFor());
+        firstTurnoutComboBoxOperator.selectItem(1); //TODO: fix hardcoded index
 
         // Select turnout B
-        //TODO: fix hardcoded index
-        JComboBoxOperator tcbB = new JComboBoxOperator(jFrameOperator, 1);
-        tcbB.selectItem(2); //TODO: fix hardcoded index
+        JLabelOperator secondTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("BeanNameTurnout") + " B");
+        JComboBoxOperator secondTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) secondTurnoutLabelOperator.getLabelFor());
+        secondTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
-        // Create a block
-        //TODO: fix hardcoded index
-        JTextFieldOperator jblktxt = new JTextFieldOperator(jFrameOperator, 0);
-        jblktxt.setText("Slip Block");
+        // Create a (new) block
+        JTextFieldOperator blockTextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockNameHint")));
+        blockTextFieldOperator.setText("Slip Block");
 
         // Enable Hide
-        //TODO: fix hardcoded index
-        new JCheckBoxOperator(jFrameOperator, 0).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("HideSlip")).doClick();
 
-        // Trigger Test button
-        new JButtonOperator(jFrameOperator, "Test").doClick();
-        new JButtonOperator(jFrameOperator, "Test").doClick();
-        new JButtonOperator(jFrameOperator, "Test").doClick();
-        new JButtonOperator(jFrameOperator, "Test").doClick();
+        // click Test button four times
+        JButtonOperator testButtonOperator = new JButtonOperator(jFrameOperator, "Test");
+        testButtonOperator.doClick();
+        testButtonOperator.doClick();
+        testButtonOperator.doClick();
+        testButtonOperator.doClick();
 
         // Invoke layout block editor
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
@@ -406,13 +436,11 @@ public class LayoutTrackEditorsTest {
 
         /* The previous block editor sections create new layout blocks so
            the following force tests of the normal create process handled by done. */
-        //TODO: fix hardcoded index
-        jblktxt = new JTextFieldOperator(jFrameOperator, 0);
-        jblktxt.setText("New Slip Block");
+        blockTextFieldOperator.setText("New Slip Block");
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-    }   // testEditSlipDone()
+    }   // testEditDoubleSlipDone()
 
     @Test
     public void testEditSingleSlipDone() {
@@ -420,42 +448,52 @@ public class LayoutTrackEditorsTest {
         createTurnouts();
         createBlocks();
 
-        // Edit the single firstLayoutSlip
+        // Edit the single Slip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(secondLayoutSlip);
-
-        // Select turnout A
+        trackEditor.editLayoutTrack(singleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
-        //TODO: fix hardcoded index
-        JComboBoxOperator tcbA = new JComboBoxOperator(jFrameOperator, 0);
-        tcbA.selectItem(1); //TODO: fix hardcoded index
+        // Select turnout A
+        JLabelOperator firstTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("BeanNameTurnout") + " A");
+        JComboBoxOperator firstTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) firstTurnoutLabelOperator.getLabelFor());
+        firstTurnoutComboBoxOperator.selectItem(1); //TODO: fix hardcoded index
 
         // Select turnout B
-        JComboBoxOperator tcbB = new JComboBoxOperator(jFrameOperator, 1);
-        tcbB.selectItem(2); //TODO: fix hardcoded index
+        JLabelOperator secondTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("BeanNameTurnout") + " B");
+        JComboBoxOperator secondTurnoutComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) secondTurnoutLabelOperator.getLabelFor());
+        secondTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
-        // Select a block
-        JComboBoxOperator blk_cbo_slip = new JComboBoxOperator(jFrameOperator, 8);
-        blk_cbo_slip.selectItem(1); //TODO: fix hardcoded index
+        // Create a (new) block
+        JTextFieldOperator blockTextFieldOperator = new JTextFieldOperator(jFrameOperator,
+                new ToolTipComponentChooser(Bundle.getMessage("EditBlockNameHint")));
+        blockTextFieldOperator.setText("Slip Block");
 
         // Enable Hide
-        //TODO: fix hardcoded index
-        new JCheckBoxOperator(jFrameOperator, 0).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("HideSlip")).doClick();
 
-        // Trigger Test button
-        new JButtonOperator(jFrameOperator, "Test").doClick();
-        new JButtonOperator(jFrameOperator, "Test").doClick();
-        new JButtonOperator(jFrameOperator, "Test").doClick();
+        // click Test button three times
+        JButtonOperator testButtonOperator = new JButtonOperator(jFrameOperator, "Test");
+        testButtonOperator.doClick();
+        testButtonOperator.doClick();
+        testButtonOperator.doClick();
 
         // Invoke layout block editor
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
 
-        //TODO: frame (dialog) titles hard coded here...
-        // it should be based on Bundle.getMessage("EditBean", "Block", "DX Blk A"));
+        // Close the block editor dialog
+        //TODO: frame (dialog) title hard coded here...
+        // it should be based on Bundle.getMessage("EditBean", "Block", "Slip Block"));
         // but that isn't working...
-        JFrameOperator blkFO = new JFrameOperator("Edit Block Blk 1");
+        JFrameOperator blkFO = new JFrameOperator("Edit Block Slip Block");
         new JButtonOperator(blkFO, Bundle.getMessage("ButtonOK")).doClick();
+
+        /* The previous block editor sections create new layout blocks so
+           the following force tests of the normal create process handled by done. */
+        blockTextFieldOperator.setText("New Slip Block");
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
@@ -465,9 +503,9 @@ public class LayoutTrackEditorsTest {
     public void testEditSlipCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // Edit the double firstLayoutSlip
+        // Edit the double doubleLayoutSlip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(firstLayoutSlip);
+        trackEditor.editLayoutTrack(doubleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Invoke layout block editor with no block assigned
@@ -487,12 +525,13 @@ public class LayoutTrackEditorsTest {
     public void testEditSlipClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        // Edit the double firstLayoutSlip
+        // Edit the double doubleLayoutSlip
         LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(firstLayoutSlip);
+        trackEditor.editLayoutTrack(doubleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
-        jFrameOperator.close();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -520,16 +559,14 @@ public class LayoutTrackEditorsTest {
         bdBlockComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         // Enable Hide
-        //TODO: fix hardcoded index
-        new JCheckBoxOperator(jFrameOperator, 0).doClick();  //TODO:fix hardcoded index
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("HideCrossing")).doClick();
 
         // Invoke layout block editor
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "AC")).doClick();
-        //new JButtonOperator(jFrameOperator, "Edit Block 1").doClick();
 
         // find and dismiss the "Edit Block Xing Blk AC" dialog
         //TODO: frame (dialog) titles hard coded here...
-        // it should be based on Bundle.getMessage("EditBean", "Block", "Blk 2"));
+        // it should be based on Bundle.getMessage("EditBean", "Block", "Blk 1"));
         // but that isn't working...
         JFrameOperator blkFOac = new JFrameOperator("Edit Block Blk 1");
         new JButtonOperator(blkFOac, Bundle.getMessage("ButtonOK")).doClick();
@@ -592,7 +629,8 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
-        jFrameOperator.close();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -606,43 +644,52 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Set good radius
-        //TODO: fix hardcoded index
-        JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 0);
+        JLabelOperator jLabelOperator = new JLabelOperator(
+                jFrameOperator, Bundle.getMessage("TurntableRadius"));
+        JTextFieldOperator jtxt = new JTextFieldOperator(
+                (JTextField) jLabelOperator.getLabelFor());
         jtxt.setText("30");
 
         // Add 5 rays
-        new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
-        jtxt = new JTextFieldOperator(jFrameOperator, 1);
+        JButtonOperator addRayTrackJButtonOperator = new JButtonOperator(
+                jFrameOperator, Bundle.getMessage("AddRayTrack"));
+        jLabelOperator = new JLabelOperator(
+                jFrameOperator, Bundle.getMessage("RayAngle"));
+        jtxt = new JTextFieldOperator(
+                (JTextField) jLabelOperator.getLabelFor());
+
+        addRayTrackJButtonOperator.doClick();
         jtxt.setText("90");
-        new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
+        addRayTrackJButtonOperator.doClick();
         jtxt.setText("180");
-        new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
+        addRayTrackJButtonOperator.doClick();
         jtxt.setText("270");
-        new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
+        addRayTrackJButtonOperator.doClick();
         jtxt.setText("315");
-        new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
+        addRayTrackJButtonOperator.doClick();
 
         // Delete the 5th ray
         Thread deleteRay = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 "Warning", "Yes");  // NOI18N
-        new JButtonOperator(jFrameOperator, "Delete", 4).doClick();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDelete"), 4).doClick();
         JUnitUtil.waitFor(() -> {
             return !(deleteRay.isAlive());
         }, "deleteRay finished");
 
         // Enable DCC control
-        //TODO: fix hardcoded index
-        new JCheckBoxOperator(jFrameOperator, 0).doClick();
+        new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("TurntableDCCControlled")).doClick();
 
         // Change the first ray to 30 degrees
-        jtxt = new JTextFieldOperator(jFrameOperator, 2);
+        JLabelOperator rayAngleLabelOperator = new JLabelOperator(
+                jFrameOperator, Bundle.getMessage("MakeLabel", Bundle.getMessage("RayAngle")), 0);
+        jtxt = new JTextFieldOperator((JTextField) rayAngleLabelOperator.getLabelFor());
         jtxt.setText("30");
 
         // Set ray turnouts
         //TODO: fix hardcoded index
         JComboBoxOperator turnout_cbo = new JComboBoxOperator(jFrameOperator, 0);
-        //TODO: fix hardcoded index
         JComboBoxOperator state_cbo = new JComboBoxOperator(jFrameOperator, 1);
+
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
         state_cbo.selectItem(0); //TODO: fix hardcoded index
 
@@ -706,7 +753,8 @@ public class LayoutTrackEditorsTest {
         trackEditor.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
-        jFrameOperator.close();
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -719,28 +767,43 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Ray angle
-        JTextFieldOperator jtxt = new JTextFieldOperator(jFrameOperator, 1);
+        JLabelOperator jLabelOperator = new JLabelOperator(
+                jFrameOperator, Bundle.getMessage("RayAngle"));
+        JTextFieldOperator jtxt = new JTextFieldOperator(
+                (JTextField) jLabelOperator.getLabelFor());
         jtxt.setText("xyz");
+
         Thread badAngle = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
-        new JButtonOperator(jFrameOperator, "New Ray Track").doClick();
+
+        JButtonOperator addRayTrackJButtonOperator = new JButtonOperator(
+                jFrameOperator, Bundle.getMessage("AddRayTrack"));
+        addRayTrackJButtonOperator.doClick();
+
         JUnitUtil.waitFor(() -> {
             return !(badAngle.isAlive());
         }, "badAngle finished");
 
         // Set radius
-        //TODO: fix hardcoded index
-        jtxt = new JTextFieldOperator(jFrameOperator, 0);
+        jLabelOperator = new JLabelOperator(
+                jFrameOperator, Bundle.getMessage("TurntableRadius"));
+        jtxt = new JTextFieldOperator(
+                (JTextField) jLabelOperator.getLabelFor());
         jtxt.setText("abc");
 
         Thread badRadius = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
+
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
+
         JUnitUtil.waitFor(() -> {
             return !(badRadius.isAlive());
         }, "badRadius finished");
+
+        new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     public void createTurnouts() {
@@ -774,26 +837,32 @@ public class LayoutTrackEditorsTest {
             layoutEditor = new LayoutEditor();
 
             Point2D point = new Point2D.Double(150.0, 100.0);
-            Point2D delta = new Point2D.Double(50.0, 75.0);
+            Point2D delta = new Point2D.Double(50.0, 10.0);
 
-            // Double crossover
-            doubleXoverLayoutTurnout = new LayoutTurnout("Double Xover",
-                    LayoutTurnout.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
+            // Track Segment
+            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.ANCHOR, point, layoutEditor);
+            point = MathUtil.add(point, delta);
+            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.ANCHOR, point, layoutEditor);
+            trackSegment = new TrackSegment("Segment", pp1, LayoutTrack.POS_POINT, pp2, LayoutTrack.POS_POINT, false, false, layoutEditor);
 
             // RH Turnout
             point = MathUtil.add(point, delta);
             rightHandLayoutTurnout = new LayoutTurnout("RH Turnout",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
 
-            // Double firstLayoutSlip
-            point = MathUtil.add(point, delta);
-            firstLayoutSlip = new LayoutSlip("Double Slip",
-                    point, 0.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
+            // Double crossover
+            doubleXoverLayoutTurnout = new LayoutTurnout("Double Xover",
+                    LayoutTurnout.DOUBLE_XOVER, point, 33.0, 1.1, 1.2, layoutEditor);
 
-            // Single firstLayoutSlip
+            // Single doubleLayoutSlip
             point = MathUtil.add(point, delta);
-            secondLayoutSlip = new LayoutSlip("Single Slip",
+            singleLayoutSlip = new LayoutSlip("Single Slip",
                     point, 0.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
+
+            // Double doubleLayoutSlip
+            point = MathUtil.add(point, delta);
+            doubleLayoutSlip = new LayoutSlip("Double Slip",
+                    point, 0.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);
 
             // Level crossing
             point = MathUtil.add(point, delta);
@@ -804,11 +873,6 @@ public class LayoutTrackEditorsTest {
             point = MathUtil.add(point, delta);
             layoutTurntable = new LayoutTurntable("Turntable",
                     point, layoutEditor);
-
-            // Track Segment
-            PositionablePoint p1 = new PositionablePoint("a", PositionablePoint.ANCHOR, new Point2D.Double(0.0, 0.0), layoutEditor);
-            PositionablePoint p2 = new PositionablePoint("b", PositionablePoint.ANCHOR, new Point2D.Double(1.0, 1.0), layoutEditor);
-            trackSegment = new TrackSegment("Segment", p1, LayoutTrack.POS_POINT, p2, LayoutTrack.POS_POINT, false, false, layoutEditor);
         }
     }
 
@@ -829,16 +893,16 @@ public class LayoutTrackEditorsTest {
             rightHandLayoutTurnout = null;
         }
 
-        if (firstLayoutSlip != null) {
-            firstLayoutSlip.remove();
-            firstLayoutSlip.dispose();
-            firstLayoutSlip = null;
+        if (doubleLayoutSlip != null) {
+            doubleLayoutSlip.remove();
+            doubleLayoutSlip.dispose();
+            doubleLayoutSlip = null;
         }
 
-        if (secondLayoutSlip != null) {
-            secondLayoutSlip.remove();
-            secondLayoutSlip.dispose();
-            secondLayoutSlip = null;
+        if (singleLayoutSlip != null) {
+            singleLayoutSlip.remove();
+            singleLayoutSlip.dispose();
+            singleLayoutSlip = null;
         }
 
         if (levelXing != null) {
@@ -865,9 +929,26 @@ public class LayoutTrackEditorsTest {
         JUnitUtil.tearDown();
     }
 
-//    try {
-//        Dumper.dumpAll("Dumper.xml");
-//    } catch (Exception e2) {
-//    }
+    /*
+     * this is used to find a component by matching against its tooltip 
+     */
+    private static class ToolTipComponentChooser implements ComponentChooser {
+
+        private String buttonTooltip;
+        private StringComparator comparator = Operator.getDefaultStringComparator();
+
+        public ToolTipComponentChooser(String buttonTooltip) {
+            this.buttonTooltip = buttonTooltip;
+        }
+
+        public boolean checkComponent(Component comp) {
+            return comparator.equals(((JComponent) comp).getToolTipText(), buttonTooltip);
+        }
+
+        public String getDescription() {
+            return "Component with tooltip \"" + buttonTooltip + "\".";
+        }
+    }
+
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrackEditorsTest.class);
 }
