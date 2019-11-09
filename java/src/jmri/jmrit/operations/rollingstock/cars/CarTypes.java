@@ -127,15 +127,7 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
     @Override
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
-            maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
-            for (String name : getNames()) {
-                String[] subString = name.split("-");
-                if (subString[0].length() > maxNameLength) {
-                    maxName = name;
-                    maxNameLength = subString[0].length();
-                }
-            }
+            getMaxNameSubStringLength();
             log.info("Max car type name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;

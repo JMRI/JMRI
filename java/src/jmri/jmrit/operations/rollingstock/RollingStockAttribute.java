@@ -158,7 +158,6 @@ public abstract class RollingStockAttribute {
                     maxNameLength = subString[0].length();
                 }
             }
-            log.info("Max car type name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;
     }
