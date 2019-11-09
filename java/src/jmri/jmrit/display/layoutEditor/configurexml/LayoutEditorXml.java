@@ -164,6 +164,16 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             log.debug("N LayoutTrack elements: " + num);
         }
 
+        // uncomment this (!!!temporarly!!!) to save alphanumerically sorted by ID
+//        log.error("DO NOT LEAVE THIS ENABLED FOR PRODUCTION: ORGINAL ORDER MUST BE MAINTAINED.");
+//        Collections.sort(layoutTracks, new Comparator<LayoutTrack>() {
+//            @Override
+//            public int compare(LayoutTrack t1, LayoutTrack t2) {
+//                AlphanumComparator ac = new AlphanumComparator();
+//                return ac.compare(t1.getId(), t2.getId());
+//            }
+//        });
+
         // Because some people (like me) like to edit their panel.xml files
         // directly we're going to group the layout tracks by class before
         // storing them. Note: No other order is effected; They should exist

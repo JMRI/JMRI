@@ -85,8 +85,9 @@
       information are stored in text files, so you can make up new
       ones as desired.</p><a name="writecode" id="writecode"></a>
 
-      <h2>How can you change how JMRI does things?</h2>There are
-      several different ways to modify JMRI:
+      <h2>How can you change how JMRI does things?</h2>
+
+      There are several different ways to modify JMRI:
 
       <ol>
         <li>You can use the JMRI interfaces to write programs for
@@ -111,10 +112,10 @@
         signaling, etc) can be immediately used.</li>
       </ol>
 
-      <h2>JMRI project information (For people interested in how
-      the software is being written)</h2>Much of the discussion
-      about JMRI development takes place on the JMRI-Developers
-      mailing list: <a href=
+      <h2>JMRI project information </h2>
+      (For people interested in how the software is being written)
+      Much of the discussion about JMRI development takes place on
+      the JMRI-Developers mailing list: <a href=
       "https://jmri-developers.groups.io/g/jmri/join">
       Subscribe</a>, <a href=
       "https://jmri-developers.groups.io/g/jmri/topics">
@@ -133,7 +134,9 @@
         project statistics (up to 2018)</a>.</li>
       </ul>
 
-      <h2>Code</h2>All of the JMRI code is available from GitHub.
+      <h2>Code</h2>
+
+      All of the JMRI code is available from GitHub.<br>
       See the <a href="getgitcode.shtml">"Getting the code via
       Git"</a> and <a href="GitFAQ.shtml">"Git FAQ"</a> pages for
       more information on how to do that.
@@ -216,9 +219,10 @@
       "../../../Acknowledgements.shtml">acknowledgements
       page</a>.</p><a name="use" id="use"></a>
 
-      <h2>Licensing</h2>We encourage people to build their own
-      projects on top of JMRI. That's the original reason that the
-      JMRI&reg; project was started!
+      <h2>Licensing</h2>
+
+      We encourage people to build their own projects on top of JMRI.
+      That's the original reason that the JMRI&reg; project was started!
 
       <p>JMRI is licensed only under the "GNU General Public
       License", sometimes called the "GPL". We use version 2 of the

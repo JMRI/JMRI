@@ -4,7 +4,7 @@
 <hr class="hide">
 <div id="side"> <!-- Block of text on left side of page -->
 
-<dl class=toc>
+<dl>
 
 <dt><h3>PanelPro&trade;</h3></dt>
 <dd>
@@ -26,7 +26,7 @@
 		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
 		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
 		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
-    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+        <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
 		</ul>
 </dd>
@@ -45,7 +45,7 @@ r&#233;seau.
 		<li><dfn><a href="../../tools/Memories.shtml">Variables de M&#233;moire</a></dfn>
 		<li><dfn><a href="../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
 		<li><dfn><a href="../../tools/LRoutes.shtml">LIn&#233;raires</a></dfn>
-    <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
+        <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
 		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
 		<li><dfn><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></dfn>
 		<li><dfn><a href="../../tools/speedometer/index.shtml">Mesureur de Vitesse</a></dfn>
@@ -72,5 +72,10 @@ r&#233;seau.
 <a href="/donations.shtml">
  <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" align="right" alt="Donate to JMRI" />
 </a> 
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
 
 </div> <!-- End of block of text on left side of page -->

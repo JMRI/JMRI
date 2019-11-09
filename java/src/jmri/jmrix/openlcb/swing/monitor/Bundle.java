@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.openlcb.swing.Bundle {
 
     @CheckForNull
-    private static final String name = null; // NOI18N
+    private static final String name = "jmri.jmrix.openlcb.swing.monitor.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
