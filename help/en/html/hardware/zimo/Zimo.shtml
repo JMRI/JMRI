@@ -24,7 +24,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
       <h1>Hardware Support: ZIMO MX-1</h1><a name="hardware" id=
       "hardware"></a>
@@ -56,7 +57,8 @@
         <li>Throttle</li>
 
         <li>Turnout Control - Tentative</li>
-      </ul><b>Note</b> Testing of the binary protocol has only been
+      </ul>
+      <b>Note</b> Testing of the binary protocol has only been
       possible using the MXULF, with the turnout control having not
       been fully tested. Issues may occur when used with the MX-10
       but we do not currently have any hardware to test against.
@@ -141,6 +143,7 @@
 
       <p><a href="http://www.mrsonline.net/html/zimo.html">ZIMO
       Agency of North America</a></p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

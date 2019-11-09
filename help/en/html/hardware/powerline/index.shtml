@@ -21,14 +21,15 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
       <h1>Hardware Support: Powerline Controllers</h1>
 
       <p>This page describes how to configure JMRI to talk to
-      Powerline controllers, e.g. X10, Insteon.</p><a name=
-      "hardware" id="hardware"></a>
+      Powerline controllers, e.g. X10, Insteon.</p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <p>The <a href="Compatibility.shtml">Powerline compatibility
@@ -52,18 +53,22 @@
       When the Turnout is set to "CLOSED", the remote device is
       sent a command to go "OFF". Depending on the X10 hardware,
       this may be either an immediate off, or be slowly
-      dimmed.</p><a name="tools" id="tools"></a>
+      dimmed.</p>
 
-      <h2>JMRI Tools</h2>N/A <a name="documentation" id=
-      "documentation"></a>
+      <a name="tools" id="tools"></a>
+      <h2>JMRI Tools</h2>
+      N/A
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
 
       <p>For information on how to address your equipment via JMRI
       see the <a href="Names.shtml">Powerline Names Help page</a>
-      for X10.</p><!--#include virtual="/Footer" -->
+      for X10.</p>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
