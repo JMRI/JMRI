@@ -230,8 +230,6 @@ git push github
        
 - Clean out the unneeded sections from the release note
 
-
-
 - Create the new draft note section
 
     cp help/en/releasenotes/jmri4.17-master.shtml help/en/releasenotes/current-draft-note.shtml
@@ -248,7 +246,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-08-10+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-09-10+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -445,9 +443,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.5+Rbf0d1af.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rbf0d1af.dmg) | 39ed7fa9e2b4753c415f5e1399c750eb048fc7bc52284f054d9f7bdeaf41c924
-[JMRI.4.17.5+Rbf0d1af.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rbf0d1af.exe) | b053fcd1b8019afc122b47d39031ce38c3a6805b54c16cbb43df9a2cf1e2e04a
-[JMRI.4.17.5+Rbf0d1af.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rbf0d1af.tgz) | c4a7f34191987f0c5ad8294b3c0b0cc0f407fd40960366af5b3fd9d6faf2810f
+[JMRI.4.17.5+Rdf73700.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rdf73700.dmg) | a020129314de1b141b153c3ad161dd8df3c54564ecbaceebcc1446abed7e423b
+[JMRI.4.17.5+Rdf73700.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rdf73700.exe) | ac35681f915605c047f7c31ad76f35bbddb5b251dca2ac44ed1c7e62ab6986fc
+[JMRI.4.17.5+Rdf73700.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.5/JMRI.4.17.5+Rdf73700.tgz) | ca41d95f33bb7f5dfdd983a823507cb41b82c3d9fbba9d84760b1d1ddadb5aa0
 
 
 ```

@@ -1,6 +1,5 @@
 package jmri.util;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -733,7 +732,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * Handle closing a window or quiting the program while the modified bit was
      * set.
      */
-    @SuppressFBWarnings(value = "LI_LAZY_INIT_STATIC", justification = "modified is only on Swing thread")
     protected void handleModified() {
         if (getModifiedFlag()) {
             this.setVisible(true);
@@ -792,7 +790,11 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     public void windowDeiconified(java.awt.event.WindowEvent e) {
     }
 
-    /** Does nothing in this class */
+    /**
+     * {@inheritDoc}
+     * 
+     * The JmriJFrame implementation calls {@link #handleModified()}.
+     */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         handleModified();

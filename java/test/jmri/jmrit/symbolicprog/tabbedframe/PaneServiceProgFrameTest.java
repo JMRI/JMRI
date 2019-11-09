@@ -1,6 +1,8 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
@@ -28,7 +30,7 @@ public class PaneServiceProgFrameTest {
         RosterEntry re = new RosterEntry();
         PaneServiceProgFrame t = new PaneServiceProgFrame(df, re, "test frame", "programmers/Basic.xml", p);
         Assert.assertNotNull("exists", t);
-        t.dispose();
+        t.dispatchEvent(new WindowEvent(t, WindowEvent.WINDOW_CLOSING));
     }
 
     // The minimal setup for log4J

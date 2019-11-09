@@ -1642,7 +1642,7 @@ public class TrainCommon {
      *
      * @param file             Manifest or Switch List File
      * @param isManifest       True if manifest, false if switch list.
-     * @param isTwoColumnTrack True if two column format.
+     * @param isTwoColumnTrack True if two column format using track names.
      */
     public void printCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
         int lineLength = getLineLength(isManifest);
@@ -1679,7 +1679,7 @@ public class TrainCommon {
     }
 
     public void printDropCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
-        if (!Setup.isPrintHeadersEnabled()) {
+        if (!Setup.isPrintHeadersEnabled() || getDropCarHeader(isManifest, isTwoColumnTrack).trim().isEmpty()) {
             return;
         }
         printHorizontalLine(file, isManifest);

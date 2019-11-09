@@ -4,7 +4,7 @@
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; is...</div>
-	    <dl class="toc">
+	    <dl>
 
 		<dt><h3><a href="index.shtml">Setup</a></h3></dt>
 		<dd>
@@ -131,11 +131,17 @@
 		    </ul>
 		</dd>
 
-</dl>
+    </dl>
 
-<a href="/donations.shtml">
- <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
-</a> 
+    <a href="/donations.shtml">
+     <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+    </a>
 
 	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
+
 <!-- /Sidebar -->

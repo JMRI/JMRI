@@ -2,7 +2,7 @@
 <!-- This is the common sidebar definition for help/en/html/ pages -->
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI is...</div>
+	    <div style="text-align: center">JMRI&reg; is...</div>
 	    <dl>
 
 		<dt><h3><a href="tools/index.shtml">Tools</a></h3></dt>
@@ -50,5 +50,10 @@
 	    </dl>
 
 	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->
