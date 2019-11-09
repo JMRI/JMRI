@@ -36,9 +36,10 @@ public class JoalAudioBufferTest {
     @Test(expected = java.lang.NullPointerException.class )
     public void testCtorFail() {
         Assume.assumeTrue(null == JoalAudioFactory.getAL());
-        JoalAudioBuffer l = new JoalAudioBuffer("test");
         
-        // no tests, because what matters is the thrown exception
+        new JoalAudioBuffer("test");
+        
+        // no Asserts, because what matters is the thrown exception
         Assert.fail("Should have thrown");
     }    
 
