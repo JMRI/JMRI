@@ -58,7 +58,7 @@
   <decoder>
     <family name="NMRA standard CV definitions" mfg="NMRA">
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
-      <model model="NMRA standard CV definitions"/>
+      <Xmodel model="NMRA standard CV definitions"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
