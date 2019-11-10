@@ -3,6 +3,7 @@ package jmri.jmrit.logix;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Font;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.jmrit.beantable.oblock.OBlockTableModel;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -788,10 +790,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return false;
         }
         path.clearSettings();
-        int oldSize = getPaths().size();
         super.removePath(path);
         path.dispose();
-        firePropertyChange("pathCount", oldSize, getPaths().size());
+        firePropertyChange("pathDelete", path, getPaths().size());
         return true;
     }
 
@@ -923,6 +924,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _portals.clear();
         for (Path pa : getPaths()) {
             removeOPath((OPath)pa);
+        }
+        for (PropertyChangeListener listener : getPropertyChangeListeners()) {
+            removePropertyChangeListener(listener);
         }
         jmri.InstanceManager.getDefault(OBlockManager.class).deregister(this);
         super.dispose();

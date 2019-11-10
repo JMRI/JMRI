@@ -678,6 +678,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             if (!(listener instanceof OBlockTableModel) && 
                     !(listener instanceof BlockPathTableModel) && 
                     !(listener instanceof PathTurnoutTableModel) &&
+                    !(listener instanceof jmri.jmrit.picker.PickListModel) &&
                     !(listener instanceof OBlockManager)) {
                 sb.append("\n");
                 sb.append(Bundle.getMessage("InUseBy", bean.getDisplayName(), listener.getClass().getName()));

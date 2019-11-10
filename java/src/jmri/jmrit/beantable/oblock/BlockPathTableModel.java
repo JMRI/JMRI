@@ -250,9 +250,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             _tempLen *= 25.4f;                            
                         }
                     } catch (ParseException e) {
-                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);                    
+                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);
                     }
-                    return;
+                    break;
                 case UNITSCOL:
                     _units.set(row, (Boolean)value);
                     fireTableRowsUpdated(row, row);
@@ -443,7 +443,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             if (log.isDebugEnabled()) {
                 log.debug("propertyChange \"" + property + "\".  source= " + e.getSource());
             }
-            if (property.equals("portalCount") || property.equals("pathCount")) {
+            if (property.equals("portalCount") || property.equals("pathCount")
+                    || property.equals("pathDelete")) {
                 fireTableDataChanged();
             }
         }

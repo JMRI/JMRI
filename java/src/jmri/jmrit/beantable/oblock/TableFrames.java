@@ -867,19 +867,15 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         /**
          *
          */
-        PathTurnoutTableModel PathTurnoutModel;
+        PathTurnoutTableModel pathTurnoutModel;
 
         public PathTurnoutFrame(String title, boolean resizable, boolean closable,
                 boolean maximizable, boolean iconifiable) {
             super(title, resizable, closable, maximizable, iconifiable);
         }
 
-        public void init(OBlock block, TableFrames parent) {
-            PathTurnoutModel = new PathTurnoutTableModel();
-        }
-
         public PathTurnoutTableModel getModel() {
-            return PathTurnoutModel;
+            return pathTurnoutModel;
         }
     }
 
@@ -897,8 +893,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (path == null) {
             return null;
         }
-        PathTurnoutTableModel PathTurnoutModel = new PathTurnoutTableModel(path);
-        PathTurnoutModel.init();
+        PathTurnoutTableModel PathTurnoutModel = new PathTurnoutTableModel(path, frame);
         JTable PathTurnoutTable = new JTable(PathTurnoutModel);
         PathTurnoutTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{PathTurnoutTableModel.SETTINGCOLUMN, PathTurnoutTableModel.DELETE_COL}));

@@ -44,19 +44,14 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     static final String[] turnoutStates = {closed, thrown};//, unknown, inconsistent};
 
     private String[] tempRow = new String[NUMCOLS];
+    TableFrames.PathTurnoutFrame _parent;
     private OPath _path;
 
-    public PathTurnoutTableModel() {
-        super();
-    }
-
-    public PathTurnoutTableModel(OPath path) {
+    public PathTurnoutTableModel(OPath path, TableFrames.PathTurnoutFrame parent) {
         super();
         _path = path;
-    }
-
-    public void init() {
         _path.getBlock().addPropertyChangeListener(this);
+        _parent = parent;
     }
 
     public void removeListener() {
@@ -266,8 +261,14 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (_path.getBlock().equals(e.getSource()) && e.getPropertyName().equals("pathCount")) {
-            fireTableDataChanged();
+        if (_path.getBlock().equals(e.getSource())) {
+            String property = e.getPropertyName();
+            if (property.equals("pathCount")) {
+                fireTableDataChanged();
+            } else if (property.equals("pathDelete") && _path.equals(e.getOldValue())) {
+                removeListener();
+                _parent.dispose();
+            }
         }
     }
 

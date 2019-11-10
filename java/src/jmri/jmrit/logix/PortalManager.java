@@ -45,7 +45,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private ArrayList<Portal> _nameList = new ArrayList<>();   // stores Portal in loaded order
     private Hashtable<String, Portal> _portalMap = new Hashtable<>();   // stores portal by current name
-    private Integer _nextIndex = new Integer(1);
+    private Integer _nextIndex = Integer.valueOf(1);
 
     public PortalManager() {
     }
