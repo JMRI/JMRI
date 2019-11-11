@@ -893,6 +893,7 @@ public class JUnitUtil {
             JUnitUtil.waitFor(() -> {
                 return (manager.allServices().isEmpty());
             }, "Stopping all ZeroConf Services");
+            manager.dispose();
         }
     }
 
