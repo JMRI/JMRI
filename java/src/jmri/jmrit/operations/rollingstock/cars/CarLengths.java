@@ -5,6 +5,7 @@ import org.jdom2.Element;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Represents the lengths that cars can have.
@@ -17,7 +18,7 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
     public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths"; // NOI18N
     public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName"; // NOI18N
     
-    protected static final int MIN_NAME_LENGTH = 4;
+    protected static final int MIN_NAME_LENGTH = Control.max_len_string_length_name;
 
     public CarLengths() {
     }
