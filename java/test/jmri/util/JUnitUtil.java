@@ -934,9 +934,9 @@ public class JUnitUtil {
     }
 
     /**
-     * Warns if the {@link jmri.ShutDownManager} was not left empty. Normally
-     * run as part of the 
-     * default end-of-test code.
+     * Errors if the {@link jmri.ShutDownManager} was not left empty. Normally
+     * run as part of the default end-of-test code. Considered an error so that
+     * CI will flag these and tests will be improved.
      *
      * @see #clearShutDownManager()
      * @see #initShutDownManager()
@@ -948,7 +948,7 @@ public class JUnitUtil {
         List<ShutDownTask> list = sm.tasks();
         while (list != null && !list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.warn("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
+            log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
