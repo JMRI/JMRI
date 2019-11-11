@@ -1518,7 +1518,8 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> turn off specific library -->
+            <!-- <<sysproperty key="jinput.useDefaultPlugin" path="false/"/> -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
