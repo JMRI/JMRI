@@ -56,9 +56,9 @@ Lorsqu'il agit comme une interface, le PR3 donne &#224; JMRI le plein contr&#241
 LocoNet et les dispositifs qui s'y rattachent.
 Cela inclut la programmation des
 d&#233;codeurs sur une voie de programmation reli&#233;&#233;e &#224; une centrale LocoNet,
-L&#224 ou la centrale LocoNet prend en charge la "programmation sur voie principale" (POM) 
+L&#224; ou la centrale LocoNet prend en charge la "programmation sur voie principale" (POM)
 JMRI est capable d'utiliser cette fonction.</p>
-<p>Le PR3 peut aussi &#234;tre connecter &#224 JMRI pourfaire un <a href="StandaloneLocoNet.shtml">
+<p>Le PR3 peut aussi &#234;tre connecter &#224; JMRI pourfaire un <a href="StandaloneLocoNet.shtml">
 "LocoNet autonome"</a> qui peut &#234;tre utile quand loconet est utilis&#233; quand LocoNet est utilis&#233;
 pour commander certain aspect du r&#233;seau tandis qu'un autre syst&#232;me decommande est utilis&#233; 
 pour d'autres aspects. Un exemple peut &#234;tre la d&#233;tection de l'occupation des voies et la signalisation 
@@ -93,32 +93,32 @@ Enfin, connectez un c&#226;ble USB entre le PR3 et votre ordinateur.
 
 <h3>Configuration Recommand&#233;e pour une interface LocoNet</h3>
 <p>
-Pour configurer une application JMRI pour utiliser le PR3 comme une interface &#224 LocoNet qui
+Pour configurer une application JMRI pour utiliser le PR3 comme une interface &#224; LocoNet qui
 inclut une centrale LocoNet:
 </p>
 
 <ul>
-<li>
-D&#233;marrez le programme.
-<li>
-Ouvrez la fen&#234;tre Pr&#233;f&#233;rences du menu &#201;dition et configurer la connexion par:
-<ul>
-<li>S&#233;lectionnez  LocoNet PR3
-<li>s&#233;lectionnez le port s&#233;rie qui est connect&#233; au PR3
-<li>Dans l'option "<strong>Command Station</strong>", s&#233;lectionnez le type de la centrale que vous avez
-	pour votre LocoNet, exemple:  "<code><strong>DCS100 (Chief)</strong></code>", "<code><strong>DCS050 (Zephyr)</strong></code>", etc.
-	<p>L'option "Stand-alone LocoNet" Doit &#234;tre s&#233;lectionn&#233; si vous n'avez pas de centrale
-	connect&#233;e; voir la page <a href="StandaloneLocoNet.shtml"> "LocoNet Autonome"</a>
-	Dans ce cas, la commexion PR3ne pourra pas programmer les d&#233;codeurs.
-<li>dans les "advanced settings", La vitesse sera fix&#233;e &#224; 57 600 bauds.
-<li>dans les "advanced settings", l'option par d&#233;faut "Flow Control" &#224 
-	"Use Hardware Flow Control", qui est le r&#233;glage pr&#233;f&#233;r&#233; pour le PR3.
-	Vous devrez essaye ceci en premier, c'est le mode le plus fiable. Seulement si vous ne 
-	pouvez pas programmer fiablement les d&#233;codeurs en utilisant ce choix, et seulement apr&#232;s avoir v&#233;rifier
-	que vous utilisez le bon port, vous s&#233;lectionnez "Aucun" pour cette 
-	pr&#233;f&#233;rence et essayez &#224 nouveau.
-</ul>
-<li>Cliquez Enregistrer en bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez le programme et red&#233;marrez.
+	<li>
+	D&#233;marrez le programme.
+	<li>
+	Ouvrez la fen&#234;tre Pr&#233;f&#233;rences du menu &#201;dition et configurer la connexion par:
+	<ul>
+		<li>S&#233;lectionnez  LocoNet PR3
+		<li>s&#233;lectionnez le port s&#233;rie qui est connect&#233; au PR3
+		<li>Dans l'option "<strong>Command Station</strong>", s&#233;lectionnez le type de la centrale que vous avez
+			pour votre LocoNet, exemple:  "<code><strong>DCS100 (Chief)</strong></code>", "<code><strong>DCS050 (Zephyr)</strong></code>", etc.
+			<p>L'option "Stand-alone LocoNet" Doit &#234;tre s&#233;lectionn&#233; si vous n'avez pas de centrale
+			connect&#233;e; voir la page <a href="StandaloneLocoNet.shtml"> "LocoNet Autonome"</a>
+			Dans ce cas, la commexion PR3ne pourra pas programmer les d&#233;codeurs.
+		<li>dans les "advanced settings", La vitesse sera fix&#233;e &#224; 57 600 bauds.
+		<li>dans les "advanced settings", l'option par d&#233;faut "Flow Control" &#224;
+			"Use Hardware Flow Control", qui est le r&#233;glage pr&#233;f&#233;r&#233; pour le PR3.
+			Vous devrez essaye ceci en premier, c'est le mode le plus fiable. Seulement si vous ne
+			pouvez pas programmer fiablement les d&#233;codeurs en utilisant ce choix, et seulement apr&#232;s avoir v&#233;rifier
+			que vous utilisez le bon port, vous s&#233;lectionnez "Aucun" pour cette
+			pr&#233;f&#233;rence et essayez &#224; nouveau.
+	</ul></li>
+	<li>Cliquez Enregistrer en bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez le programme et red&#233;marrez.</li>
 </ul>	 
 
 <h2> Utiliser la Voie de Programmation PR3 </h2>
@@ -137,28 +137,28 @@ Enfin, connectez un c&#226;ble USB entre la PR3 et votre ordinateur.
 	 <strong>A faire ceci, vous prenez des risques!</strong> <EM> La documentation Digitrax 
 	actuelle pour le PR3 d&#233;finit une tension d"entr&#233;e maximum de 15 Volts DC,
 	o&#249; pr&#233;cedemment la tension maximum &#233;tait &#233;crite 20 Volts DC. Utiliser une	
-	tension d'entr&#233;e sup&#232;rieure &#224 15 Volts DC peut provoquer des dommages au PR3.</EM>
+	tension d'entr&#233;e sup&#232;rieure &#224; 15 Volts DC peut provoquer des dommages au PR3.</EM>
 
 <h3>R&#233;glages recommand&#233;s pour une voie de programmation d&#233;di&#233;e</h3>
 <p>Pour configurer une application JMRI pour utiliser le PR3 pour voie 
 de programmation  de d&#233;codeur d&#233;di&#233;e:
 
 <ul>
-<li>D&#233;marrer DecoderPro
-<li>Ouvrez la fen&#234;tre Pr&#233;f&#233;rences dans le menu &#201;dition et configurer la connexion comme suit:
-<ul>
-<li>S&#233;lectionnez LocoNet PR3
-<li>S&#233;lectionnez le port s&#233;rie qui est connect&#233; ou PR3
-<li>Dans l'option "<code>Command Station</code>", s&#233;lectionnez "<code><strong>PR3 Standalone Programmer</strong></code>". 
-<li>Dans les "advanced settings,", la vitesse doit &#234;tre r&#233;gl&#233;e &#224 57 600 baud.
-<li>Dans les "advanced settings," l'option par d&#233;faut "Flow Control" doit &#234;tre 
-	"Use Hardware Flow Control", qui est le r&#233;glage pr&#233;f&#233;r&#233; pour PR3.
-	Vous devez essayer ceci en premier, c'est le mode le plus fiable. Seulement si vous ne 
-	pouvez pas programmer fiablement les d&#233;codeurs en utilisant ce choix, et seulement apr&#232;s avoir v&#233;rifier
-	que vous utilisez le bon port, vous s&#233;lectionnez "Aucun" pour cette 
-	pr&#233;f&#233;rence et essayez &#224 nouveau.
-</ul>
-<li>Cliquez Enregistrer en bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez le programme et red&#233;marrez.
+	<li>D&#233;marrer DecoderPro
+	<li>Ouvrez la fen&#234;tre Pr&#233;f&#233;rences dans le menu &#201;dition et configurer la connexion comme suit:
+	<ul>
+		<li>S&#233;lectionnez LocoNet PR3
+		<li>S&#233;lectionnez le port s&#233;rie qui est connect&#233; ou PR3
+		<li>Dans l'option "<code>Command Station</code>", s&#233;lectionnez "<code><strong>PR3 Standalone Programmer</strong></code>".
+		<li>Dans les "advanced settings,", la vitesse doit &#234;tre r&#233;gl&#233;e &#224 57 600 baud.
+		<li>Dans les "advanced settings," l'option par d&#233;faut "Flow Control" doit &#234;tre
+			"Use Hardware Flow Control", qui est le r&#233;glage pr&#233;f&#233;r&#233; pour PR3.
+			Vous devez essayer ceci en premier, c'est le mode le plus fiable. Seulement si vous ne
+			pouvez pas programmer fiablement les d&#233;codeurs en utilisant ce choix, et seulement apr&#232;s avoir v&#233;rifier
+			que vous utilisez le bon port, vous s&#233;lectionnez "Aucun" pour cette
+			pr&#233;f&#233;rence et essayez &#224; nouveau.
+	</ul></li>
+	<li>Cliquez Enregistrer en bas de la fen&#234;tre Pr&#233;f&#233;rences, quittez le programme et red&#233;marrez.
 </ul>
 
 <h1>Utilisation Conseill&#233;e</h1>

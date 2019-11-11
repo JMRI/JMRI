@@ -162,7 +162,7 @@ Les zones de transpondeur sont num&#233;rot&#233;es s&#233;quentiellement depuis
      La deuxi&#232;me zone de transpondage d'une carte BDL16x est rapport&#233; comme un journal num&#233;ro
      <span style="font-family: monospace"> (1 + ( adresse carte -1) * 16) + 2</span>.</p>
 La num&#233;rotation Rapports  <p> est r&#233;sum&#233;e dans le tableau ci-dessous:</p>
-     <table border="2">.
+     <table border="2">
 	  <tr align="center"><td>Adresse Carte</td><td>Zone</td><td>Num&#233;ro Rapport</td></tr>
         <tr align="center"><td rowspan="8">1</td><td>A</td><td>LR1</td></tr>
         <tr align="center"><td>B</td><td>LR3</td></tr>
@@ -283,9 +283,8 @@ l'&#233;l&#233;ment "programming pour ressembler &#224;:
         &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
     &lt;/programming&gt;
 </pre></code>
-<P>lLe protocole SV LocoNet Version 1 est la m&#234;me exception que vous sp&#233;cifiez LOCONETSV1MODE.
-Pour avoir plus d'information, voir le 
- <a href="">schema definition file</a>.
+<p>lLe protocole SV LocoNet Version 1 est la m&#234;me exception que vous sp&#233;cifiez LOCONETSV1MODE.
+Pour avoir plus d'information, voir le schema definition file.
 <p>
 Notez que le protocole version 1 n'est plus recommand&#233;e. Si vous &#233;crivez 
 une d&#233;finition d&#233;codeur pour un circuit qui peut utiliser les deux, vous sautereze la ver sion 1 par 

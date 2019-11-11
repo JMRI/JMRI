@@ -1,8 +1,6 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id$ -->
 <!-- Translated  by Blorec Hervé le 2011-09-22-->
 <html lang="fr">
-<html>
 <head>
    <title>Measurements on power leads of Digitrax components</title>
 <!-- Style -->
@@ -14,14 +12,14 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Mesures de la puissance sur les fils des composants Digitrax</H1>
+<h1>Mesures de la puissance sur les fils des composants Digitrax</h1>
 
 J'ai voulu comprendre les raisons des recommandations de Digitrax à propos de la séparation des
 sources d'énergie pour les cartes PM4 et DS54 . Cette page décrit quelques-unes des
@@ -108,10 +106,10 @@ de la PM4 et DCS100
 <IMG SRC="./images/Halfwave.jpg">
 <BR>
 Notez l'ondulation dans la terre (noir).
-Digitrax ne vous recommande <gras> pas </gras>
+Digitrax ne vous recommande <em> pas </em>
  de connectez le fil de masse DS54 à un système de terre, Cet offset montre pourquoi 
 c'est une bonne idée d'écouter cette recommandation. La masse dans le dessin schématique est le fil noir "terre" de la DS54,
-mais ce n'est <gras> pas </ gras> le même que le système de masse (LocoNet)
+mais ce n'est <em>pas</em> le même que le système de masse (LocoNet)
 . . Ceci est révélateur d'une offre d'alimentation de simple alternance de puissance corrigée. Notez ce qui est différent
 de la PM4 et DCS100 ..  
 . 
@@ -148,12 +146,10 @@ ces photos sont à 1V/division, avec la masse du système au centre.
 
 Les gens sur la liste de diffusion Digitrax ont recommandé que toutes les unités DS54 sur un réseau doivent être câblés sur les rails et l'alimentation électrique commune avec
 la même polarité. (Les miens sont aussi.) Les décalages visibles ci-dessus montrent pourquoi vous avez besoin de faire cela; si deux unités DS54
-ont été connectée de façon opposée , elles seraient incapables de créer une référence de masse cohérente..
-
-<BR>
-
-Bob Jacobsen
+ont été connectée de fa&ccedil;on opposée , elles seraient incapables de créer une référence de masse cohérente..
 
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

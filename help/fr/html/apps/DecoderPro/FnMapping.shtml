@@ -70,17 +70,17 @@ attributs et &#233;l&#233;ments utiles:
 		g&#233;rer de multiples d&#233;codeurs.  (voir ci-dessous pour un exemple).</li>
 		<li>minFn - similaire &#224; minOut, mais travaillant sur le nombre de fonctions auxquelles le d&#233;codeur 
 		r&#233;pond.  Ce n'est g&#233;n&#233;ralement pas utile.</li>
-		<liI>constante - c'est un &#233;l&#233;ment, pas un attribut, qui vous permet
+		<li>constante - c'est un &#233;l&#233;ment, pas un attribut, qui vous permet
 		de d&#233;finir une variable comme ayant une valeur constante que 
 		l'utilisateur ne peut pas changer. Un exemple d'utilisation de cette option pour afficher
 		une carte fixe est affich&#233;e ci-dessous.</li>
 		</ul>
 <p>
-Plusieurs attributs et &#233;l&#233;ments sont ignor&#233;s par un &#233;l&#233;ment fnmapping et <strong><em>ne peuvent pas</
-strong></em>  &#234;tre ajout&#233;s  &#224; un fichier de d&#233;finition.
+Plusieurs attributs et &#233;l&#233;ments sont ignor&#233;s par un &#233;l&#233;ment fnmapping et <strong><em>ne peuvent pas
+</em></strong>  &#234;tre ajout&#233;s  &#224; un fichier de d&#233;finition.
 </p>
 
-Plusieurs attributs et &#233;l&#233;ments de l'&#233;l&#233;ment "model" du fichier d&#233;coder affecte aussi l'affichage de 
+<p>Plusieurs attributs et &#233;l&#233;ments de l'&#233;l&#233;ment "model" du fichier d&#233;coder affecte aussi l'affichage de
 la Fonction Map:
 </p>
 		<ul>
@@ -153,7 +153,7 @@ mod&#232;les de d&#233;codeurs diff&#233;rents.
 <p>
 Comme vous allez vers les num&#233;ros de fonctions plus &#233;l&#233;v&#233;s, le mapping NMRA entre les bits dans les 
 CVs et le num&#233;ro de sortie change.  Vous pouvez voir ceci en regardant un exemple de la fa&#231;on dont la fonction dix 
-est mappÃ©&#233;e pour les sorties 7 &#224; 14:
+est mappé&#233;e pour les sorties 7 &#224; 14:
 <pre>
 		&lt;variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10"&gt; &lt;enumVal&gt; 
 			&lt;enumChoice choice="No"/&gt; &lt;enumChoice choice="Yes"/&gt; &lt;/enumVal&gt; &lt;/variable&gt;

@@ -43,7 +43,7 @@ pour plus d'informations sur la maintenance du code JMRI.
 
 De nombreux ordinateurs sont livr&#233;s avec CVS install&#233;, y compris Linux et Mac OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un  programme CVS "client" comme
-<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467"> WinCVS </a>.
+<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467"> WinCVS </a>.
 Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e &#224; partir de:
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">WinCvs120.zip</a>.
 

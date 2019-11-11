@@ -580,7 +580,9 @@ cette page
 
     <li> Le projet OpenDCC a deux interfaces pour une utilisation avec JMRI. 
 	La  <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html"> Centrale OpenDCC</a> et 
-	la <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">Passerelle OpenDCC</a>. Ces interfaces doivent &#234;tre configur&#233;es comme les &#233;quipement LI100F avec une vitesse de 19200 bps.La Centrale OpenDCC fournit la r&#233;tro-signalisation via une connexion S88.
+	la <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">Passerelle OpenDCC</a>. Ces interfaces doivent
+    &#234;tre configur&#233;es comme les &#233;quipement LI100F avec une vitesse de 19200 bps.La Centrale OpenDCC
+    fournit la r&#233;tro-signalisation via une connexion S88.</li>
 	</ul>
   
 <a name="Limitations"><h2>Limitations</h2></a>
@@ -1031,7 +1033,7 @@ construire un adaptateur pour raccorder un accessoire XPressNet &#224; un Centra
 	<li> Red&#233;marrez le programme. Vous devriez &#234;tre en place et op&#233;rationnel.
 	</ol>
     
-<a name="connectElite"></a><H33> Connexion en utilisant la connexion USB int&#233;gr&#233; de l'Elite Hornby</H3>
+<a name="connectElite"></a><h3> Connexion en utilisant la connexion USB int&#233;gr&#233; de l'Elite Hornby</h3>
 
 <b> NOTE: La premi&#232;re version JMRI supportant la connexion USB int&#233;gr&#233; de 
 l'Elite Hornby est la 2.1.2</b>
@@ -1100,7 +1102,7 @@ l'Elite Hornby est la 2.1.2</b>
 	plut&#244;t que de m&#233;moriser les chiffres des adresse IP,
 	car l'adresse IP peut changer  cause de l'adressage DHCP.
 
-	<a name="connectXpa"><H3>Connexion utilisant le XPA et un modem</H3>
+    <a name="connectXpa"></a><H3>Connexion utilisant le XPA et un modem</H3>
 
     <p>Nous avons d&#233;velopp&#233; une m&#233;thode alternative pour la connexion  un syst&#232;me bas&#233; sur XPressNet
     qui devrait se r&#233;v&#233;ler plus rentable sur les syst&#232;mes XPressNet de base

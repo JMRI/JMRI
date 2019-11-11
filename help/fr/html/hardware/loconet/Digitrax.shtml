@@ -56,7 +56,7 @@
 <a name="LocoNetConnect"></a><a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
 <p>Le logiciel JMRI, incluant DecoderPro eet PanelPro, fonctionne avec votre centrale Digitarx 
 pour programmer les d&#233;codeurs. Pour ce faire, il communique avec la 
-centrale par desuus LocoNet & reg; en utilisant un des nombreux types d'<a href="#adapters">adapteur</a>.</p>
+centrale par desuus LocoNet&reg; en utilisant un des nombreux types d'<a href="#adapters">adapteur</a>.</p>
 
 <h3>Centrales</h3>
 <p>Lelogiciel JMRI prend en charge les centrales LocoNet suivantes:

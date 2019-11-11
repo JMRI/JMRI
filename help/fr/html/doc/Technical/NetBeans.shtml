@@ -93,7 +93,7 @@
 		  donc allez <code>Tools > Plugins > Available Plugins</code>
 		  et l&#224; s&#233;lectionnez <code>Change Line Endings on Save</code> et ensuite <code>Install</code>.</p>
 	<p>Vous pouvez v&#233;rifier que le plug-in est proprement install&#233; en allant &#224; <code>Tools > Plugins > Installed</code>,
-			o&#249 vous pouvez voir quelque chose comme ceci (les versions peuvent diff&#233;r&#233;es):</p>
+			o&#249; vous pouvez voir quelque chose comme ceci (les versions peuvent diff&#233;r&#233;es):</p>
 	<p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" align="center" height="102" width="224"></a></p>
 
 	<p>Une fois le plug-in install&#233; et activ&#233;, il est n&#233;cessaire de le configurer pour le caract&#232;re de fin de ligne souhait&#233;, via l'onglet  <code>Tools > Options > Editor > Line Endings</code>.</p>
@@ -205,11 +205,11 @@
 		<p>&#201;ventuellement, quelqu'un regardera le "Pull Request" et d&#233;cidera de
 		fusionner. Parfois, ils vont demander des modifications suppl&#233;mentaires. Dans ce
 		cas vous pouvez actualiser le pull request en poussant juste vos derniers changements
-		dans votre r&#233;pertoire, d'o&#249 ils sont automatiquement pr&#233;lev&#233;s.
+		dans votre r&#233;pertoire, d'o&#249; ils sont automatiquement pr&#233;lev&#233;s.
 
     <h2><a id="buildandrun">Construction et Ex&#233;cution de JMRI</a></h2>
     <p>Pour construire et ex&#233;cuter DecoderPRo, tout ce que vous avez &#224; faire est de s&#233;lectionner
-	"Run Project" ( JMRI ) dans le menu Run, ou cliquer l'ic&#242ne Run dans la barre d'outil.</p>
+	"Run Project" ( JMRI ) dans le menu Run, ou cliquer l'ic&#242;ne Run dans la barre d'outil.</p>
 
 	<ul>
 		<li>[Run] -> [Run Project (JMRI)] compilera et appellera DecoderPro </li>

@@ -88,7 +88,7 @@ programmateur, ce n'est donc juste ici que pour la commodit&#233;.</li>
 par d&#233;faut pour des NCE. Ces deux param&#232;tres peuvent &#234;tre trouv&#233;s dans votre
 Manuel NCE de l'utilisateur sous la rubrique ""Setup Command Station".</p>
 
-<a id="eeprom">
+<a id="eeprom"></a>
 <h3>Versions EPROM</h3>
 
 <p>La centrale de commande NCE Power Pro  utilise une "EPROM" pour contenir
@@ -119,7 +119,7 @@ NOW= REV pour l'accessoire 5, vous avez la r&#233;vision pr&#233;c&#233;dente av
 probl&#232;me connu. Si vous avez l'EPROM d&#233;but des ann&#233;es 2007  et que vous souhaitez utiliser des SUIVI
 r&#233;tro-signalisations, contactez NCE pour une mise &#224; niveau EPROM.</p>
 
-<name="AIU"></a>
+<a name="AIU"></a>
 <h3>AIU (Entr&#233;e) Num&#233;rotation</h3>
 Le programme NCE "AIU" est un dispositif qui permet &#224; la centrale NCE de v&#233;rifier l'&#233;tat
 des entr&#233;es du r&#233;seau miniature. Celles-ci sont r&#233;f&#233;renc&#233;es dans JMRI comme "Capteurs"
@@ -129,8 +129,9 @@ avec des noms comme "NS785". "NS" signifie "capteur NCE", et 785 est le num&#233
 <P> ID = Capteur  (Adresse Cab AIU - 1) * 16 + (NIP sur AIU) -1</P>
 <P> Par exemple: L'adresse de la cab AIU est fix&#233; &#224; 50 et l'un des
 BD20s est connect&#233; &#224; la broche 2. Par cons&#233;quent, l'ID du capteur serait:</P>
-ID = Capteur <P> (50 - 1) * 16 + (2) -1</P>
-ID = 785 Capteur</P>
+<p>ID = Capteur</p>
+<p> (50 - 1) * 16 + (2) -1</p>
+<p>ID = 785 Capteur</p>
 
 <h3> Num&#233;rotation Aiguillages</h3>
 JMRI peut acc&#233;der &#224; des d&#233;codeurs d'accessoires comme les aiguillages NCE et les Lumi&#232;res.

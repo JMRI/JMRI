@@ -38,7 +38,7 @@ Le <a href="WebSite.shtml">site web JMRI</a> est dans un r&#233;pertoire similai
 
 <a name="view" id="view"></a>  
 <h2>Affichage du Code en Ligne</h2>
-	<P>Vous pouvez 	
+	<p>Vous pouvez
 	<a href="https://github.com/JMRI/JMRI">parcourir le code JMRI directement</a>
 	sur ce site. Par exemple, si vous souhaitez regarder cette page,
 	<a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/doc/Technical/getgitcode.shtml">cliquez sur ce lien</a> 

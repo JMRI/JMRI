@@ -55,7 +55,7 @@ Les panneaux sont r&#233;alis&#233;s avec un "&#201;diteur de Panneau", qui vous
 aiguillages, les capteurs (sur certains syst&#232;mes) et les voies.
 
 <p>
-Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant  "Nouveau Panneau...", puis "&#201:diteur de Panneau" depuis le menu "Panneau" sur 
+Vous d&#233;marrez l'&#233;diteur en s&#233;lectionnant  "Nouveau Panneau...", puis "&#201;diteur de Panneau" depuis le menu "Panneau" sur
 la fen&#234;tre principale.  
 Vous obtiendrez un panneau de commande vierge, plus la 
 fen&#234;tre de l'&#233;diteur:
@@ -103,7 +103,7 @@ le menu "Panneaux" pour l'&#233;crire dans un fichier XML.
 L'&#233;diteur de panneau est &#224; base d'ic&#244;ne. La librairie JMRI contient beaucoup d'ic&#244;nes de contribution pour 
 repr&#233;senter les panneaux CTC, LED, etc. Vous pouvez naviguer &#224; travers elles avec l'arbre dans le bas de l'&#233;diteur de 
 cadre. Peut-&#234;tre que le meilleur moyen de voir ce que &#224; quoi chacune ressemble est de la s&#233;lectionner dans l'arbre,puis 
-cliquez sur l'ic&#244;ne &#224; c&#244;t&#233; du bouton "Ajouter icÃ´ne". Ce qui la chargera. .
+cliquez sur l'ic&#244;ne &#224; c&#244;t&#233; du bouton "Ajouter icône". Ce qui la chargera. .
 <p>
 Pour des petits bouts de voie, exemple pour connecter des aiguillages, vous pourriez vouloir 
 <pre>

@@ -24,13 +24,11 @@
 
     <div id="mainContent">
       <!-- Page Body -->
-        <H2>
-		JMRI: Applications
-        </H2>
+        <h2>JMRI: Applications</h2>
 
-		<P>JMRI offre plusieurs applications qui sont optimis&#233;es pour 
+		<p>JMRI offre plusieurs applications qui sont optimis&#233;es pour
 		des objectifs sp&#233;cifiques. Vous pouvez bien s&#251;r &#233;galement 
-		<a href="../doc/Technical/	index.shtml#writecode">&#233;crire les votres</a>.
+		<a href="../doc/Technical/index.shtml#writecode">&#233;crire les votres</a>.
    <dl>
 			<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
 			<dd>
@@ -51,7 +49,7 @@
 			
 			<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3></dt>
 			<dd>
-			   Un syst&#232:me pour Dispatcher, regroupant votre Inventaire et Vos R&#233;gulateurs.
+			   Un syst&#232;me pour Dispatcher, regroupant votre Inventaire et Vos R&#233;gulateurs.
 			</dd>		
 
 	  <dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
@@ -72,12 +70,12 @@
 		
 <h2>Plus d'Outils</h2>
   <ul>
-  <li><a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre
-	  r&#233;seau partag&#233; par la
-  plupart des applications JMRI.</li>
-			<li><a href="../tools/index.shtml#systemSpecificTools">Des Outils Syst&#232:me-Sp&#233;cifique </a> sont disponibles dans la plupart des 
-			applications JMRI depuis leur propre menu quand vous avez configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
-	</ul>
+  	<li><a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre
+	r&#233;seau partag&#233; par la plupart des applications JMRI.</li>
+	<li><a href="../tools/index.shtml#systemSpecificTools">Des Outils Syst&#232;me-Sp&#233;cifique </a>
+	sont disponibles dans la plupart des applications JMRI depuis leur propre menu quand vous avez
+	configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
+  </ul>
 
 <!--#include virtual="/Footer" -->
 </div> <!-- close #mainContent -->

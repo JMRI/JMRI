@@ -138,7 +138,7 @@ Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obte
 	<li><dfn>label</dfn> - Ajouter du texte dans un volet.</li>
 	<li><dfn>soundlabel</dfn> - Ajouter un soundlabel depuis un fichier decoder definition dans un volet. Il a un attribut:</li>
 		<ul>
-		<li>dfn</dfn> - ( Requise )
+		<li><dfn>dfn</dfn> - ( Requise )
 		C'est le nombre de label son &#224; pr&#233;senter</li>
 		</ul>
 	<li><dfn>separator</dfn> - Ajouter une ligne de s&#233;paration dans un volet. S'il est inclus

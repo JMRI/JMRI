@@ -460,9 +460,9 @@ pour le Copyrignt, Auteur et Informations de R&#233;vision dans nos fichiers XML
 <P>
 Exemple XML:
 <Code> <pre>
-   &Lt;db: copyright &gt;
-         &Lt;db: ann&#233;e &gt; 2009 &lt;/db: ann&#233;e &gt;
-         &Lt;db: ann&#233;e &gt; 2010 &lt;/db: ann&#233;e &gt; &lt;
+   &lt;db: copyright &gt;
+         &lt;db: ann&#233;e &gt; 2009 &lt;/db: ann&#233;e &gt;
+         &lt;db: ann&#233;e &gt; 2010 &lt;/db: ann&#233;e &gt; &lt;
          db: support &gt; JMRI &lt;/db: support &gt; &lt;/db: copyright &gt;
 
 &lt;db:authorgroup&gt;
@@ -484,18 +484,18 @@ Exemple XML:
 <P>
 Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr&#233;vu dans le schema /docbook )
 <Code> <pre>
-     &Lt;xs: element ref =: minOccurs "docbook copyright" = "1" maxOccurs = "1" &gt;
-       &Lt;xs: annotation &gt; &lt; xs: documentation &gt;
+     &lt;xs: element ref =: minOccurs "docbook copyright" = "1" maxOccurs = "1" &gt;
+       &lt;xs: annotation &gt; &lt; xs: documentation &gt;
        &#233;l&#233;ment (s) DocBook fournissant des informations de copyright sous forme standard.
        Doit &#234;tre pr&#233;sent.
-       &Lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
-&Lt;/xs: element &gt;
+       &lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
+&lt;/xs: element &gt;
 
-&Lt;xs: element ref =: minOccurs "docbook AuthorGroup" = "1" maxOccurs = "unbounded" &gt;
-       &Lt;xs: annotation &gt; &lt;xs: documentation &gt;
+&lt;xs: element ref =: minOccurs "docbook AuthorGroup" = "1" maxOccurs = "unbounded" &gt;
+       &lt;xs: annotation &gt; &lt;xs: documentation &gt;
        &#233;l&#233;ment DocBook (s) d&#233;crivant les auteurs en forme standard
-       &Lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
-&Lt;/xs: element &gt;
+       &lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
+&lt;/xs: element &gt;
 
 
     &lt;xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" &gt;

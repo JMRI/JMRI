@@ -115,7 +115,7 @@
             <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
             <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
             <li><a href="http://jmri.org/install/Linux.shtml">Linux</a></li>
-            <li><a href="../setup/index.shtml">JMRI Setup</a></li></li>
+            <li><a href="../setup/index.shtml">JMRI Setup</a></li>
    		  </ul>
 		</dd>
     </dl>

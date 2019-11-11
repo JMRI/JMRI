@@ -94,8 +94,8 @@ RI       9            22
 
 	<p> Notez que je n'ai pas tester le niveau d'entr&#233;e du MS100 (DSR, CTS).
 
-</ p>
-</ dd>
+</p>
+</dd>
 
  <dt class="left"> Keyspan Dual Serial Adapter P/N USA-28X </dt>
  <dt class="left"> R&#233;sum&#233;:. Cela n'a pas fonctionn&#233; </dt>
@@ -135,7 +135,7 @@ Notez que je n'ai pas tester le niveau d'entr&#233;e du MS100 (DSR, CTS).
 		
 	<p><a HREF="./images/KeyspanRxD.jpg"><img SRC="./images/KeyspanRxD-thumb.jpg"  alt="Oscilloscope image showing inadequate Keyspan USA-28X RxD voltages">(cliquez pour agrandir)</a></p>
 	
-	<h3>Mat&#233;riel & Logiciel utilis&#233;s</h3>
+	<h3>Mat&#233;riel &amp; Logiciel utilis&#233;s</h3>
 
 	<p>Les tests ont &#233;t&#233; effectu&#233;s avec un PowerBook G4 400MHz, Mac OS 9.1. Le
 programme de test est une application Java cr&#233;&#233;e avec CodeWarrior 4.1.0.3
@@ -145,7 +145,6 @@ l'adresse. L'acc&#232;s Java &#224; des adaptateurs USB s&#233;rie a &#233;t&#23
 <p> Le syst&#232;me Digitrax &#233;tait un Chief, r&#233;gulateur DT100IR, et divers
 d&#233;codeurs sur le r&#233;seau. Le Trafic de la centrale de commande, du r&#233;gulateur et des
 divers composants auxiliaires (PM4, DS54) &#233;tait disponible pour les tests.
-.
 	</dd>
 	</dl>
 <p>LocoNet&reg; est une marque d&#233;pos&#233; de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>

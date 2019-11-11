@@ -22,14 +22,15 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<H1> JMRI: Outil Couplage </H1>
+	<div>
+<h1>JMRI: Outil Couplage</h1>
 
 <h2>Renseignements g&#233;n&#233;raux</H2>
 	<p>
 	Il y a trois types de couplage utilis&#233;s sur les syst&#232;mes DCC:
-	</P>
+	</p>
 		<ol>
-		<li><p <i>basique</i> ou <i>adresse principale de couplage</i>. Dans ce
+		<li><p><i>basique</i> ou <i>adresse principale de couplage</i>. Dans ce
 		type de couplage, &#224; chaque locomotive est attribu&#233;e la m&#234;me adresse sur
 		la voie de programmation, ou sur la voie principale avec la programmation OpsMode
 		(Si support&#233; par la centrale de commande et le d&#233;codeur). Vous pouvez
@@ -146,7 +147,7 @@
 		qui est accessible via le menu outils de toute 
 		application JMRI.
 		( Il y a aussi un 
-		<a  href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">outil couplage NCE-sp&#233;cifiques </a> 
+		<a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">outil couplage NCE-sp&#233;cifiques </a>
 		qui fonctionne un peu diff&#233;remment de l'outil d&#233;crit ici ).
 	</P>
 	<p>
@@ -162,7 +163,6 @@
 	</P>
 
 	<b>Gestionnaires de Couplage disponibles</b>
-	</P>
 		<ul>
 		<li>
 			<p>
@@ -180,7 +180,7 @@
  				l'adresse courte  que vous avez s&#233;lectionn&#233;e pour le ID couplage
 				pour contr&#244;ler la vitesse et la direction du couplage.
 			</P>
-		</Li>
+		</li>
 		<li>
 			<p>
 				Le <i>Gestionnaire de Couplage XPressNet</i> utilise le support fournit
@@ -233,15 +233,15 @@
 				dans la gamme autoris&#233;e (1-255) de la m&#233;moire de la centrale de commande.
 				Puisque la centrale de commande  est contourn&#233;e pour cr&#233;er des
 				Couplages Avanc&#233;s, ceux-ci ne peuvent &#234;tre lues &#224; partir de la centrale de commande.
-		</Li>
-		</Ul>
+		</li>
+		</ul>
 
-	<a name="tool">
-	<h2> Utilisation de l'Outil couplage </h2> </a>
+	<a name="tool"></a>
+	<h2> Utilisation de l'Outil couplage </h2>
 	<p>
 	Lorsque vous ouvrez l'outil couplage, vous verrez un &#233;cran semblable au suivant:
 	</P>
-	<image src=images/ConsistTool.jpg alt="Blank Consit Tool">
+	<img src="images/ConsistTool.jpg" alt="Blank Consit Tool">
 	<p>
 	sur la rang&#233;e sup&#233;rieure sont utilis&#233;s pour choisir entre un Couplage Avanc&#233; 
 	( D&#233;codeur Assist&#233; )  et une Centrale de Commande à Couplage Assisté. 
@@ -261,19 +261,19 @@
 	L'ajout d'une ID typique pour un d D&#233;codeur &#224; Couplage Assist&#233; devrait ressembler
 	&#224; ce qui suit:
 	</P>
-	<image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool-ID Added">
+	<img src="images/ConsistTool-IDAdded.jpg" alt="Consist Tool-ID Added">
 	<p>
 	La deuxi&#232;me ligne de l'outil couplage est utilis&#233; pour ajouter des Locomotives.
 	Une Locomotive peut &#234;tre ajout&#233;e soit en entrant son num&#233;ro dans le
 	case &#224; c&#244;t&#233; de la <b> nouvelle Locomotive</b> ou en s&#233;lectionnant son num&#233;ro &#224;
 	partir de la liste d&#233;roulante.
  	</P>
-	<image src=images/ConsistTool-LeadLoco.jpg alt="Lead Locomotive Selected">
+	<img src="images/ConsistTool-LeadLoco.jpg" alt="Lead Locomotive Selected">
 	<p>
 	Cliquer sur le bouton <b>ajouter</b> va ajouter une locomotive au
 	couplage, et elle appara&#238;tra dans la liste ci-dessous &#224; la deuxi&#232;me ligne.
 	</P>
-	<image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist ">
+	<img src="images/ConsistTool-LeadLocoAdded.jpg" alt="Lead Locomotive Added to Consist ">
 	<p>
 	Cliquer sur le bouton <b>r&#233;initialiser</b> effacera l'information pour
 	cette locomotive.
@@ -289,18 +289,18 @@
 	Locomotives ult&#233;rieures, vous pouvez cocher cette case pour indiquer la
 	direction de la locomotive par rapport &#224; la Locomotive de t&#234;te.
 	</p>
-	<image src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed"> 
+	<img src="images/ConsistTool-SecondLoco.jpg" alt="Second LocoMotive Selected - Direction Reversed">
 	<p>
  	Apr&#232;s l'ajout de la seconde Locomotive au couplage, avec le
 	sens inverse, vous devriez voir quelque chose comme ce qui suit:
 	</P>
-	<image src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
+	<img src="images/ConsistTool-SecondLocoAdded.jpg" alt="Second Locomotive Added">
 	<p>
 	Si vous faites une erreur, et ajouter une seconde Locomotive au
 	couplage avec la mauvaise direction, vous pouvez changer sa direction
 	simplement en cliquant sur la case &#224; cocher dans la colonne Direction Normale.
 	</P>
-	<image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive-Direction Change">
+	<img src="images/ConsistTool-SecondLocoDirChange.jpg" alt="Second Locomotive-Direction Change">
 	<p>
 	La direction de la Locomotive de t&#234;te ne peut pas &#234;tre chang&#233;e une fois
 	ajout&#233;e.
@@ -322,15 +322,13 @@
 	Pour ajouter un nouveau couplage, vous pouvez s&#233;lectionner l'entr&#233;e vide dans la 
 	liste d&#233;roulante &#224; c&#244;t&#233; de l'actuel ID de couplage .
 	</P>
-	<image src=images/ConsistTool-NewConsist.jpg alt="Select new Consist">
+	<img src="images/ConsistTool-NewConsist.jpg" alt="Select new Consist">
 	<p>
 	Pour rappeler un existantes couplage, vous pouvez s&#233;lectionner l'entr&#233;e 
 	appropri&#233;e de la bo&#238;te d&#233;roulante &#224; c&#244;t&#233; de l'actuel ID de couplage 
 	</P>
-	<image src=images/ConsistTool-SelectConsist.jpg alt="Select &#224; Consist">
+	<img src="images/ConsistTool-SelectConsist.jpg" alt="Select &#224; Consist">
 
-
-    
 <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
