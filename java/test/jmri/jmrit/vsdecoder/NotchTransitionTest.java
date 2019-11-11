@@ -43,6 +43,7 @@ public class NotchTransitionTest {
     @After
     public void tearDown() {
         uut = null;
+        jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
         jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
