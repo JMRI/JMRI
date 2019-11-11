@@ -100,10 +100,6 @@ public final class TreeModel extends DefaultTreeModel {
         return instanceValue;
     }
 
-    static public boolean isInstanceInitialzed() {
-        return instanceValue != null;
-    }
-    
     // intended for test routines only
     public void terminateThreads() throws InterruptedException {
         if (runner == null) {
