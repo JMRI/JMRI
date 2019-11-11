@@ -889,9 +889,12 @@ public class JUnitUtil {
 
         ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
         manager.stopAll();
+        
         JUnitUtil.waitFor(() -> {
             return (manager.allServices().isEmpty());
         }, "Stopping all ZeroConf Services");
+        
+        manager.dispose();
     }
 
     /**
