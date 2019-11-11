@@ -885,15 +885,13 @@ public class JUnitUtil {
      * stopped all services it is managing.
      */
     public static void resetZeroConfServiceManager() {
-        ZeroConfServiceManager manager = InstanceManager.containsDefault(ZeroConfServiceManager.class)
-                ? InstanceManager.getDefault(ZeroConfServiceManager.class)
-                : null;
-        if (manager != null) {
-            manager.stopAll();
-            JUnitUtil.waitFor(() -> {
-                return (manager.allServices().isEmpty());
-            }, "Stopping all ZeroConf Services");
-        }
+        if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) return; // not present, don't create on by asking for it.
+
+        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+        manager.stopAll();
+        JUnitUtil.waitFor(() -> {
+            return (manager.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
     }
 
     /**
@@ -921,8 +919,9 @@ public class JUnitUtil {
                 // we do not intend to remove this method soon but you should not use
                 // it in new code.
     public static void clearShutDownManager() {
-        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
-        if (sm == null) return;
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
         while (list != null && list.size() > 0) {
             ShutDownTask task = list.get(0);
@@ -940,12 +939,13 @@ public class JUnitUtil {
      * @see #initShutDownManager()
      */
     static void checkShutDownManager() {
-        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
-        if (sm == null) return;
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+        
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
         while (list != null && !list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.warn("Test {} left ShutDownTask registered: {}}", getTestClassName(), task.getName(), 
+            log.warn("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
