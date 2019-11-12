@@ -670,8 +670,9 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             int lowPart = oldCv % radix;
             int newPart = newVal % (maxVal + 1) * radix;
             int highPart = (oldCv / (radix * (maxVal + 1))) * (radix * (maxVal + 1));
-            log.trace("Set sees oldCv {} radix {}, lowPart {}, newVal {}, highPart {}, does {}", oldCv, radix, lowPart, newVal, highPart, highPart + newVal * radix + lowPart);
-            return highPart + newPart + lowPart;
+            int retval = highPart + newPart + lowPart;
+            log.trace("Set sees oldCv {} radix {}, lowPart {}, newVal {}, highPart {}, does {}", oldCv, radix, lowPart, newVal, highPart, retval);
+            return retval;
         }
     }
 
