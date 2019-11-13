@@ -56,6 +56,7 @@ public class MultipartMessageTest {
             log.debug("NPE shutting down web server", npe2);
             //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
         }
+        JUnitUtil.resetZeroConfServiceManager();
         jmri.util.JUnitUtil.tearDown();
     }
 
