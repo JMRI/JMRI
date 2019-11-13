@@ -929,14 +929,17 @@ public class JUnitUtil {
                 // we do not intend to remove this method soon but you should not use
                 // it in new code.
     public static void clearShutDownManager() {
-        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
-
-        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (!list.isEmpty()) {
-            ShutDownTask task = list.get(0);
-            sm.deregister(task);
-            list = sm.tasks();  // avoid ConcurrentModificationException
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            List<ShutDownTask> list = sm.tasks();
+            if (list.isEmpty()) {
+                log.error("No ShutDownTasks to clear");
+            }
+            while (!list.isEmpty()) {
+                ShutDownTask task = list.get(0);
+                sm.deregister(task);
+                list = sm.tasks(); // avoid ConcurrentModificationException
+            }
         }
     }
 
