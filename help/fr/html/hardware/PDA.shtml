@@ -31,12 +31,14 @@
       r&eacute;elles. Il a fourni l'information suivante sur la
       fa&ccedil;on dont il l'a mis en place:
 
-      <H1>Guide d'Installalation JMRI: Utilisation d'un PDA pour acc&#233;der aux applications JMRI ( obsol&#232te )</H1>
+      <h1>Guide d'Installalation JMRI: Utilisation d'un PDA pour acc&#233;der aux applications JMRI ( obsol&#232;te
+          )</h1>
 <P>
-Cette page d&#233crit une premi&#232;re tentative de connexion d'un PDA Axim &#224; JMRI, qui pr&#233;sente quelques
+Cette page d&#233;crit une premi&#232;re tentative de connexion d'un PDA Axim &#224; JMRI, qui pr&#233;sente quelques
     d&#233;fauts et est obsol&#232;te.
 
 <a name="limitations"></a><h2>Limitations</h2>
+
 <p>Pour une approche prise en charge  impliquant l'ex&#233;cution d'un programme sp&#233;cifique
 Sur votre Smartphone, consultez la page
 <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a>

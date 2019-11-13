@@ -2,19 +2,18 @@
 <html lang="fr">
 <!-- UpDated  by Blorec Herv&#233; 2011-10-01--> 
 <head>
-  <TITLE>
+  <title>
  	JMRI: Signal Groups Documentation
-  </TITLE>
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 <meta name="Date.Modified" content="20150125"/>
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   <meta name="keywords"
         content="model railroad JMRI decoderpro panelpro signal">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -61,7 +60,7 @@ Donc, l'Indicateur d'Itin&#233;raire peut seulement afficher une destination &#2
 			HSPACE="0" VSPACE="0" ALT="Speed Indicator figure by J. Calvert"></a>
 		<p>Un Indicateur de Vitesse tel qu'il est utilis&#233; en Hollande( Prorail ) et en Belgique ( NMBS/SNCB ) affiche une Digit allum&#233; en dessous de Feu de Signalisation principal, ex un "4" restreint la vitesse maximum &#224; 40 km/h.</p>
  
-<a name="table"><h3>Le Tableau Groupe Signal</h3></a>
+<a name="table"></a><h3>Le Tableau Groupe Signal</h3>
 <a href="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png" ALIGN=RIGHT WIDTH="386" HEIGHT="165" HSPACE="0" VSPACE="0" ALT="Signal Group Table figure"></a>
 
 <p>Les Groupes Signaux JMRI peuvent &#234;tre cr&#233;&#233;s et modifi&#233;s en utilisant le  <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Tableau Groupe de Signaux</a>. Vous acc&#233;dez &#224; cet outil depuis le menu Outils--> Tableaux --> Groupes de Signaux de la plupart des programme JMRI.
@@ -70,12 +69,12 @@ Dans le Tableau Groupe Signal vous pouvez cr&#233;er, changer et effacer des Gro
  		Plus d'information sur la configuration  des Groupes Signaux et un <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml#example">Exemple</a> peuvent &#234;tre trouv&#233;s sur la 
 		<a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">page d'aide de Tableau de Groupe Signal</a>.</p> 
 
-	<a name="add"><h3>Cr&#233;ation d'un Groupe Signal</h3></a>
+	<a name="add"></a><h3>Cr&#233;ation d'un Groupe Signal</h3>
 		<p>Vous ajoutez un nouveau Groupe Signal en cliquant sur le bouton "Ajouter.." 
 en bas du Tableau Groupe Signal qui vous emm&#232;ne au 
 	<a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">volet "Ajouter un Groupe Signal"</a>.</p>	
 
-<h3><h3>Commande d'un Groupe Signal</h3></h3>
+<h3>Commande d'un Groupe Signal</h3>
 		<p>L'information depuis le Groupe Signal est utilis&#233; par la Logique M&#226;t de signalisation pour calculer le comportement d&#233;fini d'un Groupe Signal. Vous pouvez tester ceci en changeant manuellement un des Feux de Signalisation de l'Indicateur dans le <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Tableau Feux de Signalisation</a>.
 
 <h2>Sauvegarde et Rechargement de la Configuration</h2>

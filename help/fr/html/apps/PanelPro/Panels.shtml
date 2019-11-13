@@ -3,7 +3,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!--Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <title>JMRI: Creating Control Panels </title>
 
@@ -21,14 +20,15 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
+<div>
 
 <h1>JMRI:Cr&#233;ation Panneaux de Commandes</h1>
 Les librairies JMRI contiennent un syst&#232;me de cr&#233;ation de panneaux de commandes. Il est grandement personnalisable, et vous 
 permet ce commander votre r&#233;seau directement depuis le panneau.
 
 <h2>Contenu d'un panneau</h2>
-<img src="../../../images/PiecedPanel.gif" alt="Screen shot of panel" align=RIGHT width="292" height="107" hspace="0" vspace="0">
+<img src="../../../images/PiecedPanel.gif" alt="Screen shot of panel" align="right" width="292" height="107" hspace="0"
+vspace="0">
 
 <p>
 Cliquer sur un symbole d'aiguillage le bascule de droit &#224; d&#233;vi&#233; et vice-versa.
@@ -135,10 +135,10 @@ Ou ce pourrait &#234;tre un glisser-droit.  D&#233;sol&#233;, je n'ai pas de mac
 +clic droit.
 <p>
 Il y a aussi un menu d&#233;roulant(ctrl - clic sur un Mac) qui vous permet de pivoter l'ic&#244;ne afin qu'elle pointe dans la 
-direction que vous voulez.
-    
+direction que vous voulez.</p>
+
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>
-</html
+</html>

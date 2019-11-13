@@ -120,14 +120,14 @@ d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 <dt>Sous-r&#233;pertoires configurexml 
 <dd>Ceux-ci contiennent le code pour le
 		<a href="XmlPersistance.shtml"> syst&#232;me de configuration XML</a>
- 		les paquets de haut niveau, esp util & dependancies, apps.
+ 		les paquets de haut niveau, esp util &amp; dependancies, apps.
 
 <dt>Sous-r&#233;pertoires swing
 <dd>Contient les outils Swing sp&#233;cifiques.
     En particulier &#224; l'ext&#233;rieur du paquet jmri.jmrit,
 		nous essayons de s&#233;parer le code Swing du
     code normal op&#233;rationnel.
-    Voir la <a href=""> page Swing</a>
+    Voir la <a href="Swing.shtml"> page Swing</a>
 		pour plus d'informations.
 
 <dt>Help files (fichiers d'aide)

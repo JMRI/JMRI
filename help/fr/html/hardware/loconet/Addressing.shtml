@@ -260,14 +260,15 @@ Il ne semble pas y avoir de m&#233;thode standard pour cartographier cela en un 
 JMRI cartographie A/B par (B-1)*256+A. La plupart des cartes semblent utiliser les adresses N/1, ainsi ceci 
 fait que cela corresponde tout juste &#224; N dans JMRI. Pour r&#233;sum&#233;:
 <p>
-<p>
+
 <table border="2">
-<tr><th width="80px">Ancien<br/>Style</th><th width="80px">JMRI<br/>Nombre</th>
+<tr><th width="80">Ancien<br>Style</th><th width="80">JMRI<br/>Nombre</th>
 <tr><td>10/1</td><td>10</td></tr>
 <tr><td>83/1</td><td>83</td></tr>
 <tr><td>83/2</td><td>339</td></tr>
 <tr><td>83/0</td><td>-173</td></tr>
 </table>
+
 Notez que les adresses N/0 font des op&#233;rations sp&#233;ciales, et ne sont pas r&#233;ellement des adresses: Elles tournent 
 les messages de programmation en commandes. Ils sont disponibles en utilisant des nombres n&#233;gatifs 
 comme ci-dessus, mais ils ne sont vraiment pas recommand&#233;!

@@ -20,7 +20,7 @@
 
 <h1>Documentation Mat&#233;rielle: OpenLCB</h1>
 
-<em> Le contenu de cette page &#233;volue rapidement; le Code r&#233;el pourrait &#234;tre en avance ou en retard par rapport &#224; la documentation
+<em>Le contenu de cette page &#233;volue rapidement; le Code r&#233;el pourrait &#234;tre en avance ou en retard par rapport &#224; la documentation
 pour un jour donn&#233;.</em>
 <ul class="snav"><!-- TOC -->
 	<li><a href="#connecting">Connexion</a></li>
@@ -54,7 +54,7 @@ et l'&#233;v&#233;nements OpenLCB "1.2.3.4.5.6.7.9"
 <p>
 Un autre format pour les ID d'&#233;v&#233;nement est une
 cha&#238;ne hexad&#233;cimale continue, tels que
-"<code>x0102030405060709</code>"..
+"<code>x0102030405060709</code>".
 <p>
 Ces noms de syst&#232;me peut devenir tr&#232;s long, dans lequel
 cas, les "noms utilisateur" deviennent beaucoup plus utile.

@@ -36,7 +36,7 @@
 		(Si support&#233; par la centrale de commande et le d&#233;codeur). Vous pouvez
 		soit utiliser une adresse longue (CV17 et CV18 et) ou courte (CV1) pour
 		une adresse principale de couplage.</p>
-		</Li>
+		</li>
 		<li>
 		<p> Une Centrale de Commande &#224; Couplage Assist&#233; (CSAC). Une centrale de commande 
 		&#224; couplage assist&#233;  est construite en utilisant une fonction de votre
@@ -45,12 +45,12 @@
 		<p> Une centrale de commande &#224; couplage assist&#233; se trouve dans les noms commerciaux
 		r&#233;pertori&#233;s dans le tableau ci-dessous. Le tableau indique &#233;galement les
 		limites connues impos&#233;es par chaque fabricant.
-		<table>couplage
+		<table>
 		<tr>
 		<td>Fabricant</td>
 		<td>Nom commercial</td>
 		<td>Remarques sur l'utilisation</td>
-		</Tr>
+		</tr>
 		<tr>
 			<td>Digitrax</td>
 			<td>Couplage Universel</td>
@@ -75,20 +75,20 @@
 			<td>Limit&#233; &#224; 8 locomotives. Permet  l'utilisation de n'importe quelle adresse sauf
 			00.</Td>
 		<tr>
-		</Table>
+		</table>
 
 		<p>
 		Le trait commun partag&#233; par toutes les versions de CSAC est
 		qu'une commande s&#233;par&#233;e de vitesse et d direction est envoy&#233;e
 		&#224; la voie pour chaque Locomotive qui est dans la couplage.
-		</P>
-		</Li>
+		</p>
+		</li>
 		
 		<li>
 		<p>
 		Un <i>D&#233;codeur Couplage Assist&#233;</i> (CAD), qui est &#233;galement
  		souvent r&#233;f&#233;renc&#233; comme un <i>Couplage Avanc&#233;</i>.
-		</P>
+		</p>
 		<p>
 		Le NMRA a mis de c&#244;t&#233; le CV19 comme un lieu d&#233;di&#233; aux adresses de couplage.
 

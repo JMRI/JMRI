@@ -387,12 +387,11 @@
       ensuite, vous devrez &eacute;galement r&eacute;gler le
       <a href=
       "../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a> pour
-      utiliser la logique M&acirc;tSignal via le menu <a de=""
-      dispatcher="" href=
+      utiliser la logique M&acirc;tSignal via le menu <a href=
       "../dispatcher/Options.shtml"><b>Options</b></a>.</p>
 
       <h2><a name="tools" id="tools">Outils Tableau
-      section</a></h2><a name="tools" id="tools"></a>
+      section</a></h2>
 
       <p>Le Tableau Sections a un menu <b>Outils</b> pour faciliter
       l'utilisation des Sections. Normalement, ces outils devraient

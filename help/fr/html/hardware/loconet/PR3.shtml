@@ -37,7 +37,7 @@ configuration "connexion" dans les "Pr&#233;f&#233;rences" JMRI.
 <p>Digitrax a fourni un "PR3 Xtra". C'est simplement un &#233;quipement PR3 avec
 	Une alimentation appropri&#233;e. Il peut &#234;tre consid&#233;r&#233; comme un PR3
 	pour la partie pratique
-<p>
+
 <h1>PR3 est un programmateur de d&#233;codeur autonome</h1>
 <p>Le PR3 agit en tant que programmateur. Quand JMRI est bien configur&#233;, le PR3 peut &#234;tre utilis&#233;
 pour r&#233;gler les CVs dans tous les d&#233;codeurs que DecoderPro prend en charge.
@@ -150,7 +150,7 @@ de programmation  de d&#233;codeur d&#233;di&#233;e:
 		<li>S&#233;lectionnez LocoNet PR3
 		<li>S&#233;lectionnez le port s&#233;rie qui est connect&#233; ou PR3
 		<li>Dans l'option "<code>Command Station</code>", s&#233;lectionnez "<code><strong>PR3 Standalone Programmer</strong></code>".
-		<li>Dans les "advanced settings,", la vitesse doit &#234;tre r&#233;gl&#233;e &#224 57 600 baud.
+		<li>Dans les "advanced settings,", la vitesse doit &#234;tre r&#233;gl&#233;e &#224; 57 600 baud.
 		<li>Dans les "advanced settings," l'option par d&#233;faut "Flow Control" doit &#234;tre
 			"Use Hardware Flow Control", qui est le r&#233;glage pr&#233;f&#233;r&#233; pour PR3.
 			Vous devez essayer ceci en premier, c'est le mode le plus fiable. Seulement si vous ne

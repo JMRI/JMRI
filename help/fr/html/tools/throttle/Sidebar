@@ -1,7 +1,7 @@
-<hr class="hide">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <!-- Translated by Blorec Herv&#233; le 2012-01-21-->
+<!-- This is the common sidebar definition for html/tools/throttle pages -->
 <html lang="fr">
+<hr class="hide">
   <div id="side"> <!-- Block of text on left side of page -->
     <div style="text-align: center"><b>Throttle Tool<br>User Guide</b></div>
     <div style="text-align: center; font: xx-small; font-size: xx-small">Revision 2004.11.21<br>Based on JMRI 1.5.3</div>
@@ -94,7 +94,7 @@
 	<ul>
 	  <li><a href="ThrottleChapter4.shtml" title="Saving a Throttle Layout">Sauver une Configuration</a></li>
 	    <ul>
-	      <li><a style="font-size: x-small" href="ThrottleChapter4.shtml#SaveMultiple" TITLE="Saving Multiple Throttle Windows">Sauvegarder De Multiples R&#233;gulateurs</a></li>
+	      <li><a style="font-size: x-small" href="ThrottleChapter4.shtml#SaveMultiple" title="Saving Multiple Throttle Windows">Sauvegarder De Multiples R&#233;gulateurs</a></li>
 	    </ul></li>
 	  <li><a href="ThrottleChapter4.shtml#LoadLayout" title="Open/Load a Throttle Layout"Ouvrir/Charger une Configuration</a>
 	    <ul>
