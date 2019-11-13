@@ -1314,8 +1314,10 @@ public class JUnitUtil {
                      || name.startsWith("AWT-EventQueue")
                      || name.startsWith("Aqua L&F")
                      || name.startsWith("Image Fetcher ")
+                     || name.startsWith("Image Animator ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
+                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().contains("FailOnTimeoutGroup")) // JUnit timeouts
                      || name.startsWith("SocketListener(")
                      || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 
