@@ -1289,7 +1289,9 @@ public class JUnitUtil {
         "JMRI Common Timer",
         "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
         "Keep-Alive-Timer",                 // from "system" group
-        "process reaper"                    // observed in macOS JRE
+        "process reaper",                   // observed in macOS JRE
+        "SIGINT handler",                   // observed in JmDNS; clean shutdown takes time
+        "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
