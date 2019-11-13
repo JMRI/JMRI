@@ -32,7 +32,6 @@ public class HtmlConductorTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
