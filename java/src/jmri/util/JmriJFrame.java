@@ -3,7 +3,11 @@ package jmri.util;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
@@ -170,12 +174,18 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     public void setFrameLocation() {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
             if (prefsMgr.hasProperties(windowFrameRef)) {
+                // Track the computed size and position of this window
+                Rectangle window = new Rectangle(this.getX(),this.getY(),this.getWidth(), this.getHeight());
+                boolean isVisible = false;
+                log.debug("Initial window location & size: {}", window);
+
                 Dimension screen = getToolkit().getScreenSize();
-                if ((reuseFrameSavedPosition)
-                        && (!((prefsMgr.getWindowLocation(windowFrameRef).getX() >= screen.getWidth()) || (prefsMgr
-                        .getWindowLocation(windowFrameRef).getY() >= screen.getHeight())))) {
+                log.debug("getScreenSize returns W:{}, H:{}", screen.getWidth(), screen.getHeight());
+                log.debug("Detected {} screens.",GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length);
+                log.debug(windowFrameRef);
+                if (reuseFrameSavedPosition) {
                     log.debug("setFrameLocation 1st clause sets \"{}\" location to {}", getTitle(), prefsMgr.getWindowLocation(windowFrameRef));
-                    this.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
+                    window.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
                 }
                 //
                 // Simple case that if either height or width are zero, then we should not set them
@@ -184,13 +194,13 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                         && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
                         windowFrameRef).getHeight() == 0.0)))) {
                     log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                    this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
                     log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                    this.setSize(prefsMgr.getWindowSize(windowFrameRef));
+                    window.setSize(prefsMgr.getWindowSize(windowFrameRef));
+                    log.debug("window now set to location: {}", window);
                 }
 
                 //
-                // We just check to make sure that having set the location that we do not have anther frame with the same
+                // We just check to make sure that having set the location that we do not have another frame with the same
                 // class name and title in the same location, if it is we offset
                 //
                 for (JmriJFrame j : getJmriJFrameManager()) {
@@ -201,6 +211,35 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                             offSetFrameOnScreen(j);
                         }
                     }
+                }
+
+                //
+                // Now we loop through all possible displays to determine if this window rectangle would intersect
+                // with any of these screens - in other words, ensure that this frame would be (partially) visible
+                // on at least one of the connected screens
+                //
+                for (GraphicsDevice gd: GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+                    Rectangle virtualBounds = new Rectangle();
+                    Insets insets = new Insets(0, 0, 0, 0);
+                    for (GraphicsConfiguration gc: gd.getConfigurations()) {
+                        virtualBounds = virtualBounds.union(gc.getBounds());
+                        insets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
+                    }
+                    boolean canShow = window.intersects(virtualBounds);
+                    log.debug("Screen {} bounds {}, {}", gd.getIDstring(), virtualBounds.getBounds(), insets);
+                    log.debug("Does \"{}\" window {} fit on screen {}? {}", getTitle(), window, gd.getIDstring(), canShow);
+                    if (canShow) isVisible = true;
+                }
+                log.debug("Can \"{}\" window {} display on a screen? {}", getTitle(), window, isVisible);
+
+                //
+                // We've determined that at least one of the connected screens can display this window
+                // so set its location and size based upon previously stored values
+                //
+                if (isVisible) {
+                    this.setLocation(window.getLocation());
+                    this.setSize(window.getSize());
+                    log.debug("Set \"{}\" location to {} and size to {}", getTitle(), window.getLocation(), window.getSize());
                 }
             }
         });
