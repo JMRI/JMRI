@@ -44,15 +44,15 @@ abstract public class AbstractConnectionConfigTestBase {
     public void testGetAndSetManufacturer(){
         Assume.assumeNotNull("adapter set",cc.getAdapter());
         Assert.assertNotNull("has manufacturer",cc.getManufacturer());
-	cc.setManufacturer("foo");
+	    cc.setManufacturer("foo");
         Assert.assertEquals("new manufacturer","foo",cc.getManufacturer());
     }
 
     @Test
     public void testGetAdapter(){
         // many test classes derived from this class need to triger 
-	// creation of the adapter.  Remove the assume to see which
-	// ones still fail.  
+	    // creation of the adapter.  Remove the assume to see which
+	    // ones still fail.  
         Assume.assumeNotNull("adapter set",cc.getAdapter());
         Assert.assertNotNull("has adapter",cc.getAdapter());
     }
@@ -62,7 +62,7 @@ abstract public class AbstractConnectionConfigTestBase {
         Assume.assumeNotNull("adapter set",cc.getAdapter());
     	cc.setDisabled(true);
         Assert.assertTrue("disabled",cc.getDisabled());
-	cc.setDisabled(false);
+	    cc.setDisabled(false);
         Assert.assertFalse("not disabled",cc.getDisabled());
     }
 
