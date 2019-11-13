@@ -305,7 +305,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
         new HashMap<>(getDNSes()).values().parallelStream().forEach((dns) -> {
-            new Thread(() -> {
+            Thread t = new Thread(() -> {
                 dns.unregisterAllServices();
                 if (close) {
                     try {
@@ -315,7 +315,9 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                     }
                 }
                 nsLatch.countDown();
-            }).start();
+            });
+            t.setName("dns.close in ZerConfServiceManager#stopAll");
+            t.start();
         });
         try {
             zcLatch.await();
