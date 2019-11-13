@@ -194,6 +194,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                         && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
                         windowFrameRef).getHeight() == 0.0)))) {
                     log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+                    this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
                     log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
                     window.setSize(prefsMgr.getWindowSize(windowFrameRef));
                     log.debug("window now set to location: {}", window);
