@@ -26,8 +26,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>Configuration Horloge Rapide</h2>JMRI fournit deux types
-      d'horloge rapide:
+      <h2>Configuration Horloges Rapides</h2>
+      <p>JMRI fournit deux types d'horloge rapide:</p>
 
       <ul>
         <li>Interne - l'horloge des ordinateurs fournit les

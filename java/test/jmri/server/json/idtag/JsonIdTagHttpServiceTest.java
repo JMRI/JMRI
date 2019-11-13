@@ -218,6 +218,10 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         validate(idTag);
         idTag = instance.doSchema(JsonIdTag.IDTAG, true, locale, 42);
         validate(idTag);
+
+        // Suppress a warning message (see networknt/json-schema-validator#79)
+        JUnitAppender.checkForMessageStartingWith(
+                "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
     }
 
 }
