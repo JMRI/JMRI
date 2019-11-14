@@ -40,8 +40,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         highPriorityListeners = new LinkedBlockingQueue<>();
     }
 
-    static XNetTrafficController self = null;
-
     // Abstract methods for the XNetInterface
 
     /**

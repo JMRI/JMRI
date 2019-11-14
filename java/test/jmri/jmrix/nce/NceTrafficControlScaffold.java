@@ -4,6 +4,9 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+
 /**
  * Stands in for the NceTrafficController class.
  *
@@ -12,6 +15,8 @@ import org.slf4j.LoggerFactory;
 public class NceTrafficControlScaffold extends NceTrafficController {
 
     public NceTrafficControlScaffold() {
+        super();
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
     // override some NceTrafficController methods for test purposes
