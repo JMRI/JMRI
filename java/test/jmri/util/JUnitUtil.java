@@ -1299,7 +1299,10 @@ public class JUnitUtil {
         "JMRI Common Timer",
         "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
         "Keep-Alive-Timer",                 // from "system" group
-        "process reaper"                    // observed in macOS JRE
+        "process reaper",                   // observed in macOS JRE
+        "SIGINT handler",                   // observed in JmDNS; clean shutdown takes time
+        "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
+        "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1318,12 +1321,15 @@ public class JUnitUtil {
                 if (t.getState() == Thread.State.TERMINATED) return; // going away, just not cleaned up yet
                 String name = t.getName();
                 if (! (threadNames.contains(name)
+                     || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
                      || name.startsWith("RMI TCP Accept")
                      || name.startsWith("AWT-EventQueue")
                      || name.startsWith("Aqua L&F")
                      || name.startsWith("Image Fetcher ")
+                     || name.startsWith("Image Animator ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
+                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().contains("FailOnTimeoutGroup")) // JUnit timeouts
                      || name.startsWith("SocketListener(")
                      || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 
