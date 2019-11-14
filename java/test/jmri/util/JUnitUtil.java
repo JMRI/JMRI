@@ -930,7 +930,7 @@ public class JUnitUtil {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<ShutDownTask> list = sm.tasks();
             if (list.isEmpty()) {
-                log.error("No ShutDownTasks to clear");
+                log.error("No ShutDownTasks to clear", Log4JUtil.shortenStacktrace(new Exception("traceback")));
             }
             while (!list.isEmpty()) {
                 ShutDownTask task = list.get(0);
@@ -955,7 +955,7 @@ public class JUnitUtil {
         List<ShutDownTask> list = sm.tasks();
         while (list != null && !list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
+            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
