@@ -10,6 +10,7 @@ import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -46,6 +47,8 @@ public class OperationsTestCase {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
+
         if (waitOnEventQueueNotEmpty) {
             Thread AWT_EventQueue = JUnitUtil.getThreadStartsWithName("AWT-EventQueue");
             if (AWT_EventQueue != null) {
@@ -55,8 +58,7 @@ public class OperationsTestCase {
                 try {
                     AWT_EventQueue.join();
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    // ignore.
                 }
             }
         }
