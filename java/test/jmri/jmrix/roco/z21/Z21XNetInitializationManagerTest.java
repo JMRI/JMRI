@@ -24,7 +24,7 @@ public class Z21XNetInitializationManagerTest {
     @Test
     public void testCtor() {
 
-// infrastructure objects
+        // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetListenerScaffold l = new XNetListenerScaffold();
 
@@ -42,7 +42,6 @@ public class Z21XNetInitializationManagerTest {
         Assert.assertNotNull("exists", memo);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -52,7 +51,6 @@ public class Z21XNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // drop ShutDownTask for jmri.jmrix.lenz.XNetInterfaceScaffold
         JUnitUtil.tearDown();
     }
 

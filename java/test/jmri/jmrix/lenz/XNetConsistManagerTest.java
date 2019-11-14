@@ -29,7 +29,6 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
     @Override
     public void tearDown() {
         cm = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

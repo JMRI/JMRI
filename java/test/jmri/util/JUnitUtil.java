@@ -921,13 +921,11 @@ public class JUnitUtil {
      *
      * @see #checkShutDownManager()
      * @see #initShutDownManager()
-     * @deprecated 4.17.4 because tests should directly test and remove queued items;
+     * @deprecated not for removal; tests should directly test and remove queued items;
      *             we do not intend to remove this method soon but you should not use
      *             it in new code.
      */
-    @Deprecated // 4.17.4 because tests should directly test and remove queued items;
-                // we do not intend to remove this method soon but you should not use
-                // it in new code.
+    @Deprecated
     public static void clearShutDownManager() {
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);

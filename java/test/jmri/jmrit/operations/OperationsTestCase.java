@@ -80,7 +80,6 @@ public class OperationsTestCase {
             }
         }
         
-        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

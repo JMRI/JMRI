@@ -95,7 +95,6 @@ public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModePro
         op = null;
         pl = null;
         programmer = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

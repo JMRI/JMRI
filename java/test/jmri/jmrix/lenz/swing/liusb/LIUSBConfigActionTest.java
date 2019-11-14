@@ -62,7 +62,6 @@ public class LIUSBConfigActionTest {
     public void tearDown() {
         t = null;
         memo = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

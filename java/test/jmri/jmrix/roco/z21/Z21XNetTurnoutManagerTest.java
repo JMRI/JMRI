@@ -16,11 +16,9 @@ public class Z21XNetTurnoutManagerTest extends jmri.jmrix.lenz.XNetTurnoutManage
     @Override
     @After
     public void tearDown() {
-	lnis = null;
-	l = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    	lnis = null;
+	    l = null;
         JUnitUtil.tearDown();
-
     }
 
     @Override

@@ -127,7 +127,6 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @After
     public void tearDown() {
         l.dispose();
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
