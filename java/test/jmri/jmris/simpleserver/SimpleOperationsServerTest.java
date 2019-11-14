@@ -195,7 +195,6 @@ public class SimpleOperationsServerTest {
 
     @After
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
