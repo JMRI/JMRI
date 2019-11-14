@@ -13,8 +13,6 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Drives the "simple signal" logic for one signal.
@@ -1438,6 +1436,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         bblList.clear();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockBossLogic.class);
 
 }
