@@ -912,18 +912,17 @@ public class JUnitUtil {
     }
     
     /**
-     * Leaves ShutDownManager, if any, in place,
-     * but removes its contents.  Instead of using this,
-     * it's better to have your test code remove _and_ _check_
-     * for specific items; this just suppresses output from the 
-     * {@link #checkShutDownManager()} check down as part of the 
-     * default end-of-test code.
+     * Leaves ShutDownManager, if any, in place, but removes its contents.
+     * Instead of using this, it's better to have your test code remove _and_
+     * _check_ for specific items; this just suppresses output from the
+     * {@link #checkShutDownManager()} check down as part of the default
+     * end-of-test code.
      *
      * @see #checkShutDownManager()
      * @see #initShutDownManager()
-     * @deprecated not for removal; tests should directly test and remove queued items;
-     *             we do not intend to remove this method soon but you should not use
-     *             it in new code.
+     * @deprecated not for removal; tests should directly test and remove queued
+     *             items; we do not intend to remove this method soon but you
+     *             should not use it in new code.
      */
     @Deprecated
     public static void clearShutDownManager() {

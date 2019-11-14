@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle; // for access operations keys directly.
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -90,6 +91,9 @@ public class JUnitOperationsUtil {
         FileUtil.delete(file);
         // create an empty operations directory
         FileUtil.createDirectory(file);
+
+        // Disable shutdown tasks
+        InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
         // there can be test concurrency issues if auto save is on
         Assert.assertFalse("Confirm disabled", Setup.isAutoSaveEnabled());
