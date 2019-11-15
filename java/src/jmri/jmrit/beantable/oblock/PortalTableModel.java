@@ -47,11 +47,12 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         _parent = parent;
         _manager = InstanceManager.getDefault(PortalManager.class);
         _manager.addPropertyChangeListener(this);
-    }
-
-    public void init() {
         initTempRow();
     }
+
+/*    public void init() {
+        initTempRow();
+    }*/
 
     void initTempRow() {
         for (int i = 0; i < NUMCOLS; i++) {
@@ -88,6 +89,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public Object getValueAt(int row, int col) {
+//        log.debug("getValueAt row= {} col= {}", row, col);
         if (row == _manager.getPortalCount()) {
             return tempRow[col];
         }
@@ -117,6 +119,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public void setValueAt(Object value, int row, int col) {
+//        log.debug("setValueAt value= {}, row= {} col= {}", row, col);
         String msg = null;
         if (row == _manager.getPortalCount()) {
             if (col == DELETE_COL) {
@@ -280,19 +283,16 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (!(e.getSource() instanceof PortalManager)) {
-            return;
-        }
         String property = e.getPropertyName();
-        if (property.equals("length")) {
-            int oldCount = getRowCount();
+        if (log.isDebugEnabled()) {
+            log.debug("property = {} source= {}", property, e.getSource().getClass().getName());
+        }
+        if (property.equals("pathCount") || property.equals("numPortals")) {
             initTempRow();
             fireTableDataChanged();
-            log.debug("propertyChange \"{}\" caught. oldCount= {}, newCount= {}", property, oldCount, getRowCount());
         } else if (property.equals("NameChange")) {
-            int row = ((Integer)e.getNewValue()).intValue();
-            log.debug("propertyChange \"{}\" caught. row= {}", property, row);
-            fireTableRowsUpdated(row, row);            
+            int row = _manager.getIndexOf((Portal)e.getNewValue());
+            fireTableRowsUpdated(row, row);   
         }
     }
 

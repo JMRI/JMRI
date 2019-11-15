@@ -77,8 +77,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     private boolean _showWarnings = true;
     private JMenuItem _showWarnItem;
     private JMenu _openMenu;
-    private HashMap<String, JInternalFrame> _blockPathMap = new HashMap<>();
-    private HashMap<String, JInternalFrame> _PathTurnoutMap = new HashMap<>();
+    private HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
+    private HashMap<String, PathTurnoutFrame> _PathTurnoutMap = new HashMap<>();
 
     public TableFrames() {
         this("OBlock Table");
@@ -335,21 +335,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     log.debug("Start loop: path {} on block {}", n, oBlockName);
                     String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
                     toBlockName = oblockPrefix() + toBlockNumber;
-//                    boolean duplicate = false;
-//                    SortedSet<Portal> poList = pom.getNamedBeanSet();
                     String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
-                    port =pom.getPortal(portalName);
-/*                    for (Portal p : poList) {
-                        log.debug("Checking existing portal {} for match", p.getName());
-                        // check for portal as opposite pair; we need only one Portal/OBlock pair per OBlock connection
-                        if (p.getName().equals(portalName)) {
-                            duplicate = true;
-                            log.debug("DUPLICATE = {}", p.getName());
-                            port = p;
-                            break;
-                        }
-                    }*/
-//                    if (!duplicate) {
+                    port = pom.getPortal(portalName);
                     if (port == null) {
                         portalName = portalPrefix + blockNumber + "-" + toBlockNumber; // normal name for new Portal
                         log.debug("new Portal {} on block {}, path #{}", portalName, toBlockName, n);
@@ -793,21 +780,18 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      */
     protected static class BlockPathFrame extends JInternalFrame {
 
-        /**
-         *
-         */
         BlockPathTableModel blockPathModel;
 
-        public BlockPathFrame(String title, boolean resizable, boolean closable,
+        BlockPathFrame(String title, boolean resizable, boolean closable,
                 boolean maximizable, boolean iconifiable) {
             super(title, resizable, closable, maximizable, iconifiable);
         }
 
-        public void init(OBlock block, TableFrames parent) {
+        void init(OBlock block, TableFrames parent) {
             blockPathModel = new BlockPathTableModel(block, parent);
         }
 
-        public BlockPathTableModel getModel() {
+        BlockPathTableModel getModel() {
             return blockPathModel;
         }
     }
@@ -824,7 +808,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         frame.setName(block.getSystemName());
         frame.init(block, this);
         BlockPathTableModel blockPathModel = frame.getModel();
-        blockPathModel.init();
         JTable blockPathTable = new JTable(blockPathModel);
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
             BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
@@ -860,7 +843,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     /**
-     * ********************* BlockPathFrame *****************************
+     * ********************* PathTurnoutFrame *****************************
      */
     protected static class PathTurnoutFrame extends JInternalFrame {
 
@@ -869,12 +852,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
          */
         PathTurnoutTableModel pathTurnoutModel;
 
-        public PathTurnoutFrame(String title, boolean resizable, boolean closable,
+        PathTurnoutFrame(String title, boolean resizable, boolean closable,
                 boolean maximizable, boolean iconifiable) {
             super(title, resizable, closable, maximizable, iconifiable);
         }
+        
+        void init(OPath path) {
+            pathTurnoutModel = new PathTurnoutTableModel(path, this);
+        }
 
-        public PathTurnoutTableModel getModel() {
+        PathTurnoutTableModel getModel() {
             return pathTurnoutModel;
         }
     }
@@ -882,7 +869,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     /*
      * ********************* PathTurnoutFrame *****************************
      */
-    protected JInternalFrame makePathTurnoutFrame(OBlock block, String pathName) {
+    protected PathTurnoutFrame makePathTurnoutFrame(OBlock block, String pathName) {
         String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
         PathTurnoutFrame frame = new PathTurnoutFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) {
@@ -893,7 +880,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (path == null) {
             return null;
         }
-        PathTurnoutTableModel PathTurnoutModel = new PathTurnoutTableModel(path, frame);
+        frame.init(path);
+        PathTurnoutTableModel PathTurnoutModel = frame.getModel();
         JTable PathTurnoutTable = new JTable(PathTurnoutModel);
         PathTurnoutTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{PathTurnoutTableModel.SETTINGCOLUMN, PathTurnoutTableModel.DELETE_COL}));
@@ -927,7 +915,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     protected void openBlockPathFrame(String sysName) {
-        JInternalFrame frame = _blockPathMap.get(sysName);
+        BlockPathFrame frame = _blockPathMap.get(sysName);
         if (frame == null) {
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
             if (block == null) {
@@ -954,7 +942,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     protected void openPathTurnoutFrame(String pathTurnoutName) {
-        JInternalFrame frame = _PathTurnoutMap.get(pathTurnoutName);
+        PathTurnoutFrame frame = _PathTurnoutMap.get(pathTurnoutName);
         log.debug("openPathTurnoutFrame for {}", pathTurnoutName);
         if (frame == null) {
             int index = pathTurnoutName.indexOf('&');

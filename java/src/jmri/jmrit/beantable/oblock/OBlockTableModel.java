@@ -771,9 +771,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
         _parent.getXRefModel().propertyChange(e);
         _parent.getSignalModel().propertyChange(e);
+        _parent.getPortalModel().propertyChange(e);
 
-        if (property.equals("length") || property.equals("UserName")
-                || property.equals("portalCount")) {
+        if (property.equals("length") || property.equals("UserName")) {
             _parent.updateOpenMenu();
         }
     }

@@ -262,8 +262,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
-        log.debug("property change: of \"{}\" property {} is now {} from {}",
-                getDisplayName(), evt.getPropertyName(), evt.getNewValue(), evt.getSource().getClass().getName());
+        if (log.isDebugEnabled()) {
+            log.debug("property change: of \"{}\" property {} is now {} from {}",
+                    getDisplayName(), evt.getPropertyName(), evt.getNewValue(), evt.getSource().getClass().getName());
+        }
         if ((getErrorSensor() != null) && (evt.getSource().equals(getErrorSensor()))) {
             if (evt.getPropertyName().equals("KnownState")) {
                 int errState = ((Integer) evt.getNewValue());
@@ -651,9 +653,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @param portal the Portal to remove
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
-    protected boolean removePortal(Portal portal) {
-        int oldSize = _portals.size();
-        int oldPathSize = getPaths().size();
+    protected void removePortal(Portal portal) {
         if (portal != null) {
             //String name = portal.getName();
             Iterator<Path> iter = getPaths().iterator();
@@ -679,6 +679,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 }
             }
             //_portals.remove(portal);
+            int oldSize = _portals.size();
             for (int i = 0; i < _portals.size(); i++) {
                 if (portal.equals(_portals.get(i))) {
                     _portals.remove(i);
@@ -686,11 +687,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     i--;
                 }
             }
+            firePropertyChange("portalCount", oldSize, _portals.size());
         }
-        log.debug("removePortal: block {} portals decreased from {} to {}. Paths decreased from {} to {}",
-                getDisplayName(), oldSize, _portals.size(), oldPathSize, getPaths().size());
-        firePropertyChange("portalCount", oldSize, _portals.size());
-        return true;
     }
 
     public Portal getPortalByName(String name) {
@@ -775,9 +773,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 return false;
             }
         }
-        int oldSize = list.size();
         super.addPath(path);
-        firePropertyChange("pathCount", oldSize, getPaths().size());
+        firePropertyChange("pathCount", null, getPaths().size());
         return true;
     }
 
@@ -791,8 +788,17 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         path.clearSettings();
         super.removePath(path);
+        // remove path from its portals
+        Portal portal = path.getToPortal();
+        if (portal != null) {
+            portal.removePath(path);
+        }
+        portal = path.getFromPortal();
+        if (portal != null) {
+            portal.removePath(path);
+        }
         path.dispose();
-        firePropertyChange("pathDelete", path, getPaths().size());
+        firePropertyChange("pathCount", path, getPaths().size());
         return true;
     }
 
@@ -848,8 +854,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Call for Circuit Builder to make icon color changes for its GUI
      */
     public void pseudoPropertyChange(String propName, Object old, Object n) {
-        log.debug("pseudoPropertyChange: Block \"{}\" property \"{}\" new value= {}",
-                getSystemName(), propName, n);
+//        log.debug("pseudoPropertyChange: Block \"{}\" property \"{}\" new value= {}",
+//                getSystemName(), propName, n);
         firePropertyChange(propName, old, n);
     }
 
@@ -903,17 +909,21 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     @Override
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     public void dispose() {
-        if (!InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).okToRemoveBlock(this)) {
+        if (!InstanceManager.getDefault(WarrantManager.class).okToRemoveBlock(this)) {
             return;
+        }
+        // remove paths first
+        for (Path pa : getPaths()) {
+            removeOPath((OPath)pa);
         }
         for (Portal portal : getPortals()) {
             OBlock opBlock = portal.getOpposingBlock(this);
             // remove portal and stub paths through portal in opposing block
             if (opBlock != null) {
-                if (!opBlock.removePortal(portal)) {
-                    return;
-                }
+                opBlock.removePortal(portal);
             }
+            log.debug("this = {}, toBlock = {}, fromblock= {}", getDisplayName(), 
+                    portal.getToBlock().getDisplayName(), portal.getFromBlock().getDisplayName());
             if (this.equals(portal.getToBlock())) {
                 portal.setToBlock(null, false);
             }
@@ -922,9 +932,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             }
         }
         _portals.clear();
-        for (Path pa : getPaths()) {
-            removeOPath((OPath)pa);
-        }
         for (PropertyChangeListener listener : getPropertyChangeListeners()) {
             removePropertyChangeListener(listener);
         }

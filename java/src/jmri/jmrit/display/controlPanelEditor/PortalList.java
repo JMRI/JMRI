@@ -11,8 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
 
 /**
  *
@@ -62,7 +66,7 @@ public class PortalList extends JList<Portal> {
         }
     }
 
-    static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener{
+    static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
 
         OBlock _homeBlock;
         List<Portal> _list = new ArrayList<>();
@@ -103,8 +107,12 @@ public class PortalList extends JList<Portal> {
             if (!(e.getSource() instanceof Portal)) {
                 return;
             }
+            if (log.isDebugEnabled()) {
+                log.debug("property = {} source= {}", e.getPropertyName(), e.getSource().getClass().getName());                
+            }
             makeList();
             fireContentsChanged(this, 0, 0);
         }
     }
+    private final static Logger log = LoggerFactory.getLogger(PortalList.class);
 }

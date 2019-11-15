@@ -47,6 +47,10 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     TableFrames.PathTurnoutFrame _parent;
     private OPath _path;
 
+    public PathTurnoutTableModel() {
+        super();
+    }
+
     public PathTurnoutTableModel(OPath path, TableFrames.PathTurnoutFrame parent) {
         super();
         _path = path;
@@ -265,9 +269,16 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
             String property = e.getPropertyName();
             if (property.equals("pathCount")) {
                 fireTableDataChanged();
-            } else if (property.equals("pathDelete") && _path.equals(e.getOldValue())) {
-                removeListener();
-                _parent.dispose();
+                if (_path.equals(e.getOldValue())) {    // path was deleted
+                    removeListener();
+                    _parent.dispose();
+                }
+            } else if (property.equals("pathName")) {
+                String title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getOldValue());
+                if (_parent.getTitle().equals(title)) {
+                    title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getNewValue());
+                    _parent.setTitle(title);
+                }
             }
         }
     }

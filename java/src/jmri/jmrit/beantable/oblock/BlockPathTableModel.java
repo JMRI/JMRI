@@ -63,9 +63,6 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         super();
         _block = block;
         _parent = parent;
-    }
-
-    public void init() {
         initTempRow();
         _block.addPropertyChangeListener(this);
     }
@@ -443,8 +440,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             if (log.isDebugEnabled()) {
                 log.debug("propertyChange \"" + property + "\".  source= " + e.getSource());
             }
-            if (property.equals("portalCount") || property.equals("pathCount")
-                    || property.equals("pathDelete")) {
+            if (property.equals("portalCount") || 
+                    property.equals("pathCount") || property.equals("pathName")) {
                 fireTableDataChanged();
             }
         }

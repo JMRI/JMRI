@@ -58,6 +58,10 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         return _nameList.get(idx);
     }
 
+    public int getIndexOf(Portal portal) {
+        return _nameList.indexOf(portal);
+    }
+
     public Portal getPortal(String name) {
         return _portalMap.get(name);
     }
@@ -83,17 +87,10 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         _nameList.add(portal);
         _portalMap.put(userName, portal);
         _nextIndex = Integer.valueOf(_nextIndex.intValue()+1);
-        pcs.firePropertyChange("length", null, _nameList.size());
+        pcs.firePropertyChange("numPortals", null, _nameList.size());
         // listen for name and state changes to forward
         portal.addPropertyChangeListener(this);
         return portal;
-    }
-
-    private synchronized void deletePortal(Portal portal) {
-        String name = portal.getName();
-        _nameList.remove(portal);
-        _portalMap.remove(name);
-        pcs.firePropertyChange("length", null, _nameList.size());
     }
 
     public Portal providePortal(String name) {
@@ -103,9 +100,22 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         Portal portal = getPortal(name);
         if (portal == null) {
             portal = createNewPortal(name);
-            pcs.firePropertyChange("length", null, _nameList.size());
         }
         return portal;
+    }
+
+    private synchronized void deletePortal(Portal portal) {
+        String name = portal.getName();
+        _nameList.remove(portal);
+        _portalMap.remove(name);
+        pcs.firePropertyChange("numPortals", portal, _nameList.size());
+    }
+
+    private synchronized void blockChange(Portal portal) {
+        int idx = _nameList.indexOf(portal);
+        // a complete mystery why PortalTableModel does not get this PropertyChange
+        pcs.firePropertyChange("BlockChanged", Integer.valueOf(idx), Integer.valueOf(idx));
+        log.debug("blockChange fired.");
     }
 
     @OverridingMethodsMustInvokeSuper
@@ -125,6 +135,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         Portal portal = (Portal)e.getSource();
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String propertyName = e.getPropertyName();
+        log.debug("property = {}", propertyName);
         if (propertyName.equals("portalDelete")) {
             deletePortal(portal);
         } else if (propertyName.equals("NameChange")) { // note, source is Portal
@@ -133,14 +144,14 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
             String oldName = (String)e.getOldValue();
             manager.portalNameChange(oldName, newName);
             Integer idx = _nameList.indexOf(_portalMap.get(newName));
-            pcs.firePropertyChange("NameChange", idx, idx);   // note, source will be PortalManager
-        } else if (propertyName.equals("BlockChanged") || propertyName.equals("RemovePath")) {
-            int idx = _nameList.indexOf(portal);
-            pcs.firePropertyChange("NameChange", idx, idx);   // note, source will be PortalManager
+            pcs.firePropertyChange("NameChange", idx, idx);
+            // note, source will be PortalManager, but PortalTableModel does not get property change ?
+        } else if (propertyName.equals("BlockChanged")) {
+            blockChange(portal);
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
+    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
 }
 
 

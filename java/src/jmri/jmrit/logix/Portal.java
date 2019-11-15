@@ -126,7 +126,7 @@ public class Portal {
         } else if (_toBlock != null && _toBlock.equals(block)) {
             _toPaths.remove(path);
         }
-        pcs.firePropertyChange("RemovePath", block, path);
+//        pcs.firePropertyChange("RemovePath", block, path); not needed
     }
 
     /**
@@ -148,6 +148,14 @@ public class Portal {
             return Bundle.getMessage("DuplicatePortalName", oldName, p.getDescription());
         }
         _name = newName;
+        // for some unknown reason, PortalManager firePropertyChange is not read by PortalTableModel
+        // so let OBlock do it
+        if (_toBlock != null) {
+            _toBlock.pseudoPropertyChange("NameChange", oldName, this);
+        } else if (_fromBlock != null) {
+            _fromBlock.pseudoPropertyChange("NameChange", oldName, this);
+        }
+        // CircuitBuilder PortalList reads it
         pcs.firePropertyChange("NameChange", oldName, newName);
         return null;
     }
@@ -177,7 +185,7 @@ public class Portal {
         } else if (!verify(_toPaths, block)) {
             return false;
         }
-        // log.debug("setToBlock: oldBlock= \"{}\" newBlock \"{}\".", getToBlockName(),
+        //log.debug("setToBlock: oldBlock= \"{}\" newBlock \"{}\".", getToBlockName(),
         //      (block != null ? block.getDisplayName() : null));
         OBlock oldBlock = _toBlock;
         if (_toBlock != null) {
@@ -540,9 +548,11 @@ public class Portal {
         } else {
             log.error("Block \"{}\" is not in Portal \"{}\".", blockName, _name);
         }
-        if (speed != null) {
-            log.debug("Portal \"{}\" has {}} speed= {} into \"{}\" from signal.",
-                    _name, (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
+        if (log.isDebugEnabled()) {
+            if (speed != null) {
+                log.debug("Portal \"{}\" has {} speed= {} into \"{}\" from signal.",
+                        _name, (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
+            }
         }
         // no signals, proceed at recorded speed
         return speed;
@@ -594,6 +604,12 @@ public class Portal {
         return speed;
     }
 
+    /*
+     * block is a potential _toBlock and paths are the current _toPaths
+     * or
+     * block is a potential _fromBlock and paths are the current _fromPaths
+     * Verify that each path has this potential block as its owning block
+     */
     static private boolean verify(List<OPath> paths, OBlock block) {
         if (block == null) {
             return (paths.size() == 0);
@@ -654,11 +670,10 @@ public class Portal {
         if (!InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).okToRemovePortal(this)) {
             return false;
         }
-        if (_fromBlock != null && !_fromBlock.removePortal(this)) {
-            return false;
-        }
-        if (_toBlock != null && !_toBlock.removePortal(this)) {
-            return false;
+        if (_toBlock != null) {
+            _toBlock.removePortal(this);
+        } else if (_fromBlock != null) {
+            _fromBlock.removePortal(this);
         }
         pcs.firePropertyChange("portalDelete", true, false);
         PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
