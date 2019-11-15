@@ -4,8 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2003-2008 -->
-<!-- $Id$ -->
-<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 --> 
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <title>JMRI: DecoderPro Symbolic Programmer</title>
 
 <!-- Style -->
@@ -51,7 +50,7 @@ comment vous pouvez l'utiliser.
 <p>
 DecoderPro est aussi couvert dans Joe Fugate's 
 <a href="http://trainmasters.tv/videos/3-4-siskiyou-line-dcc-programming-decoderpro" target="_new">TrainMasters.TV video library, part 
-3.4<a/>, car il montre comment il utilise DP sur son r&#233;seau Siskiyou Line.</a>
+3.4</a>, car il montre comment il utilise DP sur son r&#233;seau Siskiyou Line.
 
 <h2>De quoi avez-vous besoin pour utiliser DecoderPro</h2>
 
@@ -62,14 +61,14 @@ pour de l'aide si vous souhaitez l'essayer sur un autre syst&#232;me. Vous avez 
 d'avoir un port s&#233;rie ou un port USB disponible, soit sur lordinateur lui-m&#234;me ou soit par un 
 <a href="../../hardware/USBtoSerial.shtml">adaptateur USB</a>.
 Pour plus d'information, svp voir les
-<a href="../../setup/index.shtml">pages de Configuration</a>.</p>
+<a href="../../setup/index.shtml">pages de Configuration</a>.
 
 <p>Vous pouvez aussi avoir besoin d'une connexion &#224; votre syst&#232;me DCC.
 Pour plus d'information, svp voir les
 <a href="../../hardware/index.shtml">pages mat&#233;riel DCC</a>.</p>
 
-<a name="guide">
-<h2>Guide Utilisateur DecoderPro</h2></a>
+<a name="guide"></a>
+<h2>Guide Utilisateur DecoderPro</h2>
 
 <dl class="toc">
 <dt><a href="./Roster.shtml">Travailler avec l'Inventaire</a></dt>

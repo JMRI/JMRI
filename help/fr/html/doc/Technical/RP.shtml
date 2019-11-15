@@ -57,11 +57,12 @@ dans les
 <a href=""> paquets java.util</a>.
 Tout ne doit pas &#234;tre un Vecteur ou un tableau.
 
-<LI>
+<li>
 JMRI utilise largement les
 <a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html"> g&#233;n&#233;riques Java</a>
 pour
-<href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html"> r&#233;duire les erreurs et am&#233;liorer la compr&#233;hension</a>.
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html"> r&#233;duire les erreurs et
+    am&#233;liorer la compr&#233;hension</a>.
 Avec beaucoup de gens qui &#233;crivent et partagent le code, &#224; l'aide de
 g&#233;n&#233;riques au lieu de casts, rend beaucoup plus facile la compr&#233;hension du code, 
 et permets au compilateur de corriger de nombreux malentendus sur la fa&#231;on dont les choses 
