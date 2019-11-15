@@ -31,33 +31,33 @@
     <li><a href="#Continuous">Ex&#233;cution du Test d'Int&#233;gration Continue</a></li>
         <li><a href="#Reporting">Rapport d'Erreur</a></li>
         <li><a href="#Coverage">Rapports de Couverture de Codes</a></li>
-    <li><a href="#write">Tests d'&#201;critures</a></li>
+    <li><a href="#write">Tests d'&#201;critures</a>
         <ul>
         <li><a href="#writeAddl4ExistClass">&#201;criture de Tests Suppl&#233;mentaires pour une Class Existante</a></li>
         <li><a href="#write4NewClass">&#201;criture de Tests pour une Nouvelle Classe</a></li>
         <li><a href="#Write4NewPackage">&#201;criture de Tests pour un Nouveau Paquet</a></li>
-        </ul>
-    <li><a href="#keyMetaphors">Cl&#233;s M&#233;taphores</a></li>
+        </ul></li>
+    <li><a href="#keyMetaphors">Cl&#233;s M&#233;taphores</a>
         <ul>
         <li><a href="#HandlingLogOutput">Manipulation Sortie Log4J De Tests</a></li>
         <li><a href="#ResetInstMgr">R&#233;initialisation de l'InstanceManager</a></li>
         <li><a href="#RunningListeners">Ex&#233;cution des &#201;couteurs</a></li>
         <li><a href="#io">Test des I/O</a></li>
         <li><a href="#tempFileCreation">Cr&#233;ation de Fichier Temporaire dans les Tests</a></li>
-        </ul>
-    <li><a href="#testSwingCode">Test du code Swing</a></li>
+        </ul></li>
+    <li><a href="#testSwingCode">Test du code Swing</a>
         <ul>
         <li><a href="#complicatedGuiTesting">Test code GUI* Compliqu&#233;</a></li>
-        </ul>
+        </ul></li>
     </ul>
-    <li><a href="#testScriptCode">Test du Code Script</a></li>
+    <li><a href="#testScriptCode">Test du Code Script</a>
         <ul>
         <li><a href="#sampleScriptTesting">Test exemple de scripts Jython</a></li>
-        </ul>
+        </ul></li>
     </ul>
     <li><a href="#issues">Probl&#232;mes</a></li>
 </ul>
-<p>
+
 <a name="Introduction">Introduction</a>
 <p>
 JJUnit est un syst&#232;me de construction de "tests unitaires" du logiciel.
@@ -67,12 +67,12 @@ Dans un projet distribu&#233; comme JMRI, o&#249; il y a beaucoup de
 d&#233;veloppeurs qui peuvent perdre la communication avec les autres, 
 les tests unitaires sont une bonne fa&#231;on pour s'assurer que le code n'a pas 
 &#233;t&#233; cass&#233; par un changement.
-<P>
+<p>
 Pour plus d'informations sur JUnit, voir 
-<A HREF="http://www.junit.org"> la page d'accueil JUnit  </A>.
+<A HREF="http://www.junit.org"> la page d'accueil JUnit</A>.
 Un exemple tr&#232;s int&#233;ressant du d&#233;veloppement bas&#233; sur les tests est disponible &#224; partir du livre de
 <A HREF="http://www.objectmentor.com/publications/xpepisode.htm"> Robert Martin </a> .
-<P>
+<p>
 Certaines classes ont des tests JUnit disponibles. C'est bon 
 d'ajouter des tests JUnit quand vous apportez des modifications, tester vos nouvelles fonctionnalit&#233;s
 pour s'assurer qu'elle est au travail, et continue &#224; travailler), 
@@ -80,7 +80,7 @@ lorsque vous devez comprendre le code que quelqu'un a fait
 (les tests documentent exactement ce qui doit arriver!), 
 et quand vous traquer un bug (assurez-vous qu'il ne revient pas).
 
-<h2><a name="run">Ex&#233;cutez les Tests</h2></a>
+<h2><a name="run"></a>Ex&#233;cutez les Tests</h2>
 
 Pour ex&#233;cuter les tests existants, dire
 <CODE><PRE>
@@ -94,12 +94,12 @@ voudrez peut-&#234;tre faire <code>ant clean</code> en premier).
 Si vous connaissez le nom 
 de votre classe de test, ou la  classe de test pour votre paquet, vous
 pouvez ex&#233;cuter directement avec le script "runTest" :
-<CODE>
+<code>
 <PRE>
-	ant tests</br>
+	ant tests<br>
 	./runtest.cshjmri.jmrit.powerpanel.PowerPanelTest 
 </PRE>
-</CODE>
+</code>
 Le premi&#232;re ligne compile tout le code de test, et la seconde 
 effectue un test sp&#233;cifique ou une suite de test.
 
@@ -135,11 +135,16 @@ part de code ex&#233;cut&#233;, appel&#233;e "couverture de code". Nous utilison
 <a href="http://eclemma.org/jacoco/">outil JaCoCo</a> 
 pour faire le d&#233;compte. Il fournit des rapports d&#233;taill&#233;s &#224; des niveaux multiples:
 <ul>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">Une parcelle de couverture dans son ensemble</a>.Cliquez sur le graphique pour en voir une</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">Sommaire par paquet Java package</a>. Cliquez sur un paquet pour en voir un</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">Sommaire par fichier</a> (ex: class). Cliquez sur une class pour en voir une</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">Sommaire par proc&#233;d&#233;</a>. Cliquez sur un proc&#233;d&#233; pour voir</li>
-<li><href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">Comment chaque partie du code a &#233;t&#233; couvert</a> (peut n&#233;cessiter un d&#233;filement).</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">Une parcelle de couverture dans son
+    ensemble</a>.Cliquez sur le graphique pour en voir une</li>
+<li><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">Sommaire par paquet Java
+    package</a>. Cliquez sur un paquet pour en voir un</li>
+<li><a
+href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">Sommaire par fichier</a> (ex: class). Cliquez sur une class pour en voir une</li>
+<li><a
+href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">Sommaire par proc&#233;d&#233;</a>. Cliquez sur un proc&#233;d&#233; pour voir</li>
+<li><a
+href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">Comment chaque partie du code a &#233;t&#233; couvert</a> (peut n&#233;cessiter un d&#233;filement).</li>
 </ul>
 
 <h2><a name="write">&#201;criture de Tests</a></h2>
@@ -211,33 +216,34 @@ Pour permettre ceci, JMRI fonctionne et il utilise des tests avec un dispositif 
 stocke les messages de sorte que les tests JUnit peuvent les regarder avant de les transmettre
 dans le journal. Il y a deux aspects pour faire ce travail:
 <ol>
-<li>Toutes les classes d'essai doivent inclure le code commun dans leur configuration()
-et leur code de d&#233;sassemblage() pour &#234;tre s&#251;r que log4j est proprement initi&#233;, et que
-le dispositif personnalis&#233; discute quand un test d&#233;marre ou s'arr&#234;te.
-<CODE><PRE>
-    @Before<br/>
-    public void setUp() throws Exception { <br/>
-        jmri.util.JUnitUtil.setUp(); <br/>
-    }<br/>
-    @After<br/>
-    public void tearDown() throws Exception { <br/>
-        jmri.util.JUnitUtil.tearDown(); <br/>
-    }<br/>
-</PRE></code>
-<li>Quand un test invoque d&#233;lib&#233;r&#233;ment un message, il faut 
-alors utiliser le contr&#244;le pour voir si le message a &#233;t&#233; cr&#233;&#233;.
-Par exemple, si la classe en test devrait faire
-<BR><CODE><PRE>
-    log.warn("Provoked message");
-</PRE></CODE>
-la case du test appelant devrait suivre avec la ligne:
-<BR><PRE><CODE>
-    jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
-</CODE></PRE>
-<p>
-Ce sera une erreur de JUnit si un message log.warn(...) ou log.error(...) est
-produit et qu'il ne correspond pas &#224; un appel JUnitAppender.assertWarnMessage(...).
-</ol> 
+    <li>Toutes les classes d'essai doivent inclure le code commun dans leur configuration()
+    et leur code de d&#233;sassemblage() pour &#234;tre s&#251;r que log4j est proprement initi&#233;, et que
+    le dispositif personnalis&#233; discute quand un test d&#233;marre ou s'arr&#234;te.
+    <CODE><PRE>
+        @Before<br/>
+        public void setUp() throws Exception { <br/>
+            jmri.util.JUnitUtil.setUp(); <br/>
+        }<br/>
+        @After<br/>
+        public void tearDown() throws Exception { <br/>
+            jmri.util.JUnitUtil.tearDown(); <br/>
+        }<br/>
+    </PRE></code></li>
+    <li>Quand un test invoque d&#233;lib&#233;r&#233;ment un message, il faut
+    alors utiliser le contr&#244;le pour voir si le message a &#233;t&#233; cr&#233;&#233;.
+    Par exemple, si la classe en test devrait faire
+    <BR><CODE><PRE>
+        log.warn("Provoked message");
+    </PRE></CODE>
+    la case du test appelant devrait suivre avec la ligne:
+    <BR><PRE><CODE>
+        jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
+        </CODE></PRE>
+    <br>
+    Ce sera une erreur de JUnit si un message log.warn(...) ou log.error(...) est
+    produit et qu'il ne correspond pas &#224; un appel JUnitAppender.assertWarnMessage(...).
+    </li>
+</ol>
 
 Dans tous les cas, l'ensemble de vos routines principales() devrait commencer par
 <PRE><CODE>
@@ -514,7 +520,8 @@ des tests simples pour vous assurez qu'ils continuent de travailler.
 Les tests de scripts peuvent &#234;tre plac&#233;s dans <code>jython</code> et appel&#233;s par
 <code><a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/jmrit/jython/SampleScriptTest.java">java/test/jmri/jmrit/jython/SampleScriptTest.java</a></code>.
 <p>
-Voir <code> <ahref="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test.py</a></code>
+Voir <code> <a href="https://github.com/JMRI/JMRI/blob/master/jython/test/jmri_bindings_test.py">jmri_bindings_test
+    .py</a></code>
 exemple pour la syntaxe.
 <p>
 La classe <code>SampleScriptTest</code> est un espace r&#233;serv&#233;, et doit (&#233;ventuellement) &#234;tre &#233;tendu pour ramasser automatiquement les fichiers, 
@@ -529,7 +536,7 @@ de ne pas &#234;tre en mesure de trouver ou de charger une classe,
 soup&#231;onnez que l'ajout de la classe manquante
 au fichier test/junit/runner/ excluded.properties la corrigerait.
 <p>
-<u> Comme un test seulement </u>,vous pouvez essayer de r&#233;gler l'option "-noloading" dans le
+<em> Comme un test seulement</em> , vous pouvez essayer de r&#233;gler l'option "-noloading" dans le
 <code>main</code> de n'importe quel test de classe avec lequelque vous avez des probl&#232;mes avec:
 <CODE><PRE>
     static public void main(String[] args) {<br/>

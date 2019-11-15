@@ -82,8 +82,8 @@
             <li><a href="#J4rules">JUnit4 Rules</a></li>
             <li style="list-style: none">
                 <ul>
-                <li><a href="#TimeoutRule">Timeout rule</a>
-                <li><a href="#RetryRule">RetryRule</a>
+                <li><a href="#TimeoutRule">Timeout rule</a></li>
+                <li><a href="#RetryRule">RetryRule</a></li>
                 </ul>
             </li>
             <li><a href="#control">Controlling JUnit4 Tests</a></li>

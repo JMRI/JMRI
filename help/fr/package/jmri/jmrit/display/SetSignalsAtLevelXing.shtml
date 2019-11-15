@@ -19,7 +19,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -44,7 +45,7 @@
       sch&eacute;ma ci-dessous.</p>
 
       <p><a href="./images/XingDiagram.gif"><img src=
-      "./Images/XingDiagram.gif" align="center" width="173" height=
+      "./Images/XingDiagram.gif" width="173" height=
       "125" hspace="0" vspace="0"></a></p>
 
       <p>Cet outil place le croisement si la voie 1 (AC) est

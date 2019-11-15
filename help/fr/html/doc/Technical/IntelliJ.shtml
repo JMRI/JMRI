@@ -25,11 +25,11 @@
 		est une grande plateforme pour travailler avec JMRI et Java sur OS X, Windows et *nix.</p>
 
 <ul class="snav"><!-- TOC -->
-<li><a href="#install">Installation</a>
-<li><a href="#getgit">Obtenir Git</a>
-<li><a href="#ijprojectwin">La fen&#234;tre Projet</a>
-<li><a href="#push">Pousser les changements</a>
-<li><a href="#more">Plus</a>
+<li><a href="#install">Installation</a></li>
+<li><a href="#getgit">Obtenir Git</a></li>
+<li><a href="#ijprojectwin">La fen&#234;tre Projet</a></li>
+<li><a href="#push">Pousser les changements</a></li>
+<li><a href="#more">Plus</a></li>
 </ul>
 
 	<p>
@@ -53,7 +53,7 @@
 		libell&#233; "Fork". Pressez le bouton "Fork" pour cr&#233;er votre propre 
 		r&#233;pertoire de la source JMRI.
 		( Voir <a href="getgitcode.shtml#get">Obtenir le Code</a> ).
-  </ol>
+  	</ol>
 	<p>Apr&#232;s le t&#233;l&#233;chargement et l'ex&#233;cution de l'installateur pour votre OS, configurez l'application IntelliJ comme suit:<br>
 	
 <h3>D&#233;finir vmoptions</h3>
@@ -104,35 +104,35 @@
 <a name="getgit"></a>
 	<h2>Obtention de la source JMRI en utilisant Git</h2>
 	<p>Pour obtenir le code source depuis GitHub dans IntelliJ, suivre ces &#233;tapes:
-		<ol>
+	<ol>
 		<li>Ouvrir IntelliJ.</li>
 		<li>Depuis la barre de menu principale s&#233;lectionnez File -&gt; New -&gt; Project from Version Control -&gt; GitHub<br>
 		<a href="images/IntelliJ/IjImportMenu.png">
-	  <img src="images/IntelliJ/IjImportMenu.png" width="366" height="100" alt="IntelliJ Git import pane"></a>
+	  <img src="images/IntelliJ/IjImportMenu.png" width="366" height="100" alt="IntelliJ Git import pane"></a></li>
 		<li>Si vous &#234;tes invit&#233;, entrez vos nom utilisateur et Mot de Passe pour GitHub dans le champ authentification et cliquez "Login":<br>
 		<a href="images/IntelliJ/IjLoginGit.png">
-	  <img src="images/IntelliJ/IjLoginGit.png" width="200" height="110" alt="IntelliJ git login"></a>
+	  <img src="images/IntelliJ/IjLoginGit.png" width="200" height="110" alt="IntelliJ git login"></a></li>
 		<li>Le volet duplication Repository  doit appara&#238;tre maintenant. S&#233;lectionnez un URL de R&#233;pertoire Gitdepuis votre compte et pointez vers votre dossier r&#233;pertoire local comme "R&#233;pertoire Parent":<br>
 		<a href="images/IntelliJ/IjCloneRepo.png">
 	  <img src="images/IntelliJ/IjCloneRepo.png" width="313" height="100" alt="IntelliJ Git import pane3"></a><br>
 	  Optionnellement  "Test" en haut &#224; droite pour v&#233;rifier votre connexion:<br>
 		<a href="images/IntelliJ/IjCloneTest.png">
-	  <img src="images/IntelliJ/IjCloneTest.png" width="315" height="100" alt="IntelliJ Git import pane3"></a><br> 
+	  <img src="images/IntelliJ/IjCloneTest.png" width="315" height="100" alt="IntelliJ Git import pane3"></a>
 	  </li>
 		<li>Cliquez "Clone" et suivez la progression dans l'indicateur en bas de la fen&#234;tre Project:<br>
 		<a href="images/IntelliJ/IjCloningProgress.png">
-	  <img src="images/IntelliJ/IjCloningProgress.png" width="410" height="37" alt="IntelliJ Git clone progress"></a>
+	  <img src="images/IntelliJ/IjCloningProgress.png" width="410" height="37" alt="IntelliJ Git clone progress"></a></li>
 		<li>Dans le volet qui s'ouvre apr&#232;s que le t&#233;l&#233;chargement soit termin&#233;, v&#233;rifiez l'emplacement sur le disque,<br>
 		confirmez le nom du projet ( comme l'original ex: "JMRI" ) et cliquez "Next":<br>
 		<a href="images/IntelliJ/IjImportProject1.png">
-	  <img src="images/IntelliJ/IjImportProject1.png" width="396" height="97" alt="IntelliJ Git import pane1"></a>
+	  <img src="images/IntelliJ/IjImportProject1.png" width="396" height="97" alt="IntelliJ Git import pane1"></a></li>
 		<li>S&#233;lectionnez "Create project from existing sources" et cliquez encore "Next":<br>
 		<a href="images/IntelliJ/IjImportProject2.png">
-	  <img src="images/IntelliJ/IjImportProject2.png" width="396" height="123" alt="IntelliJ Git import pane2"></a>
+	  <img src="images/IntelliJ/IjImportProject2.png" width="396" height="123" alt="IntelliJ Git import pane2"></a></li>
 		<li>Cliquez "Mark all" et puis "Finish":<br>
 		<a href="images/IntelliJ/IjImportProject3.png">
-	  <img src="images/IntelliJ/IjImportProject3.png" width="396" height="119" alt="IntelliJ Git import pane3"></a>
-		</ol>
+	  <img src="images/IntelliJ/IjImportProject3.png" width="396" height="119" alt="IntelliJ Git import pane3"></a></li>
+	</ol>
 	<p>Ceci ajoutera JMRI &#224; la fen&#234;tre IntelliJ Project.
 
 <a name="ijprojectwin"></a>

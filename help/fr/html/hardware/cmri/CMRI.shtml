@@ -41,29 +41,29 @@ un acc&#232;s facile &#224; une section ci-dessous:
 	<ul><li><a href="#iobits">Bits d'Entr&#233;e et Sortie de C/MRI</a></ul></li>
 <li><a href="#connecting">Connexion</a>
 <ul>
-		<li><a href="#smini">D&#233;marrer avec un n&#339;ud SMINI</a>
-		<li><a href="#susic">D&#233;marrer avec une USIC ou SUSIC</a>
-		<li><a href="#nodes"> G&#233;rer les n&#339;uds</a>
-		<li><a  href="#numbers"> Num&#233;rotation utilis&#233;e dans les Noms Syst&#232;mes C/MRI</a>
-		<li><a href="#alternate">Num&#233;rotation Alternative pour les Noms Syst&#232;mes</a>
-		<li><a href="#options"> Options de Contr&#238;le des Aiguillages C/MRI</a>
-		<li><a href="#signals"> C&#226;blage des signaux</a>
-		<li><a href="#diagnostics">Diagnostique C/MRI</a>
-		<li><a href="#sim"> Ex&#233;cuter JMRI lorsqu'il est d&#233;connect&#233; de votre syst&#232;me C/MRI</a>
+    <li><a href="#smini">D&#233;marrer avec un n&#339;ud SMINI</a></li>
+    <li><a href="#susic">D&#233;marrer avec une USIC ou SUSIC</a></li>
+    <li><a href="#nodes"> G&#233;rer les n&#339;uds</a></li>
+    <li><a  href="#numbers"> Num&#233;rotation utilis&#233;e dans les Noms Syst&#232;mes C/MRI</a></li>
+    <li><a href="#alternate">Num&#233;rotation Alternative pour les Noms Syst&#232;mes</a></li>
+    <li><a href="#options"> Options de Contr&#238;le des Aiguillages C/MRI</a></li>
+    <li><a href="#signals"> C&#226;blage des signaux</a></li>
+    <li><a href="#diagnostics">Diagnostique C/MRI</a></li>
+    <li><a href="#sim"> Ex&#233;cuter JMRI lorsqu'il est d&#233;connect&#233; de votre syst&#232;me C/MRI</a></li>
 </ul></li>
 <li><a href="#tools">Outils JMRI C/MRI</a></li>
 <ul>
-	<li><a href="#diagnostics">Diagnostics C/MRI</a>
-	<li><a href="#confignodes">Outil Configurer N&#339;uds</a>
+	<li><a href="#diagnostics">Diagnostics C/MRI</a></li>
+	<li><a href="#confignodes">Outil Configurer N&#339;uds</a></li>
 </ul>
 <li><a href="#documentation">Documentation</a></li>
 </ul>
 
 <a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
 <ul>
-<li>Chubb C/MRI USIC
-<li>Chubb C/MRI SMINI
-<li>Chubb C/MRI SUSIC
+    <li>Chubb C/MRI USIC</li>
+    <li>Chubb C/MRI SMINI</li>
+    <li>Chubb C/MRI SUSIC</li>
 </ul>
 
 <a name="limitations"></a><h2>Limitations</h2>
@@ -753,9 +753,9 @@ Cliquez "Edit Node" pour actualiser, puis fermez le volet.
 <p>Pour une info compl&#233;mentaire  sur C/MRI ( incluant le Manuel Utilisateur c/MRI), 
 voir:</p>
     <ul>
-    <li>Le site web <a href="http://www.jlcenterprises.net/">JLC Enterprises</a>
-    <li>Le site de discussion <a href="https://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI users Yahoo group</a>
-    <li>Le site web <a href="http://www.easeeinterfaces.com">Easee Interfaces</a>.
+    <li>Le site web <a href="http://www.jlcenterprises.net/">JLC Enterprises</a></li>
+    <li>Le site de discussion <a href="https://groups.yahoo.com/neo/groups/CMRI_Users/info">C/MRI users Yahoo group</a></li>
+    <li>Le site web <a href="http://www.easeeinterfaces.com">Easee Interfaces</a>.</li>
     </ul>
 
 <!--#include virtual="/Footer" -->

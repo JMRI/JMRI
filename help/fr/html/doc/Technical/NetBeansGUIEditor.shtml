@@ -48,16 +48,16 @@
             <li><a href="#references">Voir Aussi</a></li>
         </ul>
         <h2><a id="intro">Introduction</a></h2>
-        <pNetBeans 7.4 ou 8.0 inclut un Swing GUI Builder qui rend plus ais&#233; 
-				la maintenance d'un Java Swing-based GUI (tel que JMRI ) que l'&#233;criture 
-				de l'interface utilisateur enti&#232;rement &#224; la main.</p>
+        <p>NetBeans 7.4 ou 8.0 inclut un Swing GUI Builder qui rend plus ais&#233;
+		la maintenance d'un Java Swing-based GUI (tel que JMRI ) que l'&#233;criture
+		de l'interface utilisateur enti&#232;rement &#224; la main.</p>
         <p>Cet outil peut cr&#233;er du code qui n'est pas id&#233;alement s&#233;par&#233; en code Java 
-						g&#233;n&#233;r&#233; et maintenu par l'homme. Si vous utilisez Netbeans, vous &#234;tes prot&#233;g&#233; de 
-						ceci, car le Builder r&#233;alise une bonne int&#233;gration de ses affichages avec 
-						l'&#233;diteur de source. Cependant, si vous utilisez un autre &#233;diteur, vous y 
-						serez expos&#233;.</p>
+		g&#233;n&#233;r&#233; et maintenu par l'homme. Si vous utilisez Netbeans, vous &#234;tes prot&#233;g&#233; de
+		ceci, car le Builder r&#233;alise une bonne int&#233;gration de ses affichages avec
+		l'&#233;diteur de source. Cependant, si vous utilisez un autre &#233;diteur, vous y
+		serez expos&#233;.</p>
         
-				<h2><a id="usage">Utilisation de Builder</a></h2>
+		<h2><a id="usage">Utilisation de Builder</a></h2>
 
         <p>La barre d'outil de l'&#233;diteur NetBeans contiendra automatiquement un bouton
 						<strong>Design</strong> si la Classe devant &#234;tre &#233;dit&#233;e peut aussi &#234;tre 
@@ -68,7 +68,7 @@
        			<a href="http://www.oracle.com/technetwork/java/javase/documentation/spec-136004.html">JavaBean</a>
         		peut &#234;tre plac&#233; sur la fen&#234;tre et li&#233; &#224; d'autres objets sur 
 						cette fen&#234;tre, m&#234;me s'il n'a pas de repr&#233;sentation visuelle.</p>
-				<p>O&#249 le Builder ne peut pas g&#233;n&#233;r&#233; automatiquement du code, il fournit
+				<p>O&#249; le Builder ne peut pas g&#233;n&#233;r&#233; automatiquement du code, il fournit
 						des m&#233;thodes vides, ou tronqu&#233;es, qui peuvent &#234;tre compl&#233;t&#233;es pour mettre en &#339;uvre 
 						la logique souhait&#233;e, et passe automatiquement &#224; l'affichage du code au besoin.</p>
 
